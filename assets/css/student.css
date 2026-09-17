@@ -1,0 +1,657 @@
+/* ============================================================
+   student.css — Student Application styles
+   Version: 1.0.0
+   Theme: Science Blue + Cyan
+   ============================================================ */
+
+/* ---------- Daily Score Bar ---------- */
+.daily-score-bar {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: #fff;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  flex-wrap: wrap;
+}
+
+.score-bar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.score-bar-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.score-bar-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.score-bar-right {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.score-bar-stat {
+  text-align: center;
+}
+
+.score-bar-stat .value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: block;
+}
+
+.score-bar-stat .label {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  text-transform: uppercase;
+}
+
+/* ---------- Lesson Content ---------- */
+.lesson-content h3 {
+  color: var(--color-primary-dark);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.lesson-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-md) 0;
+  font-size: 0.95rem;
+}
+
+.lesson-content table th,
+.lesson-content table td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.lesson-content table th {
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.lesson-content ul, .lesson-content ol {
+  margin: var(--space-md) 0;
+  padding-left: var(--space-lg);
+}
+
+.lesson-content li { margin-bottom: var(--space-xs); }
+
+/* ---------- Activity Cards ---------- */
+.activity-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.activity-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.activity-timer {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-danger);
+  background: #ffebee;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Match Game ---------- */
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin: var(--space-md) 0;
+}
+
+.match-column h4 {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.match-item {
+  padding: 12px var(--space-md);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.9rem;
+}
+
+.match-item:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.match-item.selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.match-item.correct {
+  border-color: var(--color-success);
+  background: #e8f5e9;
+  cursor: default;
+}
+
+.match-item.wrong {
+  border-color: var(--color-danger);
+  background: #ffebee;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ---------- Scenario Cards ---------- */
+.scenario-card {
+  background: var(--color-bg);
+  border-left: 4px solid var(--color-accent);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+}
+
+.scenario-text {
+  font-size: 1rem;
+  margin-bottom: var(--space-md);
+}
+
+.choice-row {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.choice-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px var(--space-md);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.choice-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.choice-btn.correct {
+  border-color: var(--color-success);
+  background: #e8f5e9;
+  color: var(--color-success);
+}
+
+.choice-btn.wrong {
+  border-color: var(--color-danger);
+  background: #ffebee;
+  color: var(--color-danger);
+}
+
+.choice-btn:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+/* ---------- Escape Room ---------- */
+.escape-container {
+  background: linear-gradient(135deg, #0a1929, #0d2137);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.escape-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.escape-lives {
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+}
+
+.escape-keys {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.key-icon {
+  font-size: 1.5rem;
+  opacity: 0.3;
+  transition: all 0.3s;
+}
+
+.key-icon.earned {
+  opacity: 1;
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #00acc1);
+}
+
+.escape-question {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.escape-question h4 {
+  color: #fff;
+  margin-bottom: var(--space-md);
+}
+
+.escape-options {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.escape-option {
+  padding: 12px var(--space-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.escape-option:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-accent);
+}
+
+.escape-option.correct {
+  background: rgba(46, 125, 50, 0.4);
+  border-color: #4caf50;
+}
+
+.escape-option.wrong {
+  background: rgba(198, 40, 40, 0.4);
+  border-color: #ef5350;
+}
+
+.escape-result {
+  text-align: center;
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.escape-result .result-emoji { font-size: 3rem; }
+.escape-result .result-title { font-size: 1.5rem; margin: var(--space-sm) 0; }
+.escape-result .result-message { opacity: 0.9; }
+
+/* ---------- Badges ---------- */
+.badge-earned {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #00acc1, #00838f);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0, 172, 193, 0.4);
+  animation: badgePop 0.4s ease-out;
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.badge-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-md);
+}
+
+.badge-item {
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+}
+
+.badge-item.locked {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+.badge-item .badge-icon { font-size: 2rem; }
+.badge-item .badge-name { font-size: 0.8rem; font-weight: 600; margin-top: var(--space-xs); }
+
+/* ---------- Dashboard ---------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.subject-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--color-primary);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.subject-card h3 {
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-sm);
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: var(--space-sm) 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* ============================================================
+   Modern Dashboard Styles
+   ============================================================ */
+
+/* ---------- Hero Greeting Card ---------- */
+.dash-hero {
+  position: relative;
+  background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(13, 71, 161, 0.25);
+}
+
+.dash-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dash-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dash-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dash-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.dash-hero-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+}
+
+.dash-hero-text h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dash-hero-text .dash-hero-meta {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dash-hero-text .dash-hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dash-hero-badge {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0d47a1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.dash-hero-badge.enrichment { background: #e8f5e9; color: #1b5e20; }
+.dash-hero-badge.on-track   { background: #e1f5fe; color: #01579b; }
+.dash-hero-badge.remediation{ background: #fff3e0; color: #e65100; }
+.dash-hero-badge.urgent     { background: #ffebee; color: #b71c1c; }
+
+.dash-hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ---------- Quick Stats Grid ---------- */
+.quick-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.qs-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.qs-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.qs-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 14px 0 0 14px;
+}
+
+.qs-card.green::before  { background: linear-gradient(180deg, #0d47a1, #1976d2); }
+.qs-card.blue::before   { background: linear-gradient(180deg, #0277bd, #29b6f6); }
+.qs-card.amber::before  { background: linear-gradient(180deg, #ed6c02, #ffb74d); }
+.qs-card.purple::before { background: linear-gradient(180deg, #00838f, #00acc1); }
+
+.qs-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.qs-card.green  .qs-icon { background: #e3f2fd; }
+.qs-card.blue   .qs-icon { background: #e1f5fe; }
+.qs-card.amber  .qs-icon { background: #fff3e0; }
+.qs-card.purple .qs-icon { background: #e0f7fa; }
+
+.qs-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.qs-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+}
+
+.qs-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5f6368;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* ---------- Modern Section Headers ---------- */
+.dash-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin: 28px 0 14px;
+}
+
+.dash-section-title::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, #0d47a1, #00acc1);
+  border-radius: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .daily-score-bar { flex-direction: column; align-items: flex-start; }
+  .score-bar-right { width: 100%; justify-content: space-around; }
+  .match-grid { grid-template-columns: 1fr; }
+
+  .dash-hero { padding: 20px 18px; }
+  .dash-hero-avatar { width: 50px; height: 50px; font-size: 1.3rem; }
+  .dash-hero-text h2 { font-size: 1.25rem; }
+  .dash-hero-badge { padding: 8px 14px; font-size: 0.8rem; }
+  .quick-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .qs-card { padding: 14px 12px; gap: 10px; }
+  .qs-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+  .qs-value { font-size: 1.35rem; }
+  .qs-label { font-size: 0.65rem; }
+}
