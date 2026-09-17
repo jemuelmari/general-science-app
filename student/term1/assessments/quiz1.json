@@ -1,0 +1,127 @@
+{
+  "title": "Quiz 1 — Physics in Real Life & Motion",
+  "coverage": "Weeks 1–2",
+  "items": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Which area of daily life is MOST improved by understanding motion and forces?",
+      "options": ["Transportation and sports", "Cooking rice", "Reading books", "Painting walls"],
+      "correct": "Transportation and sports"
+    },
+    {
+      "id": "q2",
+      "text": "Which of the following BEST describes translational motion?",
+      "options": ["An object moves from one point to another without rotating", "An object spins around a fixed axis", "An object vibrates in place", "An object stays at rest"],
+      "correct": "An object moves from one point to another without rotating"
+    },
+    {
+      "id": "q3",
+      "text": "Which of the following is an example of PURELY rotational motion?",
+      "options": ["A spinning top on a table", "A car driving forward", "A person walking uphill", "An elevator moving up"],
+      "correct": "A spinning top on a table"
+    },
+    {
+      "id": "q4",
+      "text": "Which quantity is measured in rad/s?",
+      "options": ["Angular velocity", "Linear velocity", "Linear acceleration", "Angular displacement"],
+      "correct": "Angular velocity"
+    },
+    {
+      "id": "q5",
+      "text": "In the equation v = r × ω, what does 'r' represent?",
+      "options": ["The radius (distance from the axis of rotation)", "The rotational speed in rpm", "The total mass of the object", "The friction coefficient"],
+      "correct": "The radius (distance from the axis of rotation)"
+    },
+    {
+      "id": "q6",
+      "text": "A wheel of radius 0.5 m rotates with angular velocity 4 rad/s. What is the linear velocity of a point on the rim?",
+      "options": ["2 m/s", "0.125 m/s", "4.5 m/s", "8 m/s"],
+      "correct": "2 m/s"
+    },
+    {
+      "id": "q7",
+      "text": "Why does the tip of a windmill blade move faster than the base?",
+      "options": ["Because points farther from the axis have greater linear velocity (v = r × ω)", "Because the tip is lighter", "Because the tip has less friction", "Because the tip is colder"],
+      "correct": "Because points farther from the axis have greater linear velocity (v = r × ω)"
+    },
+    {
+      "id": "q8",
+      "text": "Which physical quantity determines the pitch of a sound?",
+      "options": ["Frequency", "Amplitude", "Wavelength", "Speed"],
+      "correct": "Frequency"
+    },
+    {
+      "id": "q9",
+      "text": "A ball rolling down a ramp without slipping demonstrates which combination of motion types?",
+      "options": ["Both translational and rotational", "Only translational", "Only rotational", "No motion"],
+      "correct": "Both translational and rotational"
+    },
+    {
+      "id": "q10",
+      "text": "Which of the following is NOT a way physics improves daily life?",
+      "options": ["Increasing gravitational pull", "Making transportation safer", "Improving medical imaging", "Increasing work productivity"],
+      "correct": "Increasing gravitational pull"
+    },
+    {
+      "id": "q11",
+      "text": "Which of the following best represents a lever in action?",
+      "options": ["A crowbar prying a nail", "A ramp loading boxes onto a truck", "A flag being raised on a flagpole", "A doorknob turning"],
+      "correct": "A crowbar prying a nail"
+    },
+    {
+      "id": "q12",
+      "text": "What type of quantity is angular displacement measured in?",
+      "options": ["Radians", "Meters", "Meters per second", "Newtons"],
+      "correct": "Radians"
+    },
+    {
+      "id": "q13",
+      "text": "In one complete rotation, the angular displacement of the object is:",
+      "options": ["2π radians", "π radians", "1 radian", "Zero"],
+      "correct": "2π radians"
+    },
+    {
+      "id": "q14",
+      "text": "Which of the following correctly pairs a linear and its angular counterpart?",
+      "options": ["Velocity (m/s) ↔ Angular velocity (rad/s)", "Displacement (m) ↔ Angular velocity (rad/s)", "Acceleration (m/s²) ↔ Angular displacement (rad)", "Velocity (m/s) ↔ Angular displacement (rad)"],
+      "correct": "Velocity (m/s) ↔ Angular velocity (rad/s)"
+    },
+    {
+      "id": "q15",
+      "text": "A wheel of radius 0.4 m rotates with angular velocity 5 rad/s. What is the linear velocity at the rim?",
+      "options": ["2 m/s", "0.08 m/s", "5.4 m/s", "12.5 m/s"],
+      "correct": "2 m/s"
+    },
+    {
+      "id": "q16",
+      "text": "Which observation BEST shows physics improving safety in daily life?",
+      "options": ["A car's airbag reducing impact force during a crash", "A television playing a movie", "A refrigerator keeping food cold", "A fan circulating air"],
+      "correct": "A car's airbag reducing impact force during a crash"
+    },
+    {
+      "id": "q17",
+      "text": "What does the equation d = r × θ relate?",
+      "options": ["Linear displacement to angular displacement", "Speed to velocity", "Mass to force", "Pressure to area"],
+      "correct": "Linear displacement to angular displacement"
+    },
+    {
+      "id": "q18",
+      "text": "Which of the following is the BEST example of physics in navigation?",
+      "options": ["GPS satellites using radio waves to find locations", "A cook using a recipe", "A teacher checking attendance", "A student reading a book"],
+      "correct": "GPS satellites using radio waves to find locations"
+    },
+    {
+      "id": "q19",
+      "text": "You feel pushed forward when a jeepney suddenly brakes. Which physics principle explains this?",
+      "options": ["Newton's First Law of Motion (inertia)", "Newton's Third Law", "Law of Refraction", "Law of Conservation of Energy"],
+      "correct": "Newton's First Law of Motion (inertia)"
+    },
+    {
+      "id": "q20",
+      "text": "Why does a longer wrench loosen a tight bolt more easily than a shorter one?",
+      "options": ["It increases torque by increasing the lever arm distance", "It is heavier", "It absorbs more friction", "It uses less electricity"],
+      "correct": "It increases torque by increasing the lever arm distance"
+    }
+  ]
+}
