@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+  <style>
+    /* Login page modern styles */
+    .login-hero {
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
+      color: #fff;
+      padding: 40px 24px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(13, 71, 161, 0.25);
+      text-align: center;
+    }
+
+    .login-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .login-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .login-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-hero h2 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .login-hero p {
+      opacity: 0.92;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .login-hero-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Modern tabs */
+    .login-tabs {
+      display: flex;
+      gap: 4px;
+      background: #f5f7fa;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .login-tab {
+      flex: 1;
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #5f6368;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .login-tab:hover {
+      color: #0d47a1;
+      background: rgba(13, 71, 161, 0.05);
+    }
+
+    .login-tab.active {
+      background: #fff;
+      color: #0d47a1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Form groups */
+    .login-form-group {
+      margin-bottom: 18px;
+    }
+
+    .login-form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #37474f;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .login-form-group input,
+    .login-form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      transition: all 0.15s ease;
+    }
+
+    .login-form-group input:focus,
+    .login-form-group select:focus {
+      outline: none;
+      border-color: #0d47a1;
+      box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
+    }
+
+    .login-form-group .hint {
+      font-size: 0.72rem;
+      color: #78909c;
+      margin-top: 4px;
+    }
+
+    /* Required asterisk */
+    .req {
+      color: #c62828;
+      margin-left: 2px;
+    }
+
+    /* Consent checkbox */
+    .consent-box {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 14px;
+      background: #f5f7fa;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 0.85rem;
+      color: #546e7a;
+      line-height: 1.5;
+    }
+
+    .consent-box input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #0d47a1;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Primary button */
+    .login-btn {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #0d47a1, #1565c0);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Saved users cards */
+    .saved-user-card {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .saved-user-card:hover {
+      border-color: #0d47a1;
+      box-shadow: 0 4px 12px rgba(13, 71, 161, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔬 Student Login</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:540px;padding-top:32px;padding-bottom:64px;">
+
+    <!-- Hero -->
+    <div class="login-hero">
+      <div class="login-hero-content">
+        <span class="login-hero-icon">🎓</span>
+        <h2>Welcome Back!</h2>
+        <p>Log in with your LRN to continue learning</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="login-tabs">
+      <button class="login-tab active" data-tab="login">🔑 Log In</button>
+      <button class="login-tab" data-tab="register">📝 New Student</button>
+      <button class="login-tab" data-tab="saved">👥 Saved Users</button>
+    </div>
+
+    <!-- LOGIN TAB -->
+    <div id="tab-login" class="card">
+      <div class="card-header">
+        <span class="card-title">🔑 Enter your LRN</span>
+      </div>
+      <form id="login-form">
+        <div class="login-form-group">
+          <label for="login-lrn">LRN (12 digits) <span class="req">*</span></label>
+          <input type="text" id="login-lrn" inputmode="numeric"
+                 maxlength="14" placeholder="1234-5678-9012" autocomplete="off" required />
+          <div class="hint">Your Learner Reference Number</div>
+        </div>
+        <button type="submit" class="login-btn">Log In →</button>
+        <div id="login-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+
+    <!-- REGISTER TAB -->
+    <div id="tab-register" class="card hidden">
+      <div class="card-header">
+        <span class="card-title">📝 Create Your Profile</span>
+      </div>
+      <form id="register-form">
+        <div class="login-form-group">
+          <label for="reg-lastname">Last Name <span class="req">*</span></label>
+          <input type="text" id="reg-lastname" required autocomplete="off"
+                 placeholder="DELA CRUZ" style="text-transform:uppercase;" />
+          <div class="hint">Will be saved in ALL CAPS</div>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-firstname">First Name <span class="req">*</span></label>
+          <input type="text" id="reg-firstname" required autocomplete="off" placeholder="Juan" />
+          <div class="hint">Will be saved in Title Case</div>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-middlename">Middle Name</label>
+          <input type="text" id="reg-middlename" autocomplete="off" placeholder="Santos" />
+          <div class="hint">Optional · Title Case</div>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-sex">Sex <span class="req">*</span></label>
+          <select id="reg-sex" required>
+            <option value="">— Select —</option>
+            <option value="Female">♀ Female</option>
+            <option value="Male">♂ Male</option>
+          </select>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-lrn">LRN (12 digits) <span class="req">*</span></label>
+          <input type="text" id="reg-lrn" inputmode="numeric"
+                 maxlength="14" placeholder="1234-5678-9012" required autocomplete="off" />
+          <div class="hint">Exactly 12 digits, numeric only</div>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-grade">Grade Level <span class="req">*</span></label>
+          <select id="reg-grade" required>
+            <option value="">— Select —</option>
+            <option value="11" selected>Grade 11</option>
+          </select>
+        </div>
+        <div class="login-form-group">
+          <label for="reg-section">Section <span class="req">*</span></label>
+          <select id="reg-section" required>
+            <option value="">— Select —</option>
+            <option value="ACADEMIC A" selected>ACADEMIC A</option>
+            <option value="ACADEMIC B">ACADEMIC B</option>
+          </select>
+        </div>
+
+        <label class="consent-box">
+          <input type="checkbox" id="reg-consent" required />
+          <span>I agree that my progress may be saved locally on this device and shared with my teacher via sync code or backup file.</span>
+        </label>
+
+        <button type="submit" class="login-btn">Create Profile →</button>
+        <div id="register-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+
+    <!-- SAVED USERS TAB -->
+    <div id="tab-saved" class="card hidden">
+      <div class="card-header">
+        <span class="card-title">👥 Saved Users on This Device</span>
+      </div>
+      <div id="saved-users-list"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/backup.js"></script>
+  <script src="../assets/js/auth.js"></script>
+</body>
+</html>
