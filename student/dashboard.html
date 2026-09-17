@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔬 Student Dashboard</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <a href="profile.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">👤 My Profile</a>
+        <span id="user-pill" class="badge badge-success" style="font-size:0.8rem;"></span>
+        <button id="btn-logout" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="dash-hero" id="dash-hero">
+      <div class="dash-hero-content">
+        <div class="dash-hero-left">
+          <div class="dash-hero-avatar" id="dash-avatar">?</div>
+          <div class="dash-hero-text">
+            <h2 id="greeting-name">Hello!</h2>
+            <div class="dash-hero-meta" id="greeting-meta"></div>
+          </div>
+        </div>
+        <div id="standing-badge"></div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">📊 Your Progress</div>
+    <div class="quick-stats-grid" id="quick-stats"></div>
+
+    <div class="dash-section-title">📚 Terms</div>
+    <div class="dashboard-grid" id="terms-grid"></div>
+
+    <div class="dash-section-title">🏆 Badges Earned</div>
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <span id="badge-total" class="badge badge-success">🏆 0 badges earned</span>
+        <span class="text-muted text-small" id="badge-week">This week: 0</span>
+      </div>
+      <div class="badge-gallery" id="badge-gallery"></div>
+    </div>
+
+    <div class="dash-section-title">📤 Sync & Backup</div>
+    <div class="card">
+      <p class="text-small text-muted" style="margin-bottom:16px;">
+        Send your progress to your teacher, or save a backup file you can upload on another device.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button id="btn-sync-code" class="btn btn-primary">🔑 Generate Sync Code</button>
+        <button id="btn-export-json" class="btn btn-accent">💾 Download Backup (JSON)</button>
+        <button id="btn-import-json" class="btn btn-outline">📥 Restore from Backup</button>
+        <input type="file" id="import-file" accept="application/json" class="hidden" />
+      </div>
+      <div id="sync-output" class="mt-lg"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/backup.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>
