@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Term 1 — Physics & Chemistry | General Science</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/student.css" />
+  <style>
+    .term-hero {
+      position: relative;
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 32px 28px;
+      margin-bottom: 28px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(13, 71, 161, 0.25);
+    }
+    .term-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .term-hero-content { position: relative; z-index: 1; }
+    .term-hero h2 { color: #fff; font-size: 1.8rem; margin: 0 0 6px; font-weight: 700; }
+    .term-hero p { opacity: 0.92; margin: 0; font-size: 0.95rem; }
+    .term-hero-stats {
+      display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .term-hero-stat {
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+    .term-hero-stat strong { font-size: 1.1rem; }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .week-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #0d47a1;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .week-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .week-card.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .week-card.complete {
+      border-left-color: #2e7d32;
+    }
+    .week-card.in-progress {
+      border-left-color: #ed6c02;
+    }
+    .week-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .week-number {
+      font-size: 0.75rem; font-weight: 700;
+      color: #0d47a1; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .week-status { font-size: 1.2rem; }
+    .week-title {
+      font-size: 1rem; font-weight: 600; color: #1a1a1a;
+      margin: 0 0 8px; line-height: 1.3;
+    }
+    .week-topic {
+      font-size: 0.8rem; color: #5f6368; margin: 0 0 10px;
+      line-height: 1.4;
+    }
+    .week-progress-bar {
+      height: 6px; background: #eceff1; border-radius: 999px; overflow: hidden;
+      margin: 10px 0 6px;
+    }
+    .week-progress-fill {
+      height: 100%; background: linear-gradient(90deg, #0d47a1, #00acc1);
+      border-radius: 999px; transition: width 0.4s ease;
+    }
+    .week-progress-text {
+      font-size: 0.72rem; color: #90a4ae; text-align: right;
+    }
+
+    .assessment-list { display: flex; flex-direction: column; gap: 12px; }
+    .assessment-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 18px; background: #fff; border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      border-left: 4px solid #1976d2;
+      transition: all 0.15s ease;
+      text-decoration: none; color: inherit;
+    }
+    .assessment-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .assessment-item.locked { opacity: 0.55; cursor: not-allowed; border-left-color: #90a4ae; }
+    .assessment-item.passed { border-left-color: #2e7d32; background: #f1f8f4; }
+    .assessment-info h4 { font-size: 0.95rem; margin: 0 0 2px; color: #1a1a1a; }
+    .assessment-info p { font-size: 0.78rem; color: #78909c; margin: 0; }
+    .assessment-badge {
+      font-size: 0.75rem; font-weight: 700; padding: 4px 12px;
+      border-radius: 999px; background: #e3f2fd; color: #0d47a1;
+    }
+    .assessment-badge.passed { background: #e8f5e9; color: #2e7d32; }
+    .assessment-badge.locked { background: #eceff1; color: #90a4ae; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔬 General Science — Term 1</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="term-hero">
+      <div class="term-hero-content">
+        <h2>⚛️ Term 1 — Physics & Chemistry</h2>
+        <p>Physics principles in everyday living, machines, light & sound, and chemistry of household products.</p>
+        <div class="term-hero-stats">
+          <div class="term-hero-stat">📅 <strong>10</strong> weeks</div>
+          <div class="term-hero-stat">📚 <strong>40</strong> lesson days</div>
+          <div class="term-hero-stat">📝 <strong>3</strong> quizzes</div>
+          <div class="term-hero-stat">🎯 <strong>3</strong> performance tasks</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">📅 Weekly Lessons</div>
+    <div class="week-grid" id="week-grid"></div>
+
+    <div class="dash-section-title">📝 Assessments</div>
+    <div class="assessment-list" id="assessment-list"></div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/activity-tracker.js"></script>
+  <script>
+    (function() {
+      'use strict';
+      const TERM = 'term1';
+
+      const user = Store.getCurrentUser();
+      if (!user) { window.location.replace('../login.html'); return; }
+
+      // Week titles
+      const weekTitles = {
+        1: 'Physics in Real Life — Foundations',
+        2: 'Linear vs Angular Motion',
+        3: 'Efficient Machines in Motion',
+        4: 'Hydraulics & Energy Management',
+        5: 'Properties of Light',
+        6: 'Properties of Sound',
+        7: 'Chemistry Discoveries — Louis Pasteur',
+        8: 'Chemistry of Household & Personal Care Products',
+        9: 'Applications & Synthesis',
+        10: 'Term Synthesis & Review'
+      };
+      const weekTopics = {
+        1: 'Physics concepts improve quality of life in household, health & safety, work, and leisure.',
+        2: 'Translational vs rotational motion; displacement, velocity, acceleration relations.',
+        3: 'Design, construct, and test simple and compound machines for efficiency.',
+        4: 'Pressure transmission in fluids; cross-sectional area and force multiplication.',
+        5: 'Properties of light waves in communications, medicine, entertainment.',
+        6: 'Properties of sound waves in navigation, medicine, entertainment.',
+        7: 'How Louis Pasteur combined chemistry and biology to prevent infection.',
+        8: 'Product label analysis; DTI, FDA, DENR guidelines.',
+        9: 'Synthesis of physics + chemistry applications.',
+        10: 'Cumulative review and term exam preparation.'
+      };
+
+      const progress = Store.getProgress(user.lrn);
+      const completed = progress[TERM]?.completed || [];
+
+      // Determine unlock logic — week N unlocks after week N-1 is complete
+      function isWeekUnlocked(w) {
+        if (w === 1) return true;
+        for (let d = 1; d <= 4; d++) {
+          if (!completed.includes(`${TERM}-w${w - 1}-d${d}`)) return false;
+        }
+        return true;
+      }
+
+      // Render week grid
+      const grid = document.getElementById('week-grid');
+      for (let w = 1; w <= 10; w++) {
+        const days = [1, 2, 3, 4].map((d) => completed.includes(`${TERM}-w${w}-d${d}`));
+        const doneCount = days.filter(Boolean).length;
+        const pct = (doneCount / 4) * 100;
+        const unlocked = isWeekUnlocked(w);
+        const complete = doneCount === 4;
+        const statusClass = complete ? 'complete' : (doneCount > 0 ? 'in-progress' : (unlocked ? '' : 'locked'));
+        const statusIcon = complete ? '✅' : (doneCount > 0 ? '📖' : (unlocked ? '▶️' : '🔒'));
+
+        const a = document.createElement(unlocked ? 'a' : 'div');
+        a.className = `week-card ${statusClass}`;
+        if (unlocked) a.href = `week${w}/index.html`;
+        a.innerHTML = `
+          <div class="week-header">
+            <span class="week-number">Week ${w}</span>
+            <span class="week-status">${statusIcon}</span>
+          </div>
+          <h3 class="week-title">${weekTitles[w]}</h3>
+          <p class="week-topic">${weekTopics[w]}</p>
+          <div class="week-progress-bar">
+            <div class="week-progress-fill" style="width:${pct}%;"></div>
+          </div>
+          <div class="week-progress-text">${doneCount}/4 days</div>
+        `;
+        grid.appendChild(a);
+      }
+
+      // Assessment list
+      const scores = Store.getScores(user.lrn);
+      const t1 = scores[TERM] || {};
+
+      const assessments = [
+        { id: 'quiz1', type: 'quizzes', title: 'Quiz 1', desc: 'Covers Weeks 1–2 · 20 items', week: 2 },
+        { id: 'st1',   type: 'st',      title: 'Summative Test 1', desc: 'Covers Weeks 1–4 · 30 items', week: 4 },
+        { id: 'pt1',   type: 'pt',      title: 'PT1 — Physics in My Daily Life', desc: 'Portfolio · Weeks 1–4', week: 4 },
+        { id: 'quiz2', type: 'quizzes', title: 'Quiz 2', desc: 'Covers Weeks 5–6 · 20 items', week: 6 },
+        { id: 'st2',   type: 'st',      title: 'Summative Test 2', desc: 'Covers Weeks 5–8 · 30 items', week: 8 },
+        { id: 'pt2',   type: 'pt',      title: 'PT2 — Model Filipino House', desc: 'Design project · Weeks 4–8', week: 8 },
+        { id: 'quiz3', type: 'quizzes', title: 'Quiz 3', desc: 'Covers Weeks 9 · 20 items', week: 9 },
+        { id: 'pt3',   type: 'pt',      title: 'PT3 — Chemistry in My Home', desc: 'Investigation report · Weeks 8–10', week: 10 },
+        { id: 'te',    type: 'te',      title: 'Term Exam', desc: 'Covers all term topics · 60 items', week: 10 }
+      ];
+
+      const list = document.getElementById('assessment-list');
+      assessments.forEach((a) => {
+        const record = t1[a.type]?.[a.id] || (a.type === 'te' ? t1.te : null);
+        const passed = record?.passed === true || (record?.percent >= 75);
+        const locked = !isWeekUnlocked(a.week);
+        const badge = passed ? '✅ Passed' : (record ? `${record.percent}%` : (locked ? '🔒 Locked' : '📝 Available'));
+
+        const link = document.createElement(locked ? 'div' : 'a');
+        link.className = `assessment-item ${locked ? 'locked' : ''} ${passed ? 'passed' : ''}`;
+        if (!locked) {
+          const base = a.type === 'pt' ? 'assessments/pt' : (a.type === 'te' ? 'assessments' : 'assessments');
+          link.href = `${base}/${a.id}.html`;
+        }
+        link.innerHTML = `
+          <div class="assessment-info">
+            <h4>${a.title}</h4>
+            <p>${a.desc}</p>
+          </div>
+          <span class="assessment-badge ${passed ? 'passed' : (locked ? 'locked' : '')}">${badge}</span>
+        `;
+        list.appendChild(link);
+      });
+    })();
+  </script>
+</body>
+</html>
