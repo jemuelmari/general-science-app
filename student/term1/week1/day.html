@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Lesson — General Science</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+  <link rel="stylesheet" href="../../../assets/css/quiz.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1 id="header-title">📖 Daily Lesson</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Week</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:16px;padding-bottom:64px;">
+
+    <!-- Daily Score Bar -->
+    <div class="daily-score-bar" id="daily-score-bar"></div>
+
+    <!-- Lesson Content -->
+    <div class="card">
+      <div id="lesson-content" class="lesson-content">
+        <div style="text-align:center;padding:40px;">
+          <div style="font-size:2rem;">⏳</div>
+          <p class="text-muted">Loading lesson…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activities -->
+    <div id="activities-container">
+
+      <!-- Activity 1 -->
+      <div class="activity-card" id="activity-1-card">
+        <div class="activity-header">
+          <span class="activity-title">🔗 Activity 1 — Match the Pairs</span>
+        </div>
+        <div id="activity-1"></div>
+      </div>
+
+      <!-- Activity 2 -->
+      <div class="activity-card" id="activity-2-card">
+        <div class="activity-header">
+          <span class="activity-title">🎯 Activity 2 — Scenario Challenge</span>
+        </div>
+        <div id="activity-2"></div>
+      </div>
+
+      <!-- Formative Check -->
+      <div class="activity-card" id="formative-card">
+        <div class="activity-header">
+          <span class="activity-title">🔐 Formative Check — Escape the Lab</span>
+        </div>
+        <div id="formative"></div>
+      </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+      <a id="nav-prev" href="index.html" class="btn btn-outline" style="flex:1;">← Back to Week</a>
+      <a id="nav-next" href="index.html" class="btn btn-primary" style="flex:1;">Next Day →</a>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../../../config.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script src="../../../assets/js/security.js"></script>
+  <script src="../../../assets/js/lesson-engine.js"></script>
+  <script src="../../../assets/js/activity-gate.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const TERM = 'term1';
+      const WEEK = 1;
+      const params = new URLSearchParams(window.location.search);
+      const DAY = parseInt(params.get('d') || '1', 10);
+
+      const user = Store.getCurrentUser();
+      if (!user) { window.location.replace('../../login.html'); return; }
+
+      // Update header
+      document.title = `Week ${WEEK} · Day ${DAY} — General Science`;
+      document.getElementById('header-title').textContent = `📖 Week ${WEEK} · Day ${DAY}`;
+
+      // Load lesson JSON
+      fetch(`week${WEEK}.json`)
+        .then((r) => {
+          if (!r.ok) throw new Error('Failed to load lesson data');
+          return r.json();
+        })
+        .then((data) => {
+          const day = data.days?.find((d) => d.day === DAY);
+          if (!day) throw new Error(`Day ${DAY} not found in week data`);
+
+          renderLesson(day, data);
+        })
+        .catch((err) => {
+          console.error('[Day] Load error:', err);
+          document.getElementById('lesson-content').innerHTML = `
+            <div style="text-align:center;padding:40px;">
+              <div style="font-size:2rem;">⚠️</div>
+              <p style="color:#c62828;font-weight:600;">Failed to load lesson</p>
+              <p class="text-muted text-small">${err.message}</p>
+              <button onclick="location.reload()" class="btn btn-primary mt-md">🔄 Retry</button>
+            </div>
+          `;
+        });
+
+      function renderLesson(day, weekData) {
+        // Lesson HTML
+        document.getElementById('lesson-content').innerHTML = day.content || '<p>No content available.</p>';
+
+        // Init lesson engine
+        Lesson.init({
+          term: TERM,
+          week: WEEK,
+          day: DAY,
+          title: day.title || `Day ${DAY}`,
+          maxPoints: 300
+        });
+
+        // Register activities
+        if (day.activities?.match) {
+          Lesson.renderMatchGame('activity-1', {
+            pairs: day.activities.match,
+            pointsCorrect: 10,
+            pointsWrong: -3,
+            bonusFast: 15,
+            badgeId: day.badge?.id || 'physicist',
+            badgeName: day.badge?.name || 'Physicist',
+            badgeIcon: day.badge?.icon || '⚛️'
+          });
+        } else {
+          document.getElementById('activity-1-card').style.display = 'none';
+        }
+
+        if (day.activities?.scenario) {
+          Lesson.renderScenarioGame('activity-2', {
+            scenarios: day.activities.scenario,
+            pointsCorrect: 8,
+            bonusFast: 3,
+            badgeId: (day.badge?.id || 'physicist') + '-scenario',
+            badgeName: 'Scenario Solver',
+            badgeIcon: '🎯'
+          });
+        } else {
+          document.getElementById('activity-2-card').style.display = 'none';
+        }
+
+        if (day.activities?.escape) {
+          Lesson.renderEscapeRoom('formative', {
+            questions: day.activities.escape,
+            lives: 3,
+            badgeId: (day.badge?.id || 'physicist') + '-escape',
+            badgeName: 'Escape Master',
+            badgeIcon: '🔐'
+          });
+        } else {
+          document.getElementById('formative-card').style.display = 'none';
+        }
+
+        // Nav
+        const prevBtn = document.getElementById('nav-prev');
+        const nextBtn = document.getElementById('nav-next');
+
+        if (DAY > 1) {
+          prevBtn.href = `day.html?d=${DAY - 1}`;
+          prevBtn.textContent = `← Day ${DAY - 1}`;
+        }
+
+        if (DAY < 4) {
+          nextBtn.href = `day.html?d=${DAY + 1}`;
+          nextBtn.textContent = `Day ${DAY + 1} →`;
+        } else {
+          nextBtn.href = 'index.html';
+          nextBtn.textContent = '✓ Back to Week';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
