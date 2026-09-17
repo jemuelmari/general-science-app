@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 1 — Physics in Real Life — Foundations | General Science</title>
+  <title>Week 7 — Chemistry Discoveries — Louis Pasteur | General Science</title>
   <link rel="stylesheet" href="../../../assets/css/main.css" />
   <link rel="stylesheet" href="../../../assets/css/student.css" />
   <style>
@@ -43,7 +43,7 @@
   <header class="app-header">
     <div class="container flex-between">
       <div>
-        <h1>🔬 Term 1 · Week 1</h1>
+        <h1>🔬 Term 1 · Week 7</h1>
         <span class="version">v1.0.0</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 1</a>
@@ -54,9 +54,9 @@
 
     <div class="week-hero">
       <div class="week-hero-content">
-        <div class="week-hero-label">Week 1 of 10</div>
-        <h2>⚛️ Physics in Real Life — Foundations</h2>
-        <p>Identify how physics concepts improve quality of life in household, health & safety, work productivity, and leisure.</p>
+        <div class="week-hero-label">Week 7 of 10</div>
+        <h2>🧫 Chemistry Discoveries — Louis Pasteur</h2>
+        <p>Report how Louis Pasteur combined chemistry and biology to understand disease and prevent infection.</p>
         <div class="week-hero-progress"><div class="week-hero-progress-fill" id="hero-progress" style="width:0%;"></div></div>
         <p style="margin-top:8px;font-size:0.78rem;opacity:0.85;"><span id="hero-progress-text">0/4 days completed</span></p>
       </div>
@@ -92,46 +92,46 @@
     (function() {
       'use strict';
       const TERM = 'term1';
-      const WEEK = 1;
+      const WEEK = 7;
 
       const user = Store.getCurrentUser();
       if (!user) { window.location.replace('../../login.html'); return; }
 
       const weekMeta = {
-          "title": "Physics in Real Life \u2014 Foundations",
+          "title": "Chemistry Discoveries \u2014 Louis Pasteur",
           "competencies": [
                     {
-                              "code": "GENSCI-11-T1-W1-C1",
-                              "text": "Identify how physics concepts improve quality of life in household, health & safety, work productivity, and leisure."
+                              "code": "GENSCI-11-T1-W7-C1",
+                              "text": "Report how Louis Pasteur combined chemistry and biology to understand disease and prevent infection."
                     }
           ],
           "days": [
                     {
                               "day": 1,
                               "type": "lesson",
-                              "title": "Introduction to Physics in Daily Life",
-                              "desc": "Overview of physics as a way of understanding the world.",
+                              "title": "Louis Pasteur and Germ Theory",
+                              "desc": "Learn how Pasteur linked chemistry to disease prevention.",
                               "icon": "\ud83d\udcd6"
                     },
                     {
                               "day": 2,
                               "type": "activity1",
-                              "title": "Match Game \u2014 Physics Applications",
-                              "desc": "Match physics concepts to real-world applications.",
+                              "title": "Match Game \u2014 Pasteur's Contributions",
+                              "desc": "Match Pasteur's discoveries to their impact.",
                               "icon": "\ud83d\udd17"
                     },
                     {
                               "day": 3,
                               "type": "activity2",
-                              "title": "Scenario Challenge \u2014 Life Areas",
-                              "desc": "Choose the best physics reasoning for daily scenarios.",
+                              "title": "Scenario Challenge \u2014 Chemistry Meets Biology",
+                              "desc": "Apply germ theory to modern health scenarios.",
                               "icon": "\ud83c\udfaf"
                     },
                     {
                               "day": 4,
                               "type": "formative",
-                              "title": "Formative Check \u2014 Escape the Lab",
-                              "desc": "Prove your mastery by unlocking all keys.",
+                              "title": "Formative Check \u2014 Escape the Pasteur Lab",
+                              "desc": "Prove your mastery \u2014 6 keys, 3 lives.",
                               "icon": "\ud83d\udd10"
                     }
           ]

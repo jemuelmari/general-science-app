@@ -1,84 +1,80 @@
 {
-  "term": "term1",
-  "week": 2,
-  "title": "Linear vs Angular Motion",
+  "term": "term2",
+  "week": 7,
+  "title": "Plant Organ Systems",
   "competencies": [
     {
-      "code": "GENSCI-11-T1-W2-C1",
-      "text": "Differentiate translational motion from rotational motion."
-    },
-    {
-      "code": "GENSCI-11-T1-W2-C2",
-      "text": "Relate linear quantities (displacement, velocity, acceleration) to angular quantities."
+      "code": "GENSCI-11-T2-W7-C1",
+      "text": "Explain plant organ interaction for material transport."
     }
   ],
   "badge": {
-    "id": "motion-master",
-    "name": "Motion Master",
-    "icon": "🔄"
+    "id": "botanist",
+    "name": "Botanist",
+    "icon": "🌿"
   },
   "days": [
     {
       "day": 1,
       "type": "lesson",
-      "title": "Translational vs Rotational Motion",
+      "title": "Plant Organs Working Together",
       "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
       },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn the two ways objects move and how linear ↔ angular relate.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Translational vs Rotational Motion</strong> will be added here.</p>"
+      "content": "<h3>🎯 Learning Target</h3><p>Learn how roots, stems, and leaves work together.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Plant Organs Working Together</strong> will be added here.</p>"
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Linear & Angular Quantities",
+      "title": "Match Game — Plant Tissues",
       "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
       },
-      "content": "<h3>🎯 Learning Target</h3><p>Match linear quantities to angular counterparts.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Linear & Angular Quantities</strong> will be added here.</p>",
+      "content": "<h3>🎯 Learning Target</h3><p>Match plant tissues to their transport roles.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Plant Tissues</strong> will be added here.</p>",
       "activities": {
         "match": [
           {
             "key": "k1",
-            "left": "Concept 1 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 1 — Match Game — Plant Tissues",
             "right": "Definition 1"
           },
           {
             "key": "k2",
-            "left": "Concept 2 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 2 — Match Game — Plant Tissues",
             "right": "Definition 2"
           },
           {
             "key": "k3",
-            "left": "Concept 3 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 3 — Match Game — Plant Tissues",
             "right": "Definition 3"
           },
           {
             "key": "k4",
-            "left": "Concept 4 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 4 — Match Game — Plant Tissues",
             "right": "Definition 4"
           },
           {
             "key": "k5",
-            "left": "Concept 5 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 5 — Match Game — Plant Tissues",
             "right": "Definition 5"
           },
           {
             "key": "k6",
-            "left": "Concept 6 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 6 — Match Game — Plant Tissues",
             "right": "Definition 6"
           },
           {
             "key": "k7",
-            "left": "Concept 7 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 7 — Match Game — Plant Tissues",
             "right": "Definition 7"
           },
           {
             "key": "k8",
-            "left": "Concept 8 — Match Game — Linear & Angular Quantities",
+            "left": "Concept 8 — Match Game — Plant Tissues",
             "right": "Definition 8"
           }
         ]
@@ -87,17 +83,17 @@
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Motion in Real Life",
+      "title": "Scenario Challenge — Transport in Plants",
       "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
       },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply motion concepts to real-life scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Motion in Real Life</strong> will be added here.</p>",
+      "content": "<h3>🎯 Learning Target</h3><p>Analyze plant transport in real conditions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Transport in Plants</strong> will be added here.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Motion in Real Life",
+            "text": "Scenario 1: Scenario Challenge — Transport in Plants",
             "choices": [
               {
                 "label": "A) Wrong answer 1",
@@ -118,7 +114,7 @@
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Motion in Real Life",
+            "text": "Scenario 2: Scenario Challenge — Transport in Plants",
             "choices": [
               {
                 "label": "A) Wrong answer 2",
@@ -139,7 +135,7 @@
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Motion in Real Life",
+            "text": "Scenario 3: Scenario Challenge — Transport in Plants",
             "choices": [
               {
                 "label": "A) Wrong answer 3",
@@ -160,7 +156,7 @@
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Motion in Real Life",
+            "text": "Scenario 4: Scenario Challenge — Transport in Plants",
             "choices": [
               {
                 "label": "A) Wrong answer 4",
@@ -181,7 +177,7 @@
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Motion in Real Life",
+            "text": "Scenario 5: Scenario Challenge — Transport in Plants",
             "choices": [
               {
                 "label": "A) Wrong answer 5",
@@ -207,17 +203,17 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Motion Lab",
+      "title": "Formative Check — Escape the Botany Lab",
       "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
       },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Motion Lab</strong> will be added here.</p>",
+      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Botany Lab</strong> will be added here.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 1 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 1",
@@ -238,7 +234,7 @@
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 2 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 2",
@@ -259,7 +255,7 @@
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 3 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 3",
@@ -280,7 +276,7 @@
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 4 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 4",
@@ -301,7 +297,7 @@
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 5 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 5",
@@ -322,7 +318,7 @@
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Motion Lab",
+            "text": "Formative question 6 for Formative Check — Escape the Botany Lab",
             "choices": [
               {
                 "label": "A) Wrong 6",

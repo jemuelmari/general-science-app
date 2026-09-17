@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 1 — Physics in Real Life — Foundations | General Science</title>
+  <title>Week 3 — Efficient Machines in Motion | General Science</title>
   <link rel="stylesheet" href="../../../assets/css/main.css" />
   <link rel="stylesheet" href="../../../assets/css/student.css" />
   <style>
@@ -43,7 +43,7 @@
   <header class="app-header">
     <div class="container flex-between">
       <div>
-        <h1>🔬 Term 1 · Week 1</h1>
+        <h1>🔬 Term 1 · Week 3</h1>
         <span class="version">v1.0.0</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 1</a>
@@ -54,9 +54,9 @@
 
     <div class="week-hero">
       <div class="week-hero-content">
-        <div class="week-hero-label">Week 1 of 10</div>
-        <h2>⚛️ Physics in Real Life — Foundations</h2>
-        <p>Identify how physics concepts improve quality of life in household, health & safety, work productivity, and leisure.</p>
+        <div class="week-hero-label">Week 3 of 10</div>
+        <h2>⚙️ Efficient Machines in Motion</h2>
+        <p>Design, construct, and test a simple or compound machine.</p>
         <div class="week-hero-progress"><div class="week-hero-progress-fill" id="hero-progress" style="width:0%;"></div></div>
         <p style="margin-top:8px;font-size:0.78rem;opacity:0.85;"><span id="hero-progress-text">0/4 days completed</span></p>
       </div>
@@ -92,46 +92,50 @@
     (function() {
       'use strict';
       const TERM = 'term1';
-      const WEEK = 1;
+      const WEEK = 3;
 
       const user = Store.getCurrentUser();
       if (!user) { window.location.replace('../../login.html'); return; }
 
       const weekMeta = {
-          "title": "Physics in Real Life \u2014 Foundations",
+          "title": "Efficient Machines in Motion",
           "competencies": [
                     {
-                              "code": "GENSCI-11-T1-W1-C1",
-                              "text": "Identify how physics concepts improve quality of life in household, health & safety, work productivity, and leisure."
+                              "code": "GENSCI-11-T1-W3-C1",
+                              "text": "Design, construct, and test a simple or compound machine."
+                    },
+                    {
+                              "code": "GENSCI-11-T1-W3-C2",
+                              "text": "Apply torque, angular motion, and radius to improve machine efficiency."
                     }
           ],
           "days": [
                     {
                               "day": 1,
                               "type": "lesson",
-                              "title": "Introduction to Physics in Daily Life",
-                              "desc": "Overview of physics as a way of understanding the world.",
+                              "title": "Simple & Compound Machines",
+                              "desc": "Explore levers, pulleys, gears, and their combinations.",
                               "icon": "\ud83d\udcd6"
                     },
                     {
                               "day": 2,
                               "type": "activity1",
-                              "title": "Match Game \u2014 Physics Applications",
-                              "desc": "Match physics concepts to real-world applications.",
+                              "title": "Match Game \u2014 Machine Types",
+                              "desc": "Match each machine type to its function.",
                               "icon": "\ud83d\udd17"
                     },
                     {
                               "day": 3,
                               "type": "activity2",
-                              "title": "Scenario Challenge \u2014 Life Areas",
-                              "desc": "Choose the best physics reasoning for daily scenarios.",
+                              "title": "Scenario Challenge \u2014 Torque & Efficiency",
+                              "desc": "Solve efficiency problems using torque concepts.",
                               "icon": "\ud83c\udfaf"
                     },
                     {
                               "day": 4,
                               "type": "formative",
-                              "title": "Formative Check \u2014 Escape the Lab",
-                              "desc": "Prove your mastery by unlocking all keys.",
+                              "title": "Formative Check \u2014 Escape the Machine Shop",
+                              "desc": "Prove your mastery \u2014 6 keys, 3 lives.",
                               "icon": "\ud83d\udd10"
                     }
           ]
