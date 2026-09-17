@@ -1,0 +1,130 @@
+/* ============================================================
+   quiz.css — Quiz / ST / TE styles
+   Version: 1.0.0
+   Theme: Science Blue
+   ============================================================ */
+
+/* Prevent text selection during assessments */
+.quiz-active {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+/* Print protection */
+@media print {
+  body.quiz-active * { display: none !important; }
+  body.quiz-active::after {
+    content: "Printing is disabled during assessments.";
+    font-size: 20px;
+    display: block;
+    color: #c62828;
+    font-weight: 700;
+    text-align: center;
+    padding: 40px;
+  }
+}
+
+/* Quiz option hover */
+.quiz-option:hover {
+  border-color: var(--color-primary) !important;
+  background: var(--color-primary-light) !important;
+}
+
+/* Radio input visual */
+.quiz-option input[type="radio"] {
+  accent-color: var(--color-primary);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Quiz navigation dots */
+.quiz-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.quiz-dot.current {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.quiz-dot.answered {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.quiz-dot.unanswered {
+  background: var(--color-border);
+  color: #666;
+}
+
+/* Autosave indicator */
+.autosave-indicator {
+  font-size: 0.75rem;
+  color: var(--color-success);
+  text-align: right;
+  min-height: 16px;
+  transition: opacity 0.3s ease;
+}
+
+/* Result cards */
+.quiz-result-card {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.quiz-result-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.quiz-result-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 8px 0 12px;
+}
+
+.quiz-result-title.passed { color: var(--color-success); }
+.quiz-result-title.failed { color: var(--color-warning); }
+
+.quiz-result-message {
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+/* Result stat row */
+.quiz-result-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+/* Locked screen */
+.quiz-locked {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.quiz-locked .lock-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .quiz-result-title { font-size: 1.25rem; }
+  .quiz-dot { width: 20px; height: 20px; font-size: 0.65rem; }
+}
