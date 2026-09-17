@@ -1,1 +1,105 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment — General Science</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+  <link rel="stylesheet" href="../../../assets/css/quiz.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1 id="header-title">📝 Assessment</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 1</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div id="quiz-root"></div>
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../../../config.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script src="../../../assets/js/security.js"></script>
+  <script src="../../../assets/js/transmutation.js"></script>
+  <script src="../../../assets/js/quiz-engine.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      // Auto-detect assessment from URL filename
+      // e.g., quiz1.html → quiz1, st1.html → st1, te.html → te
+      const filename = window.location.pathname.split('/').pop().replace('.html', '');
+      const TERM = 'term1';
+
+      // Metadata per assessment
+      const META = {
+        quiz1: { title: 'Quiz 1', type: 'quizzes', id: 'quiz1', timeLimit: 20 * 60, file: 'quiz1.json' },
+        quiz2: { title: 'Quiz 2', type: 'quizzes', id: 'quiz2', timeLimit: 20 * 60, file: 'quiz2.json' },
+        quiz3: { title: 'Quiz 3', type: 'quizzes', id: 'quiz3', timeLimit: 20 * 60, file: 'quiz3.json' },
+        st1:   { title: 'Summative Test 1', type: 'st',      id: 'st1',   timeLimit: 45 * 60, file: 'st1.json'   },
+        st2:   { title: 'Summative Test 2', type: 'st',      id: 'st2',   timeLimit: 45 * 60, file: 'st2.json'   },
+        te:    { title: 'Term Exam',         type: 'te',      id: 'te',    timeLimit: 60 * 60, file: 'te.json'    }
+      };
+
+      const meta = META[filename];
+      if (!meta) {
+        document.getElementById('quiz-root').innerHTML = `
+          <div class="card" style="text-align:center;padding:40px;">
+            <div style="font-size:2rem;">⚠️</div>
+            <h2 style="color:#c62828;">Assessment not found</h2>
+            <p class="text-muted">The assessment file <code>${filename}.html</code> is not recognized.</p>
+            <a href="../index.html" class="btn btn-primary mt-md">← Back to Term 1</a>
+          </div>
+        `;
+        return;
+      }
+
+      document.title = `${meta.title} — General Science`;
+      document.getElementById('header-title').textContent = `📝 ${meta.title}`;
+
+      fetch(meta.file)
+        .then((r) => {
+          if (!r.ok) throw new Error(`Failed to load ${meta.file}`);
+          return r.json();
+        })
+        .then((data) => {
+          QuizEngine.init({
+            term: TERM,
+            type: meta.type,
+            id: meta.id,
+            title: meta.title,
+            questions: data.questions,
+            timeLimit: meta.timeLimit,
+            passScore: 75,
+            showResults: true,
+            allowRetake: false
+          });
+        })
+        .catch((err) => {
+          console.error('[Assessment] Load error:', err);
+          document.getElementById('quiz-root').innerHTML = `
+            <div class="card" style="text-align:center;padding:40px;">
+              <div style="font-size:2rem;">⚠️</div>
+              <h2 style="color:#c62828;">Failed to load assessment</h2>
+              <p class="text-muted text-small">${err.message}</p>
+              <button onclick="location.reload()" class="btn btn-primary mt-md">🔄 Retry</button>
+            </div>
+          `;
+        });
+    })();
+  </script>
+</body>
+</html>
