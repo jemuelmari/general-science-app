@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+  <style>
+    .profile-form-group {
+      margin-bottom: 18px;
+    }
+
+    .profile-form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #37474f;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .profile-form-group input,
+    .profile-form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      transition: all 0.15s ease;
+    }
+
+    .profile-form-group input:focus,
+    .profile-form-group select:focus {
+      outline: none;
+      border-color: #0d47a1;
+      box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
+    }
+
+    .profile-form-group input:disabled {
+      background: #f5f5f5;
+      cursor: not-allowed;
+      color: #666;
+    }
+
+    .profile-form-group .hint {
+      font-size: 0.72rem;
+      color: #78909c;
+      margin-top: 4px;
+    }
+
+    .profile-btn-primary {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #0d47a1, #1565c0);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25);
+    }
+
+    .profile-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35);
+    }
+
+    .profile-btn-outline {
+      width: 100%;
+      padding: 12px 20px;
+      background: transparent;
+      color: #0d47a1;
+      border: 2px solid #0d47a1;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .profile-btn-outline:hover {
+      background: #e3f2fd;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>👤 My Profile</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:640px;padding-top:24px;padding-bottom:64px;">
+
+    <!-- Profile header card -->
+    <div class="card" id="profile-header">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div id="profile-avatar" style="
+          width:72px;height:72px;border-radius:50%;
+          display:flex;align-items:center;justify-content:center;
+          font-size:1.6rem;font-weight:800;color:#fff;
+          background:linear-gradient(135deg,#0d47a1,#00acc1);
+          box-shadow:0 4px 12px rgba(13,71,161,0.25);
+          flex-shrink:0;
+        ">?</div>
+        <div style="flex:1;min-width:200px;">
+          <div id="profile-name" style="font-size:1.2rem;font-weight:700;color:var(--color-primary-dark);"></div>
+          <div id="profile-meta" class="text-muted text-small" style="margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit form -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">✏️ Edit Your Details</span>
+      </div>
+
+      <p class="text-muted text-small" style="margin-bottom:16px;">
+        You can update your name, grade level, section, and sex. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
+      </p>
+
+      <form id="profile-form">
+
+        <div class="profile-form-group">
+          <label for="pf-lrn">LRN (locked)</label>
+          <input type="text" id="pf-lrn" disabled />
+          <div class="hint">🔒 Cannot be changed</div>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-lastname">Last Name *</label>
+          <input type="text" id="pf-lastname" required
+                 autocomplete="off" placeholder="DELA CRUZ"
+                 style="text-transform:uppercase;" />
+          <div class="hint">Saved in ALL CAPS</div>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-firstname">First Name *</label>
+          <input type="text" id="pf-firstname" required
+                 autocomplete="off" placeholder="Juan" />
+          <div class="hint">Saved in Title Case</div>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-middlename">Middle Name</label>
+          <input type="text" id="pf-middlename"
+                 autocomplete="off" placeholder="Santos" />
+          <div class="hint">Optional · Title Case</div>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-sex">Sex *</label>
+          <select id="pf-sex" required>
+            <option value="">— Select —</option>
+            <option value="Female">♀ Female</option>
+            <option value="Male">♂ Male</option>
+          </select>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-grade">Grade Level *</label>
+          <select id="pf-grade" required>
+            <option value="">— Select —</option>
+            <option value="11">Grade 11</option>
+          </select>
+        </div>
+
+        <div class="profile-form-group">
+          <label for="pf-section">Section *</label>
+          <select id="pf-section" required>
+            <option value="">— Select —</option>
+            <option value="ACADEMIC A">ACADEMIC A</option>
+            <option value="ACADEMIC B">ACADEMIC B</option>
+          </select>
+        </div>
+
+        <!-- Live preview -->
+        <div style="background:#f5f7fa;padding:14px 16px;border-radius:10px;margin:16px 0;">
+          <div style="font-size:0.75rem;color:#5f6368;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;margin-bottom:6px;">
+            Preview
+          </div>
+          <div id="pf-preview" style="font-weight:700;color:var(--color-primary-dark);font-size:1rem;">
+            —
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="submit" class="profile-btn-primary" style="flex:1;min-width:160px;">
+            💾 Save Changes
+          </button>
+          <button type="button" id="btn-reset" class="profile-btn-outline" style="flex:1;min-width:160px;">
+            ↺ Reset
+          </button>
+        </div>
+
+        <div id="profile-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+        <div id="profile-success" class="alert alert-success hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="card" style="border-left:4px solid #c62828;">
+      <div class="card-header">
+        <span class="card-title" style="color:#c62828;">⚠️ Account Actions</span>
+      </div>
+      <p class="text-muted text-small" style="margin-bottom:12px;">
+        This action cannot be undone.
+      </p>
+      <button type="button" id="btn-logout-clean" class="profile-btn-outline" style="color:#c62828;border-color:#c62828;">
+        🚪 Log Out (with data prompt)
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/backup.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
