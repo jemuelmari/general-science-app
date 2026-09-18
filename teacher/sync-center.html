@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sync Center — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .sync-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 2px solid #eceff1;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .sync-tab {
+      padding: 14px 22px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #5f6368;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      margin-bottom: -2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sync-tab:hover { color: #0d47a1; background: #f5f7fa; }
+    .sync-tab.active { color: #0d47a1; border-bottom-color: #0d47a1; }
+
+    .sync-panel { display: none; }
+    .sync-panel.active { display: block; }
+
+    .code-input {
+      font-family: 'Consolas', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-align: center;
+      padding: 16px;
+      text-transform: uppercase;
+    }
+
+    .drop-zone {
+      display: block;
+      padding: 40px 20px;
+      border: 2px dashed #cfd8dc;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fafafa;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: #0d47a1;
+      background: #e3f2fd;
+    }
+    .drop-zone input[type="file"] { display: none; }
+
+    .import-result {
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .import-result.success { background: #e8f5e9; border-left: 4px solid #2e7d32; }
+    .import-result.warning { background: #fff3e0; border-left: 4px solid #ed6c02; }
+    .import-result.error   { background: #ffebee; border-left: 4px solid #c62828; }
+    .import-result .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .import-result .body { flex: 1; font-size: 0.88rem; color: #37474f; }
+    .import-result .body strong { display: block; margin-bottom: 4px; }
+    .import-result .body ul { margin: 6px 0 0 20px; font-size: 0.85rem; }
+    .import-result .body li { margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔄 Sync Center</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:900px;padding-top:24px;padding-bottom:64px;">
+
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Sync Student Progress</h1>
+          <p>Import data from students via sync code, JSON backup file, or Google Sheets</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="sync-tabs">
+      <button class="sync-tab active" data-tab="code">🔑 Sync Code</button>
+      <button class="sync-tab" data-tab="file">📁 JSON File</button>
+      <button class="sync-tab" data-tab="sheets">📊 Google Sheets</button>
+      <button class="sync-tab" data-tab="pending">📥 Pending (0)</button>
+    </div>
+
+    <!-- CODE TAB -->
+    <div class="sync-panel active" id="panel-code">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔑 Enter Sync Code</span>
+        </div>
+        <p class="text-small text-muted" style="margin-bottom:16px;">
+          Ask the student to open their app and tap "Generate Sync Code." Paste the code below.
+        </p>
+
+        <input type="text" id="code-input" class="form-control code-input"
+               placeholder="GS11-XXXX-XXXX-XXXXXXXX" maxlength="25" autocomplete="off" />
+
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button id="btn-import-code" class="btn btn-primary" style="flex:1;">📥 Import from Code</button>
+          <button id="btn-clear-code" class="btn btn-outline">Clear</button>
+        </div>
+
+        <div id="code-result"></div>
+      </div>
+    </div>
+
+    <!-- FILE TAB -->
+    <div class="sync-panel" id="panel-file">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📁 Import JSON File</span>
+        </div>
+        <p class="text-small text-muted" style="margin-bottom:16px;">
+          Upload a student's backup file (GSA_Backup_*.json). You can also drag and drop it below.
+        </p>
+
+        <label class="drop-zone" id="file-drop">
+          <input type="file" id="file-input" accept="application/json,.json" />
+          <div style="font-size:2.5rem;margin-bottom:8px;">📂</div>
+          <div style="font-weight:600;color:#0d47a1;font-size:0.95rem;">Click to choose or drag a JSON file</div>
+          <div style="font-size:0.78rem;color:#90a4ae;margin-top:6px;">GSA_Backup_*.json from the student app</div>
+        </label>
+
+        <div id="file-result"></div>
+      </div>
+    </div>
+
+    <!-- SHEETS TAB -->
+    <div class="sync-panel" id="panel-sheets">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📊 Google Sheets Sync</span>
+        </div>
+        <p class="text-small text-muted" style="margin-bottom:16px;">
+          When the backend is enabled (<code>CONFIG.BACKEND_URL</code> set in <code>config.js</code>), you can
+          pull all pending student data from the shared Google Sheet at once.
+        </p>
+
+        <div id="backend-status" style="margin-bottom:16px;"></div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button id="btn-ping" class="btn btn-outline">🔌 Test Backend</button>
+          <button id="btn-pull-all" class="btn btn-primary">📥 Pull All Pending</button>
+        </div>
+
+        <div id="sheets-result"></div>
+      </div>
+    </div>
+
+    <!-- PENDING TAB -->
+    <div class="sync-panel" id="panel-pending">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📥 Pending Imports</span>
+        </div>
+        <p class="text-small text-muted" style="margin-bottom:16px;">
+          Sync codes saved on this device that haven't been applied to the roster yet.
+        </p>
+
+        <div id="pending-list">
+          <div style="text-align:center;padding:40px 16px;color:#90a4ae;">
+            <div style="font-size:2rem;margin-bottom:8px;">📭</div>
+            No pending imports.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      TeacherAuth.init();
+      if (!TeacherAuth.require()) return;
+
+      const NS = 'gsa_v1_';
+
+      /* ============================================================
+         TAB SWITCHING
+         ============================================================ */
+      const tabs = APP.$$('.sync-tab');
+      const panels = {
+        code: APP.$('#panel-code'),
+        file: APP.$('#panel-file'),
+        sheets: APP.$('#panel-sheets'),
+        pending: APP.$('#panel-pending')
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          Object.values(panels).forEach((p) => p?.classList.remove('active'));
+          panels[tab.dataset.tab]?.classList.add('active');
+          if (tab.dataset.tab === 'pending') renderPending();
+        });
+      });
+
+      /* ============================================================
+         SYNC CODE IMPORT
+         ============================================================ */
+      const codeInput = APP.$('#code-input');
+
+      codeInput.addEventListener('input', () => {
+        let v = codeInput.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+        // Insert dashes every 4 chars after the "GS11-" prefix
+        codeInput.value = v;
+      });
+
+      APP.$('#btn-clear-code').addEventListener('click', () => {
+        codeInput.value = '';
+        APP.$('#code-result').innerHTML = '';
+      });
+
+      APP.$('#btn-import-code').addEventListener('click', async () => {
+        const code = codeInput.value.trim().toUpperCase();
+        const result = APP.$('#code-result');
+
+        if (!code) {
+          result.innerHTML = renderResult('error', 'No code entered', 'Paste the sync code from the student app.');
+          return;
+        }
+
+        result.innerHTML = `<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Verifying code…</div>`;
+
+        try {
+          const record = await Sync.importFromCode(code);
+
+          if (!record || !record.valid) {
+            result.innerHTML = renderResult(
+              'error',
+              'Invalid or expired code',
+              record?.error || 'The code could not be verified. It may have been tampered with or not saved on this device.'
+            );
+            return;
+          }
+
+          // Save the student data
+          applyImport(record.payload);
+          result.innerHTML = renderResult(
+            'success',
+            `Imported: ${APP.formatFullName(record.payload.student.lastName, record.payload.student.firstName, record.payload.student.middleName)}`,
+            `
+              <ul>
+                <li><strong>LRN:</strong> ${APP.formatLRN(record.payload.student.lrn)}</li>
+                <li><strong>Section:</strong> ${record.payload.student.section}</li>
+                <li><strong>Source:</strong> ${record.source}</li>
+                <li><strong>Progress:</strong> ${countProgress(record.payload)} days completed</li>
+              </ul>
+            `
+          );
+          APP.toast('Student data imported successfully!', 'success', 3500);
+          codeInput.value = '';
+        } catch (err) {
+          result.innerHTML = renderResult('error', 'Import failed', err.message);
+        }
+      });
+
+      /* ============================================================
+         FILE IMPORT
+         ============================================================ */
+      const drop = APP.$('#file-drop');
+      const fileInput = APP.$('#file-input');
+
+      ['dragenter', 'dragover'].forEach((evt) => {
+        drop.addEventListener(evt, (e) => {
+          e.preventDefault();
+          drop.classList.add('dragover');
+        });
+      });
+      ['dragleave', 'drop'].forEach((evt) => {
+        drop.addEventListener(evt, (e) => {
+          e.preventDefault();
+          drop.classList.remove('dragover');
+        });
+      });
+
+      drop.addEventListener('drop', (e) => {
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files[0]) handleFile(e.target.files[0]);
+      });
+
+      async function handleFile(file) {
+        const result = APP.$('#file-result');
+        result.innerHTML = `<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Reading file…</div>`;
+
+        try {
+          const envelope = await Sync.importFromFile(file);
+
+          if (!envelope.valid) {
+            result.innerHTML = renderResult('error', 'Signature verification failed',
+              'The file may have been modified. Ask the student to export again.');
+            return;
+          }
+
+          applyImport(envelope.payload);
+          result.innerHTML = renderResult(
+            'success',
+            `Imported: ${APP.formatFullName(envelope.payload.student.lastName, envelope.payload.student.firstName, envelope.payload.student.middleName)}`,
+            `
+              <ul>
+                <li><strong>LRN:</strong> ${APP.formatLRN(envelope.payload.student.lrn)}</li>
+                <li><strong>Section:</strong> ${envelope.payload.student.section}</li>
+                <li><strong>File:</strong> ${file.name}</li>
+                <li><strong>Progress:</strong> ${countProgress(envelope.payload)} days completed</li>
+              </ul>
+            `
+          );
+          APP.toast('Student data imported from file!', 'success', 3500);
+        } catch (err) {
+          result.innerHTML = renderResult('error', 'Import failed', err.message);
+        } finally {
+          fileInput.value = '';
+        }
+      }
+
+      /* ============================================================
+         GOOGLE SHEETS / BACKEND
+         ============================================================ */
+      function updateBackendStatus() {
+        const enabled = Sync.backendEnabled();
+        const el = APP.$('#backend-status');
+        el.innerHTML = enabled
+          ? `<div class="alert alert-success">
+              <strong>✅ Backend configured</strong>
+              <div class="text-small" style="margin-top:4px;">${CONFIG.BACKEND_URL.slice(0, 60)}…</div>
+            </div>`
+          : `<div class="alert alert-warning">
+              <strong>⚠️ Backend not configured</strong>
+              <div class="text-small" style="margin-top:4px;">
+                Set <code>CONFIG.BACKEND_URL</code> in <code>config.js</code> to enable Google Sheets sync.
+                Until then, use Sync Code (same device) or JSON file import.
+              </div>
+            </div>`;
+      }
+
+      APP.$('#btn-ping').addEventListener('click', async () => {
+        const result = APP.$('#sheets-result');
+        result.innerHTML = `<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Testing…</div>`;
+
+        const res = await Sync.pingBackend();
+        if (res.ok) {
+          result.innerHTML = renderResult('success', 'Backend online',
+            `Response time: ${res.ms || '—'} ms`);
+        } else {
+          result.innerHTML = renderResult('error', 'Backend unreachable', res.error || 'Unknown error');
+        }
+      });
+
+      APP.$('#btn-pull-all').addEventListener('click', async () => {
+        const result = APP.$('#sheets-result');
+
+        if (!Sync.backendEnabled()) {
+          result.innerHTML = renderResult('warning', 'Backend not configured',
+            'Set CONFIG.BACKEND_URL first, then retry.');
+          return;
+        }
+
+        result.innerHTML = `<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Pulling all pending students…</div>`;
+
+        try {
+          const res = await Sync.pullAllPending();
+          if (!res.ok) throw new Error(res.error || 'Unknown error');
+
+          let applied = 0;
+          const failed = [];
+
+          for (const record of (res.records || [])) {
+            try {
+              const valid = await Security.verify(record.payload, record.signature);
+              if (!valid) {
+                failed.push(record.payload?.student?.lrn || 'unknown');
+                continue;
+              }
+              applyImport(record.payload);
+              applied++;
+            } catch (e) {
+              failed.push(record.payload?.student?.lrn || 'unknown');
+            }
+          }
+
+          result.innerHTML = renderResult(
+            'success',
+            `Pulled ${applied} record${applied !== 1 ? 's' : ''}`,
+            failed.length
+              ? `<div style="margin-top:6px;color:#c62828;">⚠️ ${failed.length} record(s) failed signature verification: ${failed.join(', ')}</div>`
+              : `<div style="margin-top:6px;">All records imported successfully.</div>`
+          );
+          APP.toast(`Imported ${applied} student record(s)`, 'success');
+        } catch (err) {
+          result.innerHTML = renderResult('error', 'Pull failed', err.message);
+        }
+      });
+
+      /* ============================================================
+         PENDING LIST (LOCAL CODES SAVED, NOT YET APPLIED)
+         ============================================================ */
+      function renderPending() {
+        const list = APP.$('#pending-list');
+        const codesRaw = localStorage.getItem(`${NS}sync_codes`);
+        if (!codesRaw) {
+          list.innerHTML = `<div style="text-align:center;padding:40px 16px;color:#90a4ae;">
+            <div style="font-size:2rem;margin-bottom:8px;">📭</div>
+            No pending imports.
+          </div>`;
+          return;
+        }
+
+        let codes;
+        try { codes = JSON.parse(codesRaw); } catch (e) { codes = {}; }
+        const entries = Object.entries(codes);
+
+        if (!entries.length) {
+          list.innerHTML = `<div style="text-align:center;padding:40px 16px;color:#90a4ae;">
+            <div style="font-size:2rem;margin-bottom:8px;">📭</div>
+            No pending imports.
+          </div>`;
+          return;
+        }
+
+        list.innerHTML = entries.map(([code, data]) => {
+          const student = data.payload?.student || {};
+          return `
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #e0e0e0;border-radius:10px;margin-bottom:10px;">
+              <div style="font-family:'Consolas',monospace;font-size:0.82rem;color:#0d47a1;font-weight:700;letter-spacing:1px;">
+                ${code}
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:600;font-size:0.9rem;">
+                  ${APP.formatFullName(student.lastName || '', student.firstName || '', student.middleName || '')}
+                </div>
+                <div style="font-size:0.75rem;color:#78909c;">
+                  ${student.section || '—'} · saved ${APP.formatDate(data.savedAt || new Date())}
+                </div>
+              </div>
+              <button class="btn btn-primary" style="padding:6px 14px;font-size:0.8rem;" data-apply="${code}">
+                Apply
+              </button>
+            </div>
+          `;
+        }).join('');
+
+        list.querySelectorAll('[data-apply]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const code = btn.dataset.apply;
+            const data = codes[code];
+            if (!data?.payload) {
+              APP.toast('Invalid pending record', 'danger');
+              return;
+            }
+            applyImport(data.payload);
+            delete codes[code];
+            localStorage.setItem(`${NS}sync_codes`, JSON.stringify(codes));
+            renderPending();
+            APP.toast('Record applied!', 'success');
+          });
+        });
+      }
+
+      /* ============================================================
+         CORE: APPLY IMPORTED STUDENT DATA
+         ============================================================ */
+      function applyImport(payload) {
+        if (!payload || !payload.student) throw new Error('Invalid payload');
+
+        // Save student profile
+        const student = {
+          lrn: payload.student.lrn,
+          lastName: payload.student.lastName,
+          firstName: payload.student.firstName,
+          middleName: payload.student.middleName || '',
+          gradeLevel: payload.student.gradeLevel,
+          section: payload.student.section,
+          sex: payload.student.sex,
+          importedAt: new Date().toISOString()
+        };
+        Store.saveUser(student);
+
+        // Merge progress (keep the more advanced version)
+        if (payload.progress) {
+          const existing = Store.getProgress(payload.student.lrn);
+          const merged = mergeProgress(existing, payload.progress);
+          Store.saveProgress(payload.student.lrn, merged);
+        }
+
+        // Merge scores (union)
+        if (payload.scores) {
+          const existing = Store.getScores(payload.student.lrn);
+          const merged = mergeScores(existing, payload.scores);
+          localStorage.setItem(`${NS}scores_${payload.student.lrn}`, JSON.stringify(merged));
+        }
+
+        // Merge badges (union)
+        if (payload.badges) {
+          const existing = Store.getBadges(payload.student.lrn);
+          const merged = mergeBadges(existing, payload.badges);
+          localStorage.setItem(`${NS}badges_${payload.student.lrn}`, JSON.stringify(merged));
+        }
+      }
+
+      function mergeProgress(existing, incoming) {
+        const merged = { term1: { weeks: {}, completed: [] }, term2: { weeks: {}, completed: [] }, term3: { weeks: {}, completed: [] } };
+        ['term1', 'term2', 'term3'].forEach((t) => {
+          const ex = existing[t]?.completed || [];
+          const inc = incoming[t]?.completed || [];
+          merged[t].completed = Array.from(new Set([...ex, ...inc]));
+          merged[t].weeks = { ...(existing[t]?.weeks || {}), ...(incoming[t]?.weeks || {}) };
+        });
+        return merged;
+      }
+
+      function mergeScores(existing, incoming) {
+        const merged = { term1: {}, term2: {}, term3: {} };
+        ['term1', 'term2', 'term3'].forEach((t) => {
+          merged[t] = { ...(existing[t] || {}), ...(incoming[t] || {}) };
+        });
+        return merged;
+      }
+
+      function mergeBadges(existing, incoming) {
+        const merged = { term1: [], term2: [], term3: [] };
+        ['term1', 'term2', 'term3'].forEach((t) => {
+          merged[t] = Array.from(new Set([...(existing[t] || []), ...(incoming[t] || [])]));
+        });
+        return merged;
+      }
+
+      function countProgress(payload) {
+        let total = 0;
+        ['term1', 'term2', 'term3'].forEach((t) => {
+          total += payload.progress?.[t]?.completed?.length || 0;
+        });
+        return total;
+      }
+
+      /* ============================================================
+         HELPERS
+         ============================================================ */
+      function renderResult(type, title, body) {
+        const icons = { success: '✅', warning: '⚠️', error: '❌' };
+        return `
+          <div class="import-result ${type}">
+            <div class="icon">${icons[type] || 'ℹ️'}</div>
+            <div class="body">
+              <strong>${title}</strong>
+              ${body}
+            </div>
+          </div>
+        `;
+      }
+
+      /* ============================================================
+         LOGOUT
+         ============================================================ */
+      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+
+      /* ============================================================
+         INIT
+         ============================================================ */
+      document.addEventListener('DOMContentLoaded', () => {
+        updateBackendStatus();
+        renderPending();
+
+        // Update pending tab label
+        const codesRaw = localStorage.getItem(`${NS}sync_codes`);
+        let count = 0;
+        try { count = Object.keys(JSON.parse(codesRaw || '{}')).length; } catch (e) {}
+        const pendingTab = APP.$('[data-tab="pending"]');
+        if (pendingTab) pendingTab.textContent = `📥 Pending (${count})`;
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "id": "pt3",
+  "title": "PT3 — PAGASA & PHIVOLCS Awareness Brochure",
+  "shortTitle": "PT3 — PAGASA & PHIVOLCS Brochure",
+  "coverage": "Weeks 8–10",
+  "summary": "Create an awareness brochure promoting the importance of PAGASA and PHIVOLCS to your local community, emphasizing hazard preparedness and DRRM.",
+  "instructions": "<p>Your task is to <strong>create an awareness brochure</strong> for your local community that explains the roles of PAGASA and PHIVOLCS in protecting Filipinos from natural hazards. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Design a brochure</strong> (physical trifold, PDF, or digital) with at least <strong>6 panels</strong>.</li><li><strong>Cover PAGASA's role:</strong> typhoon tracking, rainfall warnings, storm surge alerts, heat index advisories, El Niño/La Niña monitoring.</li><li><strong>Cover PHIVOLCS' role:</strong> volcano monitoring, earthquake detection, tsunami warnings, geohazard maps, alert levels.</li><li><strong>Include practical DRRM guidance</strong> for the community:<ul style='margin-left:20px;margin-top:6px;'><li>What to do before, during, and after a typhoon</li><li>What to do before, during, and after an earthquake</li><li>How to prepare a Go Bag</li><li>Where to find evacuation centers and hazard maps</li></ul></li><li><strong>Include emergency hotlines and websites:</strong><ul style='margin-left:20px;margin-top:6px;'><li>PAGASA: bagong.pagasa.dost.gov.ph</li><li>PHIVOLCS: phivolcs.dost.gov.ph</li><li>NDRRMC: ndrrmc.gov.ph</li><li>Local barangay DRRM hotline</li></ul></li><li><strong>Use visuals</strong> — icons, hazard symbols, diagrams, and clear headings. Aim for easy-to-read, accessible language for all community members.</li><li><strong>Distribute or present</strong> the brochure to at least 3 people (family, classmates, or neighbors) and document the sharing (photo or short note).</li><li><strong>Reflect</strong> on why public awareness of PAGASA and PHIVOLCS matters for your community's safety.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> Submit as PDF or image (trifold brochure). Include a brief write-up describing how you shared it.</p>",
+  "requirements": [
+    "Trifold brochure (physical or digital) with at least 6 panels",
+    "PAGASA's role clearly explained (typhoons, rainfall, storm surge, heat index, El Niño)",
+    "PHIVOLCS' role clearly explained (volcanoes, earthquakes, tsunamis, geohazard maps)",
+    "Practical DRRM guidance for typhoons and earthquakes",
+    "Go Bag checklist and evacuation info",
+    "Emergency hotlines and websites included",
+    "Clear visuals: icons, symbols, diagrams",
+    "Shared or presented to at least 3 people",
+    "Personal reflection on the importance of public awareness",
+    "Citations if external sources used"
+  ],
+  "options": [
+    "Physical trifold brochure (printed, photographed)",
+    "Digital PDF trifold brochure",
+    "Digital infographic poster (single-page)"
+  ],
+  "rubric": [
+    { "criterion": "Accuracy of PAGASA and PHIVOLCS information", "points": 25 },
+    { "criterion": "Completeness of DRRM guidance (before/during/after)", "points": 20 },
+    { "criterion": "Clarity and readability for community audience", "points": 15 },
+    { "criterion": "Quality of visuals and layout", "points": 15 },
+    { "criterion": "Inclusion of hotlines, websites, and Go Bag info", "points": 10 },
+    { "criterion": "Evidence of sharing with community", "points": 5 },
+    { "criterion": "Reflection quality", "points": 5 },
+    { "criterion": "Citations and overall organization", "points": 5 }
+  ]
+}

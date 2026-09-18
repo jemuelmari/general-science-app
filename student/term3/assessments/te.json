@@ -1,0 +1,556 @@
+{
+  "title": "Term Exam — General Science Term 3",
+  "coverage": "Weeks 1–10 (full term)",
+  "items": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What fraction of Earth's surface is covered by water?",
+      "options": ["About 71%", "About 50%", "About 30%", "About 90%"],
+      "correct": "About 71%"
+    },
+    {
+      "id": "q2",
+      "text": "What is Earth's average surface temperature?",
+      "options": ["15°C", "0°C", "30°C", "50°C"],
+      "correct": "15°C"
+    },
+    {
+      "id": "q3",
+      "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?",
+      "options": ["About −18°C", "About 15°C", "About 0°C", "About 100°C"],
+      "correct": "About −18°C"
+    },
+    {
+      "id": "q4",
+      "text": "Which planet has a runaway greenhouse effect and is the hottest in the Solar System?",
+      "options": ["Venus", "Mercury", "Mars", "Jupiter"],
+      "correct": "Venus"
+    },
+    {
+      "id": "q5",
+      "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?",
+      "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"],
+      "correct": "Stratosphere"
+    },
+    {
+      "id": "q6",
+      "text": "What generates Earth's protective magnetic field?",
+      "options": [
+        "Its molten iron core",
+        "Its atmosphere",
+        "The Moon",
+        "Solar wind"
+      ],
+      "correct": "Its molten iron core"
+    },
+    {
+      "id": "q7",
+      "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?",
+      "options": [
+        "It's not too hot and not too cold — just right for liquid water",
+        "It's the closest planet to the Sun",
+        "It has three moons",
+        "It matches the color of gold"
+      ],
+      "correct": "It's not too hot and not too cold — just right for liquid water"
+    },
+    {
+      "id": "q8",
+      "text": "Why does ice float on water, and why is this important for life?",
+      "options": [
+        "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
+        "Ice is heavier than water",
+        "Ice is a metal",
+        "Floating ice has no effect on life"
+      ],
+      "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter"
+    },
+    {
+      "id": "q9",
+      "text": "Why is liquid water essential for life on Earth?",
+      "options": [
+        "It acts as a universal solvent for chemical reactions and transports nutrients",
+        "It looks pretty",
+        "It is rare in the universe",
+        "It has no function"
+      ],
+      "correct": "It acts as a universal solvent for chemical reactions and transports nutrients"
+    },
+    {
+      "id": "q10",
+      "text": "What is the greenhouse effect?",
+      "options": [
+        "Gases in the atmosphere trap infrared radiation, warming Earth's surface",
+        "A greenhouse covering plants",
+        "The Earth reflecting all sunlight",
+        "Cooling of the atmosphere by clouds"
+      ],
+      "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface"
+    },
+    {
+      "id": "q11",
+      "text": "What kind of radiation do greenhouse gases absorb?",
+      "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"],
+      "correct": "Infrared (heat)"
+    },
+    {
+      "id": "q12",
+      "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?",
+      "options": ["Water vapor (H₂O)", "Carbon dioxide (CO₂)", "Methane (CH₄)", "Ozone (O₃)"],
+      "correct": "Water vapor (H₂O)"
+    },
+    {
+      "id": "q13",
+      "text": "Which human activity is the MAIN source of carbon dioxide emissions?",
+      "options": [
+        "Burning fossil fuels for electricity and transportation",
+        "Planting trees",
+        "Volcanic eruptions",
+        "Ocean evaporation"
+      ],
+      "correct": "Burning fossil fuels for electricity and transportation"
+    },
+    {
+      "id": "q14",
+      "text": "Approximately how much more potent is methane (CH₄) at trapping heat than carbon dioxide?",
+      "options": ["About 28× CO₂", "About 2× CO₂", "About 1000× CO₂", "Same as CO₂"],
+      "correct": "About 28× CO₂"
+    },
+    {
+      "id": "q15",
+      "text": "What is the DIFFERENCE between the natural and enhanced greenhouse effect?",
+      "options": [
+        "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs",
+        "They are identical",
+        "Natural is bad, enhanced is good",
+        "Natural only happens in the tropics"
+      ],
+      "correct": "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs"
+    },
+    {
+      "id": "q16",
+      "text": "What is the theory that Earth's outer shell is broken into moving plates called?",
+      "options": ["Plate tectonics", "Continental drift", "Big Bang theory", "Rock cycle"],
+      "correct": "Plate tectonics"
+    },
+    {
+      "id": "q17",
+      "text": "At which type of plate boundary do volcanoes MOST commonly form?",
+      "options": [
+        "Convergent boundary (subduction zones)",
+        "Divergent boundary only",
+        "Transform boundary",
+        "Volcanoes form randomly"
+      ],
+      "correct": "Convergent boundary (subduction zones)"
+    },
+    {
+      "id": "q18",
+      "text": "The Philippine Fault System is an example of which plate boundary type?",
+      "options": [
+        "Transform (plates slide past each other)",
+        "Convergent",
+        "Divergent",
+        "Accretion"
+      ],
+      "correct": "Transform (plates slide past each other)"
+    },
+    {
+      "id": "q19",
+      "text": "How were the Philippine islands primarily formed?",
+      "options": [
+        "Through volcanic arcs, collisions, and tectonic uplift over millions of years",
+        "They were carried by ocean currents",
+        "They are fragments of the Moon",
+        "They were always a single big island"
+      ],
+      "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years"
+    },
+    {
+      "id": "q20",
+      "text": "What is the Pacific Ring of Fire?",
+      "options": [
+        "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur",
+        "A ring of fire in Hawaii",
+        "A type of volcano",
+        "A boundary between continents"
+      ],
+      "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur"
+    },
+    {
+      "id": "q21",
+      "text": "Why are marine fossils found on Philippine mountains?",
+      "options": [
+        "The ocean once covered the area, and tectonic uplift raised the land above sea level",
+        "Fish used to live on land",
+        "People carried them up there",
+        "They fell from the sky"
+      ],
+      "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level"
+    },
+    {
+      "id": "q22",
+      "text": "Which geological feature is east of Mindanao and reaches depths over 10,000 meters?",
+      "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"],
+      "correct": "Philippine Trench"
+    },
+    {
+      "id": "q23",
+      "text": "Which of the following landforms is a karst landscape with an underground river?",
+      "options": [
+        "Puerto Princesa Underground River",
+        "Chocolate Hills",
+        "Banaue Rice Terraces",
+        "Mayon Volcano"
+      ],
+      "correct": "Puerto Princesa Underground River"
+    },
+    {
+      "id": "q24",
+      "text": "How many climate types does PAGASA classify in the Philippines?",
+      "options": ["Four (Types I–IV)", "Two", "Six", "One"],
+      "correct": "Four (Types I–IV)"
+    },
+    {
+      "id": "q25",
+      "text": "Which monsoon wind brings cool, dry weather from November to February?",
+      "options": [
+        "Amihan (NE monsoon)",
+        "Habagat (SW monsoon)",
+        "Trade winds",
+        "Sea breeze"
+      ],
+      "correct": "Amihan (NE monsoon)"
+    },
+    {
+      "id": "q26",
+      "text": "About how many tropical cyclones enter Philippine waters each year?",
+      "options": ["About 20", "About 5", "About 50", "About 100"],
+      "correct": "About 20"
+    },
+    {
+      "id": "q27",
+      "text": "What is the Coral Triangle?",
+      "options": [
+        "A marine region including the Philippines with 2,500+ fish species and 500+ coral species",
+        "A political alliance of three countries",
+        "A type of coral reef",
+        "A scientific lab"
+      ],
+      "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species"
+    },
+    {
+      "id": "q28",
+      "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?",
+      "options": ["About 65%", "About 10%", "About 100%", "About 5%"],
+      "correct": "About 65%"
+    },
+    {
+      "id": "q29",
+      "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?",
+      "options": [
+        "Philippine Eagle",
+        "Palawan Peacock-Pheasant",
+        "Philippine Tarsier",
+        "Visayan Warty Pig"
+      ],
+      "correct": "Philippine Eagle"
+    },
+    {
+      "id": "q30",
+      "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
+      "options": [
+        "Habitat loss from deforestation, mining, and land conversion",
+        "Too many protected areas",
+        "Overpopulation of endemic species",
+        "Excessive rainfall"
+      ],
+      "correct": "Habitat loss from deforestation, mining, and land conversion"
+        {
+      "id": "q31",
+      "text": "What is a tsunami usually caused by?",
+      "options": [
+        "An underwater earthquake",
+        "Strong winds",
+        "Tides",
+        "Fish migration"
+      ],
+      "correct": "An underwater earthquake"
+    },
+    {
+      "id": "q32",
+      "text": "What is the point on Earth's surface directly above an earthquake's origin called?",
+      "options": ["Epicenter", "Focus", "Fault", "Crater"],
+      "correct": "Epicenter"
+    },
+    {
+      "id": "q33",
+      "text": "Which of the following is a SLOW geologic process?",
+      "options": [
+        "Saltwater intrusion",
+        "Volcanic eruption",
+        "Tsunami",
+        "Earthquake"
+      ],
+      "correct": "Saltwater intrusion"
+    },
+    {
+      "id": "q34",
+      "text": "What is soil erosion?",
+      "options": [
+        "The gradual removal of topsoil by wind, water, or human activity",
+        "A sudden landslide",
+        "The formation of new soil",
+        "Volcanic ashfall"
+      ],
+      "correct": "The gradual removal of topsoil by wind, water, or human activity"
+    },
+    {
+      "id": "q35",
+      "text": "Which agency monitors volcanic and seismic activity in the Philippines?",
+      "options": ["PHIVOLCS", "PAGASA", "DENR", "NDRRMC"],
+      "correct": "PHIVOLCS"
+    },
+    {
+      "id": "q36",
+      "text": "What is the BEST response during a strong earthquake?",
+      "options": [
+        "Drop, cover, and hold under a sturdy table",
+        "Run outside immediately",
+        "Take an elevator to the ground floor",
+        "Stand under a window"
+      ],
+      "correct": "Drop, cover, and hold under a sturdy table"
+    },
+    {
+      "id": "q37",
+      "text": "About how many tropical cyclones enter Philippine waters each year?",
+      "options": ["About 20", "About 3", "About 50", "About 100"],
+      "correct": "About 20"
+    },
+    {
+      "id": "q38",
+      "text": "What causes a storm surge?",
+      "options": [
+        "A typhoon's strong winds and low pressure pushing sea water onto the coast",
+        "Underwater earthquakes",
+        "Lunar tides only",
+        "Volcanic eruptions"
+      ],
+      "correct": "A typhoon's strong winds and low pressure pushing sea water onto the coast"
+    },
+    {
+      "id": "q39",
+      "text": "Which of the following is the STRONGEST part of a typhoon?",
+      "options": ["The eyewall", "The eye", "The outer rain bands", "The tail"],
+      "correct": "The eyewall"
+    },
+    {
+      "id": "q40",
+      "text": "Which PAGASA signal number corresponds to winds of 89–117 km/h?",
+      "options": ["Signal No. 3", "Signal No. 1", "Signal No. 2", "Signal No. 4"],
+      "correct": "Signal No. 3"
+    },
+    {
+      "id": "q41",
+      "text": "What is a flash flood?",
+      "options": [
+        "Sudden, fast-rising water — common in mountain areas after heavy rain",
+        "A slow-rising flood lasting weeks",
+        "A flood caused by tsunamis",
+        "A flood from ocean tides"
+      ],
+      "correct": "Sudden, fast-rising water — common in mountain areas after heavy rain"
+    },
+    {
+      "id": "q42",
+      "text": "Which of the following is a warning sign of a possible landslide?",
+      "options": [
+        "Cracks in the ground and tilting trees",
+        "Bright sunny weather",
+        "Sudden increase in ocean temperature",
+        "The presence of birds"
+      ],
+      "correct": "Cracks in the ground and tilting trees"
+    },
+    {
+      "id": "q43",
+      "text": "What is the heat index?",
+      "options": [
+        "The 'feels like' temperature combining heat and humidity",
+        "The actual air temperature",
+        "The temperature of the ocean",
+        "The temperature inside the house"
+      ],
+      "correct": "The 'feels like' temperature combining heat and humidity"
+    },
+    {
+      "id": "q44",
+      "text": "What does PAGASA stand for?",
+      "options": [
+        "Philippine Atmospheric, Geophysical and Astronomical Services Administration",
+        "Philippine Agency for General Science and Astronomy",
+        "Philippine Atmospheric and Geological Assessment",
+        "Pacific Atmospheric Group of Science Agencies"
+      ],
+      "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration"
+    },
+    {
+      "id": "q45",
+      "text": "What does the PAGASA iHEAT map show?",
+      "options": [
+        "Real-time and forecast heat index values across the Philippines",
+        "Volcano locations",
+        "Earthquake epicenters",
+        "Tsunami warnings only"
+      ],
+      "correct": "Real-time and forecast heat index values across the Philippines"
+    },
+    {
+      "id": "q46",
+      "text": "Which heat index range is categorized as DANGER?",
+      "options": ["42–51°C", "27–32°C", "33–41°C", "52°C and above"],
+      "correct": "42–51°C"
+    },
+    {
+      "id": "q47",
+      "text": "What should you do if someone shows signs of heat stroke (confusion, no sweating, high body temp)?",
+      "options": [
+        "Call emergency help and cool the person's body immediately",
+        "Wait and see if they feel better",
+        "Give them coffee",
+        "Let them continue working"
+      ],
+      "correct": "Call emergency help and cool the person's body immediately"
+    },
+    {
+      "id": "q48",
+      "text": "What is the urban heat island effect?",
+      "options": [
+        "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat",
+        "Islands are always cooler than the mainland",
+        "Heat escapes only at night",
+        "Urban areas have more rain"
+      ],
+      "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat"
+    },
+    {
+      "id": "q49",
+      "text": "Which human activity MOST increases landslide risk?",
+      "options": [
+        "Deforestation on hillsides",
+        "Planting trees",
+        "Building on flat land",
+        "Using solar power"
+      ],
+      "correct": "Deforestation on hillsides"
+    },
+    {
+      "id": "q50",
+      "text": "What is the difference between a hazard and a disaster?",
+      "options": [
+        "A hazard is a natural event; a disaster is when it strikes a vulnerable community",
+        "They are the same thing",
+        "Hazards are man-made; disasters are natural",
+        "Hazards are always catastrophic"
+      ],
+      "correct": "A hazard is a natural event; a disaster is when it strikes a vulnerable community"
+    },
+    {
+      "id": "q51",
+      "text": "What is an ipo-ipo?",
+      "options": [
+        "A small, intense rotating column of air — a tornado or waterspout",
+        "A type of typhoon",
+        "A tropical fish",
+        "A rain cloud"
+      ],
+      "correct": "A small, intense rotating column of air — a tornado or waterspout"
+    },
+    {
+      "id": "q52",
+      "text": "Which agency coordinates national disaster response in the Philippines?",
+      "options": ["NDRRMC", "PAGASA", "PHIVOLCS", "DepEd"],
+      "correct": "NDRRMC"
+    },
+    {
+      "id": "q53",
+      "text": "What does DRRM stand for?",
+      "options": [
+        "Disaster Risk Reduction and Management",
+        "Department of Regional Risk Measures",
+        "Disaster Response and Recovery Method",
+        "Direct Rescue and Relief Management"
+      ],
+      "correct": "Disaster Risk Reduction and Management"
+    },
+    {
+      "id": "q54",
+      "text": "How many thematic pillars make up the DRRM framework?",
+      "options": ["Four", "Two", "Six", "Ten"],
+      "correct": "Four"
+    },
+    {
+      "id": "q55",
+      "text": "Which pillar focuses on drills, Go Bags, and evacuation plans?",
+      "options": ["Preparedness", "Response", "Recovery", "Prevention"],
+      "correct": "Preparedness"
+    },
+    {
+      "id": "q56",
+      "text": "Which Philippine law institutionalized DRRM?",
+      "options": [
+        "RA 10121 — Philippine DRRM Act of 2010",
+        "RA 9003",
+        "RA 6969",
+        "RA 9729"
+      ],
+      "correct": "RA 10121 — Philippine DRRM Act of 2010"
+    },
+    {
+      "id": "q57",
+      "text": "What should a family do FIRST when a typhoon warning is issued?",
+      "options": [
+        "Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA",
+        "Wait until the last minute",
+        "Go outside and watch the storm",
+        "Ignore warnings"
+      ],
+      "correct": "Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA"
+    },
+    {
+      "id": "q58",
+      "text": "Which activity is an example of MITIGATION in DRRM?",
+      "options": [
+        "Planting mangroves to reduce storm surge impact",
+        "Distributing relief goods after a typhoon",
+        "Rebuilding houses after a flood",
+        "Conducting search and rescue"
+      ],
+      "correct": "Planting mangroves to reduce storm surge impact"
+    },
+    {
+      "id": "q59",
+      "text": "Which of the following BEST describes what the iHEAT map helps LGUs do?",
+      "options": [
+        "Issue heat advisories and open cooling centers based on forecast heat index",
+        "Predict earthquakes",
+        "Monitor volcanic activity",
+        "Track typhoon paths"
+      ],
+      "correct": "Issue heat advisories and open cooling centers based on forecast heat index"
+    },
+    {
+      "id": "q60",
+      "text": "Which of the following BEST summarizes the main idea of Term 3?",
+      "options": [
+        "Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe",
+        "Earth is a static, unchanging planet",
+        "Natural hazards cannot be studied scientifically",
+        "Only earthquakes matter in the Philippines"
+      ],
+      "correct": "Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe"
+    }
+  ]
+}

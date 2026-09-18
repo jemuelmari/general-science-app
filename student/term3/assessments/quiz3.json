@@ -1,0 +1,187 @@
+{
+  "title": "Quiz 3 — Earth Materials, Geohazards & PAGASA",
+  "coverage": "Weeks 5–9",
+  "items": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is the difference between a rock and a mineral?",
+      "options": [
+        "Rocks are made of one or more minerals; minerals have a definite chemical composition",
+        "Rocks are harder than minerals",
+        "Minerals are bigger than rocks",
+        "Rocks are always igneous"
+      ],
+      "correct": "Rocks are made of one or more minerals; minerals have a definite chemical composition"
+    },
+    {
+      "id": "q2",
+      "text": "How are igneous rocks formed?",
+      "options": [
+        "Cooling and solidifying of magma or lava",
+        "Compaction of sediments",
+        "Heat and pressure on existing rocks",
+        "Evaporation of seawater"
+      ],
+      "correct": "Cooling and solidifying of magma or lava"
+    },
+    {
+      "id": "q3",
+      "text": "Which rock type is formed from heat and pressure on existing rocks?",
+      "options": ["Metamorphic", "Igneous", "Sedimentary", "Volcanic"],
+      "correct": "Metamorphic"
+    },
+    {
+      "id": "q4",
+      "text": "Which mineral is used to make cement?",
+      "options": ["Limestone", "Gold", "Copper", "Mica"],
+      "correct": "Limestone"
+    },
+    {
+      "id": "q5",
+      "text": "Which soil type is BEST for most crops?",
+      "options": [
+        "Loam — balanced mix of sand, silt, and clay",
+        "Sandy soil",
+        "Clay soil",
+        "Gravel"
+      ],
+      "correct": "Loam — balanced mix of sand, silt, and clay"
+    },
+    {
+      "id": "q6",
+      "text": "Which Philippine province is known for its marble?",
+      "options": ["Romblon", "Batanes", "Bohol", "Cebu"],
+      "correct": "Romblon"
+    },
+    {
+      "id": "q7",
+      "text": "What is a tsunami usually caused by?",
+      "options": [
+        "An underwater earthquake",
+        "Strong winds",
+        "Tides",
+        "Fish migration"
+      ],
+      "correct": "An underwater earthquake"
+    },
+    {
+      "id": "q8",
+      "text": "What is the point on Earth's surface directly above an earthquake's origin called?",
+      "options": ["Epicenter", "Focus", "Fault", "Crater"],
+      "correct": "Epicenter"
+    },
+    {
+      "id": "q9",
+      "text": "Which of the following is a SLOW geologic process?",
+      "options": [
+        "Saltwater intrusion",
+        "Volcanic eruption",
+        "Tsunami",
+        "Earthquake"
+      ],
+      "correct": "Saltwater intrusion"
+    },
+    {
+      "id": "q10",
+      "text": "What is soil erosion?",
+      "options": [
+        "The gradual removal of topsoil by wind, water, or human activity",
+        "A sudden landslide",
+        "The formation of new soil",
+        "Volcanic ashfall"
+      ],
+      "correct": "The gradual removal of topsoil by wind, water, or human activity"
+    },
+    {
+      "id": "q11",
+      "text": "Which agency monitors volcanic and seismic activity in the Philippines?",
+      "options": ["PHIVOLCS", "PAGASA", "DENR", "NDRRMC"],
+      "correct": "PHIVOLCS"
+    },
+    {
+      "id": "q12",
+      "text": "What is the BEST response during a strong earthquake?",
+      "options": [
+        "Drop, cover, and hold under a sturdy table",
+        "Run outside immediately",
+        "Take an elevator to the ground floor",
+        "Stand under a window"
+      ],
+      "correct": "Drop, cover, and hold under a sturdy table"
+    },
+    {
+      "id": "q13",
+      "text": "About how many tropical cyclones enter Philippine waters each year?",
+      "options": ["About 20", "About 3", "About 50", "About 100"],
+      "correct": "About 20"
+    },
+    {
+      "id": "q14",
+      "text": "What causes a storm surge?",
+      "options": [
+        "A typhoon's strong winds and low pressure pushing sea water onto the coast",
+        "Underwater earthquakes",
+        "Lunar tides only",
+        "Volcanic eruptions"
+      ],
+      "correct": "A typhoon's strong winds and low pressure pushing sea water onto the coast"
+    },
+    {
+      "id": "q15",
+      "text": "Which of the following is the STRONGEST part of a typhoon?",
+      "options": ["The eyewall", "The eye", "The outer rain bands", "The tail"],
+      "correct": "The eyewall"
+    },
+    {
+      "id": "q16",
+      "text": "What is the heat index?",
+      "options": [
+        "The 'feels like' temperature combining heat and humidity",
+        "The actual air temperature",
+        "The temperature of the ocean",
+        "The temperature inside the house"
+      ],
+      "correct": "The 'feels like' temperature combining heat and humidity"
+    },
+    {
+      "id": "q17",
+      "text": "What does PAGASA stand for?",
+      "options": [
+        "Philippine Atmospheric, Geophysical and Astronomical Services Administration",
+        "Philippine Agency for General Science and Astronomy",
+        "Philippine Atmospheric and Geological Assessment",
+        "Pacific Atmospheric Group of Science Agencies"
+      ],
+      "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration"
+    },
+    {
+      "id": "q18",
+      "text": "What does the PAGASA iHEAT map show?",
+      "options": [
+        "Real-time and forecast heat index values across the Philippines",
+        "Volcano locations",
+        "Earthquake epicenters",
+        "Tsunami warnings only"
+      ],
+      "correct": "Real-time and forecast heat index values across the Philippines"
+    },
+    {
+      "id": "q19",
+      "text": "Which heat index range is categorized as DANGER?",
+      "options": ["42–51°C", "27–32°C", "33–41°C", "52°C and above"],
+      "correct": "42–51°C"
+    },
+    {
+      "id": "q20",
+      "text": "What is the urban heat island effect?",
+      "options": [
+        "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat",
+        "Islands are always cooler than the mainland",
+        "Heat escapes only at night",
+        "Urban areas have more rain"
+      ],
+      "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat"
+    }
+  ]
+}

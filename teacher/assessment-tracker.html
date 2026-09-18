@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment Tracker — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .ast-filters {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: end;
+      margin-bottom: 24px;
+    }
+    .ast-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
+
+    .matrix-wrapper {
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 4px;
+    }
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 900px;
+      font-size: 0.8rem;
+    }
+    .matrix-table thead th {
+      background: #f5f7fa;
+      color: #37474f;
+      padding: 10px 8px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border: 1px solid #e0e0e0;
+      border-bottom: 2px solid #b0bec5;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .matrix-table thead th:first-child {
+      text-align: left;
+      padding-left: 14px;
+      min-width: 220px;
+      z-index: 10;
+      position: sticky;
+      left: 0;
+      background: #f5f7fa;
+    }
+    .matrix-table tbody td {
+      padding: 10px 8px;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+      color: #37474f;
+      vertical-align: middle;
+      font-size: 0.78rem;
+    }
+    .matrix-table tbody td:first-child {
+      text-align: left;
+      padding-left: 14px;
+      font-weight: 600;
+      background: #fff;
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      border-right: 2px solid #b0bec5;
+    }
+    .matrix-table tbody tr:hover { background: #fafbfc; }
+    .matrix-table tbody tr:hover td:first-child { background: #fafbfc; }
+
+    .matrix-cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 32px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .matrix-cell.not-taken   { background: #f5f5f5; color: #bdbdbd; }
+    .matrix-cell.passed      { background: #e8f5e9; color: #1b5e20; }
+    .matrix-cell.on-track    { background: #e3f2fd; color: #0d47a1; }
+    .matrix-cell.remediation { background: #fff3e0; color: #e65100; }
+    .matrix-cell.failed      { background: #ffebee; color: #b71c1c; }
+    .matrix-cell.locked      { background: #212121; color: #fff; font-size: 1rem; }
+
+    .section-group-header {
+      background: #0d47a1 !important;
+      color: #fff !important;
+      font-weight: 800 !important;
+      padding: 10px 14px !important;
+      text-align: left !important;
+      letter-spacing: 0.5px;
+    }
+
+    .legend-grid {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      font-size: 0.78rem;
+      color: #5f6368;
+    }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .legend-swatch {
+      width: 18px; height: 18px; border-radius: 4px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700;
+    }
+
+    .ast-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: #90a4ae;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📈 Assessment Tracker</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Assessment Submission Matrix</h1>
+          <p>See at a glance who has taken quizzes, STs, PTs, and the Term Exam for each term.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ast-filters">
+        <div class="form-group">
+          <label class="form-label">Term</label>
+          <select id="filter-term" class="form-control">
+            <option value="term1">Term 1</option>
+            <option value="term2">Term 2</option>
+            <option value="term3">Term 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Section</label>
+          <select id="filter-section" class="form-control">
+            <option value="">All Sections</option>
+            <option value="ACADEMIC A">ACADEMIC A</option>
+            <option value="ACADEMIC B">ACADEMIC B</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:0;">
+          <label class="form-label">&nbsp;</label>
+          <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
+        </div>
+        <div class="form-group" style="flex:0;">
+          <label class="form-label">&nbsp;</label>
+          <button id="btn-export" class="btn btn-outline">📥 Export CSV</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-area">
+      <div class="card ast-empty">
+        <div style="font-size:2.5rem;margin-bottom:12px;">📈</div>
+        <p>Choose a term and section, then click <strong>Refresh</strong> to see the matrix.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      TeacherAuth.init();
+      if (!TeacherAuth.require()) return;
+
+      const ASSESSMENTS = [
+        { key: 'quiz1', type: 'quizzes', id: 'quiz1', label: 'Q1',  full: 'Quiz 1',          max: 20 },
+        { key: 'quiz2', type: 'quizzes', id: 'quiz2', label: 'Q2',  full: 'Quiz 2',          max: 20 },
+        { key: 'quiz3', type: 'quizzes', id: 'quiz3', label: 'Q3',  full: 'Quiz 3',          max: 20 },
+        { key: 'st1',   type: 'st',      id: 'st1',   label: 'ST1', full: 'Summative Test 1', max: 30 },
+        { key: 'st2',   type: 'st',      id: 'st2',   label: 'ST2', full: 'Summative Test 2', max: 30 },
+        { key: 'pt1',   type: 'pt',      id: 'pt1',   label: 'PT1', full: 'Performance Task 1', max: 100 },
+        { key: 'pt2',   type: 'pt',      id: 'pt2',   label: 'PT2', full: 'Performance Task 2', max: 100 },
+        { key: 'pt3',   type: 'pt',      id: 'pt3',   label: 'PT3', full: 'Performance Task 3', max: 100 },
+        { key: 'te',    type: 'te',      id: 'te',    label: 'TE',  full: 'Term Exam',        max: 60 }
+      ];
+
+      APP.$('#btn-refresh').addEventListener('click', render);
+      APP.$('#btn-export').addEventListener('click', exportCSV);
+      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+
+      let lastMatrix = null;
+
+      /* ============================================================
+         RENDER MATRIX
+         ============================================================ */
+      function render() {
+        const term = APP.$('#filter-term').value;
+        const sectionFilter = APP.$('#filter-section').value;
+        const area = APP.$('#results-area');
+
+        let students = Store.getAllUsers();
+        if (sectionFilter) students = students.filter((s) => s.section === sectionFilter);
+
+        if (!students.length) {
+          area.innerHTML = emptyState('👥', 'No students found', 'Students must register and sync first.');
+          return;
+        }
+
+        students = APP.sortStudents(students, 'last', 'asc');
+
+        // Group by section
+        const bySection = {};
+        students.forEach((s) => {
+          const sec = s.section || 'Unknown';
+          if (!bySection[sec]) bySection[sec] = [];
+          bySection[sec].push(s);
+        });
+
+        // Build matrix data
+        lastMatrix = {
+          term,
+          sectionFilter,
+          students,
+          rows: students.map((s) => {
+            const scores = Store.getScores(s.lrn);
+            const t = scores[term] || {};
+            const cells = ASSESSMENTS.map((a) => {
+              let record = null;
+              if (a.type === 'te') record = t.te;
+              else record = t[a.type]?.[a.id];
+
+              if (!record) {
+                const locked = Store.isAssessmentLocked(s.lrn, `${term}_${a.id}`);
+                return { ...a, status: locked ? 'locked' : 'not-taken', record: null };
+              }
+
+              const percent = record.percent ?? (record.total ? Math.round((record.score / record.total) * 100) : null);
+              let status = 'on-track';
+              if (a.type === 'pt') {
+                status = record.score != null
+                  ? (record.score >= 75 ? 'passed' : record.score >= 65 ? 'remediation' : 'failed')
+                  : 'on-track';
+              } else {
+                if (percent !== null) {
+                  if (percent >= 90) status = 'passed';
+                  else if (percent >= 75) status = 'on-track';
+                  else if (percent >= 65) status = 'remediation';
+                  else status = 'failed';
+                }
+              }
+
+              return { ...a, status, record, percent };
+            });
+
+            return { student: s, cells };
+          })
+        };
+
+        // Render
+        let html = `
+          <div class="stats-grid" style="margin-bottom:20px;">
+            <div class="stat-card blue">
+              <div class="stat-icon">👥</div>
+              <div class="stat-value">${students.length}</div>
+              <div class="stat-label">Students</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-icon">📝</div>
+              <div class="stat-value">${countTotalSubmissions()}</div>
+              <div class="stat-label">Submissions</div>
+            </div>
+            <div class="stat-card ${getCompletionPct() >= 75 ? 'green' : getCompletionPct() >= 50 ? 'amber' : 'red'}">
+              <div class="stat-icon">📊</div>
+              <div class="stat-value">${getCompletionPct()}%</div>
+              <div class="stat-label">Completion</div>
+            </div>
+            <div class="stat-card red">
+              <div class="stat-icon">🔒</div>
+              <div class="stat-value">${countLocked()}</div>
+              <div class="stat-label">Locked</div>
+            </div>
+          </div>
+
+          <div class="matrix-wrapper">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  ${ASSESSMENTS.map((a) => `<th title="${a.full}">${a.label}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        Object.entries(bySection).forEach(([section, secStudents]) => {
+          html += `<tr><td colspan="${ASSESSMENTS.length + 1}" class="section-group-header">${section} (${secStudents.length})</td></tr>`;
+
+          secStudents.forEach((s) => {
+            const row = lastMatrix.rows.find((r) => r.student.lrn === s.lrn);
+            const initials = `${(s.firstName || '?').charAt(0)}${(s.lastName || '?').charAt(0)}`.toUpperCase();
+            const avatarClass = UI.getAvatarClass(s.lrn);
+
+            html += `<tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div class="student-avatar ${avatarClass}" style="width:32px;height:32px;font-size:0.7rem;">${initials}</div>
+                  <div>
+                    <div style="font-weight:600;color:#1a1a1a;font-size:0.85rem;">
+                      ${APP.formatFullName(s.lastName, s.firstName, s.middleName)}
+                    </div>
+                    <div style="font-size:0.7rem;color:#90a4ae;">
+                      LRN: ${APP.formatLRN(s.lrn)}
+                    </div>
+                  </div>
+                </div>
+              </td>`;
+
+            row.cells.forEach((c) => {
+              let display = '—';
+              let title = `${c.full}: Not yet taken`;
+              let cls = 'not-taken';
+
+              if (c.status === 'locked') {
+                display = '🔒';
+                title = `${c.full}: Locked (failed or tampered)`;
+                cls = 'locked';
+              } else if (c.record) {
+                if (c.type === 'pt') {
+                  display = c.record.score != null ? `${c.record.score}` : '✓';
+                  title = `${c.full}: ${c.record.score != null ? `${c.record.score}/100` : 'Submitted, awaiting grade'}`;
+                } else {
+                  display = `${c.record.score}/${c.record.total}`;
+                  title = `${c.full}: ${c.record.score}/${c.record.total} (${c.percent}%)`;
+                }
+                cls = c.status;
+              }
+
+              html += `<td>
+                <span class="matrix-cell ${cls}" title="${title}">${display}</span>
+              </td>`;
+            });
+
+            html += '</tr>';
+          });
+        });
+
+        html += `
+              </tbody>
+            </table>
+          </div>
+
+          <div class="legend-grid">
+            <span class="legend-item"><span class="legend-swatch not-taken">—</span> Not taken</span>
+            <span class="legend-item"><span class="legend-swatch on-track">75–89</span> On track (75–89%)</span>
+            <span class="legend-item"><span class="legend-swatch passed">90+</span> Mastered (90%+)</span>
+            <span class="legend-item"><span class="legend-swatch remediation">65–74</span> Remediation (65–74%)</span>
+            <span class="legend-item"><span class="legend-swatch failed">&lt;65</span> Failed (&lt;65%)</span>
+            <span class="legend-item"><span class="legend-swatch locked">🔒</span> Locked</span>
+          </div>
+        `;
+
+        area.innerHTML = html;
+
+        function countTotalSubmissions() {
+          let n = 0;
+          lastMatrix.rows.forEach((r) => r.cells.forEach((c) => { if (c.record) n++; }));
+          return n;
+        }
+
+        function getCompletionPct() {
+          const total = lastMatrix.rows.length * ASSESSMENTS.length;
+          return total ? Math.round((countTotalSubmissions() / total) * 100) : 0;
+        }
+
+        function countLocked() {
+          let n = 0;
+          lastMatrix.rows.forEach((r) => r.cells.forEach((c) => { if (c.status === 'locked') n++; }));
+          return n;
+        }
+
+        APP.toast('Matrix refreshed', 'success', 2000);
+      }
+
+      /* ============================================================
+         EXPORT CSV
+         ============================================================ */
+      function exportCSV() {
+        if (!lastMatrix) {
+          APP.toast('Run the report first', 'warning');
+          return;
+        }
+
+        const headers = ['Student', 'LRN', 'Section', ...ASSESSMENTS.map((a) => a.label)];
+
+        const rows = lastMatrix.rows.map((r) => {
+          const s = r.student;
+          const cells = r.cells.map((c) => {
+            if (c.status === 'locked') return 'LOCKED';
+            if (!c.record) return '';
+            if (c.type === 'pt') return c.record.score != null ? `${c.record.score}/100` : 'Submitted';
+            return `${c.record.score}/${c.record.total}`;
+          });
+          return [
+            APP.formatFullName(s.lastName, s.firstName, s.middleName),
+            s.lrn,
+            s.section,
+            ...cells
+          ];
+        });
+
+        UI.exportCSV(`GSA_${lastMatrix.term}_matrix.csv`, headers, rows);
+        APP.toast('CSV exported', 'success');
+      }
+
+      function emptyState(icon, title, message) {
+        return `
+          <div class="card ast-empty">
+            <div style="font-size:2.5rem;margin-bottom:12px;">${icon}</div>
+            <div style="font-weight:700;color:#37474f;margin-bottom:6px;">${title}</div>
+            ${message ? `<p class="text-muted" style="font-size:0.88rem;max-width:480px;margin:0 auto;">${message}</p>` : ''}
+          </div>
+        `;
+      }
+
+      // Auto-run
+      document.addEventListener('DOMContentLoaded', render);
+    })();
+  </script>
+</body>
+</html>

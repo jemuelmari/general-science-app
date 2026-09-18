@@ -25,7 +25,7 @@ const CONFIG = {
   },
 
   // ---------- Backend (Google Apps Script) ----------
-  BACKEND_URL: '',
+  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbwagiA7udhYQJGcN2T3FO6biHr2GhSZ-3j45Gvs5BoFxF6AARoadCWP3T8p_hPEmLuc/exec',
 
   get backendEnabled() {
     return this.BACKEND_URL && this.BACKEND_URL.length > 20;

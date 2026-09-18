@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard — General Science</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>👩‍🏫 Teacher Dashboard</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="instructor.html">🏠 Dashboard</a>
+        <a href="classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <!-- Hero -->
+    <div class="teacher-hero">
+      <div class="teacher-hero-content">
+        <div class="teacher-hero-text">
+          <h1>Welcome back, Teacher! 👋</h1>
+          <p>General Science · Grade 11 · Academic A &amp; B</p>
+          <div class="teacher-hero-meta">
+            <div class="teacher-hero-stat">
+              <span>👥</span>
+              <div><strong id="stat-total">0</strong> students</div>
+            </div>
+            <div class="teacher-hero-stat">
+              <span>📘</span>
+              <div><strong>3</strong> terms</div>
+            </div>
+            <div class="teacher-hero-stat">
+              <span>📝</span>
+              <div><strong>9</strong> assessments per term</div>
+            </div>
+          </div>
+        </div>
+        <div class="teacher-hero-actions">
+          <a href="classrecord.html">📊 Open Class Record</a>
+          <a href="teacher/sync-center.html" class="outline">🔄 Sync Center</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid" id="quick-stats"></div>
+
+    <!-- Action Cards -->
+    <div class="dash-section-title" style="color:#0d47a1;display:flex;align-items:center;gap:10px;margin:28px 0 14px;font-size:1.1rem;font-weight:700;">
+      <span style="display:inline-block;width:4px;height:20px;background:linear-gradient(180deg,#0d47a1,#00acc1);border-radius:2px;"></span>
+      🧰 Teacher Tools
+    </div>
+
+    <div class="action-grid">
+      <a class="action-card" href="teacher/sync-center.html">
+        <div class="action-icon">🔄</div>
+        <h3>Sync Center</h3>
+        <p>Import student progress via sync codes, JSON files, or Google Sheets</p>
+      </a>
+
+      <a class="action-card" href="teacher/item-analysis.html">
+        <div class="action-icon">🔬</div>
+        <h3>Item Analysis</h3>
+        <p>Analyze quiz results per item — identify most/least learned competencies</p>
+      </a>
+
+      <a class="action-card" href="teacher/intervention.html">
+        <div class="action-icon">🎯</div>
+        <h3>Intervention</h3>
+        <p>Classify students by performance and generate targeted intervention plans</p>
+      </a>
+
+      <a class="action-card" href="teacher/activity-tracker.html">
+        <div class="action-icon">📋</div>
+        <h3>Activity Tracker</h3>
+        <p>Monitor weekly lesson completion and activity pass rates</p>
+      </a>
+
+      <a class="action-card" href="teacher/assessment-tracker.html">
+        <div class="action-icon">📈</div>
+        <h3>Assessment Tracker</h3>
+        <p>Track quizzes, STs, PTs, and Term Exam submissions at a glance</p>
+      </a>
+
+      <a class="action-card" href="teacher/locked-assessments.html">
+        <div class="action-icon">🔒</div>
+        <h3>Locked Assessments</h3>
+        <p>Review and unlock assessments that students failed or were locked out of</p>
+      </a>
+
+      <a class="action-card" href="teacher/normalize-names.html">
+        <div class="action-icon">📝</div>
+        <h3>Normalize Names</h3>
+        <p>Fix student name formatting (ALL CAPS last name, Title Case first name)</p>
+      </a>
+
+      <a class="action-card" href="classrecord.html">
+        <div class="action-icon">📊</div>
+        <h3>Class Record</h3>
+        <p>Complete gradebook with transmutation, reports, and item analytics</p>
+      </a>
+    </div>
+
+    <!-- Student Roster -->
+    <div class="section-header">
+      <h2 class="section-title">👥 Student Roster</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <select id="roster-section" class="form-control" style="min-width:180px;padding:8px 12px;font-size:0.85rem;">
+          <option value="">All Sections</option>
+          <option value="ACADEMIC A">ACADEMIC A</option>
+          <option value="ACADEMIC B">ACADEMIC B</option>
+        </select>
+        <input type="text" id="roster-search" class="form-control" placeholder="Search by name or LRN…"
+               style="min-width:220px;padding:8px 12px;font-size:0.85rem;" />
+      </div>
+    </div>
+
+    <div id="roster-container" class="card" style="padding:0;overflow:hidden;">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>LRN</th>
+            <th>Section</th>
+            <th>Sex</th>
+            <th>T1 Days</th>
+            <th>T2 Days</th>
+            <th>T3 Days</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="roster-body">
+          <tr><td colspan="8" style="text-align:center;padding:40px;color:#90a4ae;">
+            Loading students…
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/security.js"></script>
+  <script src="assets/js/transmutation.js"></script>
+  <script src="assets/js/activity-tracker.js"></script>
+  <script src="assets/js/teacher-auth.js"></script>
+  <script src="assets/js/teacher.js"></script>
+</body>
+</html>

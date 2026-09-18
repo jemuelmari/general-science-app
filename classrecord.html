@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Record — General Science</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header classrecord-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📊 Class Record</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="instructor.html">🏠 Dashboard</a>
+        <a href="classrecord/grading-sheet.html">📋 Grading Sheet</a>
+        <a href="classrecord/reports.html">📈 Reports</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <!-- Hero -->
+    <div class="classrecord-hero">
+      <div class="classrecord-hero-content">
+        <div>
+          <h1>📊 Gradebook Overview</h1>
+          <p class="subtitle">General Science · Grade 11 · 3 Terms · Weighting: 20% WW / 50% PT / 30% EX</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="classrecord/grading-sheet.html" class="btn btn-primary" style="background:#fff;color:#00695c;">
+            📋 Open Grading Sheet
+          </a>
+          <a href="classrecord/reports.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">
+            📈 View Reports
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="filter-term">Term</label>
+        <select id="filter-term">
+          <option value="term1">Term 1 — Physics & Chemistry</option>
+          <option value="term2">Term 2 — Chemistry & Life Science</option>
+          <option value="term3">Term 3 — Earth Science</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filter-section">Section</label>
+        <select id="filter-section">
+          <option value="">All Sections</option>
+          <option value="ACADEMIC A">ACADEMIC A</option>
+          <option value="ACADEMIC B">ACADEMIC B</option>
+        </select>
+      </div>
+      <div class="filter-group" style="flex:0;">
+        <label>&nbsp;</label>
+        <button id="btn-refresh" class="btn btn-primary" style="padding:10px 18px;">🔄 Refresh</button>
+      </div>
+      <div class="filter-group" style="flex:0;">
+        <label>&nbsp;</label>
+        <button id="btn-export" class="btn btn-outline" style="padding:10px 18px;">📥 Export CSV</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="cr-stats-grid" id="cr-stats"></div>
+
+    <!-- Tabs -->
+    <div class="cr-tabs">
+      <button class="cr-tab active" data-tab="summary">📋 Summary</button>
+      <button class="cr-tab" data-tab="distribution">📊 Distribution</button>
+      <button class="cr-tab" data-tab="mll">🎯 Most/Least Learned</button>
+      <button class="cr-tab" data-tab="transmutation">📐 Transmutation</button>
+    </div>
+
+    <!-- Summary tab -->
+    <div id="tab-summary" class="cr-tab-panel">
+      <div class="gradebook-wrapper">
+        <div class="gradebook-scroll">
+          <table class="gradebook-table" id="summary-table">
+            <thead>
+              <tr>
+                <th rowspan="2">Student</th>
+                <th colspan="3" class="col-group" style="background:linear-gradient(180deg,#e3f2fd,#bbdefb);color:#0d47a1;">Written Works (20%)</th>
+                <th colspan="3" class="col-group" style="background:linear-gradient(180deg,#e0f2f1,#b2dfdb);color:#00695c;">Performance Tasks (50%)</th>
+                <th colspan="3" class="col-group" style="background:linear-gradient(180deg,#f3e5f5,#e1bee7);color:#6a1b9a;">Term Exam (30%)</th>
+                <th rowspan="2" style="background:#f5f7fa;">Final</th>
+              </tr>
+              <tr>
+                <th>Q1</th><th>Q2</th><th>Q3</th>
+                <th>PT1</th><th>PT2</th><th>PT3</th>
+                <th>ST1</th><th>ST2</th><th>TE</th>
+              </tr>
+            </thead>
+            <tbody id="summary-body">
+              <tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Distribution tab -->
+    <div id="tab-distribution" class="cr-tab-panel" style="display:none;">
+      <div class="report-grid" id="distribution-grid"></div>
+    </div>
+
+    <!-- Most/Least Learned tab -->
+    <div id="tab-mll" class="cr-tab-panel" style="display:none;">
+      <div class="report-grid" id="mll-grid"></div>
+    </div>
+
+    <!-- Transmutation tab -->
+    <div id="tab-transmutation" class="cr-tab-panel" style="display:none;">
+      <div class="report-card" style="max-width:600px;margin:0 auto;">
+        <h4>📐 Adjusted Transmutation Table (SY 2026–2027)</h4>
+        <p class="text-small text-muted" style="margin-bottom:16px;">
+          Anchor: <strong>raw 70 → transmuted 75</strong> (passing). Applies to Academic Electives.
+        </p>
+        <table class="transmutation-table">
+          <thead>
+            <tr><th>Raw Score</th><th>Transmuted</th><th>Raw Score</th><th>Transmuted</th></tr>
+          </thead>
+          <tbody id="transmutation-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/security.js"></script>
+  <script src="assets/js/transmutation.js"></script>
+  <script src="assets/js/activity-tracker.js"></script>
+  <script src="assets/js/teacher-auth.js"></script>
+  <script src="assets/js/classrecord.js"></script>
+</body>
+</html>

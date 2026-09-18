@@ -1,0 +1,192 @@
+{
+  "title": "Quiz 2 — Philippine Geology & Biodiversity",
+  "coverage": "Weeks 3–4",
+  "items": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is the theory that Earth's outer shell is broken into moving plates called?",
+      "options": ["Plate tectonics", "Continental drift", "Big Bang theory", "Rock cycle"],
+      "correct": "Plate tectonics"
+    },
+    {
+      "id": "q2",
+      "text": "At which type of plate boundary do volcanoes MOST commonly form?",
+      "options": [
+        "Convergent boundary (subduction zones)",
+        "Divergent boundary only",
+        "Transform boundary",
+        "Volcanoes form randomly"
+      ],
+      "correct": "Convergent boundary (subduction zones)"
+    },
+    {
+      "id": "q3",
+      "text": "The Philippine Fault System is an example of which plate boundary type?",
+      "options": [
+        "Transform (plates slide past each other)",
+        "Convergent",
+        "Divergent",
+        "Accretion"
+      ],
+      "correct": "Transform (plates slide past each other)"
+    },
+    {
+      "id": "q4",
+      "text": "How were the Philippine islands primarily formed?",
+      "options": [
+        "Through volcanic arcs, collisions, and tectonic uplift over millions of years",
+        "They were carried by ocean currents",
+        "They are fragments of the Moon",
+        "They were always a single big island"
+      ],
+      "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years"
+    },
+    {
+      "id": "q5",
+      "text": "What is the Pacific Ring of Fire?",
+      "options": [
+        "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur",
+        "A ring of fire in Hawaii",
+        "A type of volcano",
+        "A boundary between continents"
+      ],
+      "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur"
+    },
+    {
+      "id": "q6",
+      "text": "Why are marine fossils found on Philippine mountains?",
+      "options": [
+        "The ocean once covered the area, and tectonic uplift raised the land above sea level",
+        "Fish used to live on land",
+        "People carried them up there",
+        "They fell from the sky"
+      ],
+      "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level"
+    },
+    {
+      "id": "q7",
+      "text": "Which tectonic plate subducts beneath Luzon and the Visayas, creating volcanoes and trenches?",
+      "options": ["Philippine Sea Plate", "Eurasian Plate", "Sunda Plate", "Pacific Plate"],
+      "correct": "Philippine Sea Plate"
+    },
+    {
+      "id": "q8",
+      "text": "What geological feature is east of Mindanao and reaches depths of over 10,000 meters?",
+      "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"],
+      "correct": "Philippine Trench"
+    },
+    {
+      "id": "q9",
+      "text": "Which of the following landforms is a karst landscape with an underground river?",
+      "options": [
+        "Puerto Princesa Underground River",
+        "Chocolate Hills",
+        "Banaue Rice Terraces",
+        "Mayon Volcano"
+      ],
+      "correct": "Puerto Princesa Underground River"
+    },
+    {
+      "id": "q10",
+      "text": "Which of the following describes the Chocolate Hills of Bohol?",
+      "options": [
+        "Rounded hills formed by weathering of limestone",
+        "Volcanic craters",
+        "Sand dunes",
+        "Coral reefs"
+      ],
+      "correct": "Rounded hills formed by weathering of limestone"
+    },
+    {
+      "id": "q11",
+      "text": "How many climate types does PAGASA classify in the Philippines?",
+      "options": ["Four (Types I–IV)", "Two", "Six", "One"],
+      "correct": "Four (Types I–IV)"
+    },
+    {
+      "id": "q12",
+      "text": "Which monsoon wind brings cool, dry weather from November to February?",
+      "options": [
+        "Amihan (NE monsoon)",
+        "Habagat (SW monsoon)",
+        "Trade winds",
+        "Sea breeze"
+      ],
+      "correct": "Amihan (NE monsoon)"
+    },
+    {
+      "id": "q13",
+      "text": "About how many tropical cyclones enter Philippine waters each year?",
+      "options": ["About 20", "About 5", "About 50", "About 100"],
+      "correct": "About 20"
+    },
+    {
+      "id": "q14",
+      "text": "Which region of the Philippines typically has Type II climate (no dry season, rainfall throughout the year)?",
+      "options": [
+        "Bicol and Eastern Visayas",
+        "Central Luzon",
+        "Ilocos Region",
+        "Cagayan Valley"
+      ],
+      "correct": "Bicol and Eastern Visayas"
+    },
+    {
+      "id": "q15",
+      "text": "What is the Coral Triangle?",
+      "options": [
+        "A marine region including the Philippines with 2,500+ fish species and 500+ coral species",
+        "A political alliance of three countries",
+        "A type of coral reef",
+        "A scientific lab"
+      ],
+      "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species"
+    },
+    {
+      "id": "q16",
+      "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?",
+      "options": ["About 65%", "About 10%", "About 100%", "About 5%"],
+      "correct": "About 65%"
+    },
+    {
+      "id": "q17",
+      "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?",
+      "options": [
+        "Philippine Eagle",
+        "Palawan Peacock-Pheasant",
+        "Philippine Tarsier",
+        "Visayan Warty Pig"
+      ],
+      "correct": "Philippine Eagle"
+    },
+    {
+      "id": "q18",
+      "text": "Which small buffalo species is found ONLY in Mindoro?",
+      "options": ["Tamaraw", "Carabao", "Anoa", "Banteng"],
+      "correct": "Tamaraw"
+    },
+    {
+      "id": "q19",
+      "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
+      "options": [
+        "Habitat loss from deforestation, mining, and land conversion",
+        "Too many protected areas",
+        "Overpopulation of endemic species",
+        "Excessive rainfall"
+      ],
+      "correct": "Habitat loss from deforestation, mining, and land conversion"
+    },
+    {
+      "id": "q20",
+      "text": "The Philippines is one of 17 megadiverse countries. What does this mean?",
+      "options": [
+        "It contains a very high number of species, many of which are endemic",
+        "It has the largest land area",
+        "It has the highest population",
+        "It has the most volcanoes"
+      ],
+      "correct": "It contains a very high number of species, many of which are endemic"
+    }
+  ]
+}

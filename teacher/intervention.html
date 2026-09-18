@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intervention — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .iv-filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+    .iv-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
+
+    .iv-bucket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .iv-bucket {
+      padding: 18px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-left: 5px solid #90a4ae;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .iv-bucket:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+    .iv-bucket.active { box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.2); }
+    .iv-bucket.enrichment { border-left-color: #2e7d32; }
+    .iv-bucket.on-track   { border-left-color: #0277bd; }
+    .iv-bucket.remediation{ border-left-color: #ed6c02; }
+    .iv-bucket.urgent     { border-left-color: #c62828; }
+
+    .iv-bucket .icon { font-size: 1.6rem; }
+    .iv-bucket .count {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-top: 8px;
+    }
+    .iv-bucket .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 6px;
+    }
+
+    .intervention-card-detailed {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      border-left: 4px solid #90a4ae;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.15s;
+    }
+    .intervention-card-detailed:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    .intervention-card-detailed.enrichment { border-left-color: #2e7d32; }
+    .intervention-card-detailed.on-track   { border-left-color: #0277bd; }
+    .intervention-card-detailed.remediation{ border-left-color: #ed6c02; }
+    .intervention-card-detailed.urgent     { border-left-color: #c62828; }
+
+    .iv-student-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .iv-suggested {
+      font-size: 0.85rem;
+      padding: 12px 14px;
+      background: #f5f7fa;
+      border-radius: 8px;
+      color: #37474f;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+    .iv-suggested strong { color: #0d47a1; }
+    .iv-suggested ul { margin: 6px 0 0 20px; }
+
+    .iv-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: #90a4ae;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🎯 Intervention</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Performance Intervention</h1>
+          <p>Classify students by performance and generate targeted intervention plans per term.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+      <div class="iv-filters">
+        <div class="form-group">
+          <label class="form-label">Term</label>
+          <select id="filter-term" class="form-control">
+            <option value="term1">Term 1</option>
+            <option value="term2">Term 2</option>
+            <option value="term3">Term 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Section</label>
+          <select id="filter-section" class="form-control">
+            <option value="">All Sections</option>
+            <option value="ACADEMIC A">ACADEMIC A</option>
+            <option value="ACADEMIC B">ACADEMIC B</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:0;">
+          <label class="form-label">&nbsp;</label>
+          <button id="btn-run" class="btn btn-primary">🔄 Compute</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buckets -->
+    <div id="buckets-area" style="display:none;">
+      <div class="iv-bucket-grid" id="bucket-grid"></div>
+    </div>
+
+    <!-- Students list -->
+    <div id="students-area">
+      <div class="card iv-empty">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🎯</div>
+        <p>Choose a term and section, then click <strong>Compute</strong> to see student classifications.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      TeacherAuth.init();
+      if (!TeacherAuth.require()) return;
+
+      let currentBuckets = null;
+      let activeBucket = 'all';
+      let allClassified = [];
+
+      const BUCKET_META = {
+        enrichment:  { label: 'Enrichment',        icon: '🌟', color: '#2e7d32' },
+        'on-track':  { label: 'On Track',          icon: '✅', color: '#0277bd' },
+        remediation: { label: 'Remediation Needed', icon: '📖', color: '#ed6c02' },
+        urgent:      { label: 'Urgent Intervention', icon: '🚨', color: '#c62828' }
+      };
+
+      APP.$('#btn-run').addEventListener('click', computeIntervention);
+      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+
+      /* ============================================================
+         COMPUTE
+         ============================================================ */
+      function computeIntervention() {
+        const term = APP.$('#filter-term').value;
+        const sectionFilter = APP.$('#filter-section').value;
+
+        let students = Store.getAllUsers();
+        if (sectionFilter) students = students.filter((s) => s.section === sectionFilter);
+
+        if (!students.length) {
+          APP.$('#students-area').innerHTML = emptyState('👥', 'No students found');
+          APP.$('#buckets-area').style.display = 'none';
+          return;
+        }
+
+        // Classify each student
+        allClassified = students.map((s) => {
+          const scores = Store.getScores(s.lrn);
+          const t = scores[term] || {};
+
+          // Collect ST percentages for the term
+          const stPcts = [];
+          Object.values(t.st || {}).forEach((st) => {
+            if (st && st.total) stPcts.push((st.score / st.total) * 100);
+          });
+
+          // Also factor in quiz percentages
+          const quizPcts = [];
+          Object.values(t.quizzes || {}).forEach((q) => {
+            if (q && q.total) quizPcts.push((q.score / q.total) * 100);
+          });
+
+          const allPcts = [...stPcts, ...quizPcts];
+          const avg = allPcts.length
+            ? allPcts.reduce((a, b) => a + b, 0) / allPcts.length
+            : null;
+
+          const classification = avg !== null
+            ? Transmutation.classifyStudent(avg)
+            : { label: 'No data yet', key: 'on-track' };
+
+          // Progress
+          const progress = Store.getProgress(s.lrn);
+          const daysDone = progress[term]?.completed?.length || 0;
+
+          return {
+            student: s,
+            avg,
+            classification,
+            stCount: stPcts.length,
+            quizCount: quizPcts.length,
+            daysDone,
+            scores: t
+          };
+        });
+
+        // Sort: urgent first, enrichment last
+        const order = { urgent: 0, remediation: 1, 'on-track': 2, enrichment: 3 };
+        allClassified.sort((a, b) => {
+          const diff = (order[a.classification.key] ?? 99) - (order[b.classification.key] ?? 99);
+          if (diff !== 0) return diff;
+          return (a.avg ?? 100) - (b.avg ?? 100);
+        });
+
+        // Group into buckets
+        currentBuckets = {
+          enrichment: allClassified.filter((x) => x.classification.key === 'enrichment'),
+          'on-track': allClassified.filter((x) => x.classification.key === 'on-track'),
+          remediation: allClassified.filter((x) => x.classification.key === 'remediation'),
+          urgent: allClassified.filter((x) => x.classification.key === 'urgent')
+        };
+
+        activeBucket = 'all';
+        renderBuckets();
+        renderStudents();
+      }
+
+      /* ============================================================
+         BUCKETS
+         ============================================================ */
+      function renderBuckets() {
+        const grid = APP.$('#bucket-grid');
+        APP.$('#buckets-area').style.display = 'block';
+
+        const all = allClassified.length;
+        const cards = [
+          { key: 'all', label: 'All Students', icon: '👥', color: '#0d47a1', count: all },
+          { key: 'enrichment',  ...BUCKET_META.enrichment,  count: currentBuckets.enrichment.length },
+          { key: 'on-track',    ...BUCKET_META['on-track'], count: currentBuckets['on-track'].length },
+          { key: 'remediation', ...BUCKET_META.remediation, count: currentBuckets.remediation.length },
+          { key: 'urgent',      ...BUCKET_META.urgent,      count: currentBuckets.urgent.length }
+        ];
+
+        grid.innerHTML = cards.map((b) => `
+          <div class="iv-bucket ${b.key} ${activeBucket === b.key ? 'active' : ''}"
+               data-bucket="${b.key}" style="${b.key === 'all' ? 'border-left-color:#0d47a1;' : ''}">
+            <div class="icon">${b.icon}</div>
+            <div class="count" style="color:${b.color};">${b.count}</div>
+            <div class="label">${b.label}</div>
+          </div>
+        `).join('');
+
+        grid.querySelectorAll('[data-bucket]').forEach((el) => {
+          el.addEventListener('click', () => {
+            activeBucket = el.dataset.bucket;
+            renderBuckets();
+            renderStudents();
+          });
+        });
+      }
+
+      /* ============================================================
+         STUDENT LIST
+         ============================================================ */
+      function renderStudents() {
+        const area = APP.$('#students-area');
+        const term = APP.$('#filter-term').value;
+
+        let list = allClassified;
+        if (activeBucket !== 'all') list = currentBuckets[activeBucket] || [];
+
+        if (!list.length) {
+          area.innerHTML = emptyState('📭', 'No students in this category', 'Try another term or bucket.');
+          return;
+        }
+
+        area.innerHTML = list.map((entry) => {
+          const s = entry.student;
+          const cls = entry.classification;
+          const initials = `${(s.firstName || '?').charAt(0)}${(s.lastName || '?').charAt(0)}`.toUpperCase();
+          const avatarClass = UI.getAvatarClass(s.lrn);
+          const avgDisplay = entry.avg !== null ? entry.avg.toFixed(1) + '%' : '—';
+
+          return `
+            <div class="intervention-card-detailed ${cls.key}">
+              <div class="iv-student-head">
+                <div class="student-avatar ${avatarClass}">${initials}</div>
+                <div style="flex:1;min-width:180px;">
+                  <div style="font-weight:700;font-size:0.98rem;color:#1a1a1a;">
+                    ${APP.formatFullName(s.lastName, s.firstName, s.middleName)}
+                  </div>
+                  <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">
+                    LRN: ${APP.formatLRN(s.lrn)} · ${s.section}
+                  </div>
+                </div>
+                <span class="badge-pill ${cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger'}">
+                  ${cls.label}
+                </span>
+              </div>
+
+              <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:0.82rem;color:#37474f;margin:8px 0 4px;">
+                <div><strong>Avg:</strong> <span style="color:${avgColor(entry.avg)};font-weight:700;">${avgDisplay}</span></div>
+                <div><strong>Quizzes:</strong> ${entry.quizCount}/3</div>
+                <div><strong>STs:</strong> ${entry.stCount}/2</div>
+                <div><strong>Days done:</strong> ${entry.daysDone}/40</div>
+              </div>
+
+              <div class="iv-suggested">
+                <strong>📋 Suggested Intervention:</strong>
+                ${suggestedIntervention(entry, term)}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      /* ============================================================
+         SUGGESTED INTERVENTION GENERATOR
+         ============================================================ */
+      function suggestedIntervention(entry, term) {
+        const cls = entry.classification.key;
+        const termLabel = term.replace('term', 'Term ');
+        const actions = [];
+
+        if (cls === 'enrichment') {
+          actions.push('Offer advanced enrichment tasks — extended performance tasks, deeper research, or peer tutoring roles.');
+          actions.push('Encourage participation in science fairs, quiz bees, or olympiad-style challenges.');
+          actions.push('Provide enrichment reading or supplementary problem sets at higher difficulty.');
+        } else if (cls === 'on-track') {
+          actions.push('Maintain current learning pace with consistent formative feedback.');
+          actions.push('Provide occasional challenge problems to build toward Enrichment status.');
+          actions.push('Encourage the student to help classmates — peer teaching reinforces mastery.');
+        } else if (cls === 'remediation') {
+          actions.push('Schedule small-group remediation sessions focused on the least-learned items.');
+          actions.push('Assign the corresponding weekly lessons again — allow retakes on activities (they are unlocked for practice).');
+          actions.push('Pair the student with a peer mentor for guided review of weak competencies.');
+          actions.push('Provide explicit, scaffolded practice on prerequisite skills.');
+        } else if (cls === 'urgent') {
+          actions.push('⚠️ Immediate one-on-one conference with the student and parent/guardian.');
+          actions.push('Identify root causes: attendance, motivation, comprehension gaps, or personal issues.');
+          actions.push('Create a personalized catch-up plan targeting missed weeks and assessments.');
+          actions.push('Re-administer prerequisite assessments after intervention to measure progress.');
+          actions.push('Consider referral to guidance office if non-academic issues are suspected.');
+        }
+
+        if (entry.quizCount < 3) actions.push(`Attempt ${3 - entry.quizCount} more quiz(zes) for ${termLabel}.`);
+        if (entry.stCount < 2) actions.push(`Attempt ${2 - entry.stCount} more Summative Test(s) for ${termLabel}.`);
+        if (entry.daysDone < 20) actions.push(`Complete ${20 - entry.daysDone} more lesson days — student is behind pace.`);
+
+        return `<ul>${actions.map((a) => `<li>${a}</li>`).join('')}</ul>`;
+      }
+
+      /* ============================================================
+         HELPERS
+         ============================================================ */
+      function avgColor(avg) {
+        if (avg === null) return '#90a4ae';
+        if (avg >= 90) return '#2e7d32';
+        if (avg >= 75) return '#0277bd';
+        if (avg >= 65) return '#ed6c02';
+        return '#c62828';
+      }
+
+      function emptyState(icon, title, message) {
+        return `
+          <div class="card iv-empty">
+            <div style="font-size:2.5rem;margin-bottom:12px;">${icon}</div>
+            <div style="font-weight:700;color:#37474f;margin-bottom:6px;">${title}</div>
+            ${message ? `<p class="text-muted" style="font-size:0.88rem;max-width:480px;margin:0 auto;">${message}</p>` : ''}
+          </div>
+        `;
+      }
+
+    })();
+  </script>
+</body>
+</html>

@@ -23,15 +23,15 @@ Department of Education
 
 ## 📖 Overview
 
-A web-based modular learning application for Senior High School General Science (Grade 11), aligned with the DepEd Three-Term Budget of Work (BOW) and DepEd Order No. 015, s. 2026.
+A web-based modular learning application for Senior High School **General Science (Grade 11)**, aligned with the DepEd Three-Term Budget of Work (BOW) and **DepEd Order No. 015, s. 2026**.
 
 Contains **three platforms**:
 
 | Platform | File | Purpose |
 |---|---|---|
-| Student Application | `index.html` | Lessons, gamified activities, assessments, remediation |
-| Teacher Application | `instructor.html` | Item analysis, intervention, sync center (password-protected) |
-| Gradebook Application | `classrecord.html` | Class record, transmutation, reports (password-protected) |
+| Student Application | `index.html` → `student/login.html` | Lessons, gamified activities, assessments, remediation |
+| Teacher Application | `teacher-login.html` → `instructor.html` | Item analysis, intervention, sync center (password-protected) |
+| Gradebook Application | `teacher-login.html` → `classrecord.html` | Class record, transmutation, reports (password-protected) |
 
 ---
 
@@ -85,11 +85,11 @@ SY 2027–2028 onward: No transmutation for Grades 4–12.
 
 The default teacher password is `teacher2026`. **Change it before deploying.**
 
-To change the password:
+**To change the password:**
 
-1. Open `teacher-login.html` in a browser
-2. Press F12 → Console
-3. Run: `TeacherAuth.hash('YourNewPassword').then(h => console.log(h))`
+1. Open your deployed app in a browser
+2. Press **F12** → Console
+3. Run: `TeacherAuth.hash('YourNewPassword').then(console.log)`
 4. Copy the output hash
 5. Paste it into `config.js` → `TEACHER_PASSWORD_HASH`
 6. Commit and push
@@ -101,17 +101,22 @@ To change the password:
 - **Primary color:** Science Blue `#0d47a1`
 - **Accent color:** Cyan `#00acc1`
 - **Gradebook accent:** Teal `#00695c`
+- **Term 1 accent:** Blue `#0d47a1`
+- **Term 2 accent:** Teal `#00695c`
+- **Term 3 accent:** Deep Teal `#004d40`
 
 ---
 
-## 📚 References
+## 📦 Setup & Deployment
 
-- DepEd Grade 11 General Science Three-Term Budget of Work (April 8, 2026)
-- DepEd Order No. 015, s. 2026
-- DepEd K to 12 Curriculum Guide
+### Option 1: Deploy on GitHub Pages (Recommended)
 
----
+1. **Fork or clone this repository** to your GitHub account.
 
-## 📝 License
+2. **Enable GitHub Pages**:
+   - Repo → Settings → Pages
+   - Source: `Deploy from a branch`
+   - Branch: `main` / root
+   - Click **Save**
 
-For educational use. © 2026 Jemuel C. Mari. All rights reserved.
+3. Wait ~1 minute. Your app will be live at:

@@ -1,0 +1,35 @@
+{
+  "id": "pt2",
+  "title": "PT2 — Earth Materials in My Community: Field Survey & Industry Report",
+  "shortTitle": "PT2 — Earth Materials in My Community",
+  "coverage": "Weeks 4–7",
+  "summary": "Conduct a field survey of earth materials used in your community, then write a report analyzing how rocks, minerals, and soils are harnessed by local industries.",
+  "instructions": "<p>Your task is to <strong>conduct a field survey</strong> of the earth materials used in your community and write a report on how they are harnessed by local industries. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Identify at least 5 examples</strong> of earth materials being used in your community. Examples:<ul style='margin-left:20px;margin-top:6px;'><li>Rocks — granite, marble, limestone in buildings, walls, or bridges</li><li>Minerals — copper wires, gold jewelry, silica in glass, salt (halite)</li><li>Soils — loam in gardens or farms, clay in pottery or bricks</li><li>Aggregates — sand, gravel, cement in construction</li></ul></li><li>For each material, take a <strong>photo</strong> and record:<ul style='margin-left:20px;margin-top:6px;'><li>Where you found it (specific location)</li><li>How it's being used (industry or purpose)</li><li>What rock type, mineral, or soil type it belongs to</li><li>Whether it is locally sourced or imported</li></ul></li><li><strong>Write a 2–3 page report</strong> covering:<ul style='margin-left:20px;margin-top:6px;'><li>Classification of each material (igneous/sedimentary/metamorphic rock; specific mineral; soil type)</li><li>How the material is extracted or collected</li><li>Environmental impact of its use or extraction in your community</li><li>Sustainable alternatives or practices</li></ul></li><li><strong>Create a community map or infographic</strong> showing where these materials are used.</li><li><strong>Reflect</strong> on how dependent your community is on earth materials and what could happen if they became scarce.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> Submit as PDF report + photos + community map/infographic. You may also create a video walk-through.</p>",
+  "requirements": [
+    "At least 5 examples of earth materials used in your community",
+    "Photo of each material in its real context",
+    "Classification of each material (rock/mineral/soil type)",
+    "Location and description of how it's used",
+    "2–3 page written report",
+    "Community map or infographic showing material uses",
+    "Discussion of environmental impact",
+    "Sustainable alternatives or practices proposed",
+    "Personal reflection on community dependence",
+    "Citations of sources used"
+  ],
+  "options": [
+    "Written PDF report + photos + community map",
+    "Video walk-through (5–8 minutes) with the same content",
+    "Digital infographic or poster (PDF or image)"
+  ],
+  "rubric": [
+    { "criterion": "Number and variety of earth materials identified (5+)", "points": 20 },
+    { "criterion": "Correct classification of each material", "points": 20 },
+    { "criterion": "Quality of field survey (photos + accurate descriptions)", "points": 15 },
+    { "criterion": "Depth of report on extraction, use, and impact", "points": 15 },
+    { "criterion": "Quality of community map or infographic", "points": 10 },
+    { "criterion": "Sustainable alternatives proposed", "points": 10 },
+    { "criterion": "Reflection quality", "points": 5 },
+    { "criterion": "Citations and organization", "points": 5 }
+  ]
+}

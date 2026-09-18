@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Science Online Modular Application</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #00acc1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #fff;
+      padding: 24px;
+    }
+
+    .landing {
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
+    }
+
+    .landing-logo {
+      font-size: 4rem;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+    }
+
+    .landing h1 {
+      font-size: 2rem;
+      margin: 0 0 8px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .landing-subtitle {
+      font-size: 1rem;
+      opacity: 0.92;
+      margin: 0 0 4px;
+    }
+
+    .landing-grade {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 12px;
+      margin-bottom: 32px;
+    }
+
+    .landing-cards {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .landing-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #1a1a1a;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .landing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      background: #fff;
+    }
+
+    .landing-card-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .landing-card-body h3 {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+      color: #0d47a1;
+      font-weight: 700;
+    }
+
+    .landing-card-body p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #5f6368;
+      line-height: 1.4;
+    }
+
+    .landing-card.admin h3 { color: #00695c; }
+
+    .landing-footer {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    .landing-footer strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .landing-version {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 3px 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: 'Consolas', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 480px) {
+      .landing h1 { font-size: 1.5rem; }
+      .landing-logo { font-size: 3rem; }
+      .landing-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="landing">
+    <div class="landing-logo">🔬</div>
+    <h1>General Science</h1>
+    <p class="landing-subtitle">Online Modular Application</p>
+    <span class="landing-grade">Grade 11 · Academic A &amp; B</span>
+
+    <div class="landing-cards">
+
+      <a class="landing-card" href="student/login.html">
+        <div class="landing-card-icon">👨‍🎓</div>
+        <div class="landing-card-body">
+          <h3>Student Login</h3>
+          <p>Access lessons, activities, quizzes, and performance tasks</p>
+        </div>
+      </a>
+
+      <a class="landing-card admin" href="teacher-login.html">
+        <div class="landing-card-icon">👩‍🏫</div>
+        <div class="landing-card-body">
+          <h3>Teacher Login</h3>
+          <p>Item analysis, intervention, sync center, and class management</p>
+        </div>
+      </a>
+
+      <a class="landing-card admin" href="teacher-login.html?next=classrecord.html">
+        <div class="landing-card-icon">📊</div>
+        <div class="landing-card-body">
+          <h3>Class Record / Gradebook</h3>
+          <p>Transmutation, reports, and item-level analytics</p>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="landing-footer">
+      <strong>JEMUEL C. MARI, MAN, RN, LPT</strong>
+      Senior High School Teacher · Iba High School<br>
+      Schools Division of Tarlac Province · Region III<br>
+      Department of Education
+      <div class="landing-version">v1.0.0</div>
+    </div>
+  </div>
+
+</body>
+</html>
