@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self-Diagnostic — General Science</title>
+  <link rel="stylesheet" href="assets/css/main.css?v=1" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f6f8;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1a1a1a;
+    }
+
+    .diag-header {
+      background: linear-gradient(135deg, #062b5f 0%, #0d47a1 50%, #1976d2 100%);
+      color: #fff;
+      padding: 28px 24px;
+    }
+    .diag-header-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .diag-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .diag-header p {
+      margin: 0;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+    .diag-header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .diag-header-actions button,
+    .diag-header-actions a {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      background: #fff;
+      color: #0d47a1;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.25); }
+
+    .diag-container {
+      max-width: 1080px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    .diag-summary {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .summary-stat {
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f9fafb;
+    }
+    .summary-stat .value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .summary-stat .label {
+      font-size: 0.72rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .summary-stat.ok .value { color: #2e7d32; }
+    .summary-stat.warn .value { color: #ed6c02; }
+    .summary-stat.error .value { color: #c62828; }
+    .summary-stat.skipped .value { color: #6b7280; }
+
+    .progress-wrap {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 24px;
+      display: none;
+    }
+    .progress-wrap.active { display: block; }
+    .progress-bar {
+      height: 10px;
+      background: #eceff1;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0d47a1, #00acc1);
+      transition: width 0.3s ease;
+    }
+    .progress-label {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .diag-category {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 16px;
+      border-left: 5px solid #1976d2;
+    }
+    .diag-category.has-error { border-left-color: #c62828; }
+    .diag-category.has-warn  { border-left-color: #ed6c02; }
+    .diag-category.all-ok    { border-left-color: #2e7d32; }
+
+    .cat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      cursor: pointer;
+    }
+    .cat-header h2 {
+      font-size: 1.05rem;
+      margin: 0;
+      color: #0d47a1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cat-count {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      background: #fafafa;
+    }
+    .check-row.ok       { background: #f1f8f4; }
+    .check-row.warn     { background: #fff8e1; }
+    .check-row.error    { background: #ffebee; }
+    .check-row.skipped  { background: #f5f5f5; color: #757575; }
+
+    .check-icon { flex-shrink: 0; font-size: 1rem; }
+    .check-body { flex: 1; }
+    .check-label { font-weight: 600; color: #1f2937; word-break: break-word; }
+    .check-detail {
+      font-size: 0.82rem;
+      color: #4b5563;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+    .check-fix {
+      font-size: 0.8rem;
+      color: #b45309;
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: #fff7ed;
+      border-left: 3px solid #ed6c02;
+      border-radius: 4px;
+      word-break: break-word;
+    }
+
+    .diag-placeholder {
+      background: #fff;
+      border-radius: 14px;
+      padding: 48px 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      color: #6b7280;
+    }
+    .diag-placeholder .big-icon { font-size: 3rem; margin-bottom: 12px; }
+    .diag-placeholder h2 { color: #0d47a1; margin: 0 0 8px; font-size: 1.15rem; }
+    .diag-placeholder p { margin: 0 0 16px; font-size: 0.9rem; }
+
+    .category-collapsed .check-row { display: none; }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #0d47a1;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: #c62828; }
+    .toast.success { background: #2e7d32; }
+
+    @media (max-width: 640px) {
+      .diag-header-inner { flex-direction: column; align-items: flex-start; }
+      .diag-header h1 { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="diag-header">
+    <div class="diag-header-inner">
+      <div>
+        <h1>🔬 Self-Diagnostic</h1>
+        <p>General Science App — Health Check &amp; Problem Detector</p>
+      </div>
+      <div class="diag-header-actions">
+        <button class="btn-primary" id="btn-run">▶ Run Diagnostic</button>
+        <button class="btn-ghost" id="btn-copy" style="display:none;">📋 Copy Report</button>
+        <a href="index.html" class="btn-ghost">← Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="diag-container">
+
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-label" id="progress-label">Starting…</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="diag-summary" id="summary" style="display:none;">
+      <div class="summary-stat ok">
+        <div class="value" id="s-ok">0</div>
+        <div class="label">✅ Passed</div>
+      </div>
+      <div class="summary-stat warn">
+        <div class="value" id="s-warn">0</div>
+        <div class="label">⚠️ Warnings</div>
+      </div>
+      <div class="summary-stat error">
+        <div class="value" id="s-error">0</div>
+        <div class="label">❌ Errors</div>
+      </div>
+      <div class="summary-stat skipped">
+        <div class="value" id="s-skipped">0</div>
+        <div class="label">⏭️ Skipped</div>
+      </div>
+    </div>
+
+    <div id="report-area">
+      <div class="diag-placeholder">
+        <div class="big-icon">🔬</div>
+        <h2>Ready to Diagnose</h2>
+        <p>Click <strong>Run Diagnostic</strong> above to check the app for problems.</p>
+        <p style="font-size:0.78rem;color:#9ca3af;">
+          The scan takes 10–30 seconds. It only reads — nothing is changed.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js?v=1"></script>
+  <script src="assets/js/app.js?v=1"></script>
+  <script src="assets/js/store.js?v=1"></script>
+  <script src="assets/js/security.js?v=1"></script>
+  <script src="assets/js/transmutation.js?v=1"></script>
+  <script src="assets/js/sync.js?v=1"></script>
+  <script src="assets/js/backup.js?v=1"></script>
+  <script src="assets/js/ui-helpers.js?v=1"></script>
+  <script src="assets/js/activity-tracker.js?v=1"></script>
+  <script src="assets/js/term-access.js?v=1"></script>
+  <script src="assets/js/teacher-auth.js?v=1"></script>
+  <script src="assets/js/diagnostics.js?v=1"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const btnRun = document.getElementById('btn-run');
+      const btnCopy = document.getElementById('btn-copy');
+      const progressWrap = document.getElementById('progress-wrap');
+      const progressFill = document.getElementById('progress-fill');
+      const progressLabel = document.getElementById('progress-label');
+      const summaryEl = document.getElementById('summary');
+      const reportArea = document.getElementById('report-area');
+      const toastEl = document.getElementById('toast');
+
+      let lastReport = null;
+
+      function toast(msg, type) {
+        toastEl.textContent = msg;
+        toastEl.className = 'toast show' + (type ? ' ' + type : '');
+        setTimeout(() => { toastEl.classList.remove('show'); }, 3000);
+      }
+
+      function escapeHTML(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      btnRun.addEventListener('click', async () => {
+        btnRun.disabled = true;
+        btnRun.textContent = '⏳ Running…';
+        btnCopy.style.display = 'none';
+
+        progressWrap.classList.add('active');
+        summaryEl.style.display = 'none';
+        reportArea.innerHTML = '';
+
+        lastReport = await Diagnostics.run((step, total, label) => {
+          const pct = Math.round((step / total) * 100);
+          progressFill.style.width = pct + '%';
+          progressLabel.textContent = `Step ${step} / ${total} — ${label}`;
+        });
+
+        progressFill.style.width = '100%';
+        progressLabel.textContent = '✅ Diagnostic complete';
+
+        // Show summary
+        summaryEl.style.display = 'grid';
+        document.getElementById('s-ok').textContent      = lastReport.totals.ok;
+        document.getElementById('s-warn').textContent    = lastReport.totals.warn;
+        document.getElementById('s-error').textContent   = lastReport.totals.error;
+        document.getElementById('s-skipped').textContent = lastReport.totals.skipped;
+
+        // Render categories
+        reportArea.innerHTML = '';
+        lastReport.categories.forEach((cat) => {
+          const hasError = cat.checks.some(c => c.level === 'error');
+          const hasWarn = cat.checks.some(c => c.level === 'warn');
+          const cls = hasError ? 'has-error' : (hasWarn ? 'has-warn' : 'all-ok');
+
+          const catEl = document.createElement('div');
+          catEl.className = 'diag-category ' + cls;
+
+          const checksHTML = cat.checks.map((c) => {
+            const icon = { ok: '✅', warn: '⚠️', error: '❌', skipped: '⏭️' }[c.level] || '•';
+            return `
+              <div class="check-row ${c.level}">
+                <div class="check-icon">${icon}</div>
+                <div class="check-body">
+                  <div class="check-label">${escapeHTML(c.label)}</div>
+                  ${c.detail ? `<div class="check-detail">${escapeHTML(c.detail)}</div>` : ''}
+                  ${c.fix ? `<div class="check-fix">🔧 ${escapeHTML(c.fix)}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          catEl.innerHTML = `
+            <div class="cat-header" data-toggle>
+              <h2>${cat.icon} ${escapeHTML(cat.name)}</h2>
+              <span class="cat-count">${cat.checks.length} checks</span>
+            </div>
+            ${checksHTML}
+          `;
+
+          catEl.querySelector('[data-toggle]').addEventListener('click', () => {
+            catEl.classList.toggle('category-collapsed');
+          });
+
+          reportArea.appendChild(catEl);
+        });
+
+        btnRun.disabled = false;
+        btnRun.textContent = '▶ Run Again';
+        btnCopy.style.display = 'inline-flex';
+
+        toast(
+          lastReport.totals.error > 0
+            ? `Diagnostic finished with ${lastReport.totals.error} error(s)`
+            : (lastReport.totals.warn > 0
+                ? `Diagnostic finished with ${lastReport.totals.warn} warning(s)`
+                : 'All checks passed!'),
+          lastReport.totals.error > 0 ? 'error' : (lastReport.totals.warn > 0 ? '' : 'success')
+        );
+      });
+
+      btnCopy.addEventListener('click', async () => {
+        if (!lastReport) return;
+        const text = Diagnostics.toText(lastReport);
+        try {
+          await navigator.clipboard.writeText(text);
+          toast('Full report copied to clipboard!', 'success');
+        } catch (e) {
+          // Fallback for browsers that block clipboard
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); toast('Report copied!', 'success'); }
+          catch (err) { toast('Copy failed — select and copy manually', 'error'); }
+          ta.remove();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
