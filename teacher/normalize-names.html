@@ -4,119 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Normalize Names — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
   <style>
-    .nn-filters {
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: end;
-      margin-bottom: 24px;
-    }
+    .nn-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .nn-filters .form-group { min-width: 200px; flex: 1; margin-bottom: 0; }
-
-    .nn-row {
-      background: #fff;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      border-left: 4px solid #1976d2;
-      display: grid;
-      grid-template-columns: 40px 1fr 1fr 1fr 1fr 100px;
-      gap: 12px;
-      align-items: center;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-      transition: all 0.15s;
-    }
-    .nn-row.changed {
-      border-left-color: #ed6c02;
-      background: #fffdf7;
-    }
-    .nn-row.saved {
-      border-left-color: #2e7d32;
-      background: #f1f8f4;
-    }
-    @media (max-width: 900px) {
-      .nn-row {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-    }
-
-    .nn-cell-label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #90a4ae;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 2px;
-      display: none;
-    }
-    @media (max-width: 900px) {
-      .nn-cell-label { display: block; }
-    }
-
-    .nn-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.78rem; font-weight: 700; color: #fff;
-      background: linear-gradient(135deg, #0d47a1, #00acc1);
-      flex-shrink: 0;
-    }
-
-    .nn-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .nn-input {
-      padding: 8px 10px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      border: 1.5px solid #cfd8dc;
-      border-radius: 8px;
-      background: #fff;
-      color: #1a1a1a;
-      transition: all 0.15s;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .nn-input:focus {
-      outline: none;
-      border-color: #0d47a1;
-      box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
-    }
-    .nn-input.changed {
-      border-color: #ed6c02;
-      background: #fff8e1;
-    }
-
-    .nn-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-weight: 700;
-      background: #e3f2fd;
-      color: #0d47a1;
-    }
-    .nn-badge.saved { background: #e8f5e9; color: #2e7d32; }
-
-    .nn-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .nn-actions button {
-      padding: 6px 10px;
-      font-size: 0.75rem;
-    }
-
-    .nn-empty {
-      text-align: center;
-      padding: 48px 24px;
-      color: #90a4ae;
-    }
+    .nn-row { background: #fff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #1976d2; display: grid; grid-template-columns: 40px 1fr 1fr 1fr 1fr 100px; gap: 12px; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: all 0.15s; }
+    .nn-row.changed { border-left-color: #ed6c02; background: #fffdf7; }
+    .nn-row.saved { border-left-color: #2e7d32; background: #f1f8f4; }
+    @media (max-width: 900px) { .nn-row { grid-template-columns: 1fr; gap: 6px; } }
+    .nn-cell-label { font-size: 0.68rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; display: none; }
+    @media (max-width: 900px) { .nn-cell-label { display: block; } }
+    .nn-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #0d47a1, #00acc1); flex-shrink: 0; }
+    .nn-field { display: flex; flex-direction: column; gap: 4px; }
+    .nn-input { padding: 8px 10px; font-family: inherit; font-size: 0.85rem; border: 1.5px solid #cfd8dc; border-radius: 8px; background: #fff; color: #1a1a1a; transition: all 0.15s; width: 100%; box-sizing: border-box; }
+    .nn-input:focus { outline: none; border-color: #0d47a1; box-shadow: 0 0 0 3px rgba(13,71,161,0.1); }
+    .nn-input.changed { border-color: #ed6c02; background: #fff8e1; }
+    .nn-actions { display: flex; flex-direction: column; gap: 6px; }
+    .nn-actions button { padding: 6px 10px; font-size: 0.75rem; }
+    .nn-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
   </style>
 </head>
 <body>
@@ -146,17 +52,14 @@
       </div>
     </div>
 
-    <!-- Info Banner -->
     <div class="alert alert-info" style="font-size:0.85rem;">
       <strong>ℹ️ How this works</strong>
       <div style="margin-top:6px;">
         Each row shows the current stored name and a suggested normalized version.
-        Click <strong>Auto-Fix All</strong> to apply the standard formatting everywhere, or edit individual fields and
-        click <strong>Save</strong> per student.
+        Click <strong>Auto-Fix All</strong> to apply the standard formatting everywhere, or edit individual fields and click <strong>Save</strong> per student.
       </div>
     </div>
 
-    <!-- Filters -->
     <div class="card">
       <div class="nn-filters">
         <div class="form-group">
@@ -195,222 +98,145 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/teacher-auth-v3.js"></script>
+  <script src="../config.js?v=1"></script>
+  <script src="../assets/js/app.js?v=1"></script>
+  <script src="../assets/js/store.js?v=1"></script>
+  <script src="../assets/js/teacher-auth.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
+      if (!window.TeacherAuth) {
+        document.getElementById('results-area').innerHTML = '<div class="card nn-empty">⚠️ Auth module not loaded</div>';
+        return;
+      }
       TeacherAuth.init();
       if (!TeacherAuth.require()) return;
 
-      let students = [];
-      let pendingChanges = {}; // lrn -> { lastName, firstName, middleName }
+      var students = [];
+      var pendingChanges = {};
 
-      APP.$('#btn-refresh').addEventListener('click', render);
-      APP.$('#btn-autofix-all').addEventListener('click', autoFixAll);
-      APP.$('#filter-section').addEventListener('change', render);
-      APP.$('#filter-search').addEventListener('input', render);
-      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+      document.getElementById('btn-refresh').addEventListener('click', render);
+      document.getElementById('btn-autofix-all').addEventListener('click', autoFixAll);
+      document.getElementById('filter-section').addEventListener('change', render);
+      document.getElementById('filter-search').addEventListener('input', render);
+      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
 
-      /* ============================================================
-         RENDER
-         ============================================================ */
       function render() {
-        const sectionFilter = APP.$('#filter-section').value;
-        const search = APP.$('#filter-search').value.trim().toLowerCase();
+        var sectionFilter = document.getElementById('filter-section').value;
+        var search = document.getElementById('filter-search').value.trim().toLowerCase();
 
         students = Store.getAllUsers();
-
-        if (sectionFilter) students = students.filter((s) => s.section === sectionFilter);
+        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
 
         if (search) {
-          students = students.filter((s) => {
-            const full = `${s.lastName || ''} ${s.firstName || ''} ${s.middleName || ''}`.toLowerCase();
-            return full.includes(search) || String(s.lrn).includes(search);
+          students = students.filter(function(s) {
+            var full = ((s.lastName || '') + ' ' + (s.firstName || '') + ' ' + (s.middleName || '')).toLowerCase();
+            return full.indexOf(search) !== -1 || String(s.lrn).indexOf(search) !== -1;
           });
         }
 
         students = APP.sortStudents(students, 'last', 'asc');
 
-        const area = APP.$('#results-area');
+        var area = document.getElementById('results-area');
 
         if (!students.length) {
-          area.innerHTML = emptyState('👥', 'No students match',
-            'Try a different search or section filter.');
+          area.innerHTML = '<div class="card nn-empty">👥 No students match</div>';
           return;
         }
 
-        // Count changes needed
-        const changesNeeded = students.filter((s) => needsFix(s)).length;
+        var needsFixCount = students.filter(needsFix).length;
 
-        area.innerHTML = `
-          <div class="stats-grid" style="margin-bottom:20px;">
-            <div class="stat-card blue">
-              <div class="stat-icon">👥</div>
-              <div class="stat-value">${students.length}</div>
-              <div class="stat-label">Students Listed</div>
-            </div>
-            <div class="stat-card ${changesNeeded > 0 ? 'amber' : 'green'}">
-              <div class="stat-icon">✏️</div>
-              <div class="stat-value">${changesNeeded}</div>
-              <div class="stat-label">Need Fixing</div>
-            </div>
-            <div class="stat-card green">
-              <div class="stat-icon">✅</div>
-              <div class="stat-value">${students.length - changesNeeded}</div>
-              <div class="stat-label">Already Normalized</div>
-            </div>
-          </div>
+        area.innerHTML =
+          '<div class="stats-grid" style="margin-bottom:20px;">' +
+            '<div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value">' + students.length + '</div><div class="stat-label">Students Listed</div></div>' +
+            '<div class="stat-card ' + (needsFixCount > 0 ? 'amber' : 'green') + '"><div class="stat-icon">✏️</div><div class="stat-value">' + needsFixCount + '</div><div class="stat-label">Need Fixing</div></div>' +
+            '<div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-value">' + (students.length - needsFixCount) + '</div><div class="stat-label">Already Normalized</div></div>' +
+          '</div>' +
+          '<div id="nn-list"></div>';
 
-          <div id="nn-list"></div>
-        `;
-
-        const list = APP.$('#nn-list');
-        students.forEach((s) => {
+        var list = document.getElementById('nn-list');
+        students.forEach(function(s) {
           list.appendChild(buildRow(s));
         });
 
         attachRowHandlers();
       }
 
-      /* ============================================================
-         ROW BUILDER
-         ============================================================ */
       function buildRow(s) {
-        const current = {
+        var current = {
           lastName: s.lastName || '',
           firstName: s.firstName || '',
           middleName: s.middleName || ''
         };
 
-        const pending = pendingChanges[s.lrn];
-        const shown = pending || current;
-        const suggested = {
-          lastName: APP.toLastNameFormat(shown.lastName),
-          firstName: APP.toTitleCase(shown.firstName),
-          middleName: shown.middleName ? APP.toTitleCase(shown.middleName) : ''
-        };
+        var pending = pendingChanges[s.lrn];
+        var shown = pending || current;
+        var initials = ((current.firstName || '?').charAt(0) + (current.lastName || '?').charAt(0)).toUpperCase();
 
-        const initials = `${(current.firstName || '?').charAt(0)}${(current.lastName || '?').charAt(0)}`.toUpperCase();
-        const needs = needsFix(s) || !!pending;
-
-        const row = document.createElement('div');
-        row.className = `nn-row ${pending ? 'changed' : ''}`;
+        var row = document.createElement('div');
+        row.className = 'nn-row' + (pending ? ' changed' : '');
         row.dataset.lrn = s.lrn;
 
-        row.innerHTML = `
-          <div class="nn-avatar">${initials}</div>
+        row.innerHTML =
+          '<div class="nn-avatar">' + initials + '</div>' +
+          '<div class="nn-field"><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="' + escapeAttr(shown.lastName) + '" placeholder="LAST NAME" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">First Name</div><input class="nn-input" type="text" data-field="firstName" value="' + escapeAttr(shown.firstName) + '" placeholder="First Name" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">Middle Name</div><input class="nn-input" type="text" data-field="middleName" value="' + escapeAttr(shown.middleName) + '" placeholder="Middle Name" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">LRN</div><div style="font-family:Consolas,monospace;font-size:0.8rem;color:#37474f;padding:8px 10px;background:#f5f7fa;border-radius:8px;">' + APP.formatLRN(s.lrn) + '</div></div>' +
+          '<div class="nn-actions"><button class="btn btn-primary" data-save="' + s.lrn + '">💾 Save</button><button class="btn btn-outline" data-autofix="' + s.lrn + '" style="color:#ed6c02;border-color:#ed6c02;">✨ Auto</button></div>';
 
-          <div class="nn-field">
-            <div class="nn-cell-label">Last Name</div>
-            <input class="nn-input" type="text" data-field="lastName"
-                   value="${escapeAttr(shown.lastName)}" placeholder="LAST NAME" />
-          </div>
-
-          <div class="nn-field">
-            <div class="nn-cell-label">First Name</div>
-            <input class="nn-input" type="text" data-field="firstName"
-                   value="${escapeAttr(shown.firstName)}" placeholder="First Name" />
-          </div>
-
-          <div class="nn-field">
-            <div class="nn-cell-label">Middle Name</div>
-            <input class="nn-input" type="text" data-field="middleName"
-                   value="${escapeAttr(shown.middleName)}" placeholder="Middle Name" />
-          </div>
-
-          <div class="nn-field">
-            <div class="nn-cell-label">LRN</div>
-            <div style="font-family:Consolas,monospace;font-size:0.8rem;color:#37474f;padding:8px 10px;background:#f5f7fa;border-radius:8px;">
-              ${APP.formatLRN(s.lrn)}
-            </div>
-          </div>
-
-          <div class="nn-actions">
-            <button class="btn btn-primary" data-save="${s.lrn}">💾 Save</button>
-            <button class="btn btn-outline" data-autofix="${s.lrn}" style="color:#ed6c02;border-color:#ed6c02;">
-              ✨ Auto
-            </button>
-          </div>
-        `;
-
-        // Auto-format on blur
-        row.querySelectorAll('.nn-input').forEach((input) => {
-          input.addEventListener('blur', () => {
-            const field = input.dataset.field;
+        row.querySelectorAll('.nn-input').forEach(function(input) {
+          input.addEventListener('blur', function() {
+            var field = input.dataset.field;
             if (field === 'lastName') input.value = APP.toLastNameFormat(input.value);
             else input.value = APP.toTitleCase(input.value);
             checkRowChange(row, s);
           });
-          input.addEventListener('input', () => checkRowChange(row, s));
+          input.addEventListener('input', function() { checkRowChange(row, s); });
         });
 
         return row;
       }
 
-      /* ============================================================
-         ROW HANDLERS
-         ============================================================ */
       function attachRowHandlers() {
-        document.querySelectorAll('[data-save]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const lrn = btn.dataset.save;
-            saveStudent(lrn);
-          });
+        document.querySelectorAll('[data-save]').forEach(function(btn) {
+          btn.addEventListener('click', function() { saveStudent(btn.dataset.save); });
         });
-
-        document.querySelectorAll('[data-autofix]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const lrn = btn.dataset.autofix;
-            autoFixOne(lrn);
-          });
+        document.querySelectorAll('[data-autofix]').forEach(function(btn) {
+          btn.addEventListener('click', function() { autoFixOne(btn.dataset.autofix); });
         });
       }
 
       function checkRowChange(row, s) {
-        const inputs = row.querySelectorAll('.nn-input');
-        const current = {
-          lastName: s.lastName || '',
-          firstName: s.firstName || '',
-          middleName: s.middleName || ''
-        };
+        var inputs = row.querySelectorAll('.nn-input');
+        var current = { lastName: s.lastName || '', firstName: s.firstName || '', middleName: s.middleName || '' };
+        var values = {};
+        inputs.forEach(function(i) { values[i.dataset.field] = i.value; });
 
-        const values = {};
-        inputs.forEach((i) => { values[i.dataset.field] = i.value; });
+        var changed = Object.keys(values).some(function(k) { return values[k] !== current[k]; });
 
-        const changed = Object.keys(values).some((k) => values[k] !== current[k]);
-
-        // Update row appearance
         if (changed) {
           row.classList.add('changed');
-          inputs.forEach((i) => i.classList.add('changed'));
+          inputs.forEach(function(i) { i.classList.add('changed'); });
+          pendingChanges[s.lrn] = values;
         } else {
           row.classList.remove('changed');
-          inputs.forEach((i) => i.classList.remove('changed'));
+          inputs.forEach(function(i) { i.classList.remove('changed'); });
+          delete pendingChanges[s.lrn];
         }
-
-        // Store pending change
-        if (changed) pendingChanges[s.lrn] = values;
-        else delete pendingChanges[s.lrn];
       }
 
-      /* ============================================================
-         SAVE ONE STUDENT
-         ============================================================ */
       function saveStudent(lrn) {
-        const row = document.querySelector(`.nn-row[data-lrn="${lrn}"]`);
+        var row = document.querySelector('.nn-row[data-lrn="' + lrn + '"]');
         if (!row) return;
-
-        const s = Store.getUser(lrn);
+        var s = Store.getUser(lrn);
         if (!s) return;
 
-        const inputs = row.querySelectorAll('.nn-input');
-        const updates = {};
-        inputs.forEach((i) => {
-          const field = i.dataset.field;
+        var inputs = row.querySelectorAll('.nn-input');
+        var updates = {};
+        inputs.forEach(function(i) {
+          var field = i.dataset.field;
           if (field === 'lastName') updates.lastName = APP.toLastNameFormat(i.value.trim());
           else if (field === 'firstName') updates.firstName = APP.toTitleCase(i.value.trim());
           else updates.middleName = APP.toTitleCase(i.value.trim());
@@ -421,79 +247,63 @@
           return;
         }
 
-        const merged = { ...s, ...updates, updatedAt: new Date().toISOString() };
+        var merged = Object.assign({}, s, updates, { updatedAt: new Date().toISOString() });
         Store.saveUser(merged);
         delete pendingChanges[lrn];
 
-        // Update row UI
-        inputs.forEach((i) => i.value = updates[i.dataset.field] || '');
+        inputs.forEach(function(i) { i.value = updates[i.dataset.field] || ''; });
         row.classList.remove('changed');
         row.classList.add('saved');
-        inputs.forEach((i) => i.classList.remove('changed'));
+        inputs.forEach(function(i) { i.classList.remove('changed'); });
 
-        APP.toast(`✅ Saved: ${updates.lastName}, ${updates.firstName}`, 'success', 2500);
-
-        // Remove 'saved' highlight after 1.5s
-        setTimeout(() => row.classList.remove('saved'), 1500);
+        APP.toast('✅ Saved: ' + updates.lastName + ', ' + updates.firstName, 'success', 2500);
+        setTimeout(function() { row.classList.remove('saved'); }, 1500);
       }
 
-      /* ============================================================
-         AUTO-FIX
-         ============================================================ */
       function autoFixOne(lrn) {
-        const row = document.querySelector(`.nn-row[data-lrn="${lrn}"]`);
+        var row = document.querySelector('.nn-row[data-lrn="' + lrn + '"]');
         if (!row) return;
 
-        const inputs = row.querySelectorAll('.nn-input');
-        inputs.forEach((i) => {
-          const field = i.dataset.field;
+        var inputs = row.querySelectorAll('.nn-input');
+        inputs.forEach(function(i) {
+          var field = i.dataset.field;
           if (field === 'lastName') i.value = APP.toLastNameFormat(i.value);
           else i.value = APP.toTitleCase(i.value);
         });
 
-        const s = Store.getUser(lrn);
+        var s = Store.getUser(lrn);
         checkRowChange(row, s);
         saveStudent(lrn);
       }
 
       function autoFixAll() {
-        const count = Object.keys(pendingChanges).length + students.filter((s) => needsFix(s)).length;
-
-        if (!confirm(`Apply normalized formatting to ${students.length} student(s) shown? This will save immediately.`)) {
+        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s) shown? This will save immediately.')) {
           return;
         }
 
-        let fixed = 0;
-        students.forEach((s) => {
-          const updates = {
+        var fixed = 0;
+        students.forEach(function(s) {
+          var updates = {
             lastName: APP.toLastNameFormat(s.lastName || ''),
             firstName: APP.toTitleCase(s.firstName || ''),
             middleName: s.middleName ? APP.toTitleCase(s.middleName) : ''
           };
 
-          if (
-            updates.lastName !== s.lastName ||
-            updates.firstName !== s.firstName ||
-            updates.middleName !== (s.middleName || '')
-          ) {
-            Store.saveUser({ ...s, ...updates, updatedAt: new Date().toISOString() });
+          if (updates.lastName !== s.lastName || updates.firstName !== s.firstName || updates.middleName !== (s.middleName || '')) {
+            Store.saveUser(Object.assign({}, s, updates, { updatedAt: new Date().toISOString() }));
             fixed++;
           }
         });
 
         pendingChanges = {};
-        APP.toast(`✨ Auto-fixed ${fixed} student name(s)`, 'success', 3500);
+        APP.toast('✨ Auto-fixed ' + fixed + ' student name(s)', 'success', 3500);
         render();
       }
 
-      /* ============================================================
-         HELPERS
-         ============================================================ */
       function needsFix(s) {
-        const l = s.lastName || '';
-        const f = s.firstName || '';
-        const m = s.middleName || '';
-
+        var l = s.lastName || '';
+        var f = s.firstName || '';
+        var m = s.middleName || '';
         if (!l || !f) return true;
         if (l !== APP.toLastNameFormat(l)) return true;
         if (f !== APP.toTitleCase(f)) return true;
@@ -502,24 +312,9 @@
       }
 
       function escapeAttr(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/"/g, '&quot;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
+        return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
-      function emptyState(icon, title, message) {
-        return `
-          <div class="card nn-empty">
-            <div style="font-size:2.5rem;margin-bottom:12px;">${icon}</div>
-            <div style="font-weight:700;color:#37474f;margin-bottom:6px;">${title}</div>
-            ${message ? `<p class="text-muted" style="font-size:0.88rem;max-width:480px;margin:0 auto;">${message}</p>` : ''}
-          </div>
-        `;
-      }
-
-      // Auto-run
       document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
