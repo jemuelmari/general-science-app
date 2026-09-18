@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Login — General Science</title>
+  <link rel="stylesheet" href="assets/css/main.css?v=4" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #062b5f 0%, #0d47a1 50%, #1976d2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 24px;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .login-header { text-align: center; margin-bottom: 24px; }
+    .login-header .lock-icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+    .login-header h1 { font-size: 1.35rem; margin: 0 0 4px; color: #0d47a1; font-weight: 700; }
+    .login-header p { margin: 0; font-size: 0.85rem; color: #5f6368; }
+    .login-group { margin-bottom: 18px; }
+    .login-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #37474f; margin-bottom: 6px; letter-spacing: 0.3px; text-transform: uppercase; }
+    .login-group input { width: 100%; padding: 14px 16px; font-family: inherit; font-size: 1rem; border: 1.5px solid #cfd8dc; border-radius: 10px; background: #fff; color: #1a1a1a; transition: all 0.15s ease; box-sizing: border-box; }
+    .login-group input:focus { outline: none; border-color: #0d47a1; box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1); }
+    .login-btn { width: 100%; padding: 14px 20px; background: linear-gradient(135deg, #0d47a1, #1565c0); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25); }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .login-error { background: #ffebee; border-left: 4px solid #c62828; color: #b71c1c; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
+    .login-lockout { background: #fff3e0; border-left: 4px solid #ed6c02; color: #e65100; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
+    .back-link { display: block; text-align: center; margin-top: 16px; font-size: 0.85rem; color: #0d47a1; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <div class="login-header">
+      <span class="lock-icon">🔒</span>
+      <h1>Teacher Access</h1>
+      <p>Enter your password to continue</p>
+    </div>
+
+    <div id="error-slot"></div>
+
+    <form id="login-form">
+      <div class="login-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter teacher password"
+               autocomplete="current-password" required autofocus />
+      </div>
+      <button type="submit" id="login-btn" class="login-btn">Unlock →</button>
+    </form>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+  <script src="config.js?v=4"></script>
+  <script src="assets/js/app.js?v=4"></script>
+  <script src="assets/js/store.js?v=4"></script>
+  <script src="assets/js/teacher-auth-v2.js?v=1"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const form = document.getElementById('login-form');
+      const passwordEl = document.getElementById('password');
+      const btn = document.getElementById('login-btn');
+      const errorSlot = document.getElementById('error-slot');
+  <script src="assets/js/teacher-auth-v2.js?v=1"></script>
+      // Wait for TeacherAuth to be available (in case script loads slowly)
+      let tries = 0;
+      function waitForAuth() {
+        if (window.TeacherAuth) {
+          startLogin();
+        } else if (tries++ < 20) {
+          setTimeout(waitForAuth, 100);
+        } else {
+          errorSlot.innerHTML = `
+            <div class="login-error">
+              ⚠️ Authentication module failed to load.<br>
+              Please check that <code>assets/js/teacher-auth.js</code> exists and is not empty.
+            </div>
+          `;
+          btn.disabled = true;
+        }
+      }
+
+      function startLogin() {
+        TeacherAuth.init();
+
+        if (TeacherAuth.isAuthenticated()) {
+          redirectAfterLogin();
+          return;
+        }
+
+        const lock = TeacherAuth.getLockout();
+        if (lock) showLockout(lock);
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          errorSlot.innerHTML = '';
+
+          const lock = TeacherAuth.getLockout();
+          if (lock) { showLockout(lock); return; }
+
+          const password = passwordEl.value;
+          if (!password) return;
+
+          btn.disabled = true;
+          btn.textContent = 'Checking…';
+
+          try {
+            const ok = await TeacherAuth.login(password);
+
+            if (!ok) {
+              const attemptsLeft = TeacherAuth.getAttemptsLeft();
+              if (attemptsLeft <= 0) {
+                const newLock = TeacherAuth.getLockout();
+                showLockout(newLock);
+              } else {
+                errorSlot.innerHTML = `
+                  <div class="login-error">
+                    ❌ Incorrect password. ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left.
+                  </div>
+                `;
+              }
+              passwordEl.value = '';
+              passwordEl.focus();
+            } else {
+              btn.textContent = '✓ Authenticated';
+              redirectAfterLogin();
+              return;
+            }
+          } catch (err) {
+            errorSlot.innerHTML = `<div class="login-error">Error: ${err.message}</div>`;
+          }
+
+          btn.disabled = false;
+          btn.textContent = 'Unlock →';
+        });
+      }
+
+      function showLockout(lock) {
+        const mins = Math.ceil((lock.until - Date.now()) / 60000);
+        errorSlot.innerHTML = `
+          <div class="login-lockout">
+            🔒 Too many failed attempts. Locked for ${mins} minute${mins > 1 ? 's' : ''}.
+          </div>
+        `;
+        btn.disabled = true;
+        passwordEl.disabled = true;
+
+        setTimeout(() => {
+          btn.disabled = false;
+          passwordEl.disabled = false;
+          errorSlot.innerHTML = '';
+        }, Math.max(1000, lock.until - Date.now()));
+      }
+
+      function redirectAfterLogin() {
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get('next');
+        if (next && /^[a-zA-Z0-9_\-./]+\.html$/.test(next)) {
+          window.location.replace(next);
+        } else {
+          window.location.replace('instructor.html');
+        }
+      }
+
+      // Start the wait-for-auth loop
+      waitForAuth();
+    })();
+  </script>
+</body>
+</html>

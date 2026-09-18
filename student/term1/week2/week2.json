@@ -9,7 +9,7 @@
     },
     {
       "code": "GENSCI-11-T1-W2-C2",
-      "text": "Relate linear quantities (displacement, velocity, acceleration) to angular quantities."
+      "text": "Relate linear quantities (displacement, velocity, acceleration) to angular quantities (angular displacement, angular velocity, angular acceleration)."
     }
   ],
   "badge": {
@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Translational vs Rotational Motion",
-      "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn the two ways objects move and how linear ↔ angular relate.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Translational vs Rotational Motion</strong> will be added here.</p>"
+      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to differentiate <strong>translational motion</strong> from <strong>rotational motion</strong> and describe how linear and angular quantities relate to each other.</p><h3>🔍 Two Ways Things Move</h3><p>In physics, motion can be classified into two broad categories:</p><table><thead><tr><th>Type</th><th>Description</th><th>Everyday Examples</th></tr></thead><tbody><tr><td><strong>Translational motion</strong></td><td>An object moves from one point to another without rotating. Every part moves the same distance in the same direction.</td><td>Walking in a straight line, a car driving forward, a ball rolling down a ramp, an elevator going up</td></tr><tr><td><strong>Rotational motion</strong></td><td>An object spins around a fixed axis. Different parts of the object move at different speeds depending on their distance from the axis.</td><td>Ceiling fan blades, bicycle wheels, spinning top, Earth's rotation, hands of a clock</td></tr></tbody></table><h3>🔗 Linear vs Angular Quantities</h3><p>Both types of motion share similar measurements, just in different units:</p><table><thead><tr><th>Linear (Translational)</th><th>Angular (Rotational)</th><th>Relationship</th></tr></thead><tbody><tr><td>Displacement (d) — meters (m)</td><td>Angular displacement (θ) — radians (rad)</td><td>d = r × θ</td></tr><tr><td>Velocity (v) — m/s</td><td>Angular velocity (ω) — rad/s</td><td>v = r × ω</td></tr><tr><td>Acceleration (a) — m/s²</td><td>Angular acceleration (α) — rad/s²</td><td>a = r × α</td></tr></tbody></table><p>Where <strong>r</strong> = radius (distance from the axis of rotation).</p><h3>⚙️ Key Insight</h3><p>For a rotating object, the farther a point is from the axis, the <strong>faster</strong> it moves — because it has to cover a bigger circle in the same amount of time. This is why:</p><ul><li>The outer edge of a fan blade moves faster than the center.</li><li>The tip of a windmill blade moves faster than the base.</li><li>On a Ferris wheel, riders at the rim feel faster than riders near the center.</li></ul><h3>💡 Real-Life Applications</h3><ul><li><strong>Sports:</strong> A golfer swings a club — the longer the club, the faster the clubhead moves.</li><li><strong>Vehicles:</strong> Wheels convert rotational motion into translational motion (the car moves).</li><li><strong>Machines:</strong> Gears, pulleys, and belts transfer and change rotational motion.</li><li><strong>Astronomy:</strong> Earth both revolves around the Sun (translational) and rotates on its axis (rotational).</li></ul><h3>📌 Quick Check</h3><ul><li>Is a rolling ball translational, rotational, or both?</li><li>Why does the tip of a long propeller blade move faster than the hub?</li><li>If a wheel of radius 0.5 m rotates with angular velocity 4 rad/s, what is its linear velocity? (Answer: v = r × ω = 2 m/s)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Linear & Angular Quantities",
-      "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match linear quantities to angular counterparts.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Linear & Angular Quantities</strong> will be added here.</p>",
+      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each linear quantity or concept to its angular counterpart or real-life example. You have <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Linear & Angular Quantities",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Displacement (m)", "right": "Angular displacement (rad)" },
+          { "key": "k2", "left": "Velocity (m/s)", "right": "Angular velocity (rad/s)" },
+          { "key": "k3", "left": "Acceleration (m/s²)", "right": "Angular acceleration (rad/s²)" },
+          { "key": "k4", "left": "Translational motion", "right": "Car driving forward on a straight road" },
+          { "key": "k5", "left": "Rotational motion", "right": "Ceiling fan blades spinning" },
+          { "key": "k6", "left": "Radius (r)", "right": "Distance from axis of rotation" },
+          { "key": "k7", "left": "v = r × ω", "right": "Relationship between linear and angular velocity" },
+          { "key": "k8", "left": "Both translational and rotational", "right": "A ball rolling down a ramp" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Motion in Real Life",
-      "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply motion concepts to real-life scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Motion in Real Life</strong> will be added here.</p>",
+      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Motion in Real Life",
+            "text": "🚴 You notice that the outer edge of a bicycle wheel moves faster than the hub (center) even though they rotate together. Which best explains this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The outer edge is made of lighter material.", "correct": false },
+              { "label": "B) Points farther from the axis have greater linear velocity (v = r × ω).", "correct": true },
+              { "label": "C) The hub has more mass.", "correct": false },
+              { "label": "D) The wheel has less friction at the center.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Motion in Real Life",
+            "text": "⚽ A football rolls across the field without slipping. What type of motion does the ball exhibit?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Only translational motion", "correct": false },
+              { "label": "B) Only rotational motion", "correct": false },
+              { "label": "C) Both translational and rotational motion", "correct": true },
+              { "label": "D) Neither — it is stationary", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Motion in Real Life",
+            "text": "🌀 A washing machine drum spins at 1200 rpm. Which quantity best describes how fast the drum is spinning?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Linear displacement", "correct": false },
+              { "label": "B) Angular velocity", "correct": true },
+              { "label": "C) Linear acceleration", "correct": false },
+              { "label": "D) Mass", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Motion in Real Life",
+            "text": "🏀 A basketball player spins a ball on her finger. The ball rotates but its center stays in place. What kind of motion is the center experiencing?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Translational motion", "correct": false },
+              { "label": "B) Rotational motion only", "correct": true },
+              { "label": "C) Both translational and rotational", "correct": false },
+              { "label": "D) No motion at all", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Motion in Real Life",
+            "text": "🌍 Earth moves around the Sun while also spinning on its own axis. Which statement is TRUE?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Earth's orbit around the Sun is translational; its spin on its axis is rotational.", "correct": true },
+              { "label": "B) Both motions are translational.", "correct": false },
+              { "label": "C) Both motions are rotational.", "correct": false },
+              { "label": "D) Earth does not move; the Sun orbits Earth.", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Motion Lab",
-      "badge": {
-        "id": "motion-master",
-        "name": "Motion Master",
-        "icon": "🔄"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Motion Lab</strong> will be added here.</p>",
+      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
+      "content": "<h3>🔐 Formative Check — Escape the Motion Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Motion Lab",
+            "text": "Which of the following is an example of ONLY rotational motion?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) A car moving on a straight highway", "correct": false },
+              { "label": "B) A spinning top on a table", "correct": true },
+              { "label": "C) A ball rolling down a hill", "correct": false },
+              { "label": "D) A person walking forward", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Motion Lab",
+            "text": "Which quantity is measured in rad/s?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Linear velocity", "correct": false },
+              { "label": "B) Angular velocity", "correct": true },
+              { "label": "C) Linear acceleration", "correct": false },
+              { "label": "D) Angular displacement", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Motion Lab",
+            "text": "A wheel of radius 0.4 m rotates with angular velocity 5 rad/s. What is the linear velocity of a point on the rim?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) 0.08 m/s", "correct": false },
+              { "label": "B) 2.0 m/s", "correct": true },
+              { "label": "C) 5.4 m/s", "correct": false },
+              { "label": "D) 12.5 m/s", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Motion Lab",
+            "text": "Which of the following pairs correctly matches a linear quantity with its angular counterpart?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Velocity (m/s) ↔ Angular velocity (rad/s)", "correct": true },
+              { "label": "B) Displacement (m) ↔ Angular velocity (rad/s)", "correct": false },
+              { "label": "C) Acceleration (m/s²) ↔ Angular displacement (rad)", "correct": false },
+              { "label": "D) Velocity (m/s) ↔ Angular displacement (rad)", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Motion Lab",
+            "text": "In the equation v = r × ω, what does 'r' represent?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) The radius or distance from the axis of rotation", "correct": true },
+              { "label": "B) The rotational speed in rpm", "correct": false },
+              { "label": "C) The total mass of the object", "correct": false },
+              { "label": "D) The friction coefficient", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Motion Lab",
+            "text": "A windmill's blades rotate at 2 rad/s. The blade tip is 8 m from the center. How fast does the tip move?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) 4 m/s", "correct": false },
+              { "label": "B) 10 m/s", "correct": false },
+              { "label": "C) 16 m/s", "correct": true },
+              { "label": "D) 0.25 m/s", "correct": false }
             ]
           }
         ]

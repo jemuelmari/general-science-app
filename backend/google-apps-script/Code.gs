@@ -1,11 +1,15 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.0.0
+   Version: 1.1.0
    ------------------------------------------------------------
+   Changelog v1.1.0: Added TermAccess sheet + 2 actions
+                     (getTermAccess, setTermAccess)
+
    PURPOSE:
    - Enables cross-device Sync Codes for students
    - Stores student data in a Google Sheet
    - Lets teacher pull all pending records at once
+   - Stores teacher-controlled term access per section
    - Handles HMAC signature verification server-side
 
    SETUP INSTRUCTIONS:
@@ -14,18 +18,25 @@
    3. Delete the default code, paste this entire file
    4. Click "Deploy" → "New deployment"
    5. Select type: "Web app"
-   6. Description: "GSA Backend v1"
+   6. Description: "GSA Backend v1.1"
    7. Execute as: "Me"
    8. Who has access: "Anyone"
    9. Click Deploy → Authorize → Copy the Web App URL
    10. Paste that URL into config.js → BACKEND_URL
-   11. Done! Sync Center can now pull data across devices.
+   11. Done! Sync Center + Term Control now work across devices.
 
    SHEETS STRUCTURE (auto-created):
    - Sheet 1: "SyncCodes"
      Columns: code | lrn | studentName | section | payload | signature | createdAt | used
-   - Sheet 2: "Log"
+   - Sheet 2: "TermAccess"
+     Columns: timestamp | section | term1 | term2 | term3 | updatedBy | notes
+   - Sheet 3: "Log"
      Columns: timestamp | action | lrn | code | status | notes
+
+   REDEPLOY NOTES:
+   After updating this file, click:
+     Deploy → Manage deployments → (pencil icon) → Version: New version → Deploy
+   The Web App URL stays the same. No config.js change needed.
    ============================================================ */
 
 // ============================================================
@@ -34,16 +45,18 @@
 
 const CONFIG = {
   SYNC_CODES_SHEET: 'SyncCodes',
+  TERM_ACCESS_SHEET: 'TermAccess',
   LOG_SHEET: 'Log',
   CODE_EXPIRY_DAYS: 30,
   MAX_CODES_PER_STUDENT: 5,
   // Secret must match SECRET in assets/js/security.js
   HMAC_SECRET: 'GSA-2026-DEPED-SECRET-KEY-v1',
-  ALLOWED_ORIGINS: '*' // Restrict to your domain in production
+  ALLOWED_ORIGINS: '*', // Restrict to your domain in production
+  VALID_SECTIONS: ['ACADEMIC A', 'ACADEMIC B']
 };
 
 // ============================================================
-// MAIN ROUTER
+// MAIN ROUTER — POST
 // ============================================================
 
 function doPost(e) {
@@ -67,6 +80,12 @@ function doPost(e) {
       case 'deleteSyncCode':
         response = deleteSyncCode(body);
         break;
+      case 'getTermAccess':
+        response = getTermAccess(body);
+        break;
+      case 'setTermAccess':
+        response = setTermAccess(body);
+        break;
       case 'health':
         response = { ok: true, message: 'GSA backend is running', time: new Date().toISOString() };
         break;
@@ -88,6 +107,10 @@ function doPost(e) {
   }
 }
 
+// ============================================================
+// MAIN ROUTER — GET
+// ============================================================
+
 function doGet(e) {
   const action = e.parameter.action;
 
@@ -96,7 +119,7 @@ function doGet(e) {
       .createTextOutput(JSON.stringify({
         ok: true,
         service: 'GSA Sync Backend',
-        version: '1.0.0',
+        version: '1.1.0',
         time: new Date().toISOString()
       }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -110,9 +133,31 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
+  if (action === 'termAccess') {
+    const section = e.parameter.section;
+    return ContentService
+      .createTextOutput(JSON.stringify(getTermAccess({ section: section })))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   return ContentService
     .createTextOutput(JSON.stringify({ ok: false, error: 'Unknown action' }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ============================================================
+// PARSE BODY
+// ============================================================
+
+function parseBody(e) {
+  if (!e || !e.postData || !e.postData.contents) {
+    return {};
+  }
+  try {
+    return JSON.parse(e.postData.contents);
+  } catch (err) {
+    throw new Error('Invalid JSON body: ' + err.message);
+  }
 }
 
 // ============================================================
@@ -126,20 +171,17 @@ function registerSyncCode(body) {
     return { ok: false, error: 'Missing required fields (code, lrn, payload, signature)' };
   }
 
-  // Verify signature server-side
   if (!verifySignature(payload, signature)) {
     return { ok: false, error: 'Signature verification failed' };
   }
 
   const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
 
-  // Check if code already exists
   const existing = findRowByCode(code);
   if (existing) {
     return { ok: false, error: 'Code already exists' };
   }
 
-  // Add row
   const student = payload.student || {};
   const studentName = `${student.lastName || ''}, ${student.firstName || ''}`;
   const section = student.section || '';
@@ -156,7 +198,6 @@ function registerSyncCode(body) {
     'false'
   ]);
 
-  // Trim old codes (keep only latest N per student)
   trimOldCodes(lrn);
 
   return {
@@ -178,11 +219,9 @@ function resolveSyncCode(body) {
   const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
   const data = sheet.getDataRange().getValues();
 
-  // Skip header
   for (let i = 1; i < data.length; i++) {
     const rowCode = data[i][0];
     if (rowCode === code) {
-      // Check expiry
       const createdAt = new Date(data[i][6]);
       const ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
       if (ageDays > CONFIG.CODE_EXPIRY_DAYS) {
@@ -192,7 +231,6 @@ function resolveSyncCode(body) {
       const payload = JSON.parse(data[i][4]);
       const signature = data[i][5];
 
-      // Verify again before returning
       if (!verifySignature(payload, signature)) {
         return { ok: false, error: 'Stored data failed verification' };
       }
@@ -226,12 +264,10 @@ function pullAllPending(body) {
     const rowSection = row[3];
     const used = row[7] === 'true' || row[7] === true;
 
-    // Filter by optional params
     if (lrn && rowLrn !== lrn) continue;
     if (section && rowSection !== section) continue;
     if (used) continue;
 
-    // Check expiry
     const createdAt = new Date(row[6]);
     const ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
     if (ageDays > CONFIG.CODE_EXPIRY_DAYS) continue;
@@ -275,12 +311,105 @@ function deleteSyncCode(body) {
 
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === code) {
-      sheet.getRange(i + 1, 8).setValue('true'); // mark used
+      sheet.getRange(i + 1, 8).setValue('true');
       return { ok: true, message: 'Sync code marked as used' };
     }
   }
 
   return { ok: false, error: 'Code not found' };
+}
+
+// ============================================================
+// ACTION: getTermAccess
+// - If body.section provided → { ok, section, access: {...} }
+// - If no section → { ok, all: { 'ACADEMIC A': {...}, 'ACADEMIC B': {...} } }
+// ============================================================
+
+function getTermAccess(body) {
+  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
+  const data = sheet.getDataRange().getValues();
+
+  const sections = CONFIG.VALID_SECTIONS;
+  const latest = {};
+
+  // Columns: timestamp | section | term1 | term2 | term3 | updatedBy | notes
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const section = row[1];
+    if (sections.indexOf(section) === -1) continue;
+
+    const timestamp = new Date(row[0]).getTime();
+    if (!latest[section] || timestamp > latest[section].at) {
+      latest[section] = {
+        at: timestamp,
+        access: {
+          term1: row[2] === 'open' ? 'open' : 'locked',
+          term2: row[3] === 'open' ? 'open' : 'locked',
+          term3: row[4] === 'open' ? 'open' : 'locked'
+        },
+        updatedBy: row[5] || '',
+        notes: row[6] || ''
+      };
+    }
+  }
+
+  // Default for missing sections: all locked
+  const all = {};
+  sections.forEach((sec) => {
+    all[sec] = latest[sec]
+      ? latest[sec].access
+      : { term1: 'locked', term2: 'locked', term3: 'locked' };
+  });
+
+  if (body && body.section) {
+    return {
+      ok: true,
+      section: body.section,
+      access: all[body.section] || { term1: 'locked', term2: 'locked', term3: 'locked' }
+    };
+  }
+
+  return { ok: true, all: all };
+}
+
+// ============================================================
+// ACTION: setTermAccess
+// ============================================================
+
+function setTermAccess(body) {
+  const { section, access } = body;
+
+  if (!section || !access) {
+    return { ok: false, error: 'Missing section or access' };
+  }
+
+  if (CONFIG.VALID_SECTIONS.indexOf(section) === -1) {
+    return { ok: false, error: 'Invalid section: ' + section };
+  }
+
+  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
+
+  sheet.appendRow([
+    new Date().toISOString(),
+    section,
+    access.term1 === 'open' ? 'open' : 'locked',
+    access.term2 === 'open' ? 'open' : 'locked',
+    access.term3 === 'open' ? 'open' : 'locked',
+    body.updatedBy || 'teacher',
+    body.notes || ''
+  ]);
+
+  logAction('setTermAccess', '', '', 'success', section);
+
+  return {
+    ok: true,
+    section: section,
+    access: {
+      term1: access.term1 === 'open' ? 'open' : 'locked',
+      term2: access.term2 === 'open' ? 'open' : 'locked',
+      term3: access.term3 === 'open' ? 'open' : 'locked'
+    }
+  };
 }
 
 // ============================================================
@@ -320,6 +449,11 @@ function getOrCreateSheet(name) {
         'payload', 'signature', 'createdAt', 'used'
       ]);
       sheet.setFrozenRows(1);
+    } else if (name === CONFIG.TERM_ACCESS_SHEET) {
+      sheet.appendRow([
+        'timestamp', 'section', 'term1', 'term2', 'term3', 'updatedBy', 'notes'
+      ]);
+      sheet.setFrozenRows(1);
     } else if (name === CONFIG.LOG_SHEET) {
       sheet.appendRow(['timestamp', 'action', 'lrn', 'code', 'status', 'notes']);
       sheet.setFrozenRows(1);
@@ -349,11 +483,9 @@ function trimOldCodes(lrn) {
     }
   }
 
-  // If more than max, delete oldest
   if (rows.length > CONFIG.MAX_CODES_PER_STUDENT) {
     rows.sort((a, b) => a.createdAt - b.createdAt);
     const toDelete = rows.slice(0, rows.length - CONFIG.MAX_CODES_PER_STUDENT);
-    // Delete in reverse order so indices don't shift
     toDelete.reverse().forEach((r) => sheet.deleteRow(r.rowIndex));
   }
 }
@@ -374,18 +506,17 @@ function logAction(action, lrn, code, status, notes) {
       notes || ''
     ]);
   } catch (e) {
-    // Logging failure should not break the main flow
     console.error('Log error:', e);
   }
 }
 
 // ============================================================
-// OPTIONAL: MANUAL CLEANUP / MAINTENANCE
-// Run these functions manually from the Apps Script editor.
+// MANUAL MAINTENANCE FUNCTIONS
+// Run these from the Apps Script editor when needed.
 // ============================================================
 
 /**
- * Delete all rows older than 60 days (manual cleanup).
+ * Delete sync codes older than 60 days (manual cleanup).
  */
 function cleanupOldCodes() {
   const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -403,7 +534,7 @@ function cleanupOldCodes() {
 }
 
 /**
- * Reset the Log sheet (manual trigger).
+ * Reset the Log sheet.
  */
 function clearLog() {
   const sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
@@ -413,8 +544,7 @@ function clearLog() {
 }
 
 /**
- * Manually verify that a specific code's signature matches the payload.
- * Useful for debugging.
+ * Manually check whether a stored code's signature matches.
  */
 function testSignatureCheck(code) {
   const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -435,4 +565,26 @@ function testSignatureCheck(code) {
   }
 
   return { error: 'Code not found' };
+}
+
+/**
+ * Manually view the current term access state (debug helper).
+ */
+function viewTermAccess() {
+  return getTermAccess({});
+}
+
+/**
+ * Reset term access for a section (debug helper).
+ */
+function resetTermAccess(section) {
+  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
+  sheet.appendRow([
+    new Date().toISOString(),
+    section || 'ACADEMIC A',
+    'locked', 'locked', 'locked',
+    'system-reset',
+    'Manual reset'
+  ]);
+  return { ok: true, message: 'Reset ' + (section || 'ACADEMIC A') + ' to all locked' };
 }

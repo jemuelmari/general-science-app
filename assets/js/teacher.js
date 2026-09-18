@@ -1,13 +1,9 @@
 /* ============================================================
    teacher.js — Teacher dashboard logic
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
-   Handles:
-   - Auth guard (redirect to login if not authenticated)
-   - Quick stat cards (students, active, avg progress, alerts)
-   - Student roster rendering with filter + search
-   - Per-student quick actions (view profile)
+   Changelog v1.1.0: Added Term Control feature integration
    ============================================================ */
 
 (() => {
@@ -40,7 +36,7 @@
       term2: t2,
       term3: t3,
       total: t1 + t2 + t3,
-      max: 120 // 3 terms × 10 weeks × 4 days
+      max: 120
     };
   }
 
@@ -70,8 +66,6 @@
       const prog = getOverallProgress(s.lrn);
       totalDays += prog.total;
       if (prog.total > 0) activeCount++;
-
-      // Alert if student completed less than 10 days overall
       if (prog.total < 10) alertsCount++;
     });
 
@@ -160,7 +154,6 @@
       tbody.appendChild(tr);
     });
 
-    // Attach view handlers
     tbody.querySelectorAll('[data-view]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const lrn = btn.dataset.view;
@@ -205,7 +198,6 @@
     const initials = `${(student.firstName || '?').charAt(0)}${(student.lastName || '?').charAt(0)}`.toUpperCase();
     const avatarClass = UI.getAvatarClass(student.lrn);
 
-    // Compute overall standing
     const allSTs = [];
     ['term1', 'term2', 'term3'].forEach((term) => {
       Object.values(scores[term]?.st || {}).forEach((s) => {
@@ -289,7 +281,6 @@
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 
-    // Handlers
     modal.querySelector('#detail-close').onclick = () => overlay.remove();
     overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
 

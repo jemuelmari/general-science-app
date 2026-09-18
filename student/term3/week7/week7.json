@@ -3,39 +3,32 @@
   "week": 7,
   "title": "Hydrometeorological Processes",
   "competencies": [
-    {
-      "code": "GENSCI-11-T3-W7-C1",
-      "text": "Describe typhoons, floods, landslides, storm surges, and heat waves."
-    }
+    { "code": "GENSCI-11-T3-W7-C1", "text": "Describe typhoons, floods, landslides, storm surges, and heat waves." }
   ],
-  "badge": {
-    "id": "weather-pro",
-    "name": "Weather Pro",
-    "icon": "🌀"
-  },
+  "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
   "days": [
     {
       "day": 1,
       "type": "lesson",
       "title": "Weather Hazards in the Philippines",
       "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the major hydrometeorological hazards affecting the Philippines — typhoons, floods, landslides, storm surges, and heat waves — and explain their causes, warning signs, and effects.</p><h3>🌀 What Are Hydrometeorological Hazards?</h3><p><strong>Hydrometeorological hazards</strong> are natural hazards caused by atmospheric, oceanic, or hydrological processes — like typhoons, floods, droughts, and storm surges. The Philippines is particularly vulnerable because of:</p><ul><li>Location in the <strong>typhoon belt</strong> (Western Pacific)</li><li>Warm ocean waters (fuel for typhoons)</li><li>An <strong>archipelago</strong> with long coastlines</li><li>Mountainous terrain prone to landslides</li><li>Many low-lying coastal communities</li></ul><h3>🌪️ Typhoons (Tropical Cyclones)</h3><p>A <strong>typhoon</strong> is a powerful, rotating storm system that forms over warm ocean waters (at least 26.5°C). It has:</p><ul><li><strong>Eye</strong> — calm center with lowest pressure</li><li><strong>Eyewall</strong> — strongest winds and heaviest rain</li><li><strong>Spiral rain bands</strong> — outer bands causing widespread rain</li></ul><p><strong>PAGASA Tropical Cyclone Wind Signals:</strong></p><table><thead><tr><th>Signal</th><th>Wind Speed</th><th>Expected Impact</th></tr></thead><tbody><tr><td><strong>Signal No. 1</strong></td><td>39–61 km/h</td><td>Very light damage; some trees sway</td></tr><tr><td><strong>Signal No. 2</strong></td><td>62–88 km/h</td><td>Light to moderate damage; some trees broken</td></tr><tr><td><strong>Signal No. 3</strong></td><td>89–117 km/h</td><td>Moderate to heavy damage; many trees down</td></tr><tr><td><strong>Signal No. 4</strong></td><td>118–184 km/h</td><td>Heavy to very heavy damage; widespread destruction</td></tr><tr><td><strong>Signal No. 5</strong></td><td>185+ km/h</td><td>Extreme damage; catastrophic</td></tr></tbody></table><p><strong>About 20 tropical cyclones enter Philippine waters each year; 8–9 make landfall.</strong></p><h3>🌊 Floods</h3><p>A <strong>flood</strong> is the overflow of water onto normally dry land. Types:</p><table><thead><tr><th>Type</th><th>Cause</th></tr></thead><tbody><tr><td><strong>Riverine flood</strong></td><td>Rivers overflow from heavy rain</td></tr><tr><td><strong>Flash flood</strong></td><td>Sudden, fast-rising water — common in mountain areas</td></tr><tr><td><strong>Urban flood</strong></td><td>Drainage systems overwhelmed; poor urban planning</td></tr><tr><td><strong>Coastal flood</strong></td><td>Storm surges or sea-level rise</td></tr></tbody></table><p><strong>Main causes:</strong> Heavy rainfall, deforestation (less absorption), clogged drainage (garbage), and urbanization (concrete surfaces).</p><h3>🏔️ Landslides</h3><p>A <strong>landslide</strong> is the sudden downward movement of rock, soil, and debris. Common triggers:</p><ul><li>Heavy rainfall (saturates soil)</li><li>Earthquakes</li><li>Volcanic eruptions</li><li>Deforestation and mining (weaken slopes)</li><li>Steep terrain and unstable geology</li></ul><p><strong>Warning signs:</strong> Cracks in the ground, tilting trees or posts, unusual water seepage, rumbling sounds.</p><h3>🌊 Storm Surges</h3><p>A <strong>storm surge</strong> is the abnormal rise of sea level near the coast, caused by a typhoon's strong winds and low pressure. It can:</p><ul><li>Reach <strong>5–7 meters</strong> in extreme cases (like Yolanda/Haiyan in 2013)</li><li>Flood coastal communities within minutes</li><li>Cause most typhoon deaths when combined with high tide</li></ul><p><strong>Most vulnerable:</strong> Coastal barangays, especially in Eastern Visayas and Bicol.</p><h3>🔥 Heat Waves</h3><p>A <strong>heat wave</strong> is a prolonged period of abnormally high temperatures, often combined with high humidity. In the Philippines:</p><ul><li>Heat index (the "feels like" temperature) can reach <strong>danger levels</strong> (41–54°C)</li><li>DOH and PAGASA issue heat advisories</li><li>Vulnerable: elderly, children, outdoor workers, and those with health conditions</li></ul><p><strong>Heat index categories:</strong></p><table><thead><tr><th>Heat Index</th><th>Category</th><th>Effect</th></tr></thead><tbody><tr><td>27–32°C</td><td>Caution</td><td>Fatigue possible with prolonged exposure</td></tr><tr><td>33–41°C</td><td>Extreme Caution</td><td>Heat cramps and heat exhaustion possible</td></tr><tr><td>42–51°C</td><td>Danger</td><td>Heat cramps, exhaustion likely; heat stroke possible</td></tr><tr><td>52°C+</td><td>Extreme Danger</td><td>Heat stroke imminent</td></tr></tbody></table><h3>🇵🇭 The Role of PAGASA</h3><p><strong>PAGASA</strong> (Philippine Atmospheric, Geophysical and Astronomical Services Administration) monitors and warns about:</p><ul><li>Typhoons and tropical cyclones</li><li>Floods and rainfall</li><li>Storm surges</li><li>Heat index</li><li>El Niño and La Niña events</li></ul><p>PAGASA issues bulletins every 3–6 hours during active weather events.</p><h3>🛡️ Preparedness Basics</h3><ul><li>Monitor PAGASA updates before, during, and after storms.</li><li>Prepare a <strong>Go Bag</strong> with water, food, flashlight, radio, medicines, and important documents.</li><li>Know your <strong>evacuation center</strong> and routes.</li><li>Secure loose objects; reinforce roofs and windows.</li><li>Never cross flooded roads or wade in floodwater.</li><li>Follow local government advisories on preemptive evacuation.</li></ul><h3>📌 Quick Check</h3><ul><li>How many tropical cyclones enter Philippine waters each year? (Answer: about 20)</li><li>What causes a storm surge? (Answer: a typhoon's strong winds and low pressure pushing sea water onto the coast)</li><li>Which agency issues typhoon warnings in the Philippines? (Answer: PAGASA)</li></ul>"
+      "content": "<h3>Learning Target</h3><p>By the end of today's lesson, you will be able to describe the major hydrometeorological hazards affecting the Philippines — typhoons, floods, landslides, storm surges, and heat waves — and explain their causes, warning signs, and effects.</p><h3>What Are Hydrometeorological Hazards?</h3><p><strong>Hydrometeorological hazards</strong> are natural hazards caused by atmospheric, oceanic, or hydrological processes. The Philippines is particularly vulnerable because of:</p><ul><li>Location in the typhoon belt (Western Pacific)</li><li>Warm ocean waters (fuel for typhoons)</li><li>An archipelago with long coastlines</li><li>Mountainous terrain prone to landslides</li><li>Many low-lying coastal communities</li></ul><h3>Typhoons (Tropical Cyclones)</h3><p>A <strong>typhoon</strong> is a powerful, rotating storm system that forms over warm ocean waters (at least 26.5 degrees Celsius). It has:</p><ul><li>Eye — calm center with lowest pressure</li><li>Eyewall — strongest winds and heaviest rain</li><li>Spiral rain bands — outer bands causing widespread rain</li></ul><p>PAGASA Tropical Cyclone Wind Signals:</p><table><thead><tr><th>Signal</th><th>Wind Speed</th><th>Expected Impact</th></tr></thead><tbody><tr><td>Signal No. 1</td><td>39–61 km/h</td><td>Very light damage; some trees sway</td></tr><tr><td>Signal No. 2</td><td>62–88 km/h</td><td>Light to moderate damage; some trees broken</td></tr><tr><td>Signal No. 3</td><td>89–117 km/h</td><td>Moderate to heavy damage; many trees down</td></tr><tr><td>Signal No. 4</td><td>118–184 km/h</td><td>Heavy to very heavy damage; widespread destruction</td></tr><tr><td>Signal No. 5</td><td>185+ km/h</td><td>Extreme damage; catastrophic</td></tr></tbody></table><p>About 20 tropical cyclones enter Philippine waters each year; 8–9 make landfall.</p><h3>Floods</h3><p>A <strong>flood</strong> is the overflow of water onto normally dry land. Types:</p><table><thead><tr><th>Type</th><th>Cause</th></tr></thead><tbody><tr><td>Riverine flood</td><td>Rivers overflow from heavy rain</td></tr><tr><td>Flash flood</td><td>Sudden, fast-rising water — common in mountain areas</td></tr><tr><td>Urban flood</td><td>Drainage systems overwhelmed; poor urban planning</td></tr><tr><td>Coastal flood</td><td>Storm surges or sea-level rise</td></tr></tbody></table><p>Main causes: heavy rainfall, deforestation, clogged drainage, and urbanization.</p><h3>Landslides</h3><p>A <strong>landslide</strong> is the sudden downward movement of rock, soil, and debris. Common triggers:</p><ul><li>Heavy rainfall (saturates soil)</li><li>Earthquakes</li><li>Volcanic eruptions</li><li>Deforestation and mining (weaken slopes)</li><li>Steep terrain and unstable geology</li></ul><p>Warning signs: cracks in the ground, tilting trees or posts, unusual water seepage, rumbling sounds.</p><h3>Storm Surges</h3><p>A <strong>storm surge</strong> is the abnormal rise of sea level near the coast, caused by a typhoon's strong winds and low pressure. It can:</p><ul><li>Reach 5–7 meters in extreme cases (like Yolanda/Haiyan in 2013)</li><li>Flood coastal communities within minutes</li><li>Cause most typhoon deaths when combined with high tide</li></ul><p>Most vulnerable: coastal barangays, especially in Eastern Visayas and Bicol.</p><h3>Heat Waves</h3><p>A <strong>heat wave</strong> is a prolonged period of abnormally high temperatures, often combined with high humidity. In the Philippines:</p><ul><li>Heat index (the feels like temperature) can reach danger levels (41–54 degrees Celsius)</li><li>DOH and PAGASA issue heat advisories</li><li>Vulnerable: elderly, children, outdoor workers, and those with health conditions</li></ul><p>Heat index categories:</p><table><thead><tr><th>Heat Index</th><th>Category</th><th>Effect</th></tr></thead><tbody><tr><td>27–32 C</td><td>Caution</td><td>Fatigue possible with prolonged exposure</td></tr><tr><td>33–41 C</td><td>Extreme Caution</td><td>Heat cramps and heat exhaustion possible</td></tr><tr><td>42–51 C</td><td>Danger</td><td>Heat cramps, exhaustion likely; heat stroke possible</td></tr><tr><td>52 C+</td><td>Extreme Danger</td><td>Heat stroke imminent</td></tr></tbody></table><h3>The Role of PAGASA</h3><p><strong>PAGASA</strong> monitors and warns about:</p><ul><li>Typhoons and tropical cyclones</li><li>Floods and rainfall</li><li>Storm surges</li><li>Heat index</li><li>El Nino and La Nina events</li></ul><p>PAGASA issues bulletins every 3–6 hours during active weather events.</p><h3>Preparedness Basics</h3><ul><li>Monitor PAGASA updates before, during, and after storms.</li><li>Prepare a Go Bag with water, food, flashlight, radio, medicines, and important documents.</li><li>Know your evacuation center and routes.</li><li>Secure loose objects; reinforce roofs and windows.</li><li>Never cross flooded roads or wade in floodwater.</li><li>Follow local government advisories on preemptive evacuation.</li></ul><h3>Quick Check</h3><ul><li>How many tropical cyclones enter Philippine waters each year? (Answer: about 20)</li><li>What causes a storm surge? (Answer: a typhoon's strong winds and low pressure pushing sea water onto the coast)</li><li>Which agency issues typhoon warnings in the Philippines? (Answer: PAGASA)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Weather Hazards",
       "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each hydrometeorological hazard or concept to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
+      "content": "<h3>Activity 1 — Match the Pairs</h3><p>Match each hydrometeorological hazard or concept to its correct description. There are 8 pairs.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Typhoon", "right": "Powerful rotating storm that forms over warm ocean waters (≥26.5°C)" },
+          { "key": "k1", "left": "Typhoon", "right": "Powerful rotating storm that forms over warm ocean waters (at least 26.5 C)" },
           { "key": "k2", "left": "Eye of the typhoon", "right": "Calm center with the lowest pressure" },
           { "key": "k3", "left": "Eyewall", "right": "Ring around the eye with the strongest winds and heaviest rain" },
           { "key": "k4", "left": "Storm surge", "right": "Abnormal rise of sea level near the coast, caused by typhoon winds and low pressure" },
           { "key": "k5", "left": "Flash flood", "right": "Sudden, fast-rising water — common in mountain areas after heavy rain" },
           { "key": "k6", "left": "Landslide", "right": "Sudden downward movement of rock, soil, and debris on a slope" },
-          { "key": "k7", "left": "Heat index", "right": "The 'feels like' temperature combining heat and humidity" },
+          { "key": "k7", "left": "Heat index", "right": "The feels like temperature combining heat and humidity" },
           { "key": "k8", "left": "PAGASA", "right": "Agency that monitors typhoons, floods, storm surges, and heat index" }
         ]
       }
@@ -45,20 +38,20 @@
       "type": "activity2",
       "title": "Scenario Challenge — Storm Preparedness",
       "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
+      "content": "<h3>Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌀 PAGASA raises Signal No. 3 in your province. What does this mean for residents?",
+            "text": "PAGASA raises Signal No. 3 in your province. What does this mean for residents?",
             "choices": [
               { "label": "A) Winds of 89–117 km/h are expected — moderate to heavy damage; prepare for possible evacuation", "correct": true },
-              { "label": "B) It's just a light rain warning", "correct": false },
+              { "label": "B) It is just a light rain warning", "correct": false },
               { "label": "C) The typhoon has already passed", "correct": false },
               { "label": "D) Nothing will happen", "correct": false }
             ]
           },
           {
-            "text": "🌊 A coastal barangay is warned of a possible 5-meter storm surge. What should residents do?",
+            "text": "A coastal barangay is warned of a possible 5-meter storm surge. What should residents do?",
             "choices": [
               { "label": "A) Evacuate to higher ground or designated evacuation centers immediately", "correct": true },
               { "label": "B) Stay home and wait it out", "correct": false },
@@ -67,7 +60,7 @@
             ]
           },
           {
-            "text": "🏔️ After three days of continuous heavy rain, you notice cracks appearing on a hillside near your house. What should you do?",
+            "text": "After three days of continuous heavy rain, you notice cracks appearing on a hillside near your house. What should you do?",
             "choices": [
               { "label": "A) Evacuate immediately — cracks are a warning sign of an impending landslide", "correct": true },
               { "label": "B) Ignore them — they are normal", "correct": false },
@@ -76,7 +69,7 @@
             ]
           },
           {
-            "text": "🌊 A river near your barangay is rising fast after hours of rain. What is the SAFEST action?",
+            "text": "A river near your barangay is rising fast after hours of rain. What is the SAFEST action?",
             "choices": [
               { "label": "A) Move to higher ground and avoid crossing flooded areas", "correct": true },
               { "label": "B) Try to cross the river to check on neighbors", "correct": false },
@@ -85,7 +78,7 @@
             ]
           },
           {
-            "text": "🔥 PAGASA reports a heat index of 48°C in your area. What should outdoor workers do?",
+            "text": "PAGASA reports a heat index of 48 C in your area. What should outdoor workers do?",
             "choices": [
               { "label": "A) Avoid prolonged exposure, drink plenty of water, and take breaks in the shade — heat stroke is possible", "correct": true },
               { "label": "B) Work longer hours to finish quickly", "correct": false },
@@ -101,7 +94,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Weather Lab",
       "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>🔐 Formative Check — Escape the Weather Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "content": "<h3>Formative Check — Escape the Weather Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 75% (5 of 6) to pass.</p>",
       "activities": {
         "escape": [
           {
@@ -134,7 +127,7 @@
           {
             "text": "What is the heat index?",
             "choices": [
-              { "label": "A) The 'feels like' temperature combining heat and humidity", "correct": true },
+              { "label": "A) The feels like temperature combining heat and humidity", "correct": true },
               { "label": "B) The actual air temperature", "correct": false },
               { "label": "C) The temperature of the ocean", "correct": false },
               { "label": "D) The temperature inside the house", "correct": false }

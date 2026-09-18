@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Introduction to Physics in Daily Life",
-      "badge": {
-        "id": "physicist",
-        "name": "Physicist",
-        "icon": "⚛️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Overview of physics as a way of understanding the world.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Introduction to Physics in Daily Life</strong> will be added here.</p>"
+      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain how physics concepts improve the quality of life in four key areas: <strong>household, health &amp; safety, work productivity, and leisure</strong>.</p><h3>🔍 What Is Physics?</h3><p><strong>Physics</strong> is the branch of science that studies matter, energy, motion, force, light, sound, heat, and electricity. It explains <em>why</em> things work the way they do — from why a ball rolls downhill to how your phone's screen displays images.</p><p>Physics is not just formulas in a textbook. It is everywhere in your daily life:</p><table><thead><tr><th>Area</th><th>Physics in Action</th><th>Example in Your Life</th></tr></thead><tbody><tr><td><strong>🏠 Household</strong></td><td>Heat, electricity, pressure</td><td>Rice cooker, electric fan, water pump, refrigerator</td></tr><tr><td><strong>🏥 Health &amp; Safety</strong></td><td>Optics, radiation, forces</td><td>X-ray machines, eyeglasses, seatbelts, helmets</td></tr><tr><td><strong>💼 Work Productivity</strong></td><td>Machines, electricity, torque</td><td>Wheelbarrow, sewing machine, welding equipment, computers</td></tr><tr><td><strong>🎮 Leisure</strong></td><td>Waves, optics, motion</td><td>Televisions, speakers, sports, video games, cameras</td></tr></tbody></table><h3>⚙️ The Four Core Physics Concepts You'll Meet</h3><ol><li><strong>Motion &amp; Forces</strong> — how and why objects move (Newton's Laws).</li><li><strong>Energy &amp; Work</strong> — how energy changes from one form to another (Law of Conservation of Energy).</li><li><strong>Waves &amp; Light</strong> — how energy travels through space (sound, light, radio).</li><li><strong>Electricity &amp; Magnetism</strong> — how charged particles create current and fields.</li></ol><h3>💡 Key Idea</h3><p>Every time you use a tool, ride a vehicle, turn on a light, or hear a sound — <strong>physics is making it possible</strong>. Understanding physics helps you use technology safely, make informed choices, and even invent new solutions to everyday problems.</p><h3>📌 Quick Check</h3><ul><li>Name one household appliance that uses electricity.</li><li>Name one sports activity that depends on motion and forces.</li><li>Why is a helmet important? What physics principle protects your head?</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Physics Applications",
-      "badge": {
-        "id": "physicist",
-        "name": "Physicist",
-        "icon": "⚛️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match physics concepts to real-world applications.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Physics Applications</strong> will be added here.</p>",
+      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>In this activity, match each physics concept to the correct everyday application. There are 8 pairs. You have <strong>unlimited retakes</strong> to reach 75%.</p><p><strong>Tip:</strong> Read both columns carefully. Think about <em>what physics is doing</em> in each situation.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Physics Applications",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Physics Applications",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Physics Applications",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Physics Applications",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Physics Applications",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Physics Applications",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Physics Applications",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Physics Applications",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Friction", "right": "Brakes stopping a bicycle" },
+          { "key": "k2", "left": "Gravity", "right": "Water falling from a faucet" },
+          { "key": "k3", "left": "Reflection of light", "right": "Seeing yourself in a mirror" },
+          { "key": "k4", "left": "Refraction of light", "right": "A straw appearing bent in water" },
+          { "key": "k5", "left": "Sound waves", "right": "Hearing a person speak on the phone" },
+          { "key": "k6", "left": "Electrical energy", "right": "Rice cooker heating food" },
+          { "key": "k7", "left": "Air pressure", "right": "Drinking through a straw" },
+          { "key": "k8", "left": "Torque", "right": "Using a long wrench to loosen a bolt" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Life Areas",
-      "badge": {
-        "id": "physicist",
-        "name": "Physicist",
-        "icon": "⚛️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Choose the best physics reasoning for daily scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Life Areas</strong> will be added here.</p>",
+      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the <strong>best physics-based reasoning</strong> for the situation. There are 5 scenarios. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Life Areas",
+            "text": "🏠 Your mother complains that the electric fan is not cooling the room enough on a hot day. Which physics concept best explains why an electric fan does NOT actually cool the air?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The fan creates cold air from electricity.", "correct": false },
+              { "label": "B) The fan moves air, which increases evaporation from the skin, making you feel cooler — but the air temperature stays the same.", "correct": true },
+              { "label": "C) The fan absorbs heat from the room.", "correct": false },
+              { "label": "D) The fan uses gravity to push hot air outside.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Life Areas",
+            "text": "🏥 A nurse checks your blood pressure using a cuff and a pressure gauge. What physics principle does this device rely on?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Refraction of light", "correct": false },
+              { "label": "B) Fluid pressure and force transmission", "correct": true },
+              { "label": "C) Magnetic induction", "correct": false },
+              { "label": "D) Sound wave resonance", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Life Areas",
+            "text": "💼 A carpenter uses a long crowbar to pull out a stubborn nail. Why does a longer crowbar work better than a shorter one?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) It is heavier.", "correct": false },
+              { "label": "B) It increases the torque by increasing the lever arm distance.", "correct": true },
+              { "label": "C) It absorbs more friction.", "correct": false },
+              { "label": "D) It uses less electricity.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Life Areas",
+            "text": "🎮 You are watching a live basketball game on TV. Which type of wave carries the video signal to your television?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Sound waves", "correct": false },
+              { "label": "B) Water waves", "correct": false },
+              { "label": "C) Electromagnetic waves (radio waves)", "correct": true },
+              { "label": "D) Seismic waves", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Life Areas",
+            "text": "🚗 You are riding a jeepney and the driver suddenly brakes. You feel pushed forward. Which physics principle explains this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Newton's First Law of Motion (inertia)", "correct": true },
+              { "label": "B) Newton's Third Law of Motion", "correct": false },
+              { "label": "C) Law of Refraction", "correct": false },
+              { "label": "D) Law of Conservation of Energy", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Lab",
-      "badge": {
-        "id": "physicist",
-        "name": "Physicist",
-        "icon": "⚛️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery by unlocking all keys.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Lab</strong> will be added here.</p>",
+      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
+      "content": "<h3>🔐 Formative Check — Escape the Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. Answer each question correctly to earn a key. Wrong answers cost one life. You need <strong>75%</strong> (5 of 6) to escape and complete this week.</p><p><strong>Think carefully!</strong> Once you lose all 3 lives, you must retake.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Lab",
+            "text": "Which area of daily life is MOST directly improved by understanding friction?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Cooking rice", "correct": false },
+              { "label": "B) Walking on a wet floor without slipping", "correct": true },
+              { "label": "C) Watching TV", "correct": false },
+              { "label": "D) Charging a phone", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Lab",
+            "text": "Which physics concept explains why X-ray images can pass through your skin but not your bones?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Sound reflection", "correct": false },
+              { "label": "B) Electromagnetic wave penetration", "correct": true },
+              { "label": "C) Fluid pressure", "correct": false },
+              { "label": "D) Torque", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Lab",
+            "text": "A construction worker wears a safety helmet. Which physics principle is the helmet designed to address?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Reducing impact force by extending collision time", "correct": true },
+              { "label": "B) Increasing gravitational pull", "correct": false },
+              { "label": "C) Reflecting sound waves", "correct": false },
+              { "label": "D) Increasing air pressure", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Lab",
+            "text": "You use a wheelbarrow to carry soil. Which simple machine does this represent, and what is its main advantage?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Pulley — changes direction of force", "correct": false },
+              { "label": "B) Lever — multiplies force to lift heavy loads with less effort", "correct": true },
+              { "label": "C) Inclined plane — reduces effort by spreading distance", "correct": false },
+              { "label": "D) Wedge — splits materials", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Lab",
+            "text": "Which of the following is NOT an example of physics improving work productivity?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) A sewing machine speeding up garment production", "correct": false },
+              { "label": "B) A welding machine joining metal parts", "correct": false },
+              { "label": "C) A worker taking a nap during break time", "correct": true },
+              { "label": "D) A computer processing documents instantly", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Lab",
+            "text": "You are watching a friend play a guitar. Which type of wave produces the sound you hear?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Electromagnetic wave", "correct": false },
+              { "label": "B) Mechanical (sound) wave through air", "correct": true },
+              { "label": "C) Light wave", "correct": false },
+              { "label": "D) Radio wave", "correct": false }
             ]
           }
         ]

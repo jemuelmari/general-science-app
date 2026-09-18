@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/student.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/student.css?v=3" />
 </head>
 <body>
 
@@ -73,13 +73,300 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/security.js"></script>
-  <script src="../assets/js/transmutation.js"></script>
-  <script src="../assets/js/sync.js"></script>
-  <script src="../assets/js/backup.js"></script>
-  <script src="../assets/js/dashboard.js"></script>
+  <script src="../config.js?v=3"></script>
+  <script src="../assets/js/app.js?v=3"></script>
+  <script src="../assets/js/store.js?v=3"></script>
+  <script src="../assets/js/security.js?v=3"></script>
+  <script src="../assets/js/transmutation.js?v=3"></script>
+  <script src="../assets/js/sync.js?v=3"></script>
+  <script src="../assets/js/backup.js?v=3"></script>
+  <script src="../assets/js/term-access.js?v=3"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const user = Store.getCurrentUser();
+      if (!user) {
+        window.location.replace('login.html');
+        return;
+      }
+
+      APP.$('#user-pill').textContent =
+        `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
+
+      const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+      APP.$('#dash-avatar').textContent = initials;
+      APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
+      APP.$('#greeting-meta').innerHTML = `
+        <span>🎓 LRN: ${APP.formatLRN(user.lrn)}</span>
+        <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
+      `;
+
+      function computeStanding() {
+        const scores = Store.getScores(user.lrn);
+        const allSTs = [];
+        ['term1', 'term2', 'term3'].forEach((term) => {
+          const st = scores[term]?.st || {};
+          Object.values(st).forEach((s) => {
+            if (s && s.total) allSTs.push((s.score / s.total) * 100);
+          });
+        });
+        if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
+        const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
+        return { ...Transmutation.classifyStudent(avg), avg };
+      }
+
+      const standing = computeStanding();
+
+      APP.$('#standing-badge').innerHTML = `
+        <div style="text-align:right;">
+          <div class="badge badge-${standing.key}" style="font-size:0.9rem;padding:8px 16px;">
+            ${standing.label}
+          </div>
+          ${standing.avg !== null ? `<div class="text-small text-muted" style="margin-top:4px;">ST Average: ${standing.avg.toFixed(1)}%</div>` : ''}
+        </div>
+      `;
+
+      const progress = Store.getProgress(user.lrn);
+      const badges = Store.getBadges(user.lrn);
+
+      const stats = [
+        { value: (progress.term1?.completed?.length || 0), label: 'Term 1 Days Done' },
+        { value: (progress.term2?.completed?.length || 0), label: 'Term 2 Days Done' },
+        { value: (progress.term3?.completed?.length || 0), label: 'Term 3 Days Done' },
+        { value: (badges.term1?.length || 0) + (badges.term2?.length || 0) + (badges.term3?.length || 0), label: 'Total Badges' },
+        { value: standing.avg !== null ? `${standing.avg.toFixed(0)}%` : '—', label: 'ST Average' }
+      ];
+
+      APP.$('#quick-stats').innerHTML = stats.map((s) => `
+        <div class="qs-card green">
+          <div class="qs-info">
+            <div class="qs-value">${s.value}</div>
+            <div class="qs-label">${s.label}</div>
+          </div>
+        </div>
+      `).join('');
+
+      const terms = [
+        { id: 'term1', title: 'Term 1', desc: 'Physics & Chemistry', icon: '⚛️',
+          topics: 'Motion · Machines · Hydraulics · Light · Sound · Chemistry', totalWeeks: 10 },
+        { id: 'term2', title: 'Term 2', desc: 'Chemistry & Life Science', icon: '🧪',
+          topics: 'Chemical Reactions · Solutions · Cells · Organ Systems · Climate', totalWeeks: 10 },
+        { id: 'term3', title: 'Term 3', desc: 'Earth Science', icon: '🌏',
+          topics: 'Earth\'s Uniqueness · Philippine Geology · Hazards · DRRM', totalWeeks: 10 }
+      ];
+
+      async function renderTermCards() {
+        let termAccess = { term1: 'locked', term2: 'locked', term3: 'locked' };
+        try {
+          termAccess = await TermAccess.get(user.section);
+        } catch (err) {
+          console.warn('[Dashboard] TermAccess fetch failed:', err);
+        }
+
+        APP.$('#terms-grid').innerHTML = terms.map((t) => {
+          const done = progress[t.id]?.completed?.length || 0;
+          const totalDays = t.totalWeeks * 4;
+          const pct = Math.round((done / totalDays) * 100);
+          const teacherLocked = termAccess[t.id] !== 'open';
+          const hasProgress = done > 0;
+
+          return `
+            <div class="subject-card" data-term="${t.id}" data-locked="${teacherLocked}"
+                 style="${teacherLocked ? 'opacity:0.65;cursor:not-allowed;' : ''}">
+              <div style="font-size:2rem;">${t.icon}</div>
+              <h3>${t.title} — ${t.desc}</h3>
+              <p class="text-muted text-small">${t.topics}</p>
+              <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
+              <p class="text-small text-muted">${done}/${totalDays} days · ${pct}% complete</p>
+              ${teacherLocked
+                ? `<span class="badge badge-warning" style="margin-top:8px;">
+                     🔒 ${hasProgress ? 'Locked (read-only)' : 'Locked — ask teacher'}
+                   </span>`
+                : ''}
+            </div>
+          `;
+        }).join('');
+
+        document.querySelectorAll('[data-term]').forEach((card) => {
+          card.addEventListener('click', () => {
+            const term = card.dataset.term;
+            const isLocked = card.dataset.locked === 'true';
+
+            if (isLocked) {
+              const done = progress[term]?.completed?.length || 0;
+              if (done > 0) {
+                if (confirm(
+                  '🔒 This term is currently locked by your teacher.\n\n' +
+                  'You can VIEW your past progress but cannot continue with new activities.\n\n' +
+                  'Open read-only view?'
+                )) {
+                  window.location.href = `${term}/index.html?readonly=1`;
+                }
+              } else {
+                APP.toast('🔒 This term is locked by your teacher.', 'warning', 4000);
+              }
+              return;
+            }
+
+            window.location.href = `${term}/index.html`;
+          });
+        });
+      }
+
+      renderTermCards();
+
+      const allBadges = [
+        { id: 'physicist',        icon: '⚛️', name: 'Physicist' },
+        { id: 'machine-master',   icon: '⚙️', name: 'Machine Master' },
+        { id: 'hydraulics-pro',   icon: '💧', name: 'Hydraulics Pro' },
+        { id: 'chemist',          icon: '🧪', name: 'Chemist' },
+        { id: 'reaction-master',  icon: '⚗️', name: 'Reaction Master' },
+        { id: 'cell-explorer',    icon: '🔬', name: 'Cell Explorer' },
+        { id: 'systems-pro',      icon: '🫀', name: 'Systems Pro' },
+        { id: 'earth-scientist',  icon: '🌏', name: 'Earth Scientist' }
+      ];
+
+      const earnedSet = new Set([
+        ...(badges.term1 || []),
+        ...(badges.term2 || []),
+        ...(badges.term3 || [])
+      ]);
+
+      APP.$('#badge-total').textContent = `🏆 ${earnedSet.size} badges earned`;
+      APP.$('#badge-week').textContent = `This week: ${earnedSet.size}`;
+
+      APP.$('#badge-gallery').innerHTML = allBadges.map((b) => {
+        const earned = earnedSet.has(b.id);
+        return `
+          <div class="badge-item ${earned ? '' : 'locked'}">
+            <div class="badge-icon">${b.icon}</div>
+            <div class="badge-name">${b.name}</div>
+          </div>
+        `;
+      }).join('');
+
+      const syncBtnCode = APP.$('#btn-sync-code');
+
+      if (syncBtnCode) {
+        const backendOn = Sync.backendEnabled();
+        syncBtnCode.textContent = backendOn
+          ? '🔑 Generate Sync Code (works anywhere)'
+          : '🔑 Generate Sync Code (this device only)';
+
+        if (!backendOn) {
+          const warn = document.createElement('div');
+          warn.className = 'alert alert-warning';
+          warn.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+          warn.innerHTML = `
+            <strong>⚠️ Sync Code is limited</strong>
+            <p style="margin-top:6px;">Sync Codes currently only work if the teacher uses the <strong>same device</strong>.
+            To send progress from a different device, use <strong>Download Backup (JSON)</strong> instead.</p>
+          `;
+          syncBtnCode.parentElement.appendChild(warn);
+        } else {
+          const info = document.createElement('div');
+          info.className = 'alert alert-success';
+          info.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+          info.innerHTML = `
+            <strong>✅ Cross-device sync enabled</strong>
+            <p style="margin-top:6px;">Sync Codes work on any device connected to the internet.</p>
+          `;
+          syncBtnCode.parentElement.appendChild(info);
+        }
+      }
+
+      if (syncBtnCode) {
+        syncBtnCode.addEventListener('click', async () => {
+          syncBtnCode.disabled = true;
+          syncBtnCode.textContent = '⏳ Generating...';
+          try {
+            const result = await Sync.generateSyncCode(user.lrn, null);
+            const modeLabel = result.mode === 'backend'
+              ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
+              : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
+            APP.$('#sync-output').innerHTML = `
+              <div class="alert alert-success">
+                <strong>✅ Sync Code Generated!</strong>
+                <div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">
+                  ${result.code}
+                </div>
+                <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
+                <p class="text-small">${result.mode === 'backend'
+                  ? 'Send this code to your teacher — they can import it from any device.'
+                  : 'Your teacher must use the SAME device to import this code.'}</p>
+              </div>
+            `;
+            APP.toast('Sync code generated!', 'success');
+          } catch (e) {
+            APP.toast('Failed: ' + e.message, 'danger');
+          } finally {
+            syncBtnCode.disabled = false;
+            syncBtnCode.textContent = Sync.backendEnabled()
+              ? '🔑 Generate Sync Code (works anywhere)'
+              : '🔑 Generate Sync Code (this device only)';
+          }
+        });
+      }
+
+      APP.$('#btn-export-json').addEventListener('click', async () => {
+        try {
+          const fn = await Sync.exportAsFile(user.lrn, null);
+          APP.toast(`Saved: ${fn}`, 'success');
+        } catch (e) {
+          APP.toast('Export failed: ' + e.message, 'danger');
+        }
+      });
+
+      APP.$('#btn-import-json').addEventListener('click', () => {
+        APP.$('#import-file').click();
+      });
+
+      APP.$('#import-file').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const data = await Backup.uploadBackup(file);
+          APP.toast(`Backup restored for ${data.user.firstName}!`, 'success');
+          setTimeout(() => location.reload(), 900);
+        } catch (err) {
+          APP.toast('Import failed: ' + err.message, 'danger');
+        }
+        e.target.value = '';
+      });
+
+      APP.$('#btn-logout').addEventListener('click', () => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+          position:fixed;inset:0;background:rgba(255,255,255,0.95);
+          display:flex;align-items:center;justify-content:center;
+          z-index:99999;font-family:'Segoe UI',sans-serif;
+        `;
+        overlay.innerHTML = `
+          <div style="text-align:center;">
+            <div style="font-size:2rem;">👋</div>
+            <div style="font-weight:600;color:#0d47a1;margin-top:8px;">Logging out...</div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+
+        try {
+          if (window.Store && typeof Store.clearSession === 'function') {
+            Store.clearSession();
+          } else {
+            localStorage.removeItem('gsa_v1_session');
+          }
+        } catch (e) {
+          console.error('[Logout] Cleanup error:', e);
+          localStorage.removeItem('gsa_v1_session');
+        }
+
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 400);
+      });
+
+    })();
+  </script>
 </body>
 </html>

@@ -3,30 +3,23 @@
   "week": 7,
   "title": "Plant Organ Systems",
   "competencies": [
-    {
-      "code": "GENSCI-11-T2-W7-C1",
-      "text": "Explain plant organ interaction for material transport."
-    }
+    { "code": "GENSCI-11-T2-W7-C1", "text": "Explain plant organ interaction for material transport." }
   ],
-  "badge": {
-    "id": "botanist",
-    "name": "Botanist",
-    "icon": "🌿"
-  },
+  "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
   "days": [
     {
       "day": 1,
       "type": "lesson",
       "title": "Plant Organs Working Together",
       "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the main plant organs and explain how they work together to transport water, minerals, and food throughout the plant.</p><h3>🌿 The Plant as a System</h3><p>Like animals, plants are made of <strong>organ systems</strong> that work together. In plants, the main organs are:</p><table><thead><tr><th>Organ</th><th>Main Function</th><th>Structure Support</th></tr></thead><tbody><tr><td><strong>Roots</strong></td><td>Absorb water and minerals; anchor the plant</td><td>Root hairs increase surface area; branching reaches more soil</td></tr><tr><td><strong>Stem</strong></td><td>Support and transport between roots and leaves</td><td>Contains vascular bundles (xylem + phloem); tall, strong</td></tr><tr><td><strong>Leaves</strong></td><td>Photosynthesis — make food (glucose) using sunlight</td><td>Broad, flat, thin for maximum light absorption; contain stomata for gas exchange</td></tr><tr><td><strong>Flowers</strong></td><td>Reproduction — produce seeds</td><td>Bright colors and nectar attract pollinators</td></tr><tr><td><strong>Fruits</strong></td><td>Protect seeds and aid dispersal</td><td>Fleshy or dry; may be eaten by animals</td></tr></tbody></table><h3>💧 The Vascular System — Plant "Highways"</h3><p>Plants have two types of transport tissues running through roots, stems, and leaves:</p><table><thead><tr><th>Tissue</th><th>What It Transports</th><th>Direction</th><th>Driving Force</th></tr></thead><tbody><tr><td><strong>Xylem</strong></td><td>Water + dissolved minerals</td><td>Upward (roots → leaves)</td><td>Transpiration pull + root pressure</td></tr><tr><td><strong>Phloem</strong></td><td>Food (sugars/glucose)</td><td>Both directions (source → sink)</td><td>Pressure flow from high to low concentration</td></tr></tbody></table><h3>🌊 Water Transport — Step by Step</h3><ol><li><strong>Absorption:</strong> Root hairs absorb water and minerals from the soil by osmosis.</li><li><strong>Root pressure:</strong> Water moves into the xylem.</li><li><strong>Capillary action:</strong> Water molecules stick to xylem walls and each other, helping them move up.</li><li><strong>Transpiration pull:</strong> As water evaporates from leaves (through stomata), it pulls more water upward — like sucking through a straw.</li><li><strong>Delivery:</strong> Water reaches leaves, where it's used in photosynthesis and cools the plant.</li></ol><h3>🍯 Food Transport — Step by Step</h3><ol><li><strong>Production:</strong> Leaves produce glucose through photosynthesis.</li><li><strong>Loading:</strong> Glucose is converted to sucrose and loaded into phloem.</li><li><strong>Transport:</strong> Sucrose moves through phloem to where it's needed — growing tips, roots, fruits, storage organs.</li><li><strong>Unloading:</strong> Cells use the sugar for energy or store it as starch.</li></ol><h3>💨 Transpiration — The Plant's Cooling System</h3><p><strong>Transpiration</strong> is the loss of water vapor through stomata in the leaves.</p><ul><li>Driven by sunlight, temperature, humidity, and wind.</li><li>Cools the plant (like sweating in humans).</li><li>Pulls water upward from roots to leaves.</li><li>Rate is higher on hot, dry, windy days.</li></ul><p><strong>Stomata</strong> are tiny openings on the underside of leaves that open and close to control gas exchange and water loss. Guard cells regulate them.</p><h3>🌾 Real-Life Applications</h3><ul><li><strong>Watering plants:</strong> Water the soil, not the leaves — roots are the entry point.</li><li><strong>Wilting:</strong> When water loss (transpiration) exceeds uptake, plants droop. Water them quickly.</li><li><strong>Girdling:</strong> Removing the bark (which contains phloem) kills a tree — food can't reach the roots.</li><li><strong>Fertilizers:</strong> Provide minerals to the soil so roots can absorb them.</li><li><strong>Pruning:</strong> Reduces leaf area, lowering transpiration and helping transplants survive.</li></ul><h3>🔬 The Big Idea</h3><p>Plant organs form an integrated system — water, minerals, and food are transported through xylem and phloem; leaves produce food; roots anchor and absorb; stems support and connect everything. Remove one organ, and the whole system suffers.</p><h3>📌 Quick Check</h3><ul><li>Which tissue transports water in plants? (Answer: xylem)</li><li>Which tissue transports food (sugars)? (Answer: phloem)</li><li>What is transpiration? (Answer: loss of water vapor from leaves through stomata)</li></ul>"
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the main plant organs and explain how they work together to transport water, minerals, and food.</p><h3>🌿 The Plant as a System</h3><p>Plants are made of organ systems that work together: roots, stems, leaves, flowers, and fruits.</p><table><thead><tr><th>Organ</th><th>Function</th></tr></thead><tbody><tr><td>Roots</td><td>Absorb water and minerals; anchor the plant</td></tr><tr><td>Stem</td><td>Support and transport between roots and leaves</td></tr><tr><td>Leaves</td><td>Photosynthesis — make food using sunlight</td></tr><tr><td>Flowers</td><td>Reproduction — produce seeds</td></tr><tr><td>Fruits</td><td>Protect seeds and aid dispersal</td></tr></tbody></table><h3>💧 The Vascular System</h3><table><thead><tr><th>Tissue</th><th>Transports</th><th>Direction</th></tr></thead><tbody><tr><td>Xylem</td><td>Water + minerals</td><td>Upward (roots to leaves)</td></tr><tr><td>Phloem</td><td>Sugars (food)</td><td>Both directions (source to sink)</td></tr></tbody></table><h3>📌 Quick Check</h3><ul><li>Which tissue transports water? (Answer: xylem)</li><li>Which tissue transports food? (Answer: phloem)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Plant Tissues",
       "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each plant organ or tissue to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each plant organ or tissue to its correct function. There are 8 pairs.</p>",
       "activities": {
         "match": [
           { "key": "k1", "left": "Roots", "right": "Absorb water and minerals; anchor the plant" },
@@ -45,7 +38,7 @@
       "type": "activity2",
       "title": "Scenario Challenge — Transport in Plants",
       "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
       "activities": {
         "scenario": [
           {
@@ -101,7 +94,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Botany Lab",
       "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🔐 Formative Check — Escape the Botany Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "content": "<h3>🔐 Formative Check — Escape the Botany Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 75% (5 of 6) to pass.</p>",
       "activities": {
         "escape": [
           {
