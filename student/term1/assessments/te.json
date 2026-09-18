@@ -182,7 +182,8 @@
       "text": "Which property of a sound wave determines how loud or soft it sounds?",
       "options": ["Amplitude", "Frequency", "Wavelength", "Speed"],
       "correct": "Amplitude"
-        {
+    },
+    {
       "id": "q31",
       "text": "Louis Pasteur is best known for:",
       "options": ["Developing germ theory and pasteurization", "Discovering DNA", "Inventing the microscope", "Discovering penicillin"],
