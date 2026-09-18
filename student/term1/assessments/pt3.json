@@ -1,0 +1,25 @@
+{
+  "id": "pt3",
+  "title": "PT3 — Chemistry in My Home: Product Investigation Report",
+  "shortTitle": "PT3 — Chemistry in My Home",
+  "coverage": "Weeks 8–10",
+  "summary": "Investigate a household or personal care product from your home and produce a written report that connects its chemistry to safety, regulation, and environmental impact.",
+  "instructions": "<p>Your task is to <strong>choose one household or personal care product</strong> from your home and investigate it deeply. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Choose one product</strong> from any of these categories: bleach, detergent, baking powder, shampoo, soap, toothpaste, or a similar household product.</li><li><strong>Photograph the product label</strong> and identify its <strong>active ingredients</strong>.</li><li>For each active ingredient, provide:<ul style='margin-left:20px;margin-top:6px;'><li><strong>Brief description</strong> — what the chemical is</li><li><strong>Function</strong> — what it does in the product</li><li><strong>Other uses</strong> — any non-household applications</li><li><strong>Human impact</strong> — benefits and risks</li><li><strong>Environmental impact</strong> — effects on water, soil, or air</li></ul></li><li><strong>Reference the appropriate agencies:</strong> DTI (labeling standards), FDA (safety approval), and DENR (disposal guidelines).</li><li><strong>Recommend safe use and disposal</strong> for the product.</li><li>End with a <strong>personal reflection</strong> on how your understanding of chemistry has changed your view of household products.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> 3–5 page PDF report with photos. Submit as a file or paste a share link in the reflection.</p>",
+  "requirements": [
+    "Product chosen and clearly identified with a photo of the label",
+    "All active ingredients listed and explained",
+    "Benefits and risks for each ingredient",
+    "Environmental impact noted per ingredient",
+    "References to DTI, FDA, and DENR guidelines",
+    "Safe use and disposal recommendations",
+    "Personal reflection (2–3 paragraphs)"
+  ],
+  "options": null,
+  "rubric": [
+    { "criterion": "Accuracy of chemistry content (ingredients and functions)", "points": 35 },
+    { "criterion": "Depth of human & environmental impact analysis", "points": 25 },
+    { "criterion": "Correct referencing of DTI/FDA/DENR roles", "points": 15 },
+    { "criterion": "Quality of safe-use and disposal recommendations", "points": 15 },
+    { "criterion": "Organization, grammar, formatting, and reflection", "points": 10 }
+  ]
+}
