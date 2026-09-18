@@ -348,7 +348,11 @@
         e.target.value = '';
       });
 
+      /* ============================================================
+         LOG OUT — robust handler
+         ============================================================ */
       APP.$('#btn-logout').addEventListener('click', () => {
+        // Show overlay
         const overlay = document.createElement('div');
         overlay.style.cssText = `
           position:fixed;inset:0;background:rgba(255,255,255,0.95);
@@ -363,16 +367,23 @@
         `;
         document.body.appendChild(overlay);
 
-        sessionStorage.setItem('gsa_logout_pending', JSON.stringify({
-          lrn: user.lrn,
-          at: Date.now()
-        }));
+        // Clear session safely with fallbacks
+        try {
+          if (window.Store && typeof Store.clearSession === 'function') {
+            Store.clearSession();
+          } else {
+            // Fallback: clear the session key directly
+            localStorage.removeItem('gsa_v1_session');
+          }
+        } catch (e) {
+          console.error('[Logout] Cleanup error:', e);
+          localStorage.removeItem('gsa_v1_session');
+        }
 
-        Store.clearSession();
-
+        // Redirect after a short delay
         setTimeout(() => {
-          window.location.replace('login.html');
-        }, 150);
+          window.location.href = 'login.html';
+        }, 400);
       });
 
     })();
