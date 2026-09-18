@@ -1,6 +1,6 @@
 /* ============================================================
    teacher-auth.js — Teacher password authentication
-   Version: 1.3.0
+   Version: 1.4.0
    App: General Science
    ============================================================ */
 
@@ -24,7 +24,7 @@ const TeacherAuth = (() => {
     }
     window.addEventListener('storage', (e) => {
       if (e.key === SESSION_KEY && !e.newValue) {
-        window.location.replace('../teacher-login.html');
+        window.location.replace(loginUrl());
       }
     });
   }
@@ -112,7 +112,7 @@ const TeacherAuth = (() => {
     heartbeatInterval = setInterval(() => {
       if (!isAuthenticated()) {
         stopHeartbeat();
-        setTimeout(() => { window.location.replace('../teacher-login.html'); }, 1500);
+        setTimeout(() => { window.location.replace(loginUrl()); }, 1500);
       }
     }, 60000);
   }
@@ -135,14 +135,22 @@ const TeacherAuth = (() => {
       return false;
     }
     clearSession();
-    window.location.replace('../teacher-login.html');
+    window.location.replace(loginUrl());
     return true;
+  }
+
+  function loginUrl() {
+    const path = window.location.pathname;
+    if (path.includes('/teacher/') || path.includes('/classrecord/')) {
+      return '../teacher-login.html';
+    }
+    return 'teacher-login.html';
   }
 
   function require() {
     if (!isAuthenticated()) {
       const here = window.location.pathname.split('/').pop();
-      window.location.replace('teacher-login.html?next=' + encodeURIComponent(here));
+      window.location.replace(loginUrl() + '?next=' + encodeURIComponent(here));
       return false;
     }
     return true;
