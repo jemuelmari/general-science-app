@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Teacher Login — General Science</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=3" />
+  <link rel="stylesheet" href="assets/css/main.css?v=4" />
   <style>
     body {
       margin: 0;
@@ -64,10 +64,10 @@
     <a href="index.html" class="back-link">← Back to Home</a>
   </div>
 
-  <script src="config.js?v=3"></script>
-  <script src="assets/js/app.js?v=3"></script>
-  <script src="assets/js/store.js?v=3"></script>
-  <script src="assets/js/teacher-auth.js?v=3"></script>
+  <script src="config.js?v=4"></script>
+  <script src="assets/js/app.js?v=4"></script>
+  <script src="assets/js/store.js?v=4"></script>
+  <script src="assets/js/teacher-auth.js?v=4"></script>
   <script>
     (function() {
       'use strict';
@@ -77,69 +77,78 @@
       const btn = document.getElementById('login-btn');
       const errorSlot = document.getElementById('error-slot');
 
-      if (!window.TeacherAuth) {
-        errorSlot.innerHTML = `
-          <div class="login-error">
-            ⚠️ Authentication module failed to load.<br>
-            Please check that <code>assets/js/teacher-auth.js</code> exists.
-          </div>
-        `;
-        btn.disabled = true;
-        return;
+      // Wait for TeacherAuth to be available (in case script loads slowly)
+      let tries = 0;
+      function waitForAuth() {
+        if (window.TeacherAuth) {
+          startLogin();
+        } else if (tries++ < 20) {
+          setTimeout(waitForAuth, 100);
+        } else {
+          errorSlot.innerHTML = `
+            <div class="login-error">
+              ⚠️ Authentication module failed to load.<br>
+              Please check that <code>assets/js/teacher-auth.js</code> exists and is not empty.
+            </div>
+          `;
+          btn.disabled = true;
+        }
       }
 
-      TeacherAuth.init();
+      function startLogin() {
+        TeacherAuth.init();
 
-      if (TeacherAuth.isAuthenticated()) {
-        redirectAfterLogin();
-        return;
-      }
-
-      const lock = TeacherAuth.getLockout();
-      if (lock) showLockout(lock);
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorSlot.innerHTML = '';
-
-        const lock = TeacherAuth.getLockout();
-        if (lock) { showLockout(lock); return; }
-
-        const password = passwordEl.value;
-        if (!password) return;
-
-        btn.disabled = true;
-        btn.textContent = 'Checking…';
-
-        try {
-          const ok = await TeacherAuth.login(password);
-
-          if (!ok) {
-            const attemptsLeft = TeacherAuth.getAttemptsLeft();
-            if (attemptsLeft <= 0) {
-              const newLock = TeacherAuth.getLockout();
-              showLockout(newLock);
-            } else {
-              errorSlot.innerHTML = `
-                <div class="login-error">
-                  ❌ Incorrect password. ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left.
-                </div>
-              `;
-            }
-            passwordEl.value = '';
-            passwordEl.focus();
-          } else {
-            btn.textContent = '✓ Authenticated';
-            redirectAfterLogin();
-            return;
-          }
-        } catch (err) {
-          errorSlot.innerHTML = `<div class="login-error">Error: ${err.message}</div>`;
+        if (TeacherAuth.isAuthenticated()) {
+          redirectAfterLogin();
+          return;
         }
 
-        btn.disabled = false;
-        btn.textContent = 'Unlock →';
-      });
+        const lock = TeacherAuth.getLockout();
+        if (lock) showLockout(lock);
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          errorSlot.innerHTML = '';
+
+          const lock = TeacherAuth.getLockout();
+          if (lock) { showLockout(lock); return; }
+
+          const password = passwordEl.value;
+          if (!password) return;
+
+          btn.disabled = true;
+          btn.textContent = 'Checking…';
+
+          try {
+            const ok = await TeacherAuth.login(password);
+
+            if (!ok) {
+              const attemptsLeft = TeacherAuth.getAttemptsLeft();
+              if (attemptsLeft <= 0) {
+                const newLock = TeacherAuth.getLockout();
+                showLockout(newLock);
+              } else {
+                errorSlot.innerHTML = `
+                  <div class="login-error">
+                    ❌ Incorrect password. ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left.
+                  </div>
+                `;
+              }
+              passwordEl.value = '';
+              passwordEl.focus();
+            } else {
+              btn.textContent = '✓ Authenticated';
+              redirectAfterLogin();
+              return;
+            }
+          } catch (err) {
+            errorSlot.innerHTML = `<div class="login-error">Error: ${err.message}</div>`;
+          }
+
+          btn.disabled = false;
+          btn.textContent = 'Unlock →';
+        });
+      }
 
       function showLockout(lock) {
         const mins = Math.ceil((lock.until - Date.now()) / 60000);
@@ -167,6 +176,9 @@
           window.location.replace('instructor.html');
         }
       }
+
+      // Start the wait-for-auth loop
+      waitForAuth();
     })();
   </script>
 </body>
