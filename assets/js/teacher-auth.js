@@ -9,7 +9,6 @@
    - Rate limiting (3 attempts → 5-minute lockout)
    - Session timeout (30 min of inactivity)
    - Safe logout with confirmation
-   - Cross-page auth check via TeacherAuth.require()
    ============================================================ */
 
 const TeacherAuth = (() => {
@@ -177,7 +176,7 @@ const TeacherAuth = (() => {
   }
 
   /* ============================================================
-     REQUIRE AUTH (page guard)
+     REQUIRE AUTH
      ============================================================ */
   function require() {
     if (!isAuthenticated()) {
