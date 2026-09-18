@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "PAGASA & iHEAT Maps",
-      "badge": {
-        "id": "pagasa-partner",
-        "name": "PAGASA Partner",
-        "icon": "☀️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how PAGASA's iHEAT maps work.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>PAGASA & iHEAT Maps</strong> will be added here.</p>"
+      "badge": { "id": "pagasa-partner", "name": "PAGASA Partner", "icon": "☀️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe PAGASA's role, explain what the iHEAT (Heat Index and Hazard Assessment Tool) maps show, and describe how these tools help Filipinos prepare for heat-related hazards.</p><h3>🌤️ Who Is PAGASA?</h3><p><strong>PAGASA</strong> stands for the <strong>Philippine Atmospheric, Geophysical and Astronomical Services Administration</strong>. It is the national meteorological agency under the Department of Science and Technology (DOST).</p><p><strong>PAGASA's main responsibilities:</strong></p><ul><li>Monitor and forecast typhoons and tropical cyclones</li><li>Issue rainfall, flood, and thunderstorm warnings</li><li>Provide heat index advisories</li><li>Monitor El Niño and La Niña events</li><li>Publish astronomical data (sunrise, sunset, tides, eclipses)</li><li>Maintain weather stations, radars, and satellite systems nationwide</li></ul><h3>🔥 What Is the Heat Index?</h3><p>The <strong>heat index</strong> is the temperature it actually feels like to the human body — combining air temperature AND relative humidity. High humidity prevents sweat from evaporating, making you feel hotter than the actual air temperature.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Heat Index = f(Temperature, Humidity)</strong></p><table><thead><tr><th>Heat Index Range</th><th>Category</th><th>What It Means</th></tr></thead><tbody><tr><td>27–32°C</td><td>Caution</td><td>Fatigue possible with prolonged exposure and activity</td></tr><tr><td>33–41°C</td><td>Extreme Caution</td><td>Heat cramps and heat exhaustion possible</td></tr><tr><td>42–51°C</td><td>Danger</td><td>Heat cramps, exhaustion likely; heat stroke possible</td></tr><tr><td>52°C and above</td><td>Extreme Danger</td><td>Heat stroke imminent — emergency</td></tr></tbody></table><h3>🗺️ What Is the PAGASA iHEAT Map?</h3><p>The <strong>iHEAT</strong> (Heat Index and Hazard Assessment Tool) is an interactive map on PAGASA's website that shows real-time and forecast heat index values across the Philippines.</p><p><strong>How to access:</strong></p><ul><li>Visit <strong>bagong.pagasa.dost.gov.ph</strong></li><li>Look for the 'Heat Index' or 'iHEAT' link</li><li>Select your region, province, or city</li><li>View current and 5-day forecast heat index</li></ul><h3>🎯 What the iHEAT Map Shows</h3><table><thead><tr><th>Feature</th><th>What It Displays</th></tr></thead><tbody><tr><td><strong>Color-coded regions</strong></td><td>Color reflects heat index category — green (caution) to dark red (extreme danger)</td></tr><tr><td><strong>City/province heat index</strong></td><td>Click on a region to see its current heat index value</td></tr><tr><td><strong>5-day forecast</strong></td><td>Predicted heat index values for the next 5 days</td></tr><tr><td><strong>Advisories</strong></td><td>Alerts when heat index reaches danger levels</td></tr><tr><td><strong>Historical data</strong></td><td>Comparison with past heat index records</td></tr></tbody></table><h3>🇵🇭 How iHEAT Maps Help Filipinos</h3><ul><li><strong>Personal planning:</strong> Know the best times to go outdoors</li><li><strong>School decisions:</strong> DepEd can suspend classes when heat index is dangerous</li><li><strong>Worker safety:</strong> Construction, farming, and delivery workers can adjust schedules</li><li><strong>Health protection:</strong> Hospitals and clinics prepare for heat-related illnesses</li><li><strong>Local government planning:</strong> LGUs can open cooling centers and issue advisories</li><li><strong>Agricultural planning:</strong> Farmers know when to irrigate and harvest</li><li><strong>Sports and events:</strong> Athletic events can be rescheduled to cooler hours</li></ul><h3>🩺 Heat-Related Illnesses</h3><table><thead><tr><th>Illness</th><th>Symptoms</th><th>Response</th></tr></thead><tbody><tr><td><strong>Heat cramps</strong></td><td>Muscle pain and spasms</td><td>Rest, drink water with electrolytes, cool down</td></tr><tr><td><strong>Heat exhaustion</strong></td><td>Heavy sweating, weakness, dizziness, nausea</td><td>Move to cool area, drink fluids, rest</td></tr><tr><td><strong>Heat stroke</strong></td><td>High body temp, confusion, no sweating, fainting</td><td>Emergency — call 911, cool the body immediately</td></tr></tbody></table><h3>🌡️ What Causes Extreme Heat Index?</h3><ul><li><strong>El Niño events</strong> — warmer Pacific Ocean temperatures cause dry, hot weather in the Philippines</li><li><strong>Climate change</strong> — long-term warming trends increase frequency of extreme heat days</li><li><strong>Urban heat island effect</strong> — cities absorb and radiate heat from concrete and asphalt</li><li><strong>High humidity</strong> — makes the body feel hotter than the actual temperature</li></ul><h3>🛡️ Heat Mitigation Strategies</h3><table><thead><tr><th>Strategy</th><th>What It Does</th></tr></thead><tbody><tr><td><strong>Stay hydrated</strong></td><td>Drink water regularly, even if not thirsty</td></tr><tr><td><strong>Wear light clothing</strong></td><td>Light-colored, breathable fabrics reflect heat</td></tr><tr><td><strong>Avoid peak hours</strong></td><td>Stay indoors 10 AM to 4 PM — the hottest hours</td></tr><tr><td><strong>Use sun protection</strong></td><td>Hats, sunglasses, sunscreen</td></tr><tr><td><strong>Urban greening</strong></td><td>Plant trees and create green spaces to reduce heat island effect</td></tr><tr><td><strong>Cooling centers</strong></td><td>LGUs establish air-conditioned public spaces during heat waves</td></tr><tr><td><strong>Smart building design</strong></td><td>Reflective roofs, proper insulation, natural ventilation</td></tr></tbody></table><h3>📌 Quick Check</h3><ul><li>What does PAGASA stand for? (Answer: Philippine Atmospheric, Geophysical and Astronomical Services Administration)</li><li>What does the iHEAT map show? (Answer: real-time and forecast heat index values across the Philippines)</li><li>What category is a heat index of 43°C? (Answer: Danger — heat cramps/exhaustion likely, heat stroke possible)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — PAGASA Products",
-      "badge": {
-        "id": "pagasa-partner",
-        "name": "PAGASA Partner",
-        "icon": "☀️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match PAGASA products to their uses.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — PAGASA Products</strong> will be added here.</p>",
+      "badge": { "id": "pagasa-partner", "name": "PAGASA Partner", "icon": "☀️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each PAGASA product, heat concept, or illness to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — PAGASA Products",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — PAGASA Products",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — PAGASA Products",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — PAGASA Products",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — PAGASA Products",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — PAGASA Products",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — PAGASA Products",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — PAGASA Products",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "PAGASA", "right": "Philippine Atmospheric, Geophysical and Astronomical Services Administration" },
+          { "key": "k2", "left": "iHEAT map", "right": "Interactive tool showing real-time and forecast heat index across the Philippines" },
+          { "key": "k3", "left": "Heat index", "right": "The 'feels like' temperature combining air temperature and humidity" },
+          { "key": "k4", "left": "Caution (27–32°C)", "right": "Fatigue possible with prolonged exposure and activity" },
+          { "key": "k5", "left": "Danger (42–51°C)", "right": "Heat cramps/exhaustion likely, heat stroke possible" },
+          { "key": "k6", "left": "Heat exhaustion", "right": "Heavy sweating, weakness, dizziness, nausea — move to cool area and drink fluids" },
+          { "key": "k7", "left": "Heat stroke", "right": "Emergency — high body temp, confusion, no sweating, fainting" },
+          { "key": "k8", "left": "Urban heat island", "right": "Cities absorb and radiate heat from concrete and asphalt, becoming hotter than surrounding areas" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Heat Index Awareness",
-      "badge": {
-        "id": "pagasa-partner",
-        "name": "PAGASA Partner",
-        "icon": "☀️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze heat-index scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Heat Index Awareness</strong> will be added here.</p>",
+      "badge": { "id": "pagasa-partner", "name": "PAGASA Partner", "icon": "☀️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Heat Index Awareness",
+            "text": "☀️ PAGASA's iHEAT map shows a heat index of 45°C in your city today. What should you do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Avoid outdoor activity from 10 AM to 4 PM, drink water regularly, and stay in cool areas — this is Danger level", "correct": true },
+              { "label": "B) Go outside for a long jog", "correct": false },
+              { "label": "C) Wear thick, dark clothing", "correct": false },
+              { "label": "D) Ignore it — heat index is just a number", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Heat Index Awareness",
+            "text": "🏫 Your school's principal sees a PAGASA advisory that heat index will reach 42°C. What should the school do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Consider suspending outdoor activities or adjusting class schedules following DepEd heat advisory guidelines", "correct": true },
+              { "label": "B) Hold PE class outdoors as usual", "correct": false },
+              { "label": "C) Turn off all fans and air-conditioning", "correct": false },
+              { "label": "D) Close all windows", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Heat Index Awareness",
+            "text": "🏗️ A construction worker starts feeling dizzy and weak after hours in the sun. His skin is sweaty and his heart is racing. What is likely happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Heat exhaustion — he should move to a cool area, drink fluids, and rest", "correct": true },
+              { "label": "B) He just needs a snack", "correct": false },
+              { "label": "C) He is having a heart attack", "correct": false },
+              { "label": "D) He is fine and can continue working", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Heat Index Awareness",
+            "text": "🌳 A barangay wants to reduce the urban heat island effect in their community. What is the BEST strategy?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Plant more trees, create green spaces, and use reflective or green roofs", "correct": true },
+              { "label": "B) Add more concrete and asphalt", "correct": false },
+              { "label": "C) Remove all vegetation", "correct": false },
+              { "label": "D) Increase the number of vehicles", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Heat Index Awareness",
+            "text": "🌾 A farmer uses the PAGASA iHEAT forecast for the week and sees Danger-level heat on Wednesday and Thursday. What should they do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Adjust work schedules — do heavy tasks early morning or late afternoon, and rest during peak heat hours", "correct": true },
+              { "label": "B) Work longer hours during peak heat", "correct": false },
+              { "label": "C) Work without water breaks", "correct": false },
+              { "label": "D) Ignore the forecast", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the PAGASA Lab",
-      "badge": {
-        "id": "pagasa-partner",
-        "name": "PAGASA Partner",
-        "icon": "☀️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the PAGASA Lab</strong> will be added here.</p>",
+      "badge": { "id": "pagasa-partner", "name": "PAGASA Partner", "icon": "☀️" },
+      "content": "<h3>🔐 Formative Check — Escape the PAGASA Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the PAGASA Lab",
+            "text": "What does PAGASA stand for?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Philippine Atmospheric, Geophysical and Astronomical Services Administration", "correct": true },
+              { "label": "B) Philippine Agency for General Science and Astronomy", "correct": false },
+              { "label": "C) Philippine Atmospheric and Geological Assessment", "correct": false },
+              { "label": "D) Pacific Atmospheric Group of Science Agencies", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the PAGASA Lab",
+            "text": "What does the heat index measure?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) The 'feels like' temperature combining air temperature and humidity", "correct": true },
+              { "label": "B) Only air temperature", "correct": false },
+              { "label": "C) The temperature of the ocean", "correct": false },
+              { "label": "D) The temperature inside a building", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the PAGASA Lab",
+            "text": "Which heat index range is categorized as DANGER?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) 42–51°C", "correct": true },
+              { "label": "B) 27–32°C", "correct": false },
+              { "label": "C) 33–41°C", "correct": false },
+              { "label": "D) 52°C and above", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the PAGASA Lab",
+            "text": "What should you do FIRST if you or someone shows signs of heat stroke (confusion, no sweating, high body temp)?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Call for emergency help and cool the person's body immediately", "correct": true },
+              { "label": "B) Wait and see if they feel better", "correct": false },
+              { "label": "C) Give them coffee", "correct": false },
+              { "label": "D) Let them continue working", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the PAGASA Lab",
+            "text": "What is the urban heat island effect?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat", "correct": true },
+              { "label": "B) Islands are always cooler than the mainland", "correct": false },
+              { "label": "C) Heat escapes only at night", "correct": false },
+              { "label": "D) Urban areas have more rain", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the PAGASA Lab",
+            "text": "How can the PAGASA iHEAT map help LGUs (local government units)?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) By showing heat index forecasts, LGUs can open cooling centers and issue heat advisories", "correct": true },
+              { "label": "B) By predicting earthquakes", "correct": false },
+              { "label": "C) By providing traffic updates", "correct": false },
+              { "label": "D) By monitoring volcanoes", "correct": false }
             ]
           }
         ]

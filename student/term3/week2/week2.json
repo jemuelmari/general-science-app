@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "The Greenhouse Effect",
-      "badge": {
-        "id": "atmosphere-pro",
-        "name": "Atmosphere Pro",
-        "icon": "🌡️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how greenhouse gases keep Earth warm.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>The Greenhouse Effect</strong> will be added here.</p>"
+      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain how the greenhouse effect works, identify the major greenhouse gases, distinguish the natural greenhouse effect from the enhanced greenhouse effect, and describe Earth's energy balance.</p><h3>🌡️ Earth's Energy Balance</h3><p>Earth receives energy from the Sun and radiates energy back to space. In a balanced system, the amount in equals the amount out — keeping Earth's average temperature stable at about <strong>15°C</strong>.</p><p>Earth's energy balance follows three main paths when sunlight arrives:</p><ol><li><strong>~30% is reflected</strong> back to space by clouds, ice, and bright surfaces (called <strong>albedo</strong>).</li><li><strong>~20% is absorbed</strong> by the atmosphere (ozone, water vapor, clouds).</li><li><strong>~50% is absorbed</strong> by Earth's surface (land and oceans), warming the planet.</li></ol><p>The absorbed energy is later radiated back as <strong>infrared (IR) radiation</strong> — heat.</p><h3>🌿 What Is the Greenhouse Effect?</h3><p>The <strong>greenhouse effect</strong> is the process by which certain gases in the atmosphere trap some of the infrared radiation (heat) that Earth emits, keeping the planet warm enough for life.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'>Sunlight in → Earth warms → IR emitted → GHGs absorb IR → Re-emit in all directions → Some escapes, some returns → Earth stays warm</p><h3>🔬 The Major Greenhouse Gases</h3><table><thead><tr><th>Gas</th><th>Formula</th><th>Main Source</th><th>Global Warming Potential (GWP)</th></tr></thead><tbody><tr><td>Water vapor</td><td>H₂O</td><td>Evaporation from oceans, lakes</td><td>— (most abundant, natural)</td></tr><tr><td>Carbon dioxide</td><td>CO₂</td><td>Fossil fuels, deforestation, respiration</td><td>1 (reference)</td></tr><tr><td>Methane</td><td>CH₄</td><td>Livestock, rice paddies, landfills</td><td>~28× CO₂</td></tr><tr><td>Nitrous oxide</td><td>N₂O</td><td>Fertilizers, industrial processes</td><td>~265× CO₂</td></tr><tr><td>Ozone</td><td>O₃</td><td>Natural + pollution (tropospheric)</td><td>Varies</td></tr><tr><td>Fluorinated gases (CFCs, HFCs)</td><td>Various</td><td>Refrigerants, aerosols</td><td>Hundreds to thousands × CO₂</td></tr></tbody></table><h3>🌍 Natural vs. Enhanced Greenhouse Effect</h3><table><thead><tr><th>Type</th><th>What It Is</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Natural greenhouse effect</strong></td><td>Greenhouse gases that occur naturally keep Earth ~33°C warmer than it would be without them</td><td>Enables life — without it Earth's average would be −18°C</td></tr><tr><td><strong>Enhanced greenhouse effect</strong></td><td>Human activities add extra GHGs (CO₂, CH₄, N₂O) that increase the trapping of heat</td><td>Global warming; climate change; sea-level rise; extreme weather</td></tr></tbody></table><p><strong>Key idea:</strong> The natural greenhouse effect is <em>good and necessary</em>. The enhanced greenhouse effect (from human activity) is what causes climate change.</p><h3>☀️ The Electromagnetic Spectrum Connection</h3><p>Why doesn't sunlight just pass through GHGs too?</p><ul><li><strong>Sunlight</strong> arrives as <em>visible light</em> (short wavelength, high energy). GHGs do not absorb visible light well.</li><li><strong>Earth's heat</strong> is emitted as <em>infrared radiation</em> (long wavelength, lower energy). GHGs <em>do</em> absorb IR.</li></ul><p>This is the physics behind the greenhouse effect — molecules like CO₂ and H₂O have chemical bonds that vibrate at IR frequencies.</p><h3>🌡️ Why 15°C Is Just Right</h3><p>Earth's average surface temperature is <strong>15°C</strong>. Compare with:</p><ul><li><strong>Venus</strong> (464°C) — runaway greenhouse effect with 96% CO₂</li><li><strong>Mars</strong> (−63°C) — very thin atmosphere, weak greenhouse effect</li><li><strong>Earth without greenhouse effect</strong> (−18°C) — too cold for most life</li></ul><h3>🇵🇭 Why This Matters for the Philippines</h3><ul><li>The Philippines contributes only 0.3% of global CO₂ emissions — but is among the <strong>most vulnerable</strong> to climate impacts.</li><li>Warmer oceans fuel stronger typhoons (like Yolanda/Haiyan in 2013, Odette/Rai in 2021).</li><li>Rising sea levels threaten coastal barangays and freshwater supplies.</li></ul><h3>📌 Quick Check</h3><ul><li>What would Earth's average temperature be without the greenhouse effect? (Answer: −18°C)</li><li>Which gas traps the most heat per molecule? (Answer: fluorinated gases, then N₂O, CH₄, CO₂)</li><li>What kind of radiation do greenhouse gases absorb? (Answer: infrared — heat)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Greenhouse Gases",
-      "badge": {
-        "id": "atmosphere-pro",
-        "name": "Atmosphere Pro",
-        "icon": "🌡️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match gases to their warming potential.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Greenhouse Gases</strong> will be added here.</p>",
+      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each concept or gas to its correct description or source. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Greenhouse Gases",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Greenhouse Gases",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Greenhouse Gases",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Greenhouse Gases",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Greenhouse Gases",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Greenhouse Gases",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Greenhouse Gases",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Greenhouse Gases",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Greenhouse effect", "right": "Gases trap infrared radiation, warming Earth's surface" },
+          { "key": "k2", "left": "Carbon dioxide (CO₂)", "right": "Released by fossil fuels and deforestation; reference GWP = 1" },
+          { "key": "k3", "left": "Methane (CH₄)", "right": "Released by livestock, rice paddies, and landfills; ~28× CO₂ GWP" },
+          { "key": "k4", "left": "Nitrous oxide (N₂O)", "right": "Released by fertilizers; ~265× CO₂ GWP" },
+          { "key": "k5", "left": "Water vapor (H₂O)", "right": "Most abundant natural greenhouse gas" },
+          { "key": "k6", "left": "Enhanced greenhouse effect", "right": "Extra GHGs from human activity that amplify warming" },
+          { "key": "k7", "left": "Albedo", "right": "Fraction of sunlight reflected by clouds, ice, and bright surfaces" },
+          { "key": "k8", "left": "Infrared radiation", "right": "Type of radiation Earth emits as heat — absorbed by GHGs" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Earth's Thermostat",
-      "badge": {
-        "id": "atmosphere-pro",
-        "name": "Atmosphere Pro",
-        "icon": "🌡️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze temperature-balance scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Earth's Thermostat</strong> will be added here.</p>",
+      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Earth's Thermostat",
+            "text": "☀️ Sunlight passes through Earth's atmosphere but heat doesn't easily escape. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Sunlight is visible light (short wavelength) and GHGs don't absorb it well; heat is infrared (long wavelength) and GHGs absorb it", "correct": true },
+              { "label": "B) The atmosphere is solid", "correct": false },
+              { "label": "C) Sunlight is stronger than heat", "correct": false },
+              { "label": "D) Earth's gravity holds heat in place", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Earth's Thermostat",
+            "text": "🥩 A livestock farm has many cows producing methane. How does this contribute to climate change?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Methane is a greenhouse gas that is ~28× more potent than CO₂ at trapping heat", "correct": true },
+              { "label": "B) Cows eat all the plants", "correct": false },
+              { "label": "C) Cows use too much water", "correct": false },
+              { "label": "D) Cows block sunlight", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Earth's Thermostat",
+            "text": "❄️ Ice at the North and South Poles reflects sunlight. As ice melts due to warming, what happens to the greenhouse effect?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Less ice → less reflection → more heat absorbed → more warming (a positive feedback loop)", "correct": true },
+              { "label": "B) The greenhouse effect decreases", "correct": false },
+              { "label": "C) Nothing changes", "correct": false },
+              { "label": "D) The oceans cool down", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Earth's Thermostat",
+            "text": "🌫️ Without the natural greenhouse effect, what would Earth's average temperature be?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) About −18°C — too cold for most life", "correct": true },
+              { "label": "B) About 15°C — same as now", "correct": false },
+              { "label": "C) About 100°C", "correct": false },
+              { "label": "D) Same as Venus", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Earth's Thermostat",
+            "text": "🇵🇭 The Philippines contributes only 0.3% of global CO₂ emissions but faces strong climate impacts. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) It's an archipelago in the typhoon belt with coastal communities vulnerable to sea-level rise and storms", "correct": true },
+              { "label": "B) It has the largest population", "correct": false },
+              { "label": "C) It burns the most fossil fuels", "correct": false },
+              { "label": "D) It has no greenhouse gases", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Atmosphere Lab",
-      "badge": {
-        "id": "atmosphere-pro",
-        "name": "Atmosphere Pro",
-        "icon": "🌡️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Atmosphere Lab</strong> will be added here.</p>",
+      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
+      "content": "<h3>🔐 Formative Check — Escape the Atmosphere Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Atmosphere Lab",
+            "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) About −18°C", "correct": true },
+              { "label": "B) About 15°C", "correct": false },
+              { "label": "C) About 100°C", "correct": false },
+              { "label": "D) About 0°C", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Atmosphere Lab",
+            "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Water vapor (H₂O)", "correct": true },
+              { "label": "B) Carbon dioxide (CO₂)", "correct": false },
+              { "label": "C) Methane (CH₄)", "correct": false },
+              { "label": "D) Ozone (O₃)", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Atmosphere Lab",
+            "text": "What kind of radiation do greenhouse gases absorb?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Infrared (heat)", "correct": true },
+              { "label": "B) Visible light", "correct": false },
+              { "label": "C) Ultraviolet", "correct": false },
+              { "label": "D) X-rays", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Atmosphere Lab",
+            "text": "Which gas has the HIGHEST global warming potential per molecule?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Fluorinated gases (CFCs, HFCs)", "correct": true },
+              { "label": "B) Carbon dioxide", "correct": false },
+              { "label": "C) Water vapor", "correct": false },
+              { "label": "D) Oxygen", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Atmosphere Lab",
+            "text": "The ENHANCED greenhouse effect is caused by:",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Human activities that add extra greenhouse gases", "correct": true },
+              { "label": "B) Natural volcanic eruptions only", "correct": false },
+              { "label": "C) Solar flares", "correct": false },
+              { "label": "D) Ocean tides", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Atmosphere Lab",
+            "text": "Which planet has a runaway greenhouse effect making it the hottest in the Solar System?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Venus", "correct": true },
+              { "label": "B) Mercury", "correct": false },
+              { "label": "C) Mars", "correct": false },
+              { "label": "D) Earth", "correct": false }
             ]
           }
         ]

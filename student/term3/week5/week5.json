@@ -5,7 +5,7 @@
   "competencies": [
     {
       "code": "GENSCI-11-T3-W5-C1",
-      "text": "Describe properties and local availability of rocks, minerals, and soils. Explain how they're harnessed for industries."
+      "text": "Describe properties and local availability of rocks, minerals, and soils. Explain how they are harnessed for industries."
     }
   ],
   "badge": {
@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Rocks, Minerals & Soils",
-      "badge": {
-        "id": "geologist",
-        "name": "Geologist",
-        "icon": "⛏️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn properties of rocks, minerals, and soils.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Rocks, Minerals & Soils</strong> will be added here.</p>"
+      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to distinguish rocks, minerals, and soils; describe the three rock types; identify common Philippine minerals and their uses; and explain how earth materials are harnessed for industry.</p><h3>🪨 Rocks vs. Minerals vs. Soils</h3><table><thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><strong>Mineral</strong></td><td>A naturally occurring, inorganic solid with a definite chemical composition and crystal structure</td><td>Quartz, gold, calcite, feldspar</td></tr><tr><td><strong>Rock</strong></td><td>A naturally occurring solid made of one or more minerals</td><td>Granite (quartz + feldspar + mica), limestone (calcite)</td></tr><tr><td><strong>Soil</strong></td><td>Loose mixture of weathered rock, minerals, organic matter, water, and air</td><td>Loam, clay, sand</td></tr></tbody></table><h3>🔬 Properties Used to Identify Minerals</h3><table><thead><tr><th>Property</th><th>What It Tests</th></tr></thead><tbody><tr><td><strong>Hardness</strong></td><td>Resistance to scratching (Mohs scale 1–10)</td></tr><tr><td><strong>Color &amp; streak</strong></td><td>Color of mineral in solid form vs. when rubbed on a plate</td></tr><tr><td><strong>Luster</strong></td><td>How it reflects light — metallic, glassy, dull, pearly</td></tr><tr><td><strong>Cleavage &amp; fracture</strong></td><td>How it breaks along flat planes or irregularly</td></tr><tr><td><strong>Specific gravity</strong></td><td>Density compared to water</td></tr><tr><td><strong>Reaction to acid</strong></td><td>Effervescence (fizzing) in acid — identifies carbonates like calcite</td></tr></tbody></table><h3>🪨 The Three Rock Types</h3><table><thead><tr><th>Rock Type</th><th>How It Forms</th><th>Example</th><th>Uses</th></tr></thead><tbody><tr><td><strong>Igneous</strong></td><td>Cooling and solidifying of magma or lava</td><td>Granite, basalt, obsidian</td><td>Building stone, countertops, gravel</td></tr><tr><td><strong>Sedimentary</strong></td><td>Compaction and cementation of sediments (or chemical precipitation)</td><td>Limestone, sandstone, shale</td><td>Cement, building stone, chalk</td></tr><tr><td><strong>Metamorphic</strong></td><td>Existing rock changed by heat and pressure</td><td>Marble (from limestone), slate (from shale)</td><td>Marble for flooring &amp; sculpture; slate for roofing</td></tr></tbody></table><h3>💎 Common Philippine Minerals &amp; Their Uses</h3><table><thead><tr><th>Mineral</th><th>Location in PH</th><th>Uses</th></tr></thead><tbody><tr><td><strong>Gold</strong></td><td>Baguio, Benguet, Surigao, Masbate</td><td>Jewelry, electronics, coins, dentistry</td></tr><tr><td><strong>Copper</strong></td><td>Toledo (Cebu), Mankayan, Surigao</td><td>Electrical wiring, plumbing, electronics</td></tr><tr><td><strong>Nickel</strong></td><td>Surigao, Palawan, Zambales</td><td>Stainless steel, batteries, coins</td></tr><tr><td><strong>Chromite</strong></td><td>Zambales, Surigao</td><td>Stainless steel, refractory bricks</td></tr><tr><td><strong>Iron</strong></td><td>Bulacan, Camarines Norte, Surigao</td><td>Steel, construction, machinery</td></tr><tr><td><strong>Limestone</strong></td><td>Rizal, Cebu, Palawan, Bulacan</td><td>Cement, chalk, building stone, glass</td></tr><tr><td><strong>Marble</strong></td><td>Romblon</td><td>Sculpture, flooring, tiles</td></tr><tr><td><strong>Silica / Quartz</strong></td><td>Various</td><td>Glass, electronics, sandpaper</td></tr><tr><td><strong>Coal</strong></td><td>Semirara (Antique), Cebu, Surigao</td><td>Electricity generation, fuel</td></tr><tr><td><strong>Salt (halite)</strong></td><td>Pangasinan (asinan), Mindoro</td><td>Food, water softeners, chemistry</td></tr></tbody></table><h3>🌾 Soil — The Foundation of Agriculture</h3><table><thead><tr><th>Soil Type</th><th>Properties</th><th>Best For</th></tr></thead><tbody><tr><td><strong>Sandy</strong></td><td>Large particles, drains fast, low nutrients</td><td>Root crops (carrots, cassava)</td></tr><tr><td><strong>Clay</strong></td><td>Small particles, holds water, compact</td><td>Pottery, rice paddies (with irrigation)</td></tr><tr><td><strong>Loam</strong></td><td>Balanced mix — best for most crops</td><td>Rice, corn, vegetables, fruit trees</td></tr></tbody></table><h3>🏭 How Earth Materials Are Harnessed for Industry</h3><table><thead><tr><th>Industry</th><th>Earth Materials Used</th></tr></thead><tbody><tr><td><strong>Construction</strong></td><td>Limestone (cement), marble, granite, sand, gravel</td></tr><tr><td><strong>Electronics</strong></td><td>Copper, gold, silicon (quartz), rare earth metals</td></tr><tr><td><strong>Energy</strong></td><td>Coal, geothermal (heat from Earth's interior), natural gas</td></tr><tr><td><strong>Agriculture</strong></td><td>Soil, limestone (for neutralizing acid), phosphate rock (fertilizer)</td></tr><tr><td><strong>Jewelry</strong></td><td>Gold, silver, pearls, diamonds</td></tr><tr><td><strong>Ceramics</strong></td><td>Clay, kaolin, feldspar</td></tr><tr><td><strong>Glass</strong></td><td>Silica sand, limestone, soda ash</td></tr></tbody></table><h3>⚠️ Environmental Impact of Mining</h3><ul><li><strong>Deforestation:</strong> Clearing land for mining operations</li><li><strong>Water pollution:</strong> Acid mine drainage into rivers</li><li><strong>Soil erosion:</strong> Exposed land loses topsoil</li><li><strong>Habitat destruction:</strong> Ecosystems disrupted</li><li><strong>Social impact:</strong> Displacement of Indigenous communities</li></ul><p><strong>Solutions:</strong> Sustainable mining practices, rehabilitation of mined areas, strict regulation (DENR-MGB), and support for renewable alternatives.</p><h3>📌 Quick Check</h3><ul><li>What is the difference between a rock and a mineral? (Answer: rocks are made of one or more minerals)</li><li>How are igneous rocks formed? (Answer: cooling and solidifying of magma or lava)</li><li>What mineral is used in cement? (Answer: limestone)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Earth Materials",
-      "badge": {
-        "id": "geologist",
-        "name": "Geologist",
-        "icon": "⛏️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match materials to their properties.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Earth Materials</strong> will be added here.</p>",
+      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each earth material, rock type, or concept to its correct description or use. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Earth Materials",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Earth Materials",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Earth Materials",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Earth Materials",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Earth Materials",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Earth Materials",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Earth Materials",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Earth Materials",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Mineral", "right": "Naturally occurring inorganic solid with a definite chemical composition" },
+          { "key": "k2", "left": "Igneous rock", "right": "Forms from cooling and solidifying of magma or lava" },
+          { "key": "k3", "left": "Sedimentary rock", "right": "Forms from compaction and cementation of sediments — like limestone" },
+          { "key": "k4", "left": "Metamorphic rock", "right": "Forms when existing rock is changed by heat and pressure — like marble" },
+          { "key": "k5", "left": "Limestone", "right": "Used to make cement, chalk, and building stone" },
+          { "key": "k6", "left": "Copper", "right": "Used in electrical wiring, plumbing, and electronics" },
+          { "key": "k7", "left": "Loam soil", "right": "Balanced mix of sand, silt, and clay — best for most crops" },
+          { "key": "k8", "left": "Marble (Romblon)", "right": "Used for sculpture, flooring, and tiles" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Industry Uses",
-      "badge": {
-        "id": "geologist",
-        "name": "Geologist",
-        "icon": "⛏️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze how industries use earth materials.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Industry Uses</strong> will be added here.</p>",
+      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Industry Uses",
+            "text": "🏗️ A construction company needs cement for a new bridge. Which earth material is the MAIN ingredient?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Limestone — heated to produce lime, the key ingredient in cement", "correct": true },
+              { "label": "B) Gold", "correct": false },
+              { "label": "C) Coal", "correct": false },
+              { "label": "D) Obsidian", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Industry Uses",
+            "text": "💻 A tech company builds a new factory for electronics. Which minerals from the Philippines would they most likely need?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Copper, gold, and silica (for wiring, contacts, and semiconductors)", "correct": true },
+              { "label": "B) Only clay", "correct": false },
+              { "label": "C) Only marble", "correct": false },
+              { "label": "D) Only limestone", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Industry Uses",
+            "text": "🌾 A farmer complains that their soil drains too quickly and doesn't hold nutrients. What type of soil are they likely using?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Sandy soil — large particles drain fast and hold few nutrients", "correct": true },
+              { "label": "B) Clay soil", "correct": false },
+              { "label": "C) Loam soil", "correct": false },
+              { "label": "D) Volcanic ash", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Industry Uses",
+            "text": "⛏️ A mining company opens a copper mine in Surigao. What environmental impact should be carefully managed?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Acid mine drainage, deforestation, and habitat destruction", "correct": true },
+              { "label": "B) Increased rainfall", "correct": false },
+              { "label": "C) Cooling of the local climate", "correct": false },
+              { "label": "D) Formation of new mountains", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Industry Uses",
+            "text": "🏺 A potter in Vigan wants to make traditional clay pots. Which soil type is BEST?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Clay — small particles that hold shape and harden when fired", "correct": true },
+              { "label": "B) Sandy soil", "correct": false },
+              { "label": "C) Loam", "correct": false },
+              { "label": "D) Gravel", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Geology Lab",
-      "badge": {
-        "id": "geologist",
-        "name": "Geologist",
-        "icon": "⛏️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Geology Lab</strong> will be added here.</p>",
+      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
+      "content": "<h3>🔐 Formative Check — Escape the Geology Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Geology Lab",
+            "text": "What is the difference between a rock and a mineral?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Rocks are made of one or more minerals; minerals have a definite chemical composition", "correct": true },
+              { "label": "B) Rocks are harder than minerals", "correct": false },
+              { "label": "C) Minerals are bigger than rocks", "correct": false },
+              { "label": "D) Rocks are always igneous", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Geology Lab",
+            "text": "How are igneous rocks formed?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Cooling and solidifying of magma or lava", "correct": true },
+              { "label": "B) Compaction of sediments", "correct": false },
+              { "label": "C) Heat and pressure on existing rocks", "correct": false },
+              { "label": "D) Evaporation of seawater", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Geology Lab",
+            "text": "Which rock type is formed from heat and pressure on existing rocks?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Metamorphic", "correct": true },
+              { "label": "B) Igneous", "correct": false },
+              { "label": "C) Sedimentary", "correct": false },
+              { "label": "D) Volcanic", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Geology Lab",
+            "text": "Which mineral is used to make cement?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Limestone", "correct": true },
+              { "label": "B) Gold", "correct": false },
+              { "label": "C) Copper", "correct": false },
+              { "label": "D) Mica", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Geology Lab",
+            "text": "Which soil type is BEST for most crops?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Loam — balanced mix of sand, silt, and clay", "correct": true },
+              { "label": "B) Sandy soil", "correct": false },
+              { "label": "C) Clay soil", "correct": false },
+              { "label": "D) Gravel", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Geology Lab",
+            "text": "Which Philippine province is known for its marble?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Romblon", "correct": true },
+              { "label": "B) Batanes", "correct": false },
+              { "label": "C) Bohol", "correct": false },
+              { "label": "D) Cebu", "correct": false }
             ]
           }
         ]

@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "How the Philippines Formed",
-      "badge": {
-        "id": "tectonics-explorer",
-        "name": "Tectonics Explorer",
-        "icon": "🗻"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how plate tectonics built the Philippines.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>How the Philippines Formed</strong> will be added here.</p>"
+      "badge": { "id": "tectonics-explorer", "name": "Tectonics Explorer", "icon": "🗻" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain the theory of plate tectonics, describe the geological processes that formed the Philippine archipelago, and identify the tectonic plates that interact beneath the Philippines.</p><h3>🌏 The Theory of Plate Tectonics</h3><p>Earth's outer shell (the <strong>lithosphere</strong>) is broken into large, rigid slabs called <strong>tectonic plates</strong> that float on the semi-molten <strong>asthenosphere</strong> below. These plates move a few centimeters per year — about the speed your fingernails grow.</p><p>There are <strong>7 major plates</strong> and dozens of minor ones. The Philippines sits at the boundary of several plates, making it geologically active.</p><h3>🧩 The Plates Around the Philippines</h3><table><thead><tr><th>Plate</th><th>Direction</th><th>Role in PH Geology</th></tr></thead><tbody><tr><td><strong>Philippine Sea Plate</strong></td><td>Moves westward</td><td>Subducts under Luzon and Visayas — creates volcanoes and trenches</td></tr><tr><td><strong>Eurasian Plate</strong></td><td>Moves southeast</td><td>Collides with the Philippines along western Luzon and Palawan</td></tr><tr><td><strong>Indo-Australian Plate</strong></td><td>Moves north</td><td>Subducts along the Mindanao trench — volcanic arcs in Mindanao</td></tr><tr><td><strong>Sunda Plate</strong></td><td>Moves east</td><td>Interacts near Palawan and Sulu</td></tr></tbody></table><h3>🔥 Three Types of Plate Boundaries</h3><table><thead><tr><th>Boundary Type</th><th>What Happens</th><th>PH Example</th></tr></thead><tbody><tr><td><strong>Convergent</strong> (destructive)</td><td>Plates collide; one subducts under the other → volcanoes, trenches, earthquakes</td><td>Philippine Trench (east); Manila Trench (west)</td></tr><tr><td><strong>Divergent</strong> (constructive)</td><td>Plates move apart; magma rises to form new crust</td><td>Mid-ocean ridges (not in PH, but e.g., Mid-Atlantic Ridge)</td></tr><tr><td><strong>Transform</strong> (conservative)</td><td>Plates slide past each other → earthquakes (no volcanoes)</td><td>Philippine Fault System</td></tr></tbody></table><h3>🏝️ How the Philippine Archipelago Was Formed</h3><p>The Philippines is NOT a single landmass that broke apart. Instead, it was <strong>assembled</strong> over millions of years through several tectonic processes:</p><ol><li><strong>Subduction:</strong> Oceanic plates (Philippine Sea, Indo-Australian) sank beneath other plates, melting and creating magma.</li><li><strong>Volcanic arcs:</strong> That magma rose to form chains of volcanic islands (e.g., Batanes, Babuyan, parts of Luzon, the Bicol volcanoes).</li><li><strong>Continental collision:</strong> Fragments of continental crust (like the Palawan micro-continent) collided and attached to the growing islands.</li><li><strong>Accretion of terranes:</strong> Small blocks of crust — <em>terranes</em> — from different origins were added piece by piece.</li><li><strong>Faulting and uplift:</strong> Fault movements pushed some areas up (mountains) and dropped others (basins, seas).</li><li><strong>Sea-level changes:</strong> During ice ages, sea levels dropped, connecting islands via land bridges (this is how some species migrated).</li></ol><h3>🗺️ The Major Geological Features of the Philippines</h3><table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody><tr><td><strong>Philippine Trench</strong></td><td>Deep ocean trench east of Mindanao — up to 10,540 m deep</td></tr><tr><td><strong>Manila Trench</strong></td><td>West of Luzon — site of subduction and earthquake risk</td></tr><tr><td><strong>Philippine Fault System</strong></td><td>Major transform fault running through Luzon to Mindanao — source of large earthquakes</td></tr><tr><td><strong>Bicol Volcanic Arc</strong></td><td>Chain of volcanoes including Mayon, Bulusan, Iriga</td></tr><tr><td><strong>Mindanao Volcanic Arc</strong></td><td>Volcanoes like Apo, Matutum, Hibok-Hibok</td></tr><tr><td><strong>Palawan Micro-continent</strong></td><td>Continental crust fragment from ancient Gondwana</td></tr></tbody></table><h3>🌋 Evidence of Formation</h3><ul><li><strong>Volcanoes:</strong> Over 300 volcanoes, about 24 active — proof of ongoing subduction.</li><li><strong>Earthquakes:</strong> The Philippines experiences thousands of earthquakes yearly — the Ring of Fire.</li><li><strong>Fossils:</strong> Marine fossils found in mountains show that land was once underwater and uplifted.</li><li><strong>Rock types:</strong> Igneous rocks (from volcanoes), sedimentary rocks (from ocean floors), and metamorphic rocks — all present.</li></ul><h3>🌏 The Ring of Fire</h3><p>The Philippines is part of the <strong>Pacific Ring of Fire</strong> — a 40,000 km horseshoe-shaped zone around the Pacific Ocean where 75% of the world's volcanoes and 90% of its earthquakes occur.</p><h3>📌 Quick Check</h3><ul><li>What is plate tectonics? (Answer: the theory that Earth's lithosphere is broken into moving plates)</li><li>What are the three types of plate boundaries? (Answer: convergent, divergent, transform)</li><li>Why does the Philippines have so many volcanoes? (Answer: it sits at the boundary of several subducting plates)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Tectonic Features",
-      "badge": {
-        "id": "tectonics-explorer",
-        "name": "Tectonics Explorer",
-        "icon": "🗻"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match geological features to their origins.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Tectonic Features</strong> will be added here.</p>",
+      "badge": { "id": "tectonics-explorer", "name": "Tectonics Explorer", "icon": "🗻" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each tectonic concept or feature to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Tectonic Features",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Tectonic Features",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Tectonic Features",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Tectonic Features",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Tectonic Features",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Tectonic Features",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Tectonic Features",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Tectonic Features",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Plate tectonics", "right": "Theory that Earth's lithosphere is broken into moving plates" },
+          { "key": "k2", "left": "Convergent boundary", "right": "Plates collide; one subducts → volcanoes, trenches, earthquakes" },
+          { "key": "k3", "left": "Divergent boundary", "right": "Plates move apart; magma rises to form new crust" },
+          { "key": "k4", "left": "Transform boundary", "right": "Plates slide past each other → earthquakes, no volcanoes" },
+          { "key": "k5", "left": "Philippine Trench", "right": "Deep ocean trench east of Mindanao, up to 10,540 m deep" },
+          { "key": "k6", "left": "Philippine Fault System", "right": "Transform fault running through Luzon to Mindanao" },
+          { "key": "k7", "left": "Ring of Fire", "right": "Zone around the Pacific with 75% of the world's volcanoes" },
+          { "key": "k8", "left": "Palawan micro-continent", "right": "Continental crust fragment from ancient Gondwana" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Plate Boundaries",
-      "badge": {
-        "id": "tectonics-explorer",
-        "name": "Tectonics Explorer",
-        "icon": "🗻"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze plate-boundary scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Plate Boundaries</strong> will be added here.</p>",
+      "badge": { "id": "tectonics-explorer", "name": "Tectonics Explorer", "icon": "🗻" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Plate Boundaries",
+            "text": "🌋 Mount Mayon in Albay has erupted dozens of times in the last 500 years. Why is it so active?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) It sits above a subduction zone where the Philippine Sea Plate sinks beneath the Eurasian Plate, melting rock into magma", "correct": true },
+              { "label": "B) It has been struck by lightning many times", "correct": false },
+              { "label": "C) It is the tallest mountain in the Philippines", "correct": false },
+              { "label": "D) It rains a lot in Albay", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Plate Boundaries",
+            "text": "🧱 Scientists find marine fossils (shells of sea creatures) near the top of Mount Apo in Mindanao. What does this tell us?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) The area was once underwater and was later uplifted by tectonic forces", "correct": true },
+              { "label": "B) Fish used to fly", "correct": false },
+              { "label": "C) People carried the fossils up the mountain", "correct": false },
+              { "label": "D) The mountain was once a coral reef that stayed at sea level", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Plate Boundaries",
+            "text": "🌊 The Philippine Trench east of Mindanao is up to 10,540 meters deep. What causes this deep trench?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) The Philippine Sea Plate is subducting (sinking) beneath the Philippine Mobile Belt, pulling the ocean floor down", "correct": true },
+              { "label": "B) It was carved by a giant river", "correct": false },
+              { "label": "C) It's a dried-up volcanic crater", "correct": false },
+              { "label": "D) Coral reefs collapsed there", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Plate Boundaries",
+            "text": "🏝️ The Philippines is made of over 7,600 islands. Why is it an archipelago rather than a single landmass?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) The islands formed separately through volcanic arcs, collisions, and terrane accretion — and sea levels rose between them", "correct": true },
+              { "label": "B) An ancient earthquake split a single island into many", "correct": false },
+              { "label": "C) A comet struck the region and shattered it", "correct": false },
+              { "label": "D) Humans dug channels between the islands", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Plate Boundaries",
+            "text": "🌏 Why is the Philippines part of the Pacific Ring of Fire?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) It sits at the intersection of several tectonic plates, making it prone to earthquakes and volcanic eruptions", "correct": true },
+              { "label": "B) It's the hottest country in the world", "correct": false },
+              { "label": "C) It has many active fires", "correct": false },
+              { "label": "D) It has the most tropical forests", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Tectonics Lab",
-      "badge": {
-        "id": "tectonics-explorer",
-        "name": "Tectonics Explorer",
-        "icon": "🗻"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Tectonics Lab</strong> will be added here.</p>",
+      "badge": { "id": "tectonics-explorer", "name": "Tectonics Explorer", "icon": "🗻" },
+      "content": "<h3>🔐 Formative Check — Escape the Tectonics Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Tectonics Lab",
+            "text": "What is the theory that Earth's outer shell is broken into moving plates called?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Plate tectonics", "correct": true },
+              { "label": "B) Continental drift", "correct": false },
+              { "label": "C) Big Bang theory", "correct": false },
+              { "label": "D) Rock cycle", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Tectonics Lab",
+            "text": "At which type of plate boundary do volcanoes MOST commonly form?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Convergent boundary (subduction zones)", "correct": true },
+              { "label": "B) Divergent boundary only", "correct": false },
+              { "label": "C) Transform boundary", "correct": false },
+              { "label": "D) Volcanic islands form randomly", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Tectonics Lab",
+            "text": "The Philippine Fault System is an example of which plate boundary type?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Transform (plates slide past each other)", "correct": true },
+              { "label": "B) Convergent", "correct": false },
+              { "label": "C) Divergent", "correct": false },
+              { "label": "D) Accretion", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Tectonics Lab",
+            "text": "How were the Philippine islands primarily formed?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Through volcanic arcs, collisions, and tectonic uplift over millions of years", "correct": true },
+              { "label": "B) They were carried by the ocean current", "correct": false },
+              { "label": "C) They are fragments of the Moon", "correct": false },
+              { "label": "D) They were always a single big island", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Tectonics Lab",
+            "text": "What is the Pacific Ring of Fire?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "correct": true },
+              { "label": "B) A ring of fire in Hawaii", "correct": false },
+              { "label": "C) A type of volcano", "correct": false },
+              { "label": "D) A boundary between continents", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Tectonics Lab",
+            "text": "Why are marine fossils found in Philippine mountains?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) The ocean once covered the area, and tectonic uplift raised the land above sea level", "correct": true },
+              { "label": "B) Fish used to live on land", "correct": false },
+              { "label": "C) People carried them up there", "correct": false },
+              { "label": "D) They fell from the sky", "correct": false }
             ]
           }
         ]

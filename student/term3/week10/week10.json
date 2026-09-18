@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "DRRM Planning Basics",
-      "badge": {
-        "id": "term3-finisher",
-        "name": "Term 3 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn the four pillars of DRRM.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>DRRM Planning Basics</strong> will be added here.</p>"
+      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain what Disaster Risk Reduction and Management (DRRM) is, identify its four thematic pillars, and describe how families and communities can prepare for disasters.</p><h3>🛡️ What Is DRRM?</h3><p><strong>Disaster Risk Reduction and Management (DRRM)</strong> is the systematic approach to reducing the damage caused by natural and human-made hazards. It focuses on <em>prevention, mitigation, preparedness, response, and recovery</em>.</p><p>The Philippines has <strong>RA 10121</strong> — the Philippine Disaster Risk Reduction and Management Act of 2010 — which institutionalized DRRM nationwide.</p><h3>🏛️ The Four Thematic Pillars of DRRM</h3><table><thead><tr><th>Pillar</th><th>Focus</th><th>Examples</th></tr></thead><tbody><tr><td><strong>1. Prevention &amp; Mitigation</strong></td><td>Reduce or avoid the impact of hazards</td><td>Building codes, hazard maps, reforestation, drainage systems</td></tr><tr><td><strong>2. Preparedness</strong></td><td>Prepare people and systems to respond effectively</td><td>Drills, early warning systems, Go Bags, evacuation plans</td></tr><tr><td><strong>3. Response</strong></td><td>Immediate actions during and after a disaster</td><td>Search and rescue, relief distribution, medical aid, evacuation</td></tr><tr><td><strong>4. Rehabilitation &amp; Recovery</strong></td><td>Restore normal life after a disaster</td><td>Rebuilding homes, restoring livelihoods, psychological support</td></tr></tbody></table><h3>👨‍👩‍👧 Family-Based DRRM Plan</h3><p>Every family should have an emergency plan. Key components:</p><ol><li><strong>Designate a meeting point</strong> — inside and outside your community.</li><li><strong>Assign roles</strong> — who brings the Go Bag? Who checks on lolo/lola? Who turns off utilities?</li><li><strong>List emergency contacts</strong> — barangay, LGU, NDRRMC, PAGASA, PHIVOLCS hotlines.</li><li><strong>Prepare a Go Bag</strong> — ready to grab at any time.</li><li><strong>Know your evacuation route</strong> — and practice it twice a year.</li><li><strong>Backup important documents</strong> — IDs, birth certificates, land titles — keep copies in a waterproof bag or cloud storage.</li><li><strong>Plan for vulnerable members</strong> — elderly, PWDs, infants, pregnant women, and pets.</li></ol><h3>🎒 The Go Bag Checklist</h3><table><thead><tr><th>Category</th><th>Items</th></tr></thead><tbody><tr><td><strong>Water &amp; Food</strong></td><td>1 gallon water per person (3 days), non-perishable food (canned goods, biscuits, energy bars), manual can opener</td></tr><tr><td><strong>Communication</strong></td><td>Battery-powered radio, extra batteries, fully charged power bank, whistle</td></tr><tr><td><strong>Light</strong></td><td>Flashlight, headlamp, extra batteries</td></tr><tr><td><strong>First Aid</strong></td><td>Bandages, antiseptic, prescription medicines, pain relievers, thermometer</td></tr><tr><td><strong>Documents</strong></td><td>Copies of IDs, birth certificates, insurance, list of emergency contacts (in waterproof bag)</td></tr><tr><td><strong>Clothing</strong></td><td>Light clothing, rain jacket, sturdy shoes, blanket, towel</td></tr><tr><td><strong>Others</strong></td><td>Cash, multi-tool, face masks, hygiene kit, duct tape</td></tr></tbody></table><h3>🏘️ Community-Based DRRM Plan</h3><p>Barangays and LGUs also need DRRM plans, including:</p><ul><li><strong>Hazard mapping</strong> — know which areas flood, slide, or are exposed to surges.</li><li><strong>Early warning systems</strong> — sirens, SMS alerts, community flags.</li><li><strong>Evacuation centers</strong> — schools, barangay halls, churches — with capacity for vulnerable groups.</li><li><strong>Trained responders</strong> — Barangay Disaster Risk Reduction and Management Committee (BDRRMC).</li><li><strong>Stockpiles</strong> — food, water, medicines, blankets, generators.</li><li><strong>Drills</strong> — quarterly earthquake, fire, and typhoon drills.</li></ul><h3>⚠️ Climate Change Adaptation in DRRM</h3><p>As climate change makes hazards more intense and unpredictable, DRRM must also adapt:</p><ul><li><strong>Nature-based solutions:</strong> Mangrove restoration, urban forests, watershed protection.</li><li><strong>Resilient infrastructure:</strong> Elevated roads, flood-proof buildings, drainage upgrades.</li><li><strong>Climate-resilient agriculture:</strong> Salt-tolerant rice, drought-resistant corn.</li><li><strong>Insurance and safety nets:</strong> Crop insurance, emergency cash transfers.</li></ul><h3>🇵🇭 Key Agencies in Philippine DRRM</h3><ul><li><strong>NDRRMC</strong> — coordinates national disaster response.</li><li><strong>PAGASA</strong> — weather and climate warnings.</li><li><strong>PHIVOLCS</strong> — earthquake, volcano, tsunami warnings.</li><li><strong>DSWD</strong> — relief distribution and social protection.</li><li><strong>DOH</strong> — health emergency response.</li><li><strong>DepEd</strong> — school safety and class suspensions.</li><li><strong>DILG</strong> — supports LGUs and barangays in DRRM.</li></ul><h3>📌 Quick Check</h3><ul><li>What are the four thematic pillars of DRRM? (Answer: Prevention & Mitigation, Preparedness, Response, Rehabilitation & Recovery)</li><li>What is a Go Bag? (Answer: an emergency kit with essentials ready to grab in case of evacuation)</li><li>Which Philippine law institutionalized DRRM? (Answer: RA 10121 — DRRM Act of 2010)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — DRRM Components",
-      "badge": {
-        "id": "term3-finisher",
-        "name": "Term 3 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match each pillar to its actions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — DRRM Components</strong> will be added here.</p>",
+      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each DRRM concept, pillar, or agency to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — DRRM Components",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — DRRM Components",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — DRRM Components",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — DRRM Components",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — DRRM Components",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — DRRM Components",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — DRRM Components",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — DRRM Components",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "DRRM", "right": "Systematic approach to reducing disaster damage — prevention, mitigation, preparedness, response, recovery" },
+          { "key": "k2", "left": "Prevention & Mitigation", "right": "Pillar focused on reducing or avoiding hazard impacts — like building codes and reforestation" },
+          { "key": "k3", "left": "Preparedness", "right": "Pillar focused on drills, early warning systems, Go Bags, and evacuation plans" },
+          { "key": "k4", "left": "Response", "right": "Pillar focused on immediate actions during and after a disaster — search and rescue" },
+          { "key": "k5", "left": "Rehabilitation & Recovery", "right": "Pillar focused on restoring normal life — rebuilding homes, restoring livelihoods" },
+          { "key": "k6", "left": "Go Bag", "right": "Emergency kit with water, food, radio, flashlight, medicines, and documents" },
+          { "key": "k7", "left": "RA 10121", "right": "Philippine DRRM Act of 2010" },
+          { "key": "k8", "left": "BDRRMC", "right": "Barangay Disaster Risk Reduction and Management Committee — first responders at the community level" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Family Emergency Plan",
-      "badge": {
-        "id": "term3-finisher",
-        "name": "Term 3 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Build a family emergency plan.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Family Emergency Plan</strong> will be added here.</p>",
+      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Family Emergency Plan",
+            "text": "🌀 A Signal No. 3 typhoon is approaching your province in 24 hours. What should your family do FIRST?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Review the family DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA updates", "correct": true },
+              { "label": "B) Wait until the typhoon is directly overhead", "correct": false },
+              { "label": "C) Go to the mall to buy supplies during peak hours", "correct": false },
+              { "label": "D) Ignore the warning — typhoons pass quickly", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Family Emergency Plan",
+            "text": "🎒 Your family is preparing a Go Bag. Which item should NEVER be left out?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Drinking water and non-perishable food for at least 3 days", "correct": true },
+              { "label": "B) Video game console", "correct": false },
+              { "label": "C) Formal party dress", "correct": false },
+              { "label": "D) Extra shoes", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Family Emergency Plan",
+            "text": "🏫 Your barangay has an earthquake drill scheduled. Why is it important to participate?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Drills build muscle memory — during a real earthquake, you'll know to Drop, Cover, and Hold", "correct": true },
+              { "label": "B) Drills are just for fun", "correct": false },
+              { "label": "C) They replace the need for a Go Bag", "correct": false },
+              { "label": "D) They aren't important", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Family Emergency Plan",
+            "text": "👵 Your grandmother uses a wheelchair. How should she be included in the family DRRM plan?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Assign someone to help her evacuate, ensure accessible routes, and prepare her medicines in the Go Bag", "correct": true },
+              { "label": "B) Leave her at home during evacuation", "correct": false },
+              { "label": "C) Ignore her needs", "correct": false },
+              { "label": "D) Hope for the best", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Family Emergency Plan",
+            "text": "🌳 A coastal barangay plants mangroves along the shoreline. What DRRM pillar does this activity fall under?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Prevention & Mitigation — mangroves reduce storm surge and coastal erosion", "correct": true },
+              { "label": "B) Response — they help during rescue", "correct": false },
+              { "label": "C) Recovery — they rebuild homes", "correct": false },
+              { "label": "D) It doesn't fit any pillar", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the DRRM Lab",
-      "badge": {
-        "id": "term3-finisher",
-        "name": "Term 3 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the DRRM Lab</strong> will be added here.</p>",
+      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
+      "content": "<h3>🔐 Formative Check — Escape the DRRM Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. This is your final formative check before the Term Exam.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the DRRM Lab",
+            "text": "What does DRRM stand for?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Disaster Risk Reduction and Management", "correct": true },
+              { "label": "B) Department of Regional Risk Measures", "correct": false },
+              { "label": "C) Disaster Response and Recovery Method", "correct": false },
+              { "label": "D) Direct Rescue and Relief Management", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the DRRM Lab",
+            "text": "How many thematic pillars make up the DRRM framework?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Four", "correct": true },
+              { "label": "B) Two", "correct": false },
+              { "label": "C) Six", "correct": false },
+              { "label": "D) Ten", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the DRRM Lab",
+            "text": "Which pillar focuses on drills, Go Bags, and evacuation plans?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Preparedness", "correct": true },
+              { "label": "B) Response", "correct": false },
+              { "label": "C) Recovery", "correct": false },
+              { "label": "D) Prevention", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the DRRM Lab",
+            "text": "Which Philippine law institutionalized DRRM?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) RA 10121 — Philippine DRRM Act of 2010", "correct": true },
+              { "label": "B) RA 9003", "correct": false },
+              { "label": "C) RA 6969", "correct": false },
+              { "label": "D) RA 9729", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the DRRM Lab",
+            "text": "What should a family do FIRST when a typhoon warning is issued?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA", "correct": true },
+              { "label": "B) Wait until the last minute", "correct": false },
+              { "label": "C) Go outside and watch the storm", "correct": false },
+              { "label": "D) Ignore warnings", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the DRRM Lab",
+            "text": "Which activity is an example of MITIGATION in DRRM?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Planting mangroves to reduce storm surge impact", "correct": true },
+              { "label": "B) Distributing relief goods after a typhoon", "correct": false },
+              { "label": "C) Rebuilding houses after a flood", "correct": false },
+              { "label": "D) Conducting search and rescue", "correct": false }
             ]
           }
         ]

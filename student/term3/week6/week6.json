@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Geologic Processes — Fast & Slow",
-      "badge": {
-        "id": "geohazard-analyst",
-        "name": "Geohazard Analyst",
-        "icon": "🌋"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn fast and slow geologic processes.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Geologic Processes — Fast & Slow</strong> will be added here.</p>"
+      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe fast geologic processes (volcanic eruptions, earthquakes, tsunamis) and slow geologic processes (soil erosion, saltwater intrusion), and explain their causes and effects.</p><h3>⏱️ Fast vs. Slow Geologic Processes</h3><table><thead><tr><th>Category</th><th>Time Scale</th><th>Examples</th></tr></thead><tbody><tr><td><strong>Fast (catastrophic)</strong></td><td>Seconds to days</td><td>Volcanic eruptions, earthquakes, tsunamis, landslides</td></tr><tr><td><strong>Slow (gradual)</strong></td><td>Years to centuries</td><td>Soil erosion, saltwater intrusion, weathering, subsidence</td></tr></tbody></table><h3>🌋 Volcanic Eruptions</h3><p>A <strong>volcano</strong> is an opening in Earth's crust where magma, gases, and ash escape from the mantle. Eruptions occur when pressure from dissolved gases builds up inside the magma chamber.</p><table><thead><tr><th>Type of Eruption</th><th>Characteristics</th><th>Example</th></tr></thead><tbody><tr><td><strong>Effusive</strong></td><td>Gentle lava flow, low gas content</td><td>Hawaiian volcanoes, Mayon's calmer phases</td></tr><tr><td><strong>Explosive</strong></td><td>Violent blast of ash, gas, pyroclastic flows</td><td>Pinatubo 1991, Taal 2020, Mayon 2018</td></tr></tbody></table><p><strong>Hazards:</strong> Lava flows, pyroclastic flows, ashfall, volcanic gases, lahars (mudflows), tsunami (if eruption is near or under the sea).</p><h3>🌎 Earthquakes</h3><p>An <strong>earthquake</strong> is a sudden release of energy in Earth's crust, usually caused by movement along faults (tectonic or volcanic).</p><table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><strong>Focus (hypocenter)</strong></td><td>Point inside Earth where the earthquake begins</td></tr><tr><td><strong>Epicenter</strong></td><td>Point directly above the focus on the surface</td></tr><tr><td><strong>Magnitude</strong></td><td>Measure of energy released (e.g., Richter, Moment Magnitude scale)</td></tr><tr><td><strong>Intensity</strong></td><td>Measure of shaking and damage at a specific location (e.g., PEIS)</td></tr><tr><td><strong>Aftershocks</strong></td><td>Smaller quakes that follow the main shock</td></tr></tbody></table><p><strong>Hazards:</strong> Ground shaking, ground rupture, landslides, liquefaction, tsunamis, fires, and building collapse.</p><h3>🌊 Tsunamis</h3><p>A <strong>tsunami</strong> is a series of large ocean waves usually caused by:</p><ul><li><strong>Underwater earthquakes</strong> (most common — especially along subduction zones)</li><li><strong>Volcanic eruptions</strong> (like the 1883 Krakatoa eruption)</li><li><strong>Landslides</strong> into the ocean</li><li><strong>Meteorite impacts</strong> (rare)</li></ul><p><strong>Warning signs:</strong> Strong shaking, sudden withdrawal of the sea (water recedes), loud roar.</p><p><strong>Philippine example:</strong> The 1976 Moro Gulf tsunami killed over 5,000 people — the deadliest in PH history.</p><h3>🌱 Soil Erosion — A Slow Process</h3><p><strong>Soil erosion</strong> is the gradual removal of topsoil by wind, water, or human activity.</p><table><thead><tr><th>Cause</th><th>Effect</th></tr></thead><tbody><tr><td>Deforestation</td><td>Loss of root systems that hold soil together</td></tr><tr><td>Overgrazing</td><td>Compacted, exposed soil washes away</td></tr><tr><td>Improper farming</td><td>Erosion on hillsides without terracing</td></tr><tr><td>Heavy rain &amp; floods</td><td>Rapid washing away of topsoil</td></tr><tr><td>Strong winds</td><td>Blowing away dry topsoil</td></tr></tbody></table><p><strong>Effects:</strong> Reduced soil fertility, lower crop yields, sedimentation in rivers, landslides, and desertification.</p><p><strong>Prevention:</strong> Contour plowing, terracing, cover crops, reforestation, and agroforestry.</p><h3>🌊 Saltwater Intrusion — A Slow Process</h3><p><strong>Saltwater intrusion</strong> is the movement of saline water into freshwater aquifers, usually caused by:</p><ul><li>Over-pumping of groundwater near the coast</li><li>Rising sea levels (climate change)</li><li>Droughts reducing freshwater recharge</li><li>Human-made channels allowing seawater inland</li></ul><p><strong>Effects:</strong></p><ul><li>Wells become salty — unusable for drinking</li><li>Farmland becomes saline — crops fail</li><li>Freshwater ecosystems disrupted</li><li>Coastal communities lose access to clean water</li></ul><p><strong>Prevention:</strong> Managed aquifer recharge, desalination (as a last resort), reducing groundwater pumping, and protecting coastal wetlands/mangroves.</p><h3>🇵🇭 Philippine Context</h3><ul><li>The Philippines is highly vulnerable to all of these — being in the Ring of Fire AND typhoon belt.</li><li>PHIVOLCS (Philippine Institute of Volcanology and Seismology) monitors volcanoes, earthquakes, and tsunami threats.</li><li>PHIVOLCS uses a hazard warning system with alert levels (Level 0 to 5 for volcanoes).</li></ul><h3>📌 Quick Check</h3><ul><li>What causes a tsunami? (Answer: usually an underwater earthquake; also volcanic eruptions and landslides)</li><li>What is soil erosion, and what causes it? (Answer: gradual removal of topsoil by wind, water, or human activity — often caused by deforestation)</li><li>What causes saltwater intrusion? (Answer: over-pumping of groundwater, rising sea levels, and droughts)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Geologic Hazards",
-      "badge": {
-        "id": "geohazard-analyst",
-        "name": "Geohazard Analyst",
-        "icon": "🌋"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match hazards to their characteristics.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Geologic Hazards</strong> will be added here.</p>",
+      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each geologic process or concept to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Geologic Hazards",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Geologic Hazards",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Geologic Hazards",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Geologic Hazards",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Geologic Hazards",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Geologic Hazards",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Geologic Hazards",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Geologic Hazards",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Volcanic eruption", "right": "Escape of magma, ash, and gases through an opening in Earth's crust" },
+          { "key": "k2", "left": "Effusive eruption", "right": "Gentle lava flow with low gas content — like Hawaiian volcanoes" },
+          { "key": "k3", "left": "Explosive eruption", "right": "Violent blast with ash, gas, and pyroclastic flows — like Pinatubo 1991" },
+          { "key": "k4", "left": "Epicenter", "right": "Point on Earth's surface directly above the earthquake focus" },
+          { "key": "k5", "left": "Tsunami", "right": "Series of large ocean waves usually caused by underwater earthquakes" },
+          { "key": "k6", "left": "Soil erosion", "right": "Gradual removal of topsoil by wind, water, or human activity" },
+          { "key": "k7", "left": "Saltwater intrusion", "right": "Seawater seeping into freshwater aquifers — often from over-pumping" },
+          { "key": "k8", "left": "PHIVOLCS", "right": "Agency that monitors Philippine volcanoes, earthquakes, and tsunamis" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Volcanoes & Earthquakes",
-      "badge": {
-        "id": "geohazard-analyst",
-        "name": "Geohazard Analyst",
-        "icon": "🌋"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze volcanic and seismic scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Volcanoes & Earthquakes</strong> will be added here.</p>",
+      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Volcanoes & Earthquakes",
+            "text": "🌋 Taal Volcano erupts, and PHIVOLCS raises the alert level to 4. What does this mean for residents nearby?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) A hazardous explosive eruption is imminent — they must evacuate immediately", "correct": true },
+              { "label": "B) The volcano is dormant", "correct": false },
+              { "label": "C) Nothing — alert levels are only for scientists", "correct": false },
+              { "label": "D) It means the volcano is safe to visit", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Volcanoes & Earthquakes",
+            "text": "🌊 You're at the beach and the water suddenly recedes far out to sea, exposing the ocean floor. What should you do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Run to higher ground immediately — a tsunami is coming", "correct": true },
+              { "label": "B) Walk out to explore the exposed ocean floor", "correct": false },
+              { "label": "C) Take photos to post online", "correct": false },
+              { "label": "D) Stay in place and wait", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Volcanoes & Earthquakes",
+            "text": "🌧️ After heavy rains, a hillside in your barangay starts to slide into the river. Which slow process likely made the hillside vulnerable?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Soil erosion caused by deforestation and loss of vegetation roots", "correct": true },
+              { "label": "B) Volcanic activity", "correct": false },
+              { "label": "C) Tsunami impact", "correct": false },
+              { "label": "D) Earthquakes", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Volcanoes & Earthquakes",
+            "text": "🌊 A coastal barangay's wells are becoming salty, and residents can no longer use them for drinking. What is the likely cause?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Saltwater intrusion from over-pumping of groundwater and rising sea levels", "correct": true },
+              { "label": "B) Residents added too much salt to the well", "correct": false },
+              { "label": "C) There's too much rainfall", "correct": false },
+              { "label": "D) The wells are too deep", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Volcanoes & Earthquakes",
+            "text": "🏠 An earthquake of magnitude 7.2 hits your province. What should you do DURING the shaking?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Drop, cover, and hold — get under a sturdy table and protect your head", "correct": true },
+              { "label": "B) Run outside immediately", "correct": false },
+              { "label": "C) Stand in a doorway only", "correct": false },
+              { "label": "D) Take the elevator", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Geohazard Lab",
-      "badge": {
-        "id": "geohazard-analyst",
-        "name": "Geohazard Analyst",
-        "icon": "🌋"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Geohazard Lab</strong> will be added here.</p>",
+      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
+      "content": "<h3>🔐 Formative Check — Escape the Geohazard Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Geohazard Lab",
+            "text": "What is a tsunami usually caused by?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) An underwater earthquake", "correct": true },
+              { "label": "B) Strong winds", "correct": false },
+              { "label": "C) Tides", "correct": false },
+              { "label": "D) Fish migration", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Geohazard Lab",
+            "text": "What is the point on Earth's surface directly above an earthquake's origin called?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Epicenter", "correct": true },
+              { "label": "B) Focus", "correct": false },
+              { "label": "C) Fault", "correct": false },
+              { "label": "D) Crater", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Geohazard Lab",
+            "text": "Which of the following is a SLOW geologic process?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Saltwater intrusion", "correct": true },
+              { "label": "B) Volcanic eruption", "correct": false },
+              { "label": "C) Tsunami", "correct": false },
+              { "label": "D) Earthquake", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Geohazard Lab",
+            "text": "What is soil erosion?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) The gradual removal of topsoil by wind, water, or human activity", "correct": true },
+              { "label": "B) A sudden landslide", "correct": false },
+              { "label": "C) The formation of new soil", "correct": false },
+              { "label": "D) Volcanic ashfall", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Geohazard Lab",
+            "text": "Which agency monitors volcanic and seismic activity in the Philippines?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) PHIVOLCS", "correct": true },
+              { "label": "B) PAGASA", "correct": false },
+              { "label": "C) DENR", "correct": false },
+              { "label": "D) NDRRMC", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Geohazard Lab",
+            "text": "What is the BEST response during a strong earthquake?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Drop, cover, and hold under a sturdy table", "correct": true },
+              { "label": "B) Run outside immediately", "correct": false },
+              { "label": "C) Take an elevator to the ground floor", "correct": false },
+              { "label": "D) Stand under a window", "correct": false }
             ]
           }
         ]

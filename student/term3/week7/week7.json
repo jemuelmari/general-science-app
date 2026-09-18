@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Weather Hazards in the Philippines",
-      "badge": {
-        "id": "weather-pro",
-        "name": "Weather Pro",
-        "icon": "🌀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn about typhoons, floods, and storm surges.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Weather Hazards in the Philippines</strong> will be added here.</p>"
+      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the major hydrometeorological hazards affecting the Philippines — typhoons, floods, landslides, storm surges, and heat waves — and explain their causes, warning signs, and effects.</p><h3>🌀 What Are Hydrometeorological Hazards?</h3><p><strong>Hydrometeorological hazards</strong> are natural hazards caused by atmospheric, oceanic, or hydrological processes — like typhoons, floods, droughts, and storm surges. The Philippines is particularly vulnerable because of:</p><ul><li>Location in the <strong>typhoon belt</strong> (Western Pacific)</li><li>Warm ocean waters (fuel for typhoons)</li><li>An <strong>archipelago</strong> with long coastlines</li><li>Mountainous terrain prone to landslides</li><li>Many low-lying coastal communities</li></ul><h3>🌪️ Typhoons (Tropical Cyclones)</h3><p>A <strong>typhoon</strong> is a powerful, rotating storm system that forms over warm ocean waters (at least 26.5°C). It has:</p><ul><li><strong>Eye</strong> — calm center with lowest pressure</li><li><strong>Eyewall</strong> — strongest winds and heaviest rain</li><li><strong>Spiral rain bands</strong> — outer bands causing widespread rain</li></ul><p><strong>PAGASA Tropical Cyclone Wind Signals:</strong></p><table><thead><tr><th>Signal</th><th>Wind Speed</th><th>Expected Impact</th></tr></thead><tbody><tr><td><strong>Signal No. 1</strong></td><td>39–61 km/h</td><td>Very light damage; some trees sway</td></tr><tr><td><strong>Signal No. 2</strong></td><td>62–88 km/h</td><td>Light to moderate damage; some trees broken</td></tr><tr><td><strong>Signal No. 3</strong></td><td>89–117 km/h</td><td>Moderate to heavy damage; many trees down</td></tr><tr><td><strong>Signal No. 4</strong></td><td>118–184 km/h</td><td>Heavy to very heavy damage; widespread destruction</td></tr><tr><td><strong>Signal No. 5</strong></td><td>185+ km/h</td><td>Extreme damage; catastrophic</td></tr></tbody></table><p><strong>About 20 tropical cyclones enter Philippine waters each year; 8–9 make landfall.</strong></p><h3>🌊 Floods</h3><p>A <strong>flood</strong> is the overflow of water onto normally dry land. Types:</p><table><thead><tr><th>Type</th><th>Cause</th></tr></thead><tbody><tr><td><strong>Riverine flood</strong></td><td>Rivers overflow from heavy rain</td></tr><tr><td><strong>Flash flood</strong></td><td>Sudden, fast-rising water — common in mountain areas</td></tr><tr><td><strong>Urban flood</strong></td><td>Drainage systems overwhelmed; poor urban planning</td></tr><tr><td><strong>Coastal flood</strong></td><td>Storm surges or sea-level rise</td></tr></tbody></table><p><strong>Main causes:</strong> Heavy rainfall, deforestation (less absorption), clogged drainage (garbage), and urbanization (concrete surfaces).</p><h3>🏔️ Landslides</h3><p>A <strong>landslide</strong> is the sudden downward movement of rock, soil, and debris. Common triggers:</p><ul><li>Heavy rainfall (saturates soil)</li><li>Earthquakes</li><li>Volcanic eruptions</li><li>Deforestation and mining (weaken slopes)</li><li>Steep terrain and unstable geology</li></ul><p><strong>Warning signs:</strong> Cracks in the ground, tilting trees or posts, unusual water seepage, rumbling sounds.</p><h3>🌊 Storm Surges</h3><p>A <strong>storm surge</strong> is the abnormal rise of sea level near the coast, caused by a typhoon's strong winds and low pressure. It can:</p><ul><li>Reach <strong>5–7 meters</strong> in extreme cases (like Yolanda/Haiyan in 2013)</li><li>Flood coastal communities within minutes</li><li>Cause most typhoon deaths when combined with high tide</li></ul><p><strong>Most vulnerable:</strong> Coastal barangays, especially in Eastern Visayas and Bicol.</p><h3>🔥 Heat Waves</h3><p>A <strong>heat wave</strong> is a prolonged period of abnormally high temperatures, often combined with high humidity. In the Philippines:</p><ul><li>Heat index (the "feels like" temperature) can reach <strong>danger levels</strong> (41–54°C)</li><li>DOH and PAGASA issue heat advisories</li><li>Vulnerable: elderly, children, outdoor workers, and those with health conditions</li></ul><p><strong>Heat index categories:</strong></p><table><thead><tr><th>Heat Index</th><th>Category</th><th>Effect</th></tr></thead><tbody><tr><td>27–32°C</td><td>Caution</td><td>Fatigue possible with prolonged exposure</td></tr><tr><td>33–41°C</td><td>Extreme Caution</td><td>Heat cramps and heat exhaustion possible</td></tr><tr><td>42–51°C</td><td>Danger</td><td>Heat cramps, exhaustion likely; heat stroke possible</td></tr><tr><td>52°C+</td><td>Extreme Danger</td><td>Heat stroke imminent</td></tr></tbody></table><h3>🇵🇭 The Role of PAGASA</h3><p><strong>PAGASA</strong> (Philippine Atmospheric, Geophysical and Astronomical Services Administration) monitors and warns about:</p><ul><li>Typhoons and tropical cyclones</li><li>Floods and rainfall</li><li>Storm surges</li><li>Heat index</li><li>El Niño and La Niña events</li></ul><p>PAGASA issues bulletins every 3–6 hours during active weather events.</p><h3>🛡️ Preparedness Basics</h3><ul><li>Monitor PAGASA updates before, during, and after storms.</li><li>Prepare a <strong>Go Bag</strong> with water, food, flashlight, radio, medicines, and important documents.</li><li>Know your <strong>evacuation center</strong> and routes.</li><li>Secure loose objects; reinforce roofs and windows.</li><li>Never cross flooded roads or wade in floodwater.</li><li>Follow local government advisories on preemptive evacuation.</li></ul><h3>📌 Quick Check</h3><ul><li>How many tropical cyclones enter Philippine waters each year? (Answer: about 20)</li><li>What causes a storm surge? (Answer: a typhoon's strong winds and low pressure pushing sea water onto the coast)</li><li>Which agency issues typhoon warnings in the Philippines? (Answer: PAGASA)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Weather Hazards",
-      "badge": {
-        "id": "weather-pro",
-        "name": "Weather Pro",
-        "icon": "🌀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match hazards to their warning signs.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Weather Hazards</strong> will be added here.</p>",
+      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each hydrometeorological hazard or concept to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Weather Hazards",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Weather Hazards",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Weather Hazards",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Weather Hazards",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Weather Hazards",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Weather Hazards",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Weather Hazards",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Weather Hazards",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Typhoon", "right": "Powerful rotating storm that forms over warm ocean waters (≥26.5°C)" },
+          { "key": "k2", "left": "Eye of the typhoon", "right": "Calm center with the lowest pressure" },
+          { "key": "k3", "left": "Eyewall", "right": "Ring around the eye with the strongest winds and heaviest rain" },
+          { "key": "k4", "left": "Storm surge", "right": "Abnormal rise of sea level near the coast, caused by typhoon winds and low pressure" },
+          { "key": "k5", "left": "Flash flood", "right": "Sudden, fast-rising water — common in mountain areas after heavy rain" },
+          { "key": "k6", "left": "Landslide", "right": "Sudden downward movement of rock, soil, and debris on a slope" },
+          { "key": "k7", "left": "Heat index", "right": "The 'feels like' temperature combining heat and humidity" },
+          { "key": "k8", "left": "PAGASA", "right": "Agency that monitors typhoons, floods, storm surges, and heat index" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Storm Preparedness",
-      "badge": {
-        "id": "weather-pro",
-        "name": "Weather Pro",
-        "icon": "🌀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze storm-preparedness scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Storm Preparedness</strong> will be added here.</p>",
+      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Storm Preparedness",
+            "text": "🌀 PAGASA raises Signal No. 3 in your province. What does this mean for residents?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Winds of 89–117 km/h are expected — moderate to heavy damage; prepare for possible evacuation", "correct": true },
+              { "label": "B) It's just a light rain warning", "correct": false },
+              { "label": "C) The typhoon has already passed", "correct": false },
+              { "label": "D) Nothing will happen", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Storm Preparedness",
+            "text": "🌊 A coastal barangay is warned of a possible 5-meter storm surge. What should residents do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Evacuate to higher ground or designated evacuation centers immediately", "correct": true },
+              { "label": "B) Stay home and wait it out", "correct": false },
+              { "label": "C) Go to the beach to watch the waves", "correct": false },
+              { "label": "D) Move to the second floor of their house", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Storm Preparedness",
+            "text": "🏔️ After three days of continuous heavy rain, you notice cracks appearing on a hillside near your house. What should you do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Evacuate immediately — cracks are a warning sign of an impending landslide", "correct": true },
+              { "label": "B) Ignore them — they are normal", "correct": false },
+              { "label": "C) Fill the cracks with soil", "correct": false },
+              { "label": "D) Take pictures only", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Storm Preparedness",
+            "text": "🌊 A river near your barangay is rising fast after hours of rain. What is the SAFEST action?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Move to higher ground and avoid crossing flooded areas", "correct": true },
+              { "label": "B) Try to cross the river to check on neighbors", "correct": false },
+              { "label": "C) Wait until the water reaches your house", "correct": false },
+              { "label": "D) Swim across", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Storm Preparedness",
+            "text": "🔥 PAGASA reports a heat index of 48°C in your area. What should outdoor workers do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Avoid prolonged exposure, drink plenty of water, and take breaks in the shade — heat stroke is possible", "correct": true },
+              { "label": "B) Work longer hours to finish quickly", "correct": false },
+              { "label": "C) Wear thick clothing", "correct": false },
+              { "label": "D) Ignore it — heat index doesn't matter", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Weather Lab",
-      "badge": {
-        "id": "weather-pro",
-        "name": "Weather Pro",
-        "icon": "🌀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Weather Lab</strong> will be added here.</p>",
+      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
+      "content": "<h3>🔐 Formative Check — Escape the Weather Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Weather Lab",
+            "text": "About how many tropical cyclones enter Philippine waters each year?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) About 20", "correct": true },
+              { "label": "B) About 3", "correct": false },
+              { "label": "C) About 50", "correct": false },
+              { "label": "D) About 100", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Weather Lab",
+            "text": "What causes a storm surge?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) A typhoon's strong winds and low pressure pushing sea water onto the coast", "correct": true },
+              { "label": "B) Underwater earthquakes", "correct": false },
+              { "label": "C) Lunar tides only", "correct": false },
+              { "label": "D) Volcanic eruptions", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Weather Lab",
+            "text": "Which of the following is the STRONGEST part of a typhoon?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) The eyewall", "correct": true },
+              { "label": "B) The eye", "correct": false },
+              { "label": "C) The outer rain bands", "correct": false },
+              { "label": "D) The tail", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Weather Lab",
+            "text": "What is the heat index?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) The 'feels like' temperature combining heat and humidity", "correct": true },
+              { "label": "B) The actual air temperature", "correct": false },
+              { "label": "C) The temperature of the ocean", "correct": false },
+              { "label": "D) The temperature inside the house", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Weather Lab",
+            "text": "Which agency issues typhoon warnings and heat advisories in the Philippines?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) PAGASA", "correct": true },
+              { "label": "B) PHIVOLCS", "correct": false },
+              { "label": "C) DENR", "correct": false },
+              { "label": "D) DOH only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Weather Lab",
+            "text": "What should you do if caught in a flood?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Move to higher ground immediately; never attempt to cross flooded roads", "correct": true },
+              { "label": "B) Try to drive through the flood", "correct": false },
+              { "label": "C) Wade through the water", "correct": false },
+              { "label": "D) Wait for the water to reach you", "correct": false }
             ]
           }
         ]
