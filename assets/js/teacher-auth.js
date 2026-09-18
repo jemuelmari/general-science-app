@@ -1,6 +1,6 @@
 /* ============================================================
    teacher-auth.js — Teacher password authentication
-   Version: 1.0.0
+   Version: 1.2.0
    App: General Science
    ------------------------------------------------------------
    Features:
@@ -20,29 +20,29 @@ const TeacherAuth = (() => {
   const LOCKOUT_KEY = 'gsa_teacher_lockout';
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
 
+  // Fallback hash of "teacher2026"
+  const DEFAULT_HASH = '63a9f0ea7bb98050796b649e85481845';
+
   let heartbeatInterval = null;
 
   /* ============================================================
-     INIT — call once per page that requires auth
+     INIT
      ============================================================ */
   function init() {
-    // Setup session timeout heartbeat
     if (isAuthenticated()) {
       startHeartbeat();
       trackActivity();
     }
 
-    // Handle storage events (logout in another tab)
     window.addEventListener('storage', (e) => {
       if (e.key === SESSION_KEY && !e.newValue) {
-        // Logged out elsewhere
         window.location.replace('teacher-login.html');
       }
     });
   }
 
   /* ============================================================
-     PASSWORD HASHING
+     HASH
      ============================================================ */
   async function hash(password) {
     const enc = new TextEncoder();
@@ -63,13 +63,11 @@ const TeacherAuth = (() => {
 
     const inputHash = await hash(password);
 
-    // Get stored hash from config, or use default "teacher2026" hash
     const storedHash = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_PASSWORD_HASH)
       ? CONFIG.TEACHER_PASSWORD_HASH
-      : '63a9f0ea7bb98050796b649e85481845'; // fallback hash of "teacher2026"
+      : DEFAULT_HASH;
 
     if (inputHash === storedHash) {
-      // Success — clear attempts and set session
       clearAttempts();
       clearLockout();
       setSession();
@@ -78,13 +76,13 @@ const TeacherAuth = (() => {
       return true;
     }
 
-    // Failure — increment attempts
     incrementAttempts();
 
-    // Check if this failure triggers lockout
     const attempts = getAttempts();
-    if (attempts >= (CONFIG?.TEACHER_MAX_ATTEMPTS || 3)) {
-      setLockout(CONFIG?.TEACHER_LOCKOUT_TIME || (5 * 60 * 1000));
+    const maxAttempts = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_MAX_ATTEMPTS) || 3;
+    if (attempts >= maxAttempts) {
+      const lockTime = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_LOCKOUT_TIME) || (5 * 60 * 1000);
+      setLockout(lockTime);
     }
 
     return false;
@@ -97,7 +95,6 @@ const TeacherAuth = (() => {
     const session = {
       authenticatedAt: Date.now(),
       lastActivity: Date.now(),
-      // simple token (not cryptographic — session is local)
       token: Math.random().toString(36).slice(2) + Date.now().toString(36)
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
@@ -117,21 +114,18 @@ const TeacherAuth = (() => {
     const session = getSession();
     if (!session) return false;
 
-    // Check session timeout
     const lastActivity = Number(sessionStorage.getItem(LAST_ACTIVITY_KEY) || session.lastActivity);
-    const timeout = CONFIG?.TEACHER_SESSION_TIMEOUT || (30 * 60 * 1000);
+    const timeout = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_SESSION_TIMEOUT) || (30 * 60 * 1000);
     const elapsed = Date.now() - lastActivity;
 
     if (elapsed > timeout) {
       clearSession();
       return false;
     }
-
     return true;
   }
 
   function trackActivity() {
-    // Update last activity on user interaction
     const update = () => {
       if (isAuthenticated()) {
         sessionStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
@@ -144,16 +138,17 @@ const TeacherAuth = (() => {
 
   function startHeartbeat() {
     if (heartbeatInterval) clearInterval(heartbeatInterval);
-
     heartbeatInterval = setInterval(() => {
       if (!isAuthenticated()) {
         stopHeartbeat();
-        APP.toast('⏰ Session expired. Please log in again.', 'warning', 4000);
+        if (window.APP && APP.toast) {
+          APP.toast('⏰ Session expired. Please log in again.', 'warning', 4000);
+        }
         setTimeout(() => {
           window.location.replace('teacher-login.html');
         }, 1500);
       }
-    }, 60000); // check every minute
+    }, 60000);
   }
 
   function stopHeartbeat() {
@@ -194,7 +189,7 @@ const TeacherAuth = (() => {
   }
 
   /* ============================================================
-     ATTEMPTS TRACKING
+     ATTEMPTS
      ============================================================ */
   function getAttempts() {
     return Number(localStorage.getItem(ATTEMPTS_KEY) || 0);
@@ -211,7 +206,7 @@ const TeacherAuth = (() => {
   }
 
   function getAttemptsLeft() {
-    const max = CONFIG?.TEACHER_MAX_ATTEMPTS || 3;
+    const max = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_MAX_ATTEMPTS) || 3;
     return Math.max(0, max - getAttempts());
   }
 
@@ -232,7 +227,7 @@ const TeacherAuth = (() => {
       clearAttempts();
       return null;
     }
-    return { until, remainingMs: until - Date.now() };
+    return { until: until, remainingMs: until - Date.now() };
   }
 
   function isLockedOut() {
@@ -255,10 +250,11 @@ const TeacherAuth = (() => {
     isAuthenticated,
     getSession,
     clearSession,
-    // For debugging
-    _getAttempts: getAttempts,
-    _getLockout: getLockout,
+    getAttempts,
     getAttemptsLeft,
-    isLockedOut
+    getLockout,
+    isLockedOut,
+    clearAttempts,
+    clearLockout
   };
 })();
