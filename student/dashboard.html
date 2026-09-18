@@ -80,6 +80,156 @@
   <script src="../assets/js/transmutation.js"></script>
   <script src="../assets/js/sync.js"></script>
   <script src="../assets/js/backup.js"></script>
-  <script src="../assets/js/dashboard.js"></script>
-</body>
-</html>
+  <script src="../assets/js/term-access.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      /* ---------- Auth guard ---------- */
+      const user = Store.getCurrentUser();
+      if (!user) {
+        window.location.replace('login.html');
+        return;
+      }
+
+      /* ---------- User pill ---------- */
+      APP.$('#user-pill').textContent =
+        `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
+
+      /* ---------- Hero greeting ---------- */
+      const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+      APP.$('#dash-avatar').textContent = initials;
+      APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
+      APP.$('#greeting-meta').innerHTML = `
+        <span>🎓 LRN: ${APP.formatLRN(user.lrn)}</span>
+        <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
+      `;
+
+      /* ---------- Compute standing ---------- */
+      function computeStanding() {
+        const scores = Store.getScores(user.lrn);
+        const allSTs = [];
+
+        ['term1', 'term2', 'term3'].forEach((term) => {
+          const st = scores[term]?.st || {};
+          Object.values(st).forEach((s) => {
+            if (s && s.total) allSTs.push((s.score / s.total) * 100);
+          });
+        });
+
+        if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
+
+        const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
+        return { ...Transmutation.classifyStudent(avg), avg };
+      }
+
+      const standing = computeStanding();
+
+      APP.$('#standing-badge').innerHTML = `
+        <div style="text-align:right;">
+          <div class="badge badge-${standing.key}" style="font-size:0.9rem;padding:8px 16px;">
+            ${standing.label}
+          </div>
+          ${standing.avg !== null ? `<div class="text-small text-muted" style="margin-top:4px;">ST Average: ${standing.avg.toFixed(1)}%</div>` : ''}
+        </div>
+      `;
+
+      /* ---------- Quick stats ---------- */
+      const progress = Store.getProgress(user.lrn);
+      const badges = Store.getBadges(user.lrn);
+
+      const stats = [
+        { value: (progress.term1?.completed?.length || 0), label: 'Term 1 Days Done' },
+        { value: (progress.term2?.completed?.length || 0), label: 'Term 2 Days Done' },
+        { value: (progress.term3?.completed?.length || 0), label: 'Term 3 Days Done' },
+        { value: (badges.term1?.length || 0) + (badges.term2?.length || 0) + (badges.term3?.length || 0), label: 'Total Badges' },
+        { value: standing.avg !== null ? `${standing.avg.toFixed(0)}%` : '—', label: 'ST Average' }
+      ];
+
+      APP.$('#quick-stats').innerHTML = stats.map((s) => `
+        <div class="qs-card green">
+          <div class="qs-info">
+            <div class="qs-value">${s.value}</div>
+            <div class="qs-label">${s.label}</div>
+          </div>
+        </div>
+      `).join('');
+
+      /* ============================================================
+         TERM CARDS — respect teacher-controlled access
+         ============================================================ */
+      const terms = [
+        { id: 'term1', title: 'Term 1', desc: 'Physics & Chemistry', icon: '⚛️',
+          topics: 'Motion · Machines · Hydraulics · Light · Sound · Chemistry', totalWeeks: 10 },
+        { id: 'term2', title: 'Term 2', desc: 'Chemistry & Life Science', icon: '🧪',
+          topics: 'Chemical Reactions · Solutions · Cells · Organ Systems · Climate', totalWeeks: 10 },
+        { id: 'term3', title: 'Term 3', desc: 'Earth Science', icon: '🌏',
+          topics: 'Earth\'s Uniqueness · Philippine Geology · Hazards · DRRM', totalWeeks: 10 }
+      ];
+
+      async function renderTermCards() {
+        let termAccess = { term1: 'locked', term2: 'locked', term3: 'locked' };
+        try {
+          termAccess = await TermAccess.get(user.section);
+        } catch (err) {
+          console.warn('[Dashboard] TermAccess fetch failed:', err);
+        }
+
+        APP.$('#terms-grid').innerHTML = terms.map((t) => {
+          const done = progress[t.id]?.completed?.length || 0;
+          const totalDays = t.totalWeeks * 4;
+          const pct = Math.round((done / totalDays) * 100);
+          const teacherLocked = termAccess[t.id] !== 'open';
+          const hasProgress = done > 0;
+
+          return `
+            <div class="subject-card" data-term="${t.id}" data-locked="${teacherLocked}"
+                 style="${teacherLocked ? 'opacity:0.65;cursor:not-allowed;' : ''}">
+              <div style="font-size:2rem;">${t.icon}</div>
+              <h3>${t.title} — ${t.desc}</h3>
+              <p class="text-muted text-small">${t.topics}</p>
+              <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
+              <p class="text-small text-muted">${done}/${totalDays} days · ${pct}% complete</p>
+              ${teacherLocked
+                ? `<span class="badge badge-warning" style="margin-top:8px;">
+                     🔒 ${hasProgress ? 'Locked (read-only)' : 'Locked — ask teacher'}
+                   </span>`
+                : ''}
+            </div>
+          `;
+        }).join('');
+
+        document.querySelectorAll('[data-term]').forEach((card) => {
+          card.addEventListener('click', () => {
+            const term = card.dataset.term;
+            const isLocked = card.dataset.locked === 'true';
+
+            if (isLocked) {
+              const done = progress[term]?.completed?.length || 0;
+              if (done > 0) {
+                if (confirm(
+                  '🔒 This term is currently locked by your teacher.\n\n' +
+                  'You can VIEW your past progress but cannot continue with new activities.\n\n' +
+                  'Open read-only view?'
+                )) {
+                  window.location.href = `${term}/index.html?readonly=1`;
+                }
+              } else {
+                APP.toast('🔒 This term is locked by your teacher.', 'warning', 4000);
+              }
+              return;
+            }
+
+            window.location.href = `${term}/index.html`;
+          });
+        });
+      }
+
+      renderTermCards();
+
+      /* ---------- Badges ---------- */
+      const allBadges = [
+        { id: 'physicist',        icon: '⚛️', name: 'Physicist' },
+        { id: 'machine-master',   icon: '⚙️', name: 'Machine Master' },
+        { id: 'hydraulics-pro',   icon: '💧', name: 'Hydraulics Pro' },
+        { id: 'chemist',          icon
