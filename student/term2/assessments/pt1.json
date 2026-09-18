@@ -1,0 +1,25 @@
+{
+  "id": "pt1",
+  "title": "PT1 — Chemical Reactions Around Me: Photo Essay & Equation Journal",
+  "shortTitle": "PT1 — Chemical Reactions Around Me",
+  "coverage": "Weeks 1–4",
+  "summary": "Document real chemical reactions in your daily life with photos, then write balanced chemical equations and brief explanations for each one.",
+  "instructions": "<p>Your task is to create a <strong>photo essay + equation journal</strong> that captures at least <strong>5 real chemical reactions</strong> happening around you. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Photograph 5 different chemical reactions</strong> you observe in daily life. Examples:<ul style='margin-left:20px;margin-top:6px;'><li>Cooking — caramelizing sugar, toasting bread (Maillard reaction), browning meat</li><li>Cleaning — vinegar on baking soda, bleach on stains</li><li>Burning — LPG stove flame, candle, matchstick, barbecue</li><li>Rusting — old gate, bike chain, exposed iron</li><li>Food preservation — sliced apple turning brown, milk souring</li><li>Biological — cut healing, leaf decaying, fermentation in bread dough</li></ul></li><li>For each photo, <strong>identify the type of reaction</strong> (decomposition, combustion, acid on carbonate, acid on metal, oxidation, photosynthesis, respiration, etc.).</li><li>Write the <strong>balanced chemical equation</strong> for the reaction.</li><li>Write a <strong>3–4 sentence explanation</strong> of what's happening chemically and why it matters.</li><li>Add a <strong>short reflection</strong> at the end (1 paragraph) about how this task changed the way you see chemistry around you.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> PDF, DOCX, or PowerPoint (5+ slides). Submit as a file, or paste a share link in the reflection.</p>",
+  "requirements": [
+    "At least 5 different chemical reactions documented with photos",
+    "Reaction type clearly identified for each photo",
+    "Balanced chemical equation for each reaction",
+    "3–4 sentence explanation per photo",
+    "Personal reflection paragraph at the end",
+    "Proper citation if any external sources used"
+  ],
+  "options": null,
+  "rubric": [
+    { "criterion": "Number and variety of reactions captured (5+)", "points": 20 },
+    { "criterion": "Correct identification of reaction type", "points": 25 },
+    { "criterion": "Accuracy of balanced chemical equations", "points": 25 },
+    { "criterion": "Depth and clarity of explanations", "points": 15 },
+    { "criterion": "Quality of photos and overall presentation", "points": 10 },
+    { "criterion": "Personal reflection quality", "points": 5 }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "pt2",
+  "title": "PT2 — Household & Personal Care Product Ingredient Investigation",
+  "shortTitle": "PT2 — Product Ingredient Investigation",
+  "coverage": "Weeks 5–8",
+  "summary": "Investigate the active ingredients of a household or personal care product from your home, research each ingredient, and report its function, other uses, and its impact on humans and the environment.",
+  "instructions": "<p>Your task is to <strong>investigate one household or personal care product</strong> from your home in depth. Choose from categories like:</p><ul style='margin-left:20px;margin-top:6px;'><li>Cleaning products (bleach, detergent, all-purpose cleaner, muriatic acid, disinfectant spray)</li><li>Personal care products (shampoo, soap, toothpaste, deodorant, lotion, sunscreen)</li><li>Kitchen chemicals (baking powder, vinegar, food coloring)</li></ul><p style='margin-top:12px;'>You will then:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Photograph the product label</strong> clearly — the ingredient list must be visible.</li><li><strong>List ALL active ingredients</strong> on the label (usually 3–8 ingredients).</li><li>For <strong>each active ingredient</strong>, research and report:<ul style='margin-left:20px;margin-top:6px;'><li><strong>Chemical name and formula</strong></li><li><strong>Brief description</strong> — what the chemical is</li><li><strong>Function</strong> — why it's in the product</li><li><strong>Other uses</strong> — non-household applications (industrial, medical, agricultural)</li><li><strong>Human impact</strong> — benefits and potential risks (skin irritation, toxicity if misused, etc.)</li><li><strong>Environmental impact</strong> — effects on water, soil, air, and wildlife</li></ul></li><li><strong>Reference the appropriate agencies:</strong> DTI, FDA Philippines, or DENR — and explain their role in regulating this product.</li><li><strong>Recommend safe use and disposal</strong> practices for the product.</li><li>End with a <strong>personal reflection</strong> on how the investigation changed your understanding of household chemistry.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> 4–6 page PDF report with photos and a reference list. Submit as a file, or paste a share link.</p>",
+  "requirements": [
+    "Product chosen from household or personal care category",
+    "Clear photo of the label with all ingredients visible",
+    "All active ingredients listed and researched",
+    "Chemical name + formula for each ingredient",
+    "Function, other uses, human impact, environmental impact per ingredient",
+    "Reference to DTI, FDA, or DENR role in regulation",
+    "Safe use and disposal recommendations",
+    "Personal reflection (2–3 paragraphs)",
+    "Citations of all sources used (APA or MLA)"
+  ],
+  "options": null,
+  "rubric": [
+    { "criterion": "Completeness of ingredient research (all listed, all researched)", "points": 25 },
+    { "criterion": "Accuracy of chemical information (names, formulas, functions)", "points": 25 },
+    { "criterion": "Depth of human and environmental impact analysis", "points": 20 },
+    { "criterion": "Correct referencing of DTI / FDA / DENR roles", "points": 10 },
+    { "criterion": "Quality of safe-use and disposal recommendations", "points": 10 },
+    { "criterion": "Organization, grammar, formatting, and citations", "points": 5 },
+    { "criterion": "Personal reflection quality", "points": 5 }
+  ]
+}
