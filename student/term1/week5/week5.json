@@ -5,7 +5,11 @@
   "competencies": [
     {
       "code": "GENSCI-11-T1-W5-C1",
-      "text": "Discuss properties of light waves in communications, navigation, medicine, and entertainment. Identify innovations like LEDs, lasers, and holograms."
+      "text": "Discuss properties of light waves in communications, navigation, medicine, and entertainment."
+    },
+    {
+      "code": "GENSCI-11-T1-W5-C2",
+      "text": "Identify innovations such as soundproofing, amplifiers, LEDs, holograms, and lasers."
     }
   ],
   "badge": {
@@ -18,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Nature of Light Waves",
-      "badge": {
-        "id": "optics-explorer",
-        "name": "Optics Explorer",
-        "icon": "💡"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Explore reflection, refraction, and the EM spectrum.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Nature of Light Waves</strong> will be added here.</p>"
+      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the wave nature of light, explain reflection, refraction, and the electromagnetic spectrum, and identify how light is used in communication, navigation, medicine, and entertainment.</p><h3>💡 What Is Light?</h3><p><strong>Light</strong> is a form of <strong>electromagnetic radiation</strong> — energy that travels through space as a wave. Unlike sound, light can travel through a vacuum (that's how sunlight reaches Earth).</p><p>Light travels at <strong>300,000,000 m/s</strong> (3 × 10⁸ m/s) in a vacuum — the fastest speed possible in the universe.</p><h3>🌊 Wave Properties of Light</h3><table><thead><tr><th>Property</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Wavelength (λ)</strong></td><td>Distance between two peaks of a wave</td><td>Red light = ~700 nm; violet light = ~400 nm</td></tr><tr><td><strong>Frequency (f)</strong></td><td>Number of waves passing a point per second</td><td>Measured in Hertz (Hz)</td></tr><tr><td><strong>Speed (c)</strong></td><td>3 × 10⁸ m/s in a vacuum</td><td>Slower in water and glass</td></tr><tr><td><strong>Amplitude</strong></td><td>Height of the wave</td><td>Determines brightness</td></tr></tbody></table><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>c = f × λ</strong> (speed = frequency × wavelength)</p><h3>🪞 Reflection</h3><p>When light bounces off a surface, we call it <strong>reflection</strong>. The <strong>Law of Reflection</strong> says: <em>angle of incidence = angle of reflection</em>.</p><ul><li><strong>Regular reflection:</strong> Smooth surface (mirror) → clear image.</li><li><strong>Diffuse reflection:</strong> Rough surface (wall, paper) → scattered light, no image.</li></ul><p><strong>Real-life:</strong> Mirrors, periscopes, rear-view mirrors, reflectors on bicycles.</p><h3>🔍 Refraction</h3><p>When light passes from one medium to another (e.g., air to water), it <strong>bends</strong>. This is <strong>refraction</strong>. It happens because light travels at different speeds in different materials.</p><ul><li>A straw in a glass of water looks bent.</li><li>A pool looks shallower than it really is.</li><li>Eyeglasses and contact lenses correct vision using refraction.</li><li>Lenses in cameras, microscopes, and telescopes all use refraction.</li></ul><h3>🌈 The Electromagnetic Spectrum</h3><p>Light is only the <strong>visible</strong> part of a larger family of waves called the <strong>electromagnetic (EM) spectrum</strong>:</p><table><thead><tr><th>Type</th><th>Use</th></tr></thead><tbody><tr><td><strong>Radio waves</strong></td><td>AM/FM radio, TV, WiFi, cell signals</td></tr><tr><td><strong>Microwaves</strong></td><td>Cooking, radar, satellite communication</td></tr><tr><td><strong>Infrared (IR)</strong></td><td>TV remotes, thermal imaging, night vision</td></tr><tr><td><strong>Visible light</strong></td><td>What our eyes detect (ROYGBIV)</td></tr><tr><td><strong>Ultraviolet (UV)</strong></td><td>Vitamin D production, sterilization, sunburn</td></tr><tr><td><strong>X-rays</strong></td><td>Medical imaging, airport security</td></tr><tr><td><strong>Gamma rays</strong></td><td>Cancer treatment, nuclear reactions</td></tr></tbody></table><h3>🌍 Light in Everyday Life</h3><ul><li><strong>Communications:</strong> Fiber-optic cables carry internet and phone signals using light.</li><li><strong>Navigation:</strong> GPS uses radio waves; lighthouses use visible light.</li><li><strong>Medicine:</strong> X-rays, laser surgery, endoscopes.</li><li><strong>Entertainment:</strong> TVs, LED screens, laser light shows, projectors.</li></ul><h3>🔬 Modern Light Innovations</h3><ul><li><strong>LEDs:</strong> Energy-efficient bulbs (last 25× longer than incandescent).</li><li><strong>Lasers:</strong> Focused beams for surgery, cutting metal, reading barcodes.</li><li><strong>Holograms:</strong> 3D images created by interfering light beams.</li><li><strong>Fiber optics:</strong> Data transmission at the speed of light.</li></ul><h3>📌 Quick Check</h3><ul><li>Why does a straw look bent in water? (Answer: refraction)</li><li>Why can't we see UV light? (Answer: our eyes only detect 400–700 nm wavelengths)</li><li>What kind of wave is used in WiFi? (Answer: radio waves)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Light Innovations",
-      "badge": {
-        "id": "optics-explorer",
-        "name": "Optics Explorer",
-        "icon": "💡"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match each light technology to its application.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Light Innovations</strong> will be added here.</p>",
+      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each light concept or technology to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Light Innovations",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Light Innovations",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Light Innovations",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Light Innovations",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Light Innovations",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Light Innovations",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Light Innovations",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Light Innovations",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Reflection", "right": "Light bouncing off a mirror" },
+          { "key": "k2", "left": "Refraction", "right": "A straw appearing bent in a glass of water" },
+          { "key": "k3", "left": "Visible light", "right": "Wavelengths from 400 nm to 700 nm that our eyes detect" },
+          { "key": "k4", "left": "Infrared (IR)", "right": "TV remote signals and thermal imaging" },
+          { "key": "k5", "left": "X-rays", "right": "Medical imaging of bones and airport security" },
+          { "key": "k6", "left": "LED", "right": "Energy-efficient light bulb lasting 25× longer than incandescent" },
+          { "key": "k7", "left": "Laser", "right": "Focused beam used for surgery and barcode scanning" },
+          { "key": "k8", "left": "Fiber optics", "right": "Data transmission using light through thin glass strands" }
         ]
       }
     },
@@ -84,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Light in Daily Life",
-      "badge": {
-        "id": "optics-explorer",
-        "name": "Optics Explorer",
-        "icon": "💡"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Solve light-based reasoning scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Light in Daily Life</strong> will be added here.</p>",
+      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Light in Daily Life",
+            "text": "🪞 You look into a mirror and see yourself clearly. What type of reflection is happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Diffuse reflection", "correct": false },
+              { "label": "B) Regular reflection", "correct": true },
+              { "label": "C) Refraction", "correct": false },
+              { "label": "D) Absorption", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Light in Daily Life",
+            "text": "🥤 A straw looks bent when placed in a glass of water. Which phenomenon explains this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Reflection", "correct": false },
+              { "label": "B) Diffraction", "correct": false },
+              { "label": "C) Refraction", "correct": true },
+              { "label": "D) Polarization", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Light in Daily Life",
+            "text": "📱 Your TV remote control works even when pointing at the wall (which reflects signals back to the TV). Which type of EM wave does the remote use?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Ultraviolet", "correct": false },
+              { "label": "B) Infrared", "correct": true },
+              { "label": "C) X-ray", "correct": false },
+              { "label": "D) Gamma ray", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Light in Daily Life",
+            "text": "🏥 A hospital uses a machine that produces images of bones without surgery. Which EM wave is used?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Radio waves", "correct": false },
+              { "label": "B) Microwaves", "correct": false },
+              { "label": "C) X-rays", "correct": true },
+              { "label": "D) Infrared", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Light in Daily Life",
+            "text": "⚡ Your barangay is switching to more energy-efficient streetlights. Which lighting technology is BEST for this purpose?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Incandescent bulbs (traditional)", "correct": false },
+              { "label": "B) Halogen bulbs", "correct": false },
+              { "label": "C) LED lights", "correct": true },
+              { "label": "D) Neon tubes", "correct": false }
             ]
           }
         ]
@@ -204,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Optics Lab",
-      "badge": {
-        "id": "optics-explorer",
-        "name": "Optics Explorer",
-        "icon": "💡"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Optics Lab</strong> will be added here.</p>",
+      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
+      "content": "<h3>🔐 Formative Check — Escape the Optics Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Optics Lab",
+            "text": "What is the speed of light in a vacuum?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) 3,000 m/s", "correct": false },
+              { "label": "B) 300,000 m/s", "correct": false },
+              { "label": "C) 3 × 10⁸ m/s", "correct": true },
+              { "label": "D) 3 × 10¹⁰ m/s", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Optics Lab",
+            "text": "Which property of light determines its color?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Amplitude", "correct": false },
+              { "label": "B) Wavelength (or frequency)", "correct": true },
+              { "label": "C) Speed", "correct": false },
+              { "label": "D) Intensity", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Optics Lab",
+            "text": "Which EM wave has the SHORTEST wavelength?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Radio waves", "correct": false },
+              { "label": "B) Infrared", "correct": false },
+              { "label": "C) Visible light", "correct": false },
+              { "label": "D) Gamma rays", "correct": true }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Optics Lab",
+            "text": "The Law of Reflection states that:",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Angle of incidence = angle of reflection", "correct": true },
+              { "label": "B) Angle of incidence = 2 × angle of reflection", "correct": false },
+              { "label": "C) Angle of incidence = 0", "correct": false },
+              { "label": "D) Angle of incidence = angle of refraction", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Optics Lab",
+            "text": "Which technology uses light to transmit internet data at very high speeds?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Copper phone lines", "correct": false },
+              { "label": "B) Fiber-optic cables", "correct": true },
+              { "label": "C) Satellite dishes", "correct": false },
+              { "label": "D) Bluetooth speakers", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Optics Lab",
+            "text": "Why are sunglasses with UV protection important?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) They block visible light only.", "correct": false },
+              { "label": "B) They protect eyes from harmful ultraviolet radiation that can damage the cornea.", "correct": true },
+              { "label": "C) They make things look brighter.", "correct": false },
+              { "label": "D) They reduce the speed of light.", "correct": false }
             ]
           }
         ]

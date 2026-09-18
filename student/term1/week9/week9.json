@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Putting Physics & Chemistry Together",
-      "badge": {
-        "id": "integrator",
-        "name": "Integrator",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>See how physics and chemistry interact in daily tech.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Putting Physics & Chemistry Together</strong> will be added here.</p>"
+      "badge": { "id": "integrator", "name": "Integrator", "icon": "🔬" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify real-world technologies and processes that combine physics and chemistry principles, and explain how they work together to solve everyday problems.</p><h3>🔬 Why Physics + Chemistry Together?</h3><p>Physics explains <em>how things move, transfer energy, and interact with forces</em>. Chemistry explains <em>how substances react, bond, and transform</em>. Real-world systems rarely use just one — they combine both.</p><h3>🧪 Integrated Systems Around You</h3><table><thead><tr><th>System</th><th>Physics Concepts</th><th>Chemistry Concepts</th></tr></thead><tbody><tr><td><strong>Car engine</strong></td><td>Torque, rotational motion, thermodynamics</td><td>Combustion of fuel, oxidation reactions</td></tr><tr><td><strong>Battery</strong></td><td>Electrical current, potential difference, circuits</td><td>Redox reactions, electrolytes, ion flow</td></tr><tr><td><strong>Air conditioner</strong></td><td>Heat transfer, fluid pressure, phase change</td><td>Refrigerant chemistry, gas laws</td></tr><tr><td><strong>Solar panel</strong></td><td>Photon energy, electromagnetic waves</td><td>Photovoltaic effect in silicon semiconductors</td></tr><tr><td><strong>Water treatment</strong></td><td>Fluid dynamics, filtration</td><td>Chlorination, coagulation, pH adjustment</td></tr><tr><td><strong>Cooking (frying)</strong></td><td>Conduction, convection, radiation</td><td>Maillard reaction, protein denaturation</td></tr></tbody></table><h3>🔋 Case Study: How a Battery Works</h3><ol><li><strong>Chemistry:</strong> A redox reaction inside the battery releases electrons.</li><li><strong>Physics:</strong> Electrons flow through the circuit as electrical current.</li><li><strong>Result:</strong> Current powers devices — from phones to electric vehicles.</li></ol><p>Neither physics nor chemistry alone can explain a battery — you need both.</p><h3>❄️ Case Study: How an Air Conditioner Works</h3><ol><li><strong>Chemistry:</strong> Refrigerant absorbs heat when it evaporates, releases heat when it condenses.</li><li><strong>Physics:</strong> Compressor raises pressure and temperature; coils transfer heat outside.</li><li><strong>Result:</strong> Warm room air gets cooled, heat is dumped outside.</li></ol><h3>🍳 Case Study: Why Cooking Is Physics + Chemistry</h3><ul><li><strong>Physics:</strong> Heat travels from pan to food through conduction.</li><li><strong>Chemistry:</strong> Proteins denature, sugars caramelize, and Maillard reactions create flavor.</li><li><strong>Every meal you cook</strong> is a demonstration of both sciences working together.</li></ul><h3>🏘️ Real-Life Synthesis in the Philippines</h3><ul><li><strong>Rice cookers:</strong> Electrical resistance (physics) + water phase change (chemistry).</li><li><strong>Jeepney engines:</strong> Combustion (chemistry) + torque and rotation (physics).</li><li><strong>Barangay water pumps:</strong> Pascal's Principle (physics) + chlorine disinfection (chemistry).</li><li><strong>Salt beds (asinan):</strong> Evaporation (physics) + crystallization of NaCl (chemistry).</li></ul><h3>💡 The Big Idea</h3><p>Science doesn't happen in silos. The best solutions to real-world problems — from clean energy to safe food — come from <strong>combining physics and chemistry</strong>.</p><h3>📌 Quick Check</h3><ul><li>Why is a car engine both a physics and chemistry system? (Answer: combustion = chemistry; rotation and torque = physics)</li><li>What chemistry happens inside a battery? (Answer: redox reaction)</li><li>Name one everyday object that combines physics and chemistry. (Answer: rice cooker, stove, refrigerator, etc.)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Cross-Discipline Applications",
-      "badge": {
-        "id": "integrator",
-        "name": "Integrator",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match concepts to integrated applications.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Cross-Discipline Applications</strong> will be added here.</p>",
+      "badge": { "id": "integrator", "name": "Integrator", "icon": "🔬" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each real-world system to the correct combination of physics AND chemistry principles it uses. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Cross-Discipline Applications",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Car engine", "right": "Torque + combustion reactions" },
+          { "key": "k2", "left": "Battery", "right": "Electrical circuits + redox reactions" },
+          { "key": "k3", "left": "Air conditioner", "right": "Heat transfer + refrigerant phase change" },
+          { "key": "k4", "left": "Solar panel", "right": "Photon absorption + photovoltaic effect" },
+          { "key": "k5", "left": "Water treatment plant", "right": "Fluid dynamics + chlorination chemistry" },
+          { "key": "k6", "left": "Cooking meat on a pan", "right": "Conduction + protein denaturation" },
+          { "key": "k7", "left": "Rice cooker", "right": "Electrical resistance + water phase change" },
+          { "key": "k8", "left": "Salt bed (asinan)", "right": "Evaporation + NaCl crystallization" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Integrated Science",
-      "badge": {
-        "id": "integrator",
-        "name": "Integrator",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Solve scenarios needing both physics and chemistry.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Integrated Science</strong> will be added here.</p>",
+      "badge": { "id": "integrator", "name": "Integrator", "icon": "🔬" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Integrated Science",
+            "text": "🔋 A phone battery gets warm while charging. What combination of physics and chemistry is happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Only electrical physics — no chemistry involved.", "correct": false },
+              { "label": "B) Chemical redox reactions inside the battery release energy, and electrical resistance (physics) turns some of it into heat.", "correct": true },
+              { "label": "C) The battery is broken.", "correct": false },
+              { "label": "D) Only chemistry — the phone's screen heats up the battery.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Integrated Science",
+            "text": "🚗 A jeepney burns diesel to move forward. Which set of concepts BEST describes what happens?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Only chemistry — combustion.", "correct": false },
+              { "label": "B) Only physics — torque and rotation.", "correct": false },
+              { "label": "C) Chemistry of combustion releases energy, physics of torque converts that energy into motion.", "correct": true },
+              { "label": "D) Neither — jeepneys run on batteries.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Integrated Science",
+            "text": "❄️ An air conditioner cools a room. What does the refrigerant do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) It only creates cold air out of nothing.", "correct": false },
+              { "label": "B) It absorbs heat from inside when it evaporates (chemistry) and releases heat outside when it condenses (physics of pressure and phase change).", "correct": true },
+              { "label": "C) It removes humidity using magnets.", "correct": false },
+              { "label": "D) It works purely on electricity — no chemistry involved.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Integrated Science",
+            "text": "🍞 When you toast bread, it turns brown and smells good. Why is this both physics AND chemistry?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Only chemistry — the bread changes color.", "correct": false },
+              { "label": "B) Only physics — the heat travels into the bread.", "correct": false },
+              { "label": "C) Physics explains heat transfer (conduction), chemistry explains the Maillard reaction that browns the bread and creates flavor.", "correct": true },
+              { "label": "D) Neither — toasting is a mechanical process.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Integrated Science",
+            "text": "💧 A barangay water pump lifts water from a deep well and treats it with chlorine. What combination of principles is used?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Only physics — pumps move water.", "correct": false },
+              { "label": "B) Only chemistry — chlorine kills bacteria.", "correct": false },
+              { "label": "C) Physics of fluid pressure (Pascal's Principle) lifts the water, chemistry of chlorine disinfection makes it safe.", "correct": true },
+              { "label": "D) Neither — modern pumps use no science.", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Synthesis Lab",
-      "badge": {
-        "id": "integrator",
-        "name": "Integrator",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Synthesis Lab</strong> will be added here.</p>",
+      "badge": { "id": "integrator", "name": "Integrator", "icon": "🔬" },
+      "content": "<h3>🔐 Formative Check — Escape the Synthesis Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Synthesis Lab",
+            "text": "Why do real-world systems often need both physics and chemistry to explain?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Because both sciences are the same subject", "correct": false },
+              { "label": "B) Because most systems involve both energy/motion (physics) AND substance transformation (chemistry)", "correct": true },
+              { "label": "C) Because teachers require it", "correct": false },
+              { "label": "D) Because physics alone is too hard", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Synthesis Lab",
+            "text": "Inside a battery, what kind of chemical reaction produces electrical energy?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Decomposition", "correct": false },
+              { "label": "B) Combustion", "correct": false },
+              { "label": "C) Redox (oxidation-reduction) reaction", "correct": true },
+              { "label": "D) Neutralization", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Synthesis Lab",
+            "text": "Which process in a car engine converts chemical energy into motion?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Combustion of fuel → expanding gases push pistons → torque turns wheels", "correct": true },
+              { "label": "B) Evaporation of coolant", "correct": false },
+              { "label": "C) Refrigeration cycle", "correct": false },
+              { "label": "D) Electrolysis", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Synthesis Lab",
+            "text": "What chemistry process turns bread brown and flavorful when toasted?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis", "correct": false },
+              { "label": "B) Maillard reaction", "correct": true },
+              { "label": "C) Neutralization", "correct": false },
+              { "label": "D) Fermentation", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Synthesis Lab",
+            "text": "An electric fan does NOT actually cool the air in a room. Why?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Because it uses too much electricity.", "correct": false },
+              { "label": "B) Because it moves air (physics) which increases skin evaporation, making you feel cooler — but the air temperature stays the same.", "correct": true },
+              { "label": "C) Because it creates cold air from nothing.", "correct": false },
+              { "label": "D) Because it uses chemistry to cool air.", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Synthesis Lab",
+            "text": "Which of these is the BEST example of physics + chemistry working together?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) A bicycle bell ringing", "correct": false },
+              { "label": "B) A solar panel converting photons to electricity", "correct": false },
+              { "label": "C) A rice cooker heating water to cook rice — electrical resistance heats the coil, water boils, rice cooks", "correct": true },
+              { "label": "D) A cardboard box sitting on the floor", "correct": false }
             ]
           }
         ]

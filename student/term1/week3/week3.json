@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Simple & Compound Machines",
-      "badge": {
-        "id": "machine-master",
-        "name": "Machine Master",
-        "icon": "⚙️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Explore levers, pulleys, gears, and their combinations.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Simple & Compound Machines</strong> will be added here.</p>"
+      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify the six simple machines, explain how they multiply force or change its direction, and describe how compound machines combine them for greater efficiency.</p><h3>🔧 What Is a Machine?</h3><p>A <strong>machine</strong> is any device that makes work easier by:</p><ul><li><strong>Multiplying force</strong> — you push with less effort to move a bigger load.</li><li><strong>Changing direction</strong> — you pull down to lift something up.</li><li><strong>Increasing speed or distance</strong> — you move a small distance to move a load a larger distance.</li></ul><p>Machines <em>do not create energy</em>. They simply redirect or multiply the force you apply. The total work is always the same (or slightly more due to friction) — this is called the <strong>Law of Conservation of Energy</strong>.</p><h3>⚙️ The Six Simple Machines</h3><table><thead><tr><th>Simple Machine</th><th>What It Does</th><th>Everyday Example</th></tr></thead><tbody><tr><td><strong>Lever</strong></td><td>Multiplies force using a fulcrum; a small effort moves a large load</td><td>Crowbar, seesaw, wheelbarrow, scissors</td></tr><tr><td><strong>Wheel &amp; Axle</strong></td><td>Reduces friction; a large wheel turns a small axle to multiply force</td><td>Doorknob, bicycle wheel, steering wheel</td></tr><tr><td><strong>Pulley</strong></td><td>Changes the direction of force; multiple pulleys reduce effort</td><td>Flagpole rope, crane, elevator</td></tr><tr><td><strong>Inclined Plane</strong></td><td>Reduces effort by spreading work over a longer distance</td><td>Ramp, slide, road up a hill</td></tr><tr><td><strong>Wedge</strong></td><td>Splits or separates objects by concentrating force on a small area</td><td>Knife, axe, nail, chisel</td></tr><tr><td><strong>Screw</strong></td><td>Converts rotational force into forward motion; holds things together</td><td>Bolt, jar lid, screw, drill bit</td></tr></tbody></table><h3>🔗 Compound Machines</h3><p>A <strong>compound machine</strong> combines two or more simple machines to work together. This makes it more powerful or more versatile.</p><ul><li><strong>Bicycle:</strong> Wheels &amp; axles + levers (brakes) + pulleys (chain drive) + screws (fasteners).</li><li><strong>Scissors:</strong> Two levers + a wedge (the blades).</li><li><strong>Wheelbarrow:</strong> A lever + a wheel &amp; axle.</li><li><strong>Can opener:</strong> Lever + wheel &amp; axle + wedge.</li></ul><h3>📐 Mechanical Advantage (MA)</h3><p>Machines are rated by how much they multiply your force — this is called <strong>Mechanical Advantage</strong>.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>MA = Output Force ÷ Input Force</strong></p><p>An MA greater than 1 means the machine multiplies your force. A machine with MA = 4 lets you lift 4× the load you could otherwise.</p><h3>💡 Real-Life Application</h3><p>Filipino tricycle drivers use compound machines every day: levers (brake handles, gear shifter), wheels &amp; axles (the tricycle's wheels), pulleys (the chain drive on some models), and screws (every bolt on the vehicle). Understanding machines helps you use them safely and maintain them longer.</p><h3>📌 Quick Check</h3><ul><li>Which simple machine is a broom? (Answer: lever)</li><li>Which simple machine is a ramp? (Answer: inclined plane)</li><li>Why is a bicycle considered a compound machine? (Answer: it combines several simple machines)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Machine Types",
-      "badge": {
-        "id": "machine-master",
-        "name": "Machine Master",
-        "icon": "⚙️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match each machine type to its function.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Machine Types</strong> will be added here.</p>",
+      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each simple machine or machine concept to the correct example or definition. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p><p><strong>Tip:</strong> Think about the <em>type of motion</em> each machine produces — pushing, pulling, lifting, turning, or splitting.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Machine Types",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Machine Types",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Machine Types",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Machine Types",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Machine Types",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Machine Types",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Machine Types",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Machine Types",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Lever", "right": "Crowbar prying a nail" },
+          { "key": "k2", "left": "Wheel & Axle", "right": "Doorknob turning to open a door" },
+          { "key": "k3", "left": "Pulley", "right": "Flag being raised on a flagpole" },
+          { "key": "k4", "left": "Inclined Plane", "right": "Ramp for loading goods into a truck" },
+          { "key": "k5", "left": "Wedge", "right": "Axe splitting firewood" },
+          { "key": "k6", "left": "Screw", "right": "Bolt holding metal plates together" },
+          { "key": "k7", "left": "Compound Machine", "right": "Bicycle combining wheels, levers, and pulleys" },
+          { "key": "k8", "left": "Mechanical Advantage", "right": "Output force ÷ input force" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Torque & Efficiency",
-      "badge": {
-        "id": "machine-master",
-        "name": "Machine Master",
-        "icon": "⚙️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Solve efficiency problems using torque concepts.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Torque & Efficiency</strong> will be added here.</p>",
+      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Torque & Efficiency",
+            "text": "🔧 A mechanic uses a longer wrench to loosen a very tight bolt. Why does the longer wrench work better than a shorter one?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The longer wrench is heavier.", "correct": false },
+              { "label": "B) The longer wrench increases torque by increasing the lever arm distance from the pivot.", "correct": true },
+              { "label": "C) The longer wrench has more friction.", "correct": false },
+              { "label": "D) The longer wrench uses gravity better.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Torque & Efficiency",
+            "text": "🏗️ A construction worker uses a pulley system with 3 pulleys to lift heavy cement bags. What is the main advantage of using multiple pulleys?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) It makes the bag lighter.", "correct": false },
+              { "label": "B) It reduces the effort force needed by distributing the load across multiple rope segments.", "correct": true },
+              { "label": "C) It eliminates gravity.", "correct": false },
+              { "label": "D) It converts energy into mass.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Torque & Efficiency",
+            "text": "🚲 A bicycle's pedal gear has 40 teeth, and the rear gear has 20 teeth. When you pedal once, how many times does the rear wheel turn?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Half a turn", "correct": false },
+              { "label": "B) One turn", "correct": false },
+              { "label": "C) Two turns", "correct": true },
+              { "label": "D) Forty turns", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Torque & Efficiency",
+            "text": "🪓 Which simple machine is a knife blade, and how does it make cutting easier?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Lever — it multiplies force by using a pivot.", "correct": false },
+              { "label": "B) Wedge — it concentrates force on a small area to split material.", "correct": true },
+              { "label": "C) Screw — it converts rotational force into forward motion.", "correct": false },
+              { "label": "D) Inclined plane — it spreads work over distance.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Torque & Efficiency",
+            "text": "⚙️ In a wheelbarrow, where is the fulcrum located?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) At the handles where you lift", "correct": false },
+              { "label": "B) At the wheel (the pivot point)", "correct": true },
+              { "label": "C) In the middle of the load", "correct": false },
+              { "label": "D) At the bucket's edge", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Machine Shop",
-      "badge": {
-        "id": "machine-master",
-        "name": "Machine Master",
-        "icon": "⚙️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Machine Shop</strong> will be added here.</p>",
+      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
+      "content": "<h3>🔐 Formative Check — Escape the Machine Shop</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Machine Shop",
+            "text": "Which of the following is NOT one of the six simple machines?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Lever", "correct": false },
+              { "label": "B) Pulley", "correct": false },
+              { "label": "C) Motor", "correct": true },
+              { "label": "D) Wedge", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Machine Shop",
+            "text": "A machine has an output force of 200 N and an input force of 50 N. What is its Mechanical Advantage?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) 0.25", "correct": false },
+              { "label": "B) 4", "correct": true },
+              { "label": "C) 150", "correct": false },
+              { "label": "D) 250", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Machine Shop",
+            "text": "Which simple machine changes the DIRECTION of the applied force?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Wedge", "correct": false },
+              { "label": "B) Inclined plane", "correct": false },
+              { "label": "C) Pulley", "correct": true },
+              { "label": "D) Screw", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Machine Shop",
+            "text": "Why is a pair of scissors considered a compound machine?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Because it is made of metal.", "correct": false },
+              { "label": "B) Because it combines two levers and two wedges (blades).", "correct": true },
+              { "label": "C) Because it uses electricity.", "correct": false },
+              { "label": "D) Because it has moving gears.", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Machine Shop",
+            "text": "Which of the following correctly describes a screw?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) A lever that pivots on a fulcrum", "correct": false },
+              { "label": "B) An inclined plane wrapped around a cylinder", "correct": true },
+              { "label": "C) A wheel with a groove for a rope", "correct": false },
+              { "label": "D) A flat surface at an angle", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Machine Shop",
+            "text": "A construction worker wants to reduce the effort needed to push a heavy box onto a truck. Which simple machine should they use?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) A pulley", "correct": false },
+              { "label": "B) A wedge", "correct": false },
+              { "label": "C) An inclined plane (ramp)", "correct": true },
+              { "label": "D) A screw", "correct": false }
             ]
           }
         ]

@@ -9,7 +9,7 @@
     },
     {
       "code": "GENSCI-11-T1-W8-C2",
-      "text": "Explain benefits/risks by referring to DTI, FDA, DENR."
+      "text": "Explain benefits and risks of household products by referring to DTI, FDA, and DENR guidelines."
     }
   ],
   "badge": {
@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Chemistry in Your Cabinet",
-      "badge": {
-        "id": "household-chemist",
-        "name": "Household Chemist",
-        "icon": "🧴"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Explore the chemistry of everyday products.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Chemistry in Your Cabinet</strong> will be added here.</p>"
+      "badge": { "id": "household-chemist", "name": "Household Chemist", "icon": "🧴" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify the active chemical ingredients in common household products, explain their benefits and risks, and apply DTI, FDA, and DENR guidelines for safe use and disposal.</p><h3>🏠 Chemistry Is Everywhere at Home</h3><p>Every product in your kitchen, bathroom, and laundry area is a chemical formulation. Understanding what's inside them helps you use them safely and dispose of them responsibly.</p><h3>🧴 Common Household Products & Their Chemistry</h3><table><thead><tr><th>Product</th><th>Active Ingredient(s)</th><th>Function</th></tr></thead><tbody><tr><td><strong>Bleach</strong></td><td>Sodium hypochlorite (NaClO)</td><td>Kills germs, whitens fabrics, disinfects surfaces</td></tr><tr><td><strong>Detergent</strong></td><td>Sodium lauryl sulfate, surfactants, builders</td><td>Removes grease and dirt from fabrics and dishes</td></tr><tr><td><strong>Baking powder</strong></td><td>Sodium bicarbonate + acid (cream of tartar)</td><td>Releases CO₂ gas to make baked goods rise</td></tr><tr><td><strong>Shampoo</strong></td><td>Surfactants, conditioners, preservatives</td><td>Cleans hair and scalp</td></tr><tr><td><strong>Soap</strong></td><td>Sodium or potassium salts of fatty acids</td><td>Dissolves oils and dirt for handwashing</td></tr><tr><td><strong>Toothpaste</strong></td><td>Fluoride, abrasives, humectants</td><td>Cleans teeth, prevents cavities</td></tr></tbody></table><h3>⚠️ Benefits vs Risks</h3><table><thead><tr><th>Product</th><th>Benefit</th><th>Risk if Misused</th></tr></thead><tbody><tr><td>Bleach</td><td>Disinfects, whitens</td><td>Toxic fumes if mixed with ammonia or acid; skin irritation</td></tr><tr><td>Detergent</td><td>Removes grease</td><td>Skin irritation; harms aquatic life if dumped in rivers</td></tr><tr><td>Baking powder</td><td>Makes food rise</td><td>Safe in normal use; excess can cause salty taste</td></tr><tr><td>Shampoo</td><td>Cleans hair</td><td>Eye irritation; some ingredients may cause allergies</td></tr><tr><td>Soap</td><td>Kills germs</td><td>Slips and falls; can dry skin with overuse</td></tr><tr><td>Toothpaste</td><td>Prevents cavities</td><td>Excess fluoride (if swallowed) can discolor teeth in children</td></tr></tbody></table><h3>🏛️ Regulatory Agencies</h3><ul><li><strong>DTI (Department of Trade and Industry):</strong> Regulates product labeling, safety standards, and consumer protection. Ensures products carry accurate information.</li><li><strong>FDA Philippines (Food and Drug Administration):</strong> Approves cosmetics, drugs, and personal care products before they can be sold. Monitors adverse reactions.</li><li><strong>DENR (Department of Environment and Natural Resources):</strong> Regulates how chemicals are disposed of to protect the environment. Sets limits on effluent discharge.</li></ul><h3>🏷️ Reading Product Labels</h3><p>A proper product label should show:</p><ul><li><strong>Product name and brand</strong></li><li><strong>Active ingredients and their concentrations</strong></li><li><strong>Directions for use</strong></li><li><strong>Warnings and first-aid instructions</strong></li><li><strong>Manufacturer details and expiry date</strong></li><li><strong>FDA registration number (for cosmetics/drugs)</strong></li></ul><h3>💡 Safe Use &amp; Disposal Practices</h3><ul><li>Never mix bleach with ammonia, vinegar, or other cleaners.</li><li>Store chemicals out of reach of children, in original containers.</li><li>Wear gloves when handling strong cleaners.</li><li>Dispose of chemicals per DENR guidelines — never pour down storm drains.</li><li>Prefer products with biodegradable or eco-friendly labels.</li></ul><h3>🌱 Environmental Impact</h3><p>Detergents with phosphates cause <strong>eutrophication</strong> in rivers and lakes — harmful algal blooms that kill fish. DENR encourages phosphate-free detergents and bans certain surfactants.</p><h3>📌 Quick Check</h3><ul><li>What is the active ingredient in bleach? (Answer: sodium hypochlorite)</li><li>Why should you never mix bleach and ammonia? (Answer: produces toxic chloramine gas)</li><li>Which agency approves cosmetics in the Philippines? (Answer: FDA Philippines)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Product Ingredients",
-      "badge": {
-        "id": "household-chemist",
-        "name": "Household Chemist",
-        "icon": "🧴"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match active ingredients to their functions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Product Ingredients</strong> will be added here.</p>",
+      "badge": { "id": "household-chemist", "name": "Household Chemist", "icon": "🧴" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each household product or agency to its active ingredient, function, or description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Product Ingredients",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Product Ingredients",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Product Ingredients",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Product Ingredients",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Product Ingredients",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Product Ingredients",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Product Ingredients",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Product Ingredients",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Bleach", "right": "Sodium hypochlorite — disinfects and whitens" },
+          { "key": "k2", "left": "Detergent", "right": "Surfactants that remove grease and dirt" },
+          { "key": "k3", "left": "Baking powder", "right": "Sodium bicarbonate + acid — releases CO₂ to make baked goods rise" },
+          { "key": "k4", "left": "Shampoo", "right": "Surfactants and conditioners that clean hair" },
+          { "key": "k5", "left": "Soap", "right": "Sodium salts of fatty acids — dissolves oils and dirt" },
+          { "key": "k6", "left": "Toothpaste", "right": "Fluoride and abrasives — prevent cavities" },
+          { "key": "k7", "left": "FDA Philippines", "right": "Approves cosmetics, drugs, and personal care products" },
+          { "key": "k8", "left": "DENR", "right": "Regulates chemical disposal to protect the environment" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Safe Product Use",
-      "badge": {
-        "id": "household-chemist",
-        "name": "Household Chemist",
-        "icon": "🧴"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply DTI/FDA/DENR guidelines to scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Safe Product Use</strong> will be added here.</p>",
+      "badge": { "id": "household-chemist", "name": "Household Chemist", "icon": "🧴" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Safe Product Use",
+            "text": "🧴 Your helper accidentally mixes bleach with an ammonia-based glass cleaner while cleaning the bathroom. What should she do immediately?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Add more bleach to neutralize the mixture", "correct": false },
+              { "label": "B) Leave the room, open windows, and ventilate — the mixture releases toxic chloramine gas", "correct": true },
+              { "label": "C) Drink water to counteract the fumes", "correct": false },
+              { "label": "D) Continue cleaning — it's harmless", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Safe Product Use",
+            "text": "🍰 A baker wants her cake to rise. Which ingredient is essential?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Bleach", "correct": false },
+              { "label": "B) Baking powder (sodium bicarbonate + acid)", "correct": true },
+              { "label": "C) Shampoo", "correct": false },
+              { "label": "D) Detergent", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Safe Product Use",
+            "text": "🌊 Your barangay's river shows a thick green layer of algae. Which household product is MOST likely contributing to this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Toothpaste", "correct": false },
+              { "label": "B) Phosphate-containing laundry detergent dumped into the river", "correct": true },
+              { "label": "C) Baking powder", "correct": false },
+              { "label": "D) Shampoo used at home", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Safe Product Use",
+            "text": "🛒 You are buying shampoo and see one with an FDA registration number and another without. Which should you choose?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) The cheaper one without a number — labels don't matter", "correct": false },
+              { "label": "B) The FDA-registered one — it has been checked for safety and quality", "correct": true },
+              { "label": "C) Neither — all shampoo is unsafe", "correct": false },
+              { "label": "D) Whichever has the prettiest bottle", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Safe Product Use",
+            "text": "♻️ Your family is cleaning out expired household chemicals. What is the BEST disposal method?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Pour them down the kitchen sink", "correct": false },
+              { "label": "B) Throw them in the regular trash", "correct": false },
+              { "label": "C) Follow DENR guidelines — check with your local barangay for proper hazardous waste disposal", "correct": true },
+              { "label": "D) Bury them in the backyard", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Household Chem Lab",
-      "badge": {
-        "id": "household-chemist",
-        "name": "Household Chemist",
-        "icon": "🧴"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Household Chem Lab</strong> will be added here.</p>",
+      "badge": { "id": "household-chemist", "name": "Household Chemist", "icon": "🧴" },
+      "content": "<h3>🔐 Formative Check — Escape the Household Chem Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Household Chem Lab",
+            "text": "What is the active ingredient in bleach?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Sodium bicarbonate", "correct": false },
+              { "label": "B) Sodium hypochlorite (NaClO)", "correct": true },
+              { "label": "C) Sodium chloride (table salt)", "correct": false },
+              { "label": "D) Hydrogen peroxide", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Household Chem Lab",
+            "text": "Why is it dangerous to mix bleach with ammonia-based cleaners?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) It produces a harmless foam.", "correct": false },
+              { "label": "B) It releases toxic chloramine gas that can damage lungs.", "correct": true },
+              { "label": "C) It creates a stronger bleach.", "correct": false },
+              { "label": "D) It becomes solid.", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Household Chem Lab",
+            "text": "Which government agency in the Philippines approves cosmetics and personal care products for sale?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) DTI", "correct": false },
+              { "label": "B) FDA Philippines", "correct": true },
+              { "label": "C) DENR", "correct": false },
+              { "label": "D) DepEd", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Household Chem Lab",
+            "text": "Which agency is responsible for regulating chemical disposal to protect the environment?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) DTI", "correct": false },
+              { "label": "B) FDA", "correct": false },
+              { "label": "C) DENR", "correct": true },
+              { "label": "D) NBI", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Household Chem Lab",
+            "text": "What is eutrophication?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Harmful algal blooms from excess nutrients like phosphates in water", "correct": true },
+              { "label": "B) A cleaning process for detergents", "correct": false },
+              { "label": "C) The synthesis of toothpaste ingredients", "correct": false },
+              { "label": "D) A type of bleaching reaction", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Household Chem Lab",
+            "text": "Which of the following is a BENEFIT of using household chemical products properly?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) They improve hygiene and prevent disease", "correct": true },
+              { "label": "B) They cause water pollution", "correct": false },
+              { "label": "C) They release toxic fumes", "correct": false },
+              { "label": "D) They destroy fabric colors", "correct": false }
             ]
           }
         ]

@@ -5,7 +5,11 @@
   "competencies": [
     {
       "code": "GENSCI-11-T1-W6-C1",
-      "text": "Discuss properties of sound waves in communications, navigation, medicine, and entertainment. Identify innovations like soundproofing and amplifiers."
+      "text": "Discuss properties of sound waves in communications, navigation, medicine, and entertainment."
+    },
+    {
+      "code": "GENSCI-11-T1-W6-C2",
+      "text": "Identify innovations such as soundproofing, amplifiers, and sonar."
     }
   ],
   "badge": {
@@ -18,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Nature of Sound Waves",
-      "badge": {
-        "id": "sound-scientist",
-        "name": "Sound Scientist",
-        "icon": "🔊"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Explore frequency, wavelength, amplitude, and the speed of sound.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Nature of Sound Waves</strong> will be added here.</p>"
+      "badge": { "id": "sound-scientist", "name": "Sound Scientist", "icon": "🔊" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe how sound travels as a mechanical wave, explain frequency, wavelength, amplitude, and speed of sound, and identify how sound is used in communication, navigation, medicine, and entertainment.</p><h3>🔊 What Is Sound?</h3><p><strong>Sound</strong> is a <strong>mechanical wave</strong> — a vibration that travels through a medium (solid, liquid, or gas). Unlike light, sound <em>cannot</em> travel through a vacuum because it needs particles to vibrate.</p><p>Sound travels fastest through <strong>solids</strong>, slower through <strong>liquids</strong>, and slowest through <strong>gases</strong>.</p><table><thead><tr><th>Medium</th><th>Speed of Sound</th></tr></thead><tbody><tr><td>Air (20°C)</td><td>~343 m/s</td></tr><tr><td>Water</td><td>~1,480 m/s</td></tr><tr><td>Steel</td><td>~5,960 m/s</td></tr></tbody></table><h3>📊 Key Properties of Sound</h3><table><thead><tr><th>Property</th><th>What It Means</th><th>What You Hear</th></tr></thead><tbody><tr><td><strong>Frequency</strong></td><td>Number of vibrations per second (Hz)</td><td>Pitch — high or low</td></tr><tr><td><strong>Wavelength</strong></td><td>Distance between two consecutive compressions</td><td>Related to pitch</td></tr><tr><td><strong>Amplitude</strong></td><td>Height of the wave</td><td>Volume — loud or soft</td></tr><tr><td><strong>Speed</strong></td><td>How fast sound travels through a medium</td><td>Determines echo delay</td></tr></tbody></table><h3>🎼 Pitch, Frequency & the Human Ear</h3><p>Humans can hear frequencies between <strong>20 Hz and 20,000 Hz</strong> (20 kHz).</p><ul><li><strong>Infrasonic</strong> (below 20 Hz) — elephants and earthquakes produce these.</li><li><strong>Ultrasonic</strong> (above 20 kHz) — bats, dolphins, and medical imaging use these.</li></ul><p>As we age, we lose the ability to hear high frequencies.</p><h3>🎵 Sound Wave Types</h3><ul><li><strong>Longitudinal waves:</strong> Particles vibrate parallel to the direction of the wave. This is how sound travels through air.</li><li><strong>Compression:</strong> Where particles are packed together (high pressure).</li><li><strong>Rarefaction:</strong> Where particles are spread apart (low pressure).</li></ul><h3>🔊 Real-Life Applications</h3><ul><li><strong>Communications:</strong> Telephones, radio, microphones and speakers.</li><li><strong>Navigation:</strong> Sonar (SOund Navigation And Ranging) — used by submarines and fishing boats.</li><li><strong>Medicine:</strong> Ultrasound imaging for pregnancy, echocardiograms, and kidney stones treatment.</li><li><strong>Entertainment:</strong> Musical instruments, concerts, surround-sound speakers, cinema audio.</li></ul><h3>🛠️ Modern Sound Innovations</h3><ul><li><strong>Soundproofing:</strong> Materials like foam, acoustic tiles, and double-glazed windows absorb sound to prevent noise pollution.</li><li><strong>Amplifiers:</strong> Increase the amplitude of sound waves for concerts and PA systems.</li><li><strong>Noise-cancelling headphones:</strong> Emit inverse sound waves to cancel out background noise.</li><li><strong>Ultrasound devices:</strong> Used for cleaning jewelry, medical imaging, and even repelling mosquitoes.</li></ul><h3>💡 Fun Fact</h3><p>The loudest sound ever recorded was the <strong>Krakatoa volcano eruption</strong> in 1883 — heard 4,800 km away in Australia. That's because low-frequency sound waves travel incredibly far.</p><h3>📌 Quick Check</h3><ul><li>Why can't sound travel through space? (Answer: no particles to vibrate)</li><li>What happens to pitch when frequency increases? (Answer: pitch goes higher)</li><li>What does SONAR stand for? (Answer: SOund Navigation And Ranging)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Sound Technologies",
-      "badge": {
-        "id": "sound-scientist",
-        "name": "Sound Scientist",
-        "icon": "🔊"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match sound devices to their uses.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Sound Technologies</strong> will be added here.</p>",
+      "badge": { "id": "sound-scientist", "name": "Sound Scientist", "icon": "🔊" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each sound concept or technology to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Sound Technologies",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Sound Technologies",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Sound Technologies",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Sound Technologies",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Sound Technologies",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Sound Technologies",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Sound Technologies",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Sound Technologies",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Frequency", "right": "Number of vibrations per second (Hz) — determines pitch" },
+          { "key": "k2", "left": "Amplitude", "right": "Height of the sound wave — determines volume" },
+          { "key": "k3", "left": "Longitudinal wave", "right": "Particles vibrate parallel to direction of travel — how sound moves through air" },
+          { "key": "k4", "left": "Sonar", "right": "Uses reflected sound waves to detect underwater objects" },
+          { "key": "k5", "left": "Ultrasound", "right": "Sound above 20,000 Hz — used for medical imaging" },
+          { "key": "k6", "left": "Soundproofing", "right": "Foam, acoustic tiles, double-glazed windows that absorb sound" },
+          { "key": "k7", "left": "Amplifier", "right": "Increases the amplitude of sound waves for concerts and PA systems" },
+          { "key": "k8", "left": "Echo", "right": "Reflected sound wave you hear after the original sound" }
         ]
       }
     },
@@ -84,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Sound Around Us",
-      "badge": {
-        "id": "sound-scientist",
-        "name": "Sound Scientist",
-        "icon": "🔊"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Solve sound-based reasoning scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Sound Around Us</strong> will be added here.</p>",
+      "badge": { "id": "sound-scientist", "name": "Sound Scientist", "icon": "🔊" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Sound Around Us",
+            "text": "🚢 A fishing boat uses sonar to locate schools of fish. What property of sound makes this possible?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Sound waves travel faster in air", "correct": false },
+              { "label": "B) Sound waves reflect off objects, and the echo timing reveals distance", "correct": true },
+              { "label": "C) Sound waves are invisible", "correct": false },
+              { "label": "D) Sound waves have zero frequency underwater", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Sound Around Us",
+            "text": "🎤 A singer on stage uses a microphone connected to a speaker. What is the speaker's main function?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) To reduce sound frequency", "correct": false },
+              { "label": "B) To amplify sound by increasing amplitude", "correct": true },
+              { "label": "C) To change pitch", "correct": false },
+              { "label": "D) To absorb sound waves", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Sound Around Us",
+            "text": "🤰 A pregnant mother undergoes an ultrasound. What makes ultrasound safer than X-rays for imaging a fetus?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Ultrasound uses high-energy waves that pass through the body", "correct": false },
+              { "label": "B) Ultrasound uses high-frequency sound waves (not ionizing radiation), making it safe for the developing baby", "correct": true },
+              { "label": "C) Ultrasound is a type of light wave", "correct": false },
+              { "label": "D) Ultrasound works by heating the tissues", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Sound Around Us",
+            "text": "🎧 You are in a noisy jeepney and wearing noise-cancelling headphones. How do they reduce the noise?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) By blocking all sound waves with foam", "correct": false },
+              { "label": "B) By emitting inverse sound waves that cancel out background noise", "correct": true },
+              { "label": "C) By increasing sound frequency", "correct": false },
+              { "label": "D) By reducing the speed of sound", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Sound Around Us",
+            "text": "🎼 A guitarist plucks a string harder and hears a louder sound. Which property of the sound wave increased?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Frequency", "correct": false },
+              { "label": "B) Wavelength", "correct": false },
+              { "label": "C) Amplitude", "correct": true },
+              { "label": "D) Speed", "correct": false }
             ]
           }
         ]
@@ -204,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Acoustics Lab",
-      "badge": {
-        "id": "sound-scientist",
-        "name": "Sound Scientist",
-        "icon": "🔊"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Acoustics Lab</strong> will be added here.</p>",
+      "badge": { "id": "sound-scientist", "name": "Sound Scientist", "icon": "🔊" },
+      "content": "<h3>🔐 Formative Check — Escape the Acoustics Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Acoustics Lab",
+            "text": "Why can't sound travel through space?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Space is too cold.", "correct": false },
+              { "label": "B) Space has no particles to vibrate.", "correct": true },
+              { "label": "C) Space has too much gravity.", "correct": false },
+              { "label": "D) Sound waves are attracted to planets.", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Acoustics Lab",
+            "text": "Sound travels FASTEST through which medium?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Air", "correct": false },
+              { "label": "B) Water", "correct": false },
+              { "label": "C) Steel", "correct": true },
+              { "label": "D) Vacuum", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Acoustics Lab",
+            "text": "Which property of sound determines how loud or soft it sounds?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Frequency", "correct": false },
+              { "label": "B) Wavelength", "correct": false },
+              { "label": "C) Amplitude", "correct": true },
+              { "label": "D) Speed", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Acoustics Lab",
+            "text": "What frequency range can the human ear typically hear?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) 0–10 Hz", "correct": false },
+              { "label": "B) 20 Hz – 20,000 Hz", "correct": true },
+              { "label": "C) 20,000 Hz – 100,000 Hz", "correct": false },
+              { "label": "D) 100 Hz – 1,000 Hz only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Acoustics Lab",
+            "text": "What does the acronym SONAR stand for?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Sound Navigation And Ranging", "correct": true },
+              { "label": "B) Sonic Ocean Navigation And Radar", "correct": false },
+              { "label": "C) Sound Observation Network And Receiver", "correct": false },
+              { "label": "D) Submarine Orientation Navigation And Response", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Acoustics Lab",
+            "text": "Which material is BEST for soundproofing a music room?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Glass", "correct": false },
+              { "label": "B) Ceramic tile", "correct": false },
+              { "label": "C) Acoustic foam panels", "correct": true },
+              { "label": "D) Steel plates", "correct": false }
             ]
           }
         ]

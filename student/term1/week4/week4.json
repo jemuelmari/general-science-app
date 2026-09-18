@@ -9,7 +9,7 @@
     },
     {
       "code": "GENSCI-11-T1-W4-C2",
-      "text": "Explain how cross-sectional area affects output force. Analyze electricity consumption data."
+      "text": "Explain how cross-sectional area affects output force. Analyze electricity consumption data and propose energy-efficient practices."
     }
   ],
   "badge": {
@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Pascal's Principle & Fluid Pressure",
-      "badge": {
-        "id": "hydraulics-pro",
-        "name": "Hydraulics Pro",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Understand how fluids transmit force through Pascal's Principle.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Pascal's Principle & Fluid Pressure</strong> will be added here.</p>"
+      "badge": { "id": "hydraulics-pro", "name": "Hydraulics Pro", "icon": "💧" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain <strong>Pascal's Principle</strong>, describe how pressure transmits through fluids, and analyze how changing the cross-sectional area affects the output force in hydraulic systems.</p><h3>💧 What Is Pressure?</h3><p><strong>Pressure</strong> is the force applied per unit area:</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>Pressure (P) = Force (F) ÷ Area (A)</strong><br>Unit: Pascal (Pa) = 1 Newton per square meter</p><p>This is why a sharp knife cuts better than a dull one — the same force on a smaller area creates greater pressure.</p><h3>🔬 Pascal's Principle</h3><p><strong>Pascal's Principle</strong> states that <em>pressure applied to an enclosed fluid is transmitted equally to every part of the fluid and to the walls of the container</em>.</p><p>This means: if you push down on one side of a hydraulic system, the pressure you create is felt everywhere in the fluid — and it can be used to move a much larger piston on the other side.</p><h3>⚙️ How a Hydraulic System Works</h3><p>A hydraulic system has two pistons connected by a fluid-filled tube:</p><table><thead><tr><th>Component</th><th>Role</th></tr></thead><tbody><tr><td><strong>Small piston (input)</strong></td><td>You apply a small force over a small area → creates pressure</td></tr><tr><td><strong>Fluid</strong></td><td>Transmits that pressure throughout the system</td></tr><tr><td><strong>Large piston (output)</strong></td><td>Same pressure over a larger area → produces a much larger output force</td></tr></tbody></table><h3>📐 The Hydraulic Equation</h3><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>F₁ ÷ A₁ = F₂ ÷ A₂</strong></p><p>Where:<br>F₁ = input force, A₁ = input area<br>F₂ = output force, A₂ = output area</p><p><strong>Key insight:</strong> The pressure is the same on both sides, so a <em>bigger area</em> produces a <em>bigger force</em>. This is called <strong>force multiplication</strong>.</p><h3>🛠️ Real-Life Applications</h3><ul><li><strong>Car brakes:</strong> Pressing the brake pedal (small piston) multiplies force to stop a heavy vehicle.</li><li><strong>Hydraulic jacks:</strong> Lift cars with just a small effort on the handle.</li><li><strong>Excavators:</strong> Move heavy arms and buckets with precision.</li><li><strong>Dentist chairs:</strong> Raise and lower patients smoothly.</li><li><strong>Barangay water pumps:</strong> Use fluid pressure to lift water from deep wells.</li></ul><h3>⚡ Energy Management — Why It Matters</h3><p>Hydraulic and other mechanical systems run on <strong>energy</strong>. In the Philippines, most electricity comes from coal, natural gas, and geothermal plants. Using energy efficiently:</p><ul><li>Saves money on electric bills.</li><li>Reduces carbon emissions.</li><li>Reduces strain on the national grid.</li></ul><p>Look at your own Meralco (or local utility) bill — the <strong>kilowatt-hour (kWh)</strong> is the unit of electrical energy consumed. Reducing kWh = saving money.</p><h3>📌 Quick Check</h3><ul><li>Why does a hydraulic jack lift a car with little effort? (Answer: pressure is transmitted through fluid and multiplies output force via larger piston area)</li><li>If F₁ = 50 N on A₁ = 0.01 m², what is the pressure? (Answer: 5000 Pa)</li><li>If that same pressure acts on A₂ = 0.5 m², what is F₂? (Answer: 2500 N)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Hydraulic Systems",
-      "badge": {
-        "id": "hydraulics-pro",
-        "name": "Hydraulics Pro",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match hydraulic components to their roles.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Hydraulic Systems</strong> will be added here.</p>",
+      "badge": { "id": "hydraulics-pro", "name": "Hydraulics Pro", "icon": "💧" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each hydraulic concept or device to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Hydraulic Systems",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Hydraulic Systems",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Hydraulic Systems",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Hydraulic Systems",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Hydraulic Systems",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Hydraulic Systems",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Hydraulic Systems",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Hydraulic Systems",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Pressure", "right": "Force divided by area (measured in Pascals)" },
+          { "key": "k2", "left": "Pascal's Principle", "right": "Pressure applied to an enclosed fluid is transmitted equally throughout" },
+          { "key": "k3", "left": "Small input piston", "right": "You apply small force over a small area" },
+          { "key": "k4", "left": "Large output piston", "right": "Same pressure over a larger area = greater output force" },
+          { "key": "k5", "left": "Hydraulic jack", "right": "Lifts a car using force multiplication" },
+          { "key": "k6", "left": "Car brake system", "right": "Small pedal press → large braking force" },
+          { "key": "k7", "left": "Kilowatt-hour (kWh)", "right": "Unit of electrical energy on your bill" },
+          { "key": "k8", "left": "Energy efficiency", "right": "Using less energy to do the same work" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Energy Consumption",
-      "badge": {
-        "id": "hydraulics-pro",
-        "name": "Hydraulics Pro",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze household energy consumption scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Energy Consumption</strong> will be added here.</p>",
+      "badge": { "id": "hydraulics-pro", "name": "Hydraulics Pro", "icon": "💧" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Energy Consumption",
+            "text": "🚗 You press the brake pedal of a car with a force of 40 N. The pedal piston has an area of 0.002 m². What pressure is created in the brake fluid?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) 80 Pa", "correct": false },
+              { "label": "B) 20,000 Pa", "correct": true },
+              { "label": "C) 0.00008 Pa", "correct": false },
+              { "label": "D) 40 Pa", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Energy Consumption",
+            "text": "💧 A hydraulic jack has an input piston of area 0.005 m² and an output piston of area 0.25 m². If you apply 100 N on the input, what is the output force?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) 100 N", "correct": false },
+              { "label": "B) 500 N", "correct": false },
+              { "label": "C) 5,000 N", "correct": true },
+              { "label": "D) 20 N", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Energy Consumption",
+            "text": "🏠 Your family's electric bill increased by ₱800 this month. Which action BEST reduces future electricity consumption?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Buying a bigger television", "correct": false },
+              { "label": "B) Unplugging appliances when not in use and switching to LED bulbs", "correct": true },
+              { "label": "C) Using the air conditioner 24/7", "correct": false },
+              { "label": "D) Leaving lights on all night", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Energy Consumption",
+            "text": "🏗️ An excavator uses hydraulics to move its heavy metal arm. Why is a fluid used instead of a solid rod?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Fluids are cheaper than metal rods.", "correct": false },
+              { "label": "B) Fluids transmit pressure equally in all directions and can be controlled precisely.", "correct": true },
+              { "label": "C) Fluids reduce gravity.", "correct": false },
+              { "label": "D) Fluids create energy out of nothing.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Energy Consumption",
+            "text": "🌡️ A household appliance uses 1,500 W and runs 4 hours per day. How much energy does it consume per day in kWh?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) 1.5 kWh", "correct": false },
+              { "label": "B) 4 kWh", "correct": false },
+              { "label": "C) 6 kWh", "correct": true },
+              { "label": "D) 15 kWh", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Energy Lab",
-      "badge": {
-        "id": "hydraulics-pro",
-        "name": "Hydraulics Pro",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Energy Lab</strong> will be added here.</p>",
+      "badge": { "id": "hydraulics-pro", "name": "Hydraulics Pro", "icon": "💧" },
+      "content": "<h3>🔐 Formative Check — Escape the Energy Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Energy Lab",
+            "text": "Pascal's Principle applies to which state of matter?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Solids only", "correct": false },
+              { "label": "B) Fluids (liquids and gases)", "correct": true },
+              { "label": "C) Vacuum", "correct": false },
+              { "label": "D) Plasma only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Energy Lab",
+            "text": "In a hydraulic system, if the output piston has a LARGER area than the input piston, what happens to the output force?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) It decreases", "correct": false },
+              { "label": "B) It stays the same", "correct": false },
+              { "label": "C) It increases", "correct": true },
+              { "label": "D) It becomes zero", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Energy Lab",
+            "text": "What is the unit of pressure in the SI system?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Newton (N)", "correct": false },
+              { "label": "B) Joule (J)", "correct": false },
+              { "label": "C) Pascal (Pa)", "correct": true },
+              { "label": "D) Watt (W)", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Energy Lab",
+            "text": "Which of the following is NOT a practical application of hydraulics?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Car brake systems", "correct": false },
+              { "label": "B) Excavators", "correct": false },
+              { "label": "C) Solar panels generating electricity", "correct": true },
+              { "label": "D) Dentist chairs", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Energy Lab",
+            "text": "A 100 W light bulb runs for 10 hours per day. How many kWh does it consume per day?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) 0.1 kWh", "correct": false },
+              { "label": "B) 1 kWh", "correct": true },
+              { "label": "C) 10 kWh", "correct": false },
+              { "label": "D) 1000 kWh", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Energy Lab",
+            "text": "Which practice BEST improves household energy efficiency?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Running appliances at peak hours", "correct": false },
+              { "label": "B) Using incandescent bulbs instead of LED", "correct": false },
+              { "label": "C) Setting aircon to 24–26°C and cleaning filters regularly", "correct": true },
+              { "label": "D) Leaving the refrigerator door open", "correct": false }
             ]
           }
         ]

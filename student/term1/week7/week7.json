@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Louis Pasteur and Germ Theory",
-      "badge": {
-        "id": "pasteur-scholar",
-        "name": "Pasteur Scholar",
-        "icon": "🧫"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how Pasteur linked chemistry to disease prevention.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Louis Pasteur and Germ Theory</strong> will be added here.</p>"
+      "badge": { "id": "pasteur-scholar", "name": "Pasteur Scholar", "icon": "🧫" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe how Louis Pasteur combined chemistry and biology to develop germ theory, create pasteurization, and lay the foundation for vaccines that prevent infectious diseases.</p><h3>🧑‍🔬 Who Was Louis Pasteur?</h3><p><strong>Louis Pasteur</strong> (1822–1895) was a French chemist and microbiologist whose work bridged <strong>chemistry</strong> and <strong>biology</strong>. He is considered one of the founders of <strong>microbiology</strong> and the father of <strong>modern medicine</strong>.</p><h3>🔬 Major Contributions</h3><table><thead><tr><th>Discovery</th><th>What It Did</th><th>Impact Today</th></tr></thead><tbody><tr><td><strong>Germ Theory of Disease</strong></td><td>Proved microorganisms cause disease (not 'bad air' or spontaneous generation)</td><td>Foundation of sanitation, hygiene, and disease prevention</td></tr><tr><td><strong>Pasteurization</strong></td><td>Heating liquids (milk, wine, juice) to kill harmful bacteria</td><td>Safer milk, juice, and beer worldwide</td></tr><tr><td><strong>Rabies Vaccine</strong></td><td>Developed first vaccine for rabies using weakened virus</td><td>Rabies is now preventable with post-exposure vaccination</td></tr><tr><td><strong>Anthrax Vaccine</strong></td><td>Created vaccine for livestock anthrax</td><td>Protects animals and prevents human exposure</td></tr><tr><td><strong>Fermentation Studies</strong></td><td>Showed yeast (living organisms) cause fermentation, not chemical decay</td><td>Modern food and beverage industry</td></tr></tbody></table><h3>🧫 Germ Theory — The Big Idea</h3><p>Before Pasteur, many scientists believed diseases arose <em>spontaneously</em> from non-living matter (<strong>spontaneous generation</strong>). Pasteur proved the opposite through his famous <strong>swan-neck flask experiment</strong>:</p><ul><li>He boiled broth in a flask with a curved neck that let air in but trapped dust and microorganisms.</li><li>The broth stayed clear — <em>no growth</em>.</li><li>When he broke the neck or tilted the flask so broth touched the trapped dust, microorganisms grew.</li></ul><p>Conclusion: <strong>Microorganisms come from existing microorganisms, not from nothing</strong>. This became the foundation of germ theory.</p><h3>🥛 Pasteurization — A Practical Application</h3><p><strong>Pasteurization</strong> is the process of heating a liquid to a specific temperature for a specific time to kill harmful bacteria without destroying the liquid's flavor or nutritional value.</p><table><thead><tr><th>Method</th><th>Temperature &amp; Time</th><th>Used For</th></tr></thead><tbody><tr><td>Low-Temp, Long-Time (LTLT)</td><td>63°C for 30 minutes</td><td>Batch milk processing</td></tr><tr><td>High-Temp, Short-Time (HTST)</td><td>72°C for 15 seconds</td><td>Commercial milk production</td></tr><tr><td>Ultra-High-Temp (UHT)</td><td>135°C for 2 seconds</td><td>Shelf-stable milk</td></tr></tbody></table><h3>💉 Vaccines — Preventing Infection</h3><p>Pasteur's idea: <em>expose the body to a weakened or killed version of a pathogen so the immune system can learn to fight it</em>.</p><ol><li>Weakened pathogen is introduced → body produces antibodies.</li><li>Immune system 'remembers' the pathogen.</li><li>If the real pathogen attacks later → body fights it off quickly.</li></ol><p>This principle is the basis of every modern vaccine, from polio to COVID-19.</p><h3>🌍 Real-Life Legacy</h3><ul><li><strong>Safe milk:</strong> Every carton of fresh milk you drink is pasteurized.</li><li><strong>Hospital hygiene:</strong> Handwashing, sterilization, and disinfection come from germ theory.</li><li><strong>Vaccination programs:</strong> DepEd requires immunization records for enrollment — a direct result of Pasteur's work.</li><li><strong>Food safety:</strong> FDA Philippines enforces pasteurization standards.</li></ul><h3>📌 Quick Check</h3><ul><li>What did Pasteur's swan-neck experiment disprove? (Answer: spontaneous generation)</li><li>What is pasteurization? (Answer: heating liquids to kill harmful bacteria)</li><li>How do vaccines work? (Answer: expose the body to weakened pathogens to build immunity)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Pasteur's Contributions",
-      "badge": {
-        "id": "pasteur-scholar",
-        "name": "Pasteur Scholar",
-        "icon": "🧫"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match Pasteur's discoveries to their impact.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Pasteur's Contributions</strong> will be added here.</p>",
+      "badge": { "id": "pasteur-scholar", "name": "Pasteur Scholar", "icon": "🧫" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each of Pasteur's contributions or concepts to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Pasteur's Contributions",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Pasteur's Contributions",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Pasteur's Contributions",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Pasteur's Contributions",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Pasteur's Contributions",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Pasteur's Contributions",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Pasteur's Contributions",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Pasteur's Contributions",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Germ Theory of Disease", "right": "Microorganisms cause disease — not spontaneous generation" },
+          { "key": "k2", "left": "Swan-neck flask experiment", "right": "Disproved spontaneous generation using boiled broth" },
+          { "key": "k3", "left": "Pasteurization", "right": "Heating liquids to kill harmful bacteria" },
+          { "key": "k4", "left": "Rabies Vaccine", "right": "First vaccine for a human viral disease" },
+          { "key": "k5", "left": "Anthrax Vaccine", "right": "Developed for livestock, protecting both animals and humans" },
+          { "key": "k6", "left": "Fermentation", "right": "Process where yeast produces alcohol and CO₂ in the absence of oxygen" },
+          { "key": "k7", "left": "HTST method", "right": "High-Temperature Short-Time pasteurization at 72°C for 15 seconds" },
+          { "key": "k8", "left": "Immunity", "right": "Body's ability to fight off a pathogen it has previously encountered" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Chemistry Meets Biology",
-      "badge": {
-        "id": "pasteur-scholar",
-        "name": "Pasteur Scholar",
-        "icon": "🧫"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply germ theory to modern health scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Chemistry Meets Biology</strong> will be added here.</p>",
+      "badge": { "id": "pasteur-scholar", "name": "Pasteur Scholar", "icon": "🧫" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Chemistry Meets Biology",
+            "text": "🥛 A small sari-sari store owner notices that fresh carabao milk spoils after 2 days, but the pasteurized milk in cartons lasts a week. What explains this difference?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Pasteurized milk has more sugar.", "correct": false },
+              { "label": "B) Pasteurization kills most harmful bacteria, so spoilage takes longer.", "correct": true },
+              { "label": "C) Fresh milk is radioactive.", "correct": false },
+              { "label": "D) Carton milk contains no water.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Chemistry Meets Biology",
+            "text": "💉 A child receives a polio vaccine. What does the vaccine contain?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) A strong dose of live polio virus", "correct": false },
+              { "label": "B) A weakened or inactivated form of the polio virus", "correct": true },
+              { "label": "C) Antibiotics", "correct": false },
+              { "label": "D) Vitamins and minerals", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Chemistry Meets Biology",
+            "text": "🧪 Pasteur's swan-neck flask experiment showed that when broth was exposed to dust, microorganisms grew. What did this prove?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Life arises spontaneously from broth", "correct": false },
+              { "label": "B) Microorganisms come from pre-existing microorganisms in the air, not from nothing", "correct": true },
+              { "label": "C) Broth is immune to microorganisms", "correct": false },
+              { "label": "D) The flask's shape creates life", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Chemistry Meets Biology",
+            "text": "🏥 A nurse washes hands before handling a patient. Which of Pasteur's discoveries does this practice come from?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Pasteurization", "correct": false },
+              { "label": "B) Germ theory — microorganisms cause disease", "correct": true },
+              { "label": "C) Fermentation", "correct": false },
+              { "label": "D) The rabies vaccine", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Chemistry Meets Biology",
+            "text": "🍷 A winemaker adds yeast to grape juice to produce wine. Pasteur proved that this process is caused by what?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Spontaneous chemical reactions with no biological cause", "correct": false },
+              { "label": "B) Living yeast cells (microorganisms)", "correct": true },
+              { "label": "C) Purely mechanical vibrations", "correct": false },
+              { "label": "D) Gravity", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Pasteur Lab",
-      "badge": {
-        "id": "pasteur-scholar",
-        "name": "Pasteur Scholar",
-        "icon": "🧫"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Pasteur Lab</strong> will be added here.</p>",
+      "badge": { "id": "pasteur-scholar", "name": "Pasteur Scholar", "icon": "🧫" },
+      "content": "<h3>🔐 Formative Check — Escape the Pasteur Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Pasteur Lab",
+            "text": "What is Louis Pasteur best known for?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Discovering penicillin", "correct": false },
+              { "label": "B) Developing germ theory and pasteurization", "correct": true },
+              { "label": "C) Inventing the microscope", "correct": false },
+              { "label": "D) Discovering DNA", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Pasteur Lab",
+            "text": "What does pasteurization do?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Adds preservatives to food", "correct": false },
+              { "label": "B) Heats liquids to kill harmful bacteria without ruining the flavor", "correct": true },
+              { "label": "C) Freezes food to kill bacteria", "correct": false },
+              { "label": "D) Removes all water from milk", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Pasteur Lab",
+            "text": "The swan-neck flask experiment disproved which theory?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Germ theory", "correct": false },
+              { "label": "B) Theory of evolution", "correct": false },
+              { "label": "C) Spontaneous generation", "correct": true },
+              { "label": "D) Theory of relativity", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Pasteur Lab",
+            "text": "Which vaccine did Pasteur develop first for a human disease?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) COVID-19", "correct": false },
+              { "label": "B) Polio", "correct": false },
+              { "label": "C) Rabies", "correct": true },
+              { "label": "D) Smallpox", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Pasteur Lab",
+            "text": "In Pasteur's time, many doctors did not wash their hands between patients. Which of his discoveries would have prevented many deaths if applied?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Pasteurization", "correct": false },
+              { "label": "B) Germ theory", "correct": true },
+              { "label": "C) Fermentation studies", "correct": false },
+              { "label": "D) The rabies vaccine", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Pasteur Lab",
+            "text": "Modern vaccines work by:",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Killing all bacteria in the body", "correct": false },
+              { "label": "B) Training the immune system with weakened or inactive pathogens", "correct": true },
+              { "label": "C) Replacing white blood cells", "correct": false },
+              { "label": "D) Removing viruses through pasteurization", "correct": false }
             ]
           }
         ]

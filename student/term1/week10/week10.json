@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Cumulative Review — Weeks 1–5",
-      "badge": {
-        "id": "term1-finisher",
-        "name": "Term 1 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Review physics concepts from Weeks 1–5.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Cumulative Review — Weeks 1–5</strong> will be added here.</p>"
+      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to recall and apply all major physics concepts from Weeks 1–5: physics in daily life, motion, machines, hydraulics, and light.</p><h3>📚 Term 1 Recap — Weeks 1 to 5</h3><table><thead><tr><th>Week</th><th>Topic</th><th>Key Idea</th></tr></thead><tbody><tr><td>1</td><td>Physics in Real Life</td><td>Physics improves household, health &amp; safety, work, and leisure.</td></tr><tr><td>2</td><td>Linear vs Angular Motion</td><td>d = rθ, v = rω, a = rα. Points farther from the axis move faster.</td></tr><tr><td>3</td><td>Efficient Machines</td><td>Six simple machines + compound machines. MA = F_out ÷ F_in.</td></tr><tr><td>4</td><td>Hydraulics &amp; Energy</td><td>Pascal's Principle; F₁/A₁ = F₂/A₂. kWh = energy consumed.</td></tr><tr><td>5</td><td>Properties of Light</td><td>Reflection, refraction, EM spectrum, LEDs, lasers, fiber optics.</td></tr></tbody></table><h3>🔑 Physics Big Ideas (Weeks 1–5)</h3><ul><li><strong>Motion:</strong> translational vs rotational; r connects linear and angular quantities.</li><li><strong>Machines:</strong> multiply force or change direction — but never create energy.</li><li><strong>Fluids:</strong> Pascal's Principle makes hydraulics possible (car brakes, jacks).</li><li><strong>Light:</strong> wave nature; reflection, refraction, EM spectrum. Used in meds, comms, entertainment.</li></ul><h3>🧮 Must-Know Formulas</h3><ul><li>v = r × ω (linear velocity from angular velocity)</li><li>MA = F_out ÷ F_in (mechanical advantage)</li><li>P = F ÷ A (pressure)</li><li>F₁/A₁ = F₂/A₂ (hydraulic equation)</li><li>c = f × λ (speed of light = frequency × wavelength)</li></ul><h3>💡 Study Tips</h3><ul><li>Draw diagrams for machines and hydraulic systems.</li><li>Practice 3–5 numeric problems per formula.</li><li>Know one real-life example per concept.</li><li>Link physics topics to chemistry topics (e.g., batteries combine both).</li></ul><h3>📌 Quick Check</h3><ul><li>Name all six simple machines. (Lever, wheel &amp; axle, pulley, inclined plane, wedge, screw)</li><li>If a wheel rotates at 3 rad/s with radius 0.5 m, what is v? (Answer: 1.5 m/s)</li><li>What does SONAR stand for? (Answer: SOund Navigation And Ranging)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Term 1 Concepts",
-      "badge": {
-        "id": "term1-finisher",
-        "name": "Term 1 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match every Term 1 concept to its application.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Term 1 Concepts</strong> will be added here.</p>",
+      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each Term 1 concept from across all weeks to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Term 1 Concepts",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Term 1 Concepts",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Term 1 Concepts",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Term 1 Concepts",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Term 1 Concepts",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Term 1 Concepts",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Term 1 Concepts",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Term 1 Concepts",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Translational motion", "right": "A car driving forward on a straight road" },
+          { "key": "k2", "left": "Angular velocity (ω)", "right": "Measured in rad/s — how fast an object spins" },
+          { "key": "k3", "left": "Lever", "right": "Crowbar or wheelbarrow — uses a fulcrum to multiply force" },
+          { "key": "k4", "left": "Pascal's Principle", "right": "Pressure applied to an enclosed fluid is transmitted equally" },
+          { "key": "k5", "left": "Reflection", "right": "Light bouncing off a mirror" },
+          { "key": "k6", "left": "Refraction", "right": "Straw appearing bent in a glass of water" },
+          { "key": "k7", "left": "Longitudinal wave", "right": "Sound — particles vibrate parallel to wave direction" },
+          { "key": "k8", "left": "Pasteurization", "right": "Heating liquids to kill harmful bacteria" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Full-Term Scenarios",
-      "badge": {
-        "id": "term1-finisher",
-        "name": "Term 1 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Solve integrated full-term scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Full-Term Scenarios</strong> will be added here.</p>",
+      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. These integrate concepts from the full term. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Full-Term Scenarios",
+            "text": "🚗 A mechanic uses a hydraulic lift to raise a car. The input piston has area 0.01 m², and the output piston has area 0.5 m². If the mechanic applies 200 N, what is the output force?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) 200 N", "correct": false },
+              { "label": "B) 4,000 N", "correct": false },
+              { "label": "C) 10,000 N", "correct": true },
+              { "label": "D) 50 N", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Full-Term Scenarios",
+            "text": "🎡 A Ferris wheel rotates once every 30 seconds. A rider at the outer edge (radius 10 m) and a rider near the center (radius 3 m) both complete a full circle in the same time. Which statement is TRUE?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Both riders have the same angular velocity, but the outer rider has greater linear velocity.", "correct": true },
+              { "label": "B) Both riders have the same linear velocity.", "correct": false },
+              { "label": "C) The inner rider moves faster.", "correct": false },
+              { "label": "D) Neither rider moves.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Full-Term Scenarios",
+            "text": "🧴 Your household has a bottle of bleach and a bottle of ammonia cleaner. What must you NEVER do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Store them in the same cabinet", "correct": false },
+              { "label": "B) Mix them together — releases toxic chloramine gas", "correct": true },
+              { "label": "C) Use bleach on white clothes", "correct": false },
+              { "label": "D) Read the labels", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Full-Term Scenarios",
+            "text": "💡 Your barangay installs LED streetlights instead of traditional incandescent bulbs. What is the primary benefit?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) LEDs are cheaper but dimmer.", "correct": false },
+              { "label": "B) LEDs use far less energy per unit of light output, saving on electricity and lasting longer.", "correct": true },
+              { "label": "C) LEDs don't use electricity.", "correct": false },
+              { "label": "D) LEDs generate more heat.", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Full-Term Scenarios",
+            "text": "🔊 A concert is held in an open field. Why do people far away still hear the music?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Sound travels through solid ground faster than air.", "correct": false },
+              { "label": "B) Sound waves spread outward through the air, and amplifiers increase the amplitude so the sound carries farther.", "correct": true },
+              { "label": "C) Sound travels at the speed of light.", "correct": false },
+              { "label": "D) Sound can travel through vacuum.", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Term 1 Review",
-      "badge": {
-        "id": "term1-finisher",
-        "name": "Term 1 Finisher",
-        "icon": "🏁"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Term 1 Review</strong> will be added here.</p>",
+      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
+      "content": "<h3>🔐 Formative Check — Escape the Term 1 Review</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. This is your final formative check before the Term Exam.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Term 1 Review",
+            "text": "Which formula relates linear velocity (v) to angular velocity (ω) and radius (r)?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) v = r + ω", "correct": false },
+              { "label": "B) v = r × ω", "correct": true },
+              { "label": "C) v = ω ÷ r", "correct": false },
+              { "label": "D) v = r ÷ ω", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Term 1 Review",
+            "text": "Which of the following is a COMPOUND machine?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) A single crowbar", "correct": false },
+              { "label": "B) A pair of scissors (two levers + two wedges)", "correct": true },
+              { "label": "C) A ramp", "correct": false },
+              { "label": "D) A screw", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Term 1 Review",
+            "text": "What is the pressure if a force of 100 N is applied over an area of 0.02 m²?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) 2 Pa", "correct": false },
+              { "label": "B) 50 Pa", "correct": false },
+              { "label": "C) 5,000 Pa", "correct": true },
+              { "label": "D) 200 Pa", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Term 1 Review",
+            "text": "Which EM wave has the LONGEST wavelength?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Gamma rays", "correct": false },
+              { "label": "B) X-rays", "correct": false },
+              { "label": "C) Visible light", "correct": false },
+              { "label": "D) Radio waves", "correct": true }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Term 1 Review",
+            "text": "Louis Pasteur's swan-neck flask experiment disproved which theory?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Germ theory", "correct": false },
+              { "label": "B) Spontaneous generation", "correct": true },
+              { "label": "C) Theory of relativity", "correct": false },
+              { "label": "D) Evolution", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Term 1 Review",
+            "text": "Which government agency in the Philippines approves cosmetics and personal care products before they can be sold?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) DTI", "correct": false },
+              { "label": "B) DENR", "correct": false },
+              { "label": "C) FDA Philippines", "correct": true },
+              { "label": "D) DepEd", "correct": false }
             ]
           }
         ]
