@@ -1,0 +1,366 @@
+{
+  "title": "Term Exam — General Science Term 1",
+  "coverage": "Weeks 1–10 (full term)",
+  "items": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Which branch of science studies matter, energy, motion, force, light, sound, heat, and electricity?",
+      "options": ["Physics", "Chemistry", "Biology", "Geology"],
+      "correct": "Physics"
+    },
+    {
+      "id": "q2",
+      "text": "Which of the following BEST represents physics improving health and safety?",
+      "options": ["X-ray machines producing images of bones", "A rice cooker heating food", "A bicycle bell ringing", "A painter mixing colors"],
+      "correct": "X-ray machines producing images of bones"
+    },
+    {
+      "id": "q3",
+      "text": "Which physics concept explains why water falls from a faucet?",
+      "options": ["Gravity", "Refraction", "Torque", "Fermentation"],
+      "correct": "Gravity"
+    },
+    {
+      "id": "q4",
+      "text": "Translational motion is BEST described as:",
+      "options": ["An object moving from one point to another without rotating", "An object spinning on its axis", "An object vibrating in place", "An object in free fall"],
+      "correct": "An object moving from one point to another without rotating"
+    },
+    {
+      "id": "q5",
+      "text": "Which of the following is an example of rotational motion ONLY?",
+      "options": ["A spinning top on a table", "A car driving forward", "A person walking", "An elevator going up"],
+      "correct": "A spinning top on a table"
+    },
+    {
+      "id": "q6",
+      "text": "The formula v = r × ω relates:",
+      "options": ["Linear velocity to angular velocity and radius", "Force to mass and acceleration", "Pressure to force and area", "Energy to mass and speed of light"],
+      "correct": "Linear velocity to angular velocity and radius"
+    },
+    {
+      "id": "q7",
+      "text": "A wheel with radius 0.8 m rotates at 5 rad/s. What is the linear velocity at the rim?",
+      "options": ["4 m/s", "0.16 m/s", "5.8 m/s", "6.25 m/s"],
+      "correct": "4 m/s"
+    },
+    {
+      "id": "q8",
+      "text": "Why does the outer edge of a bicycle wheel move faster than the hub?",
+      "options": ["Points farther from the axis have greater linear velocity (v = r × ω)", "The outer edge has more mass", "The hub has more friction", "The outer edge is made of lighter material"],
+      "correct": "Points farther from the axis have greater linear velocity (v = r × ω)"
+    },
+    {
+      "id": "q9",
+      "text": "Which of the following is NOT a simple machine?",
+      "options": ["Electric motor", "Lever", "Pulley", "Wedge"],
+      "correct": "Electric motor"
+    },
+    {
+      "id": "q10",
+      "text": "A doorknob is an example of which simple machine?",
+      "options": ["Wheel & axle", "Lever", "Pulley", "Screw"],
+      "correct": "Wheel & axle"
+    },
+    {
+      "id": "q11",
+      "text": "A wedge makes cutting easier by:",
+      "options": ["Concentrating force on a small area to split materials", "Changing direction of force", "Multiplying force via a fulcrum", "Reducing friction"],
+      "correct": "Concentrating force on a small area to split materials"
+    },
+    {
+      "id": "q12",
+      "text": "Mechanical advantage is calculated as:",
+      "options": ["Output force ÷ input force", "Input force ÷ output force", "Force × distance", "Mass × acceleration"],
+      "correct": "Output force ÷ input force"
+    },
+    {
+      "id": "q13",
+      "text": "A machine has an output force of 600 N and an input force of 150 N. What is its mechanical advantage?",
+      "options": ["4", "0.25", "450", "750"],
+      "correct": "4"
+    },
+    {
+      "id": "q14",
+      "text": "Why is a wheelbarrow considered a compound machine?",
+      "options": ["It combines a lever and a wheel & axle", "It uses electricity", "It runs on fuel", "It has a motor"],
+      "correct": "It combines a lever and a wheel & axle"
+    },
+    {
+      "id": "q15",
+      "text": "In a bicycle, the pedal gear has 40 teeth and the rear gear has 20 teeth. When you pedal once, how many times does the rear wheel turn?",
+      "options": ["2", "1", "0.5", "40"],
+      "correct": "2"
+    },
+    {
+      "id": "q16",
+      "text": "What is pressure?",
+      "options": ["Force divided by area", "Force times area", "Mass times acceleration", "Energy per unit time"],
+      "correct": "Force divided by area"
+    },
+    {
+      "id": "q17",
+      "text": "The SI unit of pressure is:",
+      "options": ["Pascal (Pa)", "Newton (N)", "Joule (J)", "Watt (W)"],
+      "correct": "Pascal (Pa)"
+    },
+    {
+      "id": "q18",
+      "text": "Pascal's Principle states that:",
+      "options": ["Pressure applied to an enclosed fluid is transmitted equally to every part of the fluid", "Pressure equals force times area", "Pressure decreases with depth", "Fluids cannot transmit force"],
+      "correct": "Pressure applied to an enclosed fluid is transmitted equally to every part of the fluid"
+    },
+    {
+      "id": "q19",
+      "text": "A hydraulic jack has an input piston area of 0.02 m² and an output piston area of 0.4 m². If you apply 100 N on the input, what is the output force?",
+      "options": ["2,000 N", "500 N", "100 N", "20 N"],
+      "correct": "2,000 N"
+    },
+    {
+      "id": "q20",
+      "text": "Which of the following BEST represents an application of Pascal's Principle?",
+      "options": ["Car brakes and hydraulic jacks", "Laser cutting machines", "Solar panels", "Soundproofing"],
+      "correct": "Car brakes and hydraulic jacks"
+    },
+    {
+      "id": "q21",
+      "text": "What is the speed of light in a vacuum?",
+      "options": ["3 × 10⁸ m/s", "343 m/s", "1,500 m/s", "3 × 10⁶ m/s"],
+      "correct": "3 × 10⁸ m/s"
+    },
+    {
+      "id": "q22",
+      "text": "Which property of light determines its color?",
+      "options": ["Wavelength or frequency", "Amplitude", "Speed", "Intensity"],
+      "correct": "Wavelength or frequency"
+    },
+    {
+      "id": "q23",
+      "text": "When light passes from air into water, it:",
+      "options": ["Refracts (bends)", "Reflects at 90°", "Stops completely", "Speeds up dramatically"],
+      "correct": "Refracts (bends)"
+    },
+    {
+      "id": "q24",
+      "text": "Which EM wave has the LONGEST wavelength?",
+      "options": ["Radio waves", "X-rays", "Gamma rays", "Visible light"],
+      "correct": "Radio waves"
+    },
+    {
+      "id": "q25",
+      "text": "Which EM wave is used in TV remote controls?",
+      "options": ["Infrared", "Ultraviolet", "X-ray", "Gamma ray"],
+      "correct": "Infrared"
+    },
+    {
+      "id": "q26",
+      "text": "Which light technology has replaced most incandescent bulbs because it is more energy-efficient?",
+      "options": ["LED", "Halogen", "Neon tube", "Mercury vapor"],
+      "correct": "LED"
+    },
+    {
+      "id": "q27",
+      "text": "What does the acronym SONAR stand for?",
+      "options": ["Sound Navigation And Ranging", "Sonic Orientation Navigation And Radar", "Sound Observation Network And Receiver", "Submarine Orientation Navigation And Response"],
+      "correct": "Sound Navigation And Ranging"
+    },
+    {
+      "id": "q28",
+      "text": "Why can't sound travel through a vacuum?",
+      "options": ["There are no particles to vibrate and transmit the wave", "Sound is too slow", "Sound is absorbed by light", "Sound is a type of light wave"],
+      "correct": "There are no particles to vibrate and transmit the wave"
+    },
+    {
+      "id": "q29",
+      "text": "Sound travels FASTEST through which medium?",
+      "options": ["Steel", "Air", "Water", "Vacuum"],
+      "correct": "Steel"
+    },
+    {
+      "id": "q30",
+      "text": "Which property of a sound wave determines how loud or soft it sounds?",
+      "options": ["Amplitude", "Frequency", "Wavelength", "Speed"],
+      "correct": "Amplitude"
+        {
+      "id": "q31",
+      "text": "Louis Pasteur is best known for:",
+      "options": ["Developing germ theory and pasteurization", "Discovering DNA", "Inventing the microscope", "Discovering penicillin"],
+      "correct": "Developing germ theory and pasteurization"
+    },
+    {
+      "id": "q32",
+      "text": "Pasteur's swan-neck flask experiment disproved which theory?",
+      "options": ["Spontaneous generation", "Germ theory", "Cell theory", "Theory of relativity"],
+      "correct": "Spontaneous generation"
+    },
+    {
+      "id": "q33",
+      "text": "What is pasteurization?",
+      "options": ["Heating liquids to kill harmful bacteria without ruining flavor", "Freezing liquids to preserve them", "Adding antibiotics to food", "Removing water from milk"],
+      "correct": "Heating liquids to kill harmful bacteria without ruining flavor"
+    },
+    {
+      "id": "q34",
+      "text": "Which vaccine did Pasteur develop first for a human disease?",
+      "options": ["Rabies", "Polio", "Smallpox", "Measles"],
+      "correct": "Rabies"
+    },
+    {
+      "id": "q35",
+      "text": "Modern vaccines work by:",
+      "options": ["Training the immune system with weakened or inactive pathogens", "Killing all bacteria in the body", "Replacing white blood cells", "Removing viruses through pasteurization"],
+      "correct": "Training the immune system with weakened or inactive pathogens"
+    },
+    {
+      "id": "q36",
+      "text": "Which modern practice is a direct result of Pasteur's germ theory?",
+      "options": ["Handwashing in hospitals", "Using telescopes to study stars", "Building taller bridges", "Using solar panels"],
+      "correct": "Handwashing in hospitals"
+    },
+    {
+      "id": "q37",
+      "text": "What is the active ingredient in household bleach?",
+      "options": ["Sodium hypochlorite (NaClO)", "Sodium bicarbonate", "Sodium chloride", "Hydrogen peroxide"],
+      "correct": "Sodium hypochlorite (NaClO)"
+    },
+    {
+      "id": "q38",
+      "text": "Why is it dangerous to mix bleach with ammonia-based cleaners?",
+      "options": ["It releases toxic chloramine gas that can damage lungs", "It creates a stronger bleach", "It becomes solid", "It produces harmless foam"],
+      "correct": "It releases toxic chloramine gas that can damage lungs"
+    },
+    {
+      "id": "q39",
+      "text": "Which agency in the Philippines approves cosmetics and personal care products for sale?",
+      "options": ["FDA Philippines", "DTI", "DENR", "DepEd"],
+      "correct": "FDA Philippines"
+    },
+    {
+      "id": "q40",
+      "text": "Which agency is responsible for regulating chemical disposal to protect the environment?",
+      "options": ["DENR", "DTI", "FDA", "DOH"],
+      "correct": "DENR"
+    },
+    {
+      "id": "q41",
+      "text": "What is the primary function of baking powder in baked goods?",
+      "options": ["Releases CO₂ to make them rise", "Adds sweetness", "Preserves them longer", "Adds color"],
+      "correct": "Releases CO₂ to make them rise"
+    },
+    {
+      "id": "q42",
+      "text": "What is eutrophication?",
+      "options": ["Harmful algal blooms from excess nutrients like phosphates in water", "A cleaning process for detergents", "A type of bleaching reaction", "A method of pasteurization"],
+      "correct": "Harmful algal blooms from excess nutrients like phosphates in water"
+    },
+    {
+      "id": "q43",
+      "text": "Which of the following is a BENEFIT of using household chemical products properly?",
+      "options": ["They improve hygiene and prevent disease", "They cause water pollution", "They release toxic fumes", "They destroy fabric colors"],
+      "correct": "They improve hygiene and prevent disease"
+    },
+    {
+      "id": "q44",
+      "text": "Which practice is BEST for disposing of expired household chemicals?",
+      "options": ["Follow DENR guidelines and check with local barangay for hazardous waste disposal", "Pour down the kitchen sink", "Throw in regular trash", "Bury in the backyard"],
+      "correct": "Follow DENR guidelines and check with local barangay for hazardous waste disposal"
+    },
+    {
+      "id": "q45",
+      "text": "Why is a car engine an example of BOTH physics and chemistry working together?",
+      "options": ["Combustion is a chemistry process, and torque/rotation is physics", "It uses only chemistry", "It uses only physics", "It uses neither"],
+      "correct": "Combustion is a chemistry process, and torque/rotation is physics"
+    },
+    {
+      "id": "q46",
+      "text": "Inside a battery, what kind of chemical reaction produces electrical energy?",
+      "options": ["Redox (oxidation-reduction) reaction", "Combustion", "Neutralization", "Decomposition"],
+      "correct": "Redox (oxidation-reduction) reaction"
+    },
+    {
+      "id": "q47",
+      "text": "Why is a rice cooker both a physics and a chemistry system?",
+      "options": ["Electrical resistance heats the coil (physics) and water boils (chemistry)", "It uses magnets only", "It works only on chemistry", "It works only on physics"],
+      "correct": "Electrical resistance heats the coil (physics) and water boils (chemistry)"
+    },
+    {
+      "id": "q48",
+      "text": "An air conditioner cools a room primarily by:",
+      "options": ["Refrigerant absorbing heat inside and releasing it outside", "Creating cold air from nothing", "Removing all humidity", "Using magnets"],
+      "correct": "Refrigerant absorbing heat inside and releasing it outside"
+    },
+    {
+      "id": "q49",
+      "text": "What chemistry process turns bread brown and flavorful when toasted?",
+      "options": ["Maillard reaction", "Photosynthesis", "Neutralization", "Fermentation"],
+      "correct": "Maillard reaction"
+    },
+    {
+      "id": "q50",
+      "text": "A solar panel generates electricity by:",
+      "options": ["Converting photons to electricity via the photovoltaic effect", "Burning fuel", "Heating water", "Splitting atoms"],
+      "correct": "Converting photons to electricity via the photovoltaic effect"
+    },
+    {
+      "id": "q51",
+      "text": "In the formula v = r × ω, if a wheel of radius 0.5 m spins at 4 rad/s, what is v?",
+      "options": ["2 m/s", "0.125 m/s", "4.5 m/s", "8 m/s"],
+      "correct": "2 m/s"
+    },
+    {
+      "id": "q52",
+      "text": "Which of the following is a compound machine?",
+      "options": ["Bicycle", "Single crowbar", "Ramp", "Single screw"],
+      "correct": "Bicycle"
+    },
+    {
+      "id": "q53",
+      "text": "The SI unit of angular velocity is:",
+      "options": ["rad/s", "m/s", "rad", "m/s²"],
+      "correct": "rad/s"
+    },
+    {
+      "id": "q54",
+      "text": "Which formula represents the relationship between linear and angular acceleration?",
+      "options": ["a = r × α", "a = r + α", "a = α ÷ r", "a = r ÷ α"],
+      "correct": "a = r × α"
+    },
+    {
+      "id": "q55",
+      "text": "What does a Mechanical Advantage greater than 1 indicate?",
+      "options": ["The machine multiplies the input force", "The machine reduces force", "The machine uses no force", "The machine creates energy"],
+      "correct": "The machine multiplies the input force"
+    },
+    {
+      "id": "q56",
+      "text": "Which of the following correctly explains why a longer wrench loosens a tight bolt more easily?",
+      "options": ["It increases torque by increasing the lever arm distance from the pivot", "It is heavier", "It absorbs more friction", "It uses less electricity"],
+      "correct": "It increases torque by increasing the lever arm distance from the pivot"
+    },
+    {
+      "id": "q57",
+      "text": "Pascal's Principle applies to:",
+      "options": ["Fluids (liquids and gases) in enclosed systems", "Only solids", "Only vacuum", "Only plasmas"],
+      "correct": "Fluids (liquids and gases) in enclosed systems"
+    },
+    {
+      "id": "q58",
+      "text": "Why can you drink water through a straw?",
+      "options": ["Air pressure pushes water up the straw when you lower the pressure inside it", "Gravity pulls water up", "The straw creates water", "Friction pushes water up"],
+      "correct": "Air pressure pushes water up the straw when you lower the pressure inside it"
+    },
+    {
+      "id": "q59",
+      "text": "Which of these is a valid example of physics + chemistry integration in daily life?",
+      "options": ["Cooking rice in an electric rice cooker", "Reading a book under a lamp", "Walking on a smooth pavement", "Writing with a pencil"],
+      "correct": "Cooking rice in an electric rice cooker"
+    },
+    {
+      "id": "q60",
+      "text": "Which of the following BEST summarizes the main idea of Term 1?",
+      "options": ["Physics and chemistry principles work together to explain and improve everyday life", "Only physics is important in daily life", "Only chemistry matters in daily life", "Neither physics nor chemistry is useful"],
+      "correct": "Physics and chemistry principles work together to explain and improve everyday life"
+    }
+  ]
+}
