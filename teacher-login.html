@@ -35,7 +35,6 @@
     .login-btn { width: 100%; padding: 14px 20px; background: linear-gradient(135deg, #0d47a1, #1565c0); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25); }
     .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35); }
     .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .login-hint { font-size: 0.75rem; color: #90a4ae; text-align: center; margin-top: 12px; line-height: 1.5; }
     .login-error { background: #ffebee; border-left: 4px solid #c62828; color: #b71c1c; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
     .login-lockout { background: #fff3e0; border-left: 4px solid #ed6c02; color: #e65100; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
     .back-link { display: block; text-align: center; margin-top: 16px; font-size: 0.85rem; color: #0d47a1; text-decoration: none; }
@@ -62,11 +61,6 @@
       <button type="submit" id="login-btn" class="login-btn">Unlock →</button>
     </form>
 
-    <div class="login-hint">
-      Default password: <strong>teacher2026</strong><br>
-      Change it in <code>config.js</code> before deployment
-    </div>
-
     <a href="index.html" class="back-link">← Back to Home</a>
   </div>
 
@@ -82,6 +76,17 @@
       const passwordEl = document.getElementById('password');
       const btn = document.getElementById('login-btn');
       const errorSlot = document.getElementById('error-slot');
+
+      if (!window.TeacherAuth) {
+        errorSlot.innerHTML = `
+          <div class="login-error">
+            ⚠️ Authentication module failed to load.<br>
+            Please check that <code>assets/js/teacher-auth.js</code> exists.
+          </div>
+        `;
+        btn.disabled = true;
+        return;
+      }
 
       TeacherAuth.init();
 
@@ -150,7 +155,7 @@
           btn.disabled = false;
           passwordEl.disabled = false;
           errorSlot.innerHTML = '';
-        }, lock.until - Date.now());
+        }, Math.max(1000, lock.until - Date.now()));
       }
 
       function redirectAfterLogin() {
