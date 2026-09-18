@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Term Control — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .tc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 780px) {
+      .tc-grid { grid-template-columns: 1fr; }
+    }
+
+    .tc-section-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-top: 5px solid #0d47a1;
+    }
+    .tc-section-card.A { border-top-color: #0d47a1; }
+    .tc-section-card.B { border-top-color: #00695c; }
+
+    .tc-section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0d47a1;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tc-section-card.B .tc-section-title { color: #004d40; }
+    .tc-section-sub {
+      font-size: 0.8rem;
+      color: #78909c;
+      margin: 0 0 18px;
+    }
+
+    .tc-term-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1.5px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .tc-term-row.open {
+      background: #f1f8f4;
+      border-color: #2e7d32;
+    }
+    .tc-term-row.locked {
+      background: #fafafa;
+      border-color: #dadce0;
+    }
+
+    .tc-term-icon {
+      font-size: 1.4rem;
+      width: 34px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .tc-term-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .tc-term-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+    }
+    .tc-term-sub {
+      font-size: 0.75rem;
+      color: #78909c;
+      margin-top: 2px;
+    }
+
+    /* Toggle switch */
+    .tc-switch {
+      position: relative;
+      width: 52px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+    .tc-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .tc-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #cfd8dc;
+      border-radius: 999px;
+      transition: 0.3s;
+    }
+    .tc-slider::before {
+      content: '';
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .tc-switch input:checked + .tc-slider {
+      background: #2e7d32;
+    }
+    .tc-switch input:checked + .tc-slider::before {
+      transform: translateX(22px);
+    }
+    .tc-switch input:focus + .tc-slider {
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3);
+    }
+
+    .tc-status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .tc-status-badge.open {
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+    .tc-status-badge.locked {
+      background: #eceff1;
+      color: #5f6368;
+    }
+
+    .tc-save-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
+      position: sticky;
+      bottom: 20px;
+      z-index: 10;
+    }
+
+    .tc-hint {
+      font-size: 0.85rem;
+      color: #5f6368;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tc-alert {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .tc-alert.info {
+      background: #e3f2fd;
+      border-left: 4px solid #0d47a1;
+      color: #0d47a1;
+    }
+    .tc-alert.warn {
+      background: #fff3e0;
+      border-left: 4px solid #ed6c02;
+      color: #e65100;
+    }
+    .tc-alert.success {
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔓 Term Access Control</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:1100px;padding-top:24px;padding-bottom:96px;">
+
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Term Access Control</h1>
+          <p>Open or lock each term per section. Students cannot enter a locked term, even by direct link.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="backend-banner"></div>
+
+    <div class="tc-alert info">
+      <span style="font-size:1.2rem;">ℹ️</span>
+      <div>
+        <strong>How it works</strong>
+        <div style="margin-top:6px;">
+          Toggling a term <strong>OPEN</strong> lets students enter it regardless of their progress.
+          Toggling it <strong>LOCKED</strong> prevents new activity — students can still view their past progress in that term (read-only).
+        </div>
+      </div>
+    </div>
+
+    <div class="tc-grid" id="tc-grid">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Sticky save bar -->
+    <div class="tc-save-bar">
+      <div class="tc-hint">
+        <span id="save-status">No unsaved changes</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button id="btn-reload" class="btn btn-outline">🔄 Reload</button>
+        <button id="btn-save" class="btn btn-primary" disabled>💾 Save Changes</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/term-access.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      TeacherAuth.init();
+      if (!TeacherAuth.require()) return;
+
+      const SECTIONS = (CONFIG && CONFIG.SECTIONS) || ['ACADEMIC A', 'ACADEMIC B'];
+      const TERMS = [
+        { key: 'term1', label: 'Term 1', icon: '⚛️', sub: 'Physics & Chemistry' },
+        { key: 'term2', label: 'Term 2', icon: '🧪', sub: 'Chemistry & Life Science' },
+        { key: 'term3', label: 'Term 3', icon: '🌏', sub: 'Earth Science' }
+      ];
+
+      let current = {};    // server-side truth after load
+      let pending = {};    // changed but not saved
+
+      /* ============================================================
+         BACKEND BANNER
+         ============================================================ */
+      function renderBackendBanner() {
+        const enabled = Sync.backendEnabled();
+        const banner = document.getElementById('backend-banner');
+
+        if (enabled) {
+          banner.innerHTML = `
+            <div class="tc-alert success">
+              <span style="font-size:1.2rem;">✅</span>
+              <div>
+                <strong>Backend enabled</strong>
+                <div style="margin-top:4px;">Changes save to your Google Sheet and sync to all student devices.</div>
+              </div>
+            </div>
+          `;
+        } else {
+          banner.innerHTML = `
+            <div class="tc-alert warn">
+              <span style="font-size:1.2rem;">⚠️</span>
+              <div>
+                <strong>Backend not configured</strong>
+                <div style="margin-top:4px;">
+                  Changes save only on <strong>this device</strong>. To sync across all students' devices, set
+                  <code>CONFIG.BACKEND_URL</code> in <code>config.js</code> and deploy the Google Apps Script backend.
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      /* ============================================================
+         LOAD
+         ============================================================ */
+      async function loadAll() {
+        const grid = document.getElementById('tc-grid');
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#5f6368;">
+          ⏳ Loading term access…
+        </div>`;
+
+        try {
+          current = await TermAccess.getAll(SECTIONS);
+          pending = {};
+          renderGrid();
+        } catch (err) {
+          grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#c62828;">
+            ⚠️ Failed to load: ${err.message}
+          </div>`;
+        }
+      }
+
+      /* ============================================================
+         RENDER GRID
+         ============================================================ */
+      function renderGrid() {
+        const grid = document.getElementById('tc-grid');
+        grid.innerHTML = '';
+
+        SECTIONS.forEach((section, sIdx) => {
+          const letter = section === 'ACADEMIC A' ? 'A' : 'B';
+          const card = document.createElement('div');
+          card.className = `tc-section-card ${letter}`;
+
+          card.innerHTML = `
+            <h3 class="tc-section-title">
+              <span>${letter === 'A' ? '🔵' : '🟢'}</span>
+              ${section}
+            </h3>
+            <p class="tc-section-sub">Toggle which terms are accessible to students in this section.</p>
+            <div id="rows-${sIdx}"></div>
+          `;
+
+          const rowContainer = card.querySelector(`#rows-${sIdx}`);
+
+          TERMS.forEach((t) => {
+            const state = (pending[section] && pending[section][t.key]) 
+              || (current[section] && current[section][t.key])
+              || 'locked';
+            const isOpen = state === 'open';
+
+            const row = document.createElement('div');
+            row.className = `tc-term-row ${isOpen ? 'open' : 'locked'}`;
+            row.innerHTML = `
+              <div class="tc-term-icon">${isOpen ? '🔓' : '🔒'}</div>
+              <div class="tc-term-info">
+                <div class="tc-term-label">${t.icon} ${t.label}</div>
+                <div class="tc-term-sub">${t.sub}</div>
+              </div>
+              <span class="tc-status-badge ${isOpen ? 'open' : 'locked'}">
+                ${isOpen ? 'Open' : 'Locked'}
+              </span>
+              <label class="tc-switch">
+                <input type="checkbox" data-section="${section}" data-term="${t.key}" ${isOpen ? 'checked' : ''} />
+                <span class="tc-slider"></span>
+              </label>
+            `;
+
+            const checkbox = row.querySelector('input');
+            checkbox.addEventListener('change', () => onToggle(section, t.key, checkbox.checked));
+
+            rowContainer.appendChild(row);
+          });
+
+          grid.appendChild(card);
+        });
+      }
+
+      /* ============================================================
+         TOGGLE
+         ============================================================ */
+      function onToggle(section, term, isChecked) {
+        const newState = isChecked ? 'open' : 'locked';
+
+        if (!pending[section]) pending[section] = {};
+        pending[section][term] = newState;
+
+        // Update UI in place (soft)
+        const row = document.querySelector(
+          `.tc-term-row input[data-section="${CSS.escape(section)}"][data-term="${term}"]`
+        )?.closest('.tc-term-row');
+        if (row) {
+          const icon = row.querySelector('.tc-term-icon');
+          const badge = row.querySelector('.tc-status-badge');
+          if (isChecked) {
+            row.classList.add('open');
+            row.classList.remove('locked');
+            icon.textContent = '🔓';
+            badge.className = 'tc-status-badge open';
+            badge.textContent = 'Open';
+          } else {
+            row.classList.remove('open');
+            row.classList.add('locked');
+            icon.textContent = '🔒';
+            badge.className = 'tc-status-badge locked';
+            badge.textContent = 'Locked';
+          }
+        }
+
+        // Enable save button
+        const hasPending = Object.keys(pending).some((s) => Object.keys(pending[s]).length > 0);
+        document.getElementById('btn-save').disabled = !hasPending;
+        document.getElementById('save-status').textContent = hasPending
+          ? '⚠️ Unsaved changes'
+          : 'No unsaved changes';
+      }
+
+      /* ============================================================
+         SAVE
+         ============================================================ */
+      async function saveAll() {
+        const saveBtn = document.getElementById('btn-save');
+        const status = document.getElementById('save-status');
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ Saving…';
+        status.textContent = 'Saving changes…';
+
+        let savedCount = 0;
+        let backendFailed = false;
+
+        for (const section of Object.keys(pending)) {
+          const access = { ...(current[section] || TermAccess.DEFAULT_ACCESS), ...pending[section] };
+
+          try {
+            const result = await TermAccess.set(section, access);
+            if (result.ok) {
+              current[section] = access;
+              savedCount++;
+              if (result.mode === 'local-only') backendFailed = true;
+            } else {
+              backendFailed = true;
+              APP.toast(`Failed to save ${section}: ${result.error || 'unknown error'}`, 'danger', 4000);
+            }
+          } catch (err) {
+            backendFailed = true;
+            APP.toast(`Error saving ${section}: ${err.message}`, 'danger', 4000);
+          }
+        }
+
+        pending = {};
+        saveBtn.textContent = '💾 Save Changes';
+
+        if (savedCount > 0) {
+          status.textContent = `✅ Saved ${savedCount} section(s)`;
+          APP.toast(
+            backendFailed
+              ? `Saved locally for ${savedCount} section(s) — backend sync failed`
+              : `Saved ${savedCount} section(s) successfully`,
+            backendFailed ? 'warning' : 'success',
+            3500
+          );
+          renderGrid();
+        } else {
+          status.textContent = 'No changes saved';
+        }
+      }
+
+      /* ============================================================
+         EVENTS
+         ============================================================ */
+      document.getElementById('btn-save').addEventListener('click', saveAll);
+      document.getElementById('btn-reload').addEventListener('click', () => {
+        if (Object.keys(pending).some((s) => Object.keys(pending[s]).length > 0)) {
+          if (!confirm('Discard unsaved changes and reload?')) return;
+        }
+        loadAll();
+      });
+      document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
+
+      /* ============================================================
+         INIT
+         ============================================================ */
+      document.addEventListener('DOMContentLoaded', () => {
+        renderBackendBanner();
+        loadAll();
+      });
+
+    })();
+  </script>
+</body>
+</html>
