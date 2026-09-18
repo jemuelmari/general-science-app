@@ -6,23 +6,13 @@
     {
       "id": "q1",
       "text": "What is a chemical reaction?",
-      "options": [
-        "A process where reactants change into new products with different properties",
-        "A physical change like melting ice",
-        "A change in shape only",
-        "A change in temperature only"
-      ],
+      "options": ["A process where reactants change into new products with different properties", "A physical change like melting ice", "A change in shape only", "A change in temperature only"],
       "correct": "A process where reactants change into new products with different properties"
     },
     {
       "id": "q2",
       "text": "Which of the following is NOT a sign that a chemical reaction has occurred?",
-      "options": [
-        "Change in shape only, without any other change",
-        "Formation of gas bubbles",
-        "Color change",
-        "Release of light or heat"
-      ],
+      "options": ["Change in shape only, without any other change", "Formation of gas bubbles", "Color change", "Release of light or heat"],
       "correct": "Change in shape only, without any other change"
     },
     {
@@ -34,12 +24,7 @@
     {
       "id": "q4",
       "text": "Vinegar + baking soda producing fizzing is an example of:",
-      "options": [
-        "Acid on carbonate",
-        "Decomposition",
-        "Combustion",
-        "Acid on metal"
-      ],
+      "options": ["Acid on carbonate", "Decomposition", "Combustion", "Acid on metal"],
       "correct": "Acid on carbonate"
     },
     {
@@ -57,56 +42,31 @@
     {
       "id": "q7",
       "text": "What are the products of complete combustion of a hydrocarbon fuel?",
-      "options": [
-        "Carbon dioxide and water",
-        "Hydrogen and oxygen",
-        "Salt and water",
-        "Glucose and oxygen"
-      ],
+      "options": ["Carbon dioxide and water", "Hydrogen and oxygen", "Salt and water", "Glucose and oxygen"],
       "correct": "Carbon dioxide and water"
     },
     {
       "id": "q8",
       "text": "Why should you NEVER mix bleach with ammonia cleaner?",
-      "options": [
-        "It releases toxic chloramine gas that can damage lungs",
-        "It becomes solid",
-        "It loses cleaning power",
-        "It smells better"
-      ],
+      "options": ["It releases toxic chloramine gas that can damage lungs", "It becomes solid", "It loses cleaning power", "It smells better"],
       "correct": "It releases toxic chloramine gas that can damage lungs"
     },
     {
       "id": "q9",
       "text": "Which equation correctly represents photosynthesis?",
-      "options": [
-        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
-        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
-        "2H₂ + O₂ → 2H₂O",
-        "CO₂ + H₂O → CH₄ + O₂"
-      ],
+      "options": ["6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"],
       "correct": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂"
     },
     {
       "id": "q10",
       "text": "Which equation correctly represents cellular respiration?",
-      "options": [
-        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)",
-        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
-        "2H₂ + O₂ → 2H₂O",
-        "CH₄ + 2O₂ → CO₂ + 2H₂O"
-      ],
+      "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CH₄ + 2O₂ → CO₂ + 2H₂O"],
       "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)"
     },
     {
       "id": "q11",
       "text": "Why must a chemical equation be balanced?",
-      "options": [
-        "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed",
-        "To make it look nicer",
-        "Because of gravity",
-        "To reduce temperature"
-      ],
+      "options": ["Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "To make it look nicer", "Because of gravity", "To reduce temperature"],
       "correct": "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed"
     },
     {
@@ -118,23 +78,13 @@
     {
       "id": "q13",
       "text": "What is ATP?",
-      "options": [
-        "The energy currency of the cell — used for cellular work",
-        "A type of sugar",
-        "A protein for growth",
-        "A genetic material"
-      ],
+      "options": ["The energy currency of the cell — used for cellular work", "A type of sugar", "A protein for growth", "A genetic material"],
       "correct": "The energy currency of the cell — used for cellular work"
     },
     {
       "id": "q14",
       "text": "Why are photosynthesis and respiration considered 'opposite reactions'?",
-      "options": [
-        "Their reactants and products are reversed",
-        "They happen in the same organelle",
-        "Both produce oxygen",
-        "Neither requires energy"
-      ],
+      "options": ["Their reactants and products are reversed", "They happen in the same organelle", "Both produce oxygen", "Neither requires energy"],
       "correct": "Their reactants and products are reversed"
     },
     {
@@ -146,12 +96,7 @@
     {
       "id": "q16",
       "text": "What is a solution?",
-      "options": [
-        "A homogeneous mixture of two or more substances",
-        "A heterogeneous mixture where particles settle at the bottom",
-        "A pure chemical substance",
-        "A type of solid only"
-      ],
+      "options": ["A homogeneous mixture of two or more substances", "A heterogeneous mixture where particles settle at the bottom", "A pure chemical substance", "A type of solid only"],
       "correct": "A homogeneous mixture of two or more substances"
     },
     {
@@ -163,12 +108,7 @@
     {
       "id": "q18",
       "text": "Why is water called the 'universal solvent'?",
-      "options": [
-        "It dissolves more substances than any other liquid",
-        "It is found everywhere",
-        "It has no charge",
-        "It is denser than other liquids"
-      ],
+      "options": ["It dissolves more substances than any other liquid", "It is found everywhere", "It has no charge", "It is denser than other liquids"],
       "correct": "It dissolves more substances than any other liquid"
     },
     {
@@ -186,89 +126,49 @@
     {
       "id": "q21",
       "text": "What is saturation?",
-      "options": [
-        "The point where no more solute can dissolve in a solvent at a given temperature",
-        "When a solution is diluted with water",
-        "When a solute evaporates",
-        "When a solvent freezes"
-      ],
+      "options": ["The point where no more solute can dissolve in a solvent at a given temperature", "When a solution is diluted with water", "When a solute evaporates", "When a solvent freezes"],
       "correct": "The point where no more solute can dissolve in a solvent at a given temperature"
     },
     {
       "id": "q22",
       "text": "What happens to a plant in soil with very high salt concentration?",
-      "options": [
-        "Water moves out of the plant roots due to osmotic stress, causing wilting",
-        "It grows faster because salt is a nutrient",
-        "It becomes saltwater-tolerant automatically",
-        "Nothing changes"
-      ],
+      "options": ["Water moves out of the plant roots due to osmotic stress, causing wilting", "It grows faster because salt is a nutrient", "It becomes saltwater-tolerant automatically", "Nothing changes"],
       "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting"
     },
     {
       "id": "q23",
       "text": "What is saltwater intrusion?",
-      "options": [
-        "Seawater seeping into freshwater aquifers, making them salty and unusable",
-        "Adding salt to freshwater for drinking",
-        "Removing salt from seawater",
-        "A type of water filtration"
-      ],
+      "options": ["Seawater seeping into freshwater aquifers, making them salty and unusable", "Adding salt to freshwater for drinking", "Removing salt from seawater", "A type of water filtration"],
       "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable"
     },
     {
       "id": "q24",
       "text": "What does the GHS skull-and-crossbones symbol mean?",
-      "options": [
-        "Acute toxicity — can cause death or serious harm",
-        "Flammable liquid",
-        "Corrosive to metals",
-        "Harmless"
-      ],
+      "options": ["Acute toxicity — can cause death or serious harm", "Flammable liquid", "Corrosive to metals", "Harmless"],
       "correct": "Acute toxicity — can cause death or serious harm"
     },
     {
       "id": "q25",
       "text": "Which GHS symbol warns that a chemical can corrode skin or metals?",
-      "options": [
-        "Corrosion (test tube dripping on surface)",
-        "Flame",
-        "Skull and crossbones",
-        "Exclamation mark"
-      ],
+      "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"],
       "correct": "Corrosion (test tube dripping on surface)"
     },
     {
       "id": "q26",
       "text": "Why must acids and bases be stored separately?",
-      "options": [
-        "They can react violently if they touch",
-        "They have different colors",
-        "They smell different",
-        "They weigh differently"
-      ],
+      "options": ["They can react violently if they touch", "They have different colors", "They smell different", "They weigh differently"],
       "correct": "They can react violently if they touch"
     },
     {
       "id": "q27",
       "text": "What is the BEST way to dispose of leftover household chemicals?",
-      "options": [
-        "Take them to a designated hazardous waste collection point following DENR guidelines",
-        "Pour them into the storm drain",
-        "Throw them in the regular trash",
-        "Bury them in the backyard"
-      ],
+      "options": ["Take them to a designated hazardous waste collection point following DENR guidelines", "Pour them into the storm drain", "Throw them in the regular trash", "Bury them in the backyard"],
       "correct": "Take them to a designated hazardous waste collection point following DENR guidelines"
     },
     {
       "id": "q28",
       "text": "What is eutrophication?",
-      "options": [
-        "Algal blooms caused by excess nutrients (phosphates) in water — kills fish",
-        "A cleaning process for detergents",
-        "A form of distillation",
-        "A method of water purification"
-      ],
+      "options": ["Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "A cleaning process for detergents", "A form of distillation", "A method of water purification"],
       "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish"
     },
     {
@@ -280,14 +180,10 @@
     {
       "id": "q30",
       "text": "Why is proper chemical disposal important?",
-      "options": [
-        "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
-        "Because the government requires it",
-        "To save money",
-        "To increase the volume of the ocean"
-      ],
+      "options": ["To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe", "Because the government requires it", "To save money", "To increase the volume of the ocean"],
       "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe"
-        {
+    },
+    {
       "id": "q31",
       "text": "What is the basic structural and functional unit of all living things?",
       "options": ["The cell", "The atom", "The tissue", "The organ"],
@@ -302,34 +198,19 @@
     {
       "id": "q33",
       "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?",
-      "options": [
-        "Cell → Tissue → Organ → Organ System → Organism",
-        "Organism → Cell → Tissue → Organ",
-        "Organ → Cell → Tissue → Organism",
-        "Tissue → Cell → Organ → Organism"
-      ],
+      "options": ["Cell → Tissue → Organ → Organ System → Organism", "Organism → Cell → Tissue → Organ", "Organ → Cell → Tissue → Organism", "Tissue → Cell → Organ → Organism"],
       "correct": "Cell → Tissue → Organ → Organ System → Organism"
     },
     {
       "id": "q34",
       "text": "Which statement BEST describes the structure-function relationship?",
-      "options": [
-        "The shape of a biological part determines what job it can perform",
-        "All structures look the same",
-        "Function is random and unrelated to structure",
-        "Only animals have structure-function relationships"
-      ],
+      "options": ["The shape of a biological part determines what job it can perform", "All structures look the same", "Function is random and unrelated to structure", "Only animals have structure-function relationships"],
       "correct": "The shape of a biological part determines what job it can perform"
     },
     {
       "id": "q35",
       "text": "Why are alveoli in the lungs so tiny and numerous?",
-      "options": [
-        "To create a huge surface area for gas exchange",
-        "To make them easier to see",
-        "To reduce oxygen intake",
-        "To store water"
-      ],
+      "options": ["To create a huge surface area for gas exchange", "To make them easier to see", "To reduce oxygen intake", "To store water"],
       "correct": "To create a huge surface area for gas exchange"
     },
     {
@@ -347,12 +228,7 @@
     {
       "id": "q38",
       "text": "A potato slice placed in salty water becomes soft and shriveled. Why?",
-      "options": [
-        "Water left the potato cells by osmosis because the salt solution had lower water concentration",
-        "Salt destroyed the potato cells chemically",
-        "The potato absorbed the salt",
-        "The potato froze"
-      ],
+      "options": ["Water left the potato cells by osmosis because the salt solution had lower water concentration", "Salt destroyed the potato cells chemically", "The potato absorbed the salt", "The potato froze"],
       "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration"
     },
     {
@@ -382,23 +258,13 @@
     {
       "id": "q43",
       "text": "What is transpiration?",
-      "options": [
-        "Loss of water vapor from leaves through stomata",
-        "Movement of food through phloem",
-        "Absorption of minerals by the roots",
-        "Production of glucose in leaves"
-      ],
+      "options": ["Loss of water vapor from leaves through stomata", "Movement of food through phloem", "Absorption of minerals by the roots", "Production of glucose in leaves"],
       "correct": "Loss of water vapor from leaves through stomata"
     },
     {
       "id": "q44",
       "text": "Why does removing a complete ring of bark kill a tree?",
-      "options": [
-        "It cuts the phloem, so sugars cannot reach the roots, which then starve and die",
-        "It removes the tree's protective armor",
-        "It prevents photosynthesis",
-        "It stops transpiration"
-      ],
+      "options": ["It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "It removes the tree's protective armor", "It prevents photosynthesis", "It stops transpiration"],
       "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die"
     },
     {
@@ -410,34 +276,19 @@
     {
       "id": "q46",
       "text": "What is the 1st line of defense against pathogens?",
-      "options": [
-        "Physical barriers like skin and mucous membranes",
-        "Antibodies",
-        "Memory cells",
-        "Vaccines"
-      ],
+      "options": ["Physical barriers like skin and mucous membranes", "Antibodies", "Memory cells", "Vaccines"],
       "correct": "Physical barriers like skin and mucous membranes"
     },
     {
       "id": "q47",
       "text": "How do vaccines protect you from future infections?",
-      "options": [
-        "They create memory B and T cells that respond quickly if the real pathogen appears",
-        "They kill all pathogens in your body permanently",
-        "They replace your immune system",
-        "They cause the disease in a mild form only"
-      ],
+      "options": ["They create memory B and T cells that respond quickly if the real pathogen appears", "They kill all pathogens in your body permanently", "They replace your immune system", "They cause the disease in a mild form only"],
       "correct": "They create memory B and T cells that respond quickly if the real pathogen appears"
     },
     {
       "id": "q48",
       "text": "Which BEST describes the difference between nervous and endocrine responses?",
-      "options": [
-        "Nervous is fast and short-term; endocrine is slower but longer-lasting",
-        "Nervous is slow; endocrine is fast",
-        "They are identical",
-        "Only nervous responses involve hormones"
-      ],
+      "options": ["Nervous is fast and short-term; endocrine is slower but longer-lasting", "Nervous is slow; endocrine is fast", "They are identical", "Only nervous responses involve hormones"],
       "correct": "Nervous is fast and short-term; endocrine is slower but longer-lasting"
     },
     {
@@ -449,89 +300,49 @@
     {
       "id": "q50",
       "text": "Which of the following is a symptom of an asthma attack?",
-      "options": [
-        "Difficulty breathing and wheezing due to narrowed bronchioles",
-        "Broken bones",
-        "Rapid hair growth",
-        "Loss of vision"
-      ],
+      "options": ["Difficulty breathing and wheezing due to narrowed bronchioles", "Broken bones", "Rapid hair growth", "Loss of vision"],
       "correct": "Difficulty breathing and wheezing due to narrowed bronchioles"
     },
     {
       "id": "q51",
       "text": "What is the difference between weather and climate?",
-      "options": [
-        "Weather is short-term; climate is long-term",
-        "Weather is long-term; climate is short-term",
-        "They are the same thing",
-        "Weather is about temperature only"
-      ],
+      "options": ["Weather is short-term; climate is long-term", "Weather is long-term; climate is short-term", "They are the same thing", "Weather is about temperature only"],
       "correct": "Weather is short-term; climate is long-term"
     },
     {
       "id": "q52",
       "text": "What is the MAIN cause of recent climate change?",
-      "options": [
-        "Human activities releasing greenhouse gases like CO₂ and methane",
-        "Volcanic eruptions only",
-        "Solar cycles only",
-        "Ocean tides"
-      ],
+      "options": ["Human activities releasing greenhouse gases like CO₂ and methane", "Volcanic eruptions only", "Solar cycles only", "Ocean tides"],
       "correct": "Human activities releasing greenhouse gases like CO₂ and methane"
     },
     {
       "id": "q53",
       "text": "What happens to corals when water temperature rises too much?",
-      "options": [
-        "They expel their symbiotic algae and bleach, slowly starving",
-        "They grow faster",
-        "They change color to red",
-        "Nothing happens — corals are immune"
-      ],
+      "options": ["They expel their symbiotic algae and bleach, slowly starving", "They grow faster", "They change color to red", "Nothing happens — corals are immune"],
       "correct": "They expel their symbiotic algae and bleach, slowly starving"
     },
     {
       "id": "q54",
       "text": "Which of the following is a BIOLOGICAL response to climate change?",
-      "options": [
-        "Species shifting to cooler areas (range shift)",
-        "Building more factories",
-        "Rising electricity prices",
-        "Decreasing internet speed"
-      ],
+      "options": ["Species shifting to cooler areas (range shift)", "Building more factories", "Rising electricity prices", "Decreasing internet speed"],
       "correct": "Species shifting to cooler areas (range shift)"
     },
     {
       "id": "q55",
       "text": "Why is the Philippines highly vulnerable to climate change?",
-      "options": [
-        "It's an archipelago in the typhoon belt with thousands of coastal communities",
-        "It has no coastline",
-        "It has no forests",
-        "It's located far from the ocean"
-      ],
+      "options": ["It's an archipelago in the typhoon belt with thousands of coastal communities", "It has no coastline", "It has no forests", "It's located far from the ocean"],
       "correct": "It's an archipelago in the typhoon belt with thousands of coastal communities"
     },
     {
       "id": "q56",
       "text": "What is the difference between adaptation and mitigation?",
-      "options": [
-        "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change",
-        "Adaptation reduces emissions; mitigation adjusts to impacts",
-        "They are the same thing",
-        "Both only apply to farming"
-      ],
+      "options": ["Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change", "Adaptation reduces emissions; mitigation adjusts to impacts", "They are the same thing", "Both only apply to farming"],
       "correct": "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change"
     },
     {
       "id": "q57",
       "text": "Which of the following is an example of MITIGATION?",
-      "options": [
-        "Switching to solar energy to reduce fossil fuel use",
-        "Building a sea wall",
-        "Planting drought-resistant crops",
-        "Elevating homes above flood level"
-      ],
+      "options": ["Switching to solar energy to reduce fossil fuel use", "Building a sea wall", "Planting drought-resistant crops", "Elevating homes above flood level"],
       "correct": "Switching to solar energy to reduce fossil fuel use"
     },
     {
@@ -543,23 +354,13 @@
     {
       "id": "q59",
       "text": "How does overpopulation affect the environment?",
-      "options": [
-        "It increases resource demand, deforestation, waste, and greenhouse gas emissions",
-        "It reduces pollution",
-        "It has no environmental impact",
-        "It only affects cities, not farms"
-      ],
+      "options": ["It increases resource demand, deforestation, waste, and greenhouse gas emissions", "It reduces pollution", "It has no environmental impact", "It only affects cities, not farms"],
       "correct": "It increases resource demand, deforestation, waste, and greenhouse gas emissions"
     },
     {
       "id": "q60",
       "text": "Which of the following BEST summarizes the main idea of Term 2?",
-      "options": [
-        "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense",
-        "Only chemistry matters in daily life",
-        "Only biology matters in daily life",
-        "Neither chemistry nor biology is important"
-      ],
+      "options": ["Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense", "Only chemistry matters in daily life", "Only biology matters in daily life", "Neither chemistry nor biology is important"],
       "correct": "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense"
     }
   ]
