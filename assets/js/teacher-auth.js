@@ -20,7 +20,7 @@ const TeacherAuth = (() => {
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
 
   // Fallback hash of "teacher2026"
-  const DEFAULT_HASH = '63a9f0ea7bb98050796b649e85481845';
+  const DEFAULT_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
 
   let heartbeatInterval = null;
 
