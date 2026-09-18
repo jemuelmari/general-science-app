@@ -24,7 +24,7 @@ const TeacherAuth = (() => {
     }
     window.addEventListener('storage', (e) => {
       if (e.key === SESSION_KEY && !e.newValue) {
-        window.location.replace('teacher-login.html');
+        window.location.replace('../teacher-login.html');
       }
     });
   }
@@ -112,7 +112,7 @@ const TeacherAuth = (() => {
     heartbeatInterval = setInterval(() => {
       if (!isAuthenticated()) {
         stopHeartbeat();
-        setTimeout(() => { window.location.replace('teacher-login.html'); }, 1500);
+        setTimeout(() => { window.location.replace('../teacher-login.html'); }, 1500);
       }
     }, 60000);
   }
@@ -135,7 +135,7 @@ const TeacherAuth = (() => {
       return false;
     }
     clearSession();
-    window.location.replace('teacher-login.html');
+    window.location.replace('../teacher-login.html');
     return true;
   }
 
