@@ -4,108 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Locked Assessments — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
   <style>
-    .la-filters {
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: end;
-      margin-bottom: 24px;
-    }
+    .la-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .la-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
-
-    .lock-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 12px;
-      border-left: 5px solid #c62828;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      transition: all 0.15s;
-    }
-    .lock-card:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      transform: translateY(-1px);
-    }
+    .lock-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border-left: 5px solid #c62828; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: all 0.15s; }
+    .lock-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-1px); }
     .lock-card.tampered { border-left-color: #6a1b9a; }
-
-    .lock-head {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .lock-meta {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-size: 0.82rem;
-      color: #37474f;
-      padding: 10px 14px;
-      background: #fafbfc;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
+    .lock-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+    .lock-meta { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.82rem; color: #37474f; padding: 10px 14px; background: #fafbfc; border-radius: 8px; margin-bottom: 10px; }
     .lock-meta strong { color: #0d47a1; }
-
-    .lock-reason {
-      font-size: 0.82rem;
-      padding: 10px 14px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-    .lock-reason.failed {
-      background: #fff3e0;
-      border-left: 3px solid #ed6c02;
-      color: #e65100;
-    }
-    .lock-reason.tampered {
-      background: #f3e5f5;
-      border-left: 3px solid #6a1b9a;
-      color: #4a148c;
-    }
-
-    .lock-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .la-empty {
-      text-align: center;
-      padding: 48px 24px;
-      color: #90a4ae;
-    }
-    .la-empty.success {
-      color: #2e7d32;
-    }
-
-    .confirm-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999; padding: 20px;
-    }
-    .confirm-modal {
-      background: #fff;
-      border-radius: 14px;
-      padding: 24px;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-    .confirm-modal h3 {
-      margin: 0 0 8px;
-      color: #0d47a1;
-      font-size: 1.15rem;
-    }
-    .confirm-modal p {
-      margin: 0 0 16px;
-      color: #5f6368;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
+    .lock-reason { font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; line-height: 1.5; }
+    .lock-reason.failed { background: #fff3e0; border-left: 3px solid #ed6c02; color: #e65100; }
+    .lock-reason.tampered { background: #f3e5f5; border-left: 3px solid #6a1b9a; color: #4a148c; }
+    .lock-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .la-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    .la-empty.success { color: #2e7d32; }
+    .confirm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
+    .confirm-modal { background: #fff; border-radius: 14px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .confirm-modal h3 { margin: 0 0 8px; color: #0d47a1; font-size: 1.15rem; }
+    .confirm-modal p { margin: 0 0 16px; color: #5f6368; font-size: 0.9rem; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -174,303 +93,216 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/teacher-auth-v3.js"></script>
+  <script src="../config.js?v=1"></script>
+  <script src="../assets/js/app.js?v=1"></script>
+  <script src="../assets/js/store.js?v=1"></script>
+  <script src="../assets/js/teacher-auth.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
+      if (!window.TeacherAuth) {
+        document.getElementById('results-area').innerHTML = '<div class="card la-empty">⚠️ Auth module not loaded</div>';
+        return;
+      }
       TeacherAuth.init();
       if (!TeacherAuth.require()) return;
 
-      const TERMS = ['term1', 'term2', 'term3'];
-      const ASSESSMENT_LABELS = {
+      var TERMS = ['term1', 'term2', 'term3'];
+      var LABELS = {
         quiz1: 'Quiz 1', quiz2: 'Quiz 2', quiz3: 'Quiz 3',
         st1: 'Summative Test 1', st2: 'Summative Test 2',
         te: 'Term Exam'
       };
 
-      APP.$('#btn-refresh').addEventListener('click', render);
-      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+      document.getElementById('btn-refresh').addEventListener('click', render);
+      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
 
-      /* ============================================================
-         SCAN FOR LOCKED ASSESSMENTS
-         ============================================================ */
       function scanLocked() {
-        const termFilter = APP.$('#filter-term').value;
-        const sectionFilter = APP.$('#filter-section').value;
+        var termFilter = document.getElementById('filter-term').value;
+        var sectionFilter = document.getElementById('filter-section').value;
 
-        let students = Store.getAllUsers();
-        if (sectionFilter) students = students.filter((s) => s.section === sectionFilter);
+        var students = Store.getAllUsers();
+        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
         if (!students.length) return [];
 
-        const found = [];
-        const termsToScan = termFilter ? [termFilter] : TERMS;
+        var found = [];
+        var termsToScan = termFilter ? [termFilter] : TERMS;
 
-        students.forEach((s) => {
-          termsToScan.forEach((term) => {
-            // Check each assessment type
-            ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te'].forEach((id) => {
-              const lockKey = `${term}_${id}`;
-              const lock = Store.isAssessmentLocked(s.lrn, lockKey);
-              if (!lock) return;
+        students.forEach(function(s) {
+          termsToScan.forEach(function(term) {
+            ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te'].forEach(function(id) {
+              var lockKey = term + '_' + id;
+              var locked = Store.isAssessmentLocked && Store.isAssessmentLocked(s.lrn, lockKey);
+              if (!locked) return;
 
-              // Get lock details
-              const NS = 'gsa_v1_';
-              const raw = localStorage.getItem(`${NS}lock_${s.lrn}_${lockKey}`);
-              let lockData = {};
+              var NS = 'gsa_v1_';
+              var raw = localStorage.getItem(NS + 'lock_' + s.lrn + '_' + lockKey);
+              var lockData = {};
               try { lockData = raw ? JSON.parse(raw) : {}; } catch (e) { lockData = {}; }
 
-              // Get score if available
-              const scores = Store.getScores(s.lrn);
-              const t = scores[term] || {};
-              const record = t[id]?.score !== undefined ? t[id] : (t.quizzes?.[id] || t.st?.[id] || (id === 'te' ? t.te : null));
+              var scores = Store.getScores(s.lrn);
+              var t = scores[term] || {};
+              var record = null;
+              if (id === 'te') record = t.te;
+              else if (t.quizzes && t.quizzes[id]) record = t.quizzes[id];
+              else if (t.st && t.st[id]) record = t.st[id];
 
               found.push({
                 student: s,
-                term,
+                term: term,
                 assessmentId: id,
-                assessmentLabel: ASSESSMENT_LABELS[id] || id,
-                lockKey,
-                lockData,
-                record: record || null
+                assessmentLabel: LABELS[id] || id,
+                lockKey: lockKey,
+                lockData: lockData,
+                record: record
               });
             });
           });
         });
 
-        // Sort by student last name, then term, then assessment
-        return found.sort((a, b) => {
-          const la = a.student.lastName.localeCompare(b.student.lastName);
+        found.sort(function(a, b) {
+          var la = (a.student.lastName || '').localeCompare(b.student.lastName || '');
           if (la !== 0) return la;
           if (a.term !== b.term) return a.term.localeCompare(b.term);
           return a.assessmentId.localeCompare(b.assessmentId);
         });
+
+        return found;
       }
 
-      /* ============================================================
-         RENDER
-         ============================================================ */
       function render() {
-        const area = APP.$('#results-area');
-        const locked = scanLocked();
+        var area = document.getElementById('results-area');
+        var locked = scanLocked();
 
         if (!locked.length) {
-          area.innerHTML = `
-            <div class="card la-empty success">
-              <div style="font-size:3rem;margin-bottom:12px;">✅</div>
-              <div style="font-weight:700;color:#1b5e20;font-size:1.1rem;margin-bottom:6px;">
-                No locked assessments
-              </div>
-              <p style="font-size:0.9rem;max-width:480px;margin:0 auto;">
-                All students are clear to take their assessments. Keep monitoring.
-              </p>
-            </div>
-          `;
+          area.innerHTML =
+            '<div class="card la-empty success">' +
+              '<div style="font-size:3rem;margin-bottom:12px;">✅</div>' +
+              '<div style="font-weight:700;color:#1b5e20;font-size:1.1rem;margin-bottom:6px;">No locked assessments</div>' +
+              '<p style="font-size:0.9rem;max-width:480px;margin:0 auto;">All students are clear to take their assessments. Keep monitoring.</p>' +
+            '</div>';
           return;
         }
 
-        // Group by student
-        const grouped = {};
-        locked.forEach((l) => {
+        var grouped = {};
+        locked.forEach(function(l) {
           if (!grouped[l.student.lrn]) grouped[l.student.lrn] = [];
           grouped[l.student.lrn].push(l);
         });
 
-        let html = `
-          <div class="stats-grid" style="margin-bottom:20px;">
-            <div class="stat-card red">
-              <div class="stat-icon">🔒</div>
-              <div class="stat-value">${locked.length}</div>
-              <div class="stat-label">Total Locked</div>
-            </div>
-            <div class="stat-card amber">
-              <div class="stat-icon">👥</div>
-              <div class="stat-value">${Object.keys(grouped).length}</div>
-              <div class="stat-label">Students Affected</div>
-            </div>
-            <div class="stat-card blue">
-              <div class="stat-icon">📝</div>
-              <div class="stat-value">${locked.filter((l) => l.lockData.reason === 'failed').length}</div>
-              <div class="stat-label">Failed Attempts</div>
-            </div>
-            <div class="stat-card purple">
-              <div class="stat-icon">⚠️</div>
-              <div class="stat-value">${locked.filter((l) => l.lockData.reason === 'tab-switch').length}</div>
-              <div class="stat-label">Tampered</div>
-            </div>
-          </div>
-        `;
+        var failedCount = locked.filter(function(l) { return l.lockData.reason === 'failed'; }).length;
+        var tamperedCount = locked.filter(function(l) { return l.lockData.reason === 'tab-switch'; }).length;
 
-        Object.values(grouped).forEach((items) => {
-          const s = items[0].student;
-          const initials = `${(s.firstName || '?').charAt(0)}${(s.lastName || '?').charAt(0)}`.toUpperCase();
-          const avatarClass = UI.getAvatarClass(s.lrn);
+        var html =
+          '<div class="stats-grid" style="margin-bottom:20px;">' +
+            '<div class="stat-card red"><div class="stat-icon">🔒</div><div class="stat-value">' + locked.length + '</div><div class="stat-label">Total Locked</div></div>' +
+            '<div class="stat-card amber"><div class="stat-icon">👥</div><div class="stat-value">' + Object.keys(grouped).length + '</div><div class="stat-label">Students Affected</div></div>' +
+            '<div class="stat-card blue"><div class="stat-icon">📝</div><div class="stat-value">' + failedCount + '</div><div class="stat-label">Failed Attempts</div></div>' +
+            '<div class="stat-card purple"><div class="stat-icon">⚠️</div><div class="stat-value">' + tamperedCount + '</div><div class="stat-label">Tampered</div></div>' +
+          '</div>';
 
-          html += `
-            <div style="margin-bottom:24px;">
-              <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px 16px;background:#f5f7fa;border-radius:10px;">
-                <div class="student-avatar ${avatarClass}" style="width:40px;height:40px;font-size:0.85rem;">${initials}</div>
-                <div style="flex:1;min-width:180px;">
-                  <div style="font-weight:700;font-size:1rem;color:#1a1a1a;">
-                    ${APP.formatFullName(s.lastName, s.firstName, s.middleName)}
-                  </div>
-                  <div style="font-size:0.75rem;color:#78909c;">
-                    LRN: ${APP.formatLRN(s.lrn)} · ${s.section}
-                  </div>
-                </div>
-                <span class="badge-pill danger">${items.length} lock${items.length > 1 ? 's' : ''}</span>
-              </div>
+        Object.keys(grouped).forEach(function(lrn) {
+          var items = grouped[lrn];
+          var s = items[0].student;
+          var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
 
-              ${items.map((l) => renderLockCard(l)).join('')}
-            </div>
-          `;
+          html +=
+            '<div style="margin-bottom:24px;">' +
+              '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px 16px;background:#f5f7fa;border-radius:10px;">' +
+                '<div class="student-avatar av-1" style="width:40px;height:40px;font-size:0.85rem;">' + initials + '</div>' +
+                '<div style="flex:1;min-width:180px;">' +
+                  '<div style="font-weight:700;font-size:1rem;color:#1a1a1a;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
+                  '<div style="font-size:0.75rem;color:#78909c;">LRN: ' + APP.formatLRN(s.lrn) + ' · ' + s.section + '</div>' +
+                '</div>' +
+                '<span class="badge-pill danger">' + items.length + ' lock' + (items.length > 1 ? 's' : '') + '</span>' +
+              '</div>' +
+              items.map(renderLockCard).join('') +
+            '</div>';
         });
 
         area.innerHTML = html;
 
-        // Attach handlers
-        area.querySelectorAll('[data-unlock]').forEach((btn) => {
-          btn.addEventListener('click', () => promptUnlock(btn.dataset.unlock, btn.dataset.student, btn.dataset.label));
+        area.querySelectorAll('[data-unlock]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            promptUnlock(btn.dataset.unlock, btn.dataset.student, btn.dataset.label);
+          });
         });
-
-        area.querySelectorAll('[data-unlock-all]').forEach((btn) => {
-          btn.addEventListener('click', () => promptUnlockAll(btn.dataset.unlockAll));
-        });
-
-        APP.toast(`Found ${locked.length} locked assessment(s)`, 'info', 2500);
       }
 
-      /* ============================================================
-         LOCK CARD
-         ============================================================ */
       function renderLockCard(l) {
-        const isTampered = l.lockData.reason === 'tab-switch';
-        const reasonClass = isTampered ? 'tampered' : 'failed';
-        const termLabel = l.term.replace('term', 'Term ');
-        const lockedDate = l.lockData.lockedAt ? APP.formatDate(l.lockData.lockedAt) : '—';
-        const score = l.lockData.score != null ? `${l.lockData.score}%` : (l.record?.percent != null ? `${l.record.percent}%` : '—');
+        var isTampered = l.lockData.reason === 'tab-switch';
+        var reasonClass = isTampered ? 'tampered' : 'failed';
+        var termLabel = l.term.replace('term', 'Term ');
+        var lockedDate = l.lockData.lockedAt ? APP.formatDate(l.lockData.lockedAt) : '—';
+        var score = (l.lockData.score !== undefined && l.lockData.score !== null)
+          ? l.lockData.score + '%'
+          : (l.record && l.record.percent !== undefined ? l.record.percent + '%' : '—');
 
-        return `
-          <div class="lock-card ${isTampered ? 'tampered' : ''}">
-            <div class="lock-head">
-              <span style="font-size:1.4rem;">${isTampered ? '⚠️' : '🔒'}</span>
-              <div style="flex:1;min-width:0;">
-                <div style="font-weight:700;font-size:0.98rem;color:#1a1a1a;">
-                  ${l.assessmentLabel}
-                </div>
-                <div style="font-size:0.78rem;color:#78909c;margin-top:2px;">
-                  ${termLabel} · Locked on ${lockedDate}
-                </div>
-              </div>
-              <span class="badge-pill ${isTampered ? 'danger' : 'warning'}">
-                ${isTampered ? 'Tampered' : 'Failed'}
-              </span>
-            </div>
-
-            <div class="lock-meta">
-              <div><strong>Score at lock:</strong> ${score}</div>
-              <div><strong>Reason:</strong> ${isTampered ? 'Tab-switch / Anti-cheat trigger' : 'Below passing score'}</div>
-            </div>
-
-            <div class="lock-reason ${reasonClass}">
-              ${isTampered
-                ? '⚠️ This attempt was auto-locked because the student switched tabs or attempted to copy content during the assessment. Review with the student before unlocking.'
-                : '📖 The student did not reach the 75% passing score. Consider remediation before unlocking for a retake.'}
-            </div>
-
-            <div class="lock-actions">
-              <button class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;"
-                data-unlock="${l.lockKey}"
-                data-student="${l.student.lrn}"
-                data-label="${l.assessmentLabel}">
-                🔓 Unlock for Retake
-              </button>
-            </div>
-          </div>
-        `;
+        return '<div class="lock-card ' + (isTampered ? 'tampered' : '') + '">' +
+          '<div class="lock-head">' +
+            '<span style="font-size:1.4rem;">' + (isTampered ? '⚠️' : '🔒') + '</span>' +
+            '<div style="flex:1;min-width:0;">' +
+              '<div style="font-weight:700;font-size:0.98rem;color:#1a1a1a;">' + l.assessmentLabel + '</div>' +
+              '<div style="font-size:0.78rem;color:#78909c;margin-top:2px;">' + termLabel + ' · Locked on ' + lockedDate + '</div>' +
+            '</div>' +
+            '<span class="badge-pill ' + (isTampered ? 'danger' : 'warning') + '">' + (isTampered ? 'Tampered' : 'Failed') + '</span>' +
+          '</div>' +
+          '<div class="lock-meta">' +
+            '<div><strong>Score at lock:</strong> ' + score + '</div>' +
+            '<div><strong>Reason:</strong> ' + (isTampered ? 'Tab-switch / Anti-cheat trigger' : 'Below passing score') + '</div>' +
+          '</div>' +
+          '<div class="lock-reason ' + reasonClass + '">' +
+            (isTampered
+              ? '⚠️ This attempt was auto-locked because the student switched tabs or attempted to copy content during the assessment. Review with the student before unlocking.'
+              : '📖 The student did not reach the 75% passing score. Consider remediation before unlocking for a retake.') +
+          '</div>' +
+          '<div class="lock-actions">' +
+            '<button class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;" data-unlock="' + l.lockKey + '" data-student="' + l.student.lrn + '" data-label="' + l.assessmentLabel + '">🔓 Unlock for Retake</button>' +
+          '</div>' +
+        '</div>';
       }
 
-      /* ============================================================
-         UNLOCK FLOW
-         ============================================================ */
       function promptUnlock(lockKey, studentLrn, label) {
         showConfirm({
-          title: `Unlock "${label}"?`,
-          message: `This will allow the student to retake the assessment. Their previous score of ${getScoreFor(studentLrn, lockKey)} will remain in the record but they can attempt again.`,
+          title: 'Unlock "' + label + '"?',
+          message: 'This will allow the student to retake the assessment. Their previous score remains in the record but they can attempt again.',
           confirmText: '🔓 Unlock Now',
-          onConfirm: () => {
+          onConfirm: function() {
             Store.unlockAssessment(studentLrn, lockKey);
-            APP.toast(`🔓 Unlocked "${label}"`, 'success', 3000);
+            APP.toast('🔓 Unlocked "' + label + '"', 'success', 3000);
             render();
           }
         });
       }
 
-      function promptUnlockAll(studentLrn) {
-        showConfirm({
-          title: 'Unlock ALL assessments for this student?',
-          message: 'All locked assessments for this student will be unlocked for retake. Use this after a full review with the student.',
-          confirmText: '🔓 Unlock All',
-          onConfirm: () => {
-            const NS = 'gsa_v1_';
-            const keys = Object.keys(localStorage).filter((k) => k.startsWith(`${NS}lock_${studentLrn}_`));
-            keys.forEach((k) => {
-              const lockKey = k.replace(`${NS}lock_${studentLrn}_`, '');
-              Store.unlockAssessment(studentLrn, lockKey);
-            });
-            APP.toast(`🔓 Unlocked ${keys.length} assessment(s)`, 'success', 3000);
-            render();
-          }
-        });
-      }
-
-      function getScoreFor(lrn, lockKey) {
-        const [term, id] = lockKey.split('_');
-        const scores = Store.getScores(lrn);
-        const t = scores[term] || {};
-        const record = t[id]?.score !== undefined ? t[id]
-          : t.quizzes?.[id] || t.st?.[id] || (id === 'te' ? t.te : null);
-        if (!record) return '—';
-        if (record.percent != null) return `${record.percent}%`;
-        if (record.score != null && record.total) return `${record.score}/${record.total}`;
-        return '—';
-      }
-
-      /* ============================================================
-         CONFIRM MODAL
-         ============================================================ */
-      function showConfirm({ title, message, confirmText, onConfirm }) {
-        const overlay = document.createElement('div');
+      function showConfirm(opts) {
+        var overlay = document.createElement('div');
         overlay.className = 'confirm-overlay';
 
-        const modal = document.createElement('div');
+        var modal = document.createElement('div');
         modal.className = 'confirm-modal';
-        modal.innerHTML = `
-          <h3>${title}</h3>
-          <p>${message}</p>
-          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
-            <button class="btn btn-outline" id="cc-cancel">Cancel</button>
-            <button class="btn btn-primary" id="cc-confirm">${confirmText}</button>
-          </div>
-        `;
+        modal.innerHTML =
+          '<h3>' + opts.title + '</h3>' +
+          '<p>' + opts.message + '</p>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">' +
+            '<button class="btn btn-outline" id="cc-cancel">Cancel</button>' +
+            '<button class="btn btn-primary" id="cc-confirm">' + opts.confirmText + '</button>' +
+          '</div>';
 
         overlay.appendChild(modal);
         document.body.appendChild(overlay);
 
-        const close = () => overlay.remove();
+        function close() { overlay.remove(); }
 
         modal.querySelector('#cc-cancel').addEventListener('click', close);
-        modal.querySelector('#cc-confirm').addEventListener('click', () => {
+        modal.querySelector('#cc-confirm').addEventListener('click', function() {
           close();
-          onConfirm();
+          opts.onConfirm();
         });
-        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
       }
 
-      // Auto-run
       document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
