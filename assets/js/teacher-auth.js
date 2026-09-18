@@ -1,5 +1,5 @@
 /* ============================================================
-   teacher-auth.js — Teacher password authentication
+   teacher-auth-v2.js — Teacher password authentication
    Version: 1.0.0
    App: General Science
    ------------------------------------------------------------
