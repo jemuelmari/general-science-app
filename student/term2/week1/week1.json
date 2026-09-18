@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Chemical Reactions Around Us",
-      "badge": {
-        "id": "chemist",
-        "name": "Chemist",
-        "icon": "🧪"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn the four common reaction types.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Chemical Reactions Around Us</strong> will be added here.</p>"
+      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify and describe four common types of chemical reactions that occur in your daily life: <strong>decomposition</strong>, <strong>acid on carbonates</strong>, <strong>acids on metals</strong>, and <strong>combustion</strong>.</p><h3>🔬 What Is a Chemical Reaction?</h3><p>A <strong>chemical reaction</strong> is a process where one or more substances (called <strong>reactants</strong>) change into new substances (called <strong>products</strong>). The atoms are rearranged — not created or destroyed — during the reaction.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Reactants → Products</strong></p><h3>🧪 Signs a Chemical Reaction Has Occurred</h3><ul><li><strong>Gas bubbles</strong> — fizzing when you open soda</li><li><strong>Color change</strong> — rust forming on iron</li><li><strong>Temperature change</strong> — cooking releases heat</li><li><strong>Precipitate forms</strong> — solid appears in a clear liquid</li><li><strong>Light emitted</strong> — burning wood or fireworks</li><li><strong>New odor</strong> — milk spoiling</li></ul><h3>⚗️ Four Common Reaction Types</h3><table><thead><tr><th>Reaction Type</th><th>What Happens</th><th>Everyday Example</th></tr></thead><tbody><tr><td><strong>Decomposition</strong></td><td>One compound breaks down into two or more simpler substances</td><td>Hydrogen peroxide (H₂O₂) breaking into water and oxygen when used as an antiseptic</td></tr><tr><td><strong>Acid on Carbonates</strong></td><td>An acid reacts with a carbonate → produces CO₂ gas, water, and a salt</td><td>Vinegar on baking soda producing fizz in cakes and volcano experiments</td></tr><tr><td><strong>Acids on Metals</strong></td><td>An acid reacts with a metal → produces hydrogen gas and a salt</td><td>Dilute hydrochloric acid cleaning a rusty nail; lemon juice on aluminum foil</td></tr><tr><td><strong>Combustion</strong></td><td>A substance reacts with oxygen → releases heat and light</td><td>Burning wood, LPG stove flame, jeepney engine, candles</td></tr></tbody></table><h3>🍰 Reaction Types in Daily Activities</h3><ul><li><strong>Baking:</strong> Baking soda + vinegar (or acid in buttermilk) → CO₂ makes the cake rise. <em>Acid on carbonate.</em></li><li><strong>Cleaning:</strong> Bleach (NaClO) decomposes over time releasing oxygen — that's why old bleach is weaker. <em>Decomposition.</em></li><li><strong>Burning:</strong> LPG (C₃H₈) + O₂ → CO₂ + H₂O + heat. <em>Combustion.</em></li><li><strong>Cooking in kalamansi juice:</strong> Citric acid + iron from fish → tenderizes. <em>Acid on metal.</em></li><li><strong>Rusting:</strong> Iron + oxygen + water → iron oxide (rust). <em>Oxidation (slow combustion).</em></li></ul><h3>💡 Why This Matters</h3><p>Understanding reaction types helps you:</p><ul><li><strong>Cook safely</strong> — know when to expect fizzing or heat.</li><li><strong>Clean efficiently</strong> — pick the right chemical for the right mess.</li><li><strong>Prevent accidents</strong> — never mix bleach with ammonia (acid-base reaction producing toxic gas).</li><li><strong>Understand nature</strong> — from photosynthesis to rust, reactions drive everything.</li></ul><h3>📌 Quick Check</h3><ul><li>What type of reaction produces CO₂ when vinegar meets baking soda? (Answer: acid on carbonate)</li><li>Why does old bleach become weaker over time? (Answer: decomposition of NaClO)</li><li>What are the products of combustion of LPG? (Answer: CO₂ and H₂O plus heat)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Reaction Types",
-      "badge": {
-        "id": "chemist",
-        "name": "Chemist",
-        "icon": "🧪"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match each reaction to its real-life example.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Reaction Types</strong> will be added here.</p>",
+      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each reaction type or everyday scenario to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Reaction Types",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Reaction Types",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Reaction Types",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Reaction Types",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Reaction Types",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Reaction Types",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Reaction Types",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Reaction Types",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Decomposition", "right": "One compound breaks down into two or more simpler substances" },
+          { "key": "k2", "left": "Acid on carbonate", "right": "Produces CO₂ gas, water, and a salt — like vinegar on baking soda" },
+          { "key": "k3", "left": "Acids on metals", "right": "Produces hydrogen gas and a salt — like lemon juice on aluminum" },
+          { "key": "k4", "left": "Combustion", "right": "Reaction with oxygen releasing heat and light — like burning LPG" },
+          { "key": "k5", "left": "Photosynthesis", "right": "Plants use CO₂ + H₂O + sunlight to make glucose and O₂" },
+          { "key": "k6", "left": "Rusting of iron", "right": "Slow oxidation of iron in the presence of oxygen and water" },
+          { "key": "k7", "left": "Cellular respiration", "right": "Cells break down glucose with O₂ to release energy" },
+          { "key": "k8", "left": "Fizzing from baking powder", "right": "Acid + bicarbonate produces CO₂ to make cakes rise" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Reactions at Home",
-      "badge": {
-        "id": "chemist",
-        "name": "Chemist",
-        "icon": "🧪"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Identify reaction types in daily activities.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Reactions at Home</strong> will be added here.</p>",
+      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Reactions at Home",
+            "text": "🍰 Your mother bakes a cake and adds baking powder. When the cake is in the oven, it rises. What type of reaction is happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Combustion — the cake burns", "correct": false },
+              { "label": "B) Acid on carbonate — CO₂ gas is released, making the batter rise", "correct": true },
+              { "label": "C) Decomposition — water evaporates", "correct": false },
+              { "label": "D) No chemical reaction happens", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Reactions at Home",
+            "text": "🔦 Your grandmother uses hydrogen peroxide (H₂O₂) on a wound. She notices fizzing. What happened?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Combustion — the H₂O₂ burned", "correct": false },
+              { "label": "B) Decomposition — H₂O₂ breaks into water and oxygen gas, producing fizzing", "correct": true },
+              { "label": "C) Acid-metal reaction", "correct": false },
+              { "label": "D) The bottle was empty", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Reactions at Home",
+            "text": "🚗 A jeepney burns diesel fuel to move. What are the products of this combustion reaction?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Carbon dioxide, water vapor, and heat", "correct": true },
+              { "label": "B) Only hydrogen gas", "correct": false },
+              { "label": "C) Table salt and water", "correct": false },
+              { "label": "D) Hydrogen peroxide", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Reactions at Home",
+            "text": "🔩 You spray a rusty gate with a cleaner containing phosphoric acid. The rust disappears, and bubbles form. What reaction type is this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Combustion", "correct": false },
+              { "label": "B) Decomposition", "correct": false },
+              { "label": "C) Acid on metal — the acid reacts with iron oxide, producing a salt and hydrogen gas", "correct": true },
+              { "label": "D) Evaporation", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Reactions at Home",
+            "text": "⚠️ You are told never to mix bleach with ammonia cleaner. What dangerous reaction happens if you do?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Nothing — they are safe to mix", "correct": false },
+              { "label": "B) Toxic chloramine gas is released, which can damage lungs", "correct": true },
+              { "label": "C) It becomes a stronger bleach", "correct": false },
+              { "label": "D) It creates harmless bubbles", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Chem Lab",
-      "badge": {
-        "id": "chemist",
-        "name": "Chemist",
-        "icon": "🧪"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Chem Lab</strong> will be added here.</p>",
+      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
+      "content": "<h3>🔐 Formative Check — Escape the Chem Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Chem Lab",
+            "text": "Which of the following BEST describes a chemical reaction?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) A physical change like melting ice", "correct": false },
+              { "label": "B) A process where reactants change into new products with different properties", "correct": true },
+              { "label": "C) A change in shape only", "correct": false },
+              { "label": "D) A change in temperature only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Chem Lab",
+            "text": "What type of reaction occurs when vinegar is added to baking soda?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Combustion", "correct": false },
+              { "label": "B) Decomposition", "correct": false },
+              { "label": "C) Acid on carbonate", "correct": true },
+              { "label": "D) Photosynthesis", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Chem Lab",
+            "text": "Why do we see bubbles when hydrogen peroxide is poured on a wound?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) The H₂O₂ is boiling", "correct": false },
+              { "label": "B) H₂O₂ decomposes into water and oxygen gas", "correct": true },
+              { "label": "C) It is reacting with metal in the skin", "correct": false },
+              { "label": "D) It is combusting", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Chem Lab",
+            "text": "Which of the following is NOT a sign of a chemical reaction?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Color change", "correct": false },
+              { "label": "B) Gas bubbles forming", "correct": false },
+              { "label": "C) Change in shape without any other change", "correct": true },
+              { "label": "D) Release of light or heat", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Chem Lab",
+            "text": "What are the products of complete combustion of a hydrocarbon fuel like LPG?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Carbon dioxide and water", "correct": true },
+              { "label": "B) Hydrogen gas only", "correct": false },
+              { "label": "C) Salt and water", "correct": false },
+              { "label": "D) Oxygen and glucose", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Chem Lab",
+            "text": "Why should you NEVER mix bleach with ammonia cleaner?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) It releases toxic chloramine gas that can damage your lungs", "correct": true },
+              { "label": "B) It becomes solid", "correct": false },
+              { "label": "C) It loses all cleaning power", "correct": false },
+              { "label": "D) It smells better", "correct": false }
             ]
           }
         ]
