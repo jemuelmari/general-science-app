@@ -2,13 +2,6 @@
    teacher-auth.js — Teacher password authentication
    Version: 1.2.0
    App: General Science
-   ------------------------------------------------------------
-   Features:
-   - SHA-256 password hashing (Web Crypto API)
-   - Session-based auth (survives refresh, ends on tab close)
-   - Rate limiting (3 attempts → 5-minute lockout)
-   - Session timeout (30 min of inactivity)
-   - Safe logout with confirmation
    ============================================================ */
 
 const TeacherAuth = (() => {
@@ -19,20 +12,15 @@ const TeacherAuth = (() => {
   const LOCKOUT_KEY = 'gsa_teacher_lockout';
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
 
-  // Fallback hash of "teacher2026"
   const DEFAULT_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
 
   let heartbeatInterval = null;
 
-  /* ============================================================
-     INIT
-     ============================================================ */
   function init() {
     if (isAuthenticated()) {
       startHeartbeat();
       trackActivity();
     }
-
     window.addEventListener('storage', (e) => {
       if (e.key === SESSION_KEY && !e.newValue) {
         window.location.replace('teacher-login.html');
@@ -40,9 +28,6 @@ const TeacherAuth = (() => {
     });
   }
 
-  /* ============================================================
-     HASH
-     ============================================================ */
   async function hash(password) {
     const enc = new TextEncoder();
     const data = enc.encode(String(password));
@@ -52,16 +37,11 @@ const TeacherAuth = (() => {
       .join('');
   }
 
-  /* ============================================================
-     LOGIN
-     ============================================================ */
   async function login(password) {
     if (isLockedOut()) {
       throw new Error('Too many attempts. Account is temporarily locked.');
     }
-
     const inputHash = await hash(password);
-
     const storedHash = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_PASSWORD_HASH)
       ? CONFIG.TEACHER_PASSWORD_HASH
       : DEFAULT_HASH;
@@ -74,22 +54,16 @@ const TeacherAuth = (() => {
       trackActivity();
       return true;
     }
-
     incrementAttempts();
-
     const attempts = getAttempts();
     const maxAttempts = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_MAX_ATTEMPTS) || 3;
     if (attempts >= maxAttempts) {
       const lockTime = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_LOCKOUT_TIME) || (5 * 60 * 1000);
       setLockout(lockTime);
     }
-
     return false;
   }
 
-  /* ============================================================
-     SESSION
-     ============================================================ */
   function setSession() {
     const session = {
       authenticatedAt: Date.now(),
@@ -112,12 +86,9 @@ const TeacherAuth = (() => {
   function isAuthenticated() {
     const session = getSession();
     if (!session) return false;
-
     const lastActivity = Number(sessionStorage.getItem(LAST_ACTIVITY_KEY) || session.lastActivity);
     const timeout = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_SESSION_TIMEOUT) || (30 * 60 * 1000);
-    const elapsed = Date.now() - lastActivity;
-
-    if (elapsed > timeout) {
+    if (Date.now() - lastActivity > timeout) {
       clearSession();
       return false;
     }
@@ -143,9 +114,7 @@ const TeacherAuth = (() => {
         if (window.APP && APP.toast) {
           APP.toast('⏰ Session expired. Please log in again.', 'warning', 4000);
         }
-        setTimeout(() => {
-          window.location.replace('teacher-login.html');
-        }, 1500);
+        setTimeout(() => { window.location.replace('teacher-login.html'); }, 1500);
       }
     }, 60000);
   }
@@ -163,9 +132,6 @@ const TeacherAuth = (() => {
     stopHeartbeat();
   }
 
-  /* ============================================================
-     LOGOUT
-     ============================================================ */
   function logout() {
     if (!confirm('Log out of teacher access? You will need to enter the password again.')) {
       return false;
@@ -175,9 +141,6 @@ const TeacherAuth = (() => {
     return true;
   }
 
-  /* ============================================================
-     REQUIRE AUTH
-     ============================================================ */
   function require() {
     if (!isAuthenticated()) {
       const here = window.location.pathname.split('/').pop();
@@ -187,9 +150,6 @@ const TeacherAuth = (() => {
     return true;
   }
 
-  /* ============================================================
-     ATTEMPTS
-     ============================================================ */
   function getAttempts() {
     return Number(localStorage.getItem(ATTEMPTS_KEY) || 0);
   }
@@ -209,12 +169,8 @@ const TeacherAuth = (() => {
     return Math.max(0, max - getAttempts());
   }
 
-  /* ============================================================
-     LOCKOUT
-     ============================================================ */
   function setLockout(durationMs) {
-    const until = Date.now() + durationMs;
-    localStorage.setItem(LOCKOUT_KEY, String(until));
+    localStorage.setItem(LOCKOUT_KEY, String(Date.now() + durationMs));
   }
 
   function getLockout() {
@@ -237,23 +193,9 @@ const TeacherAuth = (() => {
     localStorage.removeItem(LOCKOUT_KEY);
   }
 
-  /* ============================================================
-     PUBLIC API
-     ============================================================ */
   return {
-    init,
-    hash,
-    login,
-    logout,
-    require,
-    isAuthenticated,
-    getSession,
-    clearSession,
-    getAttempts,
-    getAttemptsLeft,
-    getLockout,
-    isLockedOut,
-    clearAttempts,
-    clearLockout
+    init, hash, login, logout, require, isAuthenticated,
+    getSession, clearSession, getAttempts, getAttemptsLeft,
+    getLockout, isLockedOut, clearAttempts, clearLockout
   };
 })();
