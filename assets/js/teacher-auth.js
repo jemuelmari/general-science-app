@@ -1,6 +1,6 @@
 /* ============================================================
-   teacher-auth-v2.js — Teacher password authentication
-   Version: 1.0.0
+   teacher-auth.js — Teacher password authentication
+   Version: 1.3.0
    App: General Science
    ============================================================ */
 
@@ -12,6 +12,7 @@ const TeacherAuth = (() => {
   const LOCKOUT_KEY = 'gsa_teacher_lockout';
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
 
+  // SHA-256 hash of "teacher2026"
   const DEFAULT_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
 
   let heartbeatInterval = null;
@@ -111,9 +112,6 @@ const TeacherAuth = (() => {
     heartbeatInterval = setInterval(() => {
       if (!isAuthenticated()) {
         stopHeartbeat();
-        if (window.APP && APP.toast) {
-          APP.toast('⏰ Session expired. Please log in again.', 'warning', 4000);
-        }
         setTimeout(() => { window.location.replace('teacher-login.html'); }, 1500);
       }
     }, 60000);
@@ -144,7 +142,7 @@ const TeacherAuth = (() => {
   function require() {
     if (!isAuthenticated()) {
       const here = window.location.pathname.split('/').pop();
-      window.location.replace(`teacher-login.html?next=${encodeURIComponent(here)}`);
+      window.location.replace('teacher-login.html?next=' + encodeURIComponent(here));
       return false;
     }
     return true;
@@ -194,8 +192,19 @@ const TeacherAuth = (() => {
   }
 
   return {
-    init, hash, login, logout, require, isAuthenticated,
-    getSession, clearSession, getAttempts, getAttemptsLeft,
-    getLockout, isLockedOut, clearAttempts, clearLockout
+    init: init,
+    hash: hash,
+    login: login,
+    logout: logout,
+    require: require,
+    isAuthenticated: isAuthenticated,
+    getSession: getSession,
+    clearSession: clearSession,
+    getAttempts: getAttempts,
+    getAttemptsLeft: getAttemptsLeft,
+    getLockout: getLockout,
+    isLockedOut: isLockedOut,
+    clearAttempts: clearAttempts,
+    clearLockout: clearLockout
   };
 })();
