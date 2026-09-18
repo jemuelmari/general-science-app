@@ -232,4 +232,150 @@
         { id: 'physicist',        icon: '⚛️', name: 'Physicist' },
         { id: 'machine-master',   icon: '⚙️', name: 'Machine Master' },
         { id: 'hydraulics-pro',   icon: '💧', name: 'Hydraulics Pro' },
-        { id: 'chemist',          icon
+        { id: 'chemist',          icon: '🧪', name: 'Chemist' },
+        { id: 'reaction-master',  icon: '⚗️', name: 'Reaction Master' },
+        { id: 'cell-explorer',    icon: '🔬', name: 'Cell Explorer' },
+        { id: 'systems-pro',      icon: '🫀', name: 'Systems Pro' },
+        { id: 'earth-scientist',  icon: '🌏', name: 'Earth Scientist' }
+      ];
+
+      const earnedSet = new Set([
+        ...(badges.term1 || []),
+        ...(badges.term2 || []),
+        ...(badges.term3 || [])
+      ]);
+
+      APP.$('#badge-total').textContent = `🏆 ${earnedSet.size} badges earned`;
+      APP.$('#badge-week').textContent = `This week: ${earnedSet.size}`;
+
+      APP.$('#badge-gallery').innerHTML = allBadges.map((b) => {
+        const earned = earnedSet.has(b.id);
+        return `
+          <div class="badge-item ${earned ? '' : 'locked'}">
+            <div class="badge-icon">${b.icon}</div>
+            <div class="badge-name">${b.name}</div>
+          </div>
+        `;
+      }).join('');
+
+      /* ---------- Sync UI ---------- */
+      const syncBtnCode = APP.$('#btn-sync-code');
+
+      if (syncBtnCode) {
+        const backendOn = Sync.backendEnabled();
+        syncBtnCode.textContent = backendOn
+          ? '🔑 Generate Sync Code (works anywhere)'
+          : '🔑 Generate Sync Code (this device only)';
+
+        if (!backendOn) {
+          const warn = document.createElement('div');
+          warn.className = 'alert alert-warning';
+          warn.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+          warn.innerHTML = `
+            <strong>⚠️ Sync Code is limited</strong>
+            <p style="margin-top:6px;">Sync Codes currently only work if the teacher uses the <strong>same device</strong>.
+            To send progress from a different device, use <strong>Download Backup (JSON)</strong> instead.</p>
+          `;
+          syncBtnCode.parentElement.appendChild(warn);
+        } else {
+          const info = document.createElement('div');
+          info.className = 'alert alert-success';
+          info.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+          info.innerHTML = `
+            <strong>✅ Cross-device sync enabled</strong>
+            <p style="margin-top:6px;">Sync Codes work on any device connected to the internet.</p>
+          `;
+          syncBtnCode.parentElement.appendChild(info);
+        }
+      }
+
+      if (syncBtnCode) {
+        syncBtnCode.addEventListener('click', async () => {
+          syncBtnCode.disabled = true;
+          syncBtnCode.textContent = '⏳ Generating...';
+          try {
+            const result = await Sync.generateSyncCode(user.lrn, null);
+            const modeLabel = result.mode === 'backend'
+              ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
+              : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
+            APP.$('#sync-output').innerHTML = `
+              <div class="alert alert-success">
+                <strong>✅ Sync Code Generated!</strong>
+                <div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">
+                  ${result.code}
+                </div>
+                <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
+                <p class="text-small">${result.mode === 'backend'
+                  ? 'Send this code to your teacher — they can import it from any device.'
+                  : 'Your teacher must use the SAME device to import this code.'}</p>
+              </div>
+            `;
+            APP.toast('Sync code generated!', 'success');
+          } catch (e) {
+            APP.toast('Failed: ' + e.message, 'danger');
+          } finally {
+            syncBtnCode.disabled = false;
+            syncBtnCode.textContent = Sync.backendEnabled()
+              ? '🔑 Generate Sync Code (works anywhere)'
+              : '🔑 Generate Sync Code (this device only)';
+          }
+        });
+      }
+
+      APP.$('#btn-export-json').addEventListener('click', async () => {
+        try {
+          const fn = await Sync.exportAsFile(user.lrn, null);
+          APP.toast(`Saved: ${fn}`, 'success');
+        } catch (e) {
+          APP.toast('Export failed: ' + e.message, 'danger');
+        }
+      });
+
+      APP.$('#btn-import-json').addEventListener('click', () => {
+        APP.$('#import-file').click();
+      });
+
+      APP.$('#import-file').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const data = await Backup.uploadBackup(file);
+          APP.toast(`Backup restored for ${data.user.firstName}!`, 'success');
+          setTimeout(() => location.reload(), 900);
+        } catch (err) {
+          APP.toast('Import failed: ' + err.message, 'danger');
+        }
+        e.target.value = '';
+      });
+
+      APP.$('#btn-logout').addEventListener('click', () => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+          position:fixed;inset:0;background:rgba(255,255,255,0.95);
+          display:flex;align-items:center;justify-content:center;
+          z-index:99999;font-family:'Segoe UI',sans-serif;
+        `;
+        overlay.innerHTML = `
+          <div style="text-align:center;">
+            <div style="font-size:2rem;">👋</div>
+            <div style="font-weight:600;color:#0d47a1;margin-top:8px;">Logging out...</div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+
+        sessionStorage.setItem('gsa_logout_pending', JSON.stringify({
+          lrn: user.lrn,
+          at: Date.now()
+        }));
+
+        Store.clearSession();
+
+        setTimeout(() => {
+          window.location.replace('login.html');
+        }, 150);
+      });
+
+    })();
+  </script>
+</body>
+</html>
