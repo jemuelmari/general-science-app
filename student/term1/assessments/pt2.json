@@ -1,0 +1,27 @@
+{
+  "id": "pt2",
+  "title": "PT2 — Design a Model Filipino House",
+  "shortTitle": "PT2 — Model Filipino House",
+  "coverage": "Weeks 4–8",
+  "summary": "Design and build a model house that demonstrates physics principles (rotational dynamics, energy efficiency, sound, and light) suited to Filipino homes.",
+  "instructions": "<p>Your task is to <strong>design and construct a physical or digital model</strong> of a Filipino home that showcases physics principles in action. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Sketch a floor plan</strong> — at least 4 rooms (living area, kitchen, bathroom, and one bedroom).</li><li>Integrate <strong>at least 3 physics concepts</strong> into the design, choosing from:<ul style='margin-left:20px;margin-top:6px;'><li><strong>Rotational dynamics:</strong> ceiling fans, doorknobs, rotating vent windows (jalousies), or water pumps</li><li><strong>Energy efficiency:</strong> natural ventilation (cross-breeze layout), roof orientation for heat reduction, LED lighting plan</li><li><strong>Sound:</strong> soundproofing for the bedroom or noise-reducing layout near streets</li><li><strong>Light:</strong> window placement for natural daylighting, use of reflective surfaces, or mirrors for brightness</li></ul></li><li>Provide a <strong>written explanation</strong> (2–3 pages) of how each physics concept is applied.</li><li><strong>Build a scale model</strong> (physical or digital — SketchUp, Tinkercad, or cardboard).</li><li>Include a <strong>photo or video tour</strong> of your model as part of your submission.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> Submit a PDF report + photos/video of your model. If digital, share the file link in the reflection.</p>",
+  "requirements": [
+    "Floor plan with at least 4 rooms clearly labeled",
+    "At least 3 physics concepts integrated and explained",
+    "Scale model — physical or digital (photo/video required)",
+    "2–3 page written explanation per concept",
+    "Consideration of Filipino climate (heat, rain, typhoons)",
+    "Proper citation of any references used"
+  ],
+  "options": [
+    "Physical scale model (cardboard, foam board, or recycled materials)",
+    "Digital 3D model (SketchUp, Tinkercad, Blender, or similar)"
+  ],
+  "rubric": [
+    { "criterion": "Physics concepts correctly identified and applied (depth and accuracy)", "points": 40 },
+    { "criterion": "Design quality — model, floor plan, and layout", "points": 20 },
+    { "criterion": "Written explanation quality and completeness", "points": 20 },
+    { "criterion": "Philippine context (climate-appropriate design)", "points": 10 },
+    { "criterion": "Creativity, neatness, and overall presentation", "points": 10 }
+  ]
+}
