@@ -1,0 +1,127 @@
+{
+  "title": "Quiz 2 — Properties of Light & Sound",
+  "coverage": "Weeks 5–6",
+  "items": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What type of wave is light?",
+      "options": ["Electromagnetic wave", "Mechanical wave", "Sound wave", "Seismic wave"],
+      "correct": "Electromagnetic wave"
+    },
+    {
+      "id": "q2",
+      "text": "What is the speed of light in a vacuum?",
+      "options": ["3 × 10⁸ m/s", "343 m/s", "1,480 m/s", "3 × 10⁶ m/s"],
+      "correct": "3 × 10⁸ m/s"
+    },
+    {
+      "id": "q3",
+      "text": "Which property of light determines its color?",
+      "options": ["Wavelength (or frequency)", "Amplitude", "Speed", "Intensity"],
+      "correct": "Wavelength (or frequency)"
+    },
+    {
+      "id": "q4",
+      "text": "When light bounces off a mirror, this is called:",
+      "options": ["Reflection", "Refraction", "Diffraction", "Absorption"],
+      "correct": "Reflection"
+    },
+    {
+      "id": "q5",
+      "text": "Why does a straw look bent when placed in a glass of water?",
+      "options": ["Refraction", "Reflection", "Diffraction", "Polarization"],
+      "correct": "Refraction"
+    },
+    {
+      "id": "q6",
+      "text": "The Law of Reflection states that:",
+      "options": ["Angle of incidence = angle of reflection", "Angle of incidence = 2 × angle of reflection", "Angle of incidence = 0", "Angle of incidence = angle of refraction"],
+      "correct": "Angle of incidence = angle of reflection"
+    },
+    {
+      "id": "q7",
+      "text": "Which EM wave is used in TV remote controls?",
+      "options": ["Infrared", "Ultraviolet", "X-ray", "Gamma ray"],
+      "correct": "Infrared"
+    },
+    {
+      "id": "q8",
+      "text": "Which EM wave is used to take images of bones in hospitals?",
+      "options": ["X-rays", "Radio waves", "Infrared", "Microwaves"],
+      "correct": "X-rays"
+    },
+    {
+      "id": "q9",
+      "text": "Which EM wave has the SHORTEST wavelength?",
+      "options": ["Gamma rays", "Radio waves", "Infrared", "Visible light"],
+      "correct": "Gamma rays"
+    },
+    {
+      "id": "q10",
+      "text": "Which technology uses light to transmit internet data at very high speeds?",
+      "options": ["Fiber-optic cables", "Copper phone lines", "Satellite dishes", "Bluetooth speakers"],
+      "correct": "Fiber-optic cables"
+    },
+    {
+      "id": "q11",
+      "text": "What is the typical range of the visible light spectrum?",
+      "options": ["400 nm to 700 nm", "20 Hz to 20,000 Hz", "100 nm to 200 nm", "1 mm to 1 m"],
+      "correct": "400 nm to 700 nm"
+    },
+    {
+      "id": "q12",
+      "text": "Which lighting technology is the MOST energy-efficient?",
+      "options": ["LED", "Incandescent", "Halogen", "Fluorescent tube"],
+      "correct": "LED"
+    },
+    {
+      "id": "q13",
+      "text": "What type of wave is sound?",
+      "options": ["Mechanical wave", "Electromagnetic wave", "Light wave", "Radio wave"],
+      "correct": "Mechanical wave"
+    },
+    {
+      "id": "q14",
+      "text": "Why can't sound travel through space?",
+      "options": ["Space has no particles to vibrate", "Space is too cold", "Sound is absorbed by stars", "Sound moves faster than light"],
+      "correct": "Space has no particles to vibrate"
+    },
+    {
+      "id": "q15",
+      "text": "Sound travels FASTEST through which medium?",
+      "options": ["Steel", "Air", "Water", "Vacuum"],
+      "correct": "Steel"
+    },
+    {
+      "id": "q16",
+      "text": "Which property of a sound wave determines how loud or soft it sounds?",
+      "options": ["Amplitude", "Frequency", "Wavelength", "Speed"],
+      "correct": "Amplitude"
+    },
+    {
+      "id": "q17",
+      "text": "What frequency range can the human ear typically hear?",
+      "options": ["20 Hz – 20,000 Hz", "0 – 10 Hz", "20,000 Hz – 100,000 Hz", "100 Hz – 1,000 Hz"],
+      "correct": "20 Hz – 20,000 Hz"
+    },
+    {
+      "id": "q18",
+      "text": "What does SONAR stand for?",
+      "options": ["Sound Navigation And Ranging", "Sonic Ocean Navigation And Radar", "Sound Observation Network And Receiver", "Submarine Orientation Navigation And Response"],
+      "correct": "Sound Navigation And Ranging"
+    },
+    {
+      "id": "q19",
+      "text": "Which material is BEST for soundproofing a music room?",
+      "options": ["Acoustic foam panels", "Glass", "Ceramic tile", "Steel plates"],
+      "correct": "Acoustic foam panels"
+    },
+    {
+      "id": "q20",
+      "text": "How do noise-cancelling headphones reduce background noise?",
+      "options": ["They emit inverse sound waves that cancel out incoming noise", "They block all sound with foam", "They increase sound frequency", "They reduce the speed of sound"],
+      "correct": "They emit inverse sound waves that cancel out incoming noise"
+    }
+  ]
+}
