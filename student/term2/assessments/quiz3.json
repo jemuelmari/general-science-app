@@ -1,0 +1,172 @@
+{
+  "title": "Quiz 3 — Life Science, Cells & Organ Systems",
+  "coverage": "Weeks 5–8",
+  "items": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is the basic structural and functional unit of all living things?",
+      "options": ["The cell", "The atom", "The tissue", "The organ"],
+      "correct": "The cell"
+    },
+    {
+      "id": "q2",
+      "text": "Which theme of life science explains why you sweat when it's hot?",
+      "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"],
+      "correct": "Homeostasis"
+    },
+    {
+      "id": "q3",
+      "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?",
+      "options": [
+        "Cell → Tissue → Organ → Organ System → Organism",
+        "Organism → Cell → Tissue → Organ",
+        "Organ → Cell → Tissue → Organism",
+        "Tissue → Cell → Organ → Organism"
+      ],
+      "correct": "Cell → Tissue → Organ → Organ System → Organism"
+    },
+    {
+      "id": "q4",
+      "text": "Which statement BEST describes the structure-function relationship?",
+      "options": [
+        "The shape of a biological part determines what job it can perform",
+        "All structures look the same",
+        "Function is random and unrelated to structure",
+        "Only animals have structure-function relationships"
+      ],
+      "correct": "The shape of a biological part determines what job it can perform"
+    },
+    {
+      "id": "q5",
+      "text": "Why are alveoli in the lungs so tiny and numerous?",
+      "options": [
+        "To create a huge surface area for gas exchange",
+        "To make them easier to see",
+        "To reduce oxygen intake",
+        "To store water"
+      ],
+      "correct": "To create a huge surface area for gas exchange"
+    },
+    {
+      "id": "q6",
+      "text": "Which organelle is known as the 'powerhouse of the cell'?",
+      "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"],
+      "correct": "Mitochondria"
+    },
+    {
+      "id": "q7",
+      "text": "What is the energy currency of the cell?",
+      "options": ["ATP", "DNA", "Glucose", "Oxygen"],
+      "correct": "ATP"
+    },
+    {
+      "id": "q8",
+      "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy (ATP)?",
+      "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"],
+      "correct": "Active transport"
+    },
+    {
+      "id": "q9",
+      "text": "A potato slice placed in salty water becomes soft and shriveled. Why?",
+      "options": [
+        "Water left the potato cells by osmosis because the salt solution had lower water concentration",
+        "Salt destroyed the potato cells chemically",
+        "The potato absorbed the salt",
+        "The potato froze"
+      ],
+      "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration"
+    },
+    {
+      "id": "q10",
+      "text": "Which equation correctly represents cellular respiration?",
+      "options": [
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
+        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+        "2H₂ + O₂ → 2H₂O",
+        "CO₂ + H₂O → CH₄ + O₂"
+      ],
+      "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP"
+    },
+    {
+      "id": "q11",
+      "text": "Which organelle performs photosynthesis in plant cells?",
+      "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"],
+      "correct": "Chloroplast"
+    },
+    {
+      "id": "q12",
+      "text": "Which plant organ is primarily responsible for absorbing water and minerals?",
+      "options": ["Roots", "Leaves", "Flowers", "Fruit"],
+      "correct": "Roots"
+    },
+    {
+      "id": "q13",
+      "text": "Which vascular tissue transports water upward from the roots to the leaves?",
+      "options": ["Xylem", "Phloem", "Cambium", "Epidermis"],
+      "correct": "Xylem"
+    },
+    {
+      "id": "q14",
+      "text": "Which vascular tissue transports sugar (food) throughout the plant?",
+      "options": ["Phloem", "Xylem", "Stomata", "Cuticle"],
+      "correct": "Phloem"
+    },
+    {
+      "id": "q15",
+      "text": "What is transpiration?",
+      "options": [
+        "Loss of water vapor from leaves through stomata",
+        "Movement of food through phloem",
+        "Absorption of minerals by the roots",
+        "Production of glucose in leaves"
+      ],
+      "correct": "Loss of water vapor from leaves through stomata"
+    },
+    {
+      "id": "q16",
+      "text": "Why does removing a complete ring of bark kill a tree?",
+      "options": [
+        "It cuts the phloem, so sugars cannot reach the roots, which then starve and die",
+        "It removes the tree's protective armor",
+        "It prevents photosynthesis",
+        "It stops transpiration"
+      ],
+      "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die"
+    },
+    {
+      "id": "q17",
+      "text": "Which brain region coordinates body temperature?",
+      "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"],
+      "correct": "Hypothalamus"
+    },
+    {
+      "id": "q18",
+      "text": "What is the 1st line of defense against pathogens?",
+      "options": [
+        "Physical barriers like skin and mucous membranes",
+        "Antibodies",
+        "Memory cells",
+        "Vaccines"
+      ],
+      "correct": "Physical barriers like skin and mucous membranes"
+    },
+    {
+      "id": "q19",
+      "text": "How do vaccines protect you from future infections?",
+      "options": [
+        "They create memory B and T cells that respond quickly if the real pathogen appears",
+        "They kill all pathogens in your body permanently",
+        "They replace your immune system",
+        "They cause the disease in a mild form only"
+      ],
+      "correct": "They create memory B and T cells that respond quickly if the real pathogen appears"
+    },
+    {
+      "id": "q20",
+      "text": "A torn ACL is a common sports injury affecting which body part?",
+      "options": ["The knee joint", "The heart", "The lungs", "The brain"],
+      "correct": "The knee joint"
+    }
+  ]
+}

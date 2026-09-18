@@ -1,0 +1,282 @@
+{
+  "title": "Summative Test 2 — Life Science & Organ Systems",
+  "coverage": "Weeks 5–8",
+  "items": 30,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is the basic structural and functional unit of all living things?",
+      "options": ["The cell", "The atom", "The tissue", "The organ"],
+      "correct": "The cell"
+    },
+    {
+      "id": "q2",
+      "text": "Which theme of life science explains why you sweat when it's hot?",
+      "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"],
+      "correct": "Homeostasis"
+    },
+    {
+      "id": "q3",
+      "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?",
+      "options": [
+        "Cell → Tissue → Organ → Organ System → Organism",
+        "Organism → Cell → Tissue → Organ",
+        "Organ → Cell → Tissue → Organism",
+        "Tissue → Cell → Organ → Organism"
+      ],
+      "correct": "Cell → Tissue → Organ → Organ System → Organism"
+    },
+    {
+      "id": "q4",
+      "text": "Which statement BEST describes the structure-function relationship?",
+      "options": [
+        "The shape of a biological part determines what job it can perform",
+        "All structures look the same",
+        "Function is random and unrelated to structure",
+        "Only animals have structure-function relationships"
+      ],
+      "correct": "The shape of a biological part determines what job it can perform"
+    },
+    {
+      "id": "q5",
+      "text": "Why are alveoli in the lungs so tiny and numerous?",
+      "options": [
+        "To create a huge surface area for gas exchange",
+        "To make them easier to see",
+        "To reduce oxygen intake",
+        "To store water"
+      ],
+      "correct": "To create a huge surface area for gas exchange"
+    },
+    {
+      "id": "q6",
+      "text": "Why is a red blood cell's shape (biconcave disc) important?",
+      "options": [
+        "It holds more hemoglobin and can squeeze through narrow capillaries",
+        "It makes the cell heavier",
+        "It helps the cell make antibodies",
+        "The shape is random — no function"
+      ],
+      "correct": "It holds more hemoglobin and can squeeze through narrow capillaries"
+    },
+    {
+      "id": "q7",
+      "text": "Which organelle is known as the 'powerhouse of the cell'?",
+      "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"],
+      "correct": "Mitochondria"
+    },
+    {
+      "id": "q8",
+      "text": "What is the energy currency of the cell?",
+      "options": ["ATP", "DNA", "Glucose", "Oxygen"],
+      "correct": "ATP"
+    },
+    {
+      "id": "q9",
+      "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy (ATP)?",
+      "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"],
+      "correct": "Active transport"
+    },
+    {
+      "id": "q10",
+      "text": "A potato slice placed in salty water becomes soft and shriveled. Why?",
+      "options": [
+        "Water left the potato cells by osmosis because the salt solution had lower water concentration",
+        "Salt destroyed the potato cells chemically",
+        "The potato absorbed the salt",
+        "The potato froze"
+      ],
+      "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration"
+    },
+    {
+      "id": "q11",
+      "text": "Which equation correctly represents cellular respiration?",
+      "options": [
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
+        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+        "2H₂ + O₂ → 2H₂O",
+        "CO₂ + H₂O → CH₄ + O₂"
+      ],
+      "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP"
+    },
+    {
+      "id": "q12",
+      "text": "Which organelle performs photosynthesis in plant cells?",
+      "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"],
+      "correct": "Chloroplast"
+    },
+    {
+      "id": "q13",
+      "text": "Which plant organ is primarily responsible for absorbing water and minerals?",
+      "options": ["Roots", "Leaves", "Flowers", "Fruit"],
+      "correct": "Roots"
+    },
+    {
+      "id": "q14",
+      "text": "Which vascular tissue transports water upward from the roots to the leaves?",
+      "options": ["Xylem", "Phloem", "Cambium", "Epidermis"],
+      "correct": "Xylem"
+    },
+    {
+      "id": "q15",
+      "text": "Which vascular tissue transports sugar (food) throughout the plant?",
+      "options": ["Phloem", "Xylem", "Stomata", "Cuticle"],
+      "correct": "Phloem"
+    },
+    {
+      "id": "q16",
+      "text": "What is transpiration?",
+      "options": [
+        "Loss of water vapor from leaves through stomata",
+        "Movement of food through phloem",
+        "Absorption of minerals by the roots",
+        "Production of glucose in leaves"
+      ],
+      "correct": "Loss of water vapor from leaves through stomata"
+    },
+    {
+      "id": "q17",
+      "text": "Why does removing a complete ring of bark kill a tree?",
+      "options": [
+        "It cuts the phloem, so sugars cannot reach the roots, which then starve and die",
+        "It removes the tree's protective armor",
+        "It prevents photosynthesis",
+        "It stops transpiration"
+      ],
+      "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die"
+    },
+    {
+      "id": "q18",
+      "text": "Which of these plant tissues is responsible for support and transport between roots and leaves?",
+      "options": [
+        "Vascular tissue (xylem + phloem) in the stem",
+        "Only the roots",
+        "Only the flowers",
+        "Only the fruit"
+      ],
+      "correct": "Vascular tissue (xylem + phloem) in the stem"
+    },
+    {
+      "id": "q19",
+      "text": "Which brain region coordinates body temperature?",
+      "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"],
+      "correct": "Hypothalamus"
+    },
+    {
+      "id": "q20",
+      "text": "What is the 1st line of defense against pathogens?",
+      "options": [
+        "Physical barriers like skin and mucous membranes",
+        "Antibodies",
+        "Memory cells",
+        "Vaccines"
+      ],
+      "correct": "Physical barriers like skin and mucous membranes"
+    },
+    {
+      "id": "q21",
+      "text": "How do vaccines protect you from future infections?",
+      "options": [
+        "They create memory B and T cells that respond quickly if the real pathogen appears",
+        "They kill all pathogens in your body permanently",
+        "They replace your immune system",
+        "They cause the disease in a mild form only"
+      ],
+      "correct": "They create memory B and T cells that respond quickly if the real pathogen appears"
+    },
+    {
+      "id": "q22",
+      "text": "Which of the following BEST describes the difference between nervous and endocrine responses?",
+      "options": [
+        "Nervous is fast and short-term; endocrine is slower but longer-lasting",
+        "Nervous is slow; endocrine is fast",
+        "They are identical",
+        "Only nervous responses involve hormones"
+      ],
+      "correct": "Nervous is fast and short-term; endocrine is slower but longer-lasting"
+    },
+    {
+      "id": "q23",
+      "text": "A torn ACL is a common sports injury affecting which body part?",
+      "options": ["The knee joint", "The heart", "The lungs", "The brain"],
+      "correct": "The knee joint"
+    },
+    {
+      "id": "q24",
+      "text": "Which of the following is a symptom of an asthma attack?",
+      "options": [
+        "Difficulty breathing and wheezing due to narrowed bronchioles",
+        "Broken bones",
+        "Rapid hair growth",
+        "Loss of vision"
+      ],
+      "correct": "Difficulty breathing and wheezing due to narrowed bronchioles"
+    },
+    {
+      "id": "q25",
+      "text": "When you get a small cut and it becomes red, warm, and swollen, what is happening?",
+      "options": [
+        "Inflammation — 2nd line of immune defense sending white blood cells",
+        "An allergic reaction",
+        "The cut is infected and untreatable",
+        "Your immune system is failing"
+      ],
+      "correct": "Inflammation — 2nd line of immune defense sending white blood cells"
+    },
+    {
+      "id": "q26",
+      "text": "Which of the following correctly lists the THREE lines of immune defense?",
+      "options": [
+        "Barriers, innate, adaptive",
+        "Skin, bone, blood",
+        "Heart, lungs, kidneys",
+        "B cells, T cells, RBCs"
+      ],
+      "correct": "Barriers, innate, adaptive"
+    },
+    {
+      "id": "q27",
+      "text": "Which organ system houses white blood cells that fight infection?",
+      "options": [
+        "Immune and lymphatic system",
+        "Skeletal system",
+        "Digestive system",
+        "Reproductive system"
+      ],
+      "correct": "Immune and lymphatic system"
+    },
+    {
+      "id": "q28",
+      "text": "Which of the following BEST explains why a red blood cell has no nucleus?",
+      "options": [
+        "To free up space for more hemoglobin, allowing it to carry more oxygen",
+        "Because it is dying",
+        "To make it lighter",
+        "Because it doesn't need DNA"
+      ],
+      "correct": "To free up space for more hemoglobin, allowing it to carry more oxygen"
+    },
+    {
+      "id": "q29",
+      "text": "Which of the following is an example of the interdependence theme in life science?",
+      "options": [
+        "Bees pollinating flowers while collecting nectar",
+        "Sweating to cool down",
+        "Reproducing by mitosis",
+        "Homeostasis"
+      ],
+      "correct": "Bees pollinating flowers while collecting nectar"
+    },
+    {
+      "id": "q30",
+      "text": "Which of the following BEST summarizes the main idea of Term 2?",
+      "options": [
+        "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense",
+        "Only chemistry matters in daily life",
+        "Only biology matters in daily life",
+        "Neither chemistry nor biology is important"
+      ],
+      "correct": "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense"
+    }
+  ]
+}

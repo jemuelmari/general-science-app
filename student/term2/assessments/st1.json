@@ -1,0 +1,297 @@
+{
+  "title": "Summative Test 1 — Chemical Reactions & Safety",
+  "coverage": "Weeks 1–4",
+  "items": 30,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is a chemical reaction?",
+      "options": [
+        "A process where reactants change into new products with different properties",
+        "A physical change like melting ice",
+        "A change in shape only",
+        "A change in temperature only"
+      ],
+      "correct": "A process where reactants change into new products with different properties"
+    },
+    {
+      "id": "q2",
+      "text": "Which of the following is a sign that a chemical reaction has occurred?",
+      "options": [
+        "Formation of gas bubbles, color change, or release of heat",
+        "Change in shape only",
+        "Change in size only",
+        "Change in position only"
+      ],
+      "correct": "Formation of gas bubbles, color change, or release of heat"
+    },
+    {
+      "id": "q3",
+      "text": "What type of reaction occurs when hydrogen peroxide (H₂O₂) breaks down into water and oxygen?",
+      "options": ["Decomposition", "Combustion", "Acid on carbonate", "Acid on metal"],
+      "correct": "Decomposition"
+    },
+    {
+      "id": "q4",
+      "text": "Vinegar (acid) reacting with baking soda (carbonate) produces:",
+      "options": [
+        "CO₂ gas, water, and a salt",
+        "Hydrogen gas and a salt",
+        "Only water",
+        "Oxygen gas and a salt"
+      ],
+      "correct": "CO₂ gas, water, and a salt"
+    },
+    {
+      "id": "q5",
+      "text": "What gas is released when an acid reacts with a metal?",
+      "options": ["Hydrogen (H₂)", "Oxygen (O₂)", "Carbon dioxide (CO₂)", "Nitrogen (N₂)"],
+      "correct": "Hydrogen (H₂)"
+    },
+    {
+      "id": "q6",
+      "text": "Burning LPG in a stove is an example of what reaction type?",
+      "options": ["Combustion", "Decomposition", "Acid on metal", "Photosynthesis"],
+      "correct": "Combustion"
+    },
+    {
+      "id": "q7",
+      "text": "What are the products of complete combustion of a hydrocarbon fuel like LPG?",
+      "options": [
+        "Carbon dioxide and water",
+        "Hydrogen and oxygen",
+        "Salt and water",
+        "Glucose and oxygen"
+      ],
+      "correct": "Carbon dioxide and water"
+    },
+    {
+      "id": "q8",
+      "text": "Why should you NEVER mix bleach with ammonia cleaner?",
+      "options": [
+        "It releases toxic chloramine gas that can damage lungs",
+        "It becomes solid",
+        "It loses all cleaning power",
+        "It smells better"
+      ],
+      "correct": "It releases toxic chloramine gas that can damage lungs"
+    },
+    {
+      "id": "q9",
+      "text": "Why must a chemical equation be balanced?",
+      "options": [
+        "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed",
+        "To make it look nicer",
+        "Because of gravity",
+        "To reduce temperature"
+      ],
+      "correct": "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed"
+    },
+    {
+      "id": "q10",
+      "text": "Which equation correctly represents photosynthesis?",
+      "options": [
+        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
+        "2H₂ + O₂ → 2H₂O",
+        "CO₂ + H₂O → CH₄ + O₂"
+      ],
+      "correct": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂"
+    },
+    {
+      "id": "q11",
+      "text": "Which equation correctly represents cellular respiration?",
+      "options": [
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)",
+        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+        "2H₂ + O₂ → 2H₂O",
+        "CH₄ + 2O₂ → CO₂ + 2H₂O"
+      ],
+      "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)"
+    },
+    {
+      "id": "q12",
+      "text": "Where in the cell does cellular respiration mainly occur?",
+      "options": ["Mitochondria", "Nucleus", "Chloroplast", "Ribosome"],
+      "correct": "Mitochondria"
+    },
+    {
+      "id": "q13",
+      "text": "What is ATP and why is it important?",
+      "options": [
+        "It is the energy currency of the cell — used for cellular work",
+        "It is a type of sugar",
+        "It is a protein for growth",
+        "It is a genetic material"
+      ],
+      "correct": "It is the energy currency of the cell — used for cellular work"
+    },
+    {
+      "id": "q14",
+      "text": "Why are photosynthesis and respiration considered 'opposite reactions'?",
+      "options": [
+        "Their reactants and products are reversed",
+        "They happen in the same organelle",
+        "Both produce oxygen",
+        "Neither requires energy"
+      ],
+      "correct": "Their reactants and products are reversed"
+    },
+    {
+      "id": "q15",
+      "text": "Balance this equation: __ H₂ + O₂ → __ H₂O. What are the correct coefficients?",
+      "options": ["2 and 2", "1 and 1", "3 and 3", "4 and 1"],
+      "correct": "2 and 2"
+    },
+    {
+      "id": "q16",
+      "text": "What is a solution?",
+      "options": [
+        "A homogeneous mixture of two or more substances",
+        "A heterogeneous mixture where particles settle at the bottom",
+        "A pure chemical substance",
+        "A type of solid only"
+      ],
+      "correct": "A homogeneous mixture of two or more substances"
+    },
+    {
+      "id": "q17",
+      "text": "In a saltwater solution, which is the solute?",
+      "options": ["Salt", "Water", "Both", "Neither"],
+      "correct": "Salt"
+    },
+    {
+      "id": "q18",
+      "text": "Why is water called the 'universal solvent'?",
+      "options": [
+        "It dissolves more substances than any other liquid",
+        "It is found everywhere",
+        "It has no charge",
+        "It is denser than other liquids"
+      ],
+      "correct": "It dissolves more substances than any other liquid"
+    },
+    {
+      "id": "q19",
+      "text": "Soda (softdrink) is an example of what type of solution?",
+      "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"],
+      "correct": "Gas-in-liquid"
+    },
+    {
+      "id": "q20",
+      "text": "What is saturation?",
+      "options": [
+        "The point where no more solute can dissolve in a solvent at a given temperature",
+        "When a solution is diluted with water",
+        "When a solute evaporates",
+        "When a solvent freezes"
+      ],
+      "correct": "The point where no more solute can dissolve in a solvent at a given temperature"
+    },
+    {
+      "id": "q21",
+      "text": "What happens to a plant when grown in soil with very high salt concentration?",
+      "options": [
+        "Water moves out of the plant roots due to osmotic stress, causing wilting",
+        "It grows faster because salt is a nutrient",
+        "It becomes saltwater-tolerant automatically",
+        "Nothing changes"
+      ],
+      "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting"
+    },
+    {
+      "id": "q22",
+      "text": "What is saltwater intrusion?",
+      "options": [
+        "Seawater seeping into freshwater aquifers, making them salty and unusable",
+        "Adding salt to freshwater for drinking",
+        "Removing salt from seawater",
+        "A type of water filtration"
+      ],
+      "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable"
+    },
+    {
+      "id": "q23",
+      "text": "What does the GHS skull-and-crossbones symbol mean?",
+      "options": [
+        "Acute toxicity — can cause death or serious harm",
+        "Flammable liquid",
+        "Corrosive to metals",
+        "Harmless"
+      ],
+      "correct": "Acute toxicity — can cause death or serious harm"
+    },
+    {
+      "id": "q24",
+      "text": "Which GHS symbol warns that a chemical can corrode skin or metals?",
+      "options": [
+        "Corrosion (test tube dripping on surface)",
+        "Flame",
+        "Skull and crossbones",
+        "Exclamation mark"
+      ],
+      "correct": "Corrosion (test tube dripping on surface)"
+    },
+    {
+      "id": "q25",
+      "text": "Why must acids and bases be stored separately?",
+      "options": [
+        "They can react violently if they touch",
+        "They have different colors",
+        "They smell different",
+        "They weigh differently"
+      ],
+      "correct": "They can react violently if they touch"
+    },
+    {
+      "id": "q26",
+      "text": "What is the BEST practice when handling chemicals at home?",
+      "options": [
+        "Wear gloves, work in a well-ventilated area, and read the label",
+        "Work in a closed room to avoid drafts",
+        "Mix all cleaners to save time",
+        "Store them in food containers for easy access"
+      ],
+      "correct": "Wear gloves, work in a well-ventilated area, and read the label"
+    },
+    {
+      "id": "q27",
+      "text": "What is the BEST way to dispose of leftover household chemicals?",
+      "options": [
+        "Take them to a designated hazardous waste collection point following DENR guidelines",
+        "Pour them into the storm drain",
+        "Throw them in the regular trash",
+        "Bury them in the backyard"
+      ],
+      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines"
+    },
+    {
+      "id": "q28",
+      "text": "What is eutrophication?",
+      "options": [
+        "Algal blooms caused by excess nutrients (phosphates) in water — kills fish",
+        "A cleaning process for detergents",
+        "A form of distillation",
+        "A method of water purification"
+      ],
+      "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish"
+    },
+    {
+      "id": "q29",
+      "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?",
+      "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"],
+      "correct": "RA 6969"
+    },
+    {
+      "id": "q30",
+      "text": "Why is proper chemical disposal important?",
+      "options": [
+        "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
+        "Because the government requires it",
+        "To save money",
+        "To increase the volume of the ocean"
+      ],
+      "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe"
+    }
+  ]
+}
