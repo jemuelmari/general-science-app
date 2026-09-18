@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Cells — The Unit of Life",
-      "badge": {
-        "id": "cell-explorer",
-        "name": "Cell Explorer",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how cells obtain and use energy.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Cells — The Unit of Life</strong> will be added here.</p>"
+      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the parts of a cell, explain how cells obtain nutrients through the cell membrane, and describe how they convert those nutrients into usable energy (ATP) through cellular respiration.</p><h3>🔬 What Is a Cell?</h3><p>The <strong>cell</strong> is the basic structural and functional unit of all living things. Every living organism — from bacteria to humans — is made of one or more cells.</p><table><thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Prokaryotic</strong></td><td>No true nucleus; DNA floats in cytoplasm</td><td>Bacteria</td></tr><tr><td><strong>Eukaryotic</strong></td><td>Has a true nucleus and membrane-bound organelles</td><td>Plant, animal, fungal cells</td></tr></tbody></table><h3>🧩 Parts of a Cell & Their Functions</h3><table><thead><tr><th>Organelle</th><th>Function</th><th>Analogy</th></tr></thead><tbody><tr><td><strong>Cell membrane</strong></td><td>Controls what enters and exits the cell</td><td>Door / gatekeeper</td></tr><tr><td><strong>Cytoplasm</strong></td><td>Jelly-like fluid where reactions occur</td><td>Factory floor</td></tr><tr><td><strong>Nucleus</strong></td><td>Contains DNA — the instructions for the cell</td><td>Manager's office</td></tr><tr><td><strong>Mitochondria</strong></td><td>Produces energy (ATP) through cellular respiration</td><td>Power plant</td></tr><tr><td><strong>Ribosomes</strong></td><td>Builds proteins</td><td>Assembly line</td></tr><tr><td><strong>Endoplasmic reticulum (ER)</strong></td><td>Transports materials inside the cell</td><td>Conveyor belt</td></tr><tr><td><strong>Golgi apparatus</strong></td><td>Packages and ships proteins</td><td>Post office</td></tr><tr><td><strong>Lysosomes</strong></td><td>Break down waste</td><td>Recycling center</td></tr><tr><td><strong>Vacuole</strong></td><td>Stores water, nutrients, waste (large in plants)</td><td>Storage room</td></tr><tr><td><strong>Chloroplast</strong> (plant only)</td><td>Performs photosynthesis to make glucose</td><td>Solar panel</td></tr><tr><td><strong>Cell wall</strong> (plant only)</td><td>Provides structure and support</td><td>Brick wall</td></tr></tbody></table><h3>🍔 How Cells Obtain Nutrients</h3><p>Cells get nutrients through a selectively permeable membrane — a barrier that lets some substances in and keeps others out.</p><table><thead><tr><th>Process</th><th>Description</th><th>Direction</th></tr></thead><tbody><tr><td><strong>Diffusion</strong></td><td>Molecules move from high to low concentration (no energy needed)</td><td>Into or out of cell</td></tr><tr><td><strong>Osmosis</strong></td><td>Water moves across the membrane from high to low water concentration</td><td>Into or out of cell</td></tr><tr><td><strong>Facilitated diffusion</strong></td><td>Molecules move through special channel proteins</td><td>High → low</td></tr><tr><td><strong>Active transport</strong></td><td>Molecules move from low to high concentration <em>using energy (ATP)</em></td><td>Low → high</td></tr><tr><td><strong>Endocytosis</strong></td><td>Cell engulfs large particles or liquids</td><td>Into cell</td></tr><tr><td><strong>Phagocytosis</strong></td><td>White blood cells engulf bacteria</td><td>Into cell</td></tr></tbody></table><h3>⚡ How Cells Convert Nutrients into Energy</h3><p>Once nutrients enter the cell, they are broken down to release energy stored in the form of <strong>ATP (adenosine triphosphate)</strong>.</p><p style='background:#e1f5fe;padding:14px;border-radius:8px;font-family:monospace;text-align:center;'><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~36 ATP</strong></p><h3>🔬 Three Stages of Cellular Respiration</h3><table><thead><tr><th>Stage</th><th>Where</th><th>What Happens</th><th>ATP Produced</th></tr></thead><tbody><tr><td><strong>1. Glycolysis</strong></td><td>Cytoplasm</td><td>Glucose is split into two pyruvate molecules</td><td>2 ATP</td></tr><tr><td><strong>2. Krebs cycle</strong> (Citric Acid Cycle)</td><td>Mitochondrial matrix</td><td>Pyruvate is broken down further; CO₂ released</td><td>2 ATP</td></tr><tr><td><strong>3. Electron Transport Chain (ETC)</strong></td><td>Inner mitochondrial membrane</td><td>Electrons power ATP production; O₂ is final electron acceptor</td><td>~32 ATP</td></tr></tbody></table><p><strong>Total:</strong> ~36 ATP per glucose molecule.</p><h3>🌿 Photosynthesis vs. Respiration — A Cycle</h3><ul><li><strong>Photosynthesis (plants):</strong> Uses sunlight + CO₂ + H₂O to make glucose and O₂.</li><li><strong>Respiration (all cells):</strong> Uses glucose + O₂ to release energy (ATP), CO₂, and H₂O.</li><li>Together, they form a balanced cycle that sustains life on Earth.</li></ul><h3>🩺 Real-Life Applications</h3><ul><li><strong>Medicine:</strong> Cancer cells divide uncontrollably — understanding cell division is key to treatment.</li><li><strong>Nutrition:</strong> Eating balanced meals gives cells the nutrients they need to produce ATP.</li><li><strong>Exercise:</strong> Muscles need more ATP — that's why you breathe faster when running.</li><li><strong>Plant growth:</strong> Fertilizers provide nutrients for photosynthesis and respiration.</li></ul><h3>📌 Quick Check</h3><ul><li>What is the powerhouse of the cell? (Answer: mitochondria)</li><li>What is the energy currency of the cell? (Answer: ATP)</li><li>Which process moves molecules from LOW to HIGH concentration? (Answer: active transport)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Cell Organelles",
-      "badge": {
-        "id": "cell-explorer",
-        "name": "Cell Explorer",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match organelles to their functions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Cell Organelles</strong> will be added here.</p>",
+      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each cell part or process to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Cell Organelles",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Cell Organelles",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Cell Organelles",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Cell Organelles",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Cell Organelles",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Cell Organelles",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Cell Organelles",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Cell Organelles",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Cell membrane", "right": "Controls what enters and exits the cell" },
+          { "key": "k2", "left": "Nucleus", "right": "Contains DNA — the instructions for the cell" },
+          { "key": "k3", "left": "Mitochondria", "right": "Produces ATP (energy) through cellular respiration" },
+          { "key": "k4", "left": "Ribosomes", "right": "Build proteins for the cell" },
+          { "key": "k5", "left": "Chloroplast (plant only)", "right": "Performs photosynthesis to make glucose" },
+          { "key": "k6", "left": "Osmosis", "right": "Water moves across the membrane from high to low water concentration" },
+          { "key": "k7", "left": "Active transport", "right": "Moves molecules from low to high concentration using ATP" },
+          { "key": "k8", "left": "ATP", "right": "The energy currency of the cell — made by mitochondria" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Cell Energy",
-      "badge": {
-        "id": "cell-explorer",
-        "name": "Cell Explorer",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply cell energy concepts to real scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Cell Energy</strong> will be added here.</p>",
+      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Cell Energy",
+            "text": "🏃 During a marathon, a runner's muscles need more energy than usual. What process increases inside their cells?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis", "correct": false },
+              { "label": "B) Cellular respiration — glucose is broken down with more oxygen to produce more ATP", "correct": true },
+              { "label": "C) Osmosis only", "correct": false },
+              { "label": "D) Nothing changes", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Cell Energy",
+            "text": "🥔 A potato slice is placed in a very salty solution. After 30 minutes, the potato feels soft and shriveled. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Water left the potato cells by osmosis because the salt solution had lower water concentration", "correct": true },
+              { "label": "B) Salt destroyed the potato cells chemically", "correct": false },
+              { "label": "C) The potato absorbed the salt", "correct": false },
+              { "label": "D) The potato froze", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Cell Energy",
+            "text": "🦠 A white blood cell engulfs a bacterium to destroy it. What process is this?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Diffusion", "correct": false },
+              { "label": "B) Phagocytosis — a form of endocytosis where the cell engulfs large particles", "correct": true },
+              { "label": "C) Photosynthesis", "correct": false },
+              { "label": "D) Osmosis", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Cell Energy",
+            "text": "🫀 A patient's cells are unable to produce enough ATP. Which organelle is most likely malfunctioning?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Nucleus", "correct": false },
+              { "label": "B) Mitochondria — the site of ATP production", "correct": true },
+              { "label": "C) Ribosome", "correct": false },
+              { "label": "D) Vacuole", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Cell Energy",
+            "text": "🌿 A plant has plenty of sunlight, water, and CO₂. It grows well. Later, it's moved to complete darkness. Which process stops, and what happens to the plant?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis stops (no light), but respiration continues — the plant slowly loses energy reserves", "correct": true },
+              { "label": "B) Both photosynthesis and respiration stop", "correct": false },
+              { "label": "C) Respiration stops first", "correct": false },
+              { "label": "D) Nothing changes", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Cell Lab",
-      "badge": {
-        "id": "cell-explorer",
-        "name": "Cell Explorer",
-        "icon": "🔬"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Cell Lab</strong> will be added here.</p>",
+      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
+      "content": "<h3>🔐 Formative Check — Escape the Cell Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Cell Lab",
+            "text": "What is the basic structural and functional unit of all living things?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) The cell", "correct": true },
+              { "label": "B) The atom", "correct": false },
+              { "label": "C) The tissue", "correct": false },
+              { "label": "D) The organ", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Cell Lab",
+            "text": "Which organelle is known as the 'powerhouse of the cell'?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Mitochondria", "correct": true },
+              { "label": "B) Nucleus", "correct": false },
+              { "label": "C) Ribosome", "correct": false },
+              { "label": "D) Golgi apparatus", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Cell Lab",
+            "text": "What is the energy currency of the cell?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) ATP", "correct": true },
+              { "label": "B) DNA", "correct": false },
+              { "label": "C) Glucose", "correct": false },
+              { "label": "D) Oxygen", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Cell Lab",
+            "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Active transport", "correct": true },
+              { "label": "B) Diffusion", "correct": false },
+              { "label": "C) Osmosis", "correct": false },
+              { "label": "D) Passive transport", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Cell Lab",
+            "text": "Which equation correctly represents cellular respiration?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "correct": true },
+              { "label": "B) 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "correct": false },
+              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
+              { "label": "D) CO₂ + H₂O → CH₄ + O₂", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Cell Lab",
+            "text": "Which organelle performs photosynthesis in plant cells?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Chloroplast", "correct": true },
+              { "label": "B) Mitochondria", "correct": false },
+              { "label": "C) Ribosome", "correct": false },
+              { "label": "D) Nucleus", "correct": false }
             ]
           }
         ]

@@ -9,7 +9,7 @@
     },
     {
       "code": "GENSCI-11-T2-W8-C2",
-      "text": "Explain how vaccines work via immune + lymphatic systems."
+      "text": "Explain how vaccines work via immune and lymphatic systems."
     },
     {
       "code": "GENSCI-11-T2-W8-C3",
@@ -26,65 +26,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Organ Systems Coordinating",
-      "badge": {
-        "id": "systems-pro",
-        "name": "Systems Pro",
-        "icon": "🫀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how organ systems coordinate for homeostasis.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Organ Systems Coordinating</strong> will be added here.</p>"
+      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe how the nervous and endocrine systems coordinate to regulate body temperature (homeostasis), explain how vaccines activate the immune and lymphatic systems, and describe how damage to specific organs affects the whole organism.</p><h3>🫀 The Human Body as a System of Systems</h3><p>The human body has <strong>11 major organ systems</strong>, all working together:</p><table><thead><tr><th>System</th><th>Main Function</th></tr></thead><tbody><tr><td>Circulatory</td><td>Transports blood, oxygen, nutrients, wastes</td></tr><tr><td>Respiratory</td><td>Gas exchange — O₂ in, CO₂ out</td></tr><tr><td>Digestive</td><td>Breaks down food, absorbs nutrients</td></tr><tr><td>Nervous</td><td>Detects stimuli, sends signals, coordinates responses</td></tr><tr><td>Endocrine</td><td>Releases hormones for long-term regulation</td></tr><tr><td>Immune &amp; Lymphatic</td><td>Defends against pathogens; returns fluid to blood</td></tr><tr><td>Muscular &amp; Skeletal</td><td>Movement, support, protection</td></tr><tr><td>Excretory</td><td>Removes waste (urine, sweat)</td></tr><tr><td>Integumentary</td><td>Skin — protection, temperature regulation</td></tr><tr><td>Reproductive</td><td>Produces offspring</td></tr><tr><td>Urinary</td><td>Filters blood, produces urine</td></tr></tbody></table><h3>🌡️ Coordinating Body Temperature (Homeostasis)</h3><p>Your body maintains ~37°C. When it changes, the <strong>hypothalamus</strong> (in the brain) detects the change and coordinates a response through BOTH the nervous and endocrine systems:</p><table><thead><tr><th>Stimulus</th><th>Nervous Response</th><th>Endocrine Response</th><th>Result</th></tr></thead><tbody><tr><td><strong>Too hot</strong></td><td>Sweat glands activated; blood vessels dilate (vasodilation)</td><td>Thyroid reduces metabolic rate</td><td>Body cools down</td></tr><tr><td><strong>Too cold</strong></td><td>Muscles shiver; blood vessels constrict (vasoconstriction); hair stands up</td><td>Adrenaline and thyroid hormones increase heat production</td><td>Body warms up</td></tr></tbody></table><p><strong>Key idea:</strong> The nervous system responds <em>fast</em> (milliseconds) — the endocrine system responds <em>slower but longer-lasting</em> (seconds to hours).</p><h3>🛡️ The Immune &amp; Lymphatic Systems</h3><p>Your body has three lines of defense against pathogens:</p><table><thead><tr><th>Line</th><th>Components</th><th>Example</th></tr></thead><tbody><tr><td><strong>1st line (barriers)</strong></td><td>Skin, mucous membranes, tears, stomach acid</td><td>Skin blocks bacteria; acid kills swallowed pathogens</td></tr><tr><td><strong>2nd line (innate)</strong></td><td>Phagocytes, inflammation, fever</td><td>White blood cells engulf bacteria at a wound</td></tr><tr><td><strong>3rd line (adaptive)</strong></td><td>B cells, T cells, antibodies, memory cells</td><td>Targeted attack after exposure to a specific pathogen</td></tr></tbody></table><p><strong>Lymphatic system:</strong> A network of vessels, lymph nodes, spleen, and thymus that:</p><ul><li>Returns excess fluid to the blood</li><li>Filters out pathogens and debris</li><li>Houses white blood cells that fight infection</li></ul><h3>💉 How Vaccines Work</h3><ol><li><strong>Exposure:</strong> Vaccine introduces a weakened, inactivated, or partial pathogen (antigen).</li><li><strong>Recognition:</strong> B cells and T cells recognize the antigen as foreign.</li><li><strong>Response:</strong> B cells produce antibodies; T cells coordinate the attack.</li><li><strong>Memory:</strong> Some B and T cells become <strong>memory cells</strong> that remain in the body.</li><li><strong>Future protection:</strong> If the real pathogen attacks later, memory cells launch a fast, strong response — often preventing illness entirely.</li></ol><p><strong>Vaccines don't give you the disease — they give your immune system a rehearsal.</strong></p><h3>🦴 When Parts Are Damaged — Case Studies</h3><table><thead><tr><th>Injury / Condition</th><th>What's Damaged</th><th>Effect on the Organism</th></tr></thead><tbody><tr><td><strong>Torn ACL</strong></td><td>Anterior cruciate ligament in the knee</td><td>Knee becomes unstable; walking, running, and pivoting become painful/difficult; may need surgery</td></tr><tr><td><strong>Asthma attack</strong></td><td>Bronchioles in the lungs constrict</td><td>Airways narrow; breathing becomes difficult; wheezing; requires inhaler (bronchodilator)</td></tr><tr><td><strong>Heart attack</strong></td><td>Heart muscle loses blood supply (blocked artery)</td><td>Heart muscle dies; pumping weakens; can be fatal if untreated</td></tr><tr><td><strong>Stroke</strong></td><td>Brain tissue loses blood supply</td><td>Paralysis, speech loss, memory problems — depends on affected brain area</td></tr></tbody></table><h3>🌍 Real-Life Applications</h3><ul><li><strong>DepEd immunization programs:</strong> Measles, polio, hepatitis B, and tetanus vaccines protect millions of Filipino children.</li><li><strong>Athlete injury management:</strong> ACL injuries require physical therapy and sometimes surgery.</li><li><strong>Asthma awareness:</strong> Inhalers and avoiding triggers (dust, smoke, pollen) are key.</li><li><strong>Fever:</strong> A sign that the immune system is fighting infection — not always a bad thing.</li></ul><h3>📌 Quick Check</h3><ul><li>Which organ coordinates body temperature? (Answer: hypothalamus)</li><li>What are the three lines of immune defense? (Answer: barriers, innate, adaptive)</li><li>How do vaccines protect us? (Answer: by creating memory cells via a safe rehearsal)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Body Systems",
-      "badge": {
-        "id": "systems-pro",
-        "name": "Systems Pro",
-        "icon": "🫀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match systems to their functions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Body Systems</strong> will be added here.</p>",
+      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each body system or concept to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Body Systems",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Body Systems",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Body Systems",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Body Systems",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Body Systems",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Body Systems",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Body Systems",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Body Systems",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Hypothalamus", "right": "Brain region that coordinates body temperature" },
+          { "key": "k2", "left": "Vasodilation", "right": "Blood vessels widen to release heat when you're hot" },
+          { "key": "k3", "left": "Vasoconstriction", "right": "Blood vessels narrow to keep heat when you're cold" },
+          { "key": "k4", "left": "1st line of defense", "right": "Skin, mucous membranes, tears, stomach acid" },
+          { "key": "k5", "left": "Memory cells", "right": "B and T cells that remain after infection to fight future attacks" },
+          { "key": "k6", "left": "Vaccine", "right": "A weakened pathogen used to train the immune system safely" },
+          { "key": "k7", "left": "Torn ACL", "right": "Damaged knee ligament — causes instability during movement" },
+          { "key": "k8", "left": "Asthma attack", "right": "Bronchioles in the lungs constrict, making breathing difficult" }
         ]
       }
     },
@@ -92,117 +52,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Immunity & Injury",
-      "badge": {
-        "id": "systems-pro",
-        "name": "Systems Pro",
-        "icon": "🫀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze injury and vaccination scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Immunity & Injury</strong> will be added here.</p>",
+      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Immunity & Injury",
+            "text": "🥵 You run a race under the hot sun and start sweating heavily. Which two systems are coordinating to cool you down?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Only the nervous system", "correct": false },
+              { "label": "B) The nervous system (sweat glands) and the endocrine system (hormones regulating metabolism)", "correct": true },
+              { "label": "C) Only the endocrine system", "correct": false },
+              { "label": "D) The digestive and respiratory systems", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Immunity & Injury",
+            "text": "💉 A child receives the measles vaccine. A few weeks later, they are exposed to a real measles virus but do not get sick. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) The vaccine gave them the disease", "correct": false },
+              { "label": "B) Memory B and T cells recognized the virus and produced antibodies quickly, stopping the infection", "correct": true },
+              { "label": "C) The virus can't infect children", "correct": false },
+              { "label": "D) It was just luck", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Immunity & Injury",
+            "text": "🦵 A basketball player lands badly and tears their ACL. What is a likely consequence?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) The knee becomes unstable; running, jumping, and pivoting become painful or impossible", "correct": true },
+              { "label": "B) The player loses the ability to breathe", "correct": false },
+              { "label": "C) Their vision is affected", "correct": false },
+              { "label": "D) Nothing — the ACL is not important", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Immunity & Injury",
+            "text": "🌬️ A student has an asthma attack during PE class. What is happening in their body?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Their heart has stopped", "correct": false },
+              { "label": "B) The bronchioles in their lungs constricted, narrowing the airways and making breathing hard", "correct": true },
+              { "label": "C) They have a broken rib", "correct": false },
+              { "label": "D) They have a fever", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Immunity & Injury",
+            "text": "🩹 You get a small cut on your finger and it becomes red, warm, and slightly swollen. What is happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) You are having an allergic reaction", "correct": false },
+              { "label": "B) Your 2nd line of defense — inflammation — is sending white blood cells to fight any pathogens that entered", "correct": true },
+              { "label": "C) The cut is infected and untreatable", "correct": false },
+              { "label": "D) Your immune system is failing", "correct": false }
             ]
           }
         ]
@@ -212,138 +108,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Anatomy Lab",
-      "badge": {
-        "id": "systems-pro",
-        "name": "Systems Pro",
-        "icon": "🫀"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Anatomy Lab</strong> will be added here.</p>",
+      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
+      "content": "<h3>🔐 Formative Check — Escape the Anatomy Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Anatomy Lab",
+            "text": "Which brain region coordinates body temperature?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Hypothalamus", "correct": true },
+              { "label": "B) Cerebellum", "correct": false },
+              { "label": "C) Brain stem", "correct": false },
+              { "label": "D) Frontal lobe", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Anatomy Lab",
+            "text": "What is the 1st line of defense against pathogens?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Physical barriers like skin and mucous membranes", "correct": true },
+              { "label": "B) Antibodies", "correct": false },
+              { "label": "C) Memory cells", "correct": false },
+              { "label": "D) Vaccines", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Anatomy Lab",
+            "text": "How do vaccines protect you from future infections?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) They create memory B and T cells that respond quickly if the real pathogen appears", "correct": true },
+              { "label": "B) They kill all pathogens in your body permanently", "correct": false },
+              { "label": "C) They replace your immune system", "correct": false },
+              { "label": "D) They cause the disease in a mild form only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Anatomy Lab",
+            "text": "Which of the following BEST describes the difference between nervous and endocrine responses?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Nervous is fast and short-term; endocrine is slower but longer-lasting", "correct": true },
+              { "label": "B) Nervous is slow; endocrine is fast", "correct": false },
+              { "label": "C) They are identical", "correct": false },
+              { "label": "D) Only nervous responses involve hormones", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Anatomy Lab",
+            "text": "A torn ACL affects which body part?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) The knee joint", "correct": true },
+              { "label": "B) The heart", "correct": false },
+              { "label": "C) The lungs", "correct": false },
+              { "label": "D) The brain", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Anatomy Lab",
+            "text": "Which of the following is a symptom of an asthma attack?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Difficulty breathing and wheezing due to narrowed bronchioles", "correct": true },
+              { "label": "B) Broken bones", "correct": false },
+              { "label": "C) Rapid hair growth", "correct": false },
+              { "label": "D) Loss of vision", "correct": false }
             ]
           }
         ]

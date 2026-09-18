@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Solutions & Their Properties",
-      "badge": {
-        "id": "solution-scientist",
-        "name": "Solution Scientist",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Explore the components and properties of solutions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Solutions & Their Properties</strong> will be added here.</p>"
+      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to define a solution, identify its components, explain concentration and saturation, and describe how solutions appear in everyday life, industry, and the environment.</p><h3>💧 What Is a Solution?</h3><p>A <strong>solution</strong> is a homogeneous mixture of two or more substances where the particles are evenly distributed. You can't see the individual components — it looks like one substance.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Solution = Solute + Solvent</strong></p><table><thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><strong>Solute</strong></td><td>Substance that is dissolved (smaller amount)</td><td>Salt, sugar, CO₂</td></tr><tr><td><strong>Solvent</strong></td><td>Substance that does the dissolving (larger amount)</td><td>Water, alcohol, oil</td></tr><tr><td><strong>Solution</strong></td><td>Uniform mixture of solute + solvent</td><td>Saltwater, soda, coffee</td></tr></tbody></table><h3>🌊 Water — The Universal Solvent</h3><p>Water is called the <strong>universal solvent</strong> because it dissolves more substances than any other liquid. Its polar nature (positive and negative ends) allows it to pull apart many compounds.</p><p>This is why rivers, lakes, and oceans contain dissolved minerals, gases, and salts.</p><h3>📊 Properties of Solutions</h3><table><thead><tr><th>Property</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><strong>Homogeneous</strong></td><td>Uniform throughout — no visible particles</td><td>Saltwater, vinegar</td></tr><tr><td><strong>Transparent</strong></td><td>Light passes through</td><td>Sugar water</td></tr><tr><td><strong>Can't be separated by filtration</strong></td><td>Particles are too small</td><td>Seawater can't be filtered into salt and water</td></tr><tr><td><strong>Concentration</strong></td><td>Amount of solute per amount of solvent</td><td>Salty vs. slightly salty soup</td></tr><tr><td><strong>Saturation</strong></td><td>Point where no more solute can dissolve at a given temperature</td><td>Sugar stops dissolving in iced tea</td></tr></tbody></table><h3>🍯 Types of Solutions by State</h3><ul><li><strong>Solid in liquid:</strong> Salt water, sugar water</li><li><strong>Liquid in liquid:</strong> Vinegar (acetic acid + water), alcohol + water</li><li><strong>Gas in liquid:</strong> Soda (CO₂ in water), soft drinks</li><li><strong>Gas in gas:</strong> Air (O₂ + N₂ + CO₂)</li><li><strong>Solid in solid:</strong> Alloys (bronze = copper + tin)</li></ul><h3>🏠 Solutions in Everyday Life</h3><ul><li><strong>Household:</strong> Coffee, tea, softdrinks, vinegar, bleach solution, shampoo</li><li><strong>Industry:</strong> Pickling brine, metal plating solutions, pharmaceutical syrups</li><li><strong>Environment:</strong> Seawater (salt + water), acid rain (SO₂ + water), dissolved oxygen in lakes</li></ul><h3>🌾 Investigating Salt's Effect on Plant Growth</h3><p>When salt (NaCl) dissolves in soil water, it affects plants in several ways:</p><ul><li><strong>Osmotic stress:</strong> High salt outside the roots pulls water <em>out</em> of the plant instead of in — plants wilt.</li><li><strong>Nutrient imbalance:</strong> Excess Na⁺ and Cl⁻ ions block the uptake of essential nutrients like potassium (K⁺).</li><li><strong>Toxicity:</strong> High salt concentrations can damage cell membranes and enzymes.</li></ul><table><thead><tr><th>Salt Concentration</th><th>Effect on Plant</th></tr></thead><tbody><tr><td>0% (pure water)</td><td>Normal growth</td></tr><tr><td>0.5% (slightly salty)</td><td>Mild stress — growth slows</td></tr><tr><td>2% (moderately salty)</td><td>Wilting, yellowing leaves</td></tr><tr><td>5%+ (very salty)</td><td>Plant dies</td></tr></tbody></table><p>This is why seawater intrusion in coastal farms (from over-pumping groundwater or rising sea levels) is a serious agricultural problem in the Philippines.</p><h3>🌊 Saltwater Intrusion in the Philippines</h3><p>Many coastal barangays in La Union, Pangasinan, and other coastal provinces face saltwater intrusion — seawater seeps into freshwater aquifers, making them unusable for farming and drinking.</p><p><strong>Causes:</strong> Over-extraction of groundwater, rising sea levels due to climate change.</p><p><strong>Effects:</strong> Reduced rice harvests, sick livestock, salty well water.</p><h3>📌 Quick Check</h3><ul><li>What is the difference between a solute and a solvent? (Answer: solute is dissolved, solvent does the dissolving)</li><li>Why is water called the universal solvent? (Answer: it dissolves more substances than any other liquid)</li><li>What happens to a plant in very salty soil? (Answer: it wilts and may die because water leaves its roots)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Solute & Solvent",
-      "badge": {
-        "id": "solution-scientist",
-        "name": "Solution Scientist",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match solute, solvent, and concentration terms.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Solute & Solvent</strong> will be added here.</p>",
+      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each solution concept or example to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Solute & Solvent",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Solute & Solvent",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Solute & Solvent",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Solute & Solvent",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Solute & Solvent",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Solute & Solvent",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Solute & Solvent",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Solute & Solvent",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Solute", "right": "Substance that dissolves — usually smaller amount" },
+          { "key": "k2", "left": "Solvent", "right": "Substance that does the dissolving — usually larger amount" },
+          { "key": "k3", "left": "Water", "right": "Called the 'universal solvent' because it dissolves many substances" },
+          { "key": "k4", "left": "Saltwater", "right": "Example of a solid-in-liquid solution" },
+          { "key": "k5", "left": "Soda (softdrink)", "right": "Example of a gas-in-liquid solution (CO₂ in water)" },
+          { "key": "k6", "left": "Air", "right": "Example of a gas-in-gas solution (O₂ + N₂ + CO₂)" },
+          { "key": "k7", "left": "Saturation", "right": "Point where no more solute can dissolve at a given temperature" },
+          { "key": "k8", "left": "Osmotic stress", "right": "High salt outside roots pulls water out of the plant" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Salt in the Environment",
-      "badge": {
-        "id": "solution-scientist",
-        "name": "Solution Scientist",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze salt's effect on plants and ecosystems.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Salt in the Environment</strong> will be added here.</p>",
+      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Salt in the Environment",
+            "text": "🌾 A coastal farmer notices that his rice plants are turning yellow and wilting, even though he waters them regularly. The well water tastes salty. What is likely happening?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The plants need more fertilizer", "correct": false },
+              { "label": "B) Saltwater intrusion is salting the soil — high salt pulls water out of plant roots (osmotic stress)", "correct": true },
+              { "label": "C) There is too much rainfall", "correct": false },
+              { "label": "D) The plants are getting too much sunlight", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Salt in the Environment",
+            "text": "🥤 You open a cold bottle of soda and see bubbles forming. What type of solution is soda, and what happens when you open it?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Solid-in-liquid; nothing happens", "correct": false },
+              { "label": "B) Gas-in-liquid; the pressure drops and dissolved CO₂ escapes as bubbles", "correct": true },
+              { "label": "C) Liquid-in-liquid; the CO₂ reacts with sugar", "correct": false },
+              { "label": "D) It is not a solution", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Salt in the Environment",
+            "text": "🧂 You stir sugar into hot tea. After a while, adding more sugar no longer dissolves and settles at the bottom. What is this point called?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Unsaturation", "correct": false },
+              { "label": "B) Saturation — the solvent can no longer dissolve more solute at that temperature", "correct": true },
+              { "label": "C) Dilution", "correct": false },
+              { "label": "D) Precipitation", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Salt in the Environment",
+            "text": "🏭 A factory releases hot water containing high salt concentration into a nearby river. What likely happens to the freshwater plants and fish?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) They thrive in saltwater", "correct": false },
+              { "label": "B) They suffer — high salt causes osmotic stress, damaging cells and reducing biodiversity", "correct": true },
+              { "label": "C) Nothing changes", "correct": false },
+              { "label": "D) Salt helps them grow faster", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Salt in the Environment",
+            "text": "🌊 Why is saltwater intrusion becoming a bigger problem in Philippine coastal areas?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Because groundwater is being over-pumped and sea levels are rising due to climate change", "correct": true },
+              { "label": "B) Because farmers are adding too much salt", "correct": false },
+              { "label": "C) Because rivers are drying up", "correct": false },
+              { "label": "D) It's not a problem in the Philippines", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Solutions Lab",
-      "badge": {
-        "id": "solution-scientist",
-        "name": "Solution Scientist",
-        "icon": "💧"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Solutions Lab</strong> will be added here.</p>",
+      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
+      "content": "<h3>🔐 Formative Check — Escape the Solutions Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Solutions Lab",
+            "text": "What is a solution?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) A homogeneous mixture of two or more substances", "correct": true },
+              { "label": "B) A heterogeneous mixture where particles settle at the bottom", "correct": false },
+              { "label": "C) A pure chemical substance", "correct": false },
+              { "label": "D) A type of solid only", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Solutions Lab",
+            "text": "In a sugar-water solution, what is the solute?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Water", "correct": false },
+              { "label": "B) Sugar", "correct": true },
+              { "label": "C) Both sugar and water", "correct": false },
+              { "label": "D) Neither — it is a pure substance", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Solutions Lab",
+            "text": "Why is water called the 'universal solvent'?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Because it dissolves more substances than any other liquid", "correct": true },
+              { "label": "B) Because it is found everywhere", "correct": false },
+              { "label": "C) Because it has no charge", "correct": false },
+              { "label": "D) Because it is denser than other liquids", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Solutions Lab",
+            "text": "What happens to a plant when it grows in soil with very high salt concentration?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Water moves out of the plant roots due to osmotic stress, and the plant wilts", "correct": true },
+              { "label": "B) It grows faster because salt is a nutrient", "correct": false },
+              { "label": "C) It becomes saltwater-tolerant automatically", "correct": false },
+              { "label": "D) Nothing changes", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Solutions Lab",
+            "text": "Which of the following is a GAS-IN-LIQUID solution?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Soda (softdrink)", "correct": true },
+              { "label": "B) Saltwater", "correct": false },
+              { "label": "C) Vinegar", "correct": false },
+              { "label": "D) Bronze", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Solutions Lab",
+            "text": "What is saltwater intrusion?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Seawater seeping into freshwater aquifers, making them salty and unusable", "correct": true },
+              { "label": "B) Adding salt to freshwater for drinking", "correct": false },
+              { "label": "C) Removing salt from seawater", "correct": false },
+              { "label": "D) A type of water filtration", "correct": false }
             ]
           }
         ]

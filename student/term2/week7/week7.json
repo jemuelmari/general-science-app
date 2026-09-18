@@ -18,65 +18,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Plant Organs Working Together",
-      "badge": {
-        "id": "botanist",
-        "name": "Botanist",
-        "icon": "🌿"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn how roots, stems, and leaves work together.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Plant Organs Working Together</strong> will be added here.</p>"
+      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the main plant organs and explain how they work together to transport water, minerals, and food throughout the plant.</p><h3>🌿 The Plant as a System</h3><p>Like animals, plants are made of <strong>organ systems</strong> that work together. In plants, the main organs are:</p><table><thead><tr><th>Organ</th><th>Main Function</th><th>Structure Support</th></tr></thead><tbody><tr><td><strong>Roots</strong></td><td>Absorb water and minerals; anchor the plant</td><td>Root hairs increase surface area; branching reaches more soil</td></tr><tr><td><strong>Stem</strong></td><td>Support and transport between roots and leaves</td><td>Contains vascular bundles (xylem + phloem); tall, strong</td></tr><tr><td><strong>Leaves</strong></td><td>Photosynthesis — make food (glucose) using sunlight</td><td>Broad, flat, thin for maximum light absorption; contain stomata for gas exchange</td></tr><tr><td><strong>Flowers</strong></td><td>Reproduction — produce seeds</td><td>Bright colors and nectar attract pollinators</td></tr><tr><td><strong>Fruits</strong></td><td>Protect seeds and aid dispersal</td><td>Fleshy or dry; may be eaten by animals</td></tr></tbody></table><h3>💧 The Vascular System — Plant "Highways"</h3><p>Plants have two types of transport tissues running through roots, stems, and leaves:</p><table><thead><tr><th>Tissue</th><th>What It Transports</th><th>Direction</th><th>Driving Force</th></tr></thead><tbody><tr><td><strong>Xylem</strong></td><td>Water + dissolved minerals</td><td>Upward (roots → leaves)</td><td>Transpiration pull + root pressure</td></tr><tr><td><strong>Phloem</strong></td><td>Food (sugars/glucose)</td><td>Both directions (source → sink)</td><td>Pressure flow from high to low concentration</td></tr></tbody></table><h3>🌊 Water Transport — Step by Step</h3><ol><li><strong>Absorption:</strong> Root hairs absorb water and minerals from the soil by osmosis.</li><li><strong>Root pressure:</strong> Water moves into the xylem.</li><li><strong>Capillary action:</strong> Water molecules stick to xylem walls and each other, helping them move up.</li><li><strong>Transpiration pull:</strong> As water evaporates from leaves (through stomata), it pulls more water upward — like sucking through a straw.</li><li><strong>Delivery:</strong> Water reaches leaves, where it's used in photosynthesis and cools the plant.</li></ol><h3>🍯 Food Transport — Step by Step</h3><ol><li><strong>Production:</strong> Leaves produce glucose through photosynthesis.</li><li><strong>Loading:</strong> Glucose is converted to sucrose and loaded into phloem.</li><li><strong>Transport:</strong> Sucrose moves through phloem to where it's needed — growing tips, roots, fruits, storage organs.</li><li><strong>Unloading:</strong> Cells use the sugar for energy or store it as starch.</li></ol><h3>💨 Transpiration — The Plant's Cooling System</h3><p><strong>Transpiration</strong> is the loss of water vapor through stomata in the leaves.</p><ul><li>Driven by sunlight, temperature, humidity, and wind.</li><li>Cools the plant (like sweating in humans).</li><li>Pulls water upward from roots to leaves.</li><li>Rate is higher on hot, dry, windy days.</li></ul><p><strong>Stomata</strong> are tiny openings on the underside of leaves that open and close to control gas exchange and water loss. Guard cells regulate them.</p><h3>🌾 Real-Life Applications</h3><ul><li><strong>Watering plants:</strong> Water the soil, not the leaves — roots are the entry point.</li><li><strong>Wilting:</strong> When water loss (transpiration) exceeds uptake, plants droop. Water them quickly.</li><li><strong>Girdling:</strong> Removing the bark (which contains phloem) kills a tree — food can't reach the roots.</li><li><strong>Fertilizers:</strong> Provide minerals to the soil so roots can absorb them.</li><li><strong>Pruning:</strong> Reduces leaf area, lowering transpiration and helping transplants survive.</li></ul><h3>🔬 The Big Idea</h3><p>Plant organs form an integrated system — water, minerals, and food are transported through xylem and phloem; leaves produce food; roots anchor and absorb; stems support and connect everything. Remove one organ, and the whole system suffers.</p><h3>📌 Quick Check</h3><ul><li>Which tissue transports water in plants? (Answer: xylem)</li><li>Which tissue transports food (sugars)? (Answer: phloem)</li><li>What is transpiration? (Answer: loss of water vapor from leaves through stomata)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Plant Tissues",
-      "badge": {
-        "id": "botanist",
-        "name": "Botanist",
-        "icon": "🌿"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match plant tissues to their transport roles.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Plant Tissues</strong> will be added here.</p>",
+      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each plant organ or tissue to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Plant Tissues",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Plant Tissues",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Plant Tissues",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Plant Tissues",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Plant Tissues",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Plant Tissues",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Plant Tissues",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Plant Tissues",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Roots", "right": "Absorb water and minerals; anchor the plant" },
+          { "key": "k2", "left": "Stem", "right": "Supports the plant and transports materials between roots and leaves" },
+          { "key": "k3", "left": "Leaves", "right": "Perform photosynthesis to make food" },
+          { "key": "k4", "left": "Xylem", "right": "Transports water and minerals upward from roots to leaves" },
+          { "key": "k5", "left": "Phloem", "right": "Transports sugars from leaves to the rest of the plant" },
+          { "key": "k6", "left": "Transpiration", "right": "Loss of water vapor through stomata — pulls water up the plant" },
+          { "key": "k7", "left": "Stomata", "right": "Tiny openings on the underside of leaves for gas exchange" },
+          { "key": "k8", "left": "Flowers", "right": "Reproductive organs — produce seeds" }
         ]
       }
     },
@@ -84,117 +44,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Transport in Plants",
-      "badge": {
-        "id": "botanist",
-        "name": "Botanist",
-        "icon": "🌿"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze plant transport in real conditions.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Transport in Plants</strong> will be added here.</p>",
+      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Transport in Plants",
+            "text": "🌿 A farmer removes a complete ring of bark from around a tree trunk. A few months later, the tree dies. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The bark ring cut the phloem, so sugars from the leaves could no longer reach the roots — the roots starved", "correct": true },
+              { "label": "B) The tree lost its support", "correct": false },
+              { "label": "C) The tree became too cold", "correct": false },
+              { "label": "D) The bark was protecting against insects only", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Transport in Plants",
+            "text": "🥀 A potted plant is left in the sun without water for two days. Its leaves droop and become soft. What has happened?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Transpiration exceeded water uptake, so cells lost water and lost turgor pressure", "correct": true },
+              { "label": "B) The plant stopped making chlorophyll", "correct": false },
+              { "label": "C) The roots grew too long", "correct": false },
+              { "label": "D) The plant froze", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Transport in Plants",
+            "text": "🌳 A gardener plants a small tree in soil with plenty of water but no minerals. It grows slowly and leaves yellow. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Plants need minerals (like nitrogen and magnesium) absorbed by roots to make chlorophyll and proteins", "correct": true },
+              { "label": "B) The plant has too much water", "correct": false },
+              { "label": "C) The tree is too young", "correct": false },
+              { "label": "D) Water alone is all plants need", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Transport in Plants",
+            "text": "☀️ On a hot, windy day, a plant's transpiration rate is very high. What is likely to happen?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) The plant pulls up water faster from the roots to replace what's lost", "correct": true },
+              { "label": "B) The plant stops photosynthesis entirely", "correct": false },
+              { "label": "C) The plant starts to grow faster", "correct": false },
+              { "label": "D) Nothing changes — plants don't respond to weather", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Transport in Plants",
+            "text": "🍯 Which plant tissue transports glucose from the leaves to the roots for storage?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Xylem", "correct": false },
+              { "label": "B) Phloem", "correct": true },
+              { "label": "C) Cambium", "correct": false },
+              { "label": "D) Epidermis", "correct": false }
             ]
           }
         ]
@@ -204,138 +100,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Botany Lab",
-      "badge": {
-        "id": "botanist",
-        "name": "Botanist",
-        "icon": "🌿"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Botany Lab</strong> will be added here.</p>",
+      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
+      "content": "<h3>🔐 Formative Check — Escape the Botany Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Botany Lab",
+            "text": "Which plant organ is primarily responsible for absorbing water and minerals?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Roots", "correct": true },
+              { "label": "B) Leaves", "correct": false },
+              { "label": "C) Flowers", "correct": false },
+              { "label": "D) Fruit", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Botany Lab",
+            "text": "Which vascular tissue transports water upward from the roots?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Xylem", "correct": true },
+              { "label": "B) Phloem", "correct": false },
+              { "label": "C) Cambium", "correct": false },
+              { "label": "D) Epidermis", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Botany Lab",
+            "text": "Which vascular tissue transports sugar (food) throughout the plant?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Phloem", "correct": true },
+              { "label": "B) Xylem", "correct": false },
+              { "label": "C) Stomata", "correct": false },
+              { "label": "D) Cuticle", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Botany Lab",
+            "text": "What is transpiration?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Loss of water vapor from leaves through stomata", "correct": true },
+              { "label": "B) Movement of food through phloem", "correct": false },
+              { "label": "C) Absorption of minerals by the roots", "correct": false },
+              { "label": "D) Production of glucose in leaves", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Botany Lab",
+            "text": "Why does removing a complete ring of bark kill a tree?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "correct": true },
+              { "label": "B) It removes the tree's protective armor", "correct": false },
+              { "label": "C) It prevents photosynthesis", "correct": false },
+              { "label": "D) It stops transpiration", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Botany Lab",
+            "text": "Which process makes a leaf a 'solar panel' for the plant?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis", "correct": true },
+              { "label": "B) Respiration", "correct": false },
+              { "label": "C) Transpiration", "correct": false },
+              { "label": "D) Osmosis", "correct": false }
             ]
           }
         ]

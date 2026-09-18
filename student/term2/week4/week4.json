@@ -9,7 +9,7 @@
     },
     {
       "code": "GENSCI-11-T2-W4-C2",
-      "text": "Create a table showing saltwater/wastewater effects on local ecosystems."
+      "text": "Create a table showing saltwater/wastewater effects on local ecosystems and recommend minimization strategies."
     }
   ],
   "badge": {
@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Safety First — Handling Chemicals",
-      "badge": {
-        "id": "safety-officer",
-        "name": "Safety Officer",
-        "icon": "🦺"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn GHS hazard symbols and safe handling.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Safety First — Handling Chemicals</strong> will be added here.</p>"
+      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify GHS hazard symbols, describe safe handling, storage, and disposal practices for household and laboratory chemicals, and explain the effects of saltwater/wastewater on local ecosystems.</p><h3>🦺 Why Chemical Safety Matters</h3><p>Every year in the Philippines, thousands of household accidents happen due to improper chemical handling. Common causes include:</p><ul><li>Mixing incompatible chemicals (e.g., bleach + ammonia → toxic chloramine gas)</li><li>Storing chemicals in food containers (children mistake them for drinks)</li><li>Pouring chemicals down the drain (pollutes rivers and groundwater)</li><li>Ignoring warning labels</li></ul><h3>⚠️ GHS Hazard Symbols</h3><p>The <strong>Globally Harmonized System (GHS)</strong> uses standardized pictograms to warn users about chemical hazards:</p><table><thead><tr><th>Symbol</th><th>Meaning</th><th>Example Product</th></tr></thead><tbody><tr><td>💀 Skull &amp; crossbones</td><td>Acute toxicity — can cause death or serious harm</td><td>Pesticides, rat poison</td></tr><tr><td>🔥 Flame</td><td>Flammable — easily catches fire</td><td>Alcohol, LPG, paint thinner</td></tr><tr><td>💥 Exploding bomb</td><td>Explosive or self-reactive</td><td>Firecrackers, some fertilizers</td></tr><tr><td>🧪 Corrosion</td><td>Corrodes skin/metals</td><td>Bleach, drain cleaner, muriatic acid</td></tr><tr><td>⚠️ Exclamation mark</td><td>Irritant — skin, eye, or respiratory irritation</td><td>Detergent, shampoo, some cleaners</td></tr><tr><td>🌫️ Gas cylinder</td><td>Compressed gas under pressure</td><td>LPG tank, oxygen tank</td></tr><tr><td>🏥 Health hazard</td><td>Long-term health effects (cancer, organ damage)</td><td>Pesticides, some solvents</td></tr><tr><td>🌍 Environment</td><td>Hazardous to aquatic life</td><td>Detergent, motor oil, pesticides</td></tr></tbody></table><h3>🏠 Best Practices — Handling</h3><ul><li>Read the label before use — every time.</li><li>Wear gloves and, if needed, a mask.</li><li>Work in a well-ventilated area.</li><li>Never mix chemicals unless the label says it's safe.</li><li>Keep chemicals away from food and children.</li><li>Wash hands thoroughly after use.</li></ul><h3>📦 Best Practices — Storage</h3><ul><li>Store in original containers with labels intact.</li><li>Keep away from heat, sunlight, and open flames.</li><li>Store acids and bases separately (they react violently).</li><li>Store flammable liquids in a cool, dry, locked cabinet.</li><li>Keep out of reach of children and pets.</li></ul><h3>♻️ Best Practices — Disposal</h3><ul><li>Never pour chemicals down the sink, toilet, or storm drain.</li><li>Follow <strong>DENR</strong> guidelines and local barangay rules for hazardous waste.</li><li>Neutralize acids and bases before disposal when safe and instructed.</li><li>Take expired chemicals to designated hazardous waste collection points.</li><li>Recycle containers where possible.</li></ul><h3>🌊 Wastewater and Saltwater Effects on Ecosystems</h3><table><thead><tr><th>Type of Pollution</th><th>Source</th><th>Effect on Ecosystem</th></tr></thead><tbody><tr><td><strong>Saltwater intrusion</strong></td><td>Over-pumping of wells, sea-level rise</td><td>Soil becomes too salty; crops fail; freshwater fish die; drinking water becomes undrinkable</td></tr><tr><td><strong>Detergent wastewater</strong></td><td>Household laundry, car wash</td><td>Phosphates cause algal blooms → fish kills (eutrophication)</td></tr><tr><td><strong>Industrial wastewater</strong></td><td>Factories, mining</td><td>Heavy metals poison fish; destroy coral reefs; contaminate groundwater</td></tr><tr><td><strong>Agricultural runoff</strong></td><td>Fertilizers, pesticides</td><td>Nutrient overload; pesticide bioaccumulation in fish; destruction of mangroves</td></tr><tr><td><strong>Untreated sewage</strong></td><td>Households without septic systems</td><td>Bacterial contamination; disease outbreaks; oxygen depletion in rivers</td></tr></tbody></table><h3>💡 Minimization Strategies</h3><ul><li><strong>Reduce:</strong> Buy only the amount of chemical you need.</li><li><strong>Reuse:</strong> Refill containers at refilling stations (e.g., liquid soap).</li><li><strong>Replace:</strong> Choose eco-friendly products (phosphate-free detergent, natural cleaners like vinegar + baking soda).</li><li><strong>Recycle:</strong> Properly empty and recycle plastic containers.</li><li><strong>Dispose responsibly:</strong> Use barangay hazardous waste collection events.</li></ul><h3>🇵🇭 Philippine Laws &amp; Agencies</h3><ul><li><strong>RA 6969 — Toxic Substances and Hazardous and Nuclear Wastes Control Act:</strong> Regulates import, manufacture, and disposal of toxic substances.</li><li><strong>RA 9003 — Ecological Solid Waste Management Act:</strong> Mandates proper waste segregation and disposal.</li><li><strong>DENR:</strong> Enforces environmental regulations and provides guidance on chemical disposal.</li><li><strong>DOH:</strong> Monitors public health effects of chemical exposure.</li></ul><h3>📌 Quick Check</h3><ul><li>What does the skull-and-crossbones GHS symbol mean? (Answer: acute toxicity — can cause death or serious harm)</li><li>Why should you store acids and bases separately? (Answer: they can react violently if they touch)</li><li>What law regulates toxic substances in the Philippines? (Answer: RA 6969)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Safety Symbols",
-      "badge": {
-        "id": "safety-officer",
-        "name": "Safety Officer",
-        "icon": "🦺"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match each symbol to its hazard class.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Safety Symbols</strong> will be added here.</p>",
+      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each GHS hazard symbol, safety practice, or wastewater type to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Safety Symbols",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Safety Symbols",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Safety Symbols",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Safety Symbols",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Safety Symbols",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Safety Symbols",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Safety Symbols",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Safety Symbols",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "💀 Skull & crossbones", "right": "Acute toxicity — can cause death or serious harm" },
+          { "key": "k2", "left": "🔥 Flame", "right": "Flammable — easily catches fire" },
+          { "key": "k3", "left": "🧪 Corrosion", "right": "Corrodes skin or metals — like bleach or muriatic acid" },
+          { "key": "k4", "left": "⚠️ Exclamation mark", "right": "Irritant to skin, eyes, or respiratory system" },
+          { "key": "k5", "left": "🌍 Environment hazard", "right": "Hazardous to aquatic life — like detergents and motor oil" },
+          { "key": "k6", "left": "Saltwater intrusion", "right": "Seawater seeping into freshwater aquifers; causes crops to fail" },
+          { "key": "k7", "left": "Eutrophication", "right": "Algal blooms caused by phosphate-rich wastewater; kills fish" },
+          { "key": "k8", "left": "RA 6969", "right": "Philippine law regulating toxic substances and hazardous waste" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Wastewater in the Community",
-      "badge": {
-        "id": "safety-officer",
-        "name": "Safety Officer",
-        "icon": "🦺"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Analyze wastewater effects on local ecosystems.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Wastewater in the Community</strong> will be added here.</p>",
+      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Wastewater in the Community",
+            "text": "🏠 A household has several expired bottles of muriatic acid, bleach, and pesticides. What is the BEST way to dispose of them?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) Pour them down the kitchen sink", "correct": false },
+              { "label": "B) Take them to a designated barangay or DENR hazardous waste collection event", "correct": true },
+              { "label": "C) Throw them in the regular trash bin", "correct": false },
+              { "label": "D) Bury them in the backyard", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Wastewater in the Community",
+            "text": "🌊 A coastal barangay notices that their wells are becoming salty, and rice farms are failing. What is the LIKELY cause?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Saltwater intrusion from over-pumping groundwater and rising sea levels", "correct": true },
+              { "label": "B) Too much rainfall", "correct": false },
+              { "label": "C) Farmers adding too much fertilizer", "correct": false },
+              { "label": "D) Fish farming in the area", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Wastewater in the Community",
+            "text": "🐟 A river near your barangay has turned green with algae and dead fish are washing ashore. Which cause is MOST likely?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) Household detergent wastewater containing phosphates, causing eutrophication", "correct": true },
+              { "label": "B) Too much rain", "correct": false },
+              { "label": "C) The fish migrated elsewhere", "correct": false },
+              { "label": "D) Local fishing activities", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Wastewater in the Community",
+            "text": "⚠️ Your helper wants to clean the bathroom with bleach and then with an ammonia-based glass cleaner in the same session. What should you tell her?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Never mix them — the combination releases toxic chloramine gas that can damage lungs", "correct": true },
+              { "label": "B) It's fine, they are both cleaners", "correct": false },
+              { "label": "C) Mix them to make a stronger cleaner", "correct": false },
+              { "label": "D) Use them together with warm water to activate the smell", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Wastewater in the Community",
+            "text": "🏭 A factory discharges untreated chemical wastewater into the local river. Which Philippine law does this violate?",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) RA 6969 (Toxic Substances and Hazardous Waste Control Act)", "correct": true },
+              { "label": "B) RA 9003 only", "correct": false },
+              { "label": "C) No law is violated", "correct": false },
+              { "label": "D) RA 6713", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Safety Lab",
-      "badge": {
-        "id": "safety-officer",
-        "name": "Safety Officer",
-        "icon": "🦺"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Safety Lab</strong> will be added here.</p>",
+      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
+      "content": "<h3>🔐 Formative Check — Escape the Safety Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Safety Lab",
+            "text": "What does the GHS skull-and-crossbones symbol mean?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Acute toxicity — can cause death or serious harm", "correct": true },
+              { "label": "B) Flammable liquid", "correct": false },
+              { "label": "C) Corrosive to metals", "correct": false },
+              { "label": "D) Harmless", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Safety Lab",
+            "text": "Why must acids and bases be stored separately?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) They can react violently if they touch", "correct": true },
+              { "label": "B) They have different colors", "correct": false },
+              { "label": "C) They smell different", "correct": false },
+              { "label": "D) They weigh differently", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Safety Lab",
+            "text": "What is the BEST practice when handling chemicals at home?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) Wear gloves, work in a well-ventilated area, and read the label", "correct": true },
+              { "label": "B) Work in a closed room to avoid drafts", "correct": false },
+              { "label": "C) Mix all cleaners to save time", "correct": false },
+              { "label": "D) Store them in food containers for easy access", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Safety Lab",
+            "text": "What is eutrophication?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "correct": true },
+              { "label": "B) A cleaning process", "correct": false },
+              { "label": "C) A form of distillation", "correct": false },
+              { "label": "D) A method of water purification", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Safety Lab",
+            "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) RA 6969", "correct": true },
+              { "label": "B) RA 9003", "correct": false },
+              { "label": "C) RA 6713", "correct": false },
+              { "label": "D) RA 10533", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Safety Lab",
+            "text": "What is the BEST way to dispose of leftover household chemicals?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Take them to a designated hazardous waste collection point following DENR guidelines", "correct": true },
+              { "label": "B) Pour them into the storm drain", "correct": false },
+              { "label": "C) Throw them in the regular trash", "correct": false },
+              { "label": "D) Bury them in the backyard", "correct": false }
             ]
           }
         ]
