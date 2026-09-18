@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/student.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/student.css?v=3" />
 </head>
 <body>
 
@@ -73,30 +73,27 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/security.js"></script>
-  <script src="../assets/js/transmutation.js"></script>
-  <script src="../assets/js/sync.js"></script>
-  <script src="../assets/js/backup.js"></script>
-  <script src="../assets/js/term-access.js"></script>
+  <script src="../config.js?v=3"></script>
+  <script src="../assets/js/app.js?v=3"></script>
+  <script src="../assets/js/store.js?v=3"></script>
+  <script src="../assets/js/security.js?v=3"></script>
+  <script src="../assets/js/transmutation.js?v=3"></script>
+  <script src="../assets/js/sync.js?v=3"></script>
+  <script src="../assets/js/backup.js?v=3"></script>
+  <script src="../assets/js/term-access.js?v=3"></script>
   <script>
     (function() {
       'use strict';
 
-      /* ---------- Auth guard ---------- */
       const user = Store.getCurrentUser();
       if (!user) {
         window.location.replace('login.html');
         return;
       }
 
-      /* ---------- User pill ---------- */
       APP.$('#user-pill').textContent =
         `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
 
-      /* ---------- Hero greeting ---------- */
       const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
       APP.$('#dash-avatar').textContent = initials;
       APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
@@ -105,20 +102,16 @@
         <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
       `;
 
-      /* ---------- Compute standing ---------- */
       function computeStanding() {
         const scores = Store.getScores(user.lrn);
         const allSTs = [];
-
         ['term1', 'term2', 'term3'].forEach((term) => {
           const st = scores[term]?.st || {};
           Object.values(st).forEach((s) => {
             if (s && s.total) allSTs.push((s.score / s.total) * 100);
           });
         });
-
         if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
-
         const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
         return { ...Transmutation.classifyStudent(avg), avg };
       }
@@ -134,7 +127,6 @@
         </div>
       `;
 
-      /* ---------- Quick stats ---------- */
       const progress = Store.getProgress(user.lrn);
       const badges = Store.getBadges(user.lrn);
 
@@ -155,9 +147,6 @@
         </div>
       `).join('');
 
-      /* ============================================================
-         TERM CARDS — respect teacher-controlled access
-         ============================================================ */
       const terms = [
         { id: 'term1', title: 'Term 1', desc: 'Physics & Chemistry', icon: '⚛️',
           topics: 'Motion · Machines · Hydraulics · Light · Sound · Chemistry', totalWeeks: 10 },
@@ -227,7 +216,6 @@
 
       renderTermCards();
 
-      /* ---------- Badges ---------- */
       const allBadges = [
         { id: 'physicist',        icon: '⚛️', name: 'Physicist' },
         { id: 'machine-master',   icon: '⚙️', name: 'Machine Master' },
@@ -258,7 +246,6 @@
         `;
       }).join('');
 
-      /* ---------- Sync UI ---------- */
       const syncBtnCode = APP.$('#btn-sync-code');
 
       if (syncBtnCode) {
@@ -348,11 +335,7 @@
         e.target.value = '';
       });
 
-      /* ============================================================
-         LOG OUT — robust handler
-         ============================================================ */
       APP.$('#btn-logout').addEventListener('click', () => {
-        // Show overlay
         const overlay = document.createElement('div');
         overlay.style.cssText = `
           position:fixed;inset:0;background:rgba(255,255,255,0.95);
@@ -367,12 +350,10 @@
         `;
         document.body.appendChild(overlay);
 
-        // Clear session safely with fallbacks
         try {
           if (window.Store && typeof Store.clearSession === 'function') {
             Store.clearSession();
           } else {
-            // Fallback: clear the session key directly
             localStorage.removeItem('gsa_v1_session');
           }
         } catch (e) {
@@ -380,7 +361,6 @@
           localStorage.removeItem('gsa_v1_session');
         }
 
-        // Redirect after a short delay
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 400);
