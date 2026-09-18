@@ -22,65 +22,25 @@
       "day": 1,
       "type": "lesson",
       "title": "Balancing Chemical Equations",
-      "badge": {
-        "id": "reaction-master",
-        "name": "Reaction Master",
-        "icon": "⚗️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Learn to read and balance chemical equations.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Balancing Chemical Equations</strong> will be added here.</p>"
+      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
+      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to read, write, and balance chemical equations, including the equations for <strong>photosynthesis</strong> and <strong>cellular respiration</strong>, and describe metabolic reactions in body cells.</p><h3>🧪 What Is a Chemical Equation?</h3><p>A <strong>chemical equation</strong> is a symbolic representation of a chemical reaction. It uses chemical formulas to show what reacts and what forms.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Reactants → Products</strong></p><p>Example:</p><p style='background:#f5f7fa;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'>2H₂ + O₂ → 2H₂O</p><p>This says: two molecules of hydrogen gas react with one molecule of oxygen gas to produce two molecules of water.</p><h3>📐 Parts of an Equation</h3><table><thead><tr><th>Part</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><strong>Chemical formula</strong></td><td>The substance involved</td><td>H₂O, CO₂, C₆H₁₂O₆</td></tr><tr><td><strong>Coefficient</strong></td><td>Number of molecules (whole number in front)</td><td>The "2" in 2H₂O</td></tr><tr><td><strong>Subscript</strong></td><td>Number of atoms of an element in a molecule</td><td>The "2" in H₂O</td></tr><tr><td><strong>Arrow (→)</strong></td><td>Means "produces" or "yields"</td><td>Reactants → Products</td></tr><tr><td><strong>State symbols</strong> (optional)</td><td>(s) solid, (l) liquid, (g) gas, (aq) aqueous</td><td>NaCl(aq)</td></tr></tbody></table><h3>⚖️ Law of Conservation of Mass</h3><p>Atoms are neither created nor destroyed in a chemical reaction. This means: <strong>the number of each type of atom must be the same on both sides of the equation</strong>.</p><p>If it isn't, the equation is <em>unbalanced</em> and needs coefficients to fix it.</p><h3>🔧 How to Balance an Equation</h3><ol><li>Write the unbalanced (skeleton) equation.</li><li>Count atoms of each element on both sides.</li><li>Add coefficients (never change subscripts!) to balance one element at a time.</li><li>Recount — check that all atoms are equal.</li><li>Simplify coefficients to the smallest whole-number ratio if possible.</li></ol><p><strong>Example — combustion of methane:</strong></p><p style='background:#f5f7fa;padding:12px;border-radius:8px;font-family:monospace;'>CH₄ + 2O₂ → CO₂ + 2H₂O</p><h3>🌿 Photosynthesis — The Green Equation</h3><p>Plants use sunlight to convert carbon dioxide and water into glucose and oxygen:</p><p style='background:#e8f5e9;padding:14px;border-radius:8px;font-family:monospace;text-align:center;font-size:1rem;'><strong>6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂</strong></p><ul><li><strong>Reactants:</strong> 6 CO₂ + 6 H₂O + light</li><li><strong>Products:</strong> 1 glucose (C₆H₁₂O₆) + 6 oxygen (O₂)</li><li><strong>Location:</strong> Chloroplasts in plant cells</li><li><strong>Importance:</strong> Produces the oxygen we breathe and the food we eat.</li></ul><h3>💨 Cellular Respiration — The Body's Engine</h3><p>Cells break down glucose using oxygen to release energy:</p><p style='background:#e1f5fe;padding:14px;border-radius:8px;font-family:monospace;text-align:center;font-size:1rem;'><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)</strong></p><ul><li><strong>Reactants:</strong> glucose + oxygen</li><li><strong>Products:</strong> carbon dioxide + water + energy</li><li><strong>Location:</strong> Mitochondria in cells</li><li><strong>Importance:</strong> Provides ATP — the energy currency your body runs on.</li></ul><h3>🔗 Photosynthesis + Respiration = A Cycle</h3><p>Notice — photosynthesis and respiration are <strong>opposite reactions</strong>:</p><ul><li>Photosynthesis uses CO₂ + H₂O and produces glucose + O₂.</li><li>Respiration uses glucose + O₂ and produces CO₂ + H₂O.</li></ul><p>Together, they form the <strong>carbon-oxygen cycle</strong> that keeps life on Earth in balance.</p><h3>🧬 Metabolic Reactions in Body Cells</h3><ul><li><strong>Catabolism:</strong> Breaking down larger molecules (e.g., glucose) to release energy.</li><li><strong>Anabolism:</strong> Building larger molecules (e.g., proteins from amino acids) using energy.</li><li><strong>Examples:</strong> Digestion, protein synthesis, DNA replication, muscle contraction.</li><li><strong>Significance:</strong> All bodily functions — from breathing to thinking — depend on metabolic reactions.</li></ul><h3>📌 Quick Check</h3><ul><li>Why must equations be balanced? (Answer: conservation of mass)</li><li>What are the products of photosynthesis? (Answer: glucose and oxygen)</li><li>What is ATP? (Answer: the energy currency produced by respiration)</li></ul>"
     },
     {
       "day": 2,
       "type": "activity1",
       "title": "Match Game — Equation Components",
-      "badge": {
-        "id": "reaction-master",
-        "name": "Reaction Master",
-        "icon": "⚗️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Match reactants, products, and coefficients.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Match Game — Equation Components</strong> will be added here.</p>",
+      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each equation term or reaction to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
       "activities": {
         "match": [
-          {
-            "key": "k1",
-            "left": "Concept 1 — Match Game — Equation Components",
-            "right": "Definition 1"
-          },
-          {
-            "key": "k2",
-            "left": "Concept 2 — Match Game — Equation Components",
-            "right": "Definition 2"
-          },
-          {
-            "key": "k3",
-            "left": "Concept 3 — Match Game — Equation Components",
-            "right": "Definition 3"
-          },
-          {
-            "key": "k4",
-            "left": "Concept 4 — Match Game — Equation Components",
-            "right": "Definition 4"
-          },
-          {
-            "key": "k5",
-            "left": "Concept 5 — Match Game — Equation Components",
-            "right": "Definition 5"
-          },
-          {
-            "key": "k6",
-            "left": "Concept 6 — Match Game — Equation Components",
-            "right": "Definition 6"
-          },
-          {
-            "key": "k7",
-            "left": "Concept 7 — Match Game — Equation Components",
-            "right": "Definition 7"
-          },
-          {
-            "key": "k8",
-            "left": "Concept 8 — Match Game — Equation Components",
-            "right": "Definition 8"
-          }
+          { "key": "k1", "left": "Reactant", "right": "Substance that reacts on the left side of the arrow" },
+          { "key": "k2", "left": "Product", "right": "Substance formed on the right side of the arrow" },
+          { "key": "k3", "left": "Coefficient", "right": "Whole number placed in front of a formula to balance the equation" },
+          { "key": "k4", "left": "Law of Conservation of Mass", "right": "Atoms are neither created nor destroyed in a reaction" },
+          { "key": "k5", "left": "Photosynthesis equation", "right": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂" },
+          { "key": "k6", "left": "Cellular respiration equation", "right": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy" },
+          { "key": "k7", "left": "Mitochondria", "right": "Organelle where respiration occurs" },
+          { "key": "k8", "left": "ATP", "right": "Energy currency produced by respiration" }
         ]
       }
     },
@@ -88,117 +48,53 @@
       "day": 3,
       "type": "activity2",
       "title": "Scenario Challenge — Reactions in Cells",
-      "badge": {
-        "id": "reaction-master",
-        "name": "Reaction Master",
-        "icon": "⚗️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Apply equation reasoning to metabolic scenarios.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Scenario Challenge — Reactions in Cells</strong> will be added here.</p>",
+      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "Scenario 1: Scenario Challenge — Reactions in Cells",
+            "text": "🌿 A plant is placed in a sealed transparent container with a CO₂ sensor. After a sunny day, the CO₂ level drops. Why?",
             "choices": [
-              {
-                "label": "A) Wrong answer 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 1c",
-                "correct": false
-              }
+              { "label": "A) The plant is producing CO₂ at night", "correct": false },
+              { "label": "B) The plant is absorbing CO₂ for photosynthesis, using it to make glucose and releasing O₂", "correct": true },
+              { "label": "C) The container is leaking CO₂", "correct": false },
+              { "label": "D) CO₂ evaporates in the sun", "correct": false }
             ]
           },
           {
-            "text": "Scenario 2: Scenario Challenge — Reactions in Cells",
+            "text": "🏃 You sprint for 100 meters and start breathing heavily. Which reaction is happening faster in your muscles?",
             "choices": [
-              {
-                "label": "A) Wrong answer 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 2c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis", "correct": false },
+              { "label": "B) Cellular respiration — breaking down glucose with oxygen to release ATP energy", "correct": true },
+              { "label": "C) Combustion of glucose with flames", "correct": false },
+              { "label": "D) Decomposition of water", "correct": false }
             ]
           },
           {
-            "text": "Scenario 3: Scenario Challenge — Reactions in Cells",
+            "text": "⚖️ You balance the equation: __ H₂ + O₂ → __ H₂O. What coefficients make it balanced?",
             "choices": [
-              {
-                "label": "A) Wrong answer 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 3c",
-                "correct": false
-              }
+              { "label": "A) 1 and 1", "correct": false },
+              { "label": "B) 2 in front of H₂ and 2 in front of H₂O", "correct": true },
+              { "label": "C) 3 and 3", "correct": false },
+              { "label": "D) 4 and 1", "correct": false }
             ]
           },
           {
-            "text": "Scenario 4: Scenario Challenge — Reactions in Cells",
+            "text": "🌍 Why are photosynthesis and respiration considered 'opposite reactions'?",
             "choices": [
-              {
-                "label": "A) Wrong answer 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 4c",
-                "correct": false
-              }
+              { "label": "A) Their reactants and products are reversed", "correct": true },
+              { "label": "B) They happen in the same organelle", "correct": false },
+              { "label": "C) Both produce oxygen", "correct": false },
+              { "label": "D) Neither requires energy", "correct": false }
             ]
           },
           {
-            "text": "Scenario 5: Scenario Challenge — Reactions in Cells",
+            "text": "🍔 After eating rice, your body breaks down the starch into glucose. This is an example of:",
             "choices": [
-              {
-                "label": "A) Wrong answer 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct answer 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong answer 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong answer 5c",
-                "correct": false
-              }
+              { "label": "A) Photosynthesis", "correct": false },
+              { "label": "B) Catabolism — breaking down larger molecules to release energy", "correct": true },
+              { "label": "C) Anabolism — building larger molecules", "correct": false },
+              { "label": "D) Combustion", "correct": false }
             ]
           }
         ]
@@ -208,138 +104,62 @@
       "day": 4,
       "type": "formative",
       "title": "Formative Check — Escape the Equation Lab",
-      "badge": {
-        "id": "reaction-master",
-        "name": "Reaction Master",
-        "icon": "⚗️"
-      },
-      "content": "<h3>🎯 Learning Target</h3><p>Prove your mastery — 6 keys, 3 lives.</p><h3>📌 Coming Soon</h3><p>Detailed lesson content for <strong>Formative Check — Escape the Equation Lab</strong> will be added here.</p>",
+      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
+      "content": "<h3>🔐 Formative Check — Escape the Equation Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Formative question 1 for Formative Check — Escape the Equation Lab",
+            "text": "What does the arrow (→) in a chemical equation mean?",
             "choices": [
-              {
-                "label": "A) Wrong 1",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 1",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 1b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 1c",
-                "correct": false
-              }
+              { "label": "A) Equals", "correct": false },
+              { "label": "B) Reacts to produce / yields", "correct": true },
+              { "label": "C) Divide", "correct": false },
+              { "label": "D) Absorbs light", "correct": false }
             ]
           },
           {
-            "text": "Formative question 2 for Formative Check — Escape the Equation Lab",
+            "text": "Why must a chemical equation be balanced?",
             "choices": [
-              {
-                "label": "A) Wrong 2",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 2",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 2b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 2c",
-                "correct": false
-              }
+              { "label": "A) Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "correct": true },
+              { "label": "B) To make it look nicer", "correct": false },
+              { "label": "C) Because of gravity", "correct": false },
+              { "label": "D) To reduce temperature", "correct": false }
             ]
           },
           {
-            "text": "Formative question 3 for Formative Check — Escape the Equation Lab",
+            "text": "Which equation correctly represents photosynthesis?",
             "choices": [
-              {
-                "label": "A) Wrong 3",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 3",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 3b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 3c",
-                "correct": false
-              }
+              { "label": "A) 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "correct": true },
+              { "label": "B) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "correct": false },
+              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
+              { "label": "D) CO₂ + H₂O → CH₄ + O₂", "correct": false }
             ]
           },
           {
-            "text": "Formative question 4 for Formative Check — Escape the Equation Lab",
+            "text": "Which equation correctly represents cellular respiration?",
             "choices": [
-              {
-                "label": "A) Wrong 4",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 4",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 4b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 4c",
-                "correct": false
-              }
+              { "label": "A) 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂", "correct": false },
+              { "label": "B) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "correct": true },
+              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
+              { "label": "D) CH₄ + 2O₂ → CO₂ + 2H₂O", "correct": false }
             ]
           },
           {
-            "text": "Formative question 5 for Formative Check — Escape the Equation Lab",
+            "text": "Where in the cell does cellular respiration mainly occur?",
             "choices": [
-              {
-                "label": "A) Wrong 5",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 5",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 5b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 5c",
-                "correct": false
-              }
+              { "label": "A) Nucleus", "correct": false },
+              { "label": "B) Mitochondria", "correct": true },
+              { "label": "C) Chloroplast", "correct": false },
+              { "label": "D) Ribosome", "correct": false }
             ]
           },
           {
-            "text": "Formative question 6 for Formative Check — Escape the Equation Lab",
+            "text": "What does ATP provide to a cell?",
             "choices": [
-              {
-                "label": "A) Wrong 6",
-                "correct": false
-              },
-              {
-                "label": "B) Correct 6",
-                "correct": true
-              },
-              {
-                "label": "C) Wrong 6b",
-                "correct": false
-              },
-              {
-                "label": "D) Wrong 6c",
-                "correct": false
-              }
+              { "label": "A) Energy for cellular work", "correct": true },
+              { "label": "B) Oxygen for breathing", "correct": false },
+              { "label": "C) Water for hydration", "correct": false },
+              { "label": "D) Protein for growth", "correct": false }
             ]
           }
         ]
