@@ -1,14 +1,10 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.0
+   Version: 1.0.1
    App: General Science
    ------------------------------------------------------------
-   Features:
-   - Difficulty-based timers (min 5 min)
-   - 75% pass threshold per activity
-   - Manual start (activities render on `activity:start` event)
-   - Unlimited retakes until passing
-   - Fail-proof score submission
+   Changelog v1.0.1: Hides loading overlay immediately after
+   lesson JSON renders — no longer depends on activity-gate:ready
    ============================================================ */
 
 const Lesson = (() => {
@@ -45,23 +41,52 @@ const Lesson = (() => {
     startLiveTimer();
     showLoadingOverlay();
 
+    // Fallback timeout — only if something truly breaks
     timeoutHandle = setTimeout(() => {
       if (!readyFlag) showTimeoutError();
     }, 15000);
 
+    // Activity start event — triggered by ActivityGate when the user clicks Start
     document.addEventListener('activity:start', (e) => {
       startActivity(e.detail.activity);
     });
 
+    // Listen for activity-gate:ready (optional, non-blocking)
     document.addEventListener('activity-gate:ready', () => {
-      setTimeout(() => {
+      if (!readyFlag) {
         hideLoadingOverlay();
         readyFlag = true;
         clearTimeout(timeoutHandle);
-      }, 100);
+      }
     });
 
-    if (window.ActivityGate) ActivityGate.init(config);
+    // Init the gate (or gracefully continue without it)
+    if (window.ActivityGate) {
+      try {
+        ActivityGate.init(config);
+      } catch (err) {
+        console.warn('[Lesson] ActivityGate init failed:', err);
+      }
+    } else {
+      console.warn('[Lesson] ActivityGate not loaded — falling back to always-ready mode');
+      if (window.ActivityGate === undefined && typeof ActivityGate === 'undefined') {
+        // No gate at all — unlock everything immediately
+        document.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
+      }
+    }
+
+    // *** NEW: Hide the overlay as soon as the current frame renders ***
+    // The lesson JSON has already been fetched and rendered by the caller
+    // (day.html or equivalent) before init() is called, so we can hide now.
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (!readyFlag) {
+          hideLoadingOverlay();
+          readyFlag = true;
+          clearTimeout(timeoutHandle);
+        }
+      }, 300);
+    });
   }
 
   /* ---------- Difficulty-Based Timer ---------- */
@@ -390,7 +415,7 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     ESCAPE ROOM (FORMATIVE)
+     ESCAPE ROOM
      ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
