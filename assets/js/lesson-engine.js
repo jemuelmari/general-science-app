@@ -1,11 +1,10 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.5
+   Version: 1.0.6
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.5: markDayComplete() now runs for ALL passing
-   activities (not just Escape Room). Fixes week index showing
-   days as locked after completing Match/Scenario activities.
+   Changelog v1.0.6: Auto-mark Day 1 (lesson-only) as complete
+   on init — since lesson days have no activity to pass.
    ============================================================ */
 
 const Lesson = (() => {
@@ -16,10 +15,10 @@ const Lesson = (() => {
   let currentAttempts = {};
   let readyFlag = false;
   let timeoutHandle = null;
+  let hasActivities = false;
 
   const PASS_THRESHOLD = 0.75;
 
-  /* ---------- Reference to ActivityGate ---------- */
   function getGate() {
     try {
       if (typeof ActivityGate !== 'undefined') return ActivityGate;
@@ -45,6 +44,8 @@ const Lesson = (() => {
       badges: [],
       startTime: Date.now()
     };
+
+    hasActivities = false; // reset for this load
 
     renderScoreBar(config.title);
     startLiveTimer();
@@ -75,8 +76,23 @@ const Lesson = (() => {
           readyFlag = true;
           clearTimeout(timeoutHandle);
         }
+        // If no activities were registered within 1 second,
+        // this is a lesson-only day → auto-complete it
+        setTimeout(autoCompleteIfLessonOnly, 1000);
       }, 500);
     });
+  }
+
+  /* ---------- Auto-complete lesson-only days ---------- */
+  function autoCompleteIfLessonOnly() {
+    if (hasActivities) return; // there ARE activities, wait for them to pass
+    // Lesson-only day → mark complete
+    try {
+      Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+      console.log('[Lesson] Day marked complete (lesson-only):', ctx.term, 'w' + ctx.week, 'd' + ctx.day);
+    } catch (err) {
+      console.warn('[Lesson] markDayComplete failed:', err);
+    }
   }
 
   function waitForGateAndInit(config, waited, maxWait) {
@@ -113,6 +129,7 @@ const Lesson = (() => {
 
   /* ---------- Register activities ---------- */
   function registerMatchGame(containerId, config) {
+    hasActivities = true;
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
     pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
@@ -120,6 +137,7 @@ const Lesson = (() => {
   }
 
   function registerScenarioGame(containerId, config) {
+    hasActivities = true;
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
     pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
@@ -127,6 +145,7 @@ const Lesson = (() => {
   }
 
   function registerEscapeRoom(containerId, config) {
+    hasActivities = true;
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
     pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
@@ -150,7 +169,6 @@ const Lesson = (() => {
     else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
   }
 
-  /* ---------- Report score to gate ---------- */
   function reportScore(containerId, scorePercent) {
     var gate = getGate();
     if (gate && typeof gate.completeWithScore === 'function') {
@@ -162,7 +180,6 @@ const Lesson = (() => {
     }
   }
 
-  /* ---------- Mark day complete (for week index) ---------- */
   function markDayIfPassed(scorePercent) {
     if (scorePercent >= 75) {
       try {
