@@ -1,11 +1,10 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.2
+   Version: 1.0.3
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.2: Waits for ActivityGate to load before
-   initializing — fixes load-order bug where activity-gate.js
-   loads AFTER lesson-engine.js
+   Changelog v1.0.3: Fixed ActivityGate reference — const
+   declarations do not attach to window
    ============================================================ */
 
 const Lesson = (() => {
@@ -42,17 +41,14 @@ const Lesson = (() => {
     startLiveTimer();
     showLoadingOverlay();
 
-    // Fallback timeout — only if something truly breaks
     timeoutHandle = setTimeout(() => {
       if (!readyFlag) showTimeoutError();
     }, 15000);
 
-    // Activity start event — triggered by ActivityGate when user clicks Start
     document.addEventListener('activity:start', (e) => {
       startActivity(e.detail.activity);
     });
 
-    // Listen for activity-gate:ready (hides loading overlay)
     document.addEventListener('activity-gate:ready', () => {
       if (!readyFlag) {
         hideLoadingOverlay();
@@ -61,15 +57,10 @@ const Lesson = (() => {
       }
     });
 
-    // *** Wait for ActivityGate to load, then init ***
-    // activity-gate.js may not have loaded yet when this runs,
-    // because both scripts are <script src="..."> tags at the end of
-    // day.html and execution order depends on their position.
-    // This poll catches it within 50–100ms in normal conditions.
+    // Wait for ActivityGate and init it
     waitForGateAndInit(config, 0, 2000);
 
-    // Fallback: hide the overlay after a short delay regardless,
-    // so the student isn't stuck staring at a spinner.
+    // Fallback: hide overlay after 500ms regardless
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (!readyFlag) {
@@ -83,9 +74,17 @@ const Lesson = (() => {
 
   /* ---------- Wait for ActivityGate ---------- */
   function waitForGateAndInit(config, waited, maxWait) {
-    if (window.ActivityGate) {
+    // `ActivityGate` is declared with `const` in activity-gate.js —
+    // it does NOT become a property of window. We must reference it
+    // by its bare identifier and guard with typeof to avoid ReferenceError.
+    var gate = null;
+    try {
+      if (typeof ActivityGate !== 'undefined') gate = ActivityGate;
+    } catch (e) { gate = null; }
+
+    if (gate && typeof gate.init === 'function') {
       try {
-        ActivityGate.init(config);
+        gate.init(config);
       } catch (err) {
         console.warn('[Lesson] ActivityGate init failed:', err);
       }
@@ -94,12 +93,11 @@ const Lesson = (() => {
 
     if (waited >= maxWait) {
       console.warn('[Lesson] ActivityGate never loaded — running in always-ready mode');
-      // Remove any pre-rendered gate overlays so students can still start
-      document.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
+      document.querySelectorAll('.gate-overlay').forEach(function (el) { el.remove(); });
       return;
     }
 
-    setTimeout(() => {
+    setTimeout(function () {
       waitForGateAndInit(config, waited + 50, maxWait);
     }, 50);
   }
@@ -116,21 +114,21 @@ const Lesson = (() => {
   /* ---------- Register activities ---------- */
   function registerMatchGame(containerId, config) {
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
-    pendingActivities[containerId] = { type: 'match', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
     if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerScenarioGame(containerId, config) {
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
-    pendingActivities[containerId] = { type: 'scenario', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
     if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerEscapeRoom(containerId, config) {
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
-    pendingActivities[containerId] = { type: 'escape', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit: timeLimit }) };
     const container = document.getElementById(containerId);
     if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
@@ -248,11 +246,17 @@ const Lesson = (() => {
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, bonusFast = 15,
-            badgeId, badgeName, badgeIcon } = config;
+    const pairs = config.pairs;
+    const timeLimit = config.timeLimit;
+    const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
+    const pointsWrong = config.pointsWrong !== undefined ? config.pointsWrong : -3;
+    const bonusFast = config.bonusFast !== undefined ? config.bonusFast : 15;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
 
-    let leftItems = [...pairs].sort(() => Math.random() - 0.5);
-    let rightItems = [...pairs].sort(() => Math.random() - 0.5);
+    let leftItems = pairs.slice().sort(() => Math.random() - 0.5);
+    let rightItems = pairs.slice().sort(() => Math.random() - 0.5);
     let selectedLeft = null;
     let matches = 0, wrongCount = 0, timeLeft = timeLimit, timerInterval = null, finished = false;
 
@@ -349,8 +353,13 @@ const Lesson = (() => {
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const { scenarios, timeLimit, pointsCorrect = 8, bonusFast = 3,
-            badgeId, badgeName, badgeIcon } = config;
+    const scenarios = config.scenarios;
+    const timeLimit = config.timeLimit;
+    const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 8;
+    const bonusFast = config.bonusFast !== undefined ? config.bonusFast : 3;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
 
     let index = 0, correct = 0, fastAnswers = 0, cardStart = Date.now(), finished = false;
     let totalTimeLeft = timeLimit, overallTimer = null;
@@ -435,7 +444,12 @@ const Lesson = (() => {
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const { questions, badgeId, badgeName, badgeIcon, lives = 3, timeLimit } = config;
+    const questions = config.questions;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
+    const lives = config.lives !== undefined ? config.lives : 3;
+    const timeLimit = config.timeLimit;
 
     let currentLives = lives, earnedKeys = [], index = 0, locked = false, finished = false;
     let timeLeft = timeLimit, timerInterval = null;
