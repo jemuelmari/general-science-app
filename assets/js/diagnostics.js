@@ -104,11 +104,11 @@ const Diagnostics = (() => {
   /* ============================================================
      CHECK 2 — Public API of each module
      ============================================================ */
-  function checkModuleAPIs() {
+    function checkModuleAPIs() {
     const cat = addCategory('Module Public APIs', '🔧');
 
     const apis = [
-      { module: 'APP', methods: ['init', 'toast', 'formatDate', 'formatLRN', 'formatFullName', 'toast'] },
+      { module: 'APP', methods: ['init', 'toast', 'formatDate', 'formatLRN', 'formatFullName'] },
       { module: 'Store', methods: ['getAllUsers', 'saveUser', 'getUser', 'setSession', 'getCurrentUser', 'getProgress', 'getScores', 'getBadges', 'clearSession'] },
       { module: 'Security', methods: ['sign', 'verify', 'shuffleQuestions'] },
       { module: 'Transmutation', methods: ['transmute', 'isPassing', 'computeFinalGrade', 'classifyStudent', 'proficiencyLevel'] },
@@ -116,15 +116,18 @@ const Diagnostics = (() => {
       { module: 'UI', methods: ['renderAvatar', 'renderProgressBar', 'exportCSV'] }
     ];
 
-          var mod = (typeof window !== 'undefined' && window[module]) || (typeof globalThis !== 'undefined' && globalThis[module]);
+    apis.forEach(({ module, methods }) => {
+      // Try multiple lookup methods to handle const declarations
+      let mod = null;
+      try { mod = eval(module); } catch (e) { mod = null; }
+      if (!mod && typeof window !== 'undefined') mod = window[module];
+      if (!mod && typeof globalThis !== 'undefined') mod = globalThis[module];
+
       if (!mod) {
-        try {
-          mod = eval(module);
-        } catch (e) {
-          fail(cat, module + ' API check skipped — module not loaded');
-          return;
-        }
+        fail(cat, module + ' API check skipped — module not loaded');
+        return;
       }
+
       const missing = methods.filter((m) => typeof mod[m] !== 'function');
       if (missing.length === 0) {
         pass(cat, module + ' — all ' + methods.length + ' methods present');
