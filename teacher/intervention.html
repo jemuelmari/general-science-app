@@ -242,4 +242,62 @@
               '<div class="student-avatar av-1">' + initials + '</div>' +
               '<div style="flex:1;min-width:180px;">' +
                 '<div style="font-weight:700;font-size:0.98rem;color:#1a1a1a;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
-                '<div style="font-size:0.75rem;color:#78909c
+                '<div style="font-size:0.75rem;color:#78909c;margin-top:2px;">LRN: ' + APP.formatLRN(s.lrn) + ' · ' + s.section + '</div>' +
+              '</div>' +
+              '<span class="badge-pill ' + (cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger') + '">' + cls.label + '</span>' +
+            '</div>' +
+            '<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:0.82rem;color:#37474f;margin:8px 0 4px;">' +
+              '<div><strong>Avg:</strong> <span style="color:' + avgColor(entry.avg) + ';font-weight:700;">' + avgDisplay + '</span></div>' +
+              '<div><strong>Quizzes:</strong> ' + entry.quizCount + '/3</div>' +
+              '<div><strong>STs:</strong> ' + entry.stCount + '/2</div>' +
+              '<div><strong>Days done:</strong> ' + entry.daysDone + '/40</div>' +
+            '</div>' +
+            '<div class="iv-suggested"><strong>📋 Suggested Intervention:</strong>' + suggestedIntervention(entry, term) + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function suggestedIntervention(entry, term) {
+        var cls = entry.classification.key;
+        var termLabel = term.replace('term', 'Term ');
+        var actions = [];
+
+        if (cls === 'enrichment') {
+          actions.push('Offer advanced enrichment tasks — extended performance tasks, deeper research, or peer tutoring roles.');
+          actions.push('Encourage participation in science fairs, quiz bees, or olympiad-style challenges.');
+          actions.push('Provide enrichment reading or supplementary problem sets at higher difficulty.');
+        } else if (cls === 'on-track') {
+          actions.push('Maintain current learning pace with consistent formative feedback.');
+          actions.push('Provide occasional challenge problems to build toward Enrichment status.');
+          actions.push('Encourage the student to help classmates — peer teaching reinforces mastery.');
+        } else if (cls === 'remediation') {
+          actions.push('Schedule small-group remediation sessions focused on the least-learned items.');
+          actions.push('Assign the corresponding weekly lessons again — allow retakes on activities.');
+          actions.push('Pair the student with a peer mentor for guided review of weak competencies.');
+          actions.push('Provide explicit, scaffolded practice on prerequisite skills.');
+        } else if (cls === 'urgent') {
+          actions.push('⚠️ Immediate one-on-one conference with the student and parent/guardian.');
+          actions.push('Identify root causes: attendance, motivation, comprehension gaps, or personal issues.');
+          actions.push('Create a personalized catch-up plan targeting missed weeks and assessments.');
+          actions.push('Re-administer prerequisite assessments after intervention to measure progress.');
+          actions.push('Consider referral to guidance office if non-academic issues are suspected.');
+        }
+
+        if (entry.quizCount < 3) actions.push('Attempt ' + (3 - entry.quizCount) + ' more quiz(zes) for ' + termLabel + '.');
+        if (entry.stCount < 2) actions.push('Attempt ' + (2 - entry.stCount) + ' more Summative Test(s) for ' + termLabel + '.');
+        if (entry.daysDone < 20) actions.push('Complete ' + (20 - entry.daysDone) + ' more lesson days — student is behind pace.');
+
+        return '<ul>' + actions.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul>';
+      }
+
+      function avgColor(avg) {
+        if (avg === null) return '#90a4ae';
+        if (avg >= 90) return '#2e7d32';
+        if (avg >= 75) return '#0277bd';
+        if (avg >= 65) return '#ed6c02';
+        return '#c62828';
+      }
+    })();
+  </script>
+</body>
+</html>
