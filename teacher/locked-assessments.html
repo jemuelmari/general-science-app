@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Locked Assessments — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
   <style>
     .la-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .la-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -44,7 +44,6 @@
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
@@ -82,31 +81,24 @@
 
     <div id="results-area">
       <div class="card la-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">🔒</div>
-        <p>Click <strong>Refresh</strong> to see locked assessments.</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading auth module…</p>
       </div>
     </div>
-
   </main>
 
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1"></script>
-  <script src="../assets/js/app.js?v=1"></script>
-  <script src="../assets/js/store.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=1"></script>
+  <script src="../config.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
+  <script src="../assets/js/store.js?v=7"></script>
+  <script src="../assets/js/teacher-auth.js?v=7"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
-
-      if (!window.TeacherAuth) {
-        document.getElementById('results-area').innerHTML = '<div class="card la-empty">⚠️ Auth module not loaded</div>';
-        return;
-      }
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
 
       var TERMS = ['term1', 'term2', 'term3'];
       var LABELS = {
@@ -115,8 +107,19 @@
         te: 'Term Exam'
       };
 
-      document.getElementById('btn-refresh').addEventListener('click', render);
-      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
+        }
+
+        document.getElementById('btn-refresh').addEventListener('click', render);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+        render();
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card la-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
 
       function scanLocked() {
         var termFilter = document.getElementById('filter-term').value;
@@ -149,13 +152,9 @@
               else if (t.st && t.st[id]) record = t.st[id];
 
               found.push({
-                student: s,
-                term: term,
-                assessmentId: id,
+                student: s, term: term, assessmentId: id,
                 assessmentLabel: LABELS[id] || id,
-                lockKey: lockKey,
-                lockData: lockData,
-                record: record
+                lockKey: lockKey, lockData: lockData, record: record
               });
             });
           });
@@ -167,7 +166,6 @@
           if (a.term !== b.term) return a.term.localeCompare(b.term);
           return a.assessmentId.localeCompare(b.assessmentId);
         });
-
         return found;
       }
 
@@ -180,7 +178,7 @@
             '<div class="card la-empty success">' +
               '<div style="font-size:3rem;margin-bottom:12px;">✅</div>' +
               '<div style="font-weight:700;color:#1b5e20;font-size:1.1rem;margin-bottom:6px;">No locked assessments</div>' +
-              '<p style="font-size:0.9rem;max-width:480px;margin:0 auto;">All students are clear to take their assessments. Keep monitoring.</p>' +
+              '<p style="font-size:0.9rem;max-width:480px;margin:0 auto;">All students are clear to take their assessments.</p>' +
             '</div>';
           return;
         }
@@ -254,8 +252,8 @@
           '</div>' +
           '<div class="lock-reason ' + reasonClass + '">' +
             (isTampered
-              ? '⚠️ This attempt was auto-locked because the student switched tabs or attempted to copy content during the assessment. Review with the student before unlocking.'
-              : '📖 The student did not reach the 75% passing score. Consider remediation before unlocking for a retake.') +
+              ? '⚠️ Auto-locked because the student switched tabs or attempted to copy content. Review with the student before unlocking.'
+              : '📖 Student did not reach the 75% passing score. Consider remediation before unlocking for retake.') +
           '</div>' +
           '<div class="lock-actions">' +
             '<button class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;" data-unlock="' + l.lockKey + '" data-student="' + l.student.lrn + '" data-label="' + l.assessmentLabel + '">🔓 Unlock for Retake</button>' +
@@ -279,7 +277,6 @@
       function showConfirm(opts) {
         var overlay = document.createElement('div');
         overlay.className = 'confirm-overlay';
-
         var modal = document.createElement('div');
         modal.className = 'confirm-modal';
         modal.innerHTML =
@@ -289,21 +286,13 @@
             '<button class="btn btn-outline" id="cc-cancel">Cancel</button>' +
             '<button class="btn btn-primary" id="cc-confirm">' + opts.confirmText + '</button>' +
           '</div>';
-
         overlay.appendChild(modal);
         document.body.appendChild(overlay);
-
         function close() { overlay.remove(); }
-
         modal.querySelector('#cc-cancel').addEventListener('click', close);
-        modal.querySelector('#cc-confirm').addEventListener('click', function() {
-          close();
-          opts.onConfirm();
-        });
+        modal.querySelector('#cc-confirm').addEventListener('click', function() { close(); opts.onConfirm(); });
         overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
       }
-
-      document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
 </body>
