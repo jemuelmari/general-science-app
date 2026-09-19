@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Term 3 — Earth Science | General Science</title>
-  <link rel="stylesheet" href="../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../assets/css/student.css" />
+  <link rel="stylesheet" href="../../assets/css/main.css?v=2" />
+  <link rel="stylesheet" href="../../assets/css/student.css?v=2" />
   <style>
     .term-hero { position: relative; background: linear-gradient(135deg, #004d40 0%, #00695c 60%, #26a69a 100%); color: #fff; border-radius: 18px; padding: 32px 28px; margin-bottom: 28px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 77, 64, 0.25); }
     .term-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); }
@@ -31,7 +31,7 @@
     .week-progress-text { font-size: 0.72rem; color: #90a4ae; text-align: right; }
     .assessment-list { display: flex; flex-direction: column; gap: 12px; }
     .assessment-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); border-left: 4px solid #00695c; transition: all 0.15s ease; text-decoration: none; color: inherit; }
-    .assessment-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .assessment-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
     .assessment-item.locked { opacity: 0.55; cursor: not-allowed; border-left-color: #90a4ae; }
     .assessment-item.passed { border-left-color: #2e7d32; background: #f1f8f4; }
     .assessment-info h4 { font-size: 0.95rem; margin: 0 0 2px; color: #1a1a1a; }
@@ -80,11 +80,11 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../../config.js"></script>
-  <script src="../../assets/js/app.js"></script>
-  <script src="../../assets/js/store.js"></script>
-  <script src="../../assets/js/sync.js"></script>
-  <script src="../../assets/js/term-access.js"></script>
+  <script src="../../config.js?v=2"></script>
+  <script src="../../assets/js/app.js?v=2"></script>
+  <script src="../../assets/js/store.js?v=2"></script>
+  <script src="../../assets/js/sync.js?v=2"></script>
+  <script src="../../assets/js/term-access.js?v=2"></script>
   <script>
     /* ---- Term Access Guard ---- */
     (async () => {
@@ -105,26 +105,15 @@
 
         if (!isOpen && isReadonly) {
           const banner = document.createElement('div');
-          banner.style.cssText = `
-            position: sticky; top: 0; z-index: 200;
-            background: linear-gradient(90deg, #fff3e0, #ffe0b2);
-            border-bottom: 2px solid #ed6c02;
-            color: #e65100; padding: 12px 20px;
-            font-size: 0.85rem; font-weight: 600;
-            display: flex; align-items: center; gap: 10px;
-            font-family: 'Segoe UI', sans-serif;
-          `;
-          banner.innerHTML = `
-            <span style="font-size:1.2rem;">🔒</span>
-            <span><strong>Read-only mode:</strong> this term is locked by your teacher. You can review past progress but cannot continue.</span>
-          `;
+          banner.style.cssText = 'position: sticky; top: 0; z-index: 200; background: linear-gradient(90deg, #fff3e0, #ffe0b2); border-bottom: 2px solid #ed6c02; color: #e65100; padding: 12px 20px; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 10px; font-family: "Segoe UI", sans-serif;';
+          banner.innerHTML = '<span style="font-size:1.2rem;">🔒</span><span><strong>Read-only mode:</strong> this term is locked by your teacher. You can review past progress but cannot continue.</span>';
           document.body.insertBefore(banner, document.body.firstChild);
 
           document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href]');
             if (!link) return;
             const href = link.getAttribute('href') || '';
-            if (href.includes('day.html') || href.includes('/assessments/')) {
+            if (href.indexOf('day.html') !== -1 || href.indexOf('/assessments/') !== -1) {
               e.preventDefault();
               APP.toast('🔒 Locked — cannot continue.', 'warning', 3000);
             }
@@ -155,8 +144,8 @@
         10: 'DRRM Preparedness & Adaptation'
       };
       const weekTopics = {
-        1: 'Earth\'s characteristics supporting life vs other planets.',
-        2: 'How the greenhouse effect regulates Earth\'s temperature.',
+        1: "Earth's characteristics supporting life vs other planets.",
+        2: "How the greenhouse effect regulates Earth's temperature.",
         3: 'How the Philippine archipelago was formed.',
         4: 'Philippine climate, life forms, and biodiversity hotspots.',
         5: 'Properties and uses of rocks, minerals, and soils in industry.',
@@ -189,20 +178,17 @@
         const statusIcon = complete ? '✅' : (doneCount > 0 ? '📖' : (unlocked ? '▶️' : '🔒'));
 
         const a = document.createElement(unlocked ? 'a' : 'div');
-        a.className = `week-card ${statusClass}`;
-        if (unlocked) a.href = `week${w}/index.html`;
-        a.innerHTML = `
-          <div class="week-header">
-            <span class="week-number">Week ${w}</span>
-            <span class="week-status">${statusIcon}</span>
-          </div>
-          <h3 class="week-title">${weekTitles[w]}</h3>
-          <p class="week-topic">${weekTopics[w]}</p>
-          <div class="week-progress-bar">
-            <div class="week-progress-fill" style="width:${pct}%;"></div>
-          </div>
-          <div class="week-progress-text">${doneCount}/4 days</div>
-        `;
+        a.className = 'week-card ' + statusClass;
+        if (unlocked) a.href = 'week' + w + '/index.html';
+        a.innerHTML =
+          '<div class="week-header">' +
+            '<span class="week-number">Week ' + w + '</span>' +
+            '<span class="week-status">' + statusIcon + '</span>' +
+          '</div>' +
+          '<h3 class="week-title">' + weekTitles[w] + '</h3>' +
+          '<p class="week-topic">' + weekTopics[w] + '</p>' +
+          '<div class="week-progress-bar"><div class="week-progress-fill" style="width:' + pct + '%;"></div></div>' +
+          '<div class="week-progress-text">' + doneCount + '/4 days</div>';
         grid.appendChild(a);
       }
 
@@ -222,23 +208,23 @@
       ];
 
       const list = document.getElementById('assessment-list');
-      assessments.forEach((a) => {
-        const record = t3[a.type]?.[a.id] || (a.type === 'te' ? t3.te : null);
-        const passed = record?.passed === true || (record?.percent >= 75);
-        const locked = !isWeekUnlocked(a.week);
-        const badge = passed ? '✅ Passed' : (record ? `${record.percent}%` : (locked ? '🔒 Locked' : '📝 Available'));
+      assessments.forEach(function(a) {
+        var record = t3[a.type] && t3[a.type][a.id] ? t3[a.type][a.id] : (a.type === 'te' ? t3.te : null);
+        var passed = record && (record.passed === true || record.percent >= 75);
+        var locked = !isWeekUnlocked(a.week);
+        var badge = passed ? '✅ Passed' : (record ? record.percent + '%' : (locked ? '🔒 Locked' : '📝 Available'));
 
-        const link = document.createElement(locked ? 'div' : 'a');
-        link.className = `assessment-item ${locked ? 'locked' : ''} ${passed ? 'passed' : ''}`;
+        var link = document.createElement(locked ? 'div' : 'a');
+        link.className = 'assessment-item ' + (locked ? 'locked' : '') + ' ' + (passed ? 'passed' : '');
         if (!locked) {
-        link.href = `assessments/${a.id}.html`;
-        link.innerHTML = `
-          <div class="assessment-info">
-            <h4>${a.title}</h4>
-            <p>${a.desc}</p>
-          </div>
-          <span class="assessment-badge ${passed ? 'passed' : (locked ? 'locked' : '')}">${badge}</span>
-        `;
+          link.href = 'assessments/' + a.id + '.html';
+        }
+        link.innerHTML =
+          '<div class="assessment-info">' +
+            '<h4>' + a.title + '</h4>' +
+            '<p>' + a.desc + '</p>' +
+          '</div>' +
+          '<span class="assessment-badge ' + (passed ? 'passed' : (locked ? 'locked' : '')) + '">' + badge + '</span>';
         list.appendChild(link);
       });
     })();
