@@ -4,116 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reports — Class Record · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css?v=8" />
   <style>
-    .rpt-filters {
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: end;
-      background: #fff; padding: 18px; border-radius: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-bottom: 24px;
-    }
+    .rpt-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; background: #fff; padding: 18px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; }
     .rpt-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
-
-    .report-header {
-      background: #fff;
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .report-header h2 {
-      font-size: 1.15rem;
-      color: #004d40;
-      margin: 0 0 6px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-    .report-header p {
-      margin: 0;
-      font-size: 0.85rem;
-      color: #5f6368;
-      line-height: 1.5;
-    }
-    .report-header .school-line {
-      font-size: 0.78rem;
-      color: #78909c;
-      margin-top: 8px;
-      line-height: 1.4;
-    }
-
-    .rpt-section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 28px 0 14px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .rpt-section-title h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      color: #004d40;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .rpt-section-title h3::before {
-      content: '';
-      width: 4px;
-      height: 18px;
-      background: linear-gradient(180deg, #004d40, #26a69a);
-      border-radius: 2px;
-    }
-
-    /* Print styles */
+    .report-header { background: #fff; border-radius: 14px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+    .report-header h2 { font-size: 1.15rem; color: #004d40; margin: 0 0 6px; font-weight: 700; letter-spacing: 0.3px; }
+    .report-header p { margin: 0; font-size: 0.85rem; color: #5f6368; line-height: 1.5; }
+    .report-header .school-line { font-size: 0.78rem; color: #78909c; margin-top: 8px; line-height: 1.4; }
+    .rpt-section-title { display: flex; justify-content: space-between; align-items: center; margin: 28px 0 14px; gap: 10px; flex-wrap: wrap; }
+    .rpt-section-title h3 { margin: 0; font-size: 1.05rem; color: #004d40; display: flex; align-items: center; gap: 8px; }
+    .rpt-section-title h3::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #004d40, #26a69a); border-radius: 2px; }
     @media print {
-      .app-header, .app-footer, .rpt-filters, .no-print {
-        display: none !important;
-      }
+      .app-header, .app-footer, .rpt-filters, .no-print { display: none !important; }
       body { background: #fff !important; }
       main { padding: 0 !important; }
       .container { max-width: 100% !important; padding: 0 !important; }
-      .card, .report-card, .report-header {
-        box-shadow: none !important;
-        border: 1px solid #ddd !important;
-        page-break-inside: avoid;
-      }
+      .card, .report-card, .report-header { box-shadow: none !important; border: 1px solid #ddd !important; page-break-inside: avoid; }
       .report-header { border: none !important; padding: 0 0 16px !important; }
       .rpt-section-title { page-break-after: avoid; }
       table { page-break-inside: auto; }
       tr { page-break-inside: avoid; }
     }
-
-    .rpt-empty {
-      text-align: center;
-      padding: 48px 24px;
-      color: #90a4ae;
-    }
-
-    .mps-bar {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .mps-bar .bar {
-      flex: 1;
-      height: 10px;
-      background: #eceff1;
-      border-radius: 999px;
-      overflow: hidden;
-      min-width: 60px;
-    }
-    .mps-bar .bar .fill {
-      height: 100%;
-      border-radius: 999px;
-      transition: width 0.4s ease;
-    }
-    .mps-bar .num {
-      font-weight: 700;
-      font-size: 0.82rem;
-      min-width: 45px;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
+    .rpt-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    .mps-bar { display: flex; align-items: center; gap: 10px; }
+    .mps-bar .bar { flex: 1; height: 10px; background: #eceff1; border-radius: 999px; overflow: hidden; min-width: 60px; }
+    .mps-bar .bar .fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+    .mps-bar .num { font-weight: 700; font-size: 0.82rem; min-width: 45px; text-align: right; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
@@ -134,7 +52,6 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <!-- Filters -->
     <div class="rpt-filters no-print">
       <div class="form-group">
         <label class="form-label">Term</label>
@@ -168,8 +85,8 @@
 
     <div id="results-area">
       <div class="card rpt-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📈</div>
-        <p>Choose a term and click <strong>Refresh</strong> to generate reports.</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading…</p>
       </div>
     </div>
 
@@ -179,387 +96,264 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/security.js"></script>
-  <script src="../assets/js/transmutation.js"></script>
-  <script src="../assets/js/teacher-auth.js"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/transmutation.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
+      var WEIGHTS = { ww: 0.20, pt: 0.50, ex: 0.30 };
+      var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
 
-      const WEIGHTS = (CONFIG && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
-      const EX_INTERNAL = (CONFIG && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
-
-      const TERM_LABEL = {
+      var TERM_LABEL = {
         term1: 'Term 1 — Physics & Chemistry',
         term2: 'Term 2 — Chemistry & Life Science',
         term3: 'Term 3 — Earth Science'
       };
 
-      APP.$('#btn-refresh').addEventListener('click', render);
-      APP.$('#btn-print').addEventListener('click', () => window.print());
-      APP.$('#btn-export').addEventListener('click', exportCSV);
-      APP.$('#btn-logout').addEventListener('click', () => TeacherAuth.logout());
+      var lastReport = null;
 
-      let lastReport = null;
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
+        }
 
-      /* ============================================================
-         HELPERS
-         ============================================================ */
+        document.getElementById('btn-refresh').addEventListener('click', render);
+        document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
+        document.getElementById('btn-export').addEventListener('click', exportCSV);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+
+        render();
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card rpt-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
+
       function pct(lrn, term, type, id) {
-        const scores = Store.getScores(lrn);
-        const t = scores[term] || {};
-        const record = type === 'te' ? t.te : (t[type]?.[id] || null);
+        var scores = Store.getScores(lrn);
+        var t = scores[term] || {};
+        var record = null;
+        if (type === 'te') record = t.te;
+        else if (t[type] && t[type][id]) record = t[type][id];
         if (!record) return null;
-        if (record.percent != null) return record.percent;
-        if (record.score != null && record.total) return (record.score / record.total) * 100;
+        if (record.percent !== undefined && record.percent !== null) return record.percent;
+        if (record.score !== undefined && record.total) return (record.score / record.total) * 100;
         return null;
       }
 
       function getRows(term, section) {
-        let students = Store.getAllUsers();
-        if (section) students = students.filter((s) => s.section === section);
+        var students = Store.getAllUsers();
+        if (section) students = students.filter(function(s) { return s.section === section; });
         students = APP.sortStudents(students, 'last', 'asc');
 
-        return students.map((s) => {
-          const lrn = s.lrn;
-          const q1 = pct(lrn, term, 'quizzes', 'quiz1');
-          const q2 = pct(lrn, term, 'quizzes', 'quiz2');
-          const q3 = pct(lrn, term, 'quizzes', 'quiz3');
-          const st1 = pct(lrn, term, 'st', 'st1');
-          const st2 = pct(lrn, term, 'st', 'st2');
-          const pt1 = pct(lrn, term, 'pt', 'pt1');
-          const pt2 = pct(lrn, term, 'pt', 'pt2');
-          const pt3 = pct(lrn, term, 'pt', 'pt3');
-          const te  = pct(lrn, term, 'te', 'te');
+        return students.map(function(s) {
+          var lrn = s.lrn;
+          var q1 = pct(lrn, term, 'quizzes', 'quiz1');
+          var q2 = pct(lrn, term, 'quizzes', 'quiz2');
+          var q3 = pct(lrn, term, 'quizzes', 'quiz3');
+          var st1 = pct(lrn, term, 'st', 'st1');
+          var st2 = pct(lrn, term, 'st', 'st2');
+          var pt1 = pct(lrn, term, 'pt', 'pt1');
+          var pt2 = pct(lrn, term, 'pt', 'pt2');
+          var pt3 = pct(lrn, term, 'pt', 'pt3');
+          var te = pct(lrn, term, 'te', 'te');
 
-          const wwPcts = [q1, q2, q3].filter((v) => v != null);
-          const wwAvg = wwPcts.length ? wwPcts.reduce((a, b) => a + b, 0) / wwPcts.length : null;
+          var wwPcts = [q1, q2, q3].filter(function(v) { return v !== null; });
+          var wwAvg = wwPcts.length ? wwPcts.reduce(function(a, b) { return a + b; }, 0) / wwPcts.length : null;
 
-          const ptPcts = [pt1, pt2, pt3].filter((v) => v != null);
-          const ptAvg = ptPcts.length ? ptPcts.reduce((a, b) => a + b, 0) / ptPcts.length : null;
+          var ptPcts = [pt1, pt2, pt3].filter(function(v) { return v !== null; });
+          var ptAvg = ptPcts.length ? ptPcts.reduce(function(a, b) { return a + b; }, 0) / ptPcts.length : null;
 
-          let exAvg = null;
-          if (st1 != null && st2 != null && te != null) {
+          var exAvg = null;
+          if (st1 !== null && st2 !== null && te !== null) {
             exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
           }
 
-          const final = Transmutation.computeFinalGrade(
-            wwAvg ?? 0, ptAvg ?? 0, exAvg ?? 0, WEIGHTS
-          );
+          var final = Transmutation.computeFinalGrade(wwAvg || 0, ptAvg || 0, exAvg || 0, WEIGHTS);
 
           return {
             student: s,
-            scores: { q1, q2, q3, st1, st2, pt1, pt2, pt3, te },
-            wwAvg, ptAvg, exAvg, final
+            scores: { q1: q1, q2: q2, q3: q3, st1: st1, st2: st2, pt1: pt1, pt2: pt2, pt3: pt3, te: te },
+            wwAvg: wwAvg, ptAvg: ptAvg, exAvg: exAvg, final: final
           };
         });
       }
 
-      /* ============================================================
-         MAIN RENDER
-         ============================================================ */
       function render() {
-        const term = APP.$('#filter-term').value;
-        const section = APP.$('#filter-section').value;
-        const area = APP.$('#results-area');
+        var term = document.getElementById('filter-term').value;
+        var section = document.getElementById('filter-section').value;
+        var area = document.getElementById('results-area');
 
-        const rows = getRows(term, section);
+        var rows = getRows(term, section);
 
         if (!rows.length) {
-          area.innerHTML = emptyState('👥', 'No students found', 'Students must register and sync first.');
+          area.innerHTML = '<div class="card rpt-empty">👥 No students found</div>';
           return;
         }
 
-        lastReport = { term, section, rows };
+        lastReport = { term: term, section: section, rows: rows };
 
-        // Class stats
-        const finals = rows.map((r) => r.final.transmuted).filter((v) => v > 0);
-        const avg = finals.length ? finals.reduce((a, b) => a + b, 0) / finals.length : 0;
-        const passing = finals.filter((v) => v >= 75).length;
-        const failing = finals.filter((v) => v < 75).length;
-        const passRate = finals.length ? Math.round((passing / finals.length) * 100) : 0;
+        var finals = rows.map(function(r) { return r.final.transmuted; }).filter(function(v) { return v > 0; });
+        var avg = finals.length ? finals.reduce(function(a, b) { return a + b; }, 0) / finals.length : 0;
+        var passing = finals.filter(function(v) { return v >= 75; }).length;
+        var failing = finals.filter(function(v) { return v < 75; }).length;
+        var passRate = finals.length ? Math.round((passing / finals.length) * 100) : 0;
 
-        // Compute MPS per assessment
-        const mpsList = [
-          { key: 'q1', label: 'Quiz 1', value: mps(rows, 'q1') },
-          { key: 'q2', label: 'Quiz 2', value: mps(rows, 'q2') },
-          { key: 'q3', label: 'Quiz 3', value: mps(rows, 'q3') },
-          { key: 'pt1', label: 'PT1', value: mps(rows, 'pt1') },
-          { key: 'pt2', label: 'PT2', value: mps(rows, 'pt2') },
-          { key: 'pt3', label: 'PT3', value: mps(rows, 'pt3') },
-          { key: 'st1', label: 'ST1', value: mps(rows, 'st1') },
-          { key: 'st2', label: 'ST2', value: mps(rows, 'st2') },
-          { key: 'te',  label: 'TE',  value: mps(rows, 'te')  }
+        function mps(key) {
+          var values = rows.map(function(r) { return r.scores[key]; }).filter(function(v) { return v !== null; });
+          return values.length ? values.reduce(function(a, b) { return a + b; }, 0) / values.length : null;
+        }
+
+        var mpsList = [
+          { key: 'q1', label: 'Quiz 1', value: mps('q1') },
+          { key: 'q2', label: 'Quiz 2', value: mps('q2') },
+          { key: 'q3', label: 'Quiz 3', value: mps('q3') },
+          { key: 'pt1', label: 'PT1', value: mps('pt1') },
+          { key: 'pt2', label: 'PT2', value: mps('pt2') },
+          { key: 'pt3', label: 'PT3', value: mps('pt3') },
+          { key: 'st1', label: 'ST1', value: mps('st1') },
+          { key: 'st2', label: 'ST2', value: mps('st2') },
+          { key: 'te', label: 'TE', value: mps('te') }
         ];
 
-        // Grade distribution
-        const ranges = [
-          { label: '90–100 (Outstanding)',        min: 90, max: 100, color: '#2e7d32' },
-          { label: '85–89 (Very Satisfactory)',   min: 85, max: 89,  color: '#0d47a1' },
-          { label: '80–84 (Satisfactory)',        min: 80, max: 84,  color: '#0277bd' },
-          { label: '75–79 (Fairly Satisfactory)', min: 75, max: 79,  color: '#00acc1' },
-          { label: 'Below 75 (Did Not Meet)',     min: 0,  max: 74,  color: '#c62828' }
+        var ranges = [
+          { label: '90–100 (Outstanding)', min: 90, max: 100, color: '#2e7d32' },
+          { label: '85–89 (Very Satisfactory)', min: 85, max: 89, color: '#0d47a1' },
+          { label: '80–84 (Satisfactory)', min: 80, max: 84, color: '#0277bd' },
+          { label: '75–79 (Fairly Satisfactory)', min: 75, max: 79, color: '#00acc1' },
+          { label: 'Below 75 (Did Not Meet)', min: 0, max: 74, color: '#c62828' }
         ];
-        const rangeCounts = ranges.map((r) => ({
-          ...r,
-          count: finals.filter((f) => f >= r.min && f <= r.max).length
-        }));
+        var rangeCounts = ranges.map(function(r) {
+          return { label: r.label, color: r.color, count: finals.filter(function(f) { return f >= r.min && f <= r.max; }).length };
+        });
 
-        // Ranking (top 10 and bottom 5)
-        const sortedDesc = [...rows].filter((r) => r.final.transmuted > 0)
-          .sort((a, b) => b.final.transmuted - a.final.transmuted);
-        const top10 = sortedDesc.slice(0, 10);
-        const bottom5 = [...sortedDesc].reverse().slice(0, 5);
+        var sortedDesc = rows.slice().filter(function(r) { return r.final.transmuted > 0; }).sort(function(a, b) { return b.final.transmuted - a.final.transmuted; });
+        var top10 = sortedDesc.slice(0, 10);
+        var bottom5 = sortedDesc.slice().reverse().slice(0, 5);
 
-        area.innerHTML = `
-          <div class="report-header">
-            <h2>CLASS PERFORMANCE REPORT</h2>
-            <p>${TERM_LABEL[term]} · ${section || 'All Sections'}</p>
-            <div class="school-line">
-              Iba High School · San Jose West District · Schools Division of Tarlac Province<br>
-              Generated ${APP.formatDate(new Date())} · Teacher: JEMUEL C. MARI, MAN, RN, LPT
-            </div>
-          </div>
+        area.innerHTML =
+          '<div class="report-header">' +
+            '<h2>CLASS PERFORMANCE REPORT</h2>' +
+            '<p>' + TERM_LABEL[term] + ' · ' + (section || 'All Sections') + '</p>' +
+            '<div class="school-line">Iba High School · San Jose West District · Schools Division of Tarlac Province<br>' +
+            'Generated ' + APP.formatDate(new Date()) + ' · Teacher: JEMUEL C. MARI, MAN, RN, LPT</div>' +
+          '</div>' +
 
-          <!-- Key metrics -->
-          <div class="cr-stats-grid">
-            <div class="cr-stat-card blue">
-              <div class="cs-icon">👥</div>
-              <div class="cs-value">${rows.length}</div>
-              <div class="cs-label">Total Students</div>
-            </div>
-            <div class="cr-stat-card ${avg >= 75 ? 'green' : 'amber'}">
-              <div class="cs-icon">📊</div>
-              <div class="cs-value">${avg.toFixed(1)}</div>
-              <div class="cs-label">Class Average</div>
-            </div>
-            <div class="cr-stat-card green">
-              <div class="cs-icon">✅</div>
-              <div class="cs-value">${passing}</div>
-              <div class="cs-label">Passing (${passRate}%)</div>
-            </div>
-            <div class="cr-stat-card red">
-              <div class="cs-icon">❌</div>
-              <div class="cs-value">${failing}</div>
-              <div class="cs-label">Failing</div>
-            </div>
-          </div>
+          '<div class="cr-stats-grid">' +
+            '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Total Students</div></div>' +
+            '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div></div>' +
+            '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing (' + passRate + '%)</div></div>' +
+            '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
+          '</div>' +
 
-          <!-- MPS per assessment -->
-          <div class="rpt-section-title">
-            <h3>📈 Mean Percentage Score (MPS) per Assessment</h3>
-          </div>
-          <div class="report-card">
-            ${mpsList.map((m) => `
-              <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px;">
-                  <strong style="font-size:0.85rem;color:#37474f;">${m.label}</strong>
-                </div>
-                <div class="mps-bar">
-                  <div class="bar">
-                    <div class="fill" style="width:${m.value ?? 0}%;background:${colorForMPS(m.value)};"></div>
-                  </div>
-                  <span class="num" style="color:${colorForMPS(m.value)};">
-                    ${m.value != null ? m.value.toFixed(1) + '%' : '—'}
-                  </span>
-                </div>
-              </div>
-            `).join('')}
-          </div>
+          '<div class="rpt-section-title"><h3>📈 Mean Percentage Score (MPS) per Assessment</h3></div>' +
+          '<div class="report-card">' +
+            mpsList.map(function(m) {
+              var color = m.value === null ? '#90a4ae' : (m.value >= 90 ? '#2e7d32' : m.value >= 75 ? '#0d47a1' : m.value >= 50 ? '#ed6c02' : '#c62828');
+              var width = m.value === null ? 0 : m.value;
+              return '<div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">' +
+                '<div style="margin-bottom:6px;"><strong style="font-size:0.85rem;color:#37474f;">' + m.label + '</strong></div>' +
+                '<div class="mps-bar">' +
+                  '<div class="bar"><div class="fill" style="width:' + width + '%;background:' + color + ';"></div></div>' +
+                  '<span class="num" style="color:' + color + ';">' + (m.value !== null ? m.value.toFixed(1) + '%' : '—') + '</span>' +
+                '</div></div>';
+            }).join('') +
+          '</div>' +
 
-          <!-- Distribution -->
-          <div class="rpt-section-title">
-            <h3>📊 Grade Distribution</h3>
-          </div>
-          <div class="report-card">
-            ${rangeCounts.map((r) => `
-              <div class="distribution-row">
-                <span class="distribution-label" style="min-width:200px;font-size:0.78rem;">${r.label}</span>
-                <div class="distribution-bar">
-                  <div class="distribution-fill"
-                       style="width:${finals.length ? (r.count / finals.length) * 100 : 0}%;background:${r.color};">
-                    ${r.count > 0 ? r.count : ''}
-                  </div>
-                </div>
-                <span class="distribution-count">${r.count} student${r.count !== 1 ? 's' : ''}</span>
-              </div>
-            `).join('')}
-          </div>
+          '<div class="rpt-section-title"><h3>📊 Grade Distribution</h3></div>' +
+          '<div class="report-card">' +
+            rangeCounts.map(function(r) {
+              var pctVal = finals.length ? Math.round((r.count / finals.length) * 100) : 0;
+              return '<div class="distribution-row">' +
+                '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + r.label + '</span>' +
+                '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pctVal + '%;background:' + r.color + ';">' + (r.count > 0 ? r.count : '') + '</div></div>' +
+                '<span class="distribution-count">' + r.count + ' student' + (r.count !== 1 ? 's' : '') + '</span></div>';
+            }).join('') +
+          '</div>' +
 
-          <!-- Top 10 -->
-          <div class="rpt-section-title">
-            <h3>🏆 Top 10 Performing Students</h3>
-          </div>
-          <div class="report-card" style="padding:0;overflow:hidden;">
-            <table class="modern-table">
-              <thead>
-                <tr>
-                  <th style="width:60px;">Rank</th>
-                  <th>Student</th>
-                  <th>Section</th>
-                  <th style="text-align:right;">WW</th>
-                  <th style="text-align:right;">PT</th>
-                  <th style="text-align:right;">EX</th>
-                  <th style="text-align:right;">Final</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${top10.length ? top10.map((r, i) => `
-                  <tr>
-                    <td style="font-weight:800;color:${i < 3 ? '#2e7d32' : '#37474f'};">#${i + 1}</td>
-                    <td><strong>${APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName)}</strong></td>
-                    <td>${r.student.section}</td>
-                    <td style="text-align:right;">${r.wwAvg != null ? r.wwAvg.toFixed(1) : '—'}</td>
-                    <td style="text-align:right;">${r.ptAvg != null ? r.ptAvg.toFixed(1) : '—'}</td>
-                    <td style="text-align:right;">${r.exAvg != null ? r.exAvg.toFixed(1) : '—'}</td>
-                    <td style="text-align:right;font-weight:800;color:#2e7d32;">${r.final.transmuted || '—'}</td>
-                  </tr>
-                `).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No graded students yet.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+          '<div class="rpt-section-title"><h3>🏆 Top 10 Performing Students</h3></div>' +
+          '<div class="report-card" style="padding:0;overflow:hidden;">' +
+            '<table class="modern-table"><thead><tr><th style="width:60px;">Rank</th><th>Student</th><th>Section</th><th style="text-align:right;">WW</th><th style="text-align:right;">PT</th><th style="text-align:right;">EX</th><th style="text-align:right;">Final</th></tr></thead>' +
+            '<tbody>' +
+              (top10.length ? top10.map(function(r, i) {
+                return '<tr><td style="font-weight:800;color:' + (i < 3 ? '#2e7d32' : '#37474f') + ';">#' + (i + 1) + '</td>' +
+                  '<td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
+                  '<td>' + r.student.section + '</td>' +
+                  '<td style="text-align:right;">' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;">' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;">' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;font-weight:800;color:#2e7d32;">' + (r.final.transmuted || '—') + '</td></tr>';
+              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No graded students yet.</td></tr>') +
+            '</tbody></table>' +
+          '</div>' +
 
-          <!-- Bottom 5 -->
-          <div class="rpt-section-title">
-            <h3>⚠️ Students Needing Intervention (Bottom 5)</h3>
-          </div>
-          <div class="report-card" style="padding:0;overflow:hidden;">
-            <table class="modern-table">
-              <thead>
-                <tr>
-                  <th>Student</th>
-                  <th>Section</th>
-                  <th style="text-align:right;">WW</th>
-                  <th style="text-align:right;">PT</th>
-                  <th style="text-align:right;">EX</th>
-                  <th style="text-align:right;">Final</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${bottom5.length ? bottom5.map((r) => {
-                  const cls = Transmutation.classifyStudent(r.final.raw);
-                  return `
-                    <tr>
-                      <td><strong>${APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName)}</strong></td>
-                      <td>${r.student.section}</td>
-                      <td style="text-align:right;">${r.wwAvg != null ? r.wwAvg.toFixed(1) : '—'}</td>
-                      <td style="text-align:right;">${r.ptAvg != null ? r.ptAvg.toFixed(1) : '—'}</td>
-                      <td style="text-align:right;">${r.exAvg != null ? r.exAvg.toFixed(1) : '—'}</td>
-                      <td style="text-align:right;font-weight:800;color:${r.final.transmuted >= 75 ? '#2e7d32' : '#c62828'};">
-                        ${r.final.transmuted || '—'}
-                      </td>
-                      <td>
-                        <span class="badge-pill ${cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger'}">
-                          ${cls.label}
-                        </span>
-                      </td>
-                    </tr>
-                  `;
-                }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No students to rank.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+          '<div class="rpt-section-title"><h3>⚠️ Students Needing Intervention (Bottom 5)</h3></div>' +
+          '<div class="report-card" style="padding:0;overflow:hidden;">' +
+            '<table class="modern-table"><thead><tr><th>Student</th><th>Section</th><th style="text-align:right;">WW</th><th style="text-align:right;">PT</th><th style="text-align:right;">EX</th><th style="text-align:right;">Final</th><th>Status</th></tr></thead>' +
+            '<tbody>' +
+              (bottom5.length ? bottom5.map(function(r) {
+                var cls = Transmutation.classifyStudent(r.final.raw);
+                return '<tr><td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
+                  '<td>' + r.student.section + '</td>' +
+                  '<td style="text-align:right;">' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;">' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;">' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;font-weight:800;color:' + (r.final.transmuted >= 75 ? '#2e7d32' : '#c62828') + ';">' + (r.final.transmuted || '—') + '</td>' +
+                  '<td><span class="badge-pill ' + (cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger') + '">' + cls.label + '</span></td></tr>';
+              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No students to rank.</td></tr>') +
+            '</tbody></table>' +
+          '</div>' +
 
-          <!-- Signature block -->
-          <div class="report-card" style="margin-top:32px;text-align:center;">
-            <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:32px;">
-              <div>
-                <div style="border-top:1px solid #333;width:200px;margin:40px auto 6px;"></div>
-                <div style="font-size:0.8rem;font-weight:700;">JEMUEL C. MARI, MAN, RN, LPT</div>
-                <div style="font-size:0.72rem;color:#5f6368;">Subject Teacher</div>
-              </div>
-              <div>
-                <div style="border-top:1px solid #333;width:200px;margin:40px auto 6px;"></div>
-                <div style="font-size:0.8rem;font-weight:700;">SCHOOL HEAD / PRINCIPAL</div>
-                <div style="font-size:0.72rem;color:#5f6368;">Iba High School</div>
-              </div>
-            </div>
-          </div>
-        `;
+          '<div class="report-card" style="margin-top:32px;text-align:center;">' +
+            '<div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:32px;">' +
+              '<div><div style="border-top:1px solid #333;width:200px;margin:40px auto 6px;"></div>' +
+                '<div style="font-size:0.8rem;font-weight:700;">JEMUEL C. MARI, MAN, RN, LPT</div>' +
+                '<div style="font-size:0.72rem;color:#5f6368;">Subject Teacher</div></div>' +
+              '<div><div style="border-top:1px solid #333;width:200px;margin:40px auto 6px;"></div>' +
+                '<div style="font-size:0.8rem;font-weight:700;">SCHOOL HEAD / PRINCIPAL</div>' +
+                '<div style="font-size:0.72rem;color:#5f6368;">Iba High School</div></div>' +
+            '</div>' +
+          '</div>';
 
-        APP.toast(`Report generated for ${rows.length} student(s)`, 'success', 2000);
+        APP.toast('Report generated for ' + rows.length + ' student(s)', 'success', 2000);
       }
 
-      /* ============================================================
-         MPS HELPER
-         ============================================================ */
-      function mps(rows, key) {
-        const values = rows.map((r) => r.scores[key]).filter((v) => v != null);
-        if (!values.length) return null;
-        return values.reduce((a, b) => a + b, 0) / values.length;
-      }
-
-      function colorForMPS(mps) {
-        if (mps == null) return '#90a4ae';
-        if (mps >= 90) return '#2e7d32';
-        if (mps >= 75) return '#0d47a1';
-        if (mps >= 50) return '#ed6c02';
-        return '#c62828';
-      }
-
-      /* ============================================================
-         EXPORT CSV
-         ============================================================ */
       function exportCSV() {
-        if (!lastReport) {
-          APP.toast('Run the report first', 'warning');
-          return;
-        }
-
-        const headers = [
-          'Rank', 'Last Name', 'First Name', 'Middle Name', 'LRN', 'Section',
-          'Quiz 1', 'Quiz 2', 'Quiz 3',
-          'PT1', 'PT2', 'PT3',
-          'ST1', 'ST2', 'TE',
-          'WW Avg', 'PT Avg', 'EX Avg',
-          'Final Grade'
-        ];
-
-        const rows = [...lastReport.rows]
-          .sort((a, b) => b.final.transmuted - a.final.transmuted)
-          .map((r, i) => {
-            const s = r.student;
-            const f = (v) => (v != null ? Math.round(v) : '');
-            return [
-              i + 1,
-              s.lastName || '',
-              s.firstName || '',
-              s.middleName || '',
-              s.lrn,
-              s.section,
-              f(r.scores.q1), f(r.scores.q2), f(r.scores.q3),
-              f(r.scores.pt1), f(r.scores.pt2), f(r.scores.pt3),
-              f(r.scores.st1), f(r.scores.st2), f(r.scores.te),
-              r.wwAvg != null ? r.wwAvg.toFixed(1) : '',
-              r.ptAvg != null ? r.ptAvg.toFixed(1) : '',
-              r.exAvg != null ? r.exAvg.toFixed(1) : '',
-              r.final.transmuted || ''
-            ];
-          });
-
-        UI.exportCSV(`GSA_Report_${lastReport.term}_${lastReport.section || 'All'}.csv`, headers, rows);
+        if (!lastReport) { APP.toast('Run the report first', 'warning'); return; }
+        var headers = ['Rank', 'Last Name', 'First Name', 'Middle Name', 'LRN', 'Section', 'Quiz 1', 'Quiz 2', 'Quiz 3', 'PT1', 'PT2', 'PT3', 'ST1', 'ST2', 'TE', 'WW Avg', 'PT Avg', 'EX Avg', 'Final Grade'];
+        var rows = lastReport.rows.slice().sort(function(a, b) { return b.final.transmuted - a.final.transmuted; }).map(function(r, i) {
+          var s = r.student;
+          var f = function(v) { return v !== null && v !== undefined ? Math.round(v) : ''; };
+          return [i + 1, s.lastName || '', s.firstName || '', s.middleName || '', s.lrn, s.section,
+            f(r.scores.q1), f(r.scores.q2), f(r.scores.q3),
+            f(r.scores.pt1), f(r.scores.pt2), f(r.scores.pt3),
+            f(r.scores.st1), f(r.scores.st2), f(r.scores.te),
+            r.wwAvg !== null ? r.wwAvg.toFixed(1) : '',
+            r.ptAvg !== null ? r.ptAvg.toFixed(1) : '',
+            r.exAvg !== null ? r.exAvg.toFixed(1) : '',
+            r.final.transmuted || ''];
+        });
+        var csv = [headers].concat(rows).map(function(row) {
+          return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
+        }).join('\n');
+        var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'GSA_Report_' + lastReport.term + '_' + (lastReport.section || 'All') + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
         APP.toast('Report exported', 'success');
       }
-
-      function emptyState(icon, title, message) {
-        return `
-          <div class="card rpt-empty">
-            <div style="font-size:2.5rem;margin-bottom:12px;">${icon}</div>
-            <div style="font-weight:700;color:#37474f;margin-bottom:6px;">${title}</div>
-            ${message ? `<p class="text-muted" style="font-size:0.88rem;max-width:480px;margin:0 auto;">${message}</p>` : ''}
-          </div>
-        `;
-      }
-
-      // Auto-run
-      document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
 </body>
