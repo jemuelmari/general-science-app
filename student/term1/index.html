@@ -227,9 +227,7 @@
         const link = document.createElement(locked ? 'div' : 'a');
         link.className = `assessment-item ${locked ? 'locked' : ''} ${passed ? 'passed' : ''}`;
         if (!locked) {
-          const base = a.type === 'pt' ? 'assessments/pt' : (a.type === 'te' ? 'assessments' : 'assessments');
-          link.href = `${base}/${a.id}.html`;
-        }
+        link.href = `assessments/${a.id}.html`;
         link.innerHTML = `
           <div class="assessment-info">
             <h4>${a.title}</h4>
