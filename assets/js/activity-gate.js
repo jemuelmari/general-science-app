@@ -1,14 +1,10 @@
 /* ============================================================
    activity-gate.js — Simple per-day activity gate
-   Version: 2.0.0
+   Version: 2.0.1
    App: General Science
    ------------------------------------------------------------
-   SIMPLER DESIGN:
-   - Each day has ONE activity (or none)
-   - The gate just tracks: passed / not passed
-   - No sequential activity unlocking (day.html already handles
-     week/day sequencing at a higher level)
-   - Detects the visible activity container automatically
+   Changelog v2.0.1: Re-detect visible container at every render
+   (fixes detection running before day.html hides unused cards)
    ============================================================ */
 
 const ActivityGate = (() => {
@@ -23,19 +19,16 @@ const ActivityGate = (() => {
      INIT
      ============================================================ */
   function init(config) {
-    // Find which activity container is actually visible on this page
-    const visible = detectVisibleActivity();
-
     session = {
       key: `${KEY_PREFIX}${config.term}_w${config.week}_d${config.day}`,
       term: config.term,
       week: config.week,
       day: config.day,
-      containerId: visible ? visible.containerId : null,
-      activityLabel: visible ? visible.label : null
+      containerId: null,
+      activityLabel: null
     };
 
-    // Restore saved state
+    // Restore saved status
     const saved = sessionStorage.getItem(session.key);
     if (saved) {
       try {
@@ -54,22 +47,24 @@ const ActivityGate = (() => {
       session.attempts = 0;
     }
 
-    console.log('[ActivityGate] Init:', session.key, 'visible:', session.containerId, 'status:', session.status);
-
-    // Wait for day.html to finish hiding/showing cards, then render
-    setTimeout(render, 100);
+    // Render multiple times — day.html will hide unused cards
+    // within the first few hundred milliseconds
+    render();
+    setTimeout(render, 50);
+    setTimeout(render, 150);
     setTimeout(render, 400);
+    setTimeout(render, 800);
 
-    // Dispatch ready event so lesson-engine knows we're alive
+    // Dispatch ready event for lesson-engine
     setTimeout(() => {
       document.dispatchEvent(new CustomEvent('activity-gate:ready'));
     }, 30);
+
+    console.log('[ActivityGate] Init:', session.key, 'status:', session.status);
   }
 
   /* ============================================================
-     DETECT VISIBLE ACTIVITY
-     Finds the one activity card that is visible (not hidden)
-     and returns its container id.
+     DETECT VISIBLE ACTIVITY — run at every render
      ============================================================ */
   function detectVisibleActivity() {
     const candidates = [
@@ -78,13 +73,11 @@ const ActivityGate = (() => {
       { containerId: 'formative',  label: 'Formative Check — Escape the Lab' }
     ];
 
-    for (const c of candidates) {
+    for (let i = 0; i < candidates.length; i++) {
+      const c = candidates[i];
       const el = document.getElementById(c.containerId);
       if (!el) continue;
       if (isHidden(el)) continue;
-      // Also check the enclosing .activity-card
-      const card = el.closest('.activity-card');
-      if (card && isHidden(card)) continue;
       return c;
     }
 
@@ -155,24 +148,36 @@ const ActivityGate = (() => {
   }
 
   /* ============================================================
-     RENDER
+     RENDER — re-detect visible container every time
      ============================================================ */
   function render() {
     if (!session) return;
-    if (!session.containerId) return; // no activity on this day
+
+    // Re-detect on every call — day.html hides cards asynchronously
+    const visible = detectVisibleActivity();
+    if (visible) {
+      session.containerId = visible.containerId;
+      session.activityLabel = visible.label;
+    }
+
+    if (!session.containerId) {
+      console.log('[ActivityGate] No visible activity container found');
+      return;
+    }
 
     const container = document.getElementById(session.containerId);
     if (!container) return;
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
 
-    // Skip if parent card itself is hidden
+    // Skip if parent card is hidden (it may not be our turn yet)
     if (isHidden(parentCard)) return;
 
-    // Clear any existing overlays
-    parentCard.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
+    // Clear existing overlays
+    parentCard.querySelectorAll('.gate-overlay').forEach(function (el) { el.remove(); });
 
-    // Render based on current status
+    console.log('[ActivityGate] Render:', session.containerId, 'status:', session.status);
+
     if (session.status === 'ready') {
       container.style.display = 'none';
       parentCard.appendChild(buildReadyOverlay());
@@ -195,7 +200,6 @@ const ActivityGate = (() => {
     el.className = 'gate-overlay';
     el.style.cssText = 'padding:32px 24px;text-align:center;background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:2px solid #1976d2;border-radius:8px;';
 
-    // Get estimated time from container
     const c = document.getElementById(session.containerId);
     const mins = (c && c.dataset.estimatedMinutes) || 5;
 
@@ -219,9 +223,9 @@ const ActivityGate = (() => {
         : '') +
       '<button class="btn btn-primary" id="gate-start-btn" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;">▶️ Start Activity</button>';
 
-    setTimeout(() => {
+    setTimeout(function () {
       const btn = el.querySelector('#gate-start-btn');
-      if (btn) btn.addEventListener('click', () => startActivity());
+      if (btn) btn.addEventListener('click', function () { startActivity(); });
     }, 0);
 
     return el;
@@ -240,9 +244,9 @@ const ActivityGate = (() => {
       '<div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">🎉 Great job! You can proceed to the next day.</div>' +
       '<button class="btn btn-outline" id="gate-retake-btn" style="margin-top:12px;font-size:0.8rem;padding:8px 18px;">♻️ Practice Again</button>';
 
-    setTimeout(() => {
+    setTimeout(function () {
       const btn = el.querySelector('#gate-retake-btn');
-      if (btn) btn.addEventListener('click', () => {
+      if (btn) btn.addEventListener('click', function () {
         if (confirm('Practice this activity again? Your pass status will NOT be affected.')) {
           resetActivity();
         }
@@ -266,9 +270,9 @@ const ActivityGate = (() => {
         session.attempts + ' · Retakes: unlimited</div>' +
       '<button class="btn btn-primary" id="gate-retry-btn" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;">🔁 Retake Activity</button>';
 
-    setTimeout(() => {
+    setTimeout(function () {
       const btn = el.querySelector('#gate-retry-btn');
-      if (btn) btn.addEventListener('click', () => startActivity());
+      if (btn) btn.addEventListener('click', function () { startActivity(); });
     }, 0);
 
     return el;
@@ -279,7 +283,6 @@ const ActivityGate = (() => {
      ============================================================ */
   function startActivity() {
     markRunning();
-    // Map container id to the state key that lesson-engine expects
     const stateKey = session.containerId === 'activity-1' ? 'activity1'
                    : session.containerId === 'activity-2' ? 'activity2'
                    : 'formative';
@@ -290,10 +293,12 @@ const ActivityGate = (() => {
      PUBLIC API
      ============================================================ */
   return {
-    init,
-    markRunning,
-    completeWithScore,
-    resetActivity,
-    getState: () => session ? { status: session.status, score: session.score, attempts: session.attempts } : null
+    init: init,
+    markRunning: markRunning,
+    completeWithScore: completeWithScore,
+    resetActivity: resetActivity,
+    getState: function () {
+      return session ? { status: session.status, score: session.score, attempts: session.attempts, containerId: session.containerId } : null;
+    }
   };
 })();
