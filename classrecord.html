@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Class Record — General Science</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/classrecord.css" />
+  <link rel="stylesheet" href="assets/css/main.css?v=7" />
+  <link rel="stylesheet" href="assets/css/classrecord.css?v=7" />
 </head>
 <body>
 
@@ -33,12 +33,8 @@
           <p class="subtitle">General Science · Grade 11 · 3 Terms · Weighting: 20% WW / 50% PT / 30% EX</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="classrecord/grading-sheet.html" class="btn btn-primary" style="background:#fff;color:#00695c;">
-            📋 Open Grading Sheet
-          </a>
-          <a href="classrecord/reports.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">
-            📈 View Reports
-          </a>
+          <a href="classrecord/grading-sheet.html" class="btn btn-primary" style="background:#fff;color:#00695c;">📋 Open Grading Sheet</a>
+          <a href="classrecord/reports.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">📈 View Reports</a>
         </div>
       </div>
     </div>
@@ -116,13 +112,9 @@
     <div id="tab-transmutation" class="cr-tab-panel" style="display:none;">
       <div class="report-card" style="max-width:600px;margin:0 auto;">
         <h4>📐 Adjusted Transmutation Table (SY 2026–2027)</h4>
-        <p class="text-small text-muted" style="margin-bottom:16px;">
-          Anchor: <strong>raw 70 → transmuted 75</strong> (passing). Applies to Academic Electives.
-        </p>
+        <p class="text-small text-muted" style="margin-bottom:16px;">Anchor: <strong>raw 70 → transmuted 75</strong>. Applies to Academic Electives.</p>
         <table class="transmutation-table">
-          <thead>
-            <tr><th>Raw Score</th><th>Transmuted</th><th>Raw Score</th><th>Transmuted</th></tr>
-          </thead>
+          <thead><tr><th>Raw Score</th><th>Transmuted</th><th>Raw Score</th><th>Transmuted</th></tr></thead>
           <tbody id="transmutation-body"></tbody>
         </table>
       </div>
@@ -134,13 +126,316 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="config.js"></script>
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/store.js"></script>
-  <script src="assets/js/security.js"></script>
-  <script src="assets/js/transmutation.js"></script>
-  <script src="assets/js/activity-tracker.js"></script>
-  <script src="assets/js/teacher-auth.js"></script>
-  <script src="assets/js/classrecord.js"></script>
+  <script src="config.js?v=7"></script>
+  <script src="assets/js/app.js?v=7"></script>
+  <script src="assets/js/store.js?v=7"></script>
+  <script src="assets/js/security.js?v=7"></script>
+  <script src="assets/js/transmutation.js?v=7"></script>
+  <script src="assets/js/activity-tracker.js?v=7"></script>
+  <script src="assets/js/ui-helpers.js?v=7"></script>
+  <script src="assets/js/teacher-auth.js?v=7"></script>
+  <script src="assets/js/teacher-auth-boot.js?v=1"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      var WEIGHTS = { ww: 0.20, pt: 0.50, ex: 0.30 };
+      var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
+
+      var TERM_LABELS = {
+        term1: 'Term 1 — Physics & Chemistry',
+        term2: 'Term 2 — Chemistry & Life Science',
+        term3: 'Term 3 — Earth Science'
+      };
+
+      var currentTab = 'summary';
+
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('teacher-login.html');
+          return;
+        }
+
+        document.getElementById('filter-term').addEventListener('change', render);
+        document.getElementById('filter-section').addEventListener('change', render);
+        document.getElementById('btn-refresh').addEventListener('click', function() {
+          render();
+          APP.toast('Refreshed', 'success', 1500);
+        });
+        document.getElementById('btn-export').addEventListener('click', exportCSV);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+
+        // Tab switching
+        document.querySelectorAll('.cr-tab').forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            document.querySelectorAll('.cr-tab').forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            currentTab = tab.dataset.tab;
+            document.querySelectorAll('.cr-tab-panel').forEach(function(p) { p.style.display = 'none'; });
+            var panel = document.getElementById('tab-' + currentTab);
+            if (panel) panel.style.display = 'block';
+            render();
+          });
+        });
+
+        render();
+      }, function() {
+        document.getElementById('summary-body').innerHTML =
+          '<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">⚠️ Auth module failed to load</td></tr>';
+      });
+
+      /* ============================================================
+         DATA HELPERS
+         ============================================================ */
+      function getScorePercent(lrn, term, type, id) {
+        var scores = Store.getScores(lrn);
+        var t = scores[term] || {};
+        var record = null;
+        if (type === 'te') record = t.te;
+        else if (t[type] && t[type][id]) record = t[type][id];
+        if (!record) return null;
+        if (record.percent !== undefined && record.percent !== null) return record.percent;
+        if (record.score !== undefined && record.total) return (record.score / record.total) * 100;
+        return null;
+      }
+
+      function computeGrade(students, term) {
+        return students.map(function(s) {
+          var q1 = getScorePercent(s.lrn, term, 'quizzes', 'quiz1');
+          var q2 = getScorePercent(s.lrn, term, 'quizzes', 'quiz2');
+          var q3 = getScorePercent(s.lrn, term, 'quizzes', 'quiz3');
+          var st1 = getScorePercent(s.lrn, term, 'st', 'st1');
+          var st2 = getScorePercent(s.lrn, term, 'st', 'st2');
+          var pt1 = getScorePercent(s.lrn, term, 'pt', 'pt1');
+          var pt2 = getScorePercent(s.lrn, term, 'pt', 'pt2');
+          var pt3 = getScorePercent(s.lrn, term, 'pt', 'pt3');
+          var te = getScorePercent(s.lrn, term, 'te', 'te');
+
+          var quizPcts = [q1, q2, q3].filter(function(v) { return v !== null; });
+          var wwAvg = quizPcts.length ? quizPcts.reduce(function(a, b) { return a + b; }, 0) / quizPcts.length : null;
+
+          var ptPcts = [pt1, pt2, pt3].filter(function(v) { return v !== null; });
+          var ptAvg = ptPcts.length ? ptPcts.reduce(function(a, b) { return a + b; }, 0) / ptPcts.length : null;
+
+          var exAvg = null;
+          if (st1 !== null && st2 !== null && te !== null) {
+            exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
+          }
+
+          var rawFinal = ((wwAvg || 0) * WEIGHTS.ww) + ((ptAvg || 0) * WEIGHTS.pt) + ((exAvg || 0) * WEIGHTS.ex);
+          var finalGrade = Transmutation.computeFinalGrade(wwAvg || 0, ptAvg || 0, exAvg || 0, WEIGHTS);
+
+          return {
+            student: s,
+            scores: { q1: q1, q2: q2, q3: q3, st1: st1, st2: st2, pt1: pt1, pt2: pt2, pt3: pt3, te: te },
+            wwAvg: wwAvg, ptAvg: ptAvg, exAvg: exAvg, final: finalGrade
+          };
+        });
+      }
+
+      /* ============================================================
+         RENDER
+         ============================================================ */
+      function render() {
+        var term = document.getElementById('filter-term').value;
+        var section = document.getElementById('filter-section').value;
+
+        var students = Store.getAllUsers();
+        if (section) students = students.filter(function(s) { return s.section === section; });
+        students = APP.sortStudents(students, 'last', 'asc');
+
+        var rows = computeGrade(students, term);
+
+        renderStats(rows);
+        if (currentTab === 'summary') renderSummary(rows, term);
+        else if (currentTab === 'distribution') renderDistribution(rows);
+        else if (currentTab === 'mll') renderMLL(rows);
+        else if (currentTab === 'transmutation') renderTransmutation();
+      }
+
+      function renderStats(rows) {
+        var stats = document.getElementById('cr-stats');
+        if (!rows.length) {
+          stats.innerHTML = '<div class="cr-stat-card"><div class="cs-value">0</div><div class="cs-label">No Students</div></div>';
+          return;
+        }
+
+        var finals = rows.map(function(r) { return r.final.transmuted; }).filter(function(v) { return v > 0; });
+        var avg = finals.length ? finals.reduce(function(a, b) { return a + b; }, 0) / finals.length : 0;
+        var passing = finals.filter(function(v) { return v >= 75; }).length;
+        var failing = finals.filter(function(v) { return v < 75; }).length;
+        var submissionCount = 0;
+        rows.forEach(function(r) {
+          Object.values(r.scores).forEach(function(v) { if (v !== null) submissionCount++; });
+        });
+        var completion = rows.length ? Math.round((submissionCount / (rows.length * 9)) * 100) : 0;
+
+        stats.innerHTML =
+          '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Students</div></div>' +
+          '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div></div>' +
+          '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing</div></div>' +
+          '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
+          '<div class="cr-stat-card ' + (completion >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📝</div><div class="cs-value">' + completion + '%</div><div class="cs-label">Submission Rate</div></div>';
+      }
+
+      function renderSummary(rows, term) {
+        var tbody = document.getElementById('summary-body');
+        if (!tbody) return;
+
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        rows.forEach(function(r) {
+          var s = r.student;
+          var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
+          var avatarClass = (typeof UI !== 'undefined' && UI.getAvatarClass) ? UI.getAvatarClass(s.lrn) : 'av-1';
+          var tr = document.createElement('tr');
+
+          tr.innerHTML =
+            '<td class="student-cell">' +
+              '<div class="student-cell">' +
+                '<div class="student-avatar ' + avatarClass + '">' + initials + '</div>' +
+                '<div class="student-info">' +
+                  '<div class="name">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
+                  '<div class="meta">' + s.section + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</td>' +
+            cellValue(r.scores.q1) +
+            cellValue(r.scores.q2) +
+            cellValue(r.scores.q3) +
+            cellValue(r.scores.pt1) +
+            cellValue(r.scores.pt2) +
+            cellValue(r.scores.pt3) +
+            cellValue(r.scores.st1) +
+            cellValue(r.scores.st2) +
+            cellValue(r.scores.te) +
+            '<td class="final-grade ' + (r.final.transmuted >= 75 ? 'passing' : 'failing') + '">' + (r.final.transmuted || '—') + '</td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function cellValue(pct) {
+        if (pct === null || pct === undefined) return '<td class="empty-cell">—</td>';
+        var rounded = Math.round(pct);
+        var color = '#37474f';
+        if (rounded >= 90) color = '#2e7d32';
+        else if (rounded >= 75) color = '#0d47a1';
+        else if (rounded >= 65) color = '#ed6c02';
+        else color = '#c62828';
+        return '<td class="grade-cell" style="color:' + color + ';">' + rounded + '</td>';
+      }
+
+      function renderDistribution(rows) {
+        var grid = document.getElementById('distribution-grid');
+        var finals = rows.map(function(r) { return r.final.transmuted; }).filter(function(v) { return v > 0; });
+
+        var ranges = [
+          { label: '90–100 (Outstanding)', min: 90, max: 100, color: '#2e7d32' },
+          { label: '85–89 (Very Satisfactory)', min: 85, max: 89, color: '#0d47a1' },
+          { label: '80–84 (Satisfactory)', min: 80, max: 84, color: '#0277bd' },
+          { label: '75–79 (Fairly Satisfactory)', min: 75, max: 79, color: '#00acc1' },
+          { label: 'Below 75 (Did Not Meet)', min: 0, max: 74, color: '#c62828' }
+        ];
+
+        var html = '<div class="report-card"><h4>📊 Grade Distribution</h4>';
+        ranges.forEach(function(r) {
+          var count = finals.filter(function(f) { return f >= r.min && f <= r.max; }).length;
+          var pct = finals.length ? Math.round((count / finals.length) * 100) : 0;
+          html += '<div class="distribution-row">' +
+            '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + r.label + '</span>' +
+            '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pct + '%;background:' + r.color + ';">' + (count > 0 ? count : '') + '</div></div>' +
+            '<span class="distribution-count">' + count + '</span></div>';
+        });
+        html += '</div>';
+
+        grid.innerHTML = html;
+      }
+
+      function renderMLL(rows) {
+        var grid = document.getElementById('mll-grid');
+        var labels = { q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3', pt1: 'PT1', pt2: 'PT2', pt3: 'PT3', st1: 'ST1', st2: 'ST2', te: 'Term Exam' };
+
+        var stats = Object.keys(labels).map(function(k) {
+          var pcts = rows.map(function(r) { return r.scores[k]; }).filter(function(v) { return v !== null; });
+          return { key: k, label: labels[k], avg: pcts.length ? pcts.reduce(function(a, b) { return a + b; }, 0) / pcts.length : 0, count: pcts.length };
+        }).filter(function(a) { return a.count > 0; });
+
+        stats.sort(function(a, b) { return b.avg - a.avg; });
+        var most = stats.slice(0, 3);
+        var least = stats.slice(-3).reverse();
+
+        grid.innerHTML =
+          '<div class="report-card"><h4>✅ Most Learned (Top 3)</h4><ul class="mll-list">' +
+            most.map(function(a) { return '<li><div class="mll-desc"><span class="mll-code">' + a.count + ' submissions</span>' + a.label + '</div><div class="mll-mps" style="color:#2e7d32;">' + a.avg.toFixed(1) + '%</div></li>'; }).join('') +
+            (most.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
+          '</ul></div>' +
+          '<div class="report-card"><h4>⚠️ Least Learned (Bottom 3)</h4><ul class="mll-list">' +
+            least.map(function(a) { return '<li><div class="mll-desc"><span class="mll-code">' + a.count + ' submissions</span>' + a.label + '</div><div class="mll-mps" style="color:#c62828;">' + a.avg.toFixed(1) + '%</div></li>'; }).join('') +
+            (least.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
+          '</ul></div>';
+      }
+
+      function renderTransmutation() {
+        var tbody = document.getElementById('transmutation-body');
+        if (!tbody) return;
+        var rows = [];
+        for (var raw = 100; raw >= 0; raw -= 2) {
+          var left = { raw: raw, out: Transmutation.transmute(raw) };
+          var right = raw - 1 >= 0 ? { raw: raw - 1, out: Transmutation.transmute(raw - 1) } : null;
+          rows.push([left, right]);
+        }
+        tbody.innerHTML = rows.map(function(pair) {
+          var l = pair[0], r = pair[1];
+          return '<tr><td class="raw">' + l.raw + '</td><td class="final">' + l.out + '</td>' +
+            (r ? '<td class="raw">' + r.raw + '</td><td class="final">' + r.out + '</td>' : '<td></td><td></td>') +
+          '</tr>';
+        }).join('');
+      }
+
+      function exportCSV() {
+        var term = document.getElementById('filter-term').value;
+        var section = document.getElementById('filter-section').value;
+        var students = Store.getAllUsers();
+        if (section) students = students.filter(function(s) { return s.section === section; });
+        students = APP.sortStudents(students, 'last', 'asc');
+        var rows = computeGrade(students, term);
+
+        var headers = ['Last Name', 'First Name', 'Middle Name', 'LRN', 'Section', 'Quiz1', 'Quiz2', 'Quiz3', 'PT1', 'PT2', 'PT3', 'ST1', 'ST2', 'TE', 'WW Avg', 'PT Avg', 'EX Avg', 'Final Grade'];
+        var data = rows.map(function(r) {
+          var s = r.student;
+          var f = function(v) { return v !== null ? Math.round(v) : ''; };
+          return [
+            s.lastName || '', s.firstName || '', s.middleName || '', s.lrn, s.section,
+            f(r.scores.q1), f(r.scores.q2), f(r.scores.q3),
+            f(r.scores.pt1), f(r.scores.pt2), f(r.scores.pt3),
+            f(r.scores.st1), f(r.scores.st2), f(r.scores.te),
+            r.wwAvg !== null ? r.wwAvg.toFixed(1) : '',
+            r.ptAvg !== null ? r.ptAvg.toFixed(1) : '',
+            r.exAvg !== null ? r.exAvg.toFixed(1) : '',
+            r.final.transmuted || ''
+          ];
+        });
+
+        var csv = [headers].concat(data).map(function(row) {
+          return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
+        }).join('\n');
+
+        var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'GSA_ClassRecord_' + term + '_' + (section || 'All') + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        APP.toast('Class record exported', 'success');
+      }
+    })();
+  </script>
 </body>
 </html>
