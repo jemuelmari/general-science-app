@@ -125,7 +125,7 @@ const Diagnostics = (() => {
           return;
         }
       }
-      const missing = methods.filter((m) => typeof window[module][m] !== 'function');
+      const missing = methods.filter((m) => typeof mod[m] !== 'function');
       if (missing.length === 0) {
         pass(cat, module + ' — all ' + methods.length + ' methods present');
       } else {
