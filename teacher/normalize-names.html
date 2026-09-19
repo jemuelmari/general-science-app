@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Normalize Names — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=6" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=6" />
   <style>
     .nn-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .nn-filters .form-group { min-width: 200px; flex: 1; margin-bottom: 0; }
@@ -42,7 +42,6 @@
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
@@ -87,40 +86,45 @@
 
     <div id="results-area">
       <div class="card nn-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📝</div>
-        <p>Loading students…</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading auth module…</p>
       </div>
     </div>
-
   </main>
 
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1"></script>
-  <script src="../assets/js/app.js?v=1"></script>
-  <script src="../assets/js/store.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=1"></script>
+  <script src="../config.js?v=6"></script>
+  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/store.js?v=6"></script>
+  <script src="../assets/js/teacher-auth.js?v=6"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
-      if (!window.TeacherAuth) {
-        document.getElementById('results-area').innerHTML = '<div class="card nn-empty">⚠️ Auth module not loaded</div>';
-        return;
-      }
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
-
       var students = [];
       var pendingChanges = {};
 
-      document.getElementById('btn-refresh').addEventListener('click', render);
-      document.getElementById('btn-autofix-all').addEventListener('click', autoFixAll);
-      document.getElementById('filter-section').addEventListener('change', render);
-      document.getElementById('filter-search').addEventListener('input', render);
-      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
+        }
+
+        document.getElementById('btn-refresh').addEventListener('click', render);
+        document.getElementById('btn-autofix-all').addEventListener('click', autoFixAll);
+        document.getElementById('filter-section').addEventListener('change', render);
+        document.getElementById('filter-search').addEventListener('input', render);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+
+        render();
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card nn-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
 
       function render() {
         var sectionFilter = document.getElementById('filter-section').value;
@@ -128,7 +132,6 @@
 
         students = Store.getAllUsers();
         if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
-
         if (search) {
           students = students.filter(function(s) {
             var full = ((s.lastName || '') + ' ' + (s.firstName || '') + ' ' + (s.middleName || '')).toLowerCase();
@@ -137,7 +140,6 @@
         }
 
         students = APP.sortStudents(students, 'last', 'asc');
-
         var area = document.getElementById('results-area');
 
         if (!students.length) {
@@ -156,20 +158,12 @@
           '<div id="nn-list"></div>';
 
         var list = document.getElementById('nn-list');
-        students.forEach(function(s) {
-          list.appendChild(buildRow(s));
-        });
-
+        students.forEach(function(s) { list.appendChild(buildRow(s)); });
         attachRowHandlers();
       }
 
       function buildRow(s) {
-        var current = {
-          lastName: s.lastName || '',
-          firstName: s.firstName || '',
-          middleName: s.middleName || ''
-        };
-
+        var current = { lastName: s.lastName || '', firstName: s.firstName || '', middleName: s.middleName || '' };
         var pending = pendingChanges[s.lrn];
         var shown = pending || current;
         var initials = ((current.firstName || '?').charAt(0) + (current.lastName || '?').charAt(0)).toUpperCase();
@@ -180,9 +174,9 @@
 
         row.innerHTML =
           '<div class="nn-avatar">' + initials + '</div>' +
-          '<div class="nn-field"><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="' + escapeAttr(shown.lastName) + '" placeholder="LAST NAME" /></div>' +
-          '<div class="nn-field"><div class="nn-cell-label">First Name</div><input class="nn-input" type="text" data-field="firstName" value="' + escapeAttr(shown.firstName) + '" placeholder="First Name" /></div>' +
-          '<div class="nn-field"><div class="nn-cell-label">Middle Name</div><input class="nn-input" type="text" data-field="middleName" value="' + escapeAttr(shown.middleName) + '" placeholder="Middle Name" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="' + escapeAttr(shown.lastName) + '" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">First Name</div><input class="nn-input" type="text" data-field="firstName" value="' + escapeAttr(shown.firstName) + '" /></div>' +
+          '<div class="nn-field"><div class="nn-cell-label">Middle Name</div><input class="nn-input" type="text" data-field="middleName" value="' + escapeAttr(shown.middleName) + '" /></div>' +
           '<div class="nn-field"><div class="nn-cell-label">LRN</div><div style="font-family:Consolas,monospace;font-size:0.8rem;color:#37474f;padding:8px 10px;background:#f5f7fa;border-radius:8px;">' + APP.formatLRN(s.lrn) + '</div></div>' +
           '<div class="nn-actions"><button class="btn btn-primary" data-save="' + s.lrn + '">💾 Save</button><button class="btn btn-outline" data-autofix="' + s.lrn + '" style="color:#ed6c02;border-color:#ed6c02;">✨ Auto</button></div>';
 
@@ -263,24 +257,19 @@
       function autoFixOne(lrn) {
         var row = document.querySelector('.nn-row[data-lrn="' + lrn + '"]');
         if (!row) return;
-
         var inputs = row.querySelectorAll('.nn-input');
         inputs.forEach(function(i) {
           var field = i.dataset.field;
           if (field === 'lastName') i.value = APP.toLastNameFormat(i.value);
           else i.value = APP.toTitleCase(i.value);
         });
-
         var s = Store.getUser(lrn);
         checkRowChange(row, s);
         saveStudent(lrn);
       }
 
       function autoFixAll() {
-        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s) shown? This will save immediately.')) {
-          return;
-        }
-
+        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s) shown? This will save immediately.')) return;
         var fixed = 0;
         students.forEach(function(s) {
           var updates = {
@@ -288,22 +277,18 @@
             firstName: APP.toTitleCase(s.firstName || ''),
             middleName: s.middleName ? APP.toTitleCase(s.middleName) : ''
           };
-
           if (updates.lastName !== s.lastName || updates.firstName !== s.firstName || updates.middleName !== (s.middleName || '')) {
             Store.saveUser(Object.assign({}, s, updates, { updatedAt: new Date().toISOString() }));
             fixed++;
           }
         });
-
         pendingChanges = {};
         APP.toast('✨ Auto-fixed ' + fixed + ' student name(s)', 'success', 3500);
         render();
       }
 
       function needsFix(s) {
-        var l = s.lastName || '';
-        var f = s.firstName || '';
-        var m = s.middleName || '';
+        var l = s.lastName || '', f = s.firstName || '', m = s.middleName || '';
         if (!l || !f) return true;
         if (l !== APP.toLastNameFormat(l)) return true;
         if (f !== APP.toTitleCase(f)) return true;
@@ -314,8 +299,6 @@
       function escapeAttr(str) {
         return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
-
-      document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
 </body>
