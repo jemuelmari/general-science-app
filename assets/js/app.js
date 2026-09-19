@@ -292,14 +292,46 @@ const APP = (() => {
   }
 
   /* ---------- Inject Manifest Meta ---------- */
-  function injectManifest() {
+    function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
+
+    // Compute depth-based path to root
+    const path = window.location.pathname;
+    let depth = 0;
+
+    // Count directory depth below the app root
+    // Examples:
+    //   /general-science-app/                                     → 0
+    //   /general-science-app/student/dashboard.html               → 1  (../)
+    //   /general-science-app/student/term2/index.html             → 2  (../../)
+    //   /general-science-app/student/term2/week1/day.html         → 3  (../../../)
+    //   /general-science-app/student/term2/week1/assessments/...  → 4  (../../../../)
+    //   /general-science-app/teacher/xxx.html                     → 2  (../../)
+    //   /general-science-app/classrecord/xxx.html                 → 2  (../../)
+
+    // Strip leading slash + repo name (first path segment)
+    let parts = path.split('/').filter(Boolean);
+
+    // Remove the leading repo name (e.g., "general-science-app")
+    // If the app is deployed at the domain root, there is no repo name —
+    // in that case `parts` is just the sub-path.
+    // We detect by checking if the last part contains a '.html' or is empty.
+    // Safer: use document.baseURI or a known anchor.
+    // Simpler heuristic: the repo name is the first segment when the path
+    // does NOT start with the app root. This handles both GitHub Pages
+    // sub-path deployments and custom-domain root deployments.
+    if (parts.length > 0) parts = parts.slice(1); // remove repo name or first segment
+
+    // Remove the last segment if it's a file
+    if (parts.length > 0 && /\.(html|htm)$/i.test(parts[parts.length - 1])) {
+      parts.pop();
+    }
+
+    depth = parts.length;
+
+    const prefix = depth > 0 ? '../'.repeat(depth) : './';
     const link = document.createElement('link');
     link.rel = 'manifest';
-    const path = window.location.pathname;
-    let prefix = '';
-    if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
-    else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
     link.href = prefix + 'manifest.json';
     document.head.appendChild(link);
 
