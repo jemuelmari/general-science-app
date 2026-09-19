@@ -1,10 +1,11 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.3
+   Version: 1.0.4
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.3: Fixed ActivityGate reference — const
-   declarations do not attach to window
+   Changelog v1.0.4: Reference ActivityGate by bare identifier
+   (const declarations are not on window). Fixes gate never
+   receiving completeWithScore() calls.
    ============================================================ */
 
 const Lesson = (() => {
@@ -17,6 +18,14 @@ const Lesson = (() => {
   let timeoutHandle = null;
 
   const PASS_THRESHOLD = 0.75;
+
+  /* ---------- Reference to ActivityGate (const-declared global) ---------- */
+  function getGate() {
+    try {
+      if (typeof ActivityGate !== 'undefined') return ActivityGate;
+    } catch (e) { /* ignore */ }
+    return null;
+  }
 
   /* ---------- Init ---------- */
   function init(config) {
@@ -57,10 +66,8 @@ const Lesson = (() => {
       }
     });
 
-    // Wait for ActivityGate and init it
     waitForGateAndInit(config, 0, 2000);
 
-    // Fallback: hide overlay after 500ms regardless
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (!readyFlag) {
@@ -74,13 +81,7 @@ const Lesson = (() => {
 
   /* ---------- Wait for ActivityGate ---------- */
   function waitForGateAndInit(config, waited, maxWait) {
-    // `ActivityGate` is declared with `const` in activity-gate.js —
-    // it does NOT become a property of window. We must reference it
-    // by its bare identifier and guard with typeof to avoid ReferenceError.
-    var gate = null;
-    try {
-      if (typeof ActivityGate !== 'undefined') gate = ActivityGate;
-    } catch (e) { gate = null; }
+    var gate = getGate();
 
     if (gate && typeof gate.init === 'function') {
       try {
@@ -148,6 +149,20 @@ const Lesson = (() => {
     if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
     else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
     else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
+  }
+
+  /* ---------- Report score to gate ---------- */
+  function reportScore(containerId, scorePercent) {
+    var gate = getGate();
+    if (gate && typeof gate.completeWithScore === 'function') {
+      try {
+        gate.completeWithScore(containerId, scorePercent);
+      } catch (err) {
+        console.warn('[Lesson] completeWithScore failed:', err);
+      }
+    } else {
+      console.warn('[Lesson] ActivityGate not available to record score');
+    }
   }
 
   /* ---------- Score Bar ---------- */
@@ -333,7 +348,7 @@ const Lesson = (() => {
         if ((timeLimit - timeLeft) < timeLimit * 0.5) awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
         awardBadge(badgeId, badgeName, badgeIcon);
       }
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      reportScore(containerId, scorePercent);
       if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
@@ -431,7 +446,7 @@ const Lesson = (() => {
         if (correct === scenarios.length) awardBadge(badgeId, badgeName, badgeIcon);
         if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
       }
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      reportScore(containerId, scorePercent);
       if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
@@ -553,7 +568,7 @@ const Lesson = (() => {
         if (currentLives === lives) awardBadge(badgeId, badgeName, badgeIcon);
         markDayComplete();
       }
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      reportScore(containerId, scorePercent);
       if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (reason === 'outoflives') APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
