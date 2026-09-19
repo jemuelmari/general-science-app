@@ -1,11 +1,11 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.4
+   Version: 1.0.5
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.4: Reference ActivityGate by bare identifier
-   (const declarations are not on window). Fixes gate never
-   receiving completeWithScore() calls.
+   Changelog v1.0.5: markDayComplete() now runs for ALL passing
+   activities (not just Escape Room). Fixes week index showing
+   days as locked after completing Match/Scenario activities.
    ============================================================ */
 
 const Lesson = (() => {
@@ -19,7 +19,7 @@ const Lesson = (() => {
 
   const PASS_THRESHOLD = 0.75;
 
-  /* ---------- Reference to ActivityGate (const-declared global) ---------- */
+  /* ---------- Reference to ActivityGate ---------- */
   function getGate() {
     try {
       if (typeof ActivityGate !== 'undefined') return ActivityGate;
@@ -79,7 +79,6 @@ const Lesson = (() => {
     });
   }
 
-  /* ---------- Wait for ActivityGate ---------- */
   function waitForGateAndInit(config, waited, maxWait) {
     var gate = getGate();
 
@@ -160,8 +159,18 @@ const Lesson = (() => {
       } catch (err) {
         console.warn('[Lesson] completeWithScore failed:', err);
       }
-    } else {
-      console.warn('[Lesson] ActivityGate not available to record score');
+    }
+  }
+
+  /* ---------- Mark day complete (for week index) ---------- */
+  function markDayIfPassed(scorePercent) {
+    if (scorePercent >= 75) {
+      try {
+        Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+        console.log('[Lesson] Day marked complete:', ctx.term, 'w' + ctx.week, 'd' + ctx.day);
+      } catch (err) {
+        console.warn('[Lesson] markDayComplete failed:', err);
+      }
     }
   }
 
@@ -349,6 +358,7 @@ const Lesson = (() => {
         awardBadge(badgeId, badgeName, badgeIcon);
       }
       reportScore(containerId, scorePercent);
+      markDayIfPassed(scorePercent);
       if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
@@ -447,6 +457,7 @@ const Lesson = (() => {
         if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
       }
       reportScore(containerId, scorePercent);
+      markDayIfPassed(scorePercent);
       if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
@@ -566,18 +577,14 @@ const Lesson = (() => {
       const scorePercent = Math.round((earnedKeys.length / questions.length) * 100);
       if (scorePercent >= 75) {
         if (currentLives === lives) awardBadge(badgeId, badgeName, badgeIcon);
-        markDayComplete();
       }
       reportScore(containerId, scorePercent);
+      markDayIfPassed(scorePercent);
       if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
       else if (reason === 'outoflives') APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
-  }
-
-  function markDayComplete() {
-    Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
   }
 
   /* ---------- Public API ---------- */
@@ -588,6 +595,6 @@ const Lesson = (() => {
     renderMatchGame: registerMatchGame,
     renderScenarioGame: registerScenarioGame,
     renderEscapeRoom: registerEscapeRoom,
-    markDayComplete
+    markDayComplete: markDayIfPassed
   };
 })();
