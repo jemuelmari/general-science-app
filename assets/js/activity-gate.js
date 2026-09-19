@@ -1,11 +1,10 @@
 /* ============================================================
    activity-gate.js — Sequential activity locking
-   Version: 1.0.3
+   Version: 1.0.4
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.3: Handles days with missing activities —
-   if a container is hidden or absent, that stage is treated as
-   "already passed" so the next stage unlocks immediately.
+   Changelog v1.0.4: Recheck activity presence AFTER day.html
+   hides unused cards — fixes Day 4 (formative) staying locked.
    ============================================================ */
 
 const ActivityGate = (() => {
@@ -27,15 +26,8 @@ const ActivityGate = (() => {
         activity1: { status: 'ready',   score: 0, attempts: 0 },
         activity2: { status: 'locked',  score: 0, attempts: 0 },
         formative: { status: 'locked',  score: 0, attempts: 0 }
-      }
-    };
-
-    // Detect which activities actually exist on this page
-    // (a container that doesn't exist OR is display:none means "not on this day")
-    session.present = {
-      activity1: isPresent('activity-1'),
-      activity2: isPresent('activity-2'),
-      formative: isPresent('formative')
+      },
+      present: { activity1: true, activity2: true, formative: true }
     };
 
     // Restore saved state
@@ -47,66 +39,116 @@ const ActivityGate = (() => {
       } catch (e) { /* ignore */ }
     }
 
-    // Auto-resolve locked states for missing activities:
-    // if an activity is absent, treat it as "passed" so the next unlocks
+    // Initial detection (may be too early — day.html hasn't hidden cards yet)
+    session.present = detectPresent();
     normalizeStates();
 
-    console.log('[ActivityGate] Init:', session.key, session.states, 'present:', session.present);
+    console.log('[ActivityGate] Init:', session.key, 'present:', session.present);
+
+    // Apply UI immediately, then again after day.html has run
     applyUI();
-    setTimeout(applyUI, 50);
-    setTimeout(applyUI, 300);
+    setTimeout(() => {
+      // Re-detect presence AFTER day.html has had time to hide cards
+      session.present = detectPresent();
+      normalizeStates();
+      console.log('[ActivityGate] Re-detected present:', session.present);
+      applyUI();
+    }, 100);
+    setTimeout(applyUI, 400);
+
     setTimeout(() => {
       document.dispatchEvent(new CustomEvent('activity-gate:ready'));
     }, 30);
   }
 
-  /* ---------- Helpers ---------- */
+  /* ---------- Detection ---------- */
+  function detectPresent() {
+    return {
+      activity1: isPresent('activity-1'),
+      activity2: isPresent('activity-2'),
+      formative: isPresent('formative')
+    };
+  }
+
   function isPresent(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return false;
-    // Check if the container or its parent card is hidden
-    if (el.style.display === 'none') return false;
-    const card = el.closest('.activity-card');
-    if (card && card.style.display === 'none') return false;
+
+    // Walk up from the container to the card, checking for hidden ancestors
+    let node = el;
+    while (node && node !== document.body) {
+      // Check inline display
+      if (node.style && node.style.display === 'none') return false;
+      // Check visibility
+      if (node.style && node.style.visibility === 'hidden') return false;
+      // Check hidden class
+      if (node.classList && node.classList.contains('hidden')) return false;
+      // Check computed display (final fallback, catches CSS rules)
+      try {
+        if (window.getComputedStyle && window.getComputedStyle(node).display === 'none') return false;
+      } catch (e) { /* ignore */ }
+      node = node.parentElement;
+    }
+
+    // Also check the parent card's children — if it has a "Coming Soon" placeholder,
+    // it means day.html decided this activity is not part of today
+    const parentCard = el.closest('.activity-card');
+    if (parentCard) {
+      const header = parentCard.querySelector('.activity-header');
+      if (header && header.style.display === 'none') return false;
+    }
+
     return true;
   }
 
   function normalizeStates() {
-    // If activity1 is not present, mark it as passed so activity2 unlocks
-    if (!session.present.activity1) {
+    const anyPresent = session.present.activity1 || session.present.activity2 || session.present.formative;
+
+    // If nothing is present on this page, nothing to unlock
+    if (!anyPresent) return;
+
+    // Case 1: Only ONE activity is present → it should be 'ready'
+    const presentKeys = ['activity1', 'activity2', 'formative'].filter(k => session.present[k]);
+    if (presentKeys.length === 1) {
+      const theOne = presentKeys[0];
+      if (session.states[theOne].status === 'locked') {
+        session.states[theOne].status = 'ready';
+      }
+      return;
+    }
+
+    // Case 2: activity1 missing → treat as passed
+    if (!session.present.activity1 && session.present.activity2) {
       session.states.activity1.status = 'passed';
       session.states.activity1.score = 100;
     }
-    // If activity2 is not present but formative is, unlock formative
+
+    // Case 3: activity2 missing → treat as passed
     if (!session.present.activity2 && session.present.formative) {
       session.states.activity2.status = 'passed';
       session.states.activity2.score = 100;
     }
-    // Recheck: if activity1 is present and passed but activity2 is missing → formative unlock
-    if (session.present.activity1 && !session.present.activity2 && session.present.formative) {
-      if (session.states.activity1.status === 'passed') {
-        session.states.formative.status = 'ready';
-      }
-    }
-    // Normal progression rules:
+
+    // Re-evaluate unlock chain:
+    // if activity1 passed and activity2 present and activity2 locked → unlock activity2
     if (session.present.activity1 && session.present.activity2) {
       if (session.states.activity1.status === 'passed' && session.states.activity2.status === 'locked') {
         session.states.activity2.status = 'ready';
       }
     }
+    // if activity2 passed and formative present and formative locked → unlock formative
     if (session.present.activity2 && session.present.formative) {
       if (session.states.activity2.status === 'passed' && session.states.formative.status === 'locked') {
         session.states.formative.status = 'ready';
       }
     }
-    // If only ONE activity is present on this day, it should just be ready
-    const presentCount = ['activity1','activity2','formative'].filter(k => session.present[k]).length;
-    if (presentCount === 1) {
-      const theOne = ['activity1','activity2','formative'].find(k => session.present[k]);
-      if (theOne && session.states[theOne].status === 'locked') {
-        session.states[theOne].status = 'ready';
+    // if activity1 missing but formative present → unlock formative
+    if (!session.present.activity1 && !session.present.activity2 && session.present.formative) {
+      if (session.states.formative.status === 'locked') {
+        session.states.formative.status = 'ready';
       }
     }
+
     save();
   }
 
@@ -179,8 +221,7 @@ const ActivityGate = (() => {
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
 
-    // If this card was hidden by day.html (activity not part of today's lesson),
-    // skip rendering overlays on it — it's invisible anyway
+    // Skip hidden cards (day.html hid them — they're not part of today's lesson)
     if (parentCard.style.display === 'none') return;
 
     const st = session.states[stateKey];
