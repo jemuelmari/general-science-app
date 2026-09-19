@@ -1,16 +1,11 @@
 /* ============================================================
    activity-gate.js — Sequential activity locking
-   Version: 1.0.0
+   Version: 1.0.3
    App: General Science
    ------------------------------------------------------------
-   RULES:
-   - Activity 1 available at start
-   - Activity 2 unlocks ONLY after Activity 1 ≥ 75%
-   - Formative unlocks ONLY after Activities 1 & 2 ≥ 75%
-   - Each activity has a difficulty-based timer (min 5 min)
-   - Retakes unlimited until passing score reached
-   - Manual "Start" tap required to begin each activity
-   - Fully fail-proof (survives refresh)
+   Changelog v1.0.3: Handles days with missing activities —
+   if a container is hidden or absent, that stage is treated as
+   "already passed" so the next stage unlocks immediately.
    ============================================================ */
 
 const ActivityGate = (() => {
@@ -35,6 +30,15 @@ const ActivityGate = (() => {
       }
     };
 
+    // Detect which activities actually exist on this page
+    // (a container that doesn't exist OR is display:none means "not on this day")
+    session.present = {
+      activity1: isPresent('activity-1'),
+      activity2: isPresent('activity-2'),
+      formative: isPresent('formative')
+    };
+
+    // Restore saved state
     const saved = sessionStorage.getItem(session.key);
     if (saved) {
       try {
@@ -43,7 +47,11 @@ const ActivityGate = (() => {
       } catch (e) { /* ignore */ }
     }
 
-    console.log('[ActivityGate] Init:', session.key, session.states);
+    // Auto-resolve locked states for missing activities:
+    // if an activity is absent, treat it as "passed" so the next unlocks
+    normalizeStates();
+
+    console.log('[ActivityGate] Init:', session.key, session.states, 'present:', session.present);
     applyUI();
     setTimeout(applyUI, 50);
     setTimeout(applyUI, 300);
@@ -52,7 +60,56 @@ const ActivityGate = (() => {
     }, 30);
   }
 
-  /* ---------- Persist ---------- */
+  /* ---------- Helpers ---------- */
+  function isPresent(containerId) {
+    const el = document.getElementById(containerId);
+    if (!el) return false;
+    // Check if the container or its parent card is hidden
+    if (el.style.display === 'none') return false;
+    const card = el.closest('.activity-card');
+    if (card && card.style.display === 'none') return false;
+    return true;
+  }
+
+  function normalizeStates() {
+    // If activity1 is not present, mark it as passed so activity2 unlocks
+    if (!session.present.activity1) {
+      session.states.activity1.status = 'passed';
+      session.states.activity1.score = 100;
+    }
+    // If activity2 is not present but formative is, unlock formative
+    if (!session.present.activity2 && session.present.formative) {
+      session.states.activity2.status = 'passed';
+      session.states.activity2.score = 100;
+    }
+    // Recheck: if activity1 is present and passed but activity2 is missing → formative unlock
+    if (session.present.activity1 && !session.present.activity2 && session.present.formative) {
+      if (session.states.activity1.status === 'passed') {
+        session.states.formative.status = 'ready';
+      }
+    }
+    // Normal progression rules:
+    if (session.present.activity1 && session.present.activity2) {
+      if (session.states.activity1.status === 'passed' && session.states.activity2.status === 'locked') {
+        session.states.activity2.status = 'ready';
+      }
+    }
+    if (session.present.activity2 && session.present.formative) {
+      if (session.states.activity2.status === 'passed' && session.states.formative.status === 'locked') {
+        session.states.formative.status = 'ready';
+      }
+    }
+    // If only ONE activity is present on this day, it should just be ready
+    const presentCount = ['activity1','activity2','formative'].filter(k => session.present[k]).length;
+    if (presentCount === 1) {
+      const theOne = ['activity1','activity2','formative'].find(k => session.present[k]);
+      if (theOne && session.states[theOne].status === 'locked') {
+        session.states[theOne].status = 'ready';
+      }
+    }
+    save();
+  }
+
   function save() {
     if (!session) return;
     sessionStorage.setItem(session.key, JSON.stringify({
@@ -84,10 +141,10 @@ const ActivityGate = (() => {
     if (scorePercent >= PASS_THRESHOLD * 100) {
       st.status = 'passed';
 
-      if (key === 'activity1') {
+      if (key === 'activity1' && session.present.activity2) {
         session.states.activity2.status = 'ready';
         APP.toast('✅ Activity 1 passed! Activity 2 is now available.', 'success', 4000);
-      } else if (key === 'activity2') {
+      } else if (key === 'activity2' && session.present.formative) {
         session.states.formative.status = 'ready';
         APP.toast('✅ Activity 2 passed! Formative Check is now available.', 'success', 4000);
       } else if (key === 'formative') {
@@ -121,6 +178,10 @@ const ActivityGate = (() => {
     if (!container) return;
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
+
+    // If this card was hidden by day.html (activity not part of today's lesson),
+    // skip rendering overlays on it — it's invisible anyway
+    if (parentCard.style.display === 'none') return;
 
     const st = session.states[stateKey];
     parentCard.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
