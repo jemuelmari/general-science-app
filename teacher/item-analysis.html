@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=5" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=5" />
   <style>
     .ia-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .ia-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
@@ -50,7 +50,6 @@
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
@@ -98,46 +97,55 @@
 
     <div id="results-area">
       <div class="card ia-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">🔬</div>
-        <p>Choose a term, assessment, and section — then click <strong>Run Analysis</strong>.</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading auth module…</p>
       </div>
     </div>
-
   </main>
 
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1"></script>
-  <script src="../assets/js/app.js?v=1"></script>
-  <script src="../assets/js/store.js?v=1"></script>
-  <script src="../assets/js/transmutation.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=1"></script>
+  <script src="../config.js?v=5"></script>
+  <script src="../assets/js/app.js?v=5"></script>
+  <script src="../assets/js/store.js?v=5"></script>
+  <script src="../assets/js/transmutation.js?v=5"></script>
+  <script src="../assets/js/teacher-auth.js?v=5"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
-      if (!window.TeacherAuth) {
-        document.getElementById('results-area').innerHTML = '<div class="card ia-empty">⚠️ Auth module not loaded</div>';
-        return;
-      }
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
-
-      const ASSESSMENT_TITLES = {
+      var ASSESSMENT_TITLES = {
         quiz1: 'Quiz 1', quiz2: 'Quiz 2', quiz3: 'Quiz 3',
         st1: 'Summative Test 1', st2: 'Summative Test 2', te: 'Term Exam'
       };
-      const RESULT_TYPE = {
+      var RESULT_TYPE = {
         quiz1: 'quizzes', quiz2: 'quizzes', quiz3: 'quizzes',
         st1: 'st', st2: 'st', te: 'te'
       };
 
-      document.getElementById('btn-run').addEventListener('click', runAnalysis);
-      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+      TeacherAuthBoot.ready(function(auth) {
+        // auth.require() was already called inside the boot helper's init
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
+        }
 
-      async function runAnalysis() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card ia-empty"><div style="font-size:2.5rem;margin-bottom:12px;">🔬</div>' +
+          '<p>Choose a term, assessment, and section — then click <strong>Run Analysis</strong>.</p></div>';
+
+        document.getElementById('btn-run').addEventListener('click', runAnalysis);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card ia-empty">⚠️ <strong>Auth module failed to load</strong><br>' +
+          '<span style="font-size:0.85rem;">Expected: <code>../assets/js/teacher-auth.js</code></span></div>';
+      });
+
+      function runAnalysis() {
         var term = document.getElementById('filter-term').value;
         var assessment = document.getElementById('filter-assessment').value;
         var sectionFilter = document.getElementById('filter-section').value;
@@ -145,60 +153,57 @@
 
         area.innerHTML = '<div class="card ia-empty">⏳ Analyzing…</div>';
 
-        try {
-          var students = Store.getAllUsers();
-          if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
+        var students = Store.getAllUsers();
+        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
 
-          if (!students.length) {
-            area.innerHTML = '<div class="card ia-empty">👥 No students found</div>';
-            return;
-          }
+        if (!students.length) {
+          area.innerHTML = '<div class="card ia-empty">👥 No students found</div>';
+          return;
+        }
 
-          var res = await fetch('../student/' + term + '/assessments/' + assessment + '.json');
-          if (!res.ok) throw new Error('Could not load questions');
-          var data = await res.json();
-          var questions = data.questions || [];
+        fetch('../student/' + term + '/assessments/' + assessment + '.json')
+          .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+          .then(function(data) {
+            var questions = data.questions || [];
+            var type = RESULT_TYPE[assessment];
+            var studentResults = [];
 
-          var type = RESULT_TYPE[assessment];
-          var studentResults = [];
-
-          students.forEach(function(s) {
-            var scores = Store.getScores(s.lrn);
-            var record = type === 'te' ? scores[term] && scores[term].te : (scores[term] && scores[term][type] && scores[term][type][assessment]);
-            if (record && record.itemResults) studentResults.push({ student: s, record: record });
-          });
-
-          if (!studentResults.length) {
-            area.innerHTML = '<div class="card ia-empty">📭 No attempts recorded yet</div>';
-            return;
-          }
-
-          var items = questions.map(function(q, i) {
-            var correctCount = 0, totalCount = 0;
-            var choiceCounts = {};
-            (q.options || []).forEach(function(o) { choiceCounts[o] = 0; });
-
-            studentResults.forEach(function(r) {
-              var item = r.record.itemResults.find(function(x) { return x.index === i; });
-              if (item) {
-                totalCount++;
-                if (item.correct) correctCount++;
-                if (item.given != null) choiceCounts[item.given] = (choiceCounts[item.given] || 0) + 1;
-              }
+            students.forEach(function(s) {
+              var scores = Store.getScores(s.lrn);
+              var record = type === 'te' ? (scores[term] && scores[term].te) : (scores[term] && scores[term][type] && scores[term][type][assessment]);
+              if (record && record.itemResults) studentResults.push({ student: s, record: record });
             });
 
-            return {
-              index: i, text: q.text, options: q.options || [], correct: q.correct,
-              correctCount: correctCount, totalCount: totalCount,
-              pct: totalCount ? Math.round((correctCount / totalCount) * 100) : 0,
-              choiceCounts: choiceCounts
-            };
-          });
+            if (!studentResults.length) {
+              area.innerHTML = '<div class="card ia-empty">📭 No attempts recorded yet</div>';
+              return;
+            }
 
-          renderResults(items, studentResults, term, assessment, sectionFilter);
-        } catch (err) {
-          area.innerHTML = '<div class="card ia-empty">⚠️ ' + err.message + '</div>';
-        }
+            var items = questions.map(function(q, i) {
+              var correctCount = 0, totalCount = 0;
+              var choiceCounts = {};
+              (q.options || []).forEach(function(o) { choiceCounts[o] = 0; });
+              studentResults.forEach(function(r) {
+                var item = r.record.itemResults.find(function(x) { return x.index === i; });
+                if (item) {
+                  totalCount++;
+                  if (item.correct) correctCount++;
+                  if (item.given != null) choiceCounts[item.given] = (choiceCounts[item.given] || 0) + 1;
+                }
+              });
+              return {
+                index: i, text: q.text, options: q.options || [], correct: q.correct,
+                correctCount: correctCount, totalCount: totalCount,
+                pct: totalCount ? Math.round((correctCount / totalCount) * 100) : 0,
+                choiceCounts: choiceCounts
+              };
+            });
+
+            renderResults(items, studentResults, term, assessment, sectionFilter);
+          })
+          .catch(function(err) {
+            area.innerHTML = '<div class="card ia-empty">⚠️ ' + err.message + '</div>';
+          });
       }
 
       function renderResults(items, studentResults, term, assessment, sectionFilter) {
@@ -244,7 +249,6 @@
         items.forEach(function(it) {
           var level = it.pct >= 80 ? 'mastered' : it.pct >= 50 ? 'moving' : 'difficult';
           var color = it.pct >= 80 ? '#2e7d32' : it.pct >= 50 ? '#ed6c02' : '#c62828';
-
           var choiceChips = it.options.map(function(opt, idx) {
             var count = it.choiceCounts[opt] || 0;
             var isCorrect = opt === it.correct;
