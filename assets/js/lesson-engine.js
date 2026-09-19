@@ -1,10 +1,11 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.1
+   Version: 1.0.2
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.0.1: Hides loading overlay immediately after
-   lesson JSON renders — no longer depends on activity-gate:ready
+   Changelog v1.0.2: Waits for ActivityGate to load before
+   initializing — fixes load-order bug where activity-gate.js
+   loads AFTER lesson-engine.js
    ============================================================ */
 
 const Lesson = (() => {
@@ -46,12 +47,12 @@ const Lesson = (() => {
       if (!readyFlag) showTimeoutError();
     }, 15000);
 
-    // Activity start event — triggered by ActivityGate when the user clicks Start
+    // Activity start event — triggered by ActivityGate when user clicks Start
     document.addEventListener('activity:start', (e) => {
       startActivity(e.detail.activity);
     });
 
-    // Listen for activity-gate:ready (optional, non-blocking)
+    // Listen for activity-gate:ready (hides loading overlay)
     document.addEventListener('activity-gate:ready', () => {
       if (!readyFlag) {
         hideLoadingOverlay();
@@ -60,24 +61,15 @@ const Lesson = (() => {
       }
     });
 
-    // Init the gate (or gracefully continue without it)
-    if (window.ActivityGate) {
-      try {
-        ActivityGate.init(config);
-      } catch (err) {
-        console.warn('[Lesson] ActivityGate init failed:', err);
-      }
-    } else {
-      console.warn('[Lesson] ActivityGate not loaded — falling back to always-ready mode');
-      if (window.ActivityGate === undefined && typeof ActivityGate === 'undefined') {
-        // No gate at all — unlock everything immediately
-        document.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
-      }
-    }
+    // *** Wait for ActivityGate to load, then init ***
+    // activity-gate.js may not have loaded yet when this runs,
+    // because both scripts are <script src="..."> tags at the end of
+    // day.html and execution order depends on their position.
+    // This poll catches it within 50–100ms in normal conditions.
+    waitForGateAndInit(config, 0, 2000);
 
-    // *** NEW: Hide the overlay as soon as the current frame renders ***
-    // The lesson JSON has already been fetched and rendered by the caller
-    // (day.html or equivalent) before init() is called, so we can hide now.
+    // Fallback: hide the overlay after a short delay regardless,
+    // so the student isn't stuck staring at a spinner.
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (!readyFlag) {
@@ -85,8 +77,31 @@ const Lesson = (() => {
           readyFlag = true;
           clearTimeout(timeoutHandle);
         }
-      }, 300);
+      }, 500);
     });
+  }
+
+  /* ---------- Wait for ActivityGate ---------- */
+  function waitForGateAndInit(config, waited, maxWait) {
+    if (window.ActivityGate) {
+      try {
+        ActivityGate.init(config);
+      } catch (err) {
+        console.warn('[Lesson] ActivityGate init failed:', err);
+      }
+      return;
+    }
+
+    if (waited >= maxWait) {
+      console.warn('[Lesson] ActivityGate never loaded — running in always-ready mode');
+      // Remove any pre-rendered gate overlays so students can still start
+      document.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
+      return;
+    }
+
+    setTimeout(() => {
+      waitForGateAndInit(config, waited + 50, maxWait);
+    }, 50);
   }
 
   /* ---------- Difficulty-Based Timer ---------- */
