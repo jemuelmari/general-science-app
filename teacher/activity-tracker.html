@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Activity Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=3" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=6" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=6" />
   <style>
     .at-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .at-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -52,7 +52,6 @@
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
@@ -89,47 +88,39 @@
 
     <div id="results-area">
       <div class="card at-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
-        <p>Choose a term and section, then click <strong>Refresh</strong> to see the completion heatmap.</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading auth module…</p>
       </div>
     </div>
-
   </main>
 
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=3"></script>
-  <script src="../assets/js/app.js?v=3"></script>
-  <script src="../assets/js/store.js?v=3"></script>
-  <script src="../assets/js/teacher-auth.js?v=3"></script>
+  <script src="../config.js?v=6"></script>
+  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/store.js?v=6"></script>
+  <script src="../assets/js/teacher-auth.js?v=6"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
 
-      // Wait for TeacherAuth to load (it may load async)
-      var tries = 0;
-      function waitForAuth() {
-        if (window.TeacherAuth || (typeof TeacherAuth !== 'undefined')) {
-          start();
-        } else if (tries++ < 30) {
-          setTimeout(waitForAuth, 100);
-        } else {
-          document.getElementById('results-area').innerHTML =
-            '<div class="card at-empty">⚠️ Auth module not loaded — check that <code>../assets/js/teacher-auth.js</code> exists</div>';
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
         }
-      }
-
-      function start() {
-        TeacherAuth.init();
-        if (!TeacherAuth.require()) return;
 
         document.getElementById('btn-run').addEventListener('click', render);
-        document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
 
         render();
-      }
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card at-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
 
       function render() {
         var term = document.getElementById('filter-term').value;
@@ -157,19 +148,6 @@
         });
 
         var classPct = totalPossible ? Math.round((totalDone / totalPossible) * 100) : 0;
-
-        var bySection = {};
-        students.forEach(function(s) {
-          var sec = s.section || 'Unknown';
-          if (!bySection[sec]) bySection[sec] = { students: 0, days: 0 };
-          bySection[sec].students++;
-          bySection[sec].days += getCompleted(s.lrn, term).length;
-        });
-        var sectionRows = Object.keys(bySection).map(function(sec) {
-          var info = bySection[sec];
-          var pct = info.students ? Math.round((info.days / (info.students * 40)) * 100) : 0;
-          return { name: sec, students: info.students, days: info.days, pct: pct };
-        });
 
         var trend = [];
         for (var w = 1; w <= 10; w++) {
@@ -216,28 +194,10 @@
             '</div>' +
           '</div>' +
 
-          (sectionRows.length > 1 ?
-            '<div class="section-header"><h2 class="section-title">🏫 Completion by Section</h2></div>' +
-            '<div class="card" style="padding:0;overflow:hidden;">' +
-              '<table class="modern-table">' +
-                '<thead><tr><th>Section</th><th>Students</th><th>Total Days</th><th>Completion %</th></tr></thead>' +
-                '<tbody>' +
-                  sectionRows.map(function(r) {
-                    return '<tr><td><strong>' + r.name + '</strong></td><td>' + r.students + '</td><td>' + r.days + '</td>' +
-                      '<td><div style="display:flex;align-items:center;gap:8px;">' +
-                      '<div class="progress-bar-modern" style="flex:1;min-width:80px;"><div class="fill ' + (r.pct >= 75 ? 'green' : r.pct >= 50 ? 'blue' : r.pct >= 25 ? 'amber' : 'red') + '" style="width:' + r.pct + '%"></div></div>' +
-                      '<span style="font-weight:700;color:#37474f;font-size:0.8rem;">' + r.pct + '%</span></div></td></tr>';
-                  }).join('') +
-                '</tbody>' +
-              '</table>' +
-            '</div>'
-          : '') +
-
           (behind.length > 0 ?
             '<div class="section-header"><h2 class="section-title" style="color:#c62828;">⚠️ Students Behind Pace (Below 30 Days)</h2></div>' +
             '<div class="card" style="padding:0;overflow:hidden;">' +
-              '<table class="modern-table">' +
-                '<thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead>' +
+              '<table class="modern-table"><thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead>' +
                 '<tbody>' +
                   behind.map(function(b) {
                     return '<tr><td><strong>' + APP.formatFullName(b.student.lastName, b.student.firstName, b.student.middleName) + '</strong></td>' +
@@ -292,9 +252,6 @@
         html += '</tbody>';
         table.innerHTML = html;
       }
-
-      // Start the wait loop
-      waitForAuth();
     })();
   </script>
 </body>
