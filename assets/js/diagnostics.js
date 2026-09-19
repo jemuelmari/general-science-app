@@ -239,7 +239,7 @@ const Diagnostics = (() => {
       'assets/js/quiz-engine.js',
       'assets/js/activity-tracker.js',
       'assets/js/teacher.js',
-      'assets/js/teacher-auth-v3.js',
+      'assets/js/teacher-auth.js',
       'assets/js/classrecord.js',
       'assets/js/term-access.js',
       'assets/js/diagnostics.js',
