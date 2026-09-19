@@ -116,10 +116,14 @@ const Diagnostics = (() => {
       { module: 'UI', methods: ['renderAvatar', 'renderProgressBar', 'exportCSV'] }
     ];
 
-    apis.forEach(({ module, methods }) => {
-      if (typeof window[module] === 'undefined') {
-        fail(cat, module + ' API check skipped — module not loaded');
-        return;
+          var mod = (typeof window !== 'undefined' && window[module]) || (typeof globalThis !== 'undefined' && globalThis[module]);
+      if (!mod) {
+        try {
+          mod = eval(module);
+        } catch (e) {
+          fail(cat, module + ' API check skipped — module not loaded');
+          return;
+        }
       }
       const missing = methods.filter((m) => typeof window[module][m] !== 'function');
       if (missing.length === 0) {
