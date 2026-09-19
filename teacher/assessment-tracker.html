@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Assessment Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=6" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=6" />
   <style>
     .ast-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .ast-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -48,7 +48,6 @@
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
@@ -89,31 +88,24 @@
 
     <div id="results-area">
       <div class="card ast-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📈</div>
-        <p>Choose a term and section, then click <strong>Refresh</strong> to see the matrix.</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading auth module…</p>
       </div>
     </div>
-
   </main>
 
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1"></script>
-  <script src="../assets/js/app.js?v=1"></script>
-  <script src="../assets/js/store.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=1"></script>
+  <script src="../config.js?v=6"></script>
+  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/store.js?v=6"></script>
+  <script src="../assets/js/teacher-auth.js?v=6"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
-
-      if (!window.TeacherAuth) {
-        document.getElementById('results-area').innerHTML = '<div class="card ast-empty">⚠️ Auth module not loaded</div>';
-        return;
-      }
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
 
       var ASSESSMENTS = [
         { key: 'quiz1', type: 'quizzes', id: 'quiz1', label: 'Q1', full: 'Quiz 1' },
@@ -127,11 +119,27 @@
         { key: 'te', type: 'te', id: 'te', label: 'TE', full: 'Term Exam' }
       ];
 
-      document.getElementById('btn-refresh').addEventListener('click', render);
-      document.getElementById('btn-export').addEventListener('click', exportCSV);
-      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
-
       var lastMatrix = null;
+
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
+          return;
+        }
+
+        document.getElementById('results-area').innerHTML =
+          '<div class="card ast-empty"><div style="font-size:2.5rem;margin-bottom:12px;">📈</div>' +
+          '<p>Choose a term and section, then click <strong>Refresh</strong> to see the matrix.</p></div>';
+
+        document.getElementById('btn-refresh').addEventListener('click', render);
+        document.getElementById('btn-export').addEventListener('click', exportCSV);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+
+        render();
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card ast-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
 
       function render() {
         var term = document.getElementById('filter-term').value;
@@ -162,7 +170,6 @@
           rows: students.map(function(s) {
             var scores = Store.getScores(s.lrn);
             var t = scores[term] || {};
-
             var cells = ASSESSMENTS.map(function(a) {
               var record = a.type === 'te' ? t.te : (t[a.type] && t[a.type][a.id]);
               if (!record) {
@@ -185,23 +192,16 @@
               }
               return { key: a.key, label: a.label, full: a.full, type: a.type, status: status, record: record, percent: pct };
             });
-
             return { student: s, cells: cells };
           })
         };
 
-        // Compute stats
         var totalSubs = 0;
-        lastMatrix.rows.forEach(function(r) {
-          r.cells.forEach(function(c) { if (c.record) totalSubs++; });
-        });
+        lastMatrix.rows.forEach(function(r) { r.cells.forEach(function(c) { if (c.record) totalSubs++; }); });
         var totalPossible = lastMatrix.rows.length * ASSESSMENTS.length;
         var completionPct = totalPossible ? Math.round((totalSubs / totalPossible) * 100) : 0;
-
         var lockCount = 0;
-        lastMatrix.rows.forEach(function(r) {
-          r.cells.forEach(function(c) { if (c.status === 'locked') lockCount++; });
-        });
+        lastMatrix.rows.forEach(function(r) { r.cells.forEach(function(c) { if (c.status === 'locked') lockCount++; }); });
 
         var html =
           '<div class="stats-grid" style="margin-bottom:20px;">' +
@@ -277,11 +277,7 @@
       }
 
       function exportCSV() {
-        if (!lastMatrix) {
-          APP.toast('Run the report first', 'warning');
-          return;
-        }
-
+        if (!lastMatrix) { APP.toast('Run the report first', 'warning'); return; }
         var headers = ['Student', 'LRN', 'Section'].concat(ASSESSMENTS.map(function(a) { return a.label; }));
         var rows = lastMatrix.rows.map(function(r) {
           var s = r.student;
@@ -293,12 +289,9 @@
           });
           return [APP.formatFullName(s.lastName, s.firstName, s.middleName), s.lrn, s.section].concat(cells);
         });
-
-        // Build CSV manually
         var csv = [headers].concat(rows).map(function(row) {
           return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
         }).join('\n');
-
         var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
@@ -310,8 +303,6 @@
         URL.revokeObjectURL(url);
         APP.toast('CSV exported', 'success');
       }
-
-      document.addEventListener('DOMContentLoaded', render);
     })();
   </script>
 </body>
