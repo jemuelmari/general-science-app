@@ -1,27 +1,14 @@
 /* ============================================================
    diagnostics.js — Self-diagnostic engine
-   Version: 1.0.0
+   Version: 1.0.1
    App: General Science
    ------------------------------------------------------------
-   Runs a comprehensive health check on the app and reports:
-   - Core file loading status
-   - CSS file availability
-   - JS module availability + public API
-   - Config sanity
-   - File integrity (fetch + check endings — catches truncation)
-   - Storage availability
-   - Backend reachability
-   - Question bank validity (27 JSON files)
-   - Lesson content validity (30 JSON files)
-   - Student data integrity
+   Changelog v1.0.1: Fixed Module API lookup (const declarations)
    ============================================================ */
 
 const Diagnostics = (() => {
   'use strict';
 
-  /* ============================================================
-     REPORT STORE
-     ============================================================ */
   const report = {
     startedAt: null,
     finishedAt: null,
@@ -29,9 +16,6 @@ const Diagnostics = (() => {
     totals: { ok: 0, warn: 0, error: 0, skipped: 0 }
   };
 
-  /* ============================================================
-     UTILITIES
-     ============================================================ */
   function addCategory(name, icon) {
     const cat = { name, icon, checks: [] };
     report.categories.push(cat);
@@ -70,41 +54,41 @@ const Diagnostics = (() => {
     }
   }
 
+  /* ---------- Lookup helper for const-declared modules ---------- */
+  function getModule(name) {
+    let mod = null;
+    try { mod = eval(name); } catch (e) { mod = null; }
+    if (!mod && typeof window !== 'undefined') mod = window[name];
+    if (!mod && typeof globalThis !== 'undefined') mod = globalThis[name];
+    return mod;
+  }
+
   /* ============================================================
-     CHECK 1 — Core Files Loaded (globals defined)
+     CHECK 1 — Core Modules
      ============================================================ */
   function checkCoreGlobals() {
     const cat = addCategory('Core JavaScript Modules', '🧩');
 
     const modules = [
-      { name: 'APP',          test: () => typeof APP !== 'undefined' },
-      { name: 'CONFIG',       test: () => typeof CONFIG !== 'undefined' },
-      { name: 'Store',        test: () => typeof Store !== 'undefined' },
-      { name: 'Security',     test: () => typeof Security !== 'undefined' },
-      { name: 'Transmutation',test: () => typeof Transmutation !== 'undefined' },
-      { name: 'Sync',         test: () => typeof Sync !== 'undefined' },
-      { name: 'Backup',       test: () => typeof Backup !== 'undefined' },
-      { name: 'UI',           test: () => typeof UI !== 'undefined' },
-      { name: 'TermAccess',   test: () => typeof TermAccess !== 'undefined' },
-      { name: 'TeacherAuth',  test: () => typeof TeacherAuth !== 'undefined' },
-      { name: 'ActivityTracker', test: () => typeof ActivityTracker !== 'undefined' }
+      'APP', 'CONFIG', 'Store', 'Security', 'Transmutation',
+      'Sync', 'Backup', 'UI', 'TermAccess', 'TeacherAuth', 'ActivityTracker'
     ];
 
-    modules.forEach((m) => {
-      if (m.test()) {
-        pass(cat, m.name + ' is loaded');
+    modules.forEach(function(name) {
+      if (getModule(name)) {
+        pass(cat, name + ' is loaded');
       } else {
-        fail(cat, m.name + ' is NOT loaded',
+        fail(cat, name + ' is NOT loaded',
           'The module\'s script tag may have failed to load, or the file is empty/truncated.',
-          'Check that assets/js/' + m.name.toLowerCase() + '.js exists and is complete on GitHub.');
+          'Check that assets/js/' + name.toLowerCase() + '.js exists and is complete on GitHub.');
       }
     });
   }
 
   /* ============================================================
-     CHECK 2 — Public API of each module
+     CHECK 2 — Module Public APIs
      ============================================================ */
-    function checkModuleAPIs() {
+  function checkModuleAPIs() {
     const cat = addCategory('Module Public APIs', '🔧');
 
     const apis = [
@@ -116,47 +100,40 @@ const Diagnostics = (() => {
       { module: 'UI', methods: ['renderAvatar', 'renderProgressBar', 'exportCSV'] }
     ];
 
-    apis.forEach(({ module, methods }) => {
-      // Try multiple lookup methods to handle const declarations
-      let mod = null;
-      try { mod = eval(module); } catch (e) { mod = null; }
-      if (!mod && typeof window !== 'undefined') mod = window[module];
-      if (!mod && typeof globalThis !== 'undefined') mod = globalThis[module];
-
+    apis.forEach(function(entry) {
+      var mod = getModule(entry.module);
       if (!mod) {
-        fail(cat, module + ' API check skipped — module not loaded');
+        fail(cat, entry.module + ' API check skipped — module not loaded');
         return;
       }
-
-      const missing = methods.filter((m) => typeof mod[m] !== 'function');
+      var missing = entry.methods.filter(function(m) { return typeof mod[m] !== 'function'; });
       if (missing.length === 0) {
-        pass(cat, module + ' — all ' + methods.length + ' methods present');
+        pass(cat, entry.module + ' — all ' + entry.methods.length + ' methods present');
       } else {
-        warn(cat, module + ' — missing methods: ' + missing.join(', '),
+        warn(cat, entry.module + ' — missing methods: ' + missing.join(', '),
           'The module may be an older version, or the file was truncated.',
-          'Re-push the complete ' + module.toLowerCase() + '.js file.');
+          'Re-push the complete ' + entry.module.toLowerCase() + '.js file.');
       }
     });
   }
 
   /* ============================================================
-     CHECK 3 — CSS loaded
+     CHECK 3 — CSS Stylesheets
      ============================================================ */
   function checkCSS() {
     const cat = addCategory('CSS Stylesheets', '🎨');
-
     const expected = ['main.css', 'student.css', 'teacher.css', 'classrecord.css', 'quiz.css'];
     const loaded = new Set();
 
-    Array.from(document.styleSheets).forEach((sheet) => {
+    Array.from(document.styleSheets).forEach(function(sheet) {
       try {
-        const href = sheet.href || '';
-        const match = href.match(/\/([^/]+\.css)(\?|$)/);
+        var href = sheet.href || '';
+        var match = href.match(/\/([^/]+\.css)(\?|$)/);
         if (match) loaded.add(match[1]);
-      } catch (e) { /* CORS-restricted */ }
+      } catch (e) { /* CORS */ }
     });
 
-    expected.forEach((file) => {
+    expected.forEach(function(file) {
       if (loaded.has(file)) {
         pass(cat, file + ' is loaded');
       } else {
@@ -168,7 +145,7 @@ const Diagnostics = (() => {
   }
 
   /* ============================================================
-     CHECK 4 — Config sanity
+     CHECK 4 — Configuration
      ============================================================ */
   function checkConfig() {
     const cat = addCategory('Configuration', '⚙️');
@@ -178,7 +155,6 @@ const Diagnostics = (() => {
       return;
     }
 
-    // Sections
     if (Array.isArray(CONFIG.SECTIONS) && CONFIG.SECTIONS.length >= 1) {
       pass(cat, 'Sections defined', CONFIG.SECTIONS.join(', '));
     } else {
@@ -187,12 +163,11 @@ const Diagnostics = (() => {
         'Add SECTIONS: ["ACADEMIC A", "ACADEMIC B"] to config.js.');
     }
 
-    // Weights
     const w = CONFIG.WEIGHTS;
     if (w && typeof w.ww === 'number' && typeof w.pt === 'number' && typeof w.ex === 'number') {
       const sum = w.ww + w.pt + w.ex;
       if (Math.abs(sum - 1.0) < 0.001) {
-        pass(cat, 'Weights sum to 1.0', `WW ${w.ww} + PT ${w.pt} + EX ${w.ex}`);
+        pass(cat, 'Weights sum to 1.0', 'WW ' + w.ww + ' + PT ' + w.pt + ' + EX ' + w.ex);
       } else {
         warn(cat, 'Weights do not sum to 1.0', 'Sum = ' + sum.toFixed(4));
       }
@@ -200,7 +175,6 @@ const Diagnostics = (() => {
       warn(cat, 'CONFIG.WEIGHTS missing or malformed');
     }
 
-    // Teacher password hash
     const hash = CONFIG.TEACHER_PASSWORD_HASH;
     if (typeof hash === 'string' && hash.length === 64) {
       pass(cat, 'Teacher password hash is valid length', '64 chars');
@@ -210,7 +184,6 @@ const Diagnostics = (() => {
         'Update config.js → TEACHER_PASSWORD_HASH.');
     }
 
-    // Backend
     if (CONFIG.backendEnabled) {
       pass(cat, 'Backend URL configured', CONFIG.BACKEND_URL.slice(0, 60) + '…');
     } else {
@@ -219,14 +192,13 @@ const Diagnostics = (() => {
         'Deploy the Apps Script backend and paste the URL into config.js.');
     }
 
-    // Version
     if (CONFIG.VERSION) {
       pass(cat, 'App version', CONFIG.VERSION);
     }
   }
 
   /* ============================================================
-     CHECK 5 — File Integrity (fetch and verify endings)
+     CHECK 5 — File Integrity
      ============================================================ */
   async function checkFileIntegrity() {
     const cat = addCategory('File Integrity (anti-truncation)', '📄');
@@ -253,12 +225,12 @@ const Diagnostics = (() => {
       'config.js'
     ];
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const res = await fetchText(file);
 
       if (!res.ok) {
-        fail(cat, file,
-          res.status ? `HTTP ${res.status}` : (res.error || 'fetch failed'),
+        fail(cat, file, res.status ? 'HTTP ' + res.status : (res.error || 'fetch failed'),
           'File may be missing on GitHub. Check the path.');
         continue;
       }
@@ -267,13 +239,12 @@ const Diagnostics = (() => {
       const trimmed = text.trimEnd();
       const sizeKB = (text.length / 1024).toFixed(1);
 
-      // Truncation heuristic: file must end with `})();`, `};`, `}`, or `;`
       const endsOK = /(\}\)\(\)|}\)\(\);|};|})$/m.test(trimmed);
 
       if (!endsOK) {
         fail(cat, file + ' (' + sizeKB + ' KB)',
           'Does not end with a valid closing brace — LIKELY TRUNCATED.',
-          'Re-push the complete ' + file + ' from your Codespace.');
+          'Re-push the complete ' + file + ' from GitHub.');
       } else if (text.length < 200) {
         warn(cat, file + ' (' + sizeKB + ' KB)',
           'Very small file — may be a stub.',
@@ -290,7 +261,6 @@ const Diagnostics = (() => {
   function checkStorage() {
     const cat = addCategory('Storage', '💾');
 
-    // localStorage
     try {
       const k = '__gsa_diag_test__';
       localStorage.setItem(k, 'x');
@@ -299,12 +269,10 @@ const Diagnostics = (() => {
       if (v === 'x') pass(cat, 'localStorage writable');
       else warn(cat, 'localStorage write test failed');
     } catch (e) {
-      fail(cat, 'localStorage is unavailable',
-        e.message,
+      fail(cat, 'localStorage is unavailable', e.message,
         'Storage may be blocked (private mode) or full.');
     }
 
-    // sessionStorage
     try {
       const k = '__gsa_diag_sess__';
       sessionStorage.setItem(k, 'x');
@@ -316,13 +284,12 @@ const Diagnostics = (() => {
       fail(cat, 'sessionStorage is unavailable', e.message);
     }
 
-    // Count stored records
     try {
       let userCount = 0;
-      let corruptKeys = [];
+      const corruptKeys = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith('gsa_v1_users')) {
+        if (key && key.indexOf('gsa_v1_users') === 0) {
           try {
             const arr = JSON.parse(localStorage.getItem(key));
             if (Array.isArray(arr)) userCount = arr.length;
@@ -331,8 +298,7 @@ const Diagnostics = (() => {
       }
       pass(cat, 'Registered students', String(userCount));
       if (corruptKeys.length) {
-        warn(cat, 'Corrupted localStorage keys',
-          corruptKeys.join(', '),
+        warn(cat, 'Corrupted localStorage keys', corruptKeys.join(', '),
           'These entries may cause load errors.');
       }
     } catch (e) {
@@ -352,7 +318,7 @@ const Diagnostics = (() => {
     }
 
     try {
-      const url = CONFIG.BACKEND_URL + (CONFIG.BACKEND_URL.includes('?') ? '&' : '?') + 'action=ping';
+      const url = CONFIG.BACKEND_URL + (CONFIG.BACKEND_URL.indexOf('?') !== -1 ? '&' : '?') + 'action=ping';
       const start = Date.now();
       const res = await fetch(url, { method: 'GET' });
       const ms = Date.now() - start;
@@ -366,36 +332,32 @@ const Diagnostics = (() => {
 
       const data = await res.json();
       if (data.ok) {
-        pass(cat, 'Backend reachable', ms + ' ms · ' + (data.service || 'OK'));
+        pass(cat, 'Backend reachable', ms + ' ms · ' + (data.service || 'OK') + ' v' + (data.version || '?'));
       } else {
         warn(cat, 'Backend responded but ok=false', JSON.stringify(data));
       }
     } catch (e) {
-      fail(cat, 'Backend unreachable',
-        e.message,
+      fail(cat, 'Backend unreachable', e.message,
         'Check that BACKEND_URL is correct and deployment is public.');
     }
   }
 
   /* ============================================================
-     CHECK 8 — Question banks (27 JSON files)
+     CHECK 8 — Question Banks
      ============================================================ */
   async function checkQuestionBanks() {
     const cat = addCategory('Question Banks', '📝');
-
     const terms = ['term1', 'term2', 'term3'];
     const assessments = [
-      { id: 'quiz1', type: 'quiz', items: 20 },
-      { id: 'quiz2', type: 'quiz', items: 20 },
-      { id: 'quiz3', type: 'quiz', items: 20 },
-      { id: 'st1',   type: 'st',   items: 30 },
-      { id: 'st2',   type: 'st',   items: 30 },
-      { id: 'te',    type: 'te',   items: 60 }
+      { id: 'quiz1', items: 20 }, { id: 'quiz2', items: 20 }, { id: 'quiz3', items: 20 },
+      { id: 'st1', items: 30 }, { id: 'st2', items: 30 }, { id: 'te', items: 60 }
     ];
 
-    for (const term of terms) {
-      for (const a of assessments) {
-        const path = `student/${term}/assessments/${a.id}.json`;
+    for (let t = 0; t < terms.length; t++) {
+      for (let a = 0; a < assessments.length; a++) {
+        const term = terms[t];
+        const asmt = assessments[a];
+        const path = 'student/' + term + '/assessments/' + asmt.id + '.json';
         const res = await fetchJSON(path);
 
         if (!res.ok) {
@@ -409,17 +371,15 @@ const Diagnostics = (() => {
           continue;
         }
 
-        if (data.questions.length !== a.items) {
-          warn(cat, path,
-            `Expected ${a.items} items, got ${data.questions.length}`);
+        if (data.questions.length !== asmt.items) {
+          warn(cat, path, 'Expected ' + asmt.items + ' items, got ' + data.questions.length);
         } else {
-          pass(cat, path, `${data.questions.length} items`);
+          pass(cat, path, data.questions.length + ' items');
         }
 
-        // Check that each question has choices and a correct answer
-        const broken = data.questions.filter((q) =>
-          !q.text || !Array.isArray(q.options) || !q.correct
-        );
+        const broken = data.questions.filter(function(q) {
+          return !q.text || !Array.isArray(q.options) || !q.correct;
+        });
         if (broken.length) {
           warn(cat, path + ' — malformed questions',
             broken.length + ' items missing text/options/correct');
@@ -429,16 +389,16 @@ const Diagnostics = (() => {
   }
 
   /* ============================================================
-     CHECK 9 — Lesson content (30 weeks)
+     CHECK 9 — Lesson Content
      ============================================================ */
   async function checkLessonContent() {
     const cat = addCategory('Lesson Content', '📚');
-
     const terms = ['term1', 'term2', 'term3'];
 
-    for (const term of terms) {
+    for (let t = 0; t < terms.length; t++) {
+      const term = terms[t];
       for (let w = 1; w <= 10; w++) {
-        const path = `student/${term}/week${w}/week${w}.json`;
+        const path = 'student/' + term + '/week' + w + '/week' + w + '.json';
         const res = await fetchJSON(path);
 
         if (!res.ok) {
@@ -448,13 +408,11 @@ const Diagnostics = (() => {
 
         const data = res.data;
         if (!data.days || !Array.isArray(data.days) || data.days.length !== 4) {
-          warn(cat, path,
-            'Expected 4 days, got ' + (data.days ? data.days.length : 0));
+          warn(cat, path, 'Expected 4 days, got ' + (data.days ? data.days.length : 0));
         } else {
-          const missing = data.days.filter((d) => !d.title || !d.content);
+          const missing = data.days.filter(function(d) { return !d.title || !d.content; });
           if (missing.length) {
-            warn(cat, path,
-              missing.length + ' day(s) missing title or content');
+            warn(cat, path, missing.length + ' day(s) missing title or content');
           } else {
             pass(cat, path, '4 days');
           }
@@ -464,7 +422,7 @@ const Diagnostics = (() => {
   }
 
   /* ============================================================
-     CHECK 10 — Student data integrity
+     CHECK 10 — Student Data
      ============================================================ */
   function checkStudentData() {
     const cat = addCategory('Student Data', '👥');
@@ -484,22 +442,19 @@ const Diagnostics = (() => {
 
       pass(cat, 'Students registered', String(users.length));
 
-      // Duplicate LRNs
       const seen = new Map();
       const dupes = [];
-      users.forEach((u) => {
+      users.forEach(function(u) {
         if (seen.has(u.lrn)) dupes.push(u.lrn);
         else seen.set(u.lrn, true);
       });
       if (dupes.length) {
-        warn(cat, 'Duplicate LRNs', dupes.join(', '),
-          'Merging may be needed.');
+        warn(cat, 'Duplicate LRNs', dupes.join(', '), 'Merging may be needed.');
       } else {
         pass(cat, 'No duplicate LRNs');
       }
 
-      // Missing fields
-      const missing = users.filter((u) => !u.lrn || !u.lastName || !u.firstName);
+      const missing = users.filter(function(u) { return !u.lrn || !u.lastName || !u.firstName; });
       if (missing.length) {
         warn(cat, 'Incomplete student records', missing.length + ' records',
           'Some students are missing LRN or name.');
@@ -507,13 +462,13 @@ const Diagnostics = (() => {
         pass(cat, 'All student records are complete');
       }
 
-      // Count progress
       let withProgress = 0;
-      users.forEach((u) => {
+      users.forEach(function(u) {
         try {
           const p = Store.getProgress(u.lrn);
-          const total = ['term1', 'term2', 'term3'].reduce(
-            (acc, t) => acc + ((p[t] && p[t].completed && p[t].completed.length) || 0), 0);
+          const total = ['term1', 'term2', 'term3'].reduce(function(acc, t) {
+            return acc + ((p[t] && p[t].completed && p[t].completed.length) || 0);
+          }, 0);
           if (total > 0) withProgress++;
         } catch (e) { /* ignore */ }
       });
@@ -524,7 +479,7 @@ const Diagnostics = (() => {
   }
 
   /* ============================================================
-     RUN ALL CHECKS
+     RUN ALL
      ============================================================ */
   async function run(onProgress) {
     report.startedAt = new Date().toISOString();
@@ -532,27 +487,28 @@ const Diagnostics = (() => {
     report.totals = { ok: 0, warn: 0, error: 0, skipped: 0 };
 
     const steps = [
-      ['Checking core modules…',        checkCoreGlobals],
-      ['Checking module APIs…',         checkModuleAPIs],
-      ['Checking stylesheets…',         checkCSS],
-      ['Checking configuration…',       checkConfig],
-      ['Checking file integrity…',      checkFileIntegrity],
-      ['Checking storage…',             checkStorage],
-      ['Checking backend…',             checkBackend],
-      ['Checking question banks…',      checkQuestionBanks],
-      ['Checking lesson content…',      checkLessonContent],
-      ['Checking student data…',        checkStudentData]
+      ['Checking core modules…', checkCoreGlobals],
+      ['Checking module APIs…', checkModuleAPIs],
+      ['Checking stylesheets…', checkCSS],
+      ['Checking configuration…', checkConfig],
+      ['Checking file integrity…', checkFileIntegrity],
+      ['Checking storage…', checkStorage],
+      ['Checking backend…', checkBackend],
+      ['Checking question banks…', checkQuestionBanks],
+      ['Checking lesson content…', checkLessonContent],
+      ['Checking student data…', checkStudentData]
     ];
 
     for (let i = 0; i < steps.length; i++) {
-      const [label, fn] = steps[i];
+      const label = steps[i][0];
+      const fn = steps[i][1];
       if (onProgress) onProgress(i + 1, steps.length, label);
       try {
         const result = fn();
         if (result && typeof result.then === 'function') await result;
       } catch (e) {
-        fail(report.categories[report.categories.length - 1] || addCategory('Unexpected error', '❌'),
-          'Check threw an exception', e.message);
+        const cat = report.categories[report.categories.length - 1] || addCategory('Unexpected error', '❌');
+        fail(cat, 'Check threw an exception', e.message);
       }
     }
 
@@ -561,7 +517,7 @@ const Diagnostics = (() => {
   }
 
   /* ============================================================
-     EXPORT REPORT AS TEXT
+     EXPORT AS TEXT
      ============================================================ */
   function toText(r) {
     const rpt = r || report;
@@ -575,16 +531,16 @@ const Diagnostics = (() => {
     lines.push('URL: ' + window.location.href);
     lines.push('User Agent: ' + navigator.userAgent);
     lines.push('');
-    lines.push(`SUMMARY: ✅ ${rpt.totals.ok} OK   ⚠️ ${rpt.totals.warn} WARN   ❌ ${rpt.totals.error} ERROR   ⏭️ ${rpt.totals.skipped} SKIPPED`);
+    lines.push('SUMMARY: ✅ ' + rpt.totals.ok + ' OK   ⚠️ ' + rpt.totals.warn + ' WARN   ❌ ' + rpt.totals.error + ' ERROR   ⏭️ ' + rpt.totals.skipped + ' SKIPPED');
     lines.push('');
 
-    rpt.categories.forEach((cat) => {
+    rpt.categories.forEach(function(cat) {
       lines.push('');
-      lines.push(`--- ${cat.icon}  ${cat.name}  (${cat.checks.length} checks) ---`);
-      cat.checks.forEach((c) => {
+      lines.push('--- ' + cat.icon + '  ' + cat.name + '  (' + cat.checks.length + ' checks) ---');
+      cat.checks.forEach(function(c) {
         const icon = { ok: '✅', warn: '⚠️', error: '❌', skipped: '⏭️' }[c.level] || '•';
-        lines.push(`  ${icon} ${c.label}${c.detail ? ' — ' + c.detail : ''}`);
-        if (c.fix) lines.push(`       → ${c.fix}`);
+        lines.push('  ' + icon + ' ' + c.label + (c.detail ? ' — ' + c.detail : ''));
+        if (c.fix) lines.push('       → ' + c.fix);
       });
     });
 
@@ -596,8 +552,5 @@ const Diagnostics = (() => {
     return lines.join('\n');
   }
 
-  /* ============================================================
-     PUBLIC API
-     ============================================================ */
-  return { run, toText, report };
+  return { run: run, toText: toText, report: report };
 })();
