@@ -1,15 +1,12 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 1.0.0
+   Version: 1.0.1
    App: General Science
    ------------------------------------------------------------
-   Features:
-   - Timed assessments with autosave every 10s
-   - Anti-cheat (tab-switch detection, copy/paste disabled)
-   - Question + option shuffle
-   - Lock-on-fail (below passing score locks the assessment)
-   - Results screen with item analysis
-   - Retake only if unlocked by teacher or passing score
+   Changelog v1.0.1: When a student opens a quiz they already
+   passed, show a full review screen (item analysis of their
+   previous attempt). No retake. Preserves academic integrity
+   while letting students learn from their mistakes.
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -41,17 +38,17 @@ const QuizEngine = (() => {
     ctx = {
       lrn: user.lrn,
       term: config.term,
-      type: config.type,           // 'quiz' | 'st' | 'te'
-      id: config.id,               // e.g. 'quiz1', 'st1', 'te'
+      type: config.type,
+      id: config.id,
       title: config.title,
       questions: config.questions,
-      timeLimit: config.timeLimit, // seconds
+      timeLimit: config.timeLimit,
       passScore: config.passScore || PASS_THRESHOLD,
       showResults: config.showResults !== false,
       allowRetake: config.allowRetake === true
     };
 
-    // Check if already locked
+    // Check if locked (failed or tampered)
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
       renderLocked();
       return;
@@ -60,8 +57,16 @@ const QuizEngine = (() => {
     // Check previous score
     const scores = Store.getScores(ctx.lrn);
     const prev = scores[ctx.term]?.[ctx.type]?.[ctx.id];
-    if (prev && prev.score >= ctx.passScore) {
-      renderAlreadyPassed(prev);
+
+    if (prev && prev.score !== undefined && prev.percent >= ctx.passScore) {
+      // Passed → show review screen
+      renderPassedReview(prev);
+      return;
+    }
+
+    if (prev && prev.percent !== undefined && prev.percent < ctx.passScore) {
+      // Failed but not locked (rare) → show retry option
+      renderRetryScreen(prev);
       return;
     }
 
@@ -69,7 +74,7 @@ const QuizEngine = (() => {
   }
 
   /* ============================================================
-     INTRO SCREEN
+     INTRO SCREEN (first time)
      ============================================================ */
   function renderIntro() {
     const container = document.getElementById('quiz-root');
@@ -111,21 +116,181 @@ const QuizEngine = (() => {
   }
 
   /* ============================================================
+     PASSED REVIEW SCREEN (new in v1.0.1)
+     ============================================================ */
+  function renderPassedReview(prev) {
+    const container = document.getElementById('quiz-root');
+    if (!container) return;
+
+    const itemResults = prev.itemResults || [];
+    const correctCount = prev.score || 0;
+    const total = prev.total || ctx.questions.length;
+    const percent = prev.percent || Math.round((correctCount / total) * 100);
+    const timeUsed = prev.timeUsed != null ? APP.formatTime(prev.timeUsed) : '—';
+    const completedAt = prev.timestamp ? APP.formatDate(prev.timestamp) : '—';
+
+    const emoji = percent >= 90 ? '🏆' : '🎉';
+    const titleText = percent >= 90 ? 'Mastered!' : 'Passed!';
+
+    // Build item analysis from the stored itemResults
+    let itemAnalysisHTML = '';
+    if (itemResults.length) {
+      itemAnalysisHTML = itemResults.map((r, i) => {
+        const q = ctx.questions[r.index !== undefined ? r.index : i];
+        if (!q) return '';
+        const isCorrect = r.correct;
+        const given = r.given;
+        const expected = r.expected || q.correct;
+
+        return `
+          <div style="padding:14px 16px;margin-bottom:10px;background:#fff;border-radius:10px;border-left:4px solid ${isCorrect ? '#2e7d32' : '#c62828'};box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
+              <div style="font-weight:700;font-size:0.85rem;color:#5f6368;">Q${i + 1}</div>
+              <span style="font-size:0.75rem;font-weight:700;padding:3px 10px;border-radius:999px;background:${isCorrect ? '#e8f5e9' : '#ffebee'};color:${isCorrect ? '#1b5e20' : '#b71c1c'};">
+                ${isCorrect ? '✅ Correct' : '❌ Wrong'}
+              </span>
+            </div>
+            <div style="font-size:0.9rem;color:#1a1a1a;line-height:1.5;margin-bottom:10px;">${q.text}</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:0.82rem;">
+              ${q.options.map((opt, oi) => {
+                const isExpected = opt === expected;
+                const isGiven = opt === given;
+                let bg = '#f9fafb';
+                let border = '1px solid #e0e0e0';
+                let color = '#5f6368';
+                let icon = '';
+
+                if (isExpected) {
+                  bg = '#e8f5e9';
+                  border = '1px solid #2e7d32';
+                  color = '#1b5e20';
+                  icon = ' ✓';
+                } else if (isGiven && !isCorrect) {
+                  bg = '#ffebee';
+                  border = '1px solid #c62828';
+                  color = '#b71c1c';
+                  icon = ' ✗';
+                }
+
+                return `
+                  <div style="padding:6px 10px;border-radius:6px;background:${bg};border:${border};color:${color};">
+                    ${String.fromCharCode(65 + oi)}. ${opt}${icon}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      itemAnalysisHTML = `
+        <div class="alert alert-info">
+          <strong>ℹ️ No item-level data</strong>
+          <p style="margin-top:6px;font-size:0.85rem;">This attempt was submitted before item tracking was enabled. You can still see your overall score above.</p>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="card quiz-result-card" style="max-width:800px;margin:0 auto;">
+        <span class="quiz-result-emoji">${emoji}</span>
+        <h2 class="quiz-result-title passed">${titleText}</h2>
+        <p class="quiz-result-message">${ctx.title} · Completed ${completedAt}</p>
+
+        <div class="quiz-result-stats">
+          <div>
+            <div style="font-size:2rem;font-weight:800;color:#2e7d32;">${correctCount}</div>
+            <div class="text-small text-muted">Correct</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:800;color:#5f6368;">${total - correctCount}</div>
+            <div class="text-small text-muted">Wrong</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:800;color:#2e7d32;">${percent}%</div>
+            <div class="text-small text-muted">Score</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:800;color:#5f6368;">${timeUsed}</div>
+            <div class="text-small text-muted">Time Used</div>
+          </div>
+        </div>
+
+        <div class="alert alert-success" style="text-align:left;">
+          <strong>✅ You have already passed this assessment.</strong>
+          <p style="margin-top:6px;font-size:0.88rem;">This is a read-only review of your previous attempt. Your grade remains your highest score.</p>
+        </div>
+
+        <div style="text-align:left;margin-top:28px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <span style="display:inline-block;width:4px;height:20px;background:linear-gradient(180deg,#0d47a1,#00acc1);border-radius:2px;"></span>
+            <h3 style="margin:0;font-size:1.1rem;color:#0d47a1;">📋 Review Your Answers</h3>
+          </div>
+          ${itemAnalysisHTML}
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ============================================================
+     RETRY SCREEN (failed but not locked)
+     ============================================================ */
+  function renderRetryScreen(prev) {
+    const container = document.getElementById('quiz-root');
+    if (!container) return;
+
+    const percent = prev.percent || 0;
+
+    container.innerHTML = `
+      <div class="card" style="max-width:640px;margin:0 auto;">
+        <div class="card-header">
+          <span class="card-title">📝 ${ctx.title}</span>
+        </div>
+
+        <div style="text-align:center;padding:20px 0;">
+          <div style="font-size:3rem;">📖</div>
+          <h2 style="color:var(--color-primary-dark);margin:12px 0;">Previous Attempt</h2>
+          <p class="text-muted">Your previous score: <strong>${percent}%</strong> (${prev.score}/${prev.total})</p>
+          <p class="text-muted text-small">Passing score: ${ctx.passScore}%</p>
+        </div>
+
+        <div class="alert alert-warning" style="text-align:left;">
+          <strong>📖 Below passing score</strong>
+          <p style="margin-top:6px;font-size:0.88rem;">
+            Please review your previous attempt below, then try again when ready.
+          </p>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <button id="quiz-retry" class="btn btn-primary" style="flex:1;">🔄 Retake Now</button>
+          <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('quiz-retry').addEventListener('click', () => {
+      renderIntro();
+    });
+  }
+
+  /* ============================================================
      START QUIZ
      ============================================================ */
   function startQuiz() {
-    // Shuffle questions + options
     shuffled = Security.shuffleQuestions(ctx.questions);
     answers = {};
     currentIndex = 0;
     startTime = Date.now();
 
-    // Anti-cheat
     document.body.classList.add('quiz-active');
     Security.disableCopyPaste(document);
     Security.disableDevShortcuts();
 
-    // Tab monitoring
     tabMonitor = Security.startTabMonitor((count, isFinal) => {
       if (isFinal) {
         APP.toast('❌ Too many tab switches. Quiz locked.', 'danger', 4000);
@@ -135,7 +300,6 @@ const QuizEngine = (() => {
       }
     }, 3);
 
-    // Timer
     timer = Security.createTimer(
       ctx.timeLimit,
       updateTimerDisplay,
@@ -145,10 +309,7 @@ const QuizEngine = (() => {
       }
     );
 
-    // Autosave
     autosaveTimer = setInterval(saveProgress, AUTOSAVE_INTERVAL);
-
-    // Restore saved progress
     restoreSaved();
 
     renderQuizShell();
@@ -234,7 +395,6 @@ const QuizEngine = (() => {
       optionsEl.appendChild(optEl);
     });
 
-    // Update nav
     document.getElementById('q-current').textContent = currentIndex + 1;
     document.getElementById('quiz-progress').style.width = `${((currentIndex + 1) / shuffled.length) * 100}%`;
 
@@ -341,12 +501,10 @@ const QuizEngine = (() => {
     if (submitting) return;
     submitting = true;
 
-    // Stop timers
     timer?.stop();
     tabMonitor?.stop();
     clearInterval(autosaveTimer);
 
-    // Compute score
     let correct = 0;
     const itemResults = [];
     shuffled.forEach((q, i) => {
@@ -367,7 +525,6 @@ const QuizEngine = (() => {
     const passed = scorePercent >= ctx.passScore;
     const timeUsed = ctx.timeLimit - (timer?.getRemaining() || 0);
 
-    // Save score
     const payload = {
       score: correct,
       total,
@@ -380,7 +537,6 @@ const QuizEngine = (() => {
 
     Store.saveScore(ctx.lrn, ctx.term, ctx.type, ctx.id, payload);
 
-    // Lock if failed OR forced
     if (!passed || forceLock) {
       Store.lockAssessment(ctx.lrn, `${ctx.term}_${ctx.id}`, {
         reason: forceLock ? 'tab-switch' : 'failed',
@@ -388,19 +544,15 @@ const QuizEngine = (() => {
       });
     }
 
-    // Clear session autosave
     sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
-
-    // Remove anti-cheat
     document.body.classList.remove('quiz-active');
 
-    // Show result
     renderResults(payload);
     submitting = false;
   }
 
   /* ============================================================
-     RESULTS
+     RESULTS (after submitting)
      ============================================================ */
   function renderResults(result) {
     const container = document.getElementById('quiz-root');
@@ -472,7 +624,7 @@ const QuizEngine = (() => {
   }
 
   /* ============================================================
-     LOCKED / PASSED SCREENS
+     LOCKED SCREEN
      ============================================================ */
   function renderLocked() {
     const container = document.getElementById('quiz-root');
@@ -484,28 +636,6 @@ const QuizEngine = (() => {
           This assessment was locked because you did not reach the passing score, or a security violation was detected.
         </p>
         <p class="text-small text-muted">Please ask your teacher to unlock this assessment for a retake.</p>
-        <a href="../../student/dashboard.html" class="btn btn-primary mt-lg">🏠 Back to Dashboard</a>
-      </div>
-    `;
-  }
-
-  function renderAlreadyPassed(prev) {
-    const container = document.getElementById('quiz-root');
-    container.innerHTML = `
-      <div class="card" style="max-width:520px;margin:0 auto;text-align:center;padding:32px;">
-        <div style="font-size:3rem;">✅</div>
-        <h2 style="color:var(--color-success);margin:12px 0;">Already Passed</h2>
-        <p class="text-muted">You have already passed this assessment.</p>
-        <div class="quiz-result-stats" style="margin-top:20px;">
-          <div>
-            <div style="font-size:1.5rem;font-weight:800;color:var(--color-success);">${prev.score}/${prev.total}</div>
-            <div class="text-small text-muted">Score</div>
-          </div>
-          <div>
-            <div style="font-size:1.5rem;font-weight:800;color:var(--color-success);">${prev.percent}%</div>
-            <div class="text-small text-muted">Percent</div>
-          </div>
-        </div>
         <a href="../../student/dashboard.html" class="btn btn-primary mt-lg">🏠 Back to Dashboard</a>
       </div>
     `;
