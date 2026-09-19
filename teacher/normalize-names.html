@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Normalize Names — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=6" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=6" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
   <style>
     .nn-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .nn-filters .form-group { min-width: 200px; flex: 1; margin-bottom: 0; }
@@ -54,7 +54,6 @@
     <div class="alert alert-info" style="font-size:0.85rem;">
       <strong>ℹ️ How this works</strong>
       <div style="margin-top:6px;">
-        Each row shows the current stored name and a suggested normalized version.
         Click <strong>Auto-Fix All</strong> to apply the standard formatting everywhere, or edit individual fields and click <strong>Save</strong> per student.
       </div>
     </div>
@@ -96,10 +95,10 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
-  <script src="../assets/js/store.js?v=6"></script>
-  <script src="../assets/js/teacher-auth.js?v=6"></script>
+  <script src="../config.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
+  <script src="../assets/js/store.js?v=7"></script>
+  <script src="../assets/js/teacher-auth.js?v=7"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -138,7 +137,6 @@
             return full.indexOf(search) !== -1 || String(s.lrn).indexOf(search) !== -1;
           });
         }
-
         students = APP.sortStudents(students, 'last', 'asc');
         var area = document.getElementById('results-area');
 
@@ -207,9 +205,7 @@
         var current = { lastName: s.lastName || '', firstName: s.firstName || '', middleName: s.middleName || '' };
         var values = {};
         inputs.forEach(function(i) { values[i.dataset.field] = i.value; });
-
         var changed = Object.keys(values).some(function(k) { return values[k] !== current[k]; });
-
         if (changed) {
           row.classList.add('changed');
           inputs.forEach(function(i) { i.classList.add('changed'); });
@@ -226,7 +222,6 @@
         if (!row) return;
         var s = Store.getUser(lrn);
         if (!s) return;
-
         var inputs = row.querySelectorAll('.nn-input');
         var updates = {};
         inputs.forEach(function(i) {
@@ -235,21 +230,17 @@
           else if (field === 'firstName') updates.firstName = APP.toTitleCase(i.value.trim());
           else updates.middleName = APP.toTitleCase(i.value.trim());
         });
-
         if (!updates.lastName || !updates.firstName) {
           APP.toast('Last name and first name are required', 'danger', 3000);
           return;
         }
-
         var merged = Object.assign({}, s, updates, { updatedAt: new Date().toISOString() });
         Store.saveUser(merged);
         delete pendingChanges[lrn];
-
         inputs.forEach(function(i) { i.value = updates[i.dataset.field] || ''; });
         row.classList.remove('changed');
         row.classList.add('saved');
         inputs.forEach(function(i) { i.classList.remove('changed'); });
-
         APP.toast('✅ Saved: ' + updates.lastName + ', ' + updates.firstName, 'success', 2500);
         setTimeout(function() { row.classList.remove('saved'); }, 1500);
       }
@@ -269,7 +260,7 @@
       }
 
       function autoFixAll() {
-        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s) shown? This will save immediately.')) return;
+        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s)? This will save immediately.')) return;
         var fixed = 0;
         students.forEach(function(s) {
           var updates = {
