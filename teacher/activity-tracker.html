@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Activity Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=3" />
   <style>
     .at-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .at-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -100,23 +100,36 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1"></script>
-  <script src="../assets/js/app.js?v=1"></script>
-  <script src="../assets/js/store.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=1"></script>
+  <script src="../config.js?v=3"></script>
+  <script src="../assets/js/app.js?v=3"></script>
+  <script src="../assets/js/store.js?v=3"></script>
+  <script src="../assets/js/teacher-auth.js?v=3"></script>
   <script>
     (function() {
       'use strict';
 
-      if (!window.TeacherAuth) {
-        document.getElementById('results-area').innerHTML = '<div class="card at-empty">⚠️ Auth module not loaded</div>';
-        return;
+      // Wait for TeacherAuth to load (it may load async)
+      var tries = 0;
+      function waitForAuth() {
+        if (window.TeacherAuth || (typeof TeacherAuth !== 'undefined')) {
+          start();
+        } else if (tries++ < 30) {
+          setTimeout(waitForAuth, 100);
+        } else {
+          document.getElementById('results-area').innerHTML =
+            '<div class="card at-empty">⚠️ Auth module not loaded — check that <code>../assets/js/teacher-auth.js</code> exists</div>';
+        }
       }
-      TeacherAuth.init();
-      if (!TeacherAuth.require()) return;
 
-      document.getElementById('btn-run').addEventListener('click', render);
-      document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+      function start() {
+        TeacherAuth.init();
+        if (!TeacherAuth.require()) return;
+
+        document.getElementById('btn-run').addEventListener('click', render);
+        document.getElementById('btn-logout').addEventListener('click', function() { TeacherAuth.logout(); });
+
+        render();
+      }
 
       function render() {
         var term = document.getElementById('filter-term').value;
@@ -133,7 +146,6 @@
 
         students = APP.sortStudents(students, 'last', 'asc');
 
-        // Class stats
         var totalDone = 0;
         var totalPossible = students.length * 40;
         var behind = [];
@@ -141,14 +153,11 @@
         students.forEach(function(s) {
           var done = getCompleted(s.lrn, term).length;
           totalDone += done;
-          if (done < 30) {
-            behind.push({ student: s, done: done, missing: 40 - done });
-          }
+          if (done < 30) behind.push({ student: s, done: done, missing: 40 - done });
         });
 
         var classPct = totalPossible ? Math.round((totalDone / totalPossible) * 100) : 0;
 
-        // Section breakdown
         var bySection = {};
         students.forEach(function(s) {
           var sec = s.section || 'Unknown';
@@ -162,7 +171,6 @@
           return { name: sec, students: info.students, days: info.days, pct: pct };
         });
 
-        // Week trend
         var trend = [];
         for (var w = 1; w <= 10; w++) {
           var done = 0;
@@ -173,12 +181,7 @@
               if (completed.indexOf(term + '-w' + w + '-d' + d) !== -1) done++;
             }
           });
-          trend.push({
-            week: w,
-            done: done,
-            total: possible,
-            pct: possible ? Math.round((done / possible) * 100) : 0
-          });
+          trend.push({ week: w, done: done, total: possible, pct: possible ? Math.round((done / possible) * 100) : 0 });
         }
 
         area.innerHTML =
@@ -203,9 +206,7 @@
 
           '<div class="section-header"><h2 class="section-title">🔥 Completion Heatmap</h2></div>' +
           '<div class="card" style="padding:16px;">' +
-            '<div class="heatmap-wrapper">' +
-              '<table class="heatmap-table" id="heatmap-table"></table>' +
-            '</div>' +
+            '<div class="heatmap-wrapper"><table class="heatmap-table" id="heatmap-table"></table></div>' +
             '<div class="legend">' +
               '<span class="legend-item"><span class="legend-swatch cell-0"></span> 0 days</span>' +
               '<span class="legend-item"><span class="legend-swatch cell-1"></span> 1 day</span>' +
@@ -222,17 +223,10 @@
                 '<thead><tr><th>Section</th><th>Students</th><th>Total Days</th><th>Completion %</th></tr></thead>' +
                 '<tbody>' +
                   sectionRows.map(function(r) {
-                    return '<tr>' +
-                      '<td><strong>' + r.name + '</strong></td>' +
-                      '<td>' + r.students + '</td>' +
-                      '<td>' + r.days + '</td>' +
-                      '<td>' +
-                        '<div style="display:flex;align-items:center;gap:8px;">' +
-                          '<div class="progress-bar-modern" style="flex:1;min-width:80px;"><div class="fill ' + (r.pct >= 75 ? 'green' : r.pct >= 50 ? 'blue' : r.pct >= 25 ? 'amber' : 'red') + '" style="width:' + r.pct + '%"></div></div>' +
-                          '<span style="font-weight:700;color:#37474f;font-size:0.8rem;">' + r.pct + '%</span>' +
-                        '</div>' +
-                      '</td>' +
-                    '</tr>';
+                    return '<tr><td><strong>' + r.name + '</strong></td><td>' + r.students + '</td><td>' + r.days + '</td>' +
+                      '<td><div style="display:flex;align-items:center;gap:8px;">' +
+                      '<div class="progress-bar-modern" style="flex:1;min-width:80px;"><div class="fill ' + (r.pct >= 75 ? 'green' : r.pct >= 50 ? 'blue' : r.pct >= 25 ? 'amber' : 'red') + '" style="width:' + r.pct + '%"></div></div>' +
+                      '<span style="font-weight:700;color:#37474f;font-size:0.8rem;">' + r.pct + '%</span></div></td></tr>';
                   }).join('') +
                 '</tbody>' +
               '</table>' +
@@ -246,12 +240,9 @@
                 '<thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead>' +
                 '<tbody>' +
                   behind.map(function(b) {
-                    return '<tr>' +
-                      '<td><strong>' + APP.formatFullName(b.student.lastName, b.student.firstName, b.student.middleName) + '</strong></td>' +
-                      '<td>' + b.student.section + '</td>' +
-                      '<td>' + b.done + '/40</td>' +
-                      '<td><span style="color:#c62828;font-weight:700;">' + b.missing + '</span></td>' +
-                    '</tr>';
+                    return '<tr><td><strong>' + APP.formatFullName(b.student.lastName, b.student.firstName, b.student.middleName) + '</strong></td>' +
+                      '<td>' + b.student.section + '</td><td>' + b.done + '/40</td>' +
+                      '<td><span style="color:#c62828;font-weight:700;">' + b.missing + '</span></td></tr>';
                   }).join('') +
                 '</tbody>' +
               '</table>' +
@@ -270,9 +261,7 @@
       function renderHeatmap(students, term) {
         var table = document.getElementById('heatmap-table');
         var progressMap = {};
-        students.forEach(function(s) {
-          progressMap[s.lrn] = getCompleted(s.lrn, term);
-        });
+        students.forEach(function(s) { progressMap[s.lrn] = getCompleted(s.lrn, term); });
 
         var html = '<thead><tr><th class="row-header">Student</th>';
         for (var w = 1; w <= 10; w++) html += '<th>W' + w + '</th>';
@@ -283,15 +272,10 @@
           var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
           var rowTotal = 0;
 
-          html += '<tr>' +
-            '<td class="row-header">' +
-              '<div style="display:flex;align-items:center;gap:8px;padding:2px;">' +
-                '<div style="font-weight:700;font-size:0.75rem;color:#37474f;">' + initials + '</div>' +
-                '<div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">' +
-                  APP.formatFullName(s.lastName, s.firstName, s.middleName) +
-                '</div>' +
-              '</div>' +
-            '</td>';
+          html += '<tr><td class="row-header"><div style="display:flex;align-items:center;gap:8px;padding:2px;">' +
+            '<div style="font-weight:700;font-size:0.75rem;color:#37474f;">' + initials + '</div>' +
+            '<div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">' +
+              APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div></div></td>';
 
           for (var w = 1; w <= 10; w++) {
             var done = 0;
@@ -302,15 +286,15 @@
             html += '<td class="heatmap-cell cell-' + done + '" title="Week ' + w + ': ' + done + '/4 days">' + done + '</td>';
           }
 
-          html += '<td style="background:#e3f2fd;color:#0d47a1;font-weight:800;">' + rowTotal + '</td>';
-          html += '</tr>';
+          html += '<td style="background:#e3f2fd;color:#0d47a1;font-weight:800;">' + rowTotal + '</td></tr>';
         });
 
         html += '</tbody>';
         table.innerHTML = html;
       }
 
-      document.addEventListener('DOMContentLoaded', render);
+      // Start the wait loop
+      waitForAuth();
     })();
   </script>
 </body>
