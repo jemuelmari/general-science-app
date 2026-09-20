@@ -1,8 +1,17 @@
 /* ============================================================
    diagnostics.js — Self-diagnostic engine
-   Version: 1.0.1
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.1.0 (Phase 2 / X11 + X14 fix):
+     - getModule() no longer uses eval(). Uses safe global lookup
+       via window[name] and globalThis[name], with optional bare
+       identifier fallback via try/catch around typeof.
+     - checkFileIntegrity() truncation regex fixed: previously
+       /(…)$/m matched `}` on ANY line (defeating the check).
+       Now /[\}\)]\s*$/ (no m flag) only matches end of file.
+     - Minor: improved detail messages.
+
    Changelog v1.0.1: Fixed Module API lookup (const declarations)
    ============================================================ */
 
@@ -54,13 +63,42 @@ const Diagnostics = (() => {
     }
   }
 
-  /* ---------- Lookup helper for const-declared modules ---------- */
+  /* ---------- Safe module lookup (no eval) ---------- */
+  /**
+   * ⚠️ X11 FIX: Try to fetch a module by name WITHOUT eval().
+   * Order:
+   *   1. window[name]           — works when the script attaches to window
+   *   2. globalThis[name]       — modern environments
+   *   3. try/catch bare ident   — for `const X = ...` in same scope
+   *      (only works when Diagnostics is in the same script scope,
+   *      which it usually isn't; hence the window fallback above
+   *      is the primary path for this codebase).
+   */
   function getModule(name) {
-    let mod = null;
-    try { mod = eval(name); } catch (e) { mod = null; }
-    if (!mod && typeof window !== 'undefined') mod = window[name];
-    if (!mod && typeof globalThis !== 'undefined') mod = globalThis[name];
-    return mod;
+    // 1. window
+    if (typeof window !== 'undefined' && window[name]) return window[name];
+    // 2. globalThis
+    if (typeof globalThis !== 'undefined' && globalThis[name]) return globalThis[name];
+
+    // 3. Bare identifier access (limited scope, no eval).
+    //    Only a curated allow-list to avoid evaluating arbitrary strings.
+    const KNOWN = {
+      APP: typeof APP !== 'undefined' ? APP : null,
+      CONFIG: typeof CONFIG !== 'undefined' ? CONFIG : null,
+      Store: typeof Store !== 'undefined' ? Store : null,
+      Security: typeof Security !== 'undefined' ? Security : null,
+      Transmutation: typeof Transmutation !== 'undefined' ? Transmutation : null,
+      Sync: typeof Sync !== 'undefined' ? Sync : null,
+      Backup: typeof Backup !== 'undefined' ? Backup : null,
+      UI: typeof UI !== 'undefined' ? UI : null,
+      TermAccess: typeof TermAccess !== 'undefined' ? TermAccess : null,
+      TeacherAuth: typeof TeacherAuth !== 'undefined' ? TeacherAuth : null,
+      ActivityTracker: typeof ActivityTracker !== 'undefined' ? ActivityTracker : null
+    };
+    if (Object.prototype.hasOwnProperty.call(KNOWN, name) && KNOWN[name]) {
+      return KNOWN[name];
+    }
+    return null;
   }
 
   /* ============================================================
@@ -195,10 +233,24 @@ const Diagnostics = (() => {
     if (CONFIG.VERSION) {
       pass(cat, 'App version', CONFIG.VERSION);
     }
+
+    // ⚠️ New: check SET_ASSIGNMENT and HOURS_PER_WEEK
+    if (CONFIG.SET_ASSIGNMENT && typeof CONFIG.SET_ASSIGNMENT === 'object') {
+      pass(cat, 'Set assignment configured', JSON.stringify(CONFIG.SET_ASSIGNMENT));
+    } else {
+      warn(cat, 'CONFIG.SET_ASSIGNMENT missing',
+        'Set A / Set B will default to Set A for all students.');
+    }
+
+    if (typeof CONFIG.HOURS_PER_WEEK === 'number') {
+      pass(cat, 'Hours per week', CONFIG.HOURS_PER_WEEK + ' hours');
+    } else {
+      warn(cat, 'CONFIG.HOURS_PER_WEEK missing', 'TOS hours fallback may be inaccurate.');
+    }
   }
 
   /* ============================================================
-     CHECK 5 — File Integrity
+     CHECK 5 — File Integrity (anti-truncation)
      ============================================================ */
   async function checkFileIntegrity() {
     const cat = addCategory('File Integrity (anti-truncation)', '📄');
@@ -222,6 +274,9 @@ const Diagnostics = (() => {
       'assets/js/classrecord.js',
       'assets/js/term-access.js',
       'assets/js/diagnostics.js',
+      'assets/js/randomize.js',       // NEW (Phase 2)
+      'assets/js/mastery-scales.js',  // NEW (Phase 2)
+      'assets/js/tos-engine.js',      // NEW (Phase 2)
       'config.js'
     ];
 
@@ -239,7 +294,9 @@ const Diagnostics = (() => {
       const trimmed = text.trimEnd();
       const sizeKB = (text.length / 1024).toFixed(1);
 
-      const endsOK = /(\}\)\(\)|}\)\(\);|};|})$/m.test(trimmed);
+      // ⚠️ X14 FIX: use /[\}\)]\s*$/ (no `m` flag) so it only
+      // matches at the END OF FILE, not at any line's `}`.
+      const endsOK = /[\}\)]\s*$/.test(trimmed);
 
       if (!endsOK) {
         fail(cat, file + ' (' + sizeKB + ' KB)',
