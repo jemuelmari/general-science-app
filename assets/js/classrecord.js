@@ -1,8 +1,16 @@
 /* ============================================================
    classrecord.js — Gradebook logic
-   Version: 1.0.1
+   Version: 1.0.2
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.0.2 (Phase 1.5):
+     - Relaxed Top/Bottom filters to include students with partial
+       data (any score exists). Final grade displays "—" until
+       complete.
+     - Stats now use partial renormalized average when finals are
+       incomplete, so Class Average is meaningful mid-term.
+     - Added "partial" awareness to export CSV.
+
    Changelog v1.0.1 (Phase 1):
      - X3 fix: EX uses null when any ST/TE missing; final grade
        falls back to `insufficient: true` (displays "—").
@@ -79,22 +87,27 @@
       const pt3 = getScorePercent(s.lrn, term, 'pt', 'pt3');
       const te = getScorePercent(s.lrn, term, 'te', 'te');
 
-      // WW average (quizzes only)
       const quizPcts = [q1, q2, q3].filter((v) => v != null);
       const wwAvg = quizPcts.length ? quizPcts.reduce((a, b) => a + b, 0) / quizPcts.length : null;
 
-      // PT average
       const ptPcts = [pt1, pt2, pt3].filter((v) => v != null);
       const ptAvg = ptPcts.length ? ptPcts.reduce((a, b) => a + b, 0) / ptPcts.length : null;
 
-      // ⚠️ FIX (X3): EX null when any ST/TE missing
       let exAvg = null;
       if (st1 != null && st2 != null && te != null) {
         exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
       }
 
-      // ⚠️ FIX (X3): Safe final grade — returns insufficient: true if any null
       const finalGrade = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
+
+      // ⚠️ NEW: partial renormalized score for sorting / mid-term stats
+      let availableSum = 0, availableWeight = 0;
+      if (wwAvg !== null) { availableSum += wwAvg * WEIGHTS.ww; availableWeight += WEIGHTS.ww; }
+      if (ptAvg !== null) { availableSum += ptAvg * WEIGHTS.pt; availableWeight += WEIGHTS.pt; }
+      if (exAvg !== null) { availableSum += exAvg * WEIGHTS.ex; availableWeight += WEIGHTS.ex; }
+      const partialScore = availableWeight > 0 ? (availableSum / availableWeight) : 0;
+
+      const compCount = [q1, q2, q3, pt1, pt2, pt3, st1, st2, te].filter((v) => v != null).length;
 
       return {
         student: s,
@@ -102,7 +115,9 @@
         wwAvg,
         ptAvg,
         exAvg,
-        final: finalGrade
+        final: finalGrade,
+        partialScore,
+        compCount
       };
     });
   }
@@ -126,7 +141,6 @@
       const avatarClass = UI.getAvatarClass(s.lrn);
       const tr = document.createElement('tr');
 
-      // ⚠️ FIX (X3): handle insufficient final
       let finalCell;
       if (r.final.insufficient || r.final.transmuted == null) {
         finalCell = '<td class="final-grade" style="color:#bdbdbd;background:#fafafa;">—</td>';
@@ -183,14 +197,17 @@
       return;
     }
 
-    // ⚠️ FIX (X3): Exclude insufficient final grades
-    const finals = rows
+    // ⚠️ Use partial scores for mid-term meaningfulness
+    const rowsWithData = rows.filter((r) => r.compCount > 0);
+    const partialScores = rowsWithData.map((r) => r.partialScore).filter((v) => v > 0);
+    const avg = partialScores.length ? partialScores.reduce((a, b) => a + b, 0) / partialScores.length : 0;
+
+    // Passing/failing only counts complete finals
+    const completeFinals = rows
       .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
       .filter((v) => v != null && v > 0);
-
-    const avg = finals.length ? finals.reduce((a, b) => a + b, 0) / finals.length : 0;
-    const passing = finals.filter((v) => v >= 75).length;
-    const failing = finals.filter((v) => v < 75).length;
+    const passing = completeFinals.filter((v) => v >= 75).length;
+    const failing = completeFinals.filter((v) => v < 75).length;
 
     const submissionCount = rows.reduce((acc, r) => {
       return acc + Object.values(r.scores).filter((v) => v != null).length;
@@ -214,7 +231,6 @@
     const grid = document.getElementById('distribution-grid');
     if (!grid) return;
 
-    // ⚠️ FIX (X3): exclude insufficient
     const finals = rows
       .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
       .filter((v) => v != null && v > 0);
@@ -242,8 +258,10 @@
     grid.innerHTML =
       '<div class="report-card">' +
         '<h4>📊 Grade Distribution</h4>' +
-        rangeCounts.map((r) => UI.renderDistributionRow(r.label, r.count, finals.length, r.color)).join('') +
-        (finals.length === 0 ? '<p class="text-muted text-small">No grades to display yet.</p>' : '') +
+        (finals.length === 0
+          ? '<p class="text-muted text-small" style="text-align:center;padding:20px;">No complete final grades yet. Students will appear once all 9 assessments are recorded.</p>'
+          : rangeCounts.map((r) => UI.renderDistributionRow(r.label, r.count, finals.length, r.color)).join('')
+        ) +
       '</div>' +
 
       '<div class="report-card">' +
@@ -408,11 +426,12 @@
       'PT1', 'PT2', 'PT3',
       'ST1', 'ST2', 'TE',
       'WW Avg', 'PT Avg', 'EX Avg',
-      'Final Grade'
+      'Final Grade', 'Status'
     ];
 
     const data = rows.map((r) => {
       const s = r.student;
+      const isComplete = !r.final.insufficient && r.final.transmuted != null;
       return [
         s.lastName || '',
         s.firstName || '',
@@ -431,8 +450,8 @@
         r.wwAvg != null ? r.wwAvg.toFixed(1) : '',
         r.ptAvg != null ? r.ptAvg.toFixed(1) : '',
         r.exAvg != null ? r.exAvg.toFixed(1) : '',
-        // ⚠️ FIX (X3): show empty if insufficient
-        (!r.final.insufficient && r.final.transmuted != null) ? r.final.transmuted : ''
+        isComplete ? r.final.transmuted : '(partial)',
+        isComplete ? (r.final.passing ? 'Passed' : 'Failed') : 'Incomplete'
       ];
     });
 
