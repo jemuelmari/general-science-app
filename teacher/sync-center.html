@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sync Center — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .sync-tabs { display: flex; gap: 4px; border-bottom: 2px solid #eceff1; margin-bottom: 24px; overflow-x: auto; }
     .sync-tab { padding: 14px 22px; background: none; border: none; border-bottom: 3px solid transparent; font-family: inherit; font-size: 0.9rem; font-weight: 600; color: #5f6368; cursor: pointer; transition: all 0.15s; white-space: nowrap; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 8px; }
@@ -39,6 +39,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -122,12 +123,14 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
-  <script src="../assets/js/store.js?v=7"></script>
-  <script src="../assets/js/security.js?v=7"></script>
-  <script src="../assets/js/sync.js?v=7"></script>
-  <script src="../assets/js/teacher-auth.js?v=7"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/sync.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -136,12 +139,8 @@
       var NS = 'gsa_v1_';
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
 
-        // Tabs
         document.querySelectorAll('.sync-tab').forEach(function(tab) {
           tab.addEventListener('click', function() {
             document.querySelectorAll('.sync-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -155,7 +154,6 @@
 
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
 
-        // Code import
         var codeInput = document.getElementById('code-input');
         codeInput.addEventListener('input', function() {
           codeInput.value = codeInput.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
@@ -166,7 +164,6 @@
         });
         document.getElementById('btn-import-code').addEventListener('click', importCode);
 
-        // File import
         var drop = document.getElementById('file-drop');
         var fileInput = document.getElementById('file-input');
         ['dragenter', 'dragover'].forEach(function(evt) {
@@ -183,7 +180,6 @@
           if (e.target.files[0]) handleFile(e.target.files[0]);
         });
 
-        // Backend
         updateBackendStatus();
         document.getElementById('btn-ping').addEventListener('click', pingBackend);
         document.getElementById('btn-pull-all').addEventListener('click', pullAllPending);
