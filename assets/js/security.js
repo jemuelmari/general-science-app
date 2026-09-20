@@ -1,7 +1,20 @@
 /* ============================================================
    security.js — HMAC-SHA256 signing + anti-cheat hooks
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science
+   ------------------------------------------------------------
+   Changelog v1.1.0 (Phase 2 / X5 + X39 fix):
+     - shuffleQuestions() now preserves `originalIndex` on each
+       question. This fixes the mapping bug that broke item
+       analysis and TOS competency lookup.
+     - Delegates shuffle to Randomize when available (deterministic
+       by assessmentId + setLetter). Falls back to Fisher-Yates
+       with a warning if Randomize is missing.
+     - verify() uses constant-time comparison (timing attack fix).
+
+   ⚠️ SECURITY NOTE: The SECRET below is client-side. It provides
+   INTEGRITY (tamper detection) but NOT AUTHENTICITY, because
+   anyone can read it in DevTools. Move to server-side HMAC in v2.
    ============================================================ */
 
 const Security = (() => {
@@ -36,9 +49,32 @@ const Security = (() => {
     return _bufToHex(sig);
   }
 
+  /**
+   * Constant-time string comparison to avoid timing attacks.
+   * Always compares the full length, regardless of early mismatches.
+   */
+  function _constantTimeEqual(a, b) {
+    const sa = String(a == null ? '' : a);
+    const sb = String(b == null ? '' : b);
+    if (sa.length !== sb.length) {
+      // Still iterate to keep timing similar; result will be false.
+      let diff = 1;
+      const len = Math.max(sa.length, sb.length);
+      for (let i = 0; i < len; i++) {
+        diff |= (sa.charCodeAt(i) || 0) ^ (sb.charCodeAt(i) || 0);
+      }
+      return false;
+    }
+    let diff = 0;
+    for (let i = 0; i < sa.length; i++) {
+      diff |= sa.charCodeAt(i) ^ sb.charCodeAt(i);
+    }
+    return diff === 0;
+  }
+
   async function verify(payload, signature) {
     const expected = await sign(payload);
-    return expected === signature;
+    return _constantTimeEqual(expected, signature);
   }
 
   /* ---------- Anti-Cheat: Tab-Switch Detection ---------- */
@@ -103,8 +139,8 @@ const Security = (() => {
     });
   }
 
-  /* ---------- Question + Option Shuffle ---------- */
-  function shuffle(arr) {
+  /* ---------- Shuffle (fallback if Randomize missing) ---------- */
+  function _fallbackShuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -113,11 +149,56 @@ const Security = (() => {
     return a;
   }
 
-  function shuffleQuestions(questions) {
-    return shuffle(questions).map((q) => ({
+  /**
+   * Shuffle a set of questions while preserving `originalIndex`.
+   *
+   * ⚠️ FIX (X39): Each returned question carries `originalIndex`,
+   * so item analysis can map back to the master question bank
+   * (and thus look up its competency + bloom level) regardless of
+   * the shuffled position the student saw.
+   *
+   * ⚠️ X5 partial: Delegates to Randomize if available, so
+   * Set A / Set B are deterministic and identical across devices.
+   *
+   * @param {Array} questions - array of question objects
+   * @param {Object} [opts] - { assessmentId, setLetter }
+   * @returns {Array} shuffled questions with originalIndex + shuffled options
+   */
+  function shuffleQuestions(questions, opts) {
+    const list = Array.isArray(questions) ? questions : [];
+    const options = opts || {};
+
+    // Snapshot originals with originalIndex
+    const withIndex = list.map((q, i) => ({
       ...q,
-      options: shuffle(q.options || [])
+      originalIndex: q.originalIndex != null ? q.originalIndex : i
     }));
+
+    // Deterministic path — uses Randomize if loaded
+    if (
+      typeof Randomize !== 'undefined' &&
+      typeof Randomize.generateSet === 'function' &&
+      options.assessmentId
+    ) {
+      const bank = { questions: list };
+      const setLetter = options.setLetter || 'A';
+      const set = Randomize.generateSet(bank, options.assessmentId, setLetter);
+      // Randomize already returns originalIndex + shuffled options
+      return set.questions;
+    }
+
+    // Fallback — nondeterministic Fisher-Yates, but still preserves originalIndex
+    if (typeof Randomize === 'undefined') {
+      console.warn('[Security] Randomize not loaded — using nondeterministic shuffle. ' +
+        'Item analysis across sets will still work via originalIndex.');
+    }
+    const shuffled = _fallbackShuffle(withIndex);
+
+    // Also shuffle each question's options
+    return shuffled.map((q) => {
+      const opts2 = Array.isArray(q.options) ? _fallbackShuffle(q.options) : q.options;
+      return { ...q, options: opts2 };
+    });
   }
 
   /* ---------- Timer ---------- */
@@ -145,7 +226,7 @@ const Security = (() => {
     startTabMonitor,
     disableCopyPaste,
     disableDevShortcuts,
-    shuffle,
+    shuffle: _fallbackShuffle,
     shuffleQuestions,
     createTimer
   };
