@@ -1,15 +1,22 @@
 /* ============================================================
    randomize.js — Set A / Set B shuffle engine
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.1.0 (Phase 2 / X5 + X39 fix):
-     - scoreAttempt() now includes originalIndex in each itemResult
-       so item analysis and TOS can map back to the master question
-       bank (competency + bloom level lookup).
+   Changelog v1.2.0 (Phase 2.5 / X44 fix):
+     - Added getRepoBase() helper (same strategy as tos-engine.js)
+       so getSet() resolves question-bank paths correctly from
+       ANY page depth (root, /teacher/, /classrecord/,
+       /student/term1/week1/, etc.).
+     - getSet() now tries multiple candidate paths in a fallback
+       chain for robustness.
+     - Fetch error messages include the fully-resolved URL.
+
+   Changelog v1.1.0 (Phase 2):
+     - scoreAttempt() now includes originalIndex in itemResults.
      - Added getOriginalIndex(set, setIndex) helper.
-     - Added validateSets() to confirm Set A and Set B contain the
-       same questions in different order (defensive check).
+     - Added validateSets() to confirm Set A / Set B contain the
+       same questions in different order.
 
    DESIGN DECISIONS (locked):
    - Same questions for both sets, different fixed shuffle
@@ -17,13 +24,53 @@
    - Question order shuffled per set
    - Option order shuffled per question per set
    - Correct answer tracked per (set, question index)
-   - No "All of the above" / "None of the above" (they can't shuffle)
+   - No "All of the above" / "None of the above" (can't shuffle)
    ============================================================ */
 
 const Randomize = (() => {
   'use strict';
 
   const STORAGE_KEY = 'gsa_v1_shuffled_sets';
+
+  let _repoBase = null;  // cached repo-base path
+
+  /* ============================================================
+     REPO BASE DETECTION (same strategy as tos-engine.js)
+     ============================================================ */
+  function getRepoBase() {
+    if (_repoBase !== null) return _repoBase;
+
+    const scripts = document.querySelectorAll('script[src]');
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].getAttribute('src') || '';
+      if (src.indexOf('config.js') !== -1) {
+        _repoBase = src.replace(/config\.js(\?.*)?$/, '');
+        return _repoBase;
+      }
+    }
+
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].getAttribute('src') || '';
+      const m = src.match(/^(.*?)assets\/js\/app\.js/);
+      if (m) {
+        _repoBase = m[1];
+        return _repoBase;
+      }
+    }
+
+    const path = window.location.pathname;
+    const repoMatch = path.match(/^(.*?\/general-science-app\/)/i);
+    if (repoMatch) {
+      const depthMatch = path.replace(repoMatch[1], '').split('/');
+      const depth = Math.max(0, depthMatch.length - 1);
+      _repoBase = '../'.repeat(depth) || './';
+      return _repoBase;
+    }
+
+    console.warn('[Randomize] Could not detect repo base — using ../ fallback');
+    _repoBase = '../';
+    return _repoBase;
+  }
 
   /* ============================================================
      SEEDED RNG — Mulberry32
@@ -69,40 +116,29 @@ const Randomize = (() => {
   /* ============================================================
      GENERATE SET
      ============================================================ */
-  /**
-   * Generate a shuffled set for a given assessment.
-   * @param {Object} questionBank — { questions: [ { id, text, options, correct, competency, bloomLevel } ] }
-   * @param {String} assessmentId — e.g. 'term1-st1'
-   * @param {String} setLetter — 'A' or 'B'
-   * @returns {Object} — { assessmentId, setLetter, questions, answerKey }
-   */
   function generateSet(questionBank, assessmentId, setLetter) {
     const questions = questionBank.questions || [];
     const rng = mulberry32(hashSeed(assessmentId, setLetter));
 
-    // Shuffle the question order
     const order = seededShuffle(questions.map(function(_, i) { return i; }), rng);
 
     const setQuestions = order.map(function(originalIndex, newIndex) {
       const q = questions[originalIndex];
-
-      // Shuffle the option order for this question
       const optionRng = mulberry32(hashSeed(assessmentId + '-q' + originalIndex, setLetter));
       const optionOrder = seededShuffle(q.options.slice(), optionRng);
 
       return {
-        setIndex: newIndex,            // position within this set (0-based)
-        originalIndex: originalIndex,  // position in the master bank
+        setIndex: newIndex,
+        originalIndex: originalIndex,
         id: q.id,
         text: q.text,
-        options: optionOrder,          // options in shuffled order
-        correct: q.correct,            // original correct answer (text)
+        options: optionOrder,
+        correct: q.correct,
         competency: q.competency || null,
         bloomLevel: q.bloomLevel || null
       };
     });
 
-    // Build the answer key for this set (used for auto-scoring)
     const answerKey = setQuestions.map(function(q, i) {
       return {
         setIndex: i,
@@ -121,9 +157,6 @@ const Randomize = (() => {
     };
   }
 
-  /**
-   * Generate both Set A and Set B for an assessment.
-   */
   function generateSets(questionBank, assessmentId) {
     return {
       A: generateSet(questionBank, assessmentId, 'A'),
@@ -131,10 +164,6 @@ const Randomize = (() => {
     };
   }
 
-  /**
-   * Defensive check: Set A and Set B contain the same questions
-   * (just different order).
-   */
   function validateSets(sets) {
     if (!sets || !sets.A || !sets.B) return false;
     const aIds = sets.A.questions.map(q => q.id).sort();
@@ -179,19 +208,50 @@ const Randomize = (() => {
 
   /**
    * Get a specific set — regenerates deterministically if not stored.
+   *
+   * ⚠️ FIX (X44): uses getRepoBase() to build candidate paths.
+   * Tries each candidate until one works.
    */
   async function getSet(assessmentId, setLetter, term, bankFilename) {
     let sets = getStoredSets(assessmentId);
     if (sets && sets[setLetter]) return sets[setLetter];
 
-    // Regenerate from the question bank
     if (!term || !bankFilename) {
       throw new Error('Sets not stored and no bank info provided to regenerate.');
     }
 
-    const res = await fetch('../student/' + term + '/assessments/' + bankFilename + '.json?ts=' + Date.now());
-    if (!res.ok) throw new Error('Failed to load question bank: ' + bankFilename);
-    const bank = await res.json();
+    const base = getRepoBase();
+    const candidates = [
+      base + 'student/' + term + '/assessments/' + bankFilename + '.json',
+      '../student/' + term + '/assessments/' + bankFilename + '.json',
+      '../../student/' + term + '/assessments/' + bankFilename + '.json',
+      './student/' + term + '/assessments/' + bankFilename + '.json'
+    ];
+
+    let bank = null;
+    let lastErr = null;
+
+    for (let i = 0; i < candidates.length; i++) {
+      try {
+        const res = await fetch(candidates[i] + '?ts=' + Date.now());
+        if (!res.ok) {
+          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
+          continue;
+        }
+        bank = await res.json();
+        console.log('[Randomize] Loaded bank from: ' + candidates[i]);
+        break;
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+
+    if (!bank) {
+      const triedList = candidates.join(', ');
+      throw new Error('Failed to load question bank: ' + bankFilename +
+        '. Tried: ' + triedList +
+        (lastErr ? ' (last error: ' + lastErr.message + ')' : ''));
+    }
 
     const fresh = generateSets(bank, assessmentId);
     persistSets(assessmentId, fresh);
@@ -201,17 +261,6 @@ const Randomize = (() => {
   /* ============================================================
      SCORE ATTEMPT
      ============================================================ */
-  /**
-   * Score a student's answers against a specific set.
-   *
-   * ⚠️ FIX (X39): itemResults now include `originalIndex` so
-   * downstream consumers (item analysis, TOS, competency reports)
-   * can map each item back to the master question bank.
-   *
-   * @param {Object} answers — { setIndex: "chosen option text" }
-   * @param {Object} set — output from generateSet()
-   * @returns {Object} — { correct, total, percent, itemResults }
-   */
   function scoreAttempt(answers, set) {
     let correct = 0;
     const itemResults = [];
@@ -222,8 +271,8 @@ const Randomize = (() => {
       if (isCorrect) correct++;
 
       itemResults.push({
-        index: i,                    // shuffled index (what student saw)
-        originalIndex: q.originalIndex, // ⚠️ X39 FIX — map back to bank
+        index: i,
+        originalIndex: q.originalIndex,
         questionId: q.id,
         correct: isCorrect,
         given: given,
@@ -248,9 +297,6 @@ const Randomize = (() => {
   /* ============================================================
      UN-SHUFFLE HELPERS
      ============================================================ */
-  /**
-   * Given a set and a set of answers, remap to the original index.
-   */
   function remapToOriginal(answers, set) {
     const remapped = {};
     set.questions.forEach(function(q, i) {
@@ -259,10 +305,6 @@ const Randomize = (() => {
     return remapped;
   }
 
-  /**
-   * Given item results from a shuffled set, remap to original indices.
-   * (Idempotent — safe to call even if itemResults already have originalIndex.)
-   */
   function remapItemResults(itemResults, set) {
     return itemResults.map(function(r) {
       const q = set.questions[r.index];
@@ -273,9 +315,6 @@ const Randomize = (() => {
     });
   }
 
-  /**
-   * Get the original index of a question at a given set index.
-   */
   function getOriginalIndex(set, setIndex) {
     if (!set || !set.questions || !set.questions[setIndex]) return null;
     return set.questions[setIndex].originalIndex;
@@ -292,9 +331,6 @@ const Randomize = (() => {
     });
   }
 
-  /**
-   * Validate a question bank — warns if any question can't be shuffled.
-   */
   function validateBank(questionBank) {
     const warnings = [];
     (questionBank.questions || []).forEach(function(q, i) {
@@ -342,10 +378,13 @@ const Randomize = (() => {
      PUBLIC API
      ============================================================ */
   return {
+    // Path helper
+    getRepoBase,
+
     // Generation
     generateSet,
     generateSets,
-    validateSets,       // NEW
+    validateSets,
 
     // Persistence
     persistSets,
@@ -356,7 +395,7 @@ const Randomize = (() => {
     scoreAttempt,
     remapToOriginal,
     remapItemResults,
-    getOriginalIndex,   // NEW
+    getOriginalIndex,
 
     // Validation
     hasUnshuffleableOption,
