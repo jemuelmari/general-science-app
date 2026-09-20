@@ -1,8 +1,18 @@
 /* ============================================================
    tos-engine.js — Table of Specification computation engine
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.1.0 (Phase 2.5 / X43 fix):
+     - Added getRepoBase() helper that computes the repo root
+       path dynamically from the config.js script tag URL.
+     - loadCompetencies() and loadQuestionBank() now use
+       ${base} prefix so paths resolve correctly from ANY page
+       depth (root, /teacher/, /classrecord/, /student/term1/week1/).
+     - Fetch error messages now include the fully-resolved URL
+       for easier debugging.
+     - Added fallback path chain when detection fails.
+
    Responsibilities:
      1. Load data/competencies.json
      2. Determine covered competencies per assessment
@@ -30,24 +40,138 @@ const TOSEngine = (() => {
   const HOTS_RATIO = 0.70;
 
   let _compData = null;
+  let _repoBase = null;  // cached repo-base path
+
+  /* ============================================================
+     REPO BASE DETECTION
+     ------------------------------------------------------------
+     ⚠️ FIX (X43): Computes the repo root path dynamically.
+
+     Strategy:
+       1. Look for a <script src="...config.js..."> tag. config.js
+          lives at the repo root, so stripping "config.js" gives
+          the base path.
+       2. If config.js not found, try <script src="...app.js...">.
+       3. If neither works, fall back to a heuristic: count path
+          segments and prepend "../" the appropriate number of times.
+   ============================================================ */
+  function getRepoBase() {
+    if (_repoBase !== null) return _repoBase;
+
+    // Strategy 1: find script tag containing "config.js"
+    const scripts = document.querySelectorAll('script[src]');
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].getAttribute('src') || '';
+      if (src.indexOf('config.js') !== -1) {
+        // Strip "config.js" and any query string
+        _repoBase = src.replace(/config\.js(\?.*)?$/, '');
+        return _repoBase;
+      }
+    }
+
+    // Strategy 2: find script tag containing "app.js"
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].getAttribute('src') || '';
+      const m = src.match(/^(.*?)assets\/js\/app\.js/);
+      if (m) {
+        _repoBase = m[1];
+        return _repoBase;
+      }
+    }
+
+    // Strategy 3: heuristic — use depth of current pathname
+    // Assume pages live at most 3 levels deep from repo root
+    // (e.g., /student/term1/week1/index.html = 3 levels)
+    const path = window.location.pathname;
+    const repoMatch = path.match(/^(.*?\/general-science-app\/)/i);
+    if (repoMatch) {
+      // Use absolute-ish relative base computed from current dir
+      const depthMatch = path.replace(repoMatch[1], '').split('/');
+      const depth = Math.max(0, depthMatch.length - 1);
+      _repoBase = '../'.repeat(depth) || './';
+      return _repoBase;
+    }
+
+    // Final fallback — assume one level up (works from /teacher/*.html)
+    console.warn('[TOSEngine] Could not detect repo base — using ../ fallback');
+    _repoBase = '../';
+    return _repoBase;
+  }
 
   /* ============================================================
      DATA LOADING
      ============================================================ */
   async function loadCompetencies() {
     if (_compData) return _compData;
-    const res = await fetch('../../data/competencies.json?ts=' + Date.now());
-    if (!res.ok) throw new Error('Failed to load competencies.json (HTTP ' + res.status + ')');
-    _compData = await res.json();
-    return _compData;
+
+    const base = getRepoBase();
+    const candidates = [
+      base + 'data/competencies.json',
+      // Fallback candidates in case base detection is off
+      '../data/competencies.json',
+      '../../data/competencies.json',
+      './data/competencies.json',
+      'data/competencies.json'
+    ];
+
+    let lastErr = null;
+    for (let i = 0; i < candidates.length; i++) {
+      const url = candidates[i] + '?ts=' + Date.now();
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
+          continue;
+        }
+        _compData = await res.json();
+        console.log('[TOSEngine] Loaded competencies from: ' + candidates[i]);
+        return _compData;
+      } catch (e) {
+        lastErr = e;
+        // Continue to next candidate
+      }
+    }
+
+    // All failed
+    const triedList = candidates.join(', ');
+    const msg = 'Failed to load competencies.json. Tried: ' + triedList +
+                (lastErr ? ' (last error: ' + lastErr.message + ')' : '');
+    console.error('[TOSEngine]', msg);
+    throw new Error(msg);
   }
 
   async function loadQuestionBank(term, assessment) {
     // assessment is one of: quiz1, quiz2, quiz3, st1, st2, te
-    const path = `../../student/${term}/assessments/${assessment}.json?ts=${Date.now()}`;
-    const res = await fetch(path);
-    if (!res.ok) throw new Error('Failed to load ' + assessment + '.json');
-    return res.json();
+    const base = getRepoBase();
+    const candidates = [
+      base + 'student/' + term + '/assessments/' + assessment + '.json',
+      '../student/' + term + '/assessments/' + assessment + '.json',
+      '../../student/' + term + '/assessments/' + assessment + '.json',
+      './student/' + term + '/assessments/' + assessment + '.json'
+    ];
+
+    let lastErr = null;
+    for (let i = 0; i < candidates.length; i++) {
+      const url = candidates[i] + '?ts=' + Date.now();
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
+          continue;
+        }
+        const data = await res.json();
+        console.log('[TOSEngine] Loaded ' + assessment + ' from: ' + candidates[i]);
+        return data;
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+
+    const triedList = candidates.join(', ');
+    const msg = 'Failed to load ' + assessment + '.json. Tried: ' + triedList +
+                (lastErr ? ' (last error: ' + lastErr.message + ')' : '');
+    console.error('[TOSEngine]', msg);
+    throw new Error(msg);
   }
 
   /* ============================================================
@@ -67,18 +191,14 @@ const TOSEngine = (() => {
 
   /**
    * Determine TE competencies:
-   *   = Top 5 Least Learned (from ST1+ST2 combined) 
+   *   = Top 5 Least Learned (from ST1+ST2 combined)
    *   + Weeks 9-10 competencies not already in Top 5
-   *
-   * @param {Object} termData - competencies for the term
-   * @param {Array}  stRanking - array of { code, mps } sorted ascending (least → most)
    */
   function getCompetenciesForTE(termData, stRanking) {
     const weeks910 = termData.competencies.filter((c) =>
       c.weeks.some((w) => w >= 9 && w <= 10)
     );
 
-    // Top 5 least learned (from provided ranking, filtered to ST1+ST2 competencies only)
     const stCodes = new Set([
       ...getCompetenciesForST1(termData).map((c) => c.code),
       ...getCompetenciesForST2(termData).map((c) => c.code)
@@ -90,7 +210,6 @@ const TOSEngine = (() => {
       .map((r) => termData.competencies.find((c) => c.code === r.code))
       .filter(Boolean);
 
-    // Merge with weeks 9-10, avoiding duplicates
     const merged = [...top5Least];
     const seen = new Set(top5Least.map((c) => c.code));
     weeks910.forEach((c) => {
@@ -106,19 +225,14 @@ const TOSEngine = (() => {
   /* ============================================================
      WEIGHT + ITEM COUNT COMPUTATION
      ============================================================ */
-  /**
-   * Compute hours, weight %, item count per competency.
-   * Ensures items sum to totalItems exactly.
-   */
   function computeWeights(competencies, totalItems) {
     const totalHours = competencies.reduce((sum, c) => sum + (c.hours || 0), 0);
     if (totalHours === 0) throw new Error('Total hours is zero — cannot compute weights.');
 
-    // Step 1 — provisional item counts using rounding
     const rows = competencies.map((c) => {
-      const weight = (c.hours / totalHours) * 100;           // percent (0-100)
-      const rawItems = (weight / 100) * totalItems;           // exact
-      const items = Math.round(rawItems);                     // nearest
+      const weight = (c.hours / totalHours) * 100;
+      const rawItems = (weight / 100) * totalItems;
+      const items = Math.round(rawItems);
       return {
         code: c.code,
         description: c.description,
@@ -127,32 +241,27 @@ const TOSEngine = (() => {
         weeks: c.weeks,
         bloomLevels: c.bloomLevels,
         termExamPriority: c.termExamPriority,
-        weightPercent: Math.round(weight * 100) / 100,        // 2 decimals
+        weightPercent: Math.round(weight * 100) / 100,
         rawItems: rawItems,
         items: items
       };
     });
 
-    // Step 2 — adjust to make total match exactly
     let sum = rows.reduce((s, r) => s + r.items, 0);
     const diff = totalItems - sum;
 
     if (diff !== 0) {
-      // Sort by fractional remainder (largest first)
       const withRemainder = rows.map((r) => ({
         row: r,
         remainder: r.rawItems - Math.floor(r.rawItems)
       }));
 
       if (diff > 0) {
-        // Need to add items — add to rows with largest remainders
         withRemainder
           .sort((a, b) => b.remainder - a.remainder)
           .slice(0, diff)
           .forEach((x) => x.row.items++);
       } else {
-        // Need to remove items — subtract from rows with smallest remainders
-        // but never below 1 item
         withRemainder
           .sort((a, b) => a.remainder - b.remainder)
           .filter((x) => x.row.items > 1)
@@ -167,11 +276,6 @@ const TOSEngine = (() => {
   /* ============================================================
      BLOOM'S DISTRIBUTION
      ============================================================ */
-  /**
-   * For each competency, distribute items across Bloom's levels.
-   * Target: 30% LOTS, 70% HOTS.
-   * Respects each competency's achievable bloomLevels array.
-   */
   function distributeBlooms(rows) {
     return rows.map((row) => {
       const items = row.items;
@@ -182,7 +286,6 @@ const TOSEngine = (() => {
       const allowedLOTS = LOTS.filter((l) => allowed.indexOf(l) !== -1);
       const allowedHOTS = HOTS.filter((l) => allowed.indexOf(l) !== -1);
 
-      // If competency allows only LOTS or only HOTS, adjust the ratio
       let lotsTarget, hotsTarget;
       if (allowedLOTS.length === 0) {
         lotsTarget = 0;
@@ -195,28 +298,22 @@ const TOSEngine = (() => {
         hotsTarget = items - lotsTarget;
       }
 
-      // Distribute LOTS items across allowedLOTS (balanced)
       const distribution = {};
       BLOOMS.forEach((b) => { distribution[b] = 0; });
 
-      let remainingLOTS = lotsTarget;
-      allowedLOTS.forEach((lvl, i) => {
-        const share = Math.floor(lotsTarget / allowedLOTS.length);
-        distribution[lvl] = share;
-        remainingLOTS -= share;
-      });
-      // Distribute remainder to first LOTS
-      for (let i = 0; i < remainingLOTS; i++) {
+      // LOTS spread
+      const lotsBase = allowedLOTS.length > 0 ? Math.floor(lotsTarget / allowedLOTS.length) : 0;
+      let lotsRemaining = lotsTarget - (lotsBase * allowedLOTS.length);
+      allowedLOTS.forEach((lvl) => { distribution[lvl] = lotsBase; });
+      for (let i = 0; i < lotsRemaining; i++) {
         distribution[allowedLOTS[i % allowedLOTS.length]]++;
       }
 
-      let remainingHOTS = hotsTarget;
-      allowedHOTS.forEach((lvl) => {
-        const share = Math.floor(hotsTarget / allowedHOTS.length);
-        distribution[lvl] = share;
-        remainingHOTS -= share;
-      });
-      for (let i = 0; i < remainingHOTS; i++) {
+      // HOTS spread
+      const hotsBase = allowedHOTS.length > 0 ? Math.floor(hotsTarget / allowedHOTS.length) : 0;
+      let hotsRemaining = hotsTarget - (hotsBase * allowedHOTS.length);
+      allowedHOTS.forEach((lvl) => { distribution[lvl] = hotsBase; });
+      for (let i = 0; i < hotsRemaining; i++) {
         distribution[allowedHOTS[i % allowedHOTS.length]]++;
       }
 
@@ -245,10 +342,6 @@ const TOSEngine = (() => {
   /* ============================================================
      ANSWER KEY GENERATION
      ============================================================ */
-  /**
-   * Builds the answer key from the question bank.
-   * Result: array of { itemNo, answer, competency, bloomLevel }
-   */
   function buildAnswerKey(rows, questionBank) {
     const key = [];
     const questions = questionBank.questions || [];
@@ -305,28 +398,14 @@ const TOSEngine = (() => {
   /* ============================================================
      MOST / LEAST LEARNED RANKING
      ============================================================ */
-  /**
-   * Given per-competency MPS values, return sorted rankings.
-   * @param {Array} competencyMPS - array of { code, mps, description }
-   * @returns {Array} sorted ascending (least → most)
-   */
   function rankByMPS(competencyMPS) {
     return [...competencyMPS].sort((a, b) => a.mps - b.mps);
   }
 
-  /**
-   * Compute per-competency MPS from student attempts.
-   * @param {Array} students - array of student objects
-   * @param {String} term - 'term1' | 'term2' | 'term3'
-   * @param {String} type - 'st1' | 'st2' | 'te' | 'quizzes'
-   * @param {Object} assessment - the question bank object
-   * @returns {Object} map code → { correct, total, mps }
-   */
   function computeCompetencyMPS(students, term, type, assessment) {
     const result = {};
     const questions = assessment.questions || [];
 
-    // Group questions by competency
     const byComp = {};
     questions.forEach((q, i) => {
       const code = q.competency || 'UNKNOWN';
@@ -334,12 +413,10 @@ const TOSEngine = (() => {
       byComp[code].push(i);
     });
 
-    // Initialize
     Object.keys(byComp).forEach((code) => {
       result[code] = { correct: 0, total: 0, mps: 0 };
     });
 
-    // Count correct / total per competency across all students
     students.forEach((s) => {
       const scores = Store.getScores(s.lrn);
       const record = type === 'te'
@@ -347,8 +424,10 @@ const TOSEngine = (() => {
         : (scores[term] && scores[term][type] && scores[term][type][assessment.id]);
 
       if (!record || !record.itemResults) return;
+
       record.itemResults.forEach((r) => {
-        const idx = r.index;
+        // ⚠️ Prefer originalIndex when present (Phase 2 X39)
+        const idx = (r.originalIndex != null) ? r.originalIndex : r.index;
         const code = (questions[idx] && questions[idx].competency) || 'UNKNOWN';
         if (!result[code]) result[code] = { correct: 0, total: 0, mps: 0 };
         result[code].total++;
@@ -356,7 +435,6 @@ const TOSEngine = (() => {
       });
     });
 
-    // Compute MPS
     Object.keys(result).forEach((code) => {
       const v = result[code];
       v.mps = v.total ? v.correct / v.total : 0;
@@ -368,16 +446,6 @@ const TOSEngine = (() => {
   /* ============================================================
      MAIN ENTRY POINT
      ============================================================ */
-  /**
-   * Generate a full TOS for a given assessment.
-   *
-   * @param {Object} opts
-   * @param {String} opts.term         'term1' | 'term2' | 'term3'
-   * @param {String} opts.assessment   'st1' | 'st2' | 'te'
-   * @param {Number} opts.totalItems   30 for STs, 60 for TE
-   * @param {Array}  opts.stRanking    Required only for TE — array of { code, mps }
-   * @returns {Object} { term, assessment, rows, totals, answerKey, coverage }
-   */
   async function generateTOS(opts) {
     const compData = await loadCompetencies();
     const termData = compData[opts.term];
@@ -399,16 +467,10 @@ const TOSEngine = (() => {
       throw new Error('Unknown assessment: ' + opts.assessment);
     }
 
-    // Compute weights + item counts
     let rows = computeWeights(competencies, opts.totalItems);
-
-    // Distribute Bloom's levels
     rows = distributeBlooms(rows);
-
-    // Assign item numbers
     rows = assignItemNumbers(rows);
 
-    // Load the question bank for the answer key
     let questionBank = { questions: [] };
     try {
       questionBank = await loadQuestionBank(opts.term, opts.assessment);
@@ -435,6 +497,7 @@ const TOSEngine = (() => {
      PUBLIC API
      ============================================================ */
   return {
+    getRepoBase,
     loadCompetencies,
     loadQuestionBank,
     getCompetenciesForST1,
