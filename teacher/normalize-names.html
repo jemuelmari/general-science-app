@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Normalize Names — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .nn-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .nn-filters .form-group { min-width: 200px; flex: 1; margin-bottom: 0; }
@@ -36,6 +36,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -95,10 +96,12 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
-  <script src="../assets/js/store.js?v=7"></script>
-  <script src="../assets/js/teacher-auth.js?v=7"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -108,17 +111,12 @@
       var pendingChanges = {};
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
-
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
         document.getElementById('btn-refresh').addEventListener('click', render);
         document.getElementById('btn-autofix-all').addEventListener('click', autoFixAll);
         document.getElementById('filter-section').addEventListener('change', render);
         document.getElementById('filter-search').addEventListener('input', render);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-
         render();
       }, function() {
         document.getElementById('results-area').innerHTML =
@@ -128,7 +126,6 @@
       function render() {
         var sectionFilter = document.getElementById('filter-section').value;
         var search = document.getElementById('filter-search').value.trim().toLowerCase();
-
         students = Store.getAllUsers();
         if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
         if (search) {
@@ -169,7 +166,6 @@
         var row = document.createElement('div');
         row.className = 'nn-row' + (pending ? ' changed' : '');
         row.dataset.lrn = s.lrn;
-
         row.innerHTML =
           '<div class="nn-avatar">' + initials + '</div>' +
           '<div class="nn-field"><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="' + escapeAttr(shown.lastName) + '" /></div>' +
@@ -187,7 +183,6 @@
           });
           input.addEventListener('input', function() { checkRowChange(row, s); });
         });
-
         return row;
       }
 
