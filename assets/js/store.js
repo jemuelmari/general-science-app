@@ -1,4 +1,3 @@
-[FILE: assets/js/store.js]
 /* ============================================================
    store.js — localStorage persistence for General Science
    Version: 1.0.1
