@@ -1,41 +1,36 @@
 /* ============================================================
    randomize.js — Set A / Set B shuffle engine
-   Version: 1.2.0
+   Version: 1.3.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.3.0 (Phase 2.6 / X45 fix):
+     - getSet() now uses res.text() + JSON.parse() with deduped
+       candidates and static ?v=1.3.0 cache-bust.
+     - Matches tos-engine.js loading strategy for consistency.
+
    Changelog v1.2.0 (Phase 2.5 / X44 fix):
-     - Added getRepoBase() helper (same strategy as tos-engine.js)
-       so getSet() resolves question-bank paths correctly from
-       ANY page depth (root, /teacher/, /classrecord/,
-       /student/term1/week1/, etc.).
-     - getSet() now tries multiple candidate paths in a fallback
-       chain for robustness.
-     - Fetch error messages include the fully-resolved URL.
+     - Added getRepoBase() helper.
 
    Changelog v1.1.0 (Phase 2):
-     - scoreAttempt() now includes originalIndex in itemResults.
-     - Added getOriginalIndex(set, setIndex) helper.
-     - Added validateSets() to confirm Set A / Set B contain the
-       same questions in different order.
+     - scoreAttempt() includes originalIndex.
+     - Added getOriginalIndex() and validateSets().
 
    DESIGN DECISIONS (locked):
    - Same questions for both sets, different fixed shuffle
    - Deterministic: same seed → same order across all devices
-   - Question order shuffled per set
-   - Option order shuffled per question per set
    - Correct answer tracked per (set, question index)
-   - No "All of the above" / "None of the above" (can't shuffle)
    ============================================================ */
 
 const Randomize = (() => {
   'use strict';
 
   const STORAGE_KEY = 'gsa_v1_shuffled_sets';
+  const CACHE_BUST = '?v=1.3.0';
 
-  let _repoBase = null;  // cached repo-base path
+  let _repoBase = null;
 
   /* ============================================================
-     REPO BASE DETECTION (same strategy as tos-engine.js)
+     REPO BASE DETECTION
      ============================================================ */
   function getRepoBase() {
     if (_repoBase !== null) return _repoBase;
@@ -48,7 +43,6 @@ const Randomize = (() => {
         return _repoBase;
       }
     }
-
     for (let i = 0; i < scripts.length; i++) {
       const src = scripts[i].getAttribute('src') || '';
       const m = src.match(/^(.*?)assets\/js\/app\.js/);
@@ -57,7 +51,6 @@ const Randomize = (() => {
         return _repoBase;
       }
     }
-
     const path = window.location.pathname;
     const repoMatch = path.match(/^(.*?\/general-science-app\/)/i);
     if (repoMatch) {
@@ -66,7 +59,6 @@ const Randomize = (() => {
       _repoBase = '../'.repeat(depth) || './';
       return _repoBase;
     }
-
     console.warn('[Randomize] Could not detect repo base — using ../ fallback');
     _repoBase = '../';
     return _repoBase;
@@ -119,7 +111,6 @@ const Randomize = (() => {
   function generateSet(questionBank, assessmentId, setLetter) {
     const questions = questionBank.questions || [];
     const rng = mulberry32(hashSeed(assessmentId, setLetter));
-
     const order = seededShuffle(questions.map(function(_, i) { return i; }), rng);
 
     const setQuestions = order.map(function(originalIndex, newIndex) {
@@ -206,12 +197,9 @@ const Randomize = (() => {
     return all[assessmentId] || null;
   }
 
-  /**
-   * Get a specific set — regenerates deterministically if not stored.
-   *
-   * ⚠️ FIX (X44): uses getRepoBase() to build candidate paths.
-   * Tries each candidate until one works.
-   */
+  /* ============================================================
+     GET SET — deterministic regenerate with deduped fallback
+     ============================================================ */
   async function getSet(assessmentId, setLetter, term, bankFilename) {
     let sets = getStoredSets(assessmentId);
     if (sets && sets[setLetter]) return sets[setLetter];
@@ -221,27 +209,49 @@ const Randomize = (() => {
     }
 
     const base = getRepoBase();
-    const candidates = [
+    const rawCandidates = [
       base + 'student/' + term + '/assessments/' + bankFilename + '.json',
+      'student/' + term + '/assessments/' + bankFilename + '.json',
       '../student/' + term + '/assessments/' + bankFilename + '.json',
-      '../../student/' + term + '/assessments/' + bankFilename + '.json',
-      './student/' + term + '/assessments/' + bankFilename + '.json'
+      '/general-science-app/student/' + term + '/assessments/' + bankFilename + '.json'
     ];
+
+    // Dedupe
+    const candidates = [];
+    const seen = new Set();
+    for (let i = 0; i < rawCandidates.length; i++) {
+      if (!seen.has(rawCandidates[i])) {
+        seen.add(rawCandidates[i]);
+        candidates.push(rawCandidates[i]);
+      }
+    }
 
     let bank = null;
     let lastErr = null;
 
     for (let i = 0; i < candidates.length; i++) {
+      const path = candidates[i];
+      const url = path + CACHE_BUST;
+      console.log('[Randomize] Trying bank at: ' + url);
+
       try {
-        const res = await fetch(candidates[i] + '?ts=' + Date.now());
+        const res = await fetch(url);
+        console.log('[Randomize]   → Status ' + res.status);
         if (!res.ok) {
-          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
+          lastErr = new Error('HTTP ' + res.status + ' for ' + path);
           continue;
         }
-        bank = await res.json();
-        console.log('[Randomize] Loaded bank from: ' + candidates[i]);
-        break;
+        const text = await res.text();
+        try {
+          bank = JSON.parse(text);
+          console.log('[Randomize]   → ✅ Loaded from: ' + path);
+          break;
+        } catch (parseErr) {
+          console.error('[Randomize]   → JSON parse failed: ' + parseErr.message);
+          throw new Error('Invalid JSON from ' + path + ': ' + parseErr.message);
+        }
       } catch (e) {
+        if (e.message && e.message.indexOf('Invalid JSON') === 0) throw e;
         lastErr = e;
       }
     }
@@ -321,7 +331,7 @@ const Randomize = (() => {
   }
 
   /* ============================================================
-     DETECT "ALL OF THE ABOVE" TYPE OPTIONS
+     VALIDATION
      ============================================================ */
   function hasUnshuffleableOption(options) {
     const phrases = ['all of the above', 'none of the above', 'both a and b', 'all the above'];
@@ -360,7 +370,7 @@ const Randomize = (() => {
   }
 
   /* ============================================================
-     CLEAR STORED SETS (admin / dev)
+     ADMIN
      ============================================================ */
   function clearAll() {
     try {
@@ -378,30 +388,19 @@ const Randomize = (() => {
      PUBLIC API
      ============================================================ */
   return {
-    // Path helper
     getRepoBase,
-
-    // Generation
     generateSet,
     generateSets,
     validateSets,
-
-    // Persistence
     persistSets,
     getStoredSets,
     getSet,
-
-    // Scoring
     scoreAttempt,
     remapToOriginal,
     remapItemResults,
     getOriginalIndex,
-
-    // Validation
     hasUnshuffleableOption,
     validateBank,
-
-    // Admin
     clearAll,
     clearOne
   };
