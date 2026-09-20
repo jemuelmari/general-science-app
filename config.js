@@ -1,11 +1,12 @@
+[FILE: config.js]
 /* ============================================================
    config.js — App configuration
-   Version: 1.0.0
+   Version: 1.0.1
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Science Online Modular Application',
-  VERSION: '1.0.0',
+  VERSION: '1.0.1',
 
   // Auto-set at build time (edit manually for now)
   BUILD_DATE: '2026-09-20',
@@ -15,6 +16,14 @@ const CONFIG = {
   GRADE_LEVEL: 'Grade 11',
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],
+
+  // ---------- Set A / Set B Assignment ----------
+  // Same questions for both sets; different deterministic shuffle.
+  // Set A → ACADEMIC A, Set B → ACADEMIC B
+  SET_ASSIGNMENT: {
+    'ACADEMIC A': 'A',
+    'ACADEMIC B': 'B'
+  },
 
   // ---------- Developer Info ----------
   DEVELOPER: {
@@ -53,8 +62,10 @@ const CONFIG = {
     stItems: 30,
     ptPerTerm: 3,
     teItems: 60,
-    passingScore: 80,
-    remediationThreshold: 80
+    // ⚠️ FIX (X1): Aligned with transmutation + quiz-engine + lesson-engine + activity-gate
+    // All code uses 75. Previously config had 80 → inconsistent scoring.
+    passingScore: 75,
+    remediationThreshold: 75
   },
 
   // ---------- Weighting (DO 015, s. 2026 — Academic Elective) ----------
@@ -71,7 +82,17 @@ const CONFIG = {
     te: 0.40
   },
 
-  // ---------- Teacher Password (SHA-256 hash of "teacher2026") ----------
+  // ---------- Hours per Week ----------
+  // 1.5 hrs/day × 4 days/week = 6 hours per week
+  HOURS_PER_WEEK: 6,
+
+  // ---------- Teacher Password ----------
+  // ⚠️ SECURITY WARNING: This is a client-side hash. It is inherently
+  // visible to anyone who opens DevTools. Change this hash immediately
+  // after deployment. See README for instructions.
+  //
+  // ⚠️ FIX (X6 partial): Password is still the same as before; Phase 2
+  // will unify teacher-login.html + teacher-auth.js to read from here.
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
 
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
