@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intervention — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=6" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=6" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .iv-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .iv-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
@@ -44,6 +44,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -100,11 +101,13 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
-  <script src="../assets/js/store.js?v=6"></script>
-  <script src="../assets/js/transmutation.js?v=6"></script>
-  <script src="../assets/js/teacher-auth.js?v=6"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/transmutation.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -122,10 +125,7 @@
       };
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
 
         document.getElementById('students-area').innerHTML =
           '<div class="card iv-empty"><div style="font-size:2.5rem;margin-bottom:12px;">🎯</div>' +
@@ -154,18 +154,15 @@
         allClassified = students.map(function(s) {
           var scores = Store.getScores(s.lrn);
           var t = scores[term] || {};
-
           var stPcts = [];
           Object.values(t.st || {}).forEach(function(st) { if (st && st.total) stPcts.push((st.score / st.total) * 100); });
           var quizPcts = [];
           Object.values(t.quizzes || {}).forEach(function(q) { if (q && q.total) quizPcts.push((q.score / q.total) * 100); });
-
           var allPcts = stPcts.concat(quizPcts);
           var avg = allPcts.length ? allPcts.reduce(function(a, b) { return a + b; }, 0) / allPcts.length : null;
           var classification = avg !== null ? Transmutation.classifyStudent(avg) : { label: 'No data yet', key: 'on-track' };
           var progress = Store.getProgress(s.lrn);
           var daysDone = (progress[term] && progress[term].completed && progress[term].completed.length) || 0;
-
           return { student: s, avg: avg, classification: classification, stCount: stPcts.length, quizCount: quizPcts.length, daysDone: daysDone };
         });
 
@@ -191,7 +188,6 @@
       function renderBuckets() {
         var grid = document.getElementById('bucket-grid');
         document.getElementById('buckets-area').style.display = 'block';
-
         var all = allClassified.length;
         var cards = [
           { key: 'all', label: 'All Students', icon: '👥', color: '#0d47a1', count: all },
@@ -200,15 +196,12 @@
           { key: 'remediation', label: BUCKET_META.remediation.label, icon: BUCKET_META.remediation.icon, color: BUCKET_META.remediation.color, count: currentBuckets.remediation.length },
           { key: 'urgent', label: BUCKET_META.urgent.label, icon: BUCKET_META.urgent.icon, color: BUCKET_META.urgent.color, count: currentBuckets.urgent.length }
         ];
-
         grid.innerHTML = cards.map(function(b) {
           return '<div class="iv-bucket ' + b.key + ' ' + (activeBucket === b.key ? 'active' : '') + '" data-bucket="' + b.key + '"' + (b.key === 'all' ? ' style="border-left-color:#0d47a1;"' : '') + '>' +
             '<div class="icon">' + b.icon + '</div>' +
             '<div class="count" style="color:' + b.color + ';">' + b.count + '</div>' +
-            '<div class="label">' + b.label + '</div>' +
-          '</div>';
+            '<div class="label">' + b.label + '</div></div>';
         }).join('');
-
         grid.querySelectorAll('[data-bucket]').forEach(function(el) {
           el.addEventListener('click', function() {
             activeBucket = el.dataset.bucket;
@@ -221,22 +214,15 @@
       function renderStudents() {
         var area = document.getElementById('students-area');
         var term = document.getElementById('filter-term').value;
-
         var list = allClassified;
         if (activeBucket !== 'all') list = currentBuckets[activeBucket] || [];
-
-        if (!list.length) {
-          area.innerHTML = '<div class="card iv-empty">📭 No students in this category</div>';
-          return;
-        }
+        if (!list.length) { area.innerHTML = '<div class="card iv-empty">📭 No students in this category</div>'; return; }
 
         area.innerHTML = list.map(function(entry) {
           var s = entry.student;
           var cls = entry.classification;
-          var initials = (s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0);
-          initials = initials.toUpperCase();
+          var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
           var avgDisplay = entry.avg !== null ? entry.avg.toFixed(1) + '%' : '—';
-
           return '<div class="intervention-card-detailed ' + cls.key + '">' +
             '<div class="iv-student-head">' +
               '<div class="student-avatar av-1">' + initials + '</div>' +
@@ -252,8 +238,7 @@
               '<div><strong>STs:</strong> ' + entry.stCount + '/2</div>' +
               '<div><strong>Days done:</strong> ' + entry.daysDone + '/40</div>' +
             '</div>' +
-            '<div class="iv-suggested"><strong>📋 Suggested Intervention:</strong>' + suggestedIntervention(entry, term) + '</div>' +
-          '</div>';
+            '<div class="iv-suggested"><strong>📋 Suggested Intervention:</strong>' + suggestedIntervention(entry, term) + '</div></div>';
         }).join('');
       }
 
@@ -261,7 +246,6 @@
         var cls = entry.classification.key;
         var termLabel = term.replace('term', 'Term ');
         var actions = [];
-
         if (cls === 'enrichment') {
           actions.push('Offer advanced enrichment tasks — extended performance tasks, deeper research, or peer tutoring roles.');
           actions.push('Encourage participation in science fairs, quiz bees, or olympiad-style challenges.');
@@ -282,11 +266,9 @@
           actions.push('Re-administer prerequisite assessments after intervention to measure progress.');
           actions.push('Consider referral to guidance office if non-academic issues are suspected.');
         }
-
         if (entry.quizCount < 3) actions.push('Attempt ' + (3 - entry.quizCount) + ' more quiz(zes) for ' + termLabel + '.');
         if (entry.stCount < 2) actions.push('Attempt ' + (2 - entry.stCount) + ' more Summative Test(s) for ' + termLabel + '.');
         if (entry.daysDone < 20) actions.push('Complete ' + (20 - entry.daysDone) + ' more lesson days — student is behind pace.');
-
         return '<ul>' + actions.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul>';
       }
 
