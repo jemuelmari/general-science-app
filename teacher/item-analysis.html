@@ -4,33 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=9" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=9" />
   <style>
-    .ia-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
-    .ia-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
-    .ia-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px; }
-    .ia-summary-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid #1976d2; }
-    .ia-summary-card .val { font-size: 1.8rem; font-weight: 800; line-height: 1; color: #1a1a1a; letter-spacing: -0.5px; }
-    .ia-summary-card .lbl { font-size: 0.72rem; font-weight: 700; color: #5f6368; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 6px; }
-    .ia-summary-card.green { border-left-color: #2e7d32; }
-    .ia-summary-card.amber { border-left-color: #ed6c02; }
-    .ia-summary-card.red { border-left-color: #c62828; }
-    .item-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: #fff; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid #dadce0; transition: all 0.15s; }
-    .item-row:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-    .item-row.mastered { border-left-color: #2e7d32; }
-    .item-row.moving { border-left-color: #ed6c02; }
-    .item-row.difficult { border-left-color: #c62828; }
-    .item-num { font-family: 'Consolas', monospace; font-weight: 800; font-size: 1rem; color: #0d47a1; min-width: 44px; text-align: center; background: #e3f2fd; padding: 8px; border-radius: 8px; }
-    .item-body { flex: 1; min-width: 0; }
-    .item-text { font-size: 0.9rem; color: #37474f; line-height: 1.4; margin-bottom: 8px; }
-    .item-bar-wrap { height: 8px; background: #eceff1; border-radius: 999px; overflow: hidden; }
-    .item-bar-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
-    .item-pct { font-weight: 800; font-size: 1.05rem; min-width: 60px; text-align: right; font-variant-numeric: tabular-nums; }
-    .choice-dist { display: flex; gap: 8px; margin-top: 8px; font-size: 0.75rem; flex-wrap: wrap; }
-    .choice-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: #f5f7fa; border-radius: 6px; color: #37474f; font-family: 'Consolas', monospace; }
-    .choice-chip.correct { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
-    .ia-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    .ia-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; margin-bottom:24px; }
+    .ia-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
+    .ia-summary-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:14px; margin-bottom:24px; }
+    .ia-summary-card { background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-left:4px solid #1976d2; }
+    .ia-summary-card .val { font-size:1.8rem; font-weight:800; line-height:1; color:#1a1a1a; letter-spacing:-0.5px; }
+    .ia-summary-card .lbl { font-size:0.72rem; font-weight:700; color:#5f6368; text-transform:uppercase; letter-spacing:0.4px; margin-top:6px; }
+    .ia-summary-card.green { border-left-color:#2e7d32; }
+    .ia-summary-card.amber { border-left-color:#ed6c02; }
+    .ia-summary-card.red   { border-left-color:#c62828; }
+    .ia-view-toggle { display:inline-flex; background:#f5f7fa; border-radius:10px; padding:4px; margin-bottom:16px; }
+    .ia-view-toggle button { padding:8px 16px; background:none; border:none; border-radius:8px; font-family:inherit; font-size:0.85rem; font-weight:600; color:#5f6368; cursor:pointer; transition:all 0.15s; }
+    .ia-view-toggle button.active { background:#fff; color:#0d47a1; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .item-row { display:flex; align-items:flex-start; gap:14px; padding:14px 18px; background:#fff; border-radius:10px; margin-bottom:8px; border-left:4px solid #dadce0; transition:all 0.15s; }
+    .item-row:hover { box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+    .item-row.mastered  { border-left-color:#2e7d32; }
+    .item-row.moving    { border-left-color:#ed6c02; }
+    .item-row.difficult { border-left-color:#c62828; }
+    .item-num { font-family:'Consolas', monospace; font-weight:800; font-size:1rem; color:#0d47a1; min-width:44px; text-align:center; background:#e3f2fd; padding:8px; border-radius:8px; }
+    .item-body { flex:1; min-width:0; }
+    .item-text { font-size:0.9rem; color:#37474f; line-height:1.4; margin-bottom:8px; }
+    .item-comp { font-size:0.72rem; color:#5f6368; background:#f5f7fa; display:inline-block; padding:2px 8px; border-radius:4px; margin-bottom:8px; font-family:'Consolas', monospace; }
+    .item-comp.unknown { background:#fce4ec; color:#ad1457; }
+    .item-bar-wrap { height:8px; background:#eceff1; border-radius:999px; overflow:hidden; }
+    .item-bar-fill { height:100%; border-radius:999px; transition:width 0.4s ease; }
+    .item-pct { font-weight:800; font-size:1.05rem; min-width:60px; text-align:right; font-variant-numeric:tabular-nums; }
+    .choice-dist { display:flex; gap:8px; margin-top:8px; font-size:0.75rem; flex-wrap:wrap; }
+    .choice-chip { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; background:#f5f7fa; border-radius:6px; color:#37474f; font-family:'Consolas', monospace; }
+    .choice-chip.correct { background:#e8f5e9; color:#1b5e20; font-weight:700; }
+    .item-bloom { font-size:0.68rem; padding:2px 8px; border-radius:999px; background:#f3e5f5; color:#6a1b9a; font-weight:700; letter-spacing:0.3px; }
+    .ia-empty { text-align:center; padding:48px 24px; color:#90a4ae; }
+    .comp-group { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:14px; overflow:hidden; }
+    .comp-group-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#f5f7fa; border-left:5px solid #0d47a1; gap:12px; flex-wrap:wrap; }
+    .comp-group-header .info { flex:1; min-width:220px; }
+    .comp-group-header .code { font-family:'Consolas', monospace; font-size:0.75rem; color:#0d47a1; font-weight:700; margin-bottom:4px; }
+    .comp-group-header .desc { font-size:0.85rem; color:#37474f; line-height:1.4; }
+    .comp-group-header .stat { text-align:right; }
+    .comp-group-header .stat .val { font-size:1.5rem; font-weight:800; line-height:1; }
+    .comp-group-header .stat .lbl { font-size:0.68rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.4px; margin-top:3px; }
+    .comp-group-body { padding:12px 14px; }
   </style>
 </head>
 <body>
@@ -39,11 +54,12 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Item Analysis</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="tos-generator.html" style="color:#ffd54f;border-color:#ffd54f;">📐 TOS</a>
         <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
@@ -54,8 +70,8 @@
     <div class="teacher-hero" style="padding:24px;">
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
-          <h1 style="font-size:1.4rem;">Per-Item Analysis</h1>
-          <p>Identify most learned and least learned items. Focus remediation where it matters.</p>
+          <h1 style="font-size:1.4rem;">Per-Item Analysis with Competency Tracking</h1>
+          <p>Identify most learned and least learned competencies. Auto-generates intervention plans per mastery level.</p>
         </div>
       </div>
     </div>
@@ -108,12 +124,13 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=8"></script>
-  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../config.js?v=9"></script>
+  <script src="../assets/js/app.js?v=9"></script>
   <script src="../assets/js/version-sync.js?v=1"></script>
-  <script src="../assets/js/store.js?v=8"></script>
-  <script src="../assets/js/ui-helpers.js?v=8"></script>
-  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/store.js?v=9"></script>
+  <script src="../assets/js/ui-helpers.js?v=9"></script>
+  <script src="../assets/js/mastery-scales.js?v=1"></script>
+  <script src="../assets/js/teacher-auth.js?v=9"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -128,11 +145,11 @@
         st1: 'st', st2: 'st', te: 'te'
       };
 
+      var viewMode = 'item'; // 'item' or 'competency'
+      var lastResults = null;
+
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
 
         document.getElementById('results-area').innerHTML =
           '<div class="card ia-empty"><div style="font-size:2.5rem;margin-bottom:12px;">🔬</div>' +
@@ -145,6 +162,9 @@
           '<div class="card ia-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
+      /* ============================================================
+         RUN ANALYSIS
+         ============================================================ */
       function runAnalysis() {
         var term = document.getElementById('filter-term').value;
         var assessment = document.getElementById('filter-assessment').value;
@@ -170,7 +190,9 @@
 
             students.forEach(function(s) {
               var scores = Store.getScores(s.lrn);
-              var record = type === 'te' ? (scores[term] && scores[term].te) : (scores[term] && scores[term][type] && scores[term][type][assessment]);
+              var record = type === 'te'
+                ? (scores[term] && scores[term].te)
+                : (scores[term] && scores[term][type] && scores[term][type][assessment]);
               if (record && record.itemResults) studentResults.push({ student: s, record: record });
             });
 
@@ -192,83 +214,230 @@
                 }
               });
               return {
-                index: i, text: q.text, options: q.options || [], correct: q.correct,
-                correctCount: correctCount, totalCount: totalCount,
+                index: i,
+                text: q.text,
+                options: q.options || [],
+                correct: q.correct,
+                competency: q.competency || 'UNKNOWN',
+                bloomLevel: q.bloomLevel || '—',
+                correctCount: correctCount,
+                totalCount: totalCount,
                 pct: totalCount ? Math.round((correctCount / totalCount) * 100) : 0,
                 choiceCounts: choiceCounts
               };
             });
 
-            renderResults(items, studentResults, term, assessment, sectionFilter);
+            lastResults = {
+              term: term,
+              assessment: assessment,
+              sectionFilter: sectionFilter,
+              items: items,
+              studentResults: studentResults,
+              titles: ASSESSMENT_TITLES[assessment]
+            };
+
+            render();
           })
           .catch(function(err) {
             area.innerHTML = '<div class="card ia-empty">⚠️ ' + err.message + '</div>';
           });
       }
 
-      function renderResults(items, studentResults, term, assessment, sectionFilter) {
+      /* ============================================================
+         RENDER
+         ============================================================ */
+      function render() {
+        if (!lastResults) return;
         var area = document.getElementById('results-area');
-        var totalAttempts = studentResults.length;
+        var items = lastResults.items;
+
+        // Overall stats
+        var totalAttempts = lastResults.studentResults.length;
         var overallCorrect = items.reduce(function(a, i) { return a + i.correctCount; }, 0);
         var overallTotal = items.reduce(function(a, i) { return a + i.totalCount; }, 0);
-        var overallMPS = overallTotal ? (overallCorrect / overallTotal) * 100 : 0;
+        var overallMPS = overallTotal ? (overallCorrect / overallTotal) : 0;
+        var overallLevel = MasteryScales.getLevel(overallMPS);
 
-        var sortedAsc = items.slice().sort(function(a, b) { return a.pct - b.pct; });
-        var sortedDesc = items.slice().sort(function(a, b) { return b.pct - a.pct; });
-        var mostLearned = sortedDesc.slice(0, 5);
-        var leastLearned = sortedAsc.slice(0, 5);
-        var title = ASSESSMENT_TITLES[assessment];
-        var sectionLabel = sectionFilter || 'All Sections';
+        // Competency groups
+        var byComp = {};
+        items.forEach(function(it) {
+          if (!byComp[it.competency]) byComp[it.competency] = [];
+          byComp[it.competency].push(it);
+        });
 
-        area.innerHTML =
+        var compStats = Object.keys(byComp).map(function(code) {
+          var list = byComp[code];
+          var correct = list.reduce(function(a, i) { return a + i.correctCount; }, 0);
+          var total = list.reduce(function(a, i) { return a + i.totalCount; }, 0);
+          var mps = total ? correct / total : 0;
+          return {
+            code: code,
+            items: list,
+            correct: correct,
+            total: total,
+            mps: mps,
+            level: MasteryScales.getLevel(mps)
+          };
+        });
+
+        // Sort by MPS
+        var sortedDesc = compStats.slice().sort(function(a, b) { return b.mps - a.mps; });
+        var sortedAsc = compStats.slice().sort(function(a, b) { return a.mps - b.mps; });
+        var most = sortedDesc.slice(0, 5);
+        var least = sortedAsc.slice(0, 5);
+
+        // Distribution summary
+        var dist = MasteryScales.summarize(compStats.map(function(c) { return c.mps; }));
+
+        var html =
           '<div class="ia-summary-grid">' +
             '<div class="ia-summary-card"><div class="val">' + totalAttempts + '</div><div class="lbl">Attempts</div></div>' +
             '<div class="ia-summary-card"><div class="val">' + items.length + '</div><div class="lbl">Items</div></div>' +
-            '<div class="ia-summary-card ' + (overallMPS >= 75 ? 'green' : overallMPS >= 50 ? 'amber' : 'red') + '"><div class="val">' + overallMPS.toFixed(1) + '%</div><div class="lbl">Class MPS</div></div>' +
-            '<div class="ia-summary-card green"><div class="val">' + (mostLearned[0] ? mostLearned[0].pct : '—') + '%</div><div class="lbl">Most Learned</div></div>' +
-            '<div class="ia-summary-card red"><div class="val">' + (leastLearned[0] ? leastLearned[0].pct : '—') + '%</div><div class="lbl">Least Learned</div></div>' +
+            '<div class="ia-summary-card"><div class="val">' + compStats.length + '</div><div class="lbl">Competencies</div></div>' +
+            '<div class="ia-summary-card ' + (overallMPS >= 0.75 ? 'green' : overallMPS >= 0.5 ? 'amber' : 'red') + '">' +
+              '<div class="val">' + (overallMPS * 100).toFixed(1) + '%</div><div class="lbl">Class MPS</div>' +
+              '<div style="margin-top:6px;font-size:0.7rem;color:' + overallLevel.color + ';font-weight:700;">' + overallLevel.label + '</div>' +
+            '</div>' +
           '</div>' +
+
+          // Mastery distribution
+          '<div class="card" style="margin-bottom:20px;">' +
+            '<div class="card-header"><span class="card-title">📊 Competency Mastery Distribution</span></div>' +
+            renderDistributionRow('Exceeds Standard',   dist.ES, compStats.length, '#2e7d32') +
+            renderDistributionRow('Meets Standard',     dist.MS, compStats.length, '#0d47a1') +
+            renderDistributionRow('Approaching Standard', dist.AS, compStats.length, '#ed6c02') +
+            renderDistributionRow('Needs Intervention', dist.NI, compStats.length, '#c62828') +
+          '</div>' +
+
+          // Most / Least Learned
           '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:24px;">' +
             '<div class="card" style="border-left:4px solid #2e7d32;">' +
-              '<div class="card-header"><span class="card-title" style="color:#2e7d32;">✅ Top 5 Most Learned</span></div>' +
-              mostLearned.map(function(it) {
-                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;"><span style="font-size:0.82rem;color:#37474f;flex:1;"><strong>Q' + (it.index + 1) + '.</strong> ' + truncate(it.text, 80) + '</span><span style="font-weight:800;color:#2e7d32;min-width:50px;text-align:right;">' + it.pct + '%</span></div>';
-              }).join('') +
+              '<div class="card-header"><span class="card-title" style="color:#2e7d32;">✅ Top 5 Most Learned Competencies</span></div>' +
+              (most.length ? most.map(function(c) {
+                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;">' +
+                  '<span style="font-size:0.82rem;color:#37474f;flex:1;">' +
+                    '<span style="font-family:Consolas,monospace;font-size:0.7rem;color:#0d47a1;">' + c.code + '</span><br>' +
+                    (c.items[0] ? truncate(c.items[0].text, 90) : '—') +
+                  '</span>' +
+                  '<span style="font-weight:800;color:#2e7d32;min-width:50px;text-align:right;">' + (c.mps * 100).toFixed(1) + '%</span>' +
+                '</div>';
+              }).join('') : '<p class="text-muted text-small">No data.</p>') +
             '</div>' +
             '<div class="card" style="border-left:4px solid #c62828;">' +
-              '<div class="card-header"><span class="card-title" style="color:#c62828;">⚠️ Top 5 Least Learned</span></div>' +
-              leastLearned.map(function(it) {
-                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;"><span style="font-size:0.82rem;color:#37474f;flex:1;"><strong>Q' + (it.index + 1) + '.</strong> ' + truncate(it.text, 80) + '</span><span style="font-weight:800;color:#c62828;min-width:50px;text-align:right;">' + it.pct + '%</span></div>';
-              }).join('') +
+              '<div class="card-header"><span class="card-title" style="color:#c62828;">⚠️ Top 5 Least Learned Competencies</span></div>' +
+              (least.length ? least.map(function(c) {
+                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;">' +
+                  '<span style="font-size:0.82rem;color:#37474f;flex:1;">' +
+                    '<span style="font-family:Consolas,monospace;font-size:0.7rem;color:#0d47a1;">' + c.code + '</span><br>' +
+                    (c.items[0] ? truncate(c.items[0].text, 90) : '—') +
+                  '</span>' +
+                  '<span style="font-weight:800;color:#c62828;min-width:50px;text-align:right;">' + (c.mps * 100).toFixed(1) + '%</span>' +
+                '</div>';
+              }).join('') : '<p class="text-muted text-small">No data.</p>') +
             '</div>' +
           '</div>' +
-          '<div class="section-header"><h2 class="section-title">All Items · ' + title + ' · ' + sectionLabel + '</h2></div>' +
-          '<div id="item-list"></div>';
 
-        var list = document.getElementById('item-list');
+          // View toggle
+          '<div class="section-header"><h2 class="section-title">📋 Detailed Analysis</h2></div>' +
+          '<div class="ia-view-toggle">' +
+            '<button data-view="item" class="' + (viewMode === 'item' ? 'active' : '') + '">Per Item</button>' +
+            '<button data-view="competency" class="' + (viewMode === 'competency' ? 'active' : '') + '">Per Competency</button>' +
+          '</div>' +
+          '<div id="detail-list"></div>';
+
+        area.innerHTML = html;
+
+        // Attach toggle
+        area.querySelectorAll('.ia-view-toggle button').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            viewMode = btn.dataset.view;
+            render();
+          });
+        });
+
+        // Render detail list
+        var detail = document.getElementById('detail-list');
+        if (viewMode === 'item') renderItemList(detail, items);
+        else renderCompetencyList(detail, compStats);
+      }
+
+      /* ============================================================
+         ITEM LIST
+         ============================================================ */
+      function renderItemList(container, items) {
         items.forEach(function(it) {
-          var level = it.pct >= 80 ? 'mastered' : it.pct >= 50 ? 'moving' : 'difficult';
-          var color = it.pct >= 80 ? '#2e7d32' : it.pct >= 50 ? '#ed6c02' : '#c62828';
+          var level = MasteryScales.getLevel(it.pct / 100);
           var choiceChips = it.options.map(function(opt, idx) {
             var count = it.choiceCounts[opt] || 0;
             var isCorrect = opt === it.correct;
-            return '<span class="choice-chip ' + (isCorrect ? 'correct' : '') + '">' + String.fromCharCode(65 + idx) + (isCorrect ? ' ✓' : '') + ': ' + count + '</span>';
+            return '<span class="choice-chip ' + (isCorrect ? 'correct' : '') + '">' +
+              String.fromCharCode(65 + idx) + (isCorrect ? ' ✓' : '') + ': ' + count +
+            '</span>';
           }).join('');
 
           var row = document.createElement('div');
-          row.className = 'item-row ' + level;
+          row.className = 'item-row ' + (it.pct >= 80 ? 'mastered' : it.pct >= 50 ? 'moving' : 'difficult');
           row.innerHTML =
             '<div class="item-num">' + (it.index + 1) + '</div>' +
             '<div class="item-body">' +
-              '<div class="item-text">' + truncate(it.text, 140) + '</div>' +
-              '<div class="item-bar-wrap"><div class="item-bar-fill" style="width:' + it.pct + '%;background:' + color + ';"></div></div>' +
+              '<div class="item-comp ' + (it.competency === 'UNKNOWN' ? 'unknown' : '') + '">' +
+                '📎 ' + it.competency +
+              '</div> ' +
+              '<span class="item-bloom">' + it.bloomLevel + '</span>' +
+              '<div class="item-text" style="margin-top:8px;">' + truncate(it.text, 140) + '</div>' +
+              '<div class="item-bar-wrap"><div class="item-bar-fill" style="width:' + it.pct + '%;background:' + level.color + ';"></div></div>' +
               '<div class="choice-dist">' + choiceChips + '</div>' +
             '</div>' +
-            '<div class="item-pct" style="color:' + color + ';">' + it.pct + '%</div>';
-          list.appendChild(row);
+            '<div class="item-pct" style="color:' + level.color + ';">' + it.pct + '%</div>';
+          container.appendChild(row);
         });
       }
 
+      /* ============================================================
+         COMPETENCY LIST
+         ============================================================ */
+      function renderCompetencyList(container, compStats) {
+        compStats.slice().sort(function(a, b) { return a.mps - b.mps; }).forEach(function(c) {
+          var group = document.createElement('div');
+          group.className = 'comp-group';
+          group.innerHTML =
+            '<div class="comp-group-header">' +
+              '<div class="info">' +
+                '<div class="code">' + c.code + '</div>' +
+                '<div class="desc">' + (c.items[0] ? truncate(c.items[0].text, 160) : 'No items') + '</div>' +
+              '</div>' +
+              '<div class="stat">' +
+                '<div class="val" style="color:' + c.level.color + ';">' + (c.mps * 100).toFixed(1) + '%</div>' +
+                '<div class="lbl">' + c.level.label + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="comp-group-body">' +
+              '<div style="font-size:0.82rem;color:#37474f;margin-bottom:8px;">' +
+                '<strong>Items in this competency:</strong> ' + c.items.map(function(i) { return (i.index + 1); }).join(', ') +
+              '</div>' +
+              '<div style="background:' + c.level.colorLight + ';padding:10px 14px;border-radius:8px;border-left:3px solid ' + c.level.color + ';font-size:0.82rem;color:' + c.level.color + ';">' +
+                '<strong>📋 Suggested Intervention:</strong> ' + c.level.action +
+              '</div>' +
+            '</div>';
+          container.appendChild(group);
+        });
+      }
+
+      /* ============================================================
+         DISTRIBUTION ROW HELPER
+         ============================================================ */
+      function renderDistributionRow(label, count, total, color) {
+        var pct = total ? Math.round((count / total) * 100) : 0;
+        return '<div class="distribution-row">' +
+          '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + label + '</span>' +
+          '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pct + '%;background:' + color + ';">' + (count > 0 ? count : '') + '</div></div>' +
+          '<span class="distribution-count">' + count + ' of ' + total + '</span>' +
+        '</div>';
+      }
+
+      /* ============================================================
+         HELPERS
+         ============================================================ */
       function truncate(str, n) {
         if (!str) return '';
         return str.length > n ? str.slice(0, n) + '…' : str;
