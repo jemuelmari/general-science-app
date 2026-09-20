@@ -1,3 +1,4 @@
+[FILE: student/dashboard.html]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Student Dashboard</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.1</span>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <a href="profile.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">👤 My Profile</a>
@@ -70,7 +71,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.1</span></p>
   </footer>
 
   <script src="../config.js?v=3"></script>
@@ -335,6 +336,8 @@
         e.target.value = '';
       });
 
+      // ⚠️ FIX (X9): restore `gsa_logout_pending` flag so the
+      // "keep or delete data?" prompt shows on the next login.
       APP.$('#btn-logout').addEventListener('click', () => {
         const overlay = document.createElement('div');
         overlay.style.cssText = `
@@ -351,6 +354,13 @@
         document.body.appendChild(overlay);
 
         try {
+          // ⚠️ FIX (X9): set pending-logout flag BEFORE clearing session.
+          // `auth.js:checkPendingLogout()` will pick this up on next login.
+          sessionStorage.setItem('gsa_logout_pending', JSON.stringify({
+            lrn: user.lrn,
+            at: Date.now()
+          }));
+
           if (window.Store && typeof Store.clearSession === 'function') {
             Store.clearSession();
           } else {
