@@ -1,4 +1,3 @@
-[FILE: assets/js/classrecord.js]
 /* ============================================================
    classrecord.js — Gradebook logic
    Version: 1.0.1
