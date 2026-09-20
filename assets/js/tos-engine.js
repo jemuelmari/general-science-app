@@ -1,32 +1,24 @@
 /* ============================================================
    tos-engine.js — Table of Specification computation engine
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.1.0 (Phase 2.5 / X43 fix):
-     - Added getRepoBase() helper that computes the repo root
-       path dynamically from the config.js script tag URL.
+   Changelog v1.2.0 (Phase 2.6 / X45 fix):
      - loadCompetencies() and loadQuestionBank() now use
-       ${base} prefix so paths resolve correctly from ANY page
-       depth (root, /teacher/, /classrecord/, /student/term1/week1/).
-     - Fetch error messages now include the fully-resolved URL
-       for easier debugging.
-     - Added fallback path chain when detection fails.
+       res.text() + JSON.parse() instead of res.json().
+       This gives explicit control over parse errors and
+       avoids browser-specific quirks with res.json().
+     - Candidates are DEDUPLICATED before iteration so the
+       same path is never tried twice.
+     - Static ?v=1.2.0 cache-bust param (was ?ts=<timestamp>)
+       which broke GitHub Pages CDN caching.
+     - Extensive console logging for debugging.
+     - Error messages include a snippet of the response body
+       when JSON parsing fails.
 
-   Responsibilities:
-     1. Load data/competencies.json
-     2. Determine covered competencies per assessment
-        - ST1  → weeks 1-4
-        - ST2  → weeks 5-8
-        - TE   → Top 5 Least Learned (ST1+ST2) + Weeks 9-10
-     3. Compute hours, weight %, item count per competency
-     4. Distribute items across Bloom's levels (30% LOTS / 70% HOTS)
-     5. Assign item numbers sequentially
-     6. Read the question bank (Q1–3, ST1–2, TE) for the answer key
-     7. Generate the "Most & Least Learned Competencies" table
-
-   All outputs are plain JS objects; the page (tos-generator.html)
-   handles rendering.
+   Changelog v1.1.0 (Phase 2.5 / X43 fix):
+     - Added getRepoBase() helper.
+     - Fallback path chain for robustness.
    ============================================================ */
 
 const TOSEngine = (() => {
@@ -39,63 +31,124 @@ const TOSEngine = (() => {
   const LOTS_RATIO = 0.30;
   const HOTS_RATIO = 0.70;
 
+  const CACHE_BUST = '?v=1.2.0';   // static — CDN-friendly
+
   let _compData = null;
-  let _repoBase = null;  // cached repo-base path
+  let _repoBase = null;
 
   /* ============================================================
      REPO BASE DETECTION
-     ------------------------------------------------------------
-     ⚠️ FIX (X43): Computes the repo root path dynamically.
-
-     Strategy:
-       1. Look for a <script src="...config.js..."> tag. config.js
-          lives at the repo root, so stripping "config.js" gives
-          the base path.
-       2. If config.js not found, try <script src="...app.js...">.
-       3. If neither works, fall back to a heuristic: count path
-          segments and prepend "../" the appropriate number of times.
-   ============================================================ */
+     ============================================================ */
   function getRepoBase() {
     if (_repoBase !== null) return _repoBase;
 
-    // Strategy 1: find script tag containing "config.js"
     const scripts = document.querySelectorAll('script[src]');
     for (let i = 0; i < scripts.length; i++) {
       const src = scripts[i].getAttribute('src') || '';
       if (src.indexOf('config.js') !== -1) {
-        // Strip "config.js" and any query string
         _repoBase = src.replace(/config\.js(\?.*)?$/, '');
+        console.log('[TOSEngine] Repo base detected from config.js:', _repoBase);
         return _repoBase;
       }
     }
 
-    // Strategy 2: find script tag containing "app.js"
     for (let i = 0; i < scripts.length; i++) {
       const src = scripts[i].getAttribute('src') || '';
       const m = src.match(/^(.*?)assets\/js\/app\.js/);
       if (m) {
         _repoBase = m[1];
+        console.log('[TOSEngine] Repo base detected from app.js:', _repoBase);
         return _repoBase;
       }
     }
 
-    // Strategy 3: heuristic — use depth of current pathname
-    // Assume pages live at most 3 levels deep from repo root
-    // (e.g., /student/term1/week1/index.html = 3 levels)
     const path = window.location.pathname;
     const repoMatch = path.match(/^(.*?\/general-science-app\/)/i);
     if (repoMatch) {
-      // Use absolute-ish relative base computed from current dir
       const depthMatch = path.replace(repoMatch[1], '').split('/');
       const depth = Math.max(0, depthMatch.length - 1);
       _repoBase = '../'.repeat(depth) || './';
+      console.log('[TOSEngine] Repo base detected from path heuristic:', _repoBase);
       return _repoBase;
     }
 
-    // Final fallback — assume one level up (works from /teacher/*.html)
     console.warn('[TOSEngine] Could not detect repo base — using ../ fallback');
     _repoBase = '../';
     return _repoBase;
+  }
+
+  /* ============================================================
+     SAFE FETCH + PARSE
+     ------------------------------------------------------------
+     ⚠️ X45 FIX: Uses res.text() + JSON.parse() with detailed
+     error reporting. Never relies on res.json()'s internals.
+     ============================================================ */
+  async function fetchJSONFromCandidates(candidates, label) {
+    // Deduplicate candidates (preserve order)
+    const uniqueCandidates = [];
+    const seen = new Set();
+    for (let i = 0; i < candidates.length; i++) {
+      const c = candidates[i];
+      if (!seen.has(c)) {
+        seen.add(c);
+        uniqueCandidates.push(c);
+      }
+    }
+
+    let lastErr = null;
+
+    for (let i = 0; i < uniqueCandidates.length; i++) {
+      const path = uniqueCandidates[i];
+      const url = path + CACHE_BUST;
+
+      console.log('[TOSEngine] Trying ' + label + ' at: ' + url);
+
+      try {
+        const res = await fetch(url);
+        console.log('[TOSEngine]   → Status ' + res.status +
+          ' (Content-Type: ' + (res.headers.get('content-type') || 'unknown') + ')');
+
+        if (!res.ok) {
+          lastErr = new Error('HTTP ' + res.status + ' for ' + path);
+          continue;
+        }
+
+        const text = await res.text();
+        console.log('[TOSEngine]   → Received ' + text.length + ' chars');
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (parseErr) {
+          const preview = text.slice(0, 200).replace(/\s+/g, ' ');
+          console.error('[TOSEngine]   → JSON parse FAILED. First 200 chars: ' + preview);
+          lastErr = new Error('Invalid JSON from ' + path + ': ' + parseErr.message);
+          // ⚠️ Don't continue — if the fetch succeeded but parse failed,
+          // there's no point trying lower-priority paths.
+          throw lastErr;
+        }
+
+        console.log('[TOSEngine]   → ✅ Successfully loaded ' + label + ' from: ' + path);
+        return data;
+
+      } catch (e) {
+        // Network error or thrown parse error
+        if (!lastErr || lastErr.message !== e.message) {
+          lastErr = e;
+        }
+        // If this was a parse error (thrown), break out immediately
+        if (e.message && e.message.indexOf('Invalid JSON') === 0) {
+          throw e;
+        }
+        // Otherwise continue to next candidate
+      }
+    }
+
+    const triedList = uniqueCandidates.join(', ');
+    const msg = 'Failed to load ' + label + '. Tried: ' + triedList +
+                (lastErr ? ' (last error: ' + lastErr.message + ')' : '');
+    console.error('[TOSEngine]', msg);
+    throw new Error(msg);
   }
 
   /* ============================================================
@@ -107,71 +160,25 @@ const TOSEngine = (() => {
     const base = getRepoBase();
     const candidates = [
       base + 'data/competencies.json',
-      // Fallback candidates in case base detection is off
+      'data/competencies.json',
       '../data/competencies.json',
-      '../../data/competencies.json',
-      './data/competencies.json',
-      'data/competencies.json'
+      '/general-science-app/data/competencies.json'
     ];
 
-    let lastErr = null;
-    for (let i = 0; i < candidates.length; i++) {
-      const url = candidates[i] + '?ts=' + Date.now();
-      try {
-        const res = await fetch(url);
-        if (!res.ok) {
-          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
-          continue;
-        }
-        _compData = await res.json();
-        console.log('[TOSEngine] Loaded competencies from: ' + candidates[i]);
-        return _compData;
-      } catch (e) {
-        lastErr = e;
-        // Continue to next candidate
-      }
-    }
-
-    // All failed
-    const triedList = candidates.join(', ');
-    const msg = 'Failed to load competencies.json. Tried: ' + triedList +
-                (lastErr ? ' (last error: ' + lastErr.message + ')' : '');
-    console.error('[TOSEngine]', msg);
-    throw new Error(msg);
+    _compData = await fetchJSONFromCandidates(candidates, 'competencies.json');
+    return _compData;
   }
 
   async function loadQuestionBank(term, assessment) {
-    // assessment is one of: quiz1, quiz2, quiz3, st1, st2, te
     const base = getRepoBase();
     const candidates = [
       base + 'student/' + term + '/assessments/' + assessment + '.json',
+      'student/' + term + '/assessments/' + assessment + '.json',
       '../student/' + term + '/assessments/' + assessment + '.json',
-      '../../student/' + term + '/assessments/' + assessment + '.json',
-      './student/' + term + '/assessments/' + assessment + '.json'
+      '/general-science-app/student/' + term + '/assessments/' + assessment + '.json'
     ];
 
-    let lastErr = null;
-    for (let i = 0; i < candidates.length; i++) {
-      const url = candidates[i] + '?ts=' + Date.now();
-      try {
-        const res = await fetch(url);
-        if (!res.ok) {
-          lastErr = new Error('HTTP ' + res.status + ' for ' + candidates[i]);
-          continue;
-        }
-        const data = await res.json();
-        console.log('[TOSEngine] Loaded ' + assessment + ' from: ' + candidates[i]);
-        return data;
-      } catch (e) {
-        lastErr = e;
-      }
-    }
-
-    const triedList = candidates.join(', ');
-    const msg = 'Failed to load ' + assessment + '.json. Tried: ' + triedList +
-                (lastErr ? ' (last error: ' + lastErr.message + ')' : '');
-    console.error('[TOSEngine]', msg);
-    throw new Error(msg);
+    return await fetchJSONFromCandidates(candidates, assessment + '.json');
   }
 
   /* ============================================================
@@ -189,11 +196,6 @@ const TOSEngine = (() => {
     );
   }
 
-  /**
-   * Determine TE competencies:
-   *   = Top 5 Least Learned (from ST1+ST2 combined)
-   *   + Weeks 9-10 competencies not already in Top 5
-   */
   function getCompetenciesForTE(termData, stRanking) {
     const weeks910 = termData.competencies.filter((c) =>
       c.weeks.some((w) => w >= 9 && w <= 10)
@@ -301,7 +303,6 @@ const TOSEngine = (() => {
       const distribution = {};
       BLOOMS.forEach((b) => { distribution[b] = 0; });
 
-      // LOTS spread
       const lotsBase = allowedLOTS.length > 0 ? Math.floor(lotsTarget / allowedLOTS.length) : 0;
       let lotsRemaining = lotsTarget - (lotsBase * allowedLOTS.length);
       allowedLOTS.forEach((lvl) => { distribution[lvl] = lotsBase; });
@@ -309,7 +310,6 @@ const TOSEngine = (() => {
         distribution[allowedLOTS[i % allowedLOTS.length]]++;
       }
 
-      // HOTS spread
       const hotsBase = allowedHOTS.length > 0 ? Math.floor(hotsTarget / allowedHOTS.length) : 0;
       let hotsRemaining = hotsTarget - (hotsBase * allowedHOTS.length);
       allowedHOTS.forEach((lvl) => { distribution[lvl] = hotsBase; });
@@ -426,7 +426,6 @@ const TOSEngine = (() => {
       if (!record || !record.itemResults) return;
 
       record.itemResults.forEach((r) => {
-        // ⚠️ Prefer originalIndex when present (Phase 2 X39)
         const idx = (r.originalIndex != null) ? r.originalIndex : r.index;
         const code = (questions[idx] && questions[idx].competency) || 'UNKNOWN';
         if (!result[code]) result[code] = { correct: 0, total: 0, mps: 0 };
