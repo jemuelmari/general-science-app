@@ -1,7 +1,19 @@
 /* ============================================================
    teacher-auth.js — Teacher password authentication
-   Version: 1.4.0
+   Version: 1.5.0
    App: General Science
+   ------------------------------------------------------------
+   Changelog v1.5.0 (Phase 2 / X6 + X34 fix):
+     - REMOVED DEFAULT_HASH fallback. If CONFIG.TEACHER_PASSWORD_HASH
+       is missing or invalid, login FAILS CLOSED (no default password).
+     - Session schema unified: { authenticatedAt, lastActivity, token }.
+     - setSession() writes BOTH session + LAST_ACTIVITY_KEY so
+       isAuthenticated() has a consistent source of truth.
+     - logout() accepts optional skipConfirm for programmatic logout.
+
+   ⚠️ SECURITY NOTE: Password is client-side. Change it immediately
+   after deploy via CONFIG.TEACHER_PASSWORD_HASH. For real security,
+   move auth to the Apps Script backend.
    ============================================================ */
 
 const TeacherAuth = (() => {
@@ -12,10 +24,24 @@ const TeacherAuth = (() => {
   const LOCKOUT_KEY = 'gsa_teacher_lockout';
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
 
-  // SHA-256 hash of "teacher2026"
-  const DEFAULT_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
-
   let heartbeatInterval = null;
+
+  /**
+   * Read the teacher password hash from CONFIG.
+   * ⚠️ X6 FIX: No fallback. Return null if missing → login fails closed.
+   */
+  function _getStoredHash() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.TEACHER_PASSWORD_HASH) {
+      console.error('[TeacherAuth] CONFIG.TEACHER_PASSWORD_HASH is not set. Login is disabled.');
+      return null;
+    }
+    const hash = String(CONFIG.TEACHER_PASSWORD_HASH).trim();
+    if (hash.length !== 64) {
+      console.error('[TeacherAuth] TEACHER_PASSWORD_HASH must be 64 hex chars. Login is disabled.');
+      return null;
+    }
+    return hash;
+  }
 
   function init() {
     if (isAuthenticated()) {
@@ -42,10 +68,13 @@ const TeacherAuth = (() => {
     if (isLockedOut()) {
       throw new Error('Too many attempts. Account is temporarily locked.');
     }
+
+    const storedHash = _getStoredHash();
+    if (!storedHash) {
+      throw new Error('Teacher authentication is not configured. Contact the administrator.');
+    }
+
     const inputHash = await hash(password);
-    const storedHash = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_PASSWORD_HASH)
-      ? CONFIG.TEACHER_PASSWORD_HASH
-      : DEFAULT_HASH;
 
     if (inputHash === storedHash) {
       clearAttempts();
@@ -55,6 +84,7 @@ const TeacherAuth = (() => {
       trackActivity();
       return true;
     }
+
     incrementAttempts();
     const attempts = getAttempts();
     const maxAttempts = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_MAX_ATTEMPTS) || 3;
@@ -65,14 +95,19 @@ const TeacherAuth = (() => {
     return false;
   }
 
+  /**
+   * ⚠️ X34: Session schema now matches teacher-login.html.
+   * Writes BOTH session and LAST_ACTIVITY_KEY.
+   */
   function setSession() {
+    const now = Date.now();
     const session = {
-      authenticatedAt: Date.now(),
-      lastActivity: Date.now(),
-      token: Math.random().toString(36).slice(2) + Date.now().toString(36)
+      authenticatedAt: now,
+      lastActivity: now,
+      token: Math.random().toString(36).slice(2) + now.toString(36)
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-    sessionStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
+    sessionStorage.setItem(LAST_ACTIVITY_KEY, String(now));
   }
 
   function getSession() {
@@ -87,9 +122,11 @@ const TeacherAuth = (() => {
   function isAuthenticated() {
     const session = getSession();
     if (!session) return false;
-    const lastActivity = Number(sessionStorage.getItem(LAST_ACTIVITY_KEY) || session.lastActivity);
+    const lastActivity = Number(
+      sessionStorage.getItem(LAST_ACTIVITY_KEY) || session.lastActivity || 0
+    );
     const timeout = (typeof CONFIG !== 'undefined' && CONFIG.TEACHER_SESSION_TIMEOUT) || (30 * 60 * 1000);
-    if (Date.now() - lastActivity > timeout) {
+    if (!lastActivity || Date.now() - lastActivity > timeout) {
       clearSession();
       return false;
     }
@@ -130,9 +167,15 @@ const TeacherAuth = (() => {
     stopHeartbeat();
   }
 
-  function logout() {
-    if (!confirm('Log out of teacher access? You will need to enter the password again.')) {
-      return false;
+  /**
+   * Logout. By default prompts for confirmation.
+   * Pass skipConfirm=true for programmatic logout.
+   */
+  function logout(skipConfirm) {
+    if (!skipConfirm) {
+      if (!confirm('Log out of teacher access? You will need to enter the password again.')) {
+        return false;
+      }
     }
     clearSession();
     window.location.replace(loginUrl());
