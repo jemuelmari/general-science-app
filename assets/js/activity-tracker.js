@@ -1,8 +1,14 @@
 /* ============================================================
    activity-tracker.js — Track activity completion for teacher
-   Version: 1.0.0
+   Version: 1.0.1
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.0.1 (Phase 2 / X12 fix):
+     - getDayGateStatus() now reads the v2 gate keys
+       (gsa_gate_v2_*) written by activity-gate.js.
+     - Falls back to v1 keys (gsa_gate_v1_*) for students whose
+       data predates the v2 migration.
+
    Provides cross-term activity tracking utilities for the
    teacher dashboard & intervention reports.
    ============================================================ */
@@ -56,15 +62,28 @@ const ActivityTracker = (() => {
   }
 
   /* ---------- Get activity gate state for a specific day ---------- */
+  /**
+   * ⚠️ X12 FIX: activity-gate.js writes v2 keys. We check v2 first,
+   * then fall back to v1 for legacy data.
+   */
   function getDayGateStatus(lrn, term, week, day) {
-    const key = `gsa_gate_v1_${term}_w${week}_d${day}`;
+    const suffix = `${term}_w${week}_d${day}`;
+    const v2Key = `gsa_gate_v2_${suffix}`;
+    const v1Key = `gsa_gate_v1_${suffix}`;
+
+    // Try v2 first
     try {
-      const raw = sessionStorage.getItem(key);
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch (e) {
-      return null;
-    }
+      const raw = sessionStorage.getItem(v2Key);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore */ }
+
+    // Fallback to v1 for migration
+    try {
+      const raw = sessionStorage.getItem(v1Key);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore */ }
+
+    return null;
   }
 
   /* ---------- Class-wide activity heatmap ---------- */
@@ -95,7 +114,6 @@ const ActivityTracker = (() => {
       }
     });
 
-    // Compute percentages
     for (let w = 1; w <= WEEKS_PER_TERM; w++) {
       for (let d = 1; d <= DAYS_PER_WEEK; d++) {
         const cell = heatmap[w][d];
@@ -201,7 +219,6 @@ const ActivityTracker = (() => {
       te: null
     };
 
-    // Quizzes
     ['quiz1', 'quiz2', 'quiz3'].forEach((id) => {
       const s = t.quizzes?.[id];
       summary.quizzes.push({
@@ -215,7 +232,6 @@ const ActivityTracker = (() => {
       });
     });
 
-    // STs
     ['st1', 'st2'].forEach((id) => {
       const s = t.st?.[id];
       summary.sts.push({
@@ -229,7 +245,6 @@ const ActivityTracker = (() => {
       });
     });
 
-    // PTs
     ['pt1', 'pt2', 'pt3'].forEach((id) => {
       const s = t.pt?.[id];
       summary.pts.push({
@@ -242,7 +257,7 @@ const ActivityTracker = (() => {
       });
     });
 
-    // TE
+    // ⚠️ X2: TE is now a single object at scores[term].te (post-Phase 1)
     const te = t.te;
     summary.te = {
       score: te?.score ?? null,
