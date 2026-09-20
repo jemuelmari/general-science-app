@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOS Generator — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
+  <style>
+    .tos-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; padding:18px; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; }
+    .tos-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
+    .tos-tabs { display:flex; gap:4px; border-bottom:2px solid #eceff1; margin-bottom:24px; overflow-x:auto; }
+    .tos-tab { padding:12px 20px; background:none; border:none; border-bottom:3px solid transparent; font-family:inherit; font-size:0.9rem; font-weight:600; color:#5f6368; cursor:pointer; transition:all 0.15s; white-space:nowrap; margin-bottom:-2px; display:inline-flex; align-items:center; gap:8px; }
+    .tos-tab:hover { color:#0d47a1; background:#f5f7fa; }
+    .tos-tab.active { color:#0d47a1; border-bottom-color:#0d47a1; }
+    .tos-panel { display:none; }
+    .tos-panel.active { display:block; }
+    .tos-alert { padding:14px 18px; border-radius:10px; margin-bottom:20px; font-size:0.88rem; display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
+    .tos-alert.warn { background:#fff3e0; border-left:4px solid #ed6c02; color:#e65100; }
+    .tos-alert.success { background:#e8f5e9; border-left:4px solid #2e7d32; color:#1b5e20; }
+    .tos-doc { background:#fff; border-radius:14px; padding:28px 24px; box-shadow:0 2px 12px rgba(0,0,0,0.06); margin-bottom:24px; }
+    .tos-doc-header { text-align:center; font-family:'Times New Roman', serif; color:#1a1a1a; line-height:1.5; margin-bottom:20px; }
+    .tos-doc-header .country { font-size:0.85rem; }
+    .tos-doc-header .dept { font-size:1.05rem; font-weight:700; letter-spacing:0.5px; }
+    .tos-doc-header .region { font-size:0.85rem; }
+    .tos-doc-header .office { font-size:0.9rem; font-weight:600; }
+    .tos-doc-header .school { font-size:0.95rem; font-weight:700; text-transform:uppercase; }
+    .tos-doc-header .address { font-size:0.78rem; color:#555; }
+    .tos-doc-title { text-align:center; font-size:1.15rem; font-weight:700; margin:20px 0 16px; padding:10px 0; border-top:2px solid #1a1a1a; border-bottom:2px solid #1a1a1a; letter-spacing:1.5px; font-family:'Times New Roman', serif; }
+    .tos-doc-meta { display:grid; grid-template-columns:1fr 1fr; gap:6px 32px; font-family:'Times New Roman', serif; font-size:0.88rem; margin-bottom:20px; color:#1a1a1a; }
+    .tos-doc-meta > div { display:flex; gap:8px; }
+    .tos-doc-meta .lbl { font-weight:700; min-width:130px; }
+    .tos-doc-meta .val { flex:1; border-bottom:1px dotted #999; padding-bottom:2px; }
+    .tos-table-wrap { overflow-x:auto; margin-bottom:24px; }
+    .tos-table { width:100%; border-collapse:collapse; font-family:'Times New Roman', serif; font-size:0.78rem; min-width:1100px; }
+    .tos-table th, .tos-table td { border:1px solid #333; padding:6px 8px; vertical-align:middle; }
+    .tos-table thead th { background:#e3f2fd; text-align:center; font-weight:700; font-size:0.75rem; line-height:1.2; }
+    .tos-table .competency-cell { text-align:left; line-height:1.4; }
+    .tos-table .num { text-align:center; font-variant-numeric:tabular-nums; }
+    .tos-table .item-num { text-align:center; font-size:0.72rem; }
+    .tos-table tbody tr:hover { background:#fafbfc; }
+    .tos-table tfoot td { background:#f5f7fa; font-weight:700; text-align:center; }
+    .tos-answer-key { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px; font-family:'Consolas', monospace; font-size:0.85rem; margin-top:12px; }
+    .tos-answer-key .ak-item { padding:8px 12px; background:#f5f7fa; border-radius:8px; border-left:4px solid #0d47a1; }
+    .tos-answer-key .ak-item .num { font-weight:700; color:#0d47a1; margin-right:8px; }
+    .tos-answer-key .ak-item .ans { font-weight:700; color:#2e7d32; margin-right:8px; padding:2px 8px; background:#e8f5e9; border-radius:4px; }
+    .tos-answer-key .ak-item .bl { font-size:0.7rem; color:#5f6368; }
+    .mll-table { width:100%; border-collapse:collapse; font-family:'Times New Roman', serif; font-size:0.85rem; margin-bottom:16px; }
+    .mll-table th, .mll-table td { border:1px solid #333; padding:10px 12px; vertical-align:top; }
+    .mll-table thead th { background:#e3f2fd; text-align:center; font-weight:700; }
+    .mll-table .rank-cell { width:50px; text-align:center; font-weight:700; background:#f5f7fa; }
+    .mll-table .most-col { background:#f1f8f4; }
+    .mll-table .least-col { background:#fff7ed; }
+    .signatories { display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; margin-top:40px; font-family:'Times New Roman', serif; font-size:0.88rem; text-align:center; }
+    @media (max-width:780px) { .signatories { grid-template-columns:1fr; gap:24px; } }
+    .sig-block .sig-role { font-size:0.75rem; font-weight:700; text-transform:uppercase; color:#555; margin-bottom:6px; letter-spacing:0.5px; }
+    .sig-block .sig-line { border-bottom:1px solid #1a1a1a; margin-bottom:6px; padding-top:32px; }
+    .sig-block .sig-name { font-weight:700; text-transform:uppercase; letter-spacing:0.3px; min-height:1.3em; }
+    .sig-block .sig-position { font-size:0.8rem; color:#555; min-height:1.3em; }
+    .tos-actions { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+    .sig-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:9999; padding:20px; }
+    .sig-modal { background:#fff; border-radius:14px; padding:24px; max-width:520px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .sig-modal h3 { margin:0 0 6px; color:#0d47a1; font-size:1.15rem; }
+    .sig-modal p { margin:0 0 16px; color:#5f6368; font-size:0.85rem; }
+    .sig-modal-group { margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid #eee; }
+    .sig-modal-group:last-of-type { border-bottom:none; }
+    .sig-modal-group .row-label { font-size:0.75rem; font-weight:700; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+    .sig-modal-group .field { margin-bottom:10px; }
+    .sig-modal-group label { display:block; font-size:0.78rem; font-weight:600; color:#37474f; margin-bottom:4px; }
+    .sig-modal-group input { width:100%; padding:10px 12px; font-family:inherit; font-size:0.9rem; border:1.5px solid #cfd8dc; border-radius:8px; box-sizing:border-box; }
+    .sig-modal-group input:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.1); }
+    @media print {
+      .app-header, .app-footer, .tos-filters, .tos-tabs, .tos-actions, .no-print { display:none !important; }
+      body { background:#fff !important; }
+      main { padding:0 !important; }
+      .container { max-width:100% !important; padding:0 !important; }
+      .tos-doc { box-shadow:none !important; padding:0 !important; margin:0 !important; }
+      .tos-table { font-size:0.7rem; }
+      .tos-table th, .tos-table td { padding:4px 6px; }
+      .tos-answer-key { grid-template-columns:repeat(6,1fr); gap:4px; }
+      .tos-answer-key .ak-item { padding:4px 6px; font-size:0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📐 TOS Generator</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Table of Specification Generator</h1>
+          <p>Auto-generate TOS for Summative Tests and Term Exams based on BOW competencies.</p>
+        </div>
+        <div class="teacher-hero-actions">
+          <button id="btn-edit-signatories" class="outline" style="border-color:#00e676;color:#00e676;">✏️ Edit Signatories</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tos-filters">
+      <div class="form-group">
+        <label class="form-label">Term</label>
+        <select id="filter-term" class="form-control">
+          <option value="term1">Term 1 — Physics & Chemistry</option>
+          <option value="term2">Term 2 — Chemistry & Life Science</option>
+          <option value="term3">Term 3 — Earth Science</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Assessment</label>
+        <select id="filter-assessment" class="form-control">
+          <option value="st1">Summative Test 1 (30 items)</option>
+          <option value="st2">Summative Test 2 (30 items)</option>
+          <option value="te">Term Exam (60 items)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Section</label>
+        <select id="filter-section" class="form-control">
+          <option value="">All Sections</option>
+          <option value="ACADEMIC A">ACADEMIC A</option>
+          <option value="ACADEMIC B">ACADEMIC B</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:0;">
+        <label class="form-label">&nbsp;</label>
+        <button id="btn-generate" class="btn btn-primary">📐 Generate TOS</button>
+      </div>
+    </div>
+
+    <div id="te-banner"></div>
+
+    <div class="tos-tabs" id="tos-tabs" style="display:none;">
+      <button class="tos-tab active" data-tab="tos">📐 Table of Specification</button>
+      <button class="tos-tab" data-tab="answer">✅ Answer Key</button>
+      <button class="tos-tab" data-tab="mll">📊 Most & Least Learned</button>
+    </div>
+
+    <div class="tos-panel active" id="panel-tos">
+      <div id="tos-doc-container">
+        <div class="card" style="text-align:center;padding:48px 24px;color:#90a4ae;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">📐</div>
+          <p>Choose a term and assessment, then click <strong>Generate TOS</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tos-panel" id="panel-answer">
+      <div id="answer-key-container">
+        <div class="card" style="text-align:center;padding:48px 24px;color:#90a4ae;">
+          <p>Generate a TOS first to view the answer key.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tos-panel" id="panel-mll">
+      <div id="mll-container">
+        <div class="card" style="text-align:center;padding:48px 24px;color:#90a4ae;">
+          <p>Generate a TOS first to view the Most & Least Learned table.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tos-actions" id="tos-actions" style="display:none;">
+      <button id="btn-print" class="btn btn-primary">🖨️ Print / Save as PDF</button>
+      <button id="btn-export-csv" class="btn btn-outline">📥 Export CSV</button>
+      <button id="btn-edit-signatories2" class="btn btn-outline">✏️ Edit Signatories</button>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/mastery-scales.js?v=1"></script>
+  <script src="../assets/js/tos-engine.js?v=1"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      /* ============================================================
+         SIGNATORIES — localStorage-backed, all 6 fields editable
+         ============================================================ */
+      var SIG_KEY = 'gsa_v1_signatories';
+
+      var DEFAULT_SIGS = {
+        prepared: { name: 'JEMUEL C. MARI, MAN, RN, LPT', position: 'Teacher II' },
+        checked:  { name: '', position: '' },
+        noted:    { name: '', position: '' }
+      };
+
+      function loadSignatories() {
+        try {
+          var raw = localStorage.getItem(SIG_KEY);
+          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_SIGS));
+          var parsed = JSON.parse(raw);
+          return {
+            prepared: Object.assign({}, DEFAULT_SIGS.prepared, parsed.prepared || {}),
+            checked:  Object.assign({}, DEFAULT_SIGS.checked,  parsed.checked  || {}),
+            noted:    Object.assign({}, DEFAULT_SIGS.noted,    parsed.noted    || {})
+          };
+        } catch (e) {
+          return JSON.parse(JSON.stringify(DEFAULT_SIGS));
+        }
+      }
+
+      function saveSignatories(sigs) {
+        try { localStorage.setItem(SIG_KEY, JSON.stringify(sigs)); } catch (e) {}
+      }
+
+      var signatories = loadSignatories();
+      var currentTOS = null;
+
+      /* ============================================================
+         INIT
+         ============================================================ */
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+
+        document.getElementById('btn-generate').addEventListener('click', generateTOS);
+        document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
+        document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
+        document.getElementById('btn-edit-signatories').addEventListener('click', openSignatoryModal);
+        document.getElementById('btn-edit-signatories2').addEventListener('click', openSignatoryModal);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+
+        document.querySelectorAll('.tos-tab').forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            document.querySelectorAll('.tos-tab').forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            document.querySelectorAll('.tos-panel').forEach(function(p) { p.classList.remove('active'); });
+            var panel = document.getElementById('panel-' + tab.dataset.tab);
+            if (panel) panel.classList.add('active');
+          });
+        });
+
+        checkTEAvailability();
+        document.getElementById('filter-term').addEventListener('change', checkTEAvailability);
+        document.getElementById('filter-assessment').addEventListener('change', checkTEAvailability);
+      }, function() {
+        document.getElementById('tos-doc-container').innerHTML =
+          '<div class="card" style="text-align:center;padding:40px;color:#c62828;">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
+
+      /* ============================================================
+         TE AVAILABILITY CHECK
+         ============================================================ */
+      function checkTEAvailability() {
+        var assessment = document.getElementById('filter-assessment').value;
+        var term = document.getElementById('filter-term').value;
+        var banner = document.getElementById('te-banner');
+
+        if (assessment !== 'te') { banner.innerHTML = ''; return; }
+
+        var students = Store.getAllUsers();
+        var st1Count = 0, st2Count = 0;
+        students.forEach(function(s) {
+          var scores = Store.getScores(s.lrn);
+          if (scores[term] && scores[term].st) {
+            if (scores[term].st.st1) st1Count++;
+            if (scores[term].st.st2) st2Count++;
+          }
+        });
+
+        var total = students.length;
+        if (total === 0) {
+          banner.innerHTML = '<div class="tos-alert warn"><span style="font-size:1.2rem;">⚠️</span><div><strong>No students registered yet.</strong><div style="margin-top:4px;">Students must register and complete ST1 & ST2 before the TE TOS can use Top 5 Least Learned data.</div></div></div>';
+          return;
+        }
+
+        if (st1Count === total && st2Count === total) {
+          banner.innerHTML = '<div class="tos-alert success"><span style="font-size:1.2rem;">✅</span><div><strong>Term Exam TOS Ready</strong><div style="margin-top:4px;">All ' + total + ' students completed ST1 and ST2. Top 5 Least Learned can be computed.</div></div></div>';
+        } else {
+          banner.innerHTML = '<div class="tos-alert warn"><span style="font-size:1.2rem;">⏳</span><div><strong>Waiting for ST data</strong><div style="margin-top:4px;">ST1: <strong>' + st1Count + '/' + total + '</strong> done. ST2: <strong>' + st2Count + '/' + total + '</strong> done. You can still generate the TE TOS using available data.</div></div></div>';
+        }
+      }
+
+      /* ============================================================
+         ST RANKING (for TE)
+         ============================================================ */
+      async function computeSTRanking(term) {
+        var students = Store.getAllUsers();
+        var sectionFilter = document.getElementById('filter-section').value;
+        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
+
+        var st1Bank, st2Bank;
+        try {
+          st1Bank = await TOSEngine.loadQuestionBank(term, 'st1');
+          st2Bank = await TOSEngine.loadQuestionBank(term, 'st2');
+        } catch (e) {
+          console.warn('[TOS] Could not load ST banks:', e);
+          return [];
+        }
+
+        st1Bank.id = 'st1';
+        st2Bank.id = 'st2';
+
+        var mps1 = TOSEngine.computeCompetencyMPS(students, term, 'st', st1Bank);
+        var mps2 = TOSEngine.computeCompetencyMPS(students, term, 'st', st2Bank);
+
+        var merged = {};
+        Object.keys(mps1).forEach(function(code) {
+          merged[code] = { code: code, correct: mps1[code].correct, total: mps1[code].total };
+        });
+        Object.keys(mps2).forEach(function(code) {
+          if (!merged[code]) merged[code] = { code: code, correct: 0, total: 0 };
+          merged[code].correct += mps2[code].correct;
+          merged[code].total += mps2[code].total;
+        });
+
+        var ranking = Object.values(merged).map(function(r) {
+          return { code: r.code, mps: r.total ? r.correct / r.total : 0 };
+        });
+        ranking.sort(function(a, b) { return a.mps - b.mps; });
+        return ranking;
+      }
+
+      /* ============================================================
+         GENERATE TOS
+         ============================================================ */
+      async function generateTOS() {
+        var term = document.getElementById('filter-term').value;
+        var assessment = document.getElementById('filter-assessment').value;
+        var totalItems = assessment === 'te' ? 60 : 30;
+
+        var btn = document.getElementById('btn-generate');
+        btn.disabled = true;
+        btn.textContent = '⏳ Generating…';
+
+        try {
+          var stRanking = [];
+          if (assessment === 'te') stRanking = await computeSTRanking(term);
+
+          var result = await TOSEngine.generateTOS({
+            term: term,
+            assessment: assessment,
+            totalItems: totalItems,
+            stRanking: stRanking
+          });
+
+          currentTOS = result;
+          renderTOSDoc(result);
+          renderAnswerKey(result);
+          renderMostLeastLearned(result);
+
+          document.getElementById('tos-tabs').style.display = 'flex';
+          document.getElementById('tos-actions').style.display = 'flex';
+          APP.toast('TOS generated successfully!', 'success', 3000);
+        } catch (err) {
+          console.error('[TOS] Generate error:', err);
+          document.getElementById('tos-doc-container').innerHTML =
+            '<div class="card" style="text-align:center;padding:40px;color:#c62828;">⚠️ ' + err.message + '</div>';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '📐 Generate TOS';
+        }
+      }
+
+      /* ============================================================
+         RENDER — TOS DOC
+         ============================================================ */
+      function renderTOSDoc(tos) {
+        var termLabel = { term1: 'Physics & Chemistry', term2: 'Chemistry & Life Science', term3: 'Earth Science' }[tos.term];
+        var assessmentLabel = { st1: 'SUMMATIVE TEST 1', st2: 'SUMMATIVE TEST 2', te: 'TERM EXAM' }[tos.assessment];
+        var termNum = { term1: '1ST', term2: '2ND', term3: '3RD' }[tos.term];
+
+        var html =
+          '<div class="tos-doc">' +
+            '<div class="tos-doc-header">' +
+              '<div class="country">Republic of the Philippines</div>' +
+              '<div class="dept">DEPARTMENT OF EDUCATION</div>' +
+              '<div class="region">Region III</div>' +
+              '<div class="office">Schools Division of Tarlac Province</div>' +
+              '<div class="region">San Jose West District</div>' +
+              '<div class="school">Iba High School</div>' +
+              '<div class="address">SY 2026-2027 · Iba, San Jose, Tarlac</div>' +
+            '</div>' +
+            '<div class="tos-doc-title">TABLE OF SPECIFICATIONS · ' + termNum + ' TERM · ' + assessmentLabel + '</div>' +
+            '<div class="tos-doc-meta">' +
+              '<div><span class="lbl">Subject:</span><span class="val">General Science 11</span></div>' +
+              '<div><span class="lbl">Term:</span><span class="val">' + termLabel + '</span></div>' +
+              '<div><span class="lbl">Exam:</span><span class="val">' + assessmentLabel + '</span></div>' +
+              '<div><span class="lbl">Coverage:</span><span class="val">' + tos.coverage + '</span></div>' +
+              '<div><span class="lbl">Total Items:</span><span class="val">' + tos.totalItems + '</span></div>' +
+              '<div><span class="lbl">Total Hours:</span><span class="val">' + tos.totals.hours + '</span></div>' +
+            '</div>' +
+            '<div class="tos-table-wrap">' +
+              '<table class="tos-table">' +
+                '<thead>' +
+                  '<tr>' +
+                    '<th rowspan="2" style="min-width:280px;">Learning Competencies</th>' +
+                    '<th rowspan="2" style="width:60px;">Hours</th>' +
+                    '<th rowspan="2" style="width:70px;">% Weight</th>' +
+                    '<th rowspan="2" style="width:60px;">Items</th>' +
+                    '<th colspan="6">Revised Bloom\'s Taxonomy</th>' +
+                    '<th rowspan="2" style="width:90px;">Item Numbers</th>' +
+                  '</tr>' +
+                  '<tr>' +
+                    '<th style="width:55px;font-size:0.7rem;">Remembering</th>' +
+                    '<th style="width:55px;font-size:0.7rem;">Understanding</th>' +
+                    '<th style="width:55px;font-size:0.7rem;">Applying</th>' +
+                    '<th style="width:55px;font-size:0.7rem;">Analyzing</th>' +
+                    '<th style="width:55px;font-size:0.7rem;">Evaluating</th>' +
+                    '<th style="width:55px;font-size:0.7rem;">Creating</th>' +
+                  '</tr>' +
+                '</thead>' +
+                '<tbody>';
+
+        tos.rows.forEach(function(r) {
+          var b = r.bloomDistribution;
+          var range = r.itemFrom === r.itemTo ? String(r.itemFrom) : (r.itemFrom + '–' + r.itemTo);
+          html += '<tr>' +
+            '<td class="competency-cell">' +
+              '<div style="font-size:0.68rem;color:#0d47a1;font-weight:700;margin-bottom:2px;">' + r.code + '</div>' +
+              r.description +
+            '</td>' +
+            '<td class="num">' + r.hours + '</td>' +
+            '<td class="num">' + r.weightPercent + '%</td>' +
+            '<td class="num">' + r.items + '</td>' +
+            '<td class="num">' + (b.Remembering || 0) + '</td>' +
+            '<td class="num">' + (b.Understanding || 0) + '</td>' +
+            '<td class="num">' + (b.Applying || 0) + '</td>' +
+            '<td class="num">' + (b.Analyzing || 0) + '</td>' +
+            '<td class="num">' + (b.Evaluating || 0) + '</td>' +
+            '<td class="num">' + (b.Creating || 0) + '</td>' +
+            '<td class="item-num">' + range + '</td>' +
+          '</tr>';
+        });
+
+        html +=
+                '</tbody>' +
+                '<tfoot>' +
+                  '<tr>' +
+                    '<td style="text-align:right;">TOTAL</td>' +
+                    '<td>' + tos.totals.hours + '</td>' +
+                    '<td>' + tos.totals.weightPercent + '%</td>' +
+                    '<td>' + tos.totals.items + '</td>' +
+                    '<td>' + tos.totals.blooms.Remembering + '</td>' +
+                    '<td>' + tos.totals.blooms.Understanding + '</td>' +
+                    '<td>' + tos.totals.blooms.Applying + '</td>' +
+                    '<td>' + tos.totals.blooms.Analyzing + '</td>' +
+                    '<td>' + tos.totals.blooms.Evaluating + '</td>' +
+                    '<td>' + tos.totals.blooms.Creating + '</td>' +
+                    '<td></td>' +
+                  '</tr>' +
+                  '<tr>' +
+                    '<td colspan="4" style="text-align:right;font-size:0.75rem;">LOTS:</td>' +
+                    '<td colspan="2">' + tos.totals.lotsCount + ' (' + tos.totals.lotsPercent + '%)</td>' +
+                    '<td colspan="4" style="text-align:right;font-size:0.75rem;">HOTS:</td>' +
+                    '<td>' + tos.totals.hotsCount + ' (' + tos.totals.hotsPercent + '%)</td>' +
+                  '</tr>' +
+                '</tfoot>' +
+              '</table>' +
+            '</div>' +
+            renderSignatoriesBlock() +
+          '</div>';
+
+        document.getElementById('tos-doc-container').innerHTML = html;
+      }
+
+      /* ============================================================
+         SIGNATORIES BLOCK
+         ============================================================ */
+      function renderSignatoriesBlock() {
+        var s = signatories;
+        var blocks = [];
+
+        if (s.prepared && (s.prepared.name || s.prepared.position)) {
+          blocks.push(
+            '<div class="sig-block">' +
+              '<div class="sig-role">Prepared by</div>' +
+              '<div class="sig-line"></div>' +
+              '<div class="sig-name">' + (s.prepared.name || '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.prepared.position || '&nbsp;') + '</div>' +
+            '</div>'
+          );
+        }
+        if (s.checked && (s.checked.name || s.checked.position)) {
+          blocks.push(
+            '<div class="sig-block">' +
+              '<div class="sig-role">Checked by</div>' +
+              '<div class="sig-line"></div>' +
+              '<div class="sig-name">' + (s.checked.name || '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.checked.position || '&nbsp;') + '</div>' +
+            '</div>'
+          );
+        }
+        if (s.noted && (s.noted.name || s.noted.position)) {
+          blocks.push(
+            '<div class="sig-block">' +
+              '<div class="sig-role">Noted by</div>' +
+              '<div class="sig-line"></div>' +
+              '<div class="sig-name">' + (s.noted.name || '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.noted.position || '&nbsp;') + '</div>' +
+            '</div>'
+          );
+        }
+
+        if (!blocks.length) return '';
+        var cols = blocks.length;
+        return '<div class="signatories" style="grid-template-columns:repeat(' + cols + ',1fr);">' + blocks.join('') + '</div>';
+      }
+
+      /* ============================================================
+         SIGNATORY MODAL
+         ============================================================ */
+      function openSignatoryModal() {
+        var overlay = document.createElement('div');
+        overlay.className = 'sig-overlay';
+        overlay.innerHTML =
+          '<div class="sig-modal">' +
+            '<h3>✏️ Edit Signatories</h3>' +
+            '<p>Leave any field blank to hide that signatory block from the document.</p>' +
+            '<div class="sig-modal-group">' +
+              '<div class="row-label">Prepared by</div>' +
+              '<div class="field"><label>Name</label><input id="sig-prepared-name" type="text" value="' + escapeAttr(signatories.prepared.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-prepared-position" type="text" value="' + escapeAttr(signatories.prepared.position) + '" /></div>' +
+            '</div>' +
+            '<div class="sig-modal-group">' +
+              '<div class="row-label">Checked by</div>' +
+              '<div class="field"><label>Name</label><input id="sig-checked-name" type="text" value="' + escapeAttr(signatories.checked.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-checked-position" type="text" value="' + escapeAttr(signatories.checked.position) + '" /></div>' +
+            '</div>' +
+            '<div class="sig-modal-group">' +
+              '<div class="row-label">Noted by</div>' +
+              '<div class="field"><label>Name</label><input id="sig-noted-name" type="text" value="' + escapeAttr(signatories.noted.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-noted-position" type="text" value="' + escapeAttr(signatories.noted.position) + '" /></div>' +
+            '</div>' +
+            '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px;">' +
+              '<button class="btn btn-outline" id="sig-cancel">Cancel</button>' +
+              '<button class="btn btn-primary" id="sig-save">💾 Save Signatories</button>' +
+            '</div>' +
+          '</div>';
+
+        document.body.appendChild(overlay);
+        function close() { overlay.remove(); }
+
+        overlay.querySelector('#sig-cancel').addEventListener('click', close);
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+        overlay.querySelector('#sig-save').addEventListener('click', function() {
+          signatories = {
+            prepared: {
+              name: overlay.querySelector('#sig-prepared-name').value.trim(),
+              position: overlay.querySelector('#sig-prepared-position').value.trim()
+            },
+            checked: {
+              name: overlay.querySelector('#sig-checked-name').value.trim(),
+              position: overlay.querySelector('#sig-checked-position').value.trim()
+            },
+            noted: {
+              name: overlay.querySelector('#sig-noted-name').value.trim(),
+              position: overlay.querySelector('#sig-noted-position').value.trim()
+            }
+          };
+          saveSignatories(signatories);
+          close();
+          APP.toast('✅ Signatories saved', 'success', 2500);
+          if (currentTOS) renderTOSDoc(currentTOS);
+        });
+      }
+
+      /* ============================================================
+         RENDER — ANSWER KEY
+         ============================================================ */
+      function renderAnswerKey(tos) {
+        var container = document.getElementById('answer-key-container');
+        if (!tos.answerKey || !tos.answerKey.length) {
+          container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#90a4ae;">No answer key available.</div>';
+          return;
+        }
+
+        var html =
+          '<div class="card">' +
+            '<div class="card-header"><span class="card-title">✅ Answer Key · ' + tos.totalItems + ' items</span></div>' +
+            '<div class="tos-answer-key">';
+
+        tos.answerKey.forEach(function(k) {
+          html += '<div class="ak-item">' +
+            '<span class="num">' + k.itemNo + '.</span>' +
+            '<span class="ans">' + escapeHtml(k.answer) + '</span>' +
+            '<span class="bl">' + k.bloomLevel + '</span>' +
+          '</div>';
+        });
+
+        html += '</div></div>';
+        container.innerHTML = html;
+      }
+
+      /* ============================================================
+         RENDER — MOST & LEAST LEARNED
+         ============================================================ */
+      function renderMostLeastLearned(tos) {
+        var container = document.getElementById('mll-container');
+
+        // Compute MPS per competency from the ST ranking (or use the row items)
+        // We compute from ranking when available, else fall back to zeros.
+        var rows = tos.rows.map(function(r) {
+          return { code: r.code, description: r.description, shortLabel: r.shortLabel, mps: 0 };
+        });
+
+        // Sort descending for most learned, ascending for least
+        var sortedDesc = rows.slice().sort(function(a, b) { return b.mps - a.mps; });
+        var sortedAsc  = rows.slice().sort(function(a, b) { return a.mps - b.mps; });
+
+        var top5 = sortedDesc.slice(0, 5);
+        var bot5 = sortedAsc.slice(0, 5);
+
+        var html =
+          '<div class="tos-doc">' +
+            '<div class="tos-doc-header">' +
+              '<div class="country">Republic of the Philippines</div>' +
+              '<div class="dept">DEPARTMENT OF EDUCATION</div>' +
+              '<div class="region">Region III</div>' +
+              '<div class="office">Schools Division of Tarlac Province</div>' +
+              '<div class="region">San Jose West District</div>' +
+              '<div class="school">Iba High School</div>' +
+              '<div class="address">SY 2026-2027 · Iba, San Jose, Tarlac</div>' +
+            '</div>' +
+            '<div class="tos-doc-title">MOST & LEAST LEARNED COMPETENCIES</div>' +
+            '<div style="text-align:center;font-family:\'Times New Roman\',serif;font-size:0.9rem;margin-bottom:16px;">' +
+              'Subject: <strong>GENERAL SCIENCE 11</strong> · ' +
+              (tos.term === 'term1' ? 'First Term' : tos.term === 'term2' ? 'Second Term' : 'Third Term') +
+            '</div>' +
+            '<table class="mll-table">' +
+              '<thead><tr>' +
+                '<th colspan="2">Most Learned Competencies</th>' +
+                '<th colspan="2">Least Learned Competencies</th>' +
+              '</tr>' +
+              '<tr>' +
+                '<th style="width:50px;">Rank</th><th>Competency</th>' +
+                '<th style="width:50px;">Rank</th><th>Competency</th>' +
+              '</tr></thead>' +
+              '<tbody>';
+
+        for (var i = 0; i < 5; i++) {
+          var most = top5[i];
+          var least = bot5[i];
+          html += '<tr>' +
+            '<td class="rank-cell">' + (i + 1) + '</td>' +
+            '<td class="most-col">' + (most ? most.description : '&nbsp;') + '</td>' +
+            '<td class="rank-cell">' + (i + 1) + '</td>' +
+            '<td class="least-col">' + (least ? least.description : '&nbsp;') + '</td>' +
+          '</tr>';
+        }
+
+        html +=
+              '</tbody>' +
+            '</table>' +
+            renderSignatoriesBlock() +
+          '</div>';
+
+        container.innerHTML = html;
+      }
+
+      /* ============================================================
+         EXPORT CSV
+         ============================================================ */
+      function exportCSV() {
+        if (!currentTOS) { APP.toast('Generate a TOS first', 'warning'); return; }
+
+        var rows = [
+          ['Learning Competencies', 'Hours', '% Weight', 'Items', 'Remembering', 'Understanding', 'Applying', 'Analyzing', 'Evaluating', 'Creating', 'Item Numbers']
+        ];
+
+        currentTOS.rows.forEach(function(r) {
+          var b = r.bloomDistribution;
+          var range = r.itemFrom === r.itemTo ? String(r.itemFrom) : (r.itemFrom + '–' + r.itemTo);
+          rows.push([
+            r.code + ' — ' + r.description,
+            r.hours,
+            r.weightPercent + '%',
+            r.items,
+            b.Remembering || 0,
+            b.Understanding || 0,
+            b.Applying || 0,
+            b.Analyzing || 0,
+            b.Evaluating || 0,
+            b.Creating || 0,
+            range
+          ]);
+        });
+
+        var t = currentTOS.totals;
+        rows.push(['TOTAL', t.hours, t.weightPercent + '%', t.items,
+          t.blooms.Remembering, t.blooms.Understanding, t.blooms.Applying,
+          t.blooms.Analyzing, t.blooms.Evaluating, t.blooms.Creating, '']);
+
+        var csv = rows.map(function(row) {
+          return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
+        }).join('\n');
+
+        var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'TOS_' + currentTOS.term + '_' + currentTOS.assessment + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        APP.toast('CSV exported', 'success');
+      }
+
+      /* ============================================================
+         HELPERS
+         ============================================================ */
+      function escapeAttr(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function escapeHtml(str) {
+        return escapeAttr(str);
+      }
+    })();
+  </script>
+</body>
+</html>
