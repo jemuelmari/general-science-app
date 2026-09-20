@@ -1,4 +1,3 @@
-[FILE: build_gensci.py]
 #!/usr/bin/env python3
 # ============================================================
 # build_gensci.py — Auto-generate all week files for the
