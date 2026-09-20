@@ -32,6 +32,8 @@
     .mps-bar .bar { flex: 1; height: 10px; background: #eceff1; border-radius: 999px; overflow: hidden; min-width: 60px; }
     .mps-bar .bar .fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
     .mps-bar .num { font-weight: 700; font-size: 0.82rem; min-width: 45px; text-align: right; font-variant-numeric: tabular-nums; }
+    .partial-tag { display: inline-block; font-size: 0.62rem; font-weight: 700; color: #ed6c02; background: #fff3e0; padding: 1px 6px; border-radius: 4px; margin-left: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .partial-cell { color: #bdbdbd; font-style: italic; }
   </style>
 </head>
 <body>
@@ -40,7 +42,7 @@
     <div class="container flex-between">
       <div>
         <h1>📈 Class Reports</h1>
-        <span class="version">v1.0.1</span>
+        <span class="version">v1.0.2</span>
       </div>
       <nav class="teacher-nav">
         <a href="../classrecord.html">← Class Record</a>
@@ -93,7 +95,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.1</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.2</span></p>
   </footer>
 
   <script src="../config.js?v=8"></script>
@@ -171,21 +173,59 @@
           var ptPcts = [pt1, pt2, pt3].filter(function(v) { return v !== null; });
           var ptAvg = ptPcts.length ? ptPcts.reduce(function(a, b) { return a + b; }, 0) / ptPcts.length : null;
 
-          // ⚠️ FIX (X3): null when any EX component missing
+          // EX — null when any ST/TE component missing (Phase 1 X3 fix)
           var exAvg = null;
           if (st1 !== null && st2 !== null && te !== null) {
             exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
           }
 
-          // ⚠️ FIX (X3): Safe computation
+          // Complete final grade (only when all components present)
           var final = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
+
+          // ⚠️ NEW: Partial weighted average — sum of available components
+          // renormalized over their available weights. Used for sorting
+          // when final is insufficient.
+          var availableSum = 0;
+          var availableWeight = 0;
+          if (wwAvg !== null) { availableSum += wwAvg * WEIGHTS.ww; availableWeight += WEIGHTS.ww; }
+          if (ptAvg !== null) { availableSum += ptAvg * WEIGHTS.pt; availableWeight += WEIGHTS.pt; }
+          if (exAvg !== null) { availableSum += exAvg * WEIGHTS.ex; availableWeight += WEIGHTS.ex; }
+          var partialScore = availableWeight > 0 ? (availableSum / availableWeight) : 0;
+
+          // Count of components available (for sorting / display)
+          var compCount = [q1, q2, q3, pt1, pt2, pt3, st1, st2, te].filter(function(v) { return v !== null; }).length;
 
           return {
             student: s,
             scores: { q1: q1, q2: q2, q3: q3, st1: st1, st2: st2, pt1: pt1, pt2: pt2, pt3: pt3, te: te },
-            wwAvg: wwAvg, ptAvg: ptAvg, exAvg: exAvg, final: final
+            wwAvg: wwAvg,
+            ptAvg: ptAvg,
+            exAvg: exAvg,
+            final: final,
+            partialScore: partialScore,
+            compCount: compCount
           };
         });
+      }
+
+      // ⚠️ NEW HELPER: Sort value for a row — uses final.transmuted if
+      // available, otherwise the partial renormalized score.
+      function sortValue(row) {
+        if (row.final && !row.final.insufficient && row.final.transmuted != null) {
+          return row.final.transmuted;
+        }
+        return row.partialScore;
+      }
+
+      // ⚠️ NEW HELPER: display value for the FINAL cell
+      function finalDisplay(row) {
+        if (row.final && !row.final.insufficient && row.final.transmuted != null) {
+          return { text: String(row.final.transmuted), partial: false };
+        }
+        if (row.compCount === 0) {
+          return { text: '—', partial: false };
+        }
+        return { text: '—', partial: true };
       }
 
       function render() {
@@ -202,10 +242,13 @@
 
         lastReport = { term: term, section: section, rows: rows };
 
-        // ⚠️ FIX (X3): exclude insufficient finals
-        var finals = rows
-          .map(function(r) { return (r.final && !r.final.insufficient) ? r.final.transmuted : null; })
-          .filter(function(v) { return v != null && v > 0; });
+        // Stats — use partial for students with at least 1 score
+        var rowsWithData = rows.filter(function(r) { return r.compCount > 0; });
+        var rowsWithCompleteFinal = rows.filter(function(r) {
+          return r.final && !r.final.insufficient && r.final.transmuted != null && r.final.transmuted > 0;
+        });
+
+        var finals = rowsWithCompleteFinal.map(function(r) { return r.final.transmuted; });
 
         var avg = finals.length ? finals.reduce(function(a, b) { return a + b; }, 0) / finals.length : 0;
         var passing = finals.filter(function(v) { return v >= 75; }).length;
@@ -240,12 +283,17 @@
           return { label: r.label, color: r.color, count: finals.filter(function(f) { return f >= r.min && f <= r.max; }).length };
         });
 
+        // ⚠️ FIX: Top 10 — sort by final OR partial score. Include anyone
+        // who has at least 1 component. Display "—" for incomplete Final.
         var sortedDesc = rows.slice()
-          .filter(function(r) { return r.final && !r.final.insufficient && r.final.transmuted > 0; })
-          .sort(function(a, b) { return b.final.transmuted - a.final.transmuted; });
+          .filter(function(r) { return r.compCount > 0; })
+          .sort(function(a, b) { return sortValue(b) - sortValue(a); });
+
+        // ⚠️ FIX: Bottom 5 — same filter, ascending sort.
+        var sortedAsc = sortedDesc.slice().reverse();
 
         var top10 = sortedDesc.slice(0, 10);
-        var bottom5 = sortedDesc.slice().reverse().slice(0, 5);
+        var bottom5 = sortedAsc.slice(0, 5);
 
         area.innerHTML =
           '<div class="report-header">' +
@@ -257,7 +305,9 @@
 
           '<div class="cr-stats-grid">' +
             '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Total Students</div></div>' +
-            '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div></div>' +
+            '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div>' +
+              '<div style="font-size:0.65rem;color:#90a4ae;font-weight:600;margin-top:2px;">' + finals.length + '/' + rows.length + ' with complete grade</div>' +
+            '</div>' +
             '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing (' + passRate + '%)</div></div>' +
             '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
           '</div>' +
@@ -278,13 +328,16 @@
 
           '<div class="rpt-section-title"><h3>📊 Grade Distribution</h3></div>' +
           '<div class="report-card">' +
-            rangeCounts.map(function(r) {
-              var pctVal = finals.length ? Math.round((r.count / finals.length) * 100) : 0;
-              return '<div class="distribution-row">' +
-                '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + r.label + '</span>' +
-                '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pctVal + '%;background:' + r.color + ';">' + (r.count > 0 ? r.count : '') + '</div></div>' +
-                '<span class="distribution-count">' + r.count + ' student' + (r.count !== 1 ? 's' : '') + '</span></div>';
-            }).join('') +
+            (finals.length === 0
+              ? '<p class="text-muted text-small" style="text-align:center;padding:20px;">No complete final grades yet. Students will appear here once all 9 assessments are recorded.</p>'
+              : rangeCounts.map(function(r) {
+                  var pctVal = finals.length ? Math.round((r.count / finals.length) * 100) : 0;
+                  return '<div class="distribution-row">' +
+                    '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + r.label + '</span>' +
+                    '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pctVal + '%;background:' + r.color + ';">' + (r.count > 0 ? r.count : '') + '</div></div>' +
+                    '<span class="distribution-count">' + r.count + ' student' + (r.count !== 1 ? 's' : '') + '</span></div>';
+                }).join('')
+            ) +
           '</div>' +
 
           '<div class="rpt-section-title"><h3>🏆 Top 10 Performing Students</h3></div>' +
@@ -292,14 +345,20 @@
             '<table class="modern-table"><thead><tr><th style="width:60px;">Rank</th><th>Student</th><th>Section</th><th style="text-align:right;">WW</th><th style="text-align:right;">PT</th><th style="text-align:right;">EX</th><th style="text-align:right;">Final</th></tr></thead>' +
             '<tbody>' +
               (top10.length ? top10.map(function(r, i) {
-                return '<tr><td style="font-weight:800;color:' + (i < 3 ? '#2e7d32' : '#37474f') + ';">#' + (i + 1) + '</td>' +
+                var fd = finalDisplay(r);
+                var rankIcon = i < 3 ? '🏅' : '';
+                return '<tr>' +
+                  '<td style="font-weight:800;color:' + (i < 3 ? '#2e7d32' : '#37474f') + ';">' + rankIcon + ' #' + (i + 1) + '</td>' +
                   '<td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
                   '<td>' + r.student.section + '</td>' +
-                  '<td style="text-align:right;">' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;">' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;">' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;font-weight:800;color:#2e7d32;">' + r.final.transmuted + '</td></tr>';
-              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No graded students yet.</td></tr>') +
+                  '<td style="text-align:right;"' + (r.wwAvg === null ? ' class="partial-cell"' : '') + '>' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;"' + (r.ptAvg === null ? ' class="partial-cell"' : '') + '>' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;"' + (r.exAvg === null ? ' class="partial-cell"' : '') + '>' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;font-weight:800;' + (fd.partial ? 'color:#ed6c02;' : 'color:' + (r.final.passing ? '#2e7d32' : '#c62828') + ';') + '">' +
+                    (fd.partial ? '<span class="partial-tag">Partial</span> ' : '') + fd.text +
+                  '</td>' +
+                '</tr>';
+              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No students with data yet.</td></tr>') +
             '</tbody></table>' +
           '</div>' +
 
@@ -308,15 +367,22 @@
             '<table class="modern-table"><thead><tr><th>Student</th><th>Section</th><th style="text-align:right;">WW</th><th style="text-align:right;">PT</th><th style="text-align:right;">EX</th><th style="text-align:right;">Final</th><th>Status</th></tr></thead>' +
             '<tbody>' +
               (bottom5.length ? bottom5.map(function(r) {
-                var cls = Transmutation.classifyStudent(r.final.raw || 0);
-                return '<tr><td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
+                // Classify using sortValue (partial or full)
+                var sv = sortValue(r);
+                var cls = Transmutation.classifyStudent(sv);
+                var fd = finalDisplay(r);
+                return '<tr>' +
+                  '<td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
                   '<td>' + r.student.section + '</td>' +
-                  '<td style="text-align:right;">' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;">' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;">' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
-                  '<td style="text-align:right;font-weight:800;color:' + (r.final.transmuted >= 75 ? '#2e7d32' : '#c62828') + ';">' + (r.final.transmuted || '—') + '</td>' +
-                  '<td><span class="badge-pill ' + (cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger') + '">' + cls.label + '</span></td></tr>';
-              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No students to rank.</td></tr>') +
+                  '<td style="text-align:right;"' + (r.wwAvg === null ? ' class="partial-cell"' : '') + '>' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;"' + (r.ptAvg === null ? ' class="partial-cell"' : '') + '>' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;"' + (r.exAvg === null ? ' class="partial-cell"' : '') + '>' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
+                  '<td style="text-align:right;font-weight:800;' + (fd.partial ? 'color:#ed6c02;' : 'color:' + (r.final.passing ? '#2e7d32' : '#c62828') + ';') + '">' +
+                    (fd.partial ? '<span class="partial-tag">Partial</span> ' : '') + fd.text +
+                  '</td>' +
+                  '<td><span class="badge-pill ' + (cls.key === 'enrichment' ? 'success' : cls.key === 'on-track' ? 'info' : cls.key === 'remediation' ? 'warning' : 'danger') + '">' + cls.label + '</span></td>' +
+                '</tr>';
+              }).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#90a4ae;">No students with data yet.</td></tr>') +
             '</tbody></table>' +
           '</div>' +
 
@@ -336,23 +402,28 @@
 
       function exportCSV() {
         if (!lastReport) { APP.toast('Run the report first', 'warning'); return; }
-        var headers = ['Rank', 'Last Name', 'First Name', 'Middle Name', 'LRN', 'Section', 'Quiz 1', 'Quiz 2', 'Quiz 3', 'PT1', 'PT2', 'PT3', 'ST1', 'ST2', 'TE', 'WW Avg', 'PT Avg', 'EX Avg', 'Final Grade'];
-        var rows = lastReport.rows.slice().sort(function(a, b) {
-          var af = (a.final && !a.final.insufficient) ? a.final.transmuted : -1;
-          var bf = (b.final && !b.final.insufficient) ? b.final.transmuted : -1;
-          return bf - af;
-        }).map(function(r, i) {
-          var s = r.student;
-          var f = function(v) { return v !== null && v !== undefined ? Math.round(v) : ''; };
-          return [i + 1, s.lastName || '', s.firstName || '', s.middleName || '', s.lrn, s.section,
-            f(r.scores.q1), f(r.scores.q2), f(r.scores.q3),
-            f(r.scores.pt1), f(r.scores.pt2), f(r.scores.pt3),
-            f(r.scores.st1), f(r.scores.st2), f(r.scores.te),
-            r.wwAvg !== null ? r.wwAvg.toFixed(1) : '',
-            r.ptAvg !== null ? r.ptAvg.toFixed(1) : '',
-            r.exAvg !== null ? r.exAvg.toFixed(1) : '',
-            (!r.final.insufficient && r.final.transmuted != null) ? r.final.transmuted : ''];
-        });
+        var headers = ['Rank', 'Last Name', 'First Name', 'Middle Name', 'LRN', 'Section', 'Quiz 1', 'Quiz 2', 'Quiz 3', 'PT1', 'PT2', 'PT3', 'ST1', 'ST2', 'TE', 'WW Avg', 'PT Avg', 'EX Avg', 'Final Grade', 'Status'];
+        var rows = lastReport.rows.slice()
+          .filter(function(r) { return r.compCount > 0; })
+          .sort(function(a, b) { return sortValue(b) - sortValue(a); })
+          .map(function(r, i) {
+            var s = r.student;
+            var f = function(v) { return v !== null && v !== undefined ? Math.round(v) : ''; };
+            var fd = finalDisplay(r);
+            return [
+              i + 1,
+              s.lastName || '', s.firstName || '', s.middleName || '',
+              s.lrn, s.section,
+              f(r.scores.q1), f(r.scores.q2), f(r.scores.q3),
+              f(r.scores.pt1), f(r.scores.pt2), f(r.scores.pt3),
+              f(r.scores.st1), f(r.scores.st2), f(r.scores.te),
+              r.wwAvg !== null ? r.wwAvg.toFixed(1) : '',
+              r.ptAvg !== null ? r.ptAvg.toFixed(1) : '',
+              r.exAvg !== null ? r.exAvg.toFixed(1) : '',
+              fd.partial ? '(partial)' : fd.text,
+              fd.partial ? 'Incomplete' : (r.final.passing ? 'Passed' : 'Failed')
+            ];
+          });
         var csv = [headers].concat(rows).map(function(row) {
           return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
         }).join('\n');
