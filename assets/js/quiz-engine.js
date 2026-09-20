@@ -1,12 +1,20 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 1.0.1
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.1.0 (Phase 2 / X5 + X17 + X39 fix):
+     - Uses Randomize.generateSet() for deterministic shuffle
+       (Set A / Set B now identical across all devices).
+     - Assigns Set A or Set B based on CONFIG.SET_ASSIGNMENT[user.section].
+     - Preserves higher score on retake (X17).
+     - itemResults now include originalIndex (X39).
+     - Stores `set` field in score record.
+
    Changelog v1.0.1: When a student opens a quiz they already
-   passed, show a full review screen (item analysis of their
-   previous attempt). No retake. Preserves academic integrity
-   while letting students learn from their mistakes.
+   passed, show a full review screen. No retake. Preserves
+   academic integrity while letting students learn from
+   their mistakes.
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -20,6 +28,7 @@ const QuizEngine = (() => {
   let autosaveTimer = null;
   let tabMonitor = null;
   let shuffled = [];
+  let currentSet = null;
   let answers = {};
   let currentIndex = 0;
   let startTime = null;
@@ -35,8 +44,13 @@ const QuizEngine = (() => {
       return;
     }
 
+    // ⚠️ X23: Determine Set A / B from section
+    const setLetter = (CONFIG.SET_ASSIGNMENT && CONFIG.SET_ASSIGNMENT[user.section]) || 'A';
+
     ctx = {
       lrn: user.lrn,
+      section: user.section,
+      setLetter: setLetter,
       term: config.term,
       type: config.type,
       id: config.id,
@@ -59,13 +73,11 @@ const QuizEngine = (() => {
     const prev = scores[ctx.term]?.[ctx.type]?.[ctx.id];
 
     if (prev && prev.score !== undefined && prev.percent >= ctx.passScore) {
-      // Passed → show review screen
       renderPassedReview(prev);
       return;
     }
 
     if (prev && prev.percent !== undefined && prev.percent < ctx.passScore) {
-      // Failed but not locked (rare) → show retry option
       renderRetryScreen(prev);
       return;
     }
@@ -92,6 +104,7 @@ const QuizEngine = (() => {
           <div style="font-size:3rem;">📝</div>
           <h2 style="color:var(--color-primary-dark);margin:12px 0;">${ctx.title}</h2>
           <p class="text-muted">${ctx.questions.length} items · ${mins} minutes</p>
+          <p class="text-small text-muted" style="margin-top:4px;">Set ${ctx.setLetter} · ${ctx.section}</p>
         </div>
 
         <div class="alert alert-info">
@@ -116,7 +129,7 @@ const QuizEngine = (() => {
   }
 
   /* ============================================================
-     PASSED REVIEW SCREEN (new in v1.0.1)
+     PASSED REVIEW SCREEN
      ============================================================ */
   function renderPassedReview(prev) {
     const container = document.getElementById('quiz-root');
@@ -132,11 +145,12 @@ const QuizEngine = (() => {
     const emoji = percent >= 90 ? '🏆' : '🎉';
     const titleText = percent >= 90 ? 'Mastered!' : 'Passed!';
 
-    // Build item analysis from the stored itemResults
     let itemAnalysisHTML = '';
     if (itemResults.length) {
       itemAnalysisHTML = itemResults.map((r, i) => {
-        const q = ctx.questions[r.index !== undefined ? r.index : i];
+        // ⚠️ X39: prefer originalIndex for source-of-truth mapping
+        const qIdx = (r.originalIndex != null) ? r.originalIndex : r.index;
+        const q = ctx.questions[qIdx] || ctx.questions[i];
         if (!q) return '';
         const isCorrect = r.correct;
         const given = r.given;
@@ -282,7 +296,28 @@ const QuizEngine = (() => {
      START QUIZ
      ============================================================ */
   function startQuiz() {
-    shuffled = Security.shuffleQuestions(ctx.questions);
+    const assessmentId = ctx.term + '-' + ctx.id;
+
+    // ⚠️ X5 FIX: Use Randomize for deterministic shuffle per set.
+    if (typeof Randomize !== 'undefined' && typeof Randomize.generateSet === 'function') {
+      const bank = { questions: ctx.questions };
+      currentSet = Randomize.generateSet(bank, assessmentId, ctx.setLetter);
+      shuffled = currentSet.questions;
+
+      // Persist so item analysis can re-derive the same order
+      try {
+        const existing = Randomize.getStoredSets(assessmentId) || {};
+        existing[ctx.setLetter] = currentSet;
+        Randomize.persistSets(assessmentId, existing);
+      } catch (e) {
+        console.warn('[Quiz] Could not persist set:', e);
+      }
+    } else {
+      // Fallback — Security.shuffleQuestions now preserves originalIndex
+      console.warn('[Quiz] Randomize not loaded — using fallback shuffle.');
+      shuffled = Security.shuffleQuestions(ctx.questions);
+    }
+
     answers = {};
     currentIndex = 0;
     startTime = Date.now();
@@ -325,7 +360,7 @@ const QuizEngine = (() => {
       <div class="card" style="max-width:720px;margin:0 auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
           <div>
-            <div style="font-size:0.75rem;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;">${ctx.title}</div>
+            <div style="font-size:0.75rem;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;">${ctx.title} · Set ${ctx.setLetter}</div>
             <div style="font-weight:700;color:var(--color-primary-dark);">Question <span id="q-current">1</span> of ${shuffled.length}</div>
           </div>
           <div class="activity-timer" id="quiz-timer" style="font-family:'Consolas',monospace;font-size:1.1rem;">--:--</div>
@@ -505,54 +540,95 @@ const QuizEngine = (() => {
     tabMonitor?.stop();
     clearInterval(autosaveTimer);
 
-    let correct = 0;
-    const itemResults = [];
-    shuffled.forEach((q, i) => {
-      const given = answers[i];
-      const isCorrect = given === q.correct;
-      if (isCorrect) correct++;
-      itemResults.push({
-        index: i,
-        questionId: q.id || null,
-        correct: isCorrect,
-        given: given || null,
-        expected: q.correct
+    // ⚠️ X39 FIX: Use Randomize.scoreAttempt for originalIndex mapping
+    let result;
+    if (typeof Randomize !== 'undefined' && currentSet) {
+      result = Randomize.scoreAttempt(answers, currentSet);
+    } else {
+      // Fallback: build itemResults manually (preserves originalIndex if present)
+      let correct = 0;
+      const itemResults = [];
+      shuffled.forEach((q, i) => {
+        const given = answers[i];
+        const isCorrect = given === q.correct;
+        if (isCorrect) correct++;
+        itemResults.push({
+          index: i,
+          originalIndex: q.originalIndex != null ? q.originalIndex : i,
+          questionId: q.id || null,
+          correct: isCorrect,
+          given: given || null,
+          expected: q.correct,
+          competency: q.competency || null,
+          bloomLevel: q.bloomLevel || null
+        });
       });
-    });
+      const total = shuffled.length;
+      result = {
+        correct: correct,
+        total: total,
+        percent: Math.round((correct / total) * 100),
+        itemResults: itemResults,
+        setLetter: ctx.setLetter
+      };
+    }
 
-    const total = shuffled.length;
-    const scorePercent = Math.round((correct / total) * 100);
-    const passed = scorePercent >= ctx.passScore;
+    const passed = result.percent >= ctx.passScore;
     const timeUsed = ctx.timeLimit - (timer?.getRemaining() || 0);
 
     const payload = {
-      score: correct,
-      total,
-      percent: scorePercent,
-      passed,
+      score: result.correct,
+      total: result.total,
+      percent: result.percent,
+      passed: passed,
       timeUsed,
-      itemResults,
+      itemResults: result.itemResults,
+      set: ctx.setLetter,        // ⚠️ X5: record which set was taken
+      section: ctx.section,
       completedAt: new Date().toISOString()
     };
+
+    // ⚠️ X17 FIX: Preserve higher score on retake.
+    // Only overwrite if the new score is >= the existing score.
+    const existingScores = Store.getScores(ctx.lrn);
+    const existing = existingScores[ctx.term]?.[ctx.type]?.[ctx.id];
+    if (existing && typeof existing.percent === 'number' && existing.percent > result.percent) {
+      // Keep old score, but update metadata (retry attempt was worse)
+      payload.score = existing.score;
+      payload.total = existing.total;
+      payload.percent = existing.percent;
+      payload.passed = existing.passed;
+      payload.set = existing.set || ctx.setLetter;
+      payload.previousAttempt = {
+        score: result.correct,
+        total: result.total,
+        percent: result.percent,
+        timestamp: new Date().toISOString()
+      };
+    }
 
     Store.saveScore(ctx.lrn, ctx.term, ctx.type, ctx.id, payload);
 
     if (!passed || forceLock) {
       Store.lockAssessment(ctx.lrn, `${ctx.term}_${ctx.id}`, {
         reason: forceLock ? 'tab-switch' : 'failed',
-        score: scorePercent
+        score: result.percent
       });
     }
 
     sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
     document.body.classList.remove('quiz-active');
 
-    renderResults(payload);
+    // Re-read final record (may be the preserved higher score)
+    const finalScores = Store.getScores(ctx.lrn);
+    const finalRecord = finalScores[ctx.term]?.[ctx.type]?.[ctx.id] || payload;
+
+    renderResults(finalRecord);
     submitting = false;
   }
 
   /* ============================================================
-     RESULTS (after submitting)
+     RESULTS
      ============================================================ */
   function renderResults(result) {
     const container = document.getElementById('quiz-root');
@@ -563,7 +639,7 @@ const QuizEngine = (() => {
       <div class="card quiz-result-card" style="max-width:600px;margin:0 auto;">
         <span class="quiz-result-emoji">${emoji}</span>
         <h2 class="quiz-result-title ${result.passed ? 'passed' : 'failed'}">${title}</h2>
-        <p class="quiz-result-message">${ctx.title}</p>
+        <p class="quiz-result-message">${ctx.title} · Set ${ctx.setLetter}</p>
 
         <div class="quiz-result-stats">
           <div>
