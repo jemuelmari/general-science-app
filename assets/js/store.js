@@ -1,6 +1,7 @@
+[FILE: assets/js/store.js]
 /* ============================================================
    store.js — localStorage persistence for General Science
-   Version: 1.0.0
+   Version: 1.0.1
    ============================================================ */
 
 const Store = (() => {
@@ -56,9 +57,24 @@ const Store = (() => {
   function deleteUser(lrn) {
     const users = getAllUsers().filter((u) => u.lrn !== lrn);
     _set(USERS_KEY, users);
-    _remove(`${NS}progress_${lrn}`);
-    _remove(`${NS}scores_${lrn}`);
-    _remove(`${NS}badges_${lrn}`);
+
+    // ⚠️ FIX (A6): Sweep all per-user keys, not just the 3 known ones.
+    // Previously ghost keys (attempts, locks, points, sync codes) leaked.
+    const prefix = NS;
+    const suffix = `_${lrn}`;
+    const keysToRemove = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key) continue;
+      if (key.indexOf(prefix) !== 0) continue;
+      // Match keys like gsa_v1_scores_LRN, gsa_v1_attempts_LRN_quiz1, gsa_v1_points_LRN_term1_w1_d1, gsa_v1_lock_LRN_term1_quiz1
+      if (key.indexOf(suffix) !== -1 || key.indexOf(`_${lrn}_`) !== -1) {
+        keysToRemove.push(key);
+      }
+    }
+
+    keysToRemove.forEach((k) => localStorage.removeItem(k));
   }
 
   /* ---------- Session ---------- */
@@ -96,6 +112,8 @@ const Store = (() => {
   function markDayComplete(lrn, term, week, day) {
     const p = getProgress(lrn);
     if (!p[term]) p[term] = { weeks: {}, completed: [] };
+    if (!Array.isArray(p[term].completed)) p[term].completed = [];
+    if (!p[term].weeks) p[term].weeks = {};
     if (!p[term].weeks[week]) p[term].weeks[week] = {};
     p[term].weeks[week][day] = {
       completed: true,
@@ -115,16 +133,60 @@ const Store = (() => {
     });
   }
 
+  /**
+   * Save an assessment score.
+   *
+   * ⚠️ FIX (X2): TE records are now written directly to scores[term].te
+   * instead of scores[term].te.te. This matches how classrecord.js,
+   * grading-sheet.html, reports.html, and term index pages READ the value.
+   *
+   * ⚠️ FIX (X24): If a PT record already has a teacher-set score,
+   * preserve it when the student re-submits (unless the caller explicitly
+   * passes score: null AND existing score is null).
+   *
+   * ⚠️ NEW: Stores `set` field (A or B) so item analysis can un-shuffle.
+   */
   function saveScore(lrn, term, type, id, data) {
     const scores = getScores(lrn);
-    if (!scores[term]) scores[term] = {};
-    if (!scores[term][type]) scores[term][type] = {};
-    scores[term][type][id] = {
-      ...data,
-      timestamp: new Date().toISOString()
-    };
+    if (!scores[term]) scores[term] = { quizzes: {}, st: {}, pt: {}, te: null, activities: {} };
+
+    // ⚠️ FIX (X2): TE has a different structure — it's a single record, not a map.
+    if (type === 'te') {
+      const existing = scores[term].te || {};
+      // Preserve teacher score if present
+      const preservedScore = (data && data.score != null) ? data.score
+        : (existing.score != null ? existing.score : null);
+      const preservedPercent = (data && data.percent != null) ? data.percent
+        : (existing.percent != null ? existing.percent : null);
+
+      scores[term].te = {
+        ...existing,
+        ...data,
+        score: preservedScore,
+        percent: preservedPercent,
+        timestamp: new Date().toISOString()
+      };
+    } else {
+      if (!scores[term][type]) scores[term][type] = {};
+      const existing = scores[term][type][id] || {};
+
+      // ⚠️ FIX (X24): Preserve teacher-set score on PT re-submit
+      const preservedScore = (data && data.score != null) ? data.score
+        : (existing.score != null ? existing.score : null);
+      const preservedPercent = (data && data.percent != null) ? data.percent
+        : (existing.percent != null ? existing.percent : null);
+
+      scores[term][type][id] = {
+        ...existing,
+        ...data,
+        score: preservedScore,
+        percent: preservedPercent,
+        timestamp: new Date().toISOString()
+      };
+    }
+
     _set(`${NS}scores_${lrn}`, scores);
-    return scores[term][type][id];
+    return type === 'te' ? scores[term].te : scores[term][type][id];
   }
 
   /* ---------- Badges (per term) ---------- */
@@ -134,7 +196,7 @@ const Store = (() => {
 
   function awardBadge(lrn, term, badgeId) {
     const badges = getBadges(lrn);
-    if (!badges[term]) badges[term] = [];
+    if (!Array.isArray(badges[term])) badges[term] = [];
     if (!badges[term].includes(badgeId)) {
       badges[term].push(badgeId);
       _set(`${NS}badges_${lrn}`, badges);
@@ -191,7 +253,7 @@ const Store = (() => {
     const user = getUser(lrn);
     if (!user) return null;
     return {
-      version: '1.0.0',
+      version: '1.0.1',
       app: 'General Science',
       exportedAt: new Date().toISOString(),
       user,
