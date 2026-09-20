@@ -1,3 +1,4 @@
+[FILE: classrecord/grading-sheet.html]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +52,7 @@
     <div class="container flex-between">
       <div>
         <h1>📋 Grading Sheet</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="../classrecord.html">← Class Record</a>
@@ -106,7 +107,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.1</span></p>
   </footer>
 
   <script src="../config.js?v=8"></script>
@@ -228,12 +229,22 @@
         var st2Pct = st2 && st2.percent !== undefined ? st2.percent : null;
         var tePct = te && te.percent !== undefined ? te.percent : null;
 
+        // ⚠️ FIX (X3): null when any EX component missing
         var exAvg = null;
         if (st1Pct !== null && st2Pct !== null && tePct !== null) {
           exAvg = (st1Pct * EX_INTERNAL.st1) + (st2Pct * EX_INTERNAL.st2) + (tePct * EX_INTERNAL.te);
         }
 
-        var final = Transmutation.computeFinalGrade(wwAvg || 0, ptAvg || 0, exAvg || 0, WEIGHTS);
+        // ⚠️ FIX (X3): Safe computation
+        var final = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
+
+        var finalDisplay = final.insufficient ? '—' : final.transmuted;
+        var finalColor = final.insufficient ? '#90a4ae' : (final.passing ? '#2e7d32' : '#c62828');
+        var finalLabel = final.insufficient ? 'Not Yet Available' : (final.passing ? '✅ PASSED' : '❌ FAILED');
+        var finalSubText = final.insufficient
+          ? '⚠️ Waiting for ST1, ST2, and TE'
+          : 'Raw: ' + final.raw.toFixed(2);
+
         var classification = Transmutation.classifyStudent(
           [wwAvg, ptAvg, exAvg].filter(function(v) { return v !== null; }).reduce(function(a, b, _, arr) { return a + b / arr.length; }, 0)
         );
@@ -266,10 +277,10 @@
               '<div class="val">' + (exAvg !== null ? exAvg.toFixed(1) + '%' : '—') + '</div>' +
               '<div class="sub">30% ST1 + 30% ST2 + 40% TE</div>' +
             '</div>' +
-            '<div class="gs-summary-card ' + (final.passing ? 'green' : final.transmuted > 0 ? 'red' : '') + '">' +
+            '<div class="gs-summary-card ' + (final.insufficient ? '' : (final.passing ? 'green' : 'red')) + '">' +
               '<div class="lbl">Final Grade (' + termLabel + ')</div>' +
-              '<div class="val" style="color:' + (final.passing ? '#2e7d32' : '#c62828') + ';">' + (final.transmuted || '—') + '</div>' +
-              '<div class="sub">Raw: ' + (final.raw !== null && final.raw !== undefined ? final.raw.toFixed(1) : '—') + '</div>' +
+              '<div class="val" style="color:' + finalColor + ';">' + finalDisplay + '</div>' +
+              '<div class="sub">' + finalSubText + '</div>' +
             '</div>' +
           '</div>' +
 
@@ -311,18 +322,23 @@
               '<div>' +
                 '<div style="font-size:0.75rem;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;">Final Computation</div>' +
                 '<div style="font-size:0.88rem;color:#37474f;margin-top:6px;line-height:1.6;">' +
-                  '(WW ' + (wwAvg !== null ? wwAvg.toFixed(1) : '0') + ' × ' + WEIGHTS.ww + ') + ' +
-                  '(PT ' + (ptAvg !== null ? ptAvg.toFixed(1) : '0') + ' × ' + WEIGHTS.pt + ') + ' +
-                  '(EX ' + (exAvg !== null ? exAvg.toFixed(1) : '0') + ' × ' + WEIGHTS.ex + ') = ' +
-                  '<strong>' + (final.raw !== null && final.raw !== undefined ? final.raw.toFixed(2) : '—') + '</strong>' +
+                  (final.insufficient
+                    ? '⚠️ Final grade not yet available — waiting for ST1, ST2, and TE.'
+                    : '(WW ' + wwAvg.toFixed(1) + ' × ' + WEIGHTS.ww + ') + ' +
+                      '(PT ' + ptAvg.toFixed(1) + ' × ' + WEIGHTS.pt + ') + ' +
+                      '(EX ' + exAvg.toFixed(1) + ' × ' + WEIGHTS.ex + ') = ' +
+                      '<strong>' + final.raw.toFixed(2) + '</strong>'
+                  ) +
                 '</div>' +
-                '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">' +
-                  'Transmuted grade: <strong style="color:' + (final.passing ? '#2e7d32' : '#c62828') + ';font-size:1rem;">' + (final.transmuted || '—') + '</strong>' +
-                  ' · ' + (final.passing ? '✅ PASSED' : '❌ FAILED') +
-                '</div>' +
+                (final.insufficient ? '' :
+                  '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">' +
+                    'Transmuted grade: <strong style="color:' + finalColor + ';font-size:1rem;">' + final.transmuted + '</strong>' +
+                    ' · ' + finalLabel +
+                  '</div>'
+                ) +
               '</div>' +
-              '<div style="text-align:center;padding:12px 24px;background:#fff;border-radius:12px;border:2px solid ' + (final.passing ? '#2e7d32' : '#c62828') + ';">' +
-                '<div style="font-size:2.5rem;font-weight:900;color:' + (final.passing ? '#2e7d32' : '#c62828') + ';line-height:1;">' + (final.transmuted || '—') + '</div>' +
+              '<div style="text-align:center;padding:12px 24px;background:#fff;border-radius:12px;border:2px solid ' + (final.insufficient ? '#bdbdbd' : (final.passing ? '#2e7d32' : '#c62828')) + ';">' +
+                '<div style="font-size:2.5rem;font-weight:900;color:' + finalColor + ';line-height:1;">' + finalDisplay + '</div>' +
                 '<div style="font-size:0.7rem;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;">Final Grade</div>' +
               '</div>' +
             '</div>' +
