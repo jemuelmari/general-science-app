@@ -1,4 +1,3 @@
-[FILE: config.js]
 /* ============================================================
    config.js — App configuration
    Version: 1.0.1
