@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=5" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=5" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .ia-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .ia-filters .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
@@ -44,6 +44,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -107,11 +108,12 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=5"></script>
-  <script src="../assets/js/app.js?v=5"></script>
-  <script src="../assets/js/store.js?v=5"></script>
-  <script src="../assets/js/transmutation.js?v=5"></script>
-  <script src="../assets/js/teacher-auth.js?v=5"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -127,7 +129,6 @@
       };
 
       TeacherAuthBoot.ready(function(auth) {
-        // auth.require() was already called inside the boot helper's init
         if (!auth.isAuthenticated()) {
           window.location.replace('../teacher-login.html');
           return;
@@ -141,8 +142,7 @@
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
       }, function() {
         document.getElementById('results-area').innerHTML =
-          '<div class="card ia-empty">⚠️ <strong>Auth module failed to load</strong><br>' +
-          '<span style="font-size:0.85rem;">Expected: <code>../assets/js/teacher-auth.js</code></span></div>';
+          '<div class="card ia-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
       function runAnalysis() {
