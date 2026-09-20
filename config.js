@@ -1,11 +1,14 @@
 /* ============================================================
-   config.js — App configuration (teacher password, dev info)
+   config.js — App configuration
    Version: 1.0.0
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Science Online Modular Application',
   VERSION: '1.0.0',
+
+  // Auto-set at build time (edit manually for now)
+  BUILD_DATE: '2026-09-20',
 
   // ---------- Subject Info ----------
   SUBJECT: 'General Science',
@@ -56,9 +59,9 @@ const CONFIG = {
 
   // ---------- Weighting (DO 015, s. 2026 — Academic Elective) ----------
   WEIGHTS: {
-    ww: 0.20,   // Written Works
-    pt: 0.50,   // Performance Tasks
-    ex: 0.30    // Term Exam
+    ww: 0.20,
+    pt: 0.50,
+    ex: 0.30
   },
 
   // ---------- EX Internal Breakdown ----------
@@ -68,10 +71,8 @@ const CONFIG = {
     te: 0.40
   },
 
-  // ---------- Teacher Password ----------
-  // SHA-256 hash of the teacher password.
-  // Default password: "teacher2026"
-  TEACHER_PASSWORD_HASH: 'e2f8fa8d3a8a8f8b4c2c4c6e1a0f9e8d7c6b5a4938271605142332415069789a',
+  // ---------- Teacher Password (SHA-256 hash of "teacher2026") ----------
+  TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
 
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
   TEACHER_MAX_ATTEMPTS: 3,
