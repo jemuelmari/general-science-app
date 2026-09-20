@@ -1,4 +1,3 @@
-[FILE: assets/js/transmutation.js]
 /* ============================================================
    transmutation.js — Adjusted Transmutation Table (SY 2026–2027)
    Version: 1.0.1
