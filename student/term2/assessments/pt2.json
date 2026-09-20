@@ -1,29 +1,36 @@
+[FILE: student/term2/assessments/pt2.json]
 {
   "id": "pt2",
-  "title": "PT2 — Household & Personal Care Product Ingredient Investigation",
-  "shortTitle": "PT2 — Product Ingredient Investigation",
-  "coverage": "Weeks 5–8",
-  "summary": "Investigate the active ingredients of a household or personal care product from your home, research each ingredient, and report its function, other uses, and its impact on humans and the environment.",
-  "instructions": "<p>Your task is to <strong>investigate one household or personal care product</strong> from your home in depth. Choose from categories like:</p><ul style='margin-left:20px;margin-top:6px;'><li>Cleaning products (bleach, detergent, all-purpose cleaner, muriatic acid, disinfectant spray)</li><li>Personal care products (shampoo, soap, toothpaste, deodorant, lotion, sunscreen)</li><li>Kitchen chemicals (baking powder, vinegar, food coloring)</li></ul><p style='margin-top:12px;'>You will then:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Photograph the product label</strong> clearly — the ingredient list must be visible.</li><li><strong>List ALL active ingredients</strong> on the label (usually 3–8 ingredients).</li><li>For <strong>each active ingredient</strong>, research and report:<ul style='margin-left:20px;margin-top:6px;'><li><strong>Chemical name and formula</strong></li><li><strong>Brief description</strong> — what the chemical is</li><li><strong>Function</strong> — why it's in the product</li><li><strong>Other uses</strong> — non-household applications (industrial, medical, agricultural)</li><li><strong>Human impact</strong> — benefits and potential risks (skin irritation, toxicity if misused, etc.)</li><li><strong>Environmental impact</strong> — effects on water, soil, air, and wildlife</li></ul></li><li><strong>Reference the appropriate agencies:</strong> DTI, FDA Philippines, or DENR — and explain their role in regulating this product.</li><li><strong>Recommend safe use and disposal</strong> practices for the product.</li><li>End with a <strong>personal reflection</strong> on how the investigation changed your understanding of household chemistry.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> 4–6 page PDF report with photos and a reference list. Submit as a file, or paste a share link.</p>",
+  "title": "PT2 — Community Immunity Story: A Public Health Campaign",
+  "shortTitle": "PT2 — Community Immunity Story",
+  "coverage": "Weeks 6–8",
+  "summary": "Design a mini public-health campaign that teaches your community how vaccines work and why herd immunity protects everyone.",
+  "instructions": "<p>Your task is to create a <strong>public-health campaign</strong> that educates your barangay, family, or school about vaccines and immunity. You will:</p><ol style='margin-left:20px;margin-top:8px;'><li><strong>Choose ONE campaign format:</strong><ul style='margin-left:20px;margin-top:6px;'><li><strong>Poster or infographic</strong> (PDF, PNG, or hand-drawn photographed)</li><li><strong>Short video PSA</strong> (1–2 minutes, mobile video is fine)</li><li><strong>Comic strip or storyboard</strong> (4–8 panels)</li><li><strong>Radio/audio jingle or 60-second script</strong> with recording</li></ul></li><li><strong>Explain the science of how vaccines work:</strong><ul style='margin-left:20px;margin-top:6px;'><li>What a vaccine contains (weakened, inactivated, or partial pathogen)</li><li>How the immune system responds (B cells, T cells, memory cells)</li><li>How memory cells make future infections harmless</li></ul></li><li><strong>Focus on ONE vaccine-preventable disease in the Philippines:</strong><ul style='margin-left:20px;margin-top:6px;'><li>Examples: measles (tigdas), polio, hepatitis B, diphtheria, tetanus, COVID-19</li><li>Why it matters locally — cases, outbreaks, or risks in your community</li></ul></li><li><strong>Introduce the idea of herd immunity:</strong><ul style='margin-left:20px;margin-top:6px;'><li>How many people need to be vaccinated to protect a community</li><li>Who is protected when herd immunity is reached (babies, elderly, immunocompromised)</li></ul></li><li><strong>Address ONE common vaccine misconception</strong> with scientific evidence. Examples:<ul style='margin-left:20px;margin-top:6px;'><li>\"Vaccines cause autism\" — debunked by extensive studies</li><li>\"Vaccines give you the disease\" — explained by how vaccines train immunity safely</li><li>\"Natural immunity is always better\" — explained by the risks of the actual disease</li></ul></li><li><strong>Include a call to action:</strong> What should your audience DO after seeing your campaign?</li><li><strong>Share your campaign</strong> with at least 3 people (family, classmates, or neighbors) and document it with a short note or photo.</li><li><strong>Reflect</strong> (2–3 paragraphs) on what you learned and why community awareness matters for public health.</li></ol><p style='margin-top:12px;'><strong>Format:</strong> Submit as PDF, video, audio, or image. Include a copy of your script/plan and evidence of sharing.</p>",
   "requirements": [
-    "Product chosen from household or personal care category",
-    "Clear photo of the label with all ingredients visible",
-    "All active ingredients listed and researched",
-    "Chemical name + formula for each ingredient",
-    "Function, other uses, human impact, environmental impact per ingredient",
-    "Reference to DTI, FDA, or DENR role in regulation",
-    "Safe use and disposal recommendations",
+    "Campaign in one of the approved formats (poster, video, comic, audio)",
+    "Explanation of how vaccines work (B cells, T cells, memory cells)",
+    "One specific vaccine-preventable disease in the Philippines",
+    "Explanation of herd immunity with numbers",
+    "Debunking of one common vaccine misconception with evidence",
+    "Clear call to action for the audience",
+    "Evidence of sharing with at least 3 people",
     "Personal reflection (2–3 paragraphs)",
-    "Citations of all sources used (APA or MLA)"
+    "Citations of sources used (APA or MLA)"
   ],
-  "options": null,
+  "options": [
+    "Poster or infographic (PDF, PNG, or hand-drawn photo)",
+    "Short video PSA (1–2 minutes)",
+    "Comic strip or storyboard (4–8 panels)",
+    "Radio/audio jingle or 60-second script with recording"
+  ],
   "rubric": [
-    { "criterion": "Completeness of ingredient research (all listed, all researched)", "points": 25 },
-    { "criterion": "Accuracy of chemical information (names, formulas, functions)", "points": 25 },
-    { "criterion": "Depth of human and environmental impact analysis", "points": 20 },
-    { "criterion": "Correct referencing of DTI / FDA / DENR roles", "points": 10 },
-    { "criterion": "Quality of safe-use and disposal recommendations", "points": 10 },
-    { "criterion": "Organization, grammar, formatting, and citations", "points": 5 },
-    { "criterion": "Personal reflection quality", "points": 5 }
+    { "criterion": "Scientific accuracy of vaccine mechanism (how immunity develops)", "points": 25 },
+    { "criterion": "Clarity of herd immunity explanation with numbers", "points": 15 },
+    { "criterion": "Quality of misconception debunk with evidence", "points": 15 },
+    { "criterion": "Local relevance of the chosen disease for the Philippines", "points": 10 },
+    { "criterion": "Effectiveness of visual/audio design and messaging", "points": 15 },
+    { "criterion": "Evidence of sharing with the community", "points": 10 },
+    { "criterion": "Reflection quality", "points": 5 },
+    { "criterion": "Citations and organization", "points": 5 }
   ]
 }
