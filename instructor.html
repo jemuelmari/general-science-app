@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Teacher Dashboard — General Science</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/teacher.css" />
+  <link rel="stylesheet" href="assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="assets/css/teacher.css?v=8" />
 </head>
 <body>
 
@@ -25,6 +25,7 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
+    <!-- Hero -->
     <div class="teacher-hero">
       <div class="teacher-hero-content">
         <div class="teacher-hero-text">
@@ -48,6 +49,7 @@
         <div class="teacher-hero-actions">
           <a href="classrecord.html">📊 Open Class Record</a>
           <a href="teacher/sync-center.html" class="outline">🔄 Sync Center</a>
+          <a href="diagnostics.html" class="outline" style="border-color:#00e676;color:#00e676;">🔬 Self-Diagnostic</a>
         </div>
       </div>
     </div>
@@ -64,7 +66,6 @@
         <div class="action-icon" style="background:#e3f2fd;">🔓</div>
         <h3>Term Access Control</h3>
         <p>Open or lock each term per section — students can't enter locked terms</p>
-        <span class="action-badge info">New</span>
       </a>
 
       <a class="action-card" href="teacher/sync-center.html">
@@ -114,8 +115,16 @@
         <h3>Class Record</h3>
         <p>Complete gradebook with transmutation, reports, and item analytics</p>
       </a>
+
+      <a class="action-card" href="diagnostics.html" style="border-top:4px solid #2e7d32;background:linear-gradient(135deg,#f1f8f4,#ffffff);">
+        <div class="action-icon" style="background:#e8f5e9;">🔬</div>
+        <h3>Self-Diagnostic</h3>
+        <p>Run a full health check on the app — detects missing files, broken JSON, backend issues, and more</p>
+        <span class="action-badge" style="background:#e8f5e9;color:#1b5e20;">Run anytime</span>
+      </a>
     </div>
 
+    <!-- Student Roster -->
     <div class="section-header">
       <h2 class="section-title">👥 Student Roster</h2>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -157,14 +166,16 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="config.js?v=2"></script>
-  <script src="assets/js/app.js?v=2"></script>
-  <script src="assets/js/store.js?v=2"></script>
-  <script src="assets/js/security.js?v=2"></script>
-  <script src="assets/js/transmutation.js?v=2"></script>
-  <script src="assets/js/activity-tracker.js?v=2"></script>
-  <script src="assets/js/ui-helpers.js?v=2"></script>
-  <script src="assets/js/teacher-auth.js?v=2"></script>
-  <script src="assets/js/teacher.js?v=2"></script>
+  <script src="config.js?v=8"></script>
+  <script src="assets/js/app.js?v=8"></script>
+  <script src="assets/js/version-sync.js?v=1"></script>
+  <script src="assets/js/store.js?v=8"></script>
+  <script src="assets/js/security.js?v=8"></script>
+  <script src="assets/js/transmutation.js?v=8"></script>
+  <script src="assets/js/activity-tracker.js?v=8"></script>
+  <script src="assets/js/ui-helpers.js?v=8"></script>
+  <script src="assets/js/teacher-auth.js?v=8"></script>
+  <script src="assets/js/teacher-auth-boot.js?v=1"></script>
+  <script src="assets/js/teacher.js?v=8"></script>
 </body>
 </html>
