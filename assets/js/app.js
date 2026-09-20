@@ -1,13 +1,18 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science Online Modular Application
+   ------------------------------------------------------------
+   Changelog v1.1.0: Enhanced version rendering — displays
+   "v1.0.0 · build YYYY-MM-DD" everywhere. Auto-syncs the
+   version string across every page from CONFIG.
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
   const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1.0.0';
+  const BUILD_DATE = (typeof CONFIG !== 'undefined' && CONFIG.BUILD_DATE) || '';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Science Online Modular Application';
 
   /* ---------- State ---------- */
@@ -235,37 +240,60 @@ const APP = (() => {
     return typeof name === 'string' && name.trim().length >= 2;
   }
 
-  /* ---------- Version Rendering ---------- */
+  /* ---------- Version String Builder ---------- */
+  function versionString() {
+    const v = 'v' + VERSION;
+    return BUILD_DATE ? v + ' · build ' + BUILD_DATE : v;
+  }
+
+  /* ---------- Version Rendering (enhanced) ---------- */
   function renderVersions() {
-    const v = `v${VERSION}`;
+    const vDisplay = versionString();
+    const vSimple = 'v' + VERSION;
 
-    document.querySelectorAll('.version').forEach((e) => {
-      e.textContent = v;
+    // Elements with .version class or [data-version] attribute
+    document.querySelectorAll('.version, [data-version]').forEach((e) => {
+      // If element has a data-version attribute, use its value; otherwise show full string
+      const attr = e.getAttribute('data-version');
+      if (attr === 'simple') {
+        e.textContent = vSimple;
+      } else {
+        e.textContent = vDisplay;
+      }
     });
 
-    document.querySelectorAll('[data-version]').forEach((e) => {
-      e.textContent = v;
-    });
-
+    // Footer text: replace any vX.X.X pattern with current full string
     document.querySelectorAll('.app-footer, footer').forEach((footer) => {
       footer.childNodes.forEach((node) => {
         if (node.nodeType === Node.TEXT_NODE) {
-          const updated = node.textContent.replace(/v\d+\.\d+\.\d+/g, v);
-          if (updated !== node.textContent) {
-            node.textContent = updated;
-          }
+          const updated = node.textContent.replace(/v\d+\.\d+\.\d+/g, vDisplay);
+          if (updated !== node.textContent) node.textContent = updated;
         }
         node.querySelectorAll?.('p').forEach((p) => {
-          const updated = p.textContent.replace(/v\d+\.\d+\.\d+/g, v);
-          if (updated !== p.textContent) {
-            p.textContent = updated;
-          }
+          const updated = p.textContent.replace(/v\d+\.\d+\.\d+/g, vDisplay);
+          if (updated !== p.textContent) p.textContent = updated;
         });
       });
     });
 
+    // <title> tag
     if (document.title.includes('v')) {
-      document.title = document.title.replace(/v\d+\.\d+\.\d+/g, v);
+      document.title = document.title.replace(/v\d+\.\d+\.\d+/g, vSimple);
+    }
+
+    // <meta name="version"> for debugging
+    let metaV = document.querySelector('meta[name="app-version"]');
+    if (!metaV) {
+      metaV = document.createElement('meta');
+      metaV.name = 'app-version';
+      document.head.appendChild(metaV);
+    }
+    metaV.content = versionString();
+
+    // Log once on load
+    if (!window.__versionLogged) {
+      console.log(`[${APP_NAME}] ${versionString()}`);
+      window.__versionLogged = true;
     }
   }
 
@@ -292,46 +320,14 @@ const APP = (() => {
   }
 
   /* ---------- Inject Manifest Meta ---------- */
-    function injectManifest() {
+  function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
-
-    // Compute depth-based path to root
-    const path = window.location.pathname;
-    let depth = 0;
-
-    // Count directory depth below the app root
-    // Examples:
-    //   /general-science-app/                                     → 0
-    //   /general-science-app/student/dashboard.html               → 1  (../)
-    //   /general-science-app/student/term2/index.html             → 2  (../../)
-    //   /general-science-app/student/term2/week1/day.html         → 3  (../../../)
-    //   /general-science-app/student/term2/week1/assessments/...  → 4  (../../../../)
-    //   /general-science-app/teacher/xxx.html                     → 2  (../../)
-    //   /general-science-app/classrecord/xxx.html                 → 2  (../../)
-
-    // Strip leading slash + repo name (first path segment)
-    let parts = path.split('/').filter(Boolean);
-
-    // Remove the leading repo name (e.g., "general-science-app")
-    // If the app is deployed at the domain root, there is no repo name —
-    // in that case `parts` is just the sub-path.
-    // We detect by checking if the last part contains a '.html' or is empty.
-    // Safer: use document.baseURI or a known anchor.
-    // Simpler heuristic: the repo name is the first segment when the path
-    // does NOT start with the app root. This handles both GitHub Pages
-    // sub-path deployments and custom-domain root deployments.
-    if (parts.length > 0) parts = parts.slice(1); // remove repo name or first segment
-
-    // Remove the last segment if it's a file
-    if (parts.length > 0 && /\.(html|htm)$/i.test(parts[parts.length - 1])) {
-      parts.pop();
-    }
-
-    depth = parts.length;
-
-    const prefix = depth > 0 ? '../'.repeat(depth) : './';
     const link = document.createElement('link');
     link.rel = 'manifest';
+    const path = window.location.pathname;
+    let prefix = '';
+    if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
+    else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
     link.href = prefix + 'manifest.json';
     document.head.appendChild(link);
 
@@ -343,7 +339,6 @@ const APP = (() => {
 
   /* ---------- Init ---------- */
   function init() {
-    console.log(`[${APP_NAME}] v${VERSION}`);
     renderVersions();
     injectManifest();
     renderDeveloperFooter();
@@ -353,7 +348,9 @@ const APP = (() => {
   /* ---------- Public API ---------- */
   return {
     VERSION,
+    BUILD_DATE,
     APP_NAME,
+    versionString,
     state,
     Router,
     $, $$, el,
