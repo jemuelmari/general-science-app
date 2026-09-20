@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Assessment Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .ast-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .ast-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -42,6 +42,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -83,10 +84,6 @@
           <label class="form-label">&nbsp;</label>
           <button id="btn-export" class="btn btn-outline">📥 Export CSV</button>
         </div>
-        <div class="form-group" style="flex:0;">
-          <label class="form-label">&nbsp;</label>
-          <button id="btn-debug" class="btn btn-outline" style="font-size:0.75rem;">🔍 Debug Scores</button>
-        </div>
       </div>
     </div>
 
@@ -102,11 +99,12 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
-  <script src="../assets/js/store.js?v=7"></script>
-  <script src="../assets/js/ui-helpers.js?v=7"></script>
-  <script src="../assets/js/teacher-auth.js?v=7"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -127,54 +125,26 @@
       var lastMatrix = null;
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
-
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
         document.getElementById('btn-refresh').addEventListener('click', render);
         document.getElementById('btn-export').addEventListener('click', exportCSV);
-        document.getElementById('btn-debug').addEventListener('click', debugScores);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-
         render();
       }, function() {
         document.getElementById('results-area').innerHTML =
           '<div class="card ast-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
-      /* ============================================================
-         ROBUST SCORE LOOKUP
-         Tries multiple possible key names
-         ============================================================ */
       function findRecord(lrn, term, assessment) {
         var scores = Store.getScores(lrn);
         var t = scores[term] || {};
-
-        // Primary path: t[type][id]
-        if (t[assessment.type] && t[assessment.type][assessment.id]) {
-          return t[assessment.type][assessment.id];
-        }
-
-        // Fallback: t[type] itself if it's a single object (te is stored directly as t.te)
-        if (assessment.type === 'te' && t.te) {
-          return t.te;
-        }
-
-        // Fallback: search all sub-objects for the id
+        if (t[assessment.type] && t[assessment.type][assessment.id]) return t[assessment.type][assessment.id];
+        if (assessment.type === 'te' && t.te) return t.te;
         var keys = Object.keys(t);
         for (var i = 0; i < keys.length; i++) {
           var obj = t[keys[i]];
-          if (obj && typeof obj === 'object' && obj[assessment.id]) {
-            return obj[assessment.id];
-          }
+          if (obj && typeof obj === 'object' && obj[assessment.id]) return obj[assessment.id];
         }
-
-        // Fallback: if type is 'pt', also check 'pt' object directly
-        if (assessment.type === 'pt' && t.pt && t.pt[assessment.id]) {
-          return t.pt[assessment.id];
-        }
-
         return null;
       }
 
@@ -185,12 +155,7 @@
 
         var students = Store.getAllUsers();
         if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
-
-        if (!students.length) {
-          area.innerHTML = '<div class="card ast-empty">👥 No students found</div>';
-          return;
-        }
-
+        if (!students.length) { area.innerHTML = '<div class="card ast-empty">👥 No students found</div>'; return; }
         students = APP.sortStudents(students, 'last', 'asc');
 
         var bySection = {};
@@ -201,9 +166,7 @@
         });
 
         lastMatrix = {
-          term: term,
-          sectionFilter: sectionFilter,
-          students: students,
+          term: term, sectionFilter: sectionFilter, students: students,
           rows: students.map(function(s) {
             var cells = ASSESSMENTS.map(function(a) {
               var record = findRecord(s.lrn, term, a);
@@ -211,16 +174,10 @@
                 var locked = Store.isAssessmentLocked && Store.isAssessmentLocked(s.lrn, term + '_' + a.id);
                 return { key: a.key, label: a.label, full: a.full, type: a.type, status: locked ? 'locked' : 'not-taken', record: null };
               }
-
-              var pct = (record.percent !== undefined && record.percent !== null)
-                ? record.percent
-                : (record.total ? Math.round((record.score / record.total) * 100) : null);
-
+              var pct = (record.percent !== undefined && record.percent !== null) ? record.percent : (record.total ? Math.round((record.score / record.total) * 100) : null);
               var status = 'on-track';
               if (a.type === 'pt') {
-                if (record.score !== undefined && record.score !== null) {
-                  status = record.score >= 75 ? 'passed' : record.score >= 65 ? 'remediation' : 'failed';
-                }
+                if (record.score !== undefined && record.score !== null) status = record.score >= 75 ? 'passed' : record.score >= 65 ? 'remediation' : 'failed';
               } else {
                 if (pct !== null) {
                   if (pct >= 90) status = 'passed';
@@ -229,7 +186,6 @@
                   else status = 'failed';
                 }
               }
-
               return { key: a.key, label: a.label, full: a.full, type: a.type, status: status, record: record, percent: pct };
             });
             return { student: s, cells: cells };
@@ -250,53 +206,27 @@
             '<div class="stat-card ' + (completionPct >= 75 ? 'green' : completionPct >= 50 ? 'amber' : 'red') + '"><div class="stat-icon">📊</div><div class="stat-value">' + completionPct + '%</div><div class="stat-label">Completion</div></div>' +
             '<div class="stat-card red"><div class="stat-icon">🔒</div><div class="stat-value">' + lockCount + '</div><div class="stat-label">Locked</div></div>' +
           '</div>' +
-          '<div class="matrix-wrapper">' +
-            '<table class="matrix-table">' +
-              '<thead><tr><th>Student</th>' +
-                ASSESSMENTS.map(function(a) { return '<th title="' + a.full + '">' + a.label + '</th>'; }).join('') +
-              '</tr></thead><tbody>';
+          '<div class="matrix-wrapper"><table class="matrix-table"><thead><tr><th>Student</th>' +
+            ASSESSMENTS.map(function(a) { return '<th title="' + a.full + '">' + a.label + '</th>'; }).join('') +
+          '</tr></thead><tbody>';
 
         Object.keys(bySection).forEach(function(section) {
           var secStudents = bySection[section];
           html += '<tr><td colspan="' + (ASSESSMENTS.length + 1) + '" class="section-group-header">' + section + ' (' + secStudents.length + ')</td></tr>';
-
           secStudents.forEach(function(s) {
             var row = lastMatrix.rows.find(function(r) { return r.student.lrn === s.lrn; });
             var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-
-            html += '<tr><td>' +
-              '<div style="display:flex;align-items:center;gap:10px;">' +
-                '<div class="student-avatar av-1" style="width:32px;height:32px;font-size:0.7rem;">' + initials + '</div>' +
-                '<div>' +
-                  '<div style="font-weight:600;color:#1a1a1a;font-size:0.85rem;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
-                  '<div style="font-size:0.7rem;color:#90a4ae;">LRN: ' + APP.formatLRN(s.lrn) + '</div>' +
-                '</div>' +
-              '</div>' +
-            '</td>';
-
+            html += '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="student-avatar av-1" style="width:32px;height:32px;font-size:0.7rem;">' + initials + '</div><div><div style="font-weight:600;color:#1a1a1a;font-size:0.85rem;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div><div style="font-size:0.7rem;color:#90a4ae;">LRN: ' + APP.formatLRN(s.lrn) + '</div></div></div></td>';
             row.cells.forEach(function(c) {
-              var display = '—';
-              var title = c.full + ': Not yet taken';
-              var cls = 'not-taken';
-
-              if (c.status === 'locked') {
-                display = '🔒';
-                title = c.full + ': Locked';
-                cls = 'locked';
-              } else if (c.record) {
-                if (c.type === 'pt') {
-                  display = (c.record.score !== undefined && c.record.score !== null) ? String(c.record.score) : '✓';
-                  title = c.full + ': ' + ((c.record.score !== undefined && c.record.score !== null) ? c.record.score + '/100' : 'Submitted');
-                } else {
-                  display = (c.record.score !== undefined ? c.record.score : '?') + '/' + (c.record.total !== undefined ? c.record.total : '?');
-                  title = c.full + ': ' + display + (c.percent !== null ? ' (' + c.percent + '%)' : '');
-                }
+              var display = '—', title = c.full + ': Not yet taken', cls = 'not-taken';
+              if (c.status === 'locked') { display = '🔒'; title = c.full + ': Locked'; cls = 'locked'; }
+              else if (c.record) {
+                if (c.type === 'pt') { display = (c.record.score !== undefined && c.record.score !== null) ? String(c.record.score) : '✓'; title = c.full + ': ' + ((c.record.score !== undefined && c.record.score !== null) ? c.record.score + '/100' : 'Submitted'); }
+                else { display = (c.record.score !== undefined ? c.record.score : '?') + '/' + (c.record.total !== undefined ? c.record.total : '?'); title = c.full + ': ' + display; }
                 cls = c.status;
               }
-
               html += '<td><span class="matrix-cell ' + cls + '" title="' + title + '">' + display + '</span></td>';
             });
-
             html += '</tr>';
           });
         });
@@ -311,29 +241,6 @@
             '<span class="legend-item"><span class="legend-swatch locked">🔒</span> Locked</span>' +
           '</div>';
 
-        area.innerHTML = html;
-      }
-
-      /* ============================================================
-         DEBUG: show raw score data
-         ============================================================ */
-      function debugScores() {
-        var area = document.getElementById('results-area');
-        var students = Store.getAllUsers();
-        if (!students.length) { APP.toast('No students to debug', 'warning'); return; }
-
-        var html = '<div class="card"><div class="card-header"><span class="card-title">🔍 Raw Score Data (all students)</span></div>';
-        students.forEach(function(s) {
-          var scores = Store.getScores(s.lrn);
-          html += '<div style="margin-bottom:20px;padding:12px;background:#f5f7fa;border-radius:8px;">';
-          html += '<div style="font-weight:700;margin-bottom:8px;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + ' (LRN ' + s.lrn + ')</div>';
-          ['term1', 'term2', 'term3'].forEach(function(t) {
-            var termData = scores[t] || {};
-            html += '<div style="margin-bottom:6px;font-size:0.85rem;"><strong>' + t + ':</strong> ' + JSON.stringify(termData) + '</div>';
-          });
-          html += '</div>';
-        });
-        html += '</div>';
         area.innerHTML = html;
       }
 
