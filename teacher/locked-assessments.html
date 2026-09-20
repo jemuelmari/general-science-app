@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Locked Assessments — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .la-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .la-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -38,6 +38,7 @@
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
+        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -91,10 +92,12 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
-  <script src="../assets/js/store.js?v=7"></script>
-  <script src="../assets/js/teacher-auth.js?v=7"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
@@ -108,11 +111,7 @@
       };
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
-
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
         document.getElementById('btn-refresh').addEventListener('click', render);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
         render();
@@ -124,7 +123,6 @@
       function scanLocked() {
         var termFilter = document.getElementById('filter-term').value;
         var sectionFilter = document.getElementById('filter-section').value;
-
         var students = Store.getAllUsers();
         if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
         if (!students.length) return [];
@@ -204,7 +202,6 @@
           var items = grouped[lrn];
           var s = items[0].student;
           var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-
           html +=
             '<div style="margin-bottom:24px;">' +
               '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px 16px;background:#f5f7fa;border-radius:10px;">' +
@@ -220,7 +217,6 @@
         });
 
         area.innerHTML = html;
-
         area.querySelectorAll('[data-unlock]').forEach(function(btn) {
           btn.addEventListener('click', function() {
             promptUnlock(btn.dataset.unlock, btn.dataset.student, btn.dataset.label);
@@ -230,11 +226,9 @@
 
       function renderLockCard(l) {
         var isTampered = l.lockData.reason === 'tab-switch';
-        var reasonClass = isTampered ? 'tampered' : 'failed';
         var termLabel = l.term.replace('term', 'Term ');
         var lockedDate = l.lockData.lockedAt ? APP.formatDate(l.lockData.lockedAt) : '—';
-        var score = (l.lockData.score !== undefined && l.lockData.score !== null)
-          ? l.lockData.score + '%'
+        var score = (l.lockData.score !== undefined && l.lockData.score !== null) ? l.lockData.score + '%'
           : (l.record && l.record.percent !== undefined ? l.record.percent + '%' : '—');
 
         return '<div class="lock-card ' + (isTampered ? 'tampered' : '') + '">' +
@@ -248,11 +242,11 @@
           '</div>' +
           '<div class="lock-meta">' +
             '<div><strong>Score at lock:</strong> ' + score + '</div>' +
-            '<div><strong>Reason:</strong> ' + (isTampered ? 'Tab-switch / Anti-cheat trigger' : 'Below passing score') + '</div>' +
+            '<div><strong>Reason:</strong> ' + (isTampered ? 'Tab-switch' : 'Below passing score') + '</div>' +
           '</div>' +
-          '<div class="lock-reason ' + reasonClass + '">' +
+          '<div class="lock-reason ' + (isTampered ? 'tampered' : 'failed') + '">' +
             (isTampered
-              ? '⚠️ Auto-locked because the student switched tabs or attempted to copy content. Review with the student before unlocking.'
+              ? '⚠️ Auto-locked because the student switched tabs or attempted to copy content.'
               : '📖 Student did not reach the 75% passing score. Consider remediation before unlocking for retake.') +
           '</div>' +
           '<div class="lock-actions">' +
@@ -280,8 +274,7 @@
         var modal = document.createElement('div');
         modal.className = 'confirm-modal';
         modal.innerHTML =
-          '<h3>' + opts.title + '</h3>' +
-          '<p>' + opts.message + '</p>' +
+          '<h3>' + opts.title + '</h3><p>' + opts.message + '</p>' +
           '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">' +
             '<button class="btn btn-outline" id="cc-cancel">Cancel</button>' +
             '<button class="btn btn-primary" id="cc-confirm">' + opts.confirmText + '</button>' +
