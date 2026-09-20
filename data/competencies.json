@@ -6,7 +6,7 @@
     "schoolYear": "2026-2027",
     "version": "1.0.0",
     "generatedAt": "2026-09-20",
-    "notes": "Master competency list for TOS Generator, Item Analysis, and Term Exam auto-generation. Hours sourced from BOW. Bloom's levels are achievable per competency and add hours = weeks × 6 (1.5 hrs/day × 4 days/week)",
+    "notes": "Master competency list for TOS Generator, Item Analysis, and Term Exam auto-generation. Hours sourced from BOW. Bloom's levels are achievable per competency and add hours = weeks × 6 (1.5 hrs/day × 4 days/week)."
   },
 
   "term1": {
