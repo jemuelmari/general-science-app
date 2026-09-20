@@ -1,8 +1,14 @@
+[FILE: assets/js/classrecord.js]
 /* ============================================================
    classrecord.js — Gradebook logic
-   Version: 1.0.0
+   Version: 1.0.1
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.0.1 (Phase 1):
+     - X3 fix: EX uses null when any ST/TE missing; final grade
+       falls back to `insufficient: true` (displays "—").
+     - Uses Transmutation.computeFinalGradeSafe().
+
    Features:
    - Auth guard via TeacherAuth
    - Term + section filters
@@ -20,7 +26,7 @@
   if (!TeacherAuth.require()) return;
 
   /* ============================================================
-     WEIGHTING CONSTANTS (per config.js, DO 015, s. 2026)
+     WEIGHTING CONSTANTS
      ============================================================ */
   const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || {
     ww: 0.20,
@@ -82,19 +88,14 @@
       const ptPcts = [pt1, pt2, pt3].filter((v) => v != null);
       const ptAvg = ptPcts.length ? ptPcts.reduce((a, b) => a + b, 0) / ptPcts.length : null;
 
-      // EX = 30% ST1 + 30% ST2 + 40% TE
+      // ⚠️ FIX (X3): EX null when any ST/TE missing
       let exAvg = null;
       if (st1 != null && st2 != null && te != null) {
         exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
       }
 
-      // Compute final grade
-      const finalGrade = Transmutation.computeFinalGrade(
-        wwAvg ?? 0,
-        ptAvg ?? 0,
-        exAvg ?? 0,
-        WEIGHTS
-      );
+      // ⚠️ FIX (X3): Safe final grade — returns insufficient: true if any null
+      const finalGrade = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
 
       return {
         student: s,
@@ -115,47 +116,52 @@
     if (!tbody) return;
 
     if (!rows.length) {
-      tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found.</td></tr>`;
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found.</td></tr>';
       return;
     }
 
     tbody.innerHTML = '';
     rows.forEach((r) => {
       const s = r.student;
-      const initials = `${(s.firstName || '?').charAt(0)}${(s.lastName || '?').charAt(0)}`.toUpperCase();
+      const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
       const avatarClass = UI.getAvatarClass(s.lrn);
       const tr = document.createElement('tr');
 
-      tr.innerHTML = `
-        <td class="student-cell">
-          <div class="student-cell">
-            <div class="student-avatar ${avatarClass}">${initials}</div>
-            <div class="student-info">
-              <div class="name">${APP.formatFullName(s.lastName, s.firstName, s.middleName)}</div>
-              <div class="meta">${s.section}</div>
-            </div>
-          </div>
-        </td>
-        ${cellValue(r.scores.q1)}
-        ${cellValue(r.scores.q2)}
-        ${cellValue(r.scores.q3)}
-        ${cellValue(r.scores.pt1, 'pt')}
-        ${cellValue(r.scores.pt2, 'pt')}
-        ${cellValue(r.scores.pt3, 'pt')}
-        ${cellValue(r.scores.st1)}
-        ${cellValue(r.scores.st2)}
-        ${cellValue(r.scores.te)}
-        <td class="final-grade ${r.final.transmuted >= 75 ? 'passing' : 'failing'}">
-          ${r.final.transmuted || '—'}
-        </td>
-      `;
+      // ⚠️ FIX (X3): handle insufficient final
+      let finalCell;
+      if (r.final.insufficient || r.final.transmuted == null) {
+        finalCell = '<td class="final-grade" style="color:#bdbdbd;background:#fafafa;">—</td>';
+      } else {
+        finalCell = '<td class="final-grade ' + (r.final.transmuted >= 75 ? 'passing' : 'failing') + '">' + r.final.transmuted + '</td>';
+      }
+
+      tr.innerHTML =
+        '<td class="student-cell">' +
+          '<div class="student-cell">' +
+            '<div class="student-avatar ' + avatarClass + '">' + initials + '</div>' +
+            '<div class="student-info">' +
+              '<div class="name">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
+              '<div class="meta">' + s.section + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</td>' +
+        cellValue(r.scores.q1) +
+        cellValue(r.scores.q2) +
+        cellValue(r.scores.q3) +
+        cellValue(r.scores.pt1) +
+        cellValue(r.scores.pt2) +
+        cellValue(r.scores.pt3) +
+        cellValue(r.scores.st1) +
+        cellValue(r.scores.st2) +
+        cellValue(r.scores.te) +
+        finalCell;
 
       tbody.appendChild(tr);
     });
   }
 
-  function cellValue(pct, type) {
-    if (pct == null) return `<td class="empty-cell">—</td>`;
+  function cellValue(pct) {
+    if (pct == null) return '<td class="empty-cell">—</td>';
     const rounded = Math.round(pct);
     let color = '#37474f';
     if (rounded >= 90) color = '#2e7d32';
@@ -163,7 +169,7 @@
     else if (rounded >= 65) color = '#ed6c02';
     else color = '#c62828';
 
-    return `<td class="grade-cell" style="color:${color};">${rounded}</td>`;
+    return '<td class="grade-cell" style="color:' + color + ';">' + rounded + '</td>';
   }
 
   /* ============================================================
@@ -174,48 +180,32 @@
     if (!stats) return;
 
     if (!rows.length) {
-      stats.innerHTML = `<div class="cr-stat-card"><div class="cs-value">0</div><div class="cs-label">No Students</div></div>`;
+      stats.innerHTML = '<div class="cr-stat-card"><div class="cs-value">0</div><div class="cs-label">No Students</div></div>';
       return;
     }
 
-    const finals = rows.map((r) => r.final.transmuted).filter((v) => v > 0);
+    // ⚠️ FIX (X3): Exclude insufficient final grades
+    const finals = rows
+      .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
+      .filter((v) => v != null && v > 0);
+
     const avg = finals.length ? finals.reduce((a, b) => a + b, 0) / finals.length : 0;
     const passing = finals.filter((v) => v >= 75).length;
     const failing = finals.filter((v) => v < 75).length;
+
+    const submissionCount = rows.reduce((acc, r) => {
+      return acc + Object.values(r.scores).filter((v) => v != null).length;
+    }, 0);
     const completion = rows.length
-      ? Math.round(
-          rows.reduce((acc, r) => acc + Object.values(r.scores).filter((v) => v != null).length, 0) /
-          (rows.length * 9) * 100
-        )
+      ? Math.round((submissionCount / (rows.length * 9)) * 100)
       : 0;
 
-    stats.innerHTML = `
-      <div class="cr-stat-card blue">
-        <div class="cs-icon">👥</div>
-        <div class="cs-value">${rows.length}</div>
-        <div class="cs-label">Students</div>
-      </div>
-      <div class="cr-stat-card ${avg >= 75 ? 'green' : 'amber'}">
-        <div class="cs-icon">📊</div>
-        <div class="cs-value">${avg.toFixed(1)}</div>
-        <div class="cs-label">Class Average</div>
-      </div>
-      <div class="cr-stat-card green">
-        <div class="cs-icon">✅</div>
-        <div class="cs-value">${passing}</div>
-        <div class="cs-label">Passing</div>
-      </div>
-      <div class="cr-stat-card red">
-        <div class="cs-icon">❌</div>
-        <div class="cs-value">${failing}</div>
-        <div class="cs-label">Failing</div>
-      </div>
-      <div class="cr-stat-card ${completion >= 75 ? 'green' : 'amber'}">
-        <div class="cs-icon">📝</div>
-        <div class="cs-value">${completion}%</div>
-        <div class="cs-label">Submission Rate</div>
-      </div>
-    `;
+    stats.innerHTML =
+      '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Students</div></div>' +
+      '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div></div>' +
+      '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing</div></div>' +
+      '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
+      '<div class="cr-stat-card ' + (completion >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📝</div><div class="cs-value">' + completion + '%</div><div class="cs-label">Submission Rate</div></div>';
   }
 
   /* ============================================================
@@ -225,9 +215,11 @@
     const grid = document.getElementById('distribution-grid');
     if (!grid) return;
 
-    const finals = rows.map((r) => r.final.transmuted).filter((v) => v > 0);
+    // ⚠️ FIX (X3): exclude insufficient
+    const finals = rows
+      .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
+      .filter((v) => v != null && v > 0);
 
-    // Grade ranges
     const ranges = [
       { label: '90–100 (Outstanding)',   min: 90, max: 100, color: '#2e7d32' },
       { label: '85–89 (Very Satisfactory)', min: 85, max: 89, color: '#0d47a1' },
@@ -241,7 +233,6 @@
       count: finals.filter((f) => f >= r.min && f <= r.max).length
     }));
 
-    // Proficiency level distribution (based on MPS-like avg of quizzes + STs)
     const pcts = [];
     rows.forEach((r) => {
       Object.values(r.scores).forEach((v) => { if (v != null) pcts.push(v); });
@@ -249,36 +240,36 @@
     const avgMPS = pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0;
     const pl = Transmutation.proficiencyLevel(avgMPS);
 
-    grid.innerHTML = `
-      <div class="report-card">
-        <h4>📊 Grade Distribution</h4>
-        ${rangeCounts.map((r) => UI.renderDistributionRow(r.label, r.count, finals.length, r.color)).join('')}
-        ${finals.length === 0 ? '<p class="text-muted text-small">No grades to display yet.</p>' : ''}
-      </div>
+    grid.innerHTML =
+      '<div class="report-card">' +
+        '<h4>📊 Grade Distribution</h4>' +
+        rangeCounts.map((r) => UI.renderDistributionRow(r.label, r.count, finals.length, r.color)).join('') +
+        (finals.length === 0 ? '<p class="text-muted text-small">No grades to display yet.</p>' : '') +
+      '</div>' +
 
-      <div class="report-card">
-        <h4>🎯 Class Performance Summary</h4>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div>
-            <div class="text-small text-muted" style="margin-bottom:6px;">Class MPS (across all assessments)</div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="font-size:2rem;font-weight:800;color:${mpsColor(avgMPS)};">${avgMPS.toFixed(1)}%</div>
-              <span class="pl-indicator pl-${pl.key}">${pl.level}</span>
-            </div>
-          </div>
-          <div>
-            <div class="text-small text-muted" style="margin-bottom:6px;">Proficiency Level</div>
-            <div style="font-size:0.9rem;color:#37474f;line-height:1.5;">
-              Based on MPS, the class is classified as
-              <strong style="color:${mpsColor(avgMPS)};">${pl.level}</strong>.
-            </div>
-          </div>
-        </div>
-      </div>
+      '<div class="report-card">' +
+        '<h4>🎯 Class Performance Summary</h4>' +
+        '<div style="display:flex;flex-direction:column;gap:14px;">' +
+          '<div>' +
+            '<div class="text-small text-muted" style="margin-bottom:6px;">Class MPS (across all assessments)</div>' +
+            '<div style="display:flex;align-items:center;gap:12px;">' +
+              '<div style="font-size:2rem;font-weight:800;color:' + mpsColor(avgMPS) + ';">' + avgMPS.toFixed(1) + '%</div>' +
+              '<span class="pl-indicator pl-' + pl.key + '">' + pl.level + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<div class="text-small text-muted" style="margin-bottom:6px;">Proficiency Level</div>' +
+            '<div style="font-size:0.9rem;color:#37474f;line-height:1.5;">' +
+              'Based on MPS, the class is classified as ' +
+              '<strong style="color:' + mpsColor(avgMPS) + ';">' + pl.level + '</strong>.' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
 
-      <div class="report-card">
-        <h4>📝 Submission Summary</h4>
-        ${['q1', 'q2', 'q3', 'pt1', 'pt2', 'pt3', 'st1', 'st2', 'te'].map((k) => {
+      '<div class="report-card">' +
+        '<h4>📝 Submission Summary</h4>' +
+        ['q1', 'q2', 'q3', 'pt1', 'pt2', 'pt3', 'st1', 'st2', 'te'].map((k) => {
           const label = {
             q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3',
             pt1: 'PT1', pt2: 'PT2', pt3: 'PT3',
@@ -286,9 +277,8 @@
           }[k];
           const count = rows.filter((r) => r.scores[k] != null).length;
           return UI.renderDistributionRow(label, count, rows.length, '#1976d2');
-        }).join('')}
-      </div>
-    `;
+        }).join('') +
+      '</div>';
   }
 
   function mpsColor(mps) {
@@ -311,7 +301,6 @@
       st1: 'ST1', st2: 'ST2', te: 'Term Exam'
     };
 
-    // Compute average per assessment
     const assessmentStats = Object.keys(labels).map((k) => {
       const pcts = rows.map((r) => r.scores[k]).filter((v) => v != null);
       return {
@@ -326,39 +315,38 @@
     const most = sorted.slice(0, 3);
     const least = sorted.slice(-3).reverse();
 
-    grid.innerHTML = `
-      <div class="report-card">
-        <h4>✅ Most Learned (Top 3)</h4>
-        <ul class="mll-list">
-          ${most.map((a) => `
-            <li>
-              <div class="mll-desc">
-                <span class="mll-code">${a.count} submissions</span>
-                ${a.label}
-              </div>
-              <div class="mll-mps" style="color:#2e7d32;">${a.avg.toFixed(1)}%</div>
-            </li>
-          `).join('')}
-          ${most.length === 0 ? '<li class="text-muted">No data yet.</li>' : ''}
-        </ul>
-      </div>
+    grid.innerHTML =
+      '<div class="report-card">' +
+        '<h4>✅ Most Learned (Top 3)</h4>' +
+        '<ul class="mll-list">' +
+          most.map((a) =>
+            '<li>' +
+              '<div class="mll-desc">' +
+                '<span class="mll-code">' + a.count + ' submissions</span>' +
+                a.label +
+              '</div>' +
+              '<div class="mll-mps" style="color:#2e7d32;">' + a.avg.toFixed(1) + '%</div>' +
+            '</li>'
+          ).join('') +
+          (most.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
+        '</ul>' +
+      '</div>' +
 
-      <div class="report-card">
-        <h4>⚠️ Least Learned (Bottom 3)</h4>
-        <ul class="mll-list">
-          ${least.map((a) => `
-            <li>
-              <div class="mll-desc">
-                <span class="mll-code">${a.count} submissions</span>
-                ${a.label}
-              </div>
-              <div class="mll-mps" style="color:#c62828;">${a.avg.toFixed(1)}%</div>
-            </li>
-          `).join('')}
-          ${least.length === 0 ? '<li class="text-muted">No data yet.</li>' : ''}
-        </ul>
-      </div>
-    `;
+      '<div class="report-card">' +
+        '<h4>⚠️ Least Learned (Bottom 3)</h4>' +
+        '<ul class="mll-list">' +
+          least.map((a) =>
+            '<li>' +
+              '<div class="mll-desc">' +
+                '<span class="mll-code">' + a.count + ' submissions</span>' +
+                a.label +
+              '</div>' +
+              '<div class="mll-mps" style="color:#c62828;">' + a.avg.toFixed(1) + '%</div>' +
+            '</li>'
+          ).join('') +
+          (least.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
+        '</ul>' +
+      '</div>';
   }
 
   /* ============================================================
@@ -375,15 +363,13 @@
       rows.push([left, right]);
     }
 
-    tbody.innerHTML = rows.map(([l, r]) => `
-      <tr>
-        <td class="raw">${l.raw}</td>
-        <td class="final">${l.out}</td>
-        ${r
-          ? `<td class="raw">${r.raw}</td><td class="final">${r.out}</td>`
-          : `<td></td><td></td>`}
-      </tr>
-    `).join('');
+    tbody.innerHTML = rows.map(([l, r]) =>
+      '<tr>' +
+        '<td class="raw">' + l.raw + '</td>' +
+        '<td class="final">' + l.out + '</td>' +
+        (r ? '<td class="raw">' + r.raw + '</td><td class="final">' + r.out + '</td>' : '<td></td><td></td>') +
+      '</tr>'
+    ).join('');
   }
 
   /* ============================================================
@@ -446,11 +432,12 @@
         r.wwAvg != null ? r.wwAvg.toFixed(1) : '',
         r.ptAvg != null ? r.ptAvg.toFixed(1) : '',
         r.exAvg != null ? r.exAvg.toFixed(1) : '',
-        r.final.transmuted || ''
+        // ⚠️ FIX (X3): show empty if insufficient
+        (!r.final.insufficient && r.final.transmuted != null) ? r.final.transmuted : ''
       ];
     });
 
-    UI.exportCSV(`GSA_ClassRecord_${term}_${section || 'All'}.csv`, headers, data);
+    UI.exportCSV('GSA_ClassRecord_' + term + '_' + (section || 'All') + '.csv', headers, data);
     APP.toast('Class record exported', 'success');
   }
 
