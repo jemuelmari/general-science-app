@@ -32,13 +32,17 @@
     .login-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #37474f; margin-bottom: 6px; letter-spacing: 0.3px; text-transform: uppercase; }
     .login-group input { width: 100%; padding: 14px 16px; font-family: inherit; font-size: 1rem; border: 1.5px solid #cfd8dc; border-radius: 10px; background: #fff; color: #1a1a1a; transition: all 0.15s ease; box-sizing: border-box; }
     .login-group input:focus { outline: none; border-color: #0d47a1; box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1); }
+    .login-group input:disabled { background: #f5f5f5; cursor: not-allowed; }
     .login-btn { width: 100%; padding: 14px 20px; background: linear-gradient(135deg, #0d47a1, #1565c0); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25); }
-    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35); }
+    .login-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.35); }
     .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .login-error { background: #ffebee; border-left: 4px solid #c62828; color: #b71c1c; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
+    .login-error { background: #ffebee; border-left: 4px solid #c62828; color: #b71c1c; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.5; }
     .login-success { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
+    .login-warn { background: #fff3e0; border-left: 4px solid #ed6c02; color: #e65100; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.5; }
     .back-link { display: block; text-align: center; margin-top: 16px; font-size: 0.85rem; color: #0d47a1; text-decoration: none; }
     .back-link:hover { text-decoration: underline; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; vertical-align: -2px; margin-right: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -64,49 +68,62 @@
     <a href="index.html" class="back-link">← Back to Home</a>
   </div>
 
+  <script src="config.js?v=10"></script>
+  <script src="assets/js/teacher-auth.js?v=10"></script>
   <script>
-    /* ============================================================
-       Self-contained teacher login — no external dependencies
-       Password is verified via SHA-256 hash comparison.
-       ============================================================ */
     (function() {
       'use strict';
-
-      var PASSWORD_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
-      var SESSION_KEY = 'gsa_teacher_session';
 
       var form = document.getElementById('login-form');
       var passwordEl = document.getElementById('password');
       var btn = document.getElementById('login-btn');
       var messageSlot = document.getElementById('message-slot');
 
-      /* If already logged in, go to dashboard */
-      if (sessionStorage.getItem(SESSION_KEY)) {
-        window.location.replace('instructor.html');
+      // ⚠️ X35: read ?next= param and redirect there on success
+      var urlParams = new URLSearchParams(window.location.search);
+      var nextPage = urlParams.get('next') || 'instructor.html';
+
+      // Sanitize — only allow relative filenames, no protocol, no path traversal
+      nextPage = String(nextPage).replace(/^[\/\\]+/, '').replace(/\.\./g, '');
+      if (!/^[a-z0-9_\-./]+\.html$/i.test(nextPage) && nextPage !== 'instructor.html') {
+        nextPage = 'instructor.html';
+      }
+
+      /* ---------- Already logged in? ---------- */
+      if (TeacherAuth.isAuthenticated()) {
+        window.location.replace(nextPage);
         return;
       }
 
-      /* SHA-256 hash of a string, returns hex */
-      async function sha256(text) {
-        var enc = new TextEncoder();
-        var data = enc.encode(text);
-        var buf = await crypto.subtle.digest('SHA-256', data);
-        var bytes = new Uint8Array(buf);
-        var hex = '';
-        for (var i = 0; i < bytes.length; i++) {
-          hex += bytes[i].toString(16).padStart(2, '0');
+      /* ---------- Lockout check ---------- */
+      var lockoutInterval = null;
+
+      function renderLockout() {
+        var lockout = TeacherAuth.getLockout();
+        if (!lockout) {
+          clearInterval(lockoutInterval);
+          lockoutInterval = null;
+          passwordEl.disabled = false;
+          btn.disabled = false;
+          btn.textContent = 'Unlock →';
+          messageSlot.innerHTML = '';
+          return;
         }
-        return hex;
+        var mins = Math.floor(lockout.remainingMs / 60000);
+        var secs = Math.floor((lockout.remainingMs % 60000) / 1000);
+        var timeStr = mins > 0 ? mins + 'm ' + secs + 's' : secs + 's';
+        messageSlot.innerHTML = '<div class="login-error">🔒 Too many failed attempts. Try again in <strong>' + timeStr + '</strong>.</div>';
+        passwordEl.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '🔒 Locked (' + timeStr + ')';
       }
 
-      function showError(msg) {
-        messageSlot.innerHTML = '<div class="login-error">❌ ' + msg + '</div>';
+      if (TeacherAuth.isLockedOut()) {
+        renderLockout();
+        lockoutInterval = setInterval(renderLockout, 1000);
       }
 
-      function showSuccess(msg) {
-        messageSlot.innerHTML = '<div class="login-success">✅ ' + msg + '</div>';
-      }
-
+      /* ---------- Submit handler ---------- */
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         messageSlot.innerHTML = '';
@@ -114,37 +131,52 @@
         var password = passwordEl.value;
         if (!password) return;
 
+        // Pre-check lockout (in case it expired while typing)
+        if (TeacherAuth.isLockedOut()) {
+          renderLockout();
+          return;
+        }
+
         btn.disabled = true;
-        btn.textContent = 'Checking…';
+        btn.innerHTML = '<span class="spinner"></span>Checking…';
 
         try {
-          var inputHash = await sha256(password);
+          var ok = await TeacherAuth.login(password);
 
-          if (inputHash === PASSWORD_HASH) {
-            /* Success — store session and redirect */
-            var session = {
-              authenticatedAt: Date.now(),
-              token: Math.random().toString(36).slice(2)
-            };
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-            showSuccess('Authenticated! Redirecting…');
+          if (ok) {
+            messageSlot.innerHTML = '<div class="login-success">✅ Authenticated! Redirecting…</div>';
             setTimeout(function() {
-              window.location.replace('instructor.html');
+              window.location.replace(nextPage);
             }, 500);
             return;
           }
 
-          /* Wrong password */
-          showError('Incorrect password. Please try again.');
+          // Wrong password
+          var attemptsLeft = TeacherAuth.getAttemptsLeft();
+          if (TeacherAuth.isLockedOut()) {
+            renderLockout();
+            lockoutInterval = setInterval(renderLockout, 1000);
+            return;
+          }
+          messageSlot.innerHTML = '<div class="login-error">❌ Incorrect password. <strong>' + attemptsLeft + '</strong> attempt' + (attemptsLeft === 1 ? '' : 's') + ' remaining.</div>';
           passwordEl.value = '';
           passwordEl.focus();
         } catch (err) {
-          showError('Error: ' + err.message);
+          messageSlot.innerHTML = '<div class="login-error">⚠️ ' + (err.message || 'Login error') + '</div>';
         }
 
         btn.disabled = false;
         btn.textContent = 'Unlock →';
       });
+
+      /* ---------- Show attempts-left warning on load ---------- */
+      if (!TeacherAuth.isLockedOut()) {
+        var attempts = TeacherAuth.getAttempts();
+        if (attempts > 0) {
+          var left = TeacherAuth.getAttemptsLeft();
+          messageSlot.innerHTML = '<div class="login-warn">⚠️ Previous failed attempt(s). <strong>' + left + '</strong> attempt' + (left === 1 ? '' : 's') + ' remaining before lockout.</div>';
+        }
+      }
     })();
   </script>
 </body>
