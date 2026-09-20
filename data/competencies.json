@@ -1,0 +1,388 @@
+{
+  "meta": {
+    "subject": "General Science",
+    "gradeLevel": 11,
+    "sections": ["ACADEMIC A", "ACADEMIC B"],
+    "schoolYear": "2026-2027",
+    "version": "1.0.0",
+    "generatedAt": "2026-09-20",
+    "notes": "Master competency list for TOS Generator, Item Analysis, and Term Exam auto-generation. Hours sourced from BOW. Bloom's levels are achievable per competency."
+  },
+
+  "term1": {
+    "title": "Physics & Chemistry",
+    "weeks": 10,
+    "hoursTotal": 40,
+    "competencies": [
+      {
+        "code": "GENSCI-11-T1-W1-C1",
+        "description": "Identify how physics concepts improve quality of life in household, health & safety, work productivity, and leisure.",
+        "shortLabel": "Physics in Real Life",
+        "weeks": [1],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term1/week1/week1.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W2-C1",
+        "description": "Differentiate translational motion from rotational motion and relate linear quantities (displacement, velocity, acceleration) to angular quantities.",
+        "shortLabel": "Linear vs Angular Motion",
+        "weeks": [2, 3],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 2,
+        "coveredBy": ["ST1"],
+        "source": "student/term1/week2/week2.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W3-C1",
+        "description": "Design, construct, and test a simple or compound machine. Apply torque, angular motion, and radius to improve machine efficiency.",
+        "shortLabel": "Efficient Machines",
+        "weeks": [3, 4],
+        "hours": 5,
+        "bloomLevels": ["Applying", "Analyzing", "Evaluating", "Creating"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST1"],
+        "source": "student/term1/week3/week3.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W4-C1",
+        "description": "Investigate how pressure is transmitted in fluids. Explain how cross-sectional area affects output force.",
+        "shortLabel": "Hydraulics",
+        "weeks": [4, 5],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term1/week4/week4.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W5-C1",
+        "description": "Discuss properties of light waves in communications, navigation, medicine, and entertainment. Identify innovations such as LEDs, lasers, and holograms.",
+        "shortLabel": "Properties of Light",
+        "weeks": [5],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term1/week5/week5.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W6-C1",
+        "description": "Discuss properties of sound waves in communications, navigation, medicine, and entertainment. Identify innovations such as soundproofing and amplifiers.",
+        "shortLabel": "Properties of Sound",
+        "weeks": [6],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term1/week6/week6.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W7-C1",
+        "description": "Report how Louis Pasteur combined chemistry and biology to understand disease and prevent infection.",
+        "shortLabel": "Louis Pasteur",
+        "weeks": [7],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Analyzing", "Evaluating"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST2"],
+        "source": "student/term1/week7/week7.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W8-C1",
+        "description": "Construct a table using product labels describing the functions of substances in household and personal care products. Explain benefits and risks by referring to DTI, FDA, DENR.",
+        "shortLabel": "Household Products",
+        "weeks": [8],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Evaluating"],
+        "termExamPriority": 5,
+        "coveredBy": ["ST2"],
+        "source": "student/term1/week8/week8.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W9-C1",
+        "description": "Synthesize physics and chemistry principles in real-world applications.",
+        "shortLabel": "Applications & Synthesis",
+        "weeks": [9],
+        "hours": 5,
+        "bloomLevels": ["Analyzing", "Evaluating", "Creating"],
+        "termExamPriority": 5,
+        "coveredBy": ["TE"],
+        "source": "student/term1/week9/week9.json"
+      },
+      {
+        "code": "GENSCI-11-T1-W10-C1",
+        "description": "Review all Term 1 competencies in preparation for the Term Exam.",
+        "shortLabel": "Term Synthesis",
+        "weeks": [10],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing", "Evaluating"],
+        "termExamPriority": 3,
+        "coveredBy": ["TE"],
+        "source": "student/term1/week10/week10.json"
+      }
+    ]
+  },
+
+  "term2": {
+    "title": "Chemistry & Life Science",
+    "weeks": 10,
+    "hoursTotal": 40,
+    "competencies": [
+      {
+        "code": "GENSCI-11-T2-W1-C1",
+        "description": "Explain common reaction types: decomposition, acid on carbonates, acids on metals, combustion. Identify reaction types in daily activities.",
+        "shortLabel": "Chemical Reactions",
+        "weeks": [1, 2],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term2/week1/week1.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W2-C1",
+        "description": "Use chemical equations for photosynthesis and respiration. Describe metabolic reactions in body cells and their significance.",
+        "shortLabel": "Chemical Equations",
+        "weeks": [2],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST1"],
+        "source": "student/term2/week2/week2.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W3-C1",
+        "description": "Explain characteristics of solutions in household products, industry, and environmental science. Investigate salt's effect on plant growth.",
+        "shortLabel": "Solutions",
+        "weeks": [3],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term2/week3/week3.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W4-C1",
+        "description": "Apply best practices for handling, storage, and disposal of chemicals. Create a table showing saltwater/wastewater effects on local ecosystems.",
+        "shortLabel": "Safe Handling",
+        "weeks": [4],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Evaluating", "Creating"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST1"],
+        "source": "student/term2/week4/week4.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W5-C1",
+        "description": "Explain how life forms operate as systems of related parts. Create a diagram showing structure-function relationships.",
+        "shortLabel": "Unifying Themes",
+        "weeks": [5],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Creating"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term2/week5/week5.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W6-C1",
+        "description": "Describe how cells obtain nutrients and convert them into energy.",
+        "shortLabel": "Importance of Cells",
+        "weeks": [6],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term2/week6/week6.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W7-C1",
+        "description": "Explain plant organ interaction for material transport.",
+        "shortLabel": "Plant Organ Systems",
+        "weeks": [7],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 2,
+        "coveredBy": ["ST2"],
+        "source": "student/term2/week7/week7.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W8-C1",
+        "description": "Explain nervous and endocrine coordination for temperature regulation. Explain how vaccines work via immune and lymphatic systems. Describe how damaged parts affect organisms.",
+        "shortLabel": "Animal Systems & Immunity",
+        "weeks": [8],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Evaluating"],
+        "termExamPriority": 5,
+        "coveredBy": ["ST2"],
+        "source": "student/term2/week8/week8.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W9-C1",
+        "description": "Describe climate change. Explain biological responses to climate change. Explain climate change impacts on Philippine ecosystems.",
+        "shortLabel": "Philippine Ecosystems",
+        "weeks": [9],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Evaluating"],
+        "termExamPriority": 5,
+        "coveredBy": ["TE"],
+        "source": "student/term2/week9/week9.json"
+      },
+      {
+        "code": "GENSCI-11-T2-W10-C1",
+        "description": "Propose adaptation and mitigation strategies for local biodiversity. Evaluate overpopulation effects from secondary sources.",
+        "shortLabel": "Climate Adaptation",
+        "weeks": [10],
+        "hours": 5,
+        "bloomLevels": ["Analyzing", "Evaluating", "Creating"],
+        "termExamPriority": 5,
+        "coveredBy": ["TE"],
+        "source": "student/term2/week10/week10.json"
+      }
+    ]
+  },
+
+  "term3": {
+    "title": "Earth Science",
+    "weeks": 10,
+    "hoursTotal": 40,
+    "competencies": [
+      {
+        "code": "GENSCI-11-T3-W1-C1",
+        "description": "Explain Earth's characteristics supporting life versus other planets. Describe how the greenhouse effect regulates Earth's temperature.",
+        "shortLabel": "Earth's Uniqueness",
+        "weeks": [1, 2],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term3/week1/week1.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W2-C1",
+        "description": "Describe how the greenhouse effect regulates Earth's temperature.",
+        "shortLabel": "Greenhouse Effect",
+        "weeks": [2],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term3/week2/week2.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W3-C1",
+        "description": "Demonstrate how the Philippine archipelago was formed. Explain unique landforms, climate, and life forms using images, maps, and cross-sections.",
+        "shortLabel": "Philippine Geology",
+        "weeks": [3, 4],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Creating"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST1"],
+        "source": "student/term3/week3/week3.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W4-C1",
+        "description": "Describe properties and local availability of rocks, minerals, and soils. Explain how they are harnessed for industries.",
+        "shortLabel": "Philippine Landforms & Materials",
+        "weeks": [4, 5],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST1"],
+        "source": "student/term3/week4/week4.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W5-C1",
+        "description": "Describe properties and local availability of rocks, minerals, and soils. Explain how they're harnessed for industries.",
+        "shortLabel": "Uses of Earth Materials",
+        "weeks": [5],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term3/week5/week5.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W6-C1",
+        "description": "Describe volcanic eruptions, earthquakes, tsunamis. Describe slow processes: soil erosion, saltwater intrusion.",
+        "shortLabel": "Geologic Processes",
+        "weeks": [6],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 4,
+        "coveredBy": ["ST2"],
+        "source": "student/term3/week6/week6.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W7-C1",
+        "description": "Describe typhoons, floods, landslides, storm surges, and heat waves.",
+        "shortLabel": "Hydrometeorological Processes",
+        "weeks": [7],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 3,
+        "coveredBy": ["ST2"],
+        "source": "student/term3/week7/week7.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W8-C1",
+        "description": "Describe human modification of landforms since Neolithic. Assess hazards (tropical cyclones, ipo-ipo, thunderstorms, storm surges, heat waves).",
+        "shortLabel": "Natural Hazards",
+        "weeks": [8],
+        "hours": 5,
+        "bloomLevels": ["Understanding", "Applying", "Analyzing", "Evaluating"],
+        "termExamPriority": 5,
+        "coveredBy": ["ST2"],
+        "source": "student/term3/week8/week8.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W9-C1",
+        "description": "Describe how PAGASA iHEAT maps help Filipinos.",
+        "shortLabel": "PAGASA iHEAT",
+        "weeks": [9],
+        "hours": 5,
+        "bloomLevels": ["Remembering", "Understanding", "Applying", "Analyzing"],
+        "termExamPriority": 4,
+        "coveredBy": ["TE"],
+        "source": "student/term3/week9/week9.json"
+      },
+      {
+        "code": "GENSCI-11-T3-W10-C1",
+        "description": "Develop family and community-based DRRM plans.",
+        "shortLabel": "DRRM Plans",
+        "weeks": [10],
+        "hours": 5,
+        "bloomLevels": ["Applying", "Analyzing", "Evaluating", "Creating"],
+        "termExamPriority": 5,
+        "coveredBy": ["TE"],
+        "source": "student/term3/week10/week10.json"
+      }
+    ]
+  },
+
+  "assessmentCoverage": {
+    "ST1": ["weeks 1-4"],
+    "ST2": ["weeks 5-8"],
+    "TE": {
+      "rule": "Top 5 Least Learned from ST1 + ST2, PLUS all Week 9-10 competencies not already included",
+      "weeksTargeted": [9, 10]
+    }
+  },
+
+  "bloomsDistribution": {
+    "LOTS": ["Remembering", "Understanding"],
+    "HOTS": ["Applying", "Analyzing", "Evaluating", "Creating"],
+    "targetRatio": { "LOTS": 0.30, "HOTS": 0.70 },
+    "roundingRule": "nearest"
+  },
+
+  "masteryLevels": {
+    "exceedsStandard":     { "min": 0.85, "max": 1.0000, "label": "Exceeds Standard",     "code": "ES", "action": "Enrichment & Peer Tutoring" },
+    "meetsStandard":       { "min": 0.70, "max": 0.8499, "label": "Meets Standard",       "code": "MS", "action": "Standard Reinforcement" },
+    "approachingStandard": { "min": 0.50, "max": 0.6999, "label": "Approaching Standard", "code": "AS", "action": "Targeted Practice Worksheets" },
+    "needsIntervention":   { "min": 0.00, "max": 0.4999, "label": "Needs Intervention",   "code": "NI", "action": "Reteach & Intensive Remediation" }
+  }
+}
