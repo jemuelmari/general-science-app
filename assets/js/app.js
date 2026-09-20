@@ -1,11 +1,18 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science Online Modular Application
    ------------------------------------------------------------
-   Changelog v1.1.0: Enhanced version rendering — displays
-   "v1.0.0 · build YYYY-MM-DD" everywhere. Auto-syncs the
-   version string across every page from CONFIG.
+   Changelog v1.2.0 (Phase 2 / X13 + X15 fix):
+     - formatLRN() regex now uses 12 digits (was 11) to match
+       auth.js and Philippine LRN format.
+     - injectManifest() computes correct relative path using
+       document.baseURI — no more broken manifest on week pages.
+     - renderVersions() uses stricter regex on <title>.
+     - renderDeveloperFooter() handles missing DEVELOPER gracefully.
+     - Added getSetLetterForSection() helper (Set A / Set B).
+
+   Changelog v1.1.0: Enhanced version rendering.
    ============================================================ */
 
 const APP = (() => {
@@ -136,8 +143,12 @@ const APP = (() => {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
+  /**
+   * ⚠️ X13 FIX: Philippine LRN is 12 digits. Format as 1234-5678-9012.
+   * Previously used 11-digit regex which produced malformed output.
+   */
   function formatLRN(lrn) {
-    return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    return String(lrn).replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
   }
 
   /* ---------- Name Formatting Helpers ---------- */
@@ -203,6 +214,19 @@ const APP = (() => {
     return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#fce4ec;color:#ad1457;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♀ F</span>';
   }
 
+  /* ---------- Set A / Set B Helper ---------- */
+  /**
+   * Returns 'A' or 'B' based on student section.
+   * Uses CONFIG.SET_ASSIGNMENT if available.
+   */
+  function getSetLetterForSection(section) {
+    if (typeof CONFIG !== 'undefined' && CONFIG.SET_ASSIGNMENT && CONFIG.SET_ASSIGNMENT[section]) {
+      return CONFIG.SET_ASSIGNMENT[section];
+    }
+    // Fallback default
+    return 'A';
+  }
+
   /* ---------- Sorting Helpers ---------- */
   function sortStudents(list, order = 'last', dir = 'asc') {
     const arr = [...list];
@@ -246,14 +270,12 @@ const APP = (() => {
     return BUILD_DATE ? v + ' · build ' + BUILD_DATE : v;
   }
 
-  /* ---------- Version Rendering (enhanced) ---------- */
+  /* ---------- Version Rendering ---------- */
   function renderVersions() {
     const vDisplay = versionString();
     const vSimple = 'v' + VERSION;
 
-    // Elements with .version class or [data-version] attribute
     document.querySelectorAll('.version, [data-version]').forEach((e) => {
-      // If element has a data-version attribute, use its value; otherwise show full string
       const attr = e.getAttribute('data-version');
       if (attr === 'simple') {
         e.textContent = vSimple;
@@ -262,7 +284,7 @@ const APP = (() => {
       }
     });
 
-    // Footer text: replace any vX.X.X pattern with current full string
+    // Footer text — replace version pattern
     document.querySelectorAll('.app-footer, footer').forEach((footer) => {
       footer.childNodes.forEach((node) => {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -276,12 +298,12 @@ const APP = (() => {
       });
     });
 
-    // <title> tag
-    if (document.title.includes('v')) {
+    // ⚠️ X13: stricter regex on <title>
+    if (/v\d+\.\d+\.\d+/.test(document.title)) {
       document.title = document.title.replace(/v\d+\.\d+\.\d+/g, vSimple);
     }
 
-    // <meta name="version"> for debugging
+    // meta name="app-version"
     let metaV = document.querySelector('meta[name="app-version"]');
     if (!metaV) {
       metaV = document.createElement('meta');
@@ -290,7 +312,6 @@ const APP = (() => {
     }
     metaV.content = versionString();
 
-    // Log once on load
     if (!window.__versionLogged) {
       console.log(`[${APP_NAME}] ${versionString()}`);
       window.__versionLogged = true;
@@ -299,8 +320,10 @@ const APP = (() => {
 
   /* ---------- Developer Footer ---------- */
   function renderDeveloperFooter() {
-    if (typeof CONFIG === 'undefined' || !CONFIG.DEVELOPER) return;
+    // ⚠️ Guard: only render if CONFIG.DEVELOPER exists
+    if (typeof CONFIG === 'undefined') return;
     const dev = CONFIG.DEVELOPER;
+    if (!dev) return;
 
     document.querySelectorAll('.app-footer, footer').forEach((footer) => {
       if (footer.querySelector('.dev-credit')) return;
@@ -309,26 +332,41 @@ const APP = (() => {
       credit.className = 'dev-credit';
       credit.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid var(--color-border);font-size:0.75rem;line-height:1.6;';
       credit.innerHTML = `
-        <div style="font-weight:600;color:var(--color-primary-dark);">${dev.name}</div>
-        <div>${dev.position}</div>
-        <div>${dev.school} · ${dev.district}</div>
-        <div>${dev.division} · ${dev.region}</div>
-        <div>${dev.department}</div>
+        <div style="font-weight:600;color:var(--color-primary-dark);">${dev.name || ''}</div>
+        <div>${dev.position || ''}</div>
+        <div>${dev.school || ''} · ${dev.district || ''}</div>
+        <div>${dev.division || ''} · ${dev.region || ''}</div>
+        <div>${dev.department || ''}</div>
       `;
       footer.appendChild(credit);
     });
   }
 
   /* ---------- Inject Manifest Meta ---------- */
+  /**
+   * ⚠️ X15 FIX: Compute correct relative path using document.baseURI
+   * so manifest.json resolves correctly from any page depth
+   * (root, /student/, /student/term1/week1/, etc.).
+   */
   function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
+
+    // Compute path to repo root relative to the current page
+    // by finding the common ancestor between document.baseURI and the repo root.
+    const base = document.baseURI || window.location.href;
+    // We assume manifest.json is at repo root. Walk up from current dir
+    // to find repo root (which contains config.js).
+    const scripts = document.querySelectorAll('script[src*="config.js"]');
+    let manifestHref = 'manifest.json';
+    if (scripts.length) {
+      const cfgSrc = scripts[0].getAttribute('src');
+      // config.js is at repo root → strip "config.js" to get path to root
+      manifestHref = cfgSrc.replace(/config\.js.*$/, '') + 'manifest.json';
+    }
+
     const link = document.createElement('link');
     link.rel = 'manifest';
-    const path = window.location.pathname;
-    let prefix = '';
-    if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
-    else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
-    link.href = prefix + 'manifest.json';
+    link.href = manifestHref;
     document.head.appendChild(link);
 
     const meta = document.createElement('meta');
@@ -366,6 +404,7 @@ const APP = (() => {
     getSexCode,
     getSexIcon,
     getSexBadge,
+    getSetLetterForSection,
     sortStudents,
     validateLRN,
     validateName,
