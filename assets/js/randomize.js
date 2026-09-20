@@ -1,8 +1,16 @@
 /* ============================================================
    randomize.js — Set A / Set B shuffle engine
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.1.0 (Phase 2 / X5 + X39 fix):
+     - scoreAttempt() now includes originalIndex in each itemResult
+       so item analysis and TOS can map back to the master question
+       bank (competency + bloom level lookup).
+     - Added getOriginalIndex(set, setIndex) helper.
+     - Added validateSets() to confirm Set A and Set B contain the
+       same questions in different order (defensive check).
+
    DESIGN DECISIONS (locked):
    - Same questions for both sets, different fixed shuffle
    - Deterministic: same seed → same order across all devices
@@ -10,20 +18,6 @@
    - Option order shuffled per question per set
    - Correct answer tracked per (set, question index)
    - No "All of the above" / "None of the above" (they can't shuffle)
-
-   USAGE:
-     // Generate the two sets once
-     const sets = Randomize.generateSets(questionBank, 'term1-st1');
-
-     // Get one set for a student
-     const setA = Randomize.getSet('term1-st1', 'A');
-     const setB = Randomize.getSet('term1-st1', 'B');
-
-     // Score a student's attempt against the shuffled set
-     const result = Randomize.scoreAttempt(studentAnswers, setA);
-
-   The seed is derived from (assessmentId + setLetter) so both
-   teacher and student devices produce the identical shuffle.
    ============================================================ */
 
 const Randomize = (() => {
@@ -33,7 +27,6 @@ const Randomize = (() => {
 
   /* ============================================================
      SEEDED RNG — Mulberry32
-     Deterministic across all devices
      ============================================================ */
   function mulberry32(seed) {
     let a = seed >>> 0;
@@ -60,7 +53,7 @@ const Randomize = (() => {
   }
 
   /* ============================================================
-     SHUFFLE (with seed)
+     SEEDED SHUFFLE
      ============================================================ */
   function seededShuffle(arr, rng) {
     const a = arr.slice();
@@ -74,11 +67,11 @@ const Randomize = (() => {
   }
 
   /* ============================================================
-     GENERATE SETS
+     GENERATE SET
      ============================================================ */
   /**
    * Generate a shuffled set for a given assessment.
-   * @param {Object} questionBank — { questions: [ { id, text, options, correct, ... } ] }
+   * @param {Object} questionBank — { questions: [ { id, text, options, correct, competency, bloomLevel } ] }
    * @param {String} assessmentId — e.g. 'term1-st1'
    * @param {String} setLetter — 'A' or 'B'
    * @returns {Object} — { assessmentId, setLetter, questions, answerKey }
@@ -94,7 +87,8 @@ const Randomize = (() => {
       const q = questions[originalIndex];
 
       // Shuffle the option order for this question
-      const optionOrder = seededShuffle(q.options.slice(), mulberry32(hashSeed(assessmentId + '-q' + originalIndex, setLetter)));
+      const optionRng = mulberry32(hashSeed(assessmentId + '-q' + originalIndex, setLetter));
+      const optionOrder = seededShuffle(q.options.slice(), optionRng);
 
       return {
         setIndex: newIndex,            // position within this set (0-based)
@@ -135,6 +129,21 @@ const Randomize = (() => {
       A: generateSet(questionBank, assessmentId, 'A'),
       B: generateSet(questionBank, assessmentId, 'B')
     };
+  }
+
+  /**
+   * Defensive check: Set A and Set B contain the same questions
+   * (just different order).
+   */
+  function validateSets(sets) {
+    if (!sets || !sets.A || !sets.B) return false;
+    const aIds = sets.A.questions.map(q => q.id).sort();
+    const bIds = sets.B.questions.map(q => q.id).sort();
+    if (aIds.length !== bIds.length) return false;
+    for (let i = 0; i < aIds.length; i++) {
+      if (aIds[i] !== bIds[i]) return false;
+    }
+    return true;
   }
 
   /* ============================================================
@@ -194,6 +203,11 @@ const Randomize = (() => {
      ============================================================ */
   /**
    * Score a student's answers against a specific set.
+   *
+   * ⚠️ FIX (X39): itemResults now include `originalIndex` so
+   * downstream consumers (item analysis, TOS, competency reports)
+   * can map each item back to the master question bank.
+   *
    * @param {Object} answers — { setIndex: "chosen option text" }
    * @param {Object} set — output from generateSet()
    * @returns {Object} — { correct, total, percent, itemResults }
@@ -208,14 +222,14 @@ const Randomize = (() => {
       if (isCorrect) correct++;
 
       itemResults.push({
-        index: i,
-        originalIndex: q.originalIndex,
+        index: i,                    // shuffled index (what student saw)
+        originalIndex: q.originalIndex, // ⚠️ X39 FIX — map back to bank
         questionId: q.id,
         correct: isCorrect,
         given: given,
         expected: q.correct,
-        competency: q.competency,
-        bloomLevel: q.bloomLevel
+        competency: q.competency || null,
+        bloomLevel: q.bloomLevel || null
       });
     });
 
@@ -226,16 +240,16 @@ const Randomize = (() => {
       correct: correct,
       total: total,
       percent: percent,
+      setLetter: set.setLetter,
       itemResults: itemResults
     };
   }
 
   /* ============================================================
-     UN-SHUFFLE (for cross-set comparison in item analysis)
+     UN-SHUFFLE HELPERS
      ============================================================ */
   /**
    * Given a set and a set of answers, remap to the original index.
-   * Useful when the teacher wants to compare across Set A and Set B.
    */
   function remapToOriginal(answers, set) {
     const remapped = {};
@@ -247,15 +261,24 @@ const Randomize = (() => {
 
   /**
    * Given item results from a shuffled set, remap to original indices.
+   * (Idempotent — safe to call even if itemResults already have originalIndex.)
    */
   function remapItemResults(itemResults, set) {
     return itemResults.map(function(r) {
       const q = set.questions[r.index];
       return {
         ...r,
-        originalIndex: q ? q.originalIndex : r.index
+        originalIndex: q ? q.originalIndex : (r.originalIndex != null ? r.originalIndex : r.index)
       };
     });
+  }
+
+  /**
+   * Get the original index of a question at a given set index.
+   */
+  function getOriginalIndex(set, setIndex) {
+    if (!set || !set.questions || !set.questions[setIndex]) return null;
+    return set.questions[setIndex].originalIndex;
   }
 
   /* ============================================================
@@ -322,6 +345,7 @@ const Randomize = (() => {
     // Generation
     generateSet,
     generateSets,
+    validateSets,       // NEW
 
     // Persistence
     persistSets,
@@ -332,6 +356,7 @@ const Randomize = (() => {
     scoreAttempt,
     remapToOriginal,
     remapItemResults,
+    getOriginalIndex,   // NEW
 
     // Validation
     hasUnshuffleableOption,
