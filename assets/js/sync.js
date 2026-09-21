@@ -1,7 +1,11 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.2
+   Version: 2.0.3
    App: General Science · v1.0.2
+   Changelog v2.0.3: signCanonical/verifyCanonical now JSON
+   round-trip the payload BEFORE canonicalizing, so the signed
+   string matches exactly what the backend receives after
+   JSON.stringify/JSON.parse. Fixes persistent signature mismatches.
    ============================================================ */
 
 const Sync = (() => {
@@ -34,6 +38,18 @@ const Sync = (() => {
     return 'null';
   }
 
+  /**
+   * Round-trip through JSON so the payload we sign matches what
+   * the backend will receive after its own JSON.parse().
+   */
+  function roundTrip(payload) {
+    try {
+      return JSON.parse(JSON.stringify(payload));
+    } catch (e) {
+      return payload;
+    }
+  }
+
   async function signCanonical(payload) {
     if (typeof Security === 'undefined') {
       throw new Error('Security module not loaded — cannot sign payload');
@@ -41,7 +57,8 @@ const Sync = (() => {
     if (typeof Security.signString !== 'function') {
       throw new Error('Security.signString unavailable — reload the page');
     }
-    var canonical = canonicalize(payload);
+    var clean = roundTrip(payload);
+    var canonical = canonicalize(clean);
     return await Security.signString(canonical);
   }
 
@@ -49,12 +66,13 @@ const Sync = (() => {
     if (typeof Security === 'undefined') {
       throw new Error('Security module not loaded');
     }
+    var clean = roundTrip(payload);
     if (typeof Security.verifyString === 'function') {
-      var canonical = canonicalize(payload);
+      var canonical = canonicalize(clean);
       return await Security.verifyString(canonical, signature);
     }
     if (typeof Security.verify === 'function') {
-      return await Security.verify(payload, signature);
+      return await Security.verify(clean, signature);
     }
     throw new Error('Security.verifyString unavailable');
   }
@@ -398,6 +416,7 @@ const Sync = (() => {
 
   return {
     canonicalize: canonicalize,
+    roundTrip: roundTrip,
     signCanonical: signCanonical,
     verifyCanonical: verifyCanonical,
     backendEnabled: backendEnabled,
