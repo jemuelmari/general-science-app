@@ -1,41 +1,38 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.1.0
+   Version: 1.2.0
    ------------------------------------------------------------
-   Changelog v1.1.0: Added TermAccess sheet + 2 actions
-                     (getTermAccess, setTermAccess)
+   Changelog:
+     v1.2.0: Added Attempts + History sheets, 5 new actions
+             (pushAttempt, pullAttempts, markUsedBulk, archiveUsed,
+             getSyncStatus), canonical JSON signing, rate limiting.
+     v1.1.0: Added TermAccess sheet + 2 actions.
+     v1.0.0: Initial — SyncCodes + Log.
 
    PURPOSE:
-   - Enables cross-device Sync Codes for students
-   - Stores student data in a Google Sheet
-   - Lets teacher pull all pending records at once
-   - Stores teacher-controlled term access per section
-   - Handles HMAC signature verification server-side
-
-   SETUP INSTRUCTIONS:
-   1. Create a new Google Sheet (e.g., "GSA Sync Backend")
-   2. Go to Extensions → Apps Script
-   3. Delete the default code, paste this entire file
-   4. Click "Deploy" → "New deployment"
-   5. Select type: "Web app"
-   6. Description: "GSA Backend v1.1"
-   7. Execute as: "Me"
-   8. Who has access: "Anyone"
-   9. Click Deploy → Authorize → Copy the Web App URL
-   10. Paste that URL into config.js → BACKEND_URL
-   11. Done! Sync Center + Term Control now work across devices.
+   - Cross-device Sync Codes for students (existing, unchanged)
+   - NEW: Auto-push quiz attempts from students → Google Sheet
+   - NEW: Teacher pulls all pending attempts
+   - NEW: Archive-then-delete cleanup policy
+   - HMAC signature verification (canonical JSON, constant-time compare)
 
    SHEETS STRUCTURE (auto-created):
-   - Sheet 1: "SyncCodes"
-     Columns: code | lrn | studentName | section | payload | signature | createdAt | used
-   - Sheet 2: "TermAccess"
-     Columns: timestamp | section | term1 | term2 | term3 | updatedBy | notes
-   - Sheet 3: "Log"
-     Columns: timestamp | action | lrn | code | status | notes
+   - Sheet 1: "SyncCodes" (v1.0.0, unchanged)
+     code | lrn | studentName | section | payload | signature | createdAt | used
+   - Sheet 2: "TermAccess" (v1.1.0, unchanged)
+     timestamp | section | term1 | term2 | term3 | updatedBy | notes
+   - Sheet 3: "Log" (v1.0.0, unchanged)
+     timestamp | action | lrn | code | status | notes
+   - Sheet 4: "Attempts" (v1.2.0, NEW)
+     pushId | lrn | studentName | section | term | assessment | score | total
+     | itemResults | set | clientTimestamp | serverTimestamp | signature
+     | used | usedAt | usedBy
+   - Sheet 5: "History" (v1.2.0, NEW) — archive of used/old rows
+     (same columns as Attempts, plus archivedAt, archivedBy)
 
    REDEPLOY NOTES:
    After updating this file, click:
-     Deploy → Manage deployments → (pencil icon) → Version: New version → Deploy
+     Deploy → Manage deployments → (pencil) → Version: New version → Deploy
    The Web App URL stays the same. No config.js change needed.
    ============================================================ */
 
@@ -47,12 +44,24 @@ const CONFIG = {
   SYNC_CODES_SHEET: 'SyncCodes',
   TERM_ACCESS_SHEET: 'TermAccess',
   LOG_SHEET: 'Log',
+  ATTEMPTS_SHEET: 'Attempts',
+  HISTORY_SHEET: 'History',
+
   CODE_EXPIRY_DAYS: 30,
+  ATTEMPT_EXPIRY_DAYS: 90,
   MAX_CODES_PER_STUDENT: 5,
-  // Secret must match SECRET in assets/js/security.js
+
+  // Rate limiting
+  RATE_LIMIT_WINDOW_SEC: 60,
+  RATE_LIMIT_MAX_PER_WINDOW: 30,
+
+  // Secret must match HMAC_SECRET in assets/js/security.js
   HMAC_SECRET: 'GSA-2026-DEPED-SECRET-KEY-v1',
-  ALLOWED_ORIGINS: '*', // Restrict to your domain in production
-  VALID_SECTIONS: ['ACADEMIC A', 'ACADEMIC B']
+
+  ALLOWED_ORIGINS: '*',
+  VALID_SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
+  VALID_ASSESSMENTS: ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te', 'pt1', 'pt2', 'pt3'],
+  VALID_TERMS: ['term1', 'term2', 'term3']
 };
 
 // ============================================================
@@ -60,50 +69,54 @@ const CONFIG = {
 // ============================================================
 
 function doPost(e) {
+  var startedAt = Date.now();
   try {
-    const body = parseBody(e);
-    const action = body.action;
+    var body = parseBody(e);
+    var action = body.action;
 
-    logAction(action, body.lrn, body.code, 'received');
+    logAction(action, body.lrn, body.pushId || body.code, 'received');
 
-    let response;
+    // Rate limit check (except health)
+    if (action !== 'health') {
+      var rl = checkRateLimit(body.lrn || body.ip || 'anonymous', action);
+      if (!rl.ok) {
+        logAction(action, body.lrn, '', 'rate_limited', rl.reason);
+        return respond({ ok: false, error: 'Rate limit exceeded. Try again shortly.', retryAfterSec: rl.retryAfter });
+      }
+    }
+
+    var response;
     switch (action) {
-      case 'registerSyncCode':
-        response = registerSyncCode(body);
-        break;
-      case 'resolveSyncCode':
-        response = resolveSyncCode(body);
-        break;
-      case 'pullAllPending':
-        response = pullAllPending(body);
-        break;
-      case 'deleteSyncCode':
-        response = deleteSyncCode(body);
-        break;
-      case 'getTermAccess':
-        response = getTermAccess(body);
-        break;
-      case 'setTermAccess':
-        response = setTermAccess(body);
-        break;
+      // Existing v1.0.0 / v1.1.0
+      case 'registerSyncCode':  response = registerSyncCode(body); break;
+      case 'resolveSyncCode':   response = resolveSyncCode(body); break;
+      case 'pullAllPending':    response = pullAllPending(body); break;
+      case 'deleteSyncCode':    response = deleteSyncCode(body); break;
+      case 'getTermAccess':     response = getTermAccess(body); break;
+      case 'setTermAccess':     response = setTermAccess(body); break;
       case 'health':
-        response = { ok: true, message: 'GSA backend is running', time: new Date().toISOString() };
+        response = { ok: true, message: 'GSA backend is running', version: '1.2.0', time: new Date().toISOString() };
         break;
+
+      // New v1.2.0 — Auto-push
+      case 'pushAttempt':       response = pushAttempt(body); break;
+      case 'pullAttempts':      response = pullAttempts(body); break;
+      case 'markUsedBulk':      response = markUsedBulk(body); break;
+      case 'archiveUsed':       response = archiveUsed(body); break;
+      case 'getSyncStatus':     response = getSyncStatus(body); break;
+
       default:
         response = { ok: false, error: 'Unknown action: ' + action };
     }
 
-    logAction(action, body.lrn, body.code, response.ok ? 'success' : 'error', response.error || '');
+    response.serverMs = Date.now() - startedAt;
+    logAction(action, body.lrn, body.pushId || body.code, response.ok ? 'success' : 'error', response.error || '');
 
-    return ContentService
-      .createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond(response);
 
   } catch (err) {
     logAction('doPost', '', '', 'exception', err.message);
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond({ ok: false, error: err.message, serverMs: Date.now() - startedAt });
   }
 }
 
@@ -112,36 +125,33 @@ function doPost(e) {
 // ============================================================
 
 function doGet(e) {
-  const action = e.parameter.action;
+  var action = e.parameter.action;
 
   if (action === 'ping') {
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        ok: true,
-        service: 'GSA Sync Backend',
-        version: '1.1.0',
-        time: new Date().toISOString()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.0', time: new Date().toISOString() });
   }
-
   if (action === 'count') {
-    const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-    const count = Math.max(0, sheet.getLastRow() - 1);
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true, totalCodes: count }))
-      .setMimeType(ContentService.MimeType.JSON);
+    var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+    return respond({ ok: true, totalCodes: Math.max(0, sheet.getLastRow() - 1) });
   }
-
   if (action === 'termAccess') {
-    const section = e.parameter.section;
-    return ContentService
-      .createTextOutput(JSON.stringify(getTermAccess({ section: section })))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond(getTermAccess({ section: e.parameter.section }));
+  }
+  if (action === 'attemptsCount') {
+    var aSheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+    return respond({ ok: true, totalAttempts: Math.max(0, aSheet.getLastRow() - 1) });
   }
 
+  return respond({ ok: false, error: 'Unknown action' });
+}
+
+// ============================================================
+// RESPONSE HELPER
+// ============================================================
+
+function respond(obj) {
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: false, error: 'Unknown action' }))
+    .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -150,245 +160,445 @@ function doGet(e) {
 // ============================================================
 
 function parseBody(e) {
-  if (!e || !e.postData || !e.postData.contents) {
-    return {};
-  }
-  try {
-    return JSON.parse(e.postData.contents);
-  } catch (err) {
-    throw new Error('Invalid JSON body: ' + err.message);
-  }
+  if (!e || !e.postData || !e.postData.contents) return {};
+  try { return JSON.parse(e.postData.contents); }
+  catch (err) { throw new Error('Invalid JSON body: ' + err.message); }
 }
 
 // ============================================================
-// ACTION: registerSyncCode
+// ACTION: pushAttempt  (NEW v1.2.0)
 // ============================================================
-
-function registerSyncCode(body) {
-  const { code, lrn, payload, signature } = body;
-
-  if (!code || !lrn || !payload || !signature) {
-    return { ok: false, error: 'Missing required fields (code, lrn, payload, signature)' };
+/**
+ * Receives a single quiz attempt from a student.
+ * Strict: HMAC verified. Rejected if invalid.
+ *
+ * body = {
+ *   action: 'pushAttempt',
+ *   pushId: unique string (student-generated, e.g. lrn + '-' + term + '-' + assessment + '-' + ts),
+ *   lrn, term, assessment,
+ *   score, total, itemResults[], set,
+ *   clientTimestamp (ISO),
+ *   payload: { student: {...}, attempt: {...} },
+ *   signature: HMAC of canonical(payload)
+ * }
+ */
+function pushAttempt(body) {
+  var required = ['pushId', 'lrn', 'term', 'assessment', 'payload', 'signature'];
+  for (var i = 0; i < required.length; i++) {
+    if (!body[required[i]]) {
+      return { ok: false, error: 'Missing required field: ' + required[i] };
+    }
   }
 
-  if (!verifySignature(payload, signature)) {
+  if (CONFIG.VALID_TERMS.indexOf(body.term) === -1) {
+    return { ok: false, error: 'Invalid term: ' + body.term };
+  }
+  if (CONFIG.VALID_ASSESSMENTS.indexOf(body.assessment) === -1) {
+    return { ok: false, error: 'Invalid assessment: ' + body.assessment };
+  }
+
+  // Strict signature verification (canonical JSON)
+  if (!verifyCanonicalSignature(body.payload, body.signature)) {
     return { ok: false, error: 'Signature verification failed' };
   }
 
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+  var data = sheet.getDataRange().getValues();
 
-  const existing = findRowByCode(code);
-  if (existing) {
-    return { ok: false, error: 'Code already exists' };
-  }
-
-  const student = payload.student || {};
-  const studentName = `${student.lastName || ''}, ${student.firstName || ''}`;
-  const section = student.section || '';
-  const createdAt = new Date().toISOString();
-
-  sheet.appendRow([
-    code,
-    lrn,
-    studentName,
-    section,
-    JSON.stringify(payload),
-    signature,
-    createdAt,
-    'false'
-  ]);
-
-  trimOldCodes(lrn);
-
-  return {
-    ok: true,
-    code: code,
-    createdAt: createdAt,
-    message: 'Sync code registered'
-  };
-}
-
-// ============================================================
-// ACTION: resolveSyncCode
-// ============================================================
-
-function resolveSyncCode(body) {
-  const { code } = body;
-  if (!code) return { ok: false, error: 'Missing code' };
-
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-
-  for (let i = 1; i < data.length; i++) {
-    const rowCode = data[i][0];
-    if (rowCode === code) {
-      const createdAt = new Date(data[i][6]);
-      const ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
-      if (ageDays > CONFIG.CODE_EXPIRY_DAYS) {
-        return { ok: false, error: 'Sync code has expired' };
-      }
-
-      const payload = JSON.parse(data[i][4]);
-      const signature = data[i][5];
-
-      if (!verifySignature(payload, signature)) {
-        return { ok: false, error: 'Stored data failed verification' };
-      }
-
+  // Idempotency: if pushId already exists, treat as success (already synced)
+  for (var r = 1; r < data.length; r++) {
+    if (data[r][0] === body.pushId) {
       return {
         ok: true,
-        payload: payload,
-        signature: signature,
-        createdAt: data[i][6]
+        pushId: body.pushId,
+        duplicate: true,
+        message: 'Attempt already recorded'
       };
     }
   }
 
-  return { ok: false, error: 'Code not found' };
-}
+  var student = (body.payload && body.payload.student) || {};
+  var attempt = (body.payload && body.payload.attempt) || {};
+  var studentName = (student.lastName || '') + ', ' + (student.firstName || '');
+  var section = student.section || '';
+  var serverTimestamp = new Date().toISOString();
+  var clientTimestamp = body.clientTimestamp || attempt.timestamp || '';
 
-// ============================================================
-// ACTION: pullAllPending (Teacher pulls all unused codes)
-// ============================================================
+  sheet.appendRow([
+    body.pushId,
+    body.lrn,
+    studentName,
+    section,
+    body.term,
+    body.assessment,
+    Number(body.score || 0),
+    Number(body.total || 0),
+    JSON.stringify(body.itemResults || []),
+    body.set || '',
+    clientTimestamp,
+    serverTimestamp,
+    body.signature,
+    'false',   // used
+    '',        // usedAt
+    ''         // usedBy
+  ]);
 
-function pullAllPending(body) {
-  const { section, lrn } = body;
-
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-  const records = [];
-
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-    const rowLrn = row[1];
-    const rowSection = row[3];
-    const used = row[7] === 'true' || row[7] === true;
-
-    if (lrn && rowLrn !== lrn) continue;
-    if (section && rowSection !== section) continue;
-    if (used) continue;
-
-    const createdAt = new Date(row[6]);
-    const ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
-    if (ageDays > CONFIG.CODE_EXPIRY_DAYS) continue;
-
-    let payload, signature;
-    try {
-      payload = JSON.parse(row[4]);
-      signature = row[5];
-    } catch (e) {
-      continue;
-    }
-
-    records.push({
-      code: row[0],
-      lrn: rowLrn,
-      studentName: row[2],
-      section: rowSection,
-      payload: payload,
-      signature: signature,
-      createdAt: row[6]
-    });
-  }
+  trimOldAttempts(body.lrn);
 
   return {
     ok: true,
-    count: records.length,
-    records: records
+    pushId: body.pushId,
+    serverTimestamp: serverTimestamp,
+    message: 'Attempt recorded'
   };
 }
 
 // ============================================================
-// ACTION: deleteSyncCode (mark as used)
+// ACTION: pullAttempts  (NEW v1.2.0)
+// ============================================================
+/**
+ * Teacher pulls pending attempts.
+ * Filters: section, lrn, term, assessment, used (default false)
+ * Returns: { ok, count, records: [...] }
+ */
+function pullAttempts(body) {
+  body = body || {};
+  var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var records = [];
+  var cutoffMs = Date.now() - (CONFIG.ATTEMPT_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var rowLrn = row[1];
+    var rowSection = row[3];
+    var rowTerm = row[4];
+    var rowAssessment = row[5];
+    var used = row[13] === 'true' || row[13] === true;
+
+    if (body.lrn && rowLrn !== body.lrn) continue;
+    if (body.section && rowSection !== body.section) continue;
+    if (body.term && rowTerm !== body.term) continue;
+    if (body.assessment && rowAssessment !== body.assessment) continue;
+    if (body.includeUsed !== true && used) continue;
+
+    var serverTs = row[11];
+    var serverMs = serverTs ? new Date(serverTs).getTime() : 0;
+    if (serverMs && serverMs < cutoffMs) continue;
+
+    var payload, itemResults;
+    try {
+      itemResults = JSON.parse(row[8] || '[]');
+    } catch (e) { itemResults = []; }
+
+    payload = {
+      student: {
+        lrn: rowLrn,
+        name: row[2],
+        section: rowSection
+      },
+      attempt: {
+        term: rowTerm,
+        assessment: rowAssessment,
+        score: Number(row[6] || 0),
+        total: Number(row[7] || 0),
+        itemResults: itemResults,
+        set: row[9] || '',
+        timestamp: row[10] || ''
+      }
+    };
+
+    records.push({
+      pushId: row[0],
+      lrn: rowLrn,
+      studentName: row[2],
+      section: rowSection,
+      term: rowTerm,
+      assessment: rowAssessment,
+      score: Number(row[6] || 0),
+      total: Number(row[7] || 0),
+      itemResults: itemResults,
+      set: row[9] || '',
+      clientTimestamp: row[10] || '',
+      serverTimestamp: serverTs,
+      signature: row[12],
+      payload: payload,
+      verified: verifyCanonicalSignature(payload, row[12])
+    });
+  }
+
+  return { ok: true, count: records.length, records: records };
+}
+
+// ============================================================
+// ACTION: markUsedBulk  (NEW v1.2.0)
+// ============================================================
+/**
+ * Mark multiple pushIds as used (after teacher has applied them locally).
+ * body = { action: 'markUsedBulk', pushIds: [...], usedBy: 'teacher' }
+ */
+function markUsedBulk(body) {
+  if (!body || !body.pushIds || !body.pushIds.length) {
+    return { ok: false, error: 'Missing pushIds array' };
+  }
+
+  var usedBy = body.usedBy || 'teacher';
+  var now = new Date().toISOString();
+  var ids = {};
+  body.pushIds.forEach(function (id) { ids[id] = true; });
+
+  var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var marked = 0;
+
+  for (var i = 1; i < data.length; i++) {
+    var pid = data[i][0];
+    if (ids[pid]) {
+      sheet.getRange(i + 1, 14).setValue('true');
+      sheet.getRange(i + 1, 15).setValue(now);
+      sheet.getRange(i + 1, 16).setValue(usedBy);
+      marked++;
+    }
+  }
+
+  return { ok: true, marked: marked, usedBy: usedBy, usedAt: now };
+}
+
+// ============================================================
+// ACTION: archiveUsed  (NEW v1.2.0)
+// ============================================================
+/**
+ * Archive used/old attempts to History sheet, then delete from Attempts.
+ * body = { action: 'archiveUsed', olderThanDays: 60, archivedBy: 'teacher' }
+ * - Rows where used=true AND serverTimestamp < (now - olderThanDays) are archived.
+ * - If olderThanDays not provided, only used=true rows are archived.
+ */
+function archiveUsed(body) {
+  body = body || {};
+  var olderThanDays = body.olderThanDays;
+  var archivedBy = body.archivedBy || 'system';
+  var cutoffMs = olderThanDays
+    ? Date.now() - (olderThanDays * 24 * 60 * 60 * 1000)
+    : Infinity;
+
+  var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+  var histSheet = getOrCreateSheet(CONFIG.HISTORY_SHEET);
+  var data = sheet.getDataRange().getValues();
+
+  var toArchive = [];
+  var rowIndices = [];
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var used = row[13] === 'true' || row[13] === true;
+    if (!used) continue;
+    var serverMs = row[11] ? new Date(row[11]).getTime() : 0;
+    if (serverMs && serverMs > cutoffMs) continue;
+
+    toArchive.push(row);
+    rowIndices.push(i + 1);
+  }
+
+  if (!toArchive.length) {
+    return { ok: true, archived: 0, message: 'Nothing to archive' };
+  }
+
+  var archivedAt = new Date().toISOString();
+  toArchive.forEach(function (row) {
+    histSheet.appendRow(row.concat([archivedAt, archivedBy]));
+  });
+
+  // Delete in reverse to preserve indices
+  rowIndices.reverse().forEach(function (idx) {
+    sheet.deleteRow(idx);
+  });
+
+  return {
+    ok: true,
+    archived: toArchive.length,
+    archivedAt: archivedAt,
+    archivedBy: archivedBy
+  };
+}
+
+// ============================================================
+// ACTION: getSyncStatus  (NEW v1.2.0)
+// ============================================================
+/**
+ * Lightweight status for dashboards.
+ * Returns: { ok, totalPending, totalUsed, totalArchived, perSection: {...} }
+ */
+function getSyncStatus(body) {
+  body = body || {};
+
+  var attempts = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
+  var aData = attempts.getDataRange().getValues();
+
+  var totalPending = 0, totalUsed = 0;
+  var perSection = {};
+
+  for (var i = 1; i < aData.length; i++) {
+    var row = aData[i];
+    var section = row[3] || 'UNKNOWN';
+    var used = row[13] === 'true' || row[13] === true;
+
+    if (body.section && section !== body.section) continue;
+
+    if (!perSection[section]) perSection[section] = { pending: 0, used: 0 };
+    if (used) { totalUsed++; perSection[section].used++; }
+    else { totalPending++; perSection[section].pending++; }
+  }
+
+  var hist = getOrCreateSheet(CONFIG.HISTORY_SHEET);
+  var totalArchived = Math.max(0, hist.getLastRow() - 1);
+
+  return {
+    ok: true,
+    totalPending: totalPending,
+    totalUsed: totalUsed,
+    totalArchived: totalArchived,
+    perSection: perSection,
+    serverTime: new Date().toISOString()
+  };
+}
+
+// ============================================================
+// EXISTING ACTIONS (v1.0.0 / v1.1.0) — UNCHANGED
 // ============================================================
 
-function deleteSyncCode(body) {
-  const { code } = body;
+function registerSyncCode(body) {
+  var code = body.code, lrn = body.lrn, payload = body.payload, signature = body.signature;
+  if (!code || !lrn || !payload || !signature) {
+    return { ok: false, error: 'Missing required fields (code, lrn, payload, signature)' };
+  }
+  if (!verifyCanonicalSignature(payload, signature)) {
+    return { ok: false, error: 'Signature verification failed' };
+  }
+
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  if (findRowByCode(code)) return { ok: false, error: 'Code already exists' };
+
+  var student = payload.student || {};
+  var studentName = (student.lastName || '') + ', ' + (student.firstName || '');
+  var section = student.section || '';
+  var createdAt = new Date().toISOString();
+
+  sheet.appendRow([code, lrn, studentName, section, JSON.stringify(payload), signature, createdAt, 'false']);
+  trimOldCodes(lrn);
+
+  return { ok: true, code: code, createdAt: createdAt, message: 'Sync code registered' };
+}
+
+function resolveSyncCode(body) {
+  var code = body.code;
   if (!code) return { ok: false, error: 'Missing code' };
 
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
 
-  for (let i = 1; i < data.length; i++) {
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0] === code) {
+      var createdAt = new Date(data[i][6]);
+      var ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
+      if (ageDays > CONFIG.CODE_EXPIRY_DAYS) return { ok: false, error: 'Sync code has expired' };
+
+      var payload = JSON.parse(data[i][4]);
+      var signature = data[i][5];
+      if (!verifyCanonicalSignature(payload, signature)) {
+        return { ok: false, error: 'Stored data failed verification' };
+      }
+      return { ok: true, payload: payload, signature: signature, createdAt: data[i][6] };
+    }
+  }
+  return { ok: false, error: 'Code not found' };
+}
+
+function pullAllPending(body) {
+  body = body || {};
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var records = [];
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var used = row[7] === 'true' || row[7] === true;
+    if (body.lrn && row[1] !== body.lrn) continue;
+    if (body.section && row[3] !== body.section) continue;
+    if (used) continue;
+
+    var createdAt = new Date(row[6]);
+    var ageDays = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
+    if (ageDays > CONFIG.CODE_EXPIRY_DAYS) continue;
+
+    var payload, signature;
+    try {
+      payload = JSON.parse(row[4]);
+      signature = row[5];
+    } catch (e) { continue; }
+
+    records.push({
+      code: row[0], lrn: row[1], studentName: row[2], section: row[3],
+      payload: payload, signature: signature, createdAt: row[6]
+    });
+  }
+
+  return { ok: true, count: records.length, records: records };
+}
+
+function deleteSyncCode(body) {
+  var code = body.code;
+  if (!code) return { ok: false, error: 'Missing code' };
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
     if (data[i][0] === code) {
       sheet.getRange(i + 1, 8).setValue('true');
       return { ok: true, message: 'Sync code marked as used' };
     }
   }
-
   return { ok: false, error: 'Code not found' };
 }
 
-// ============================================================
-// ACTION: getTermAccess
-// - If body.section provided → { ok, section, access: {...} }
-// - If no section → { ok, all: { 'ACADEMIC A': {...}, 'ACADEMIC B': {...} } }
-// ============================================================
-
 function getTermAccess(body) {
-  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
-  const data = sheet.getDataRange().getValues();
+  var sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var sections = CONFIG.VALID_SECTIONS;
+  var latest = {};
 
-  const sections = CONFIG.VALID_SECTIONS;
-  const latest = {};
-
-  // Columns: timestamp | section | term1 | term2 | term3 | updatedBy | notes
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-    const section = row[1];
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var section = row[1];
     if (sections.indexOf(section) === -1) continue;
-
-    const timestamp = new Date(row[0]).getTime();
-    if (!latest[section] || timestamp > latest[section].at) {
+    var ts = new Date(row[0]).getTime();
+    if (!latest[section] || ts > latest[section].at) {
       latest[section] = {
-        at: timestamp,
+        at: ts,
         access: {
           term1: row[2] === 'open' ? 'open' : 'locked',
           term2: row[3] === 'open' ? 'open' : 'locked',
           term3: row[4] === 'open' ? 'open' : 'locked'
-        },
-        updatedBy: row[5] || '',
-        notes: row[6] || ''
+        }
       };
     }
   }
 
-  // Default for missing sections: all locked
-  const all = {};
-  sections.forEach((sec) => {
-    all[sec] = latest[sec]
-      ? latest[sec].access
-      : { term1: 'locked', term2: 'locked', term3: 'locked' };
+  var all = {};
+  sections.forEach(function (sec) {
+    all[sec] = latest[sec] ? latest[sec].access : { term1: 'locked', term2: 'locked', term3: 'locked' };
   });
 
   if (body && body.section) {
-    return {
-      ok: true,
-      section: body.section,
-      access: all[body.section] || { term1: 'locked', term2: 'locked', term3: 'locked' }
-    };
+    return { ok: true, section: body.section, access: all[body.section] || { term1: 'locked', term2: 'locked', term3: 'locked' } };
   }
-
   return { ok: true, all: all };
 }
 
-// ============================================================
-// ACTION: setTermAccess
-// ============================================================
-
 function setTermAccess(body) {
-  const { section, access } = body;
+  var section = body.section, access = body.access;
+  if (!section || !access) return { ok: false, error: 'Missing section or access' };
+  if (CONFIG.VALID_SECTIONS.indexOf(section) === -1) return { ok: false, error: 'Invalid section: ' + section };
 
-  if (!section || !access) {
-    return { ok: false, error: 'Missing section or access' };
-  }
-
-  if (CONFIG.VALID_SECTIONS.indexOf(section) === -1) {
-    return { ok: false, error: 'Invalid section: ' + section };
-  }
-
-  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
-
+  var sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
   sheet.appendRow([
     new Date().toISOString(),
     section,
@@ -399,11 +609,8 @@ function setTermAccess(body) {
     body.notes || ''
   ]);
 
-  logAction('setTermAccess', '', '', 'success', section);
-
   return {
-    ok: true,
-    section: section,
+    ok: true, section: section,
     access: {
       term1: access.term1 === 'open' ? 'open' : 'locked',
       term2: access.term2 === 'open' ? 'open' : 'locked',
@@ -413,24 +620,105 @@ function setTermAccess(body) {
 }
 
 // ============================================================
-// HMAC SIGNATURE VERIFICATION (SHA-256)
+// CANONICAL JSON + HMAC (X36 fix — constant-time compare)
 // ============================================================
 
-function verifySignature(payload, signature) {
+/**
+ * Produce a canonical JSON string:
+ *   - Keys sorted recursively
+ *   - No whitespace
+ *   - Undefined/function values omitted
+ *   - Top-level "signature" field removed if present
+ */
+function canonicalize(obj) {
+  if (obj === null || obj === undefined) return 'null';
+  if (typeof obj === 'number') {
+    if (isNaN(obj) || !isFinite(obj)) return 'null';
+    return String(obj);
+  }
+  if (typeof obj === 'boolean') return obj ? 'true' : 'false';
+  if (typeof obj === 'string') return JSON.stringify(obj);
+  if (Array.isArray(obj)) {
+    return '[' + obj.map(canonicalize).join(',') + ']';
+  }
+  if (typeof obj === 'object') {
+    var keys = Object.keys(obj).filter(function (k) {
+      if (k === 'signature' && obj === arguments.callee) return false;
+      return obj[k] !== undefined && typeof obj[k] !== 'function';
+    });
+    keys.sort();
+    var parts = keys.map(function (k) {
+      return JSON.stringify(k) + ':' + canonicalize(obj[k]);
+    });
+    return '{' + parts.join(',') + '}';
+  }
+  return 'null';
+}
+
+function computeHMAC(message, secret) {
+  var rawHmac = Utilities.computeHmacSha256Signature(message, secret);
+  return rawHmac
+    .map(function (byte) { return ((byte < 0 ? byte + 256 : byte).toString(16).padStart(2, '0')); })
+    .join('');
+}
+
+/**
+ * Verify signature using canonical JSON.
+ * Constant-time comparison to avoid timing attacks.
+ */
+function verifyCanonicalSignature(payload, signature) {
   try {
-    const json = JSON.stringify(payload);
-    const expected = computeHMAC(json, CONFIG.HMAC_SECRET);
-    return expected === signature;
+    if (!payload || !signature) return false;
+    var canonical = canonicalize(payload);
+    var expected = computeHMAC(canonical, CONFIG.HMAC_SECRET);
+    return constantTimeEquals(expected, signature);
   } catch (e) {
     return false;
   }
 }
 
-function computeHMAC(message, secret) {
-  const rawHmac = Utilities.computeHmacSha256Signature(message, secret);
-  return rawHmac
-    .map((byte) => ((byte < 0 ? byte + 256 : byte).toString(16).padStart(2, '0')))
-    .join('');
+function constantTimeEquals(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  if (a.length !== b.length) return false;
+  var diff = 0;
+  for (var i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+// ============================================================
+// RATE LIMITING (in-memory, per Apps Script execution)
+// ============================================================
+
+var _rateCache = {};
+
+function checkRateLimit(key, action) {
+  var now = Date.now();
+  var windowMs = CONFIG.RATE_LIMIT_WINDOW_SEC * 1000;
+  var cacheKey = key + '::' + action;
+
+  if (!_rateCache[cacheKey]) {
+    _rateCache[cacheKey] = { count: 1, windowStart: now };
+    return { ok: true };
+  }
+
+  var entry = _rateCache[cacheKey];
+  if (now - entry.windowStart > windowMs) {
+    entry.count = 1;
+    entry.windowStart = now;
+    return { ok: true };
+  }
+
+  entry.count++;
+  if (entry.count > CONFIG.RATE_LIMIT_MAX_PER_WINDOW) {
+    return {
+      ok: false,
+      reason: 'Exceeded ' + CONFIG.RATE_LIMIT_MAX_PER_WINDOW + ' per ' + CONFIG.RATE_LIMIT_WINDOW_SEC + 's',
+      retryAfter: Math.ceil((entry.windowStart + windowMs - now) / 1000)
+    };
+  }
+  return { ok: true };
 }
 
 // ============================================================
@@ -438,24 +726,36 @@ function computeHMAC(message, secret) {
 // ============================================================
 
 function getOrCreateSheet(name) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(name);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(name);
 
   if (!sheet) {
     sheet = ss.insertSheet(name);
     if (name === CONFIG.SYNC_CODES_SHEET) {
-      sheet.appendRow([
-        'code', 'lrn', 'studentName', 'section',
-        'payload', 'signature', 'createdAt', 'used'
-      ]);
+      sheet.appendRow(['code', 'lrn', 'studentName', 'section', 'payload', 'signature', 'createdAt', 'used']);
       sheet.setFrozenRows(1);
     } else if (name === CONFIG.TERM_ACCESS_SHEET) {
-      sheet.appendRow([
-        'timestamp', 'section', 'term1', 'term2', 'term3', 'updatedBy', 'notes'
-      ]);
+      sheet.appendRow(['timestamp', 'section', 'term1', 'term2', 'term3', 'updatedBy', 'notes']);
       sheet.setFrozenRows(1);
     } else if (name === CONFIG.LOG_SHEET) {
       sheet.appendRow(['timestamp', 'action', 'lrn', 'code', 'status', 'notes']);
+      sheet.setFrozenRows(1);
+    } else if (name === CONFIG.ATTEMPTS_SHEET) {
+      sheet.appendRow([
+        'pushId', 'lrn', 'studentName', 'section',
+        'term', 'assessment', 'score', 'total',
+        'itemResults', 'set', 'clientTimestamp', 'serverTimestamp',
+        'signature', 'used', 'usedAt', 'usedBy'
+      ]);
+      sheet.setFrozenRows(1);
+    } else if (name === CONFIG.HISTORY_SHEET) {
+      sheet.appendRow([
+        'pushId', 'lrn', 'studentName', 'section',
+        'term', 'assessment', 'score', 'total',
+        'itemResults', 'set', 'clientTimestamp', 'serverTimestamp',
+        'signature', 'used', 'usedAt', 'usedBy',
+        'archivedAt', 'archivedBy'
+      ]);
       sheet.setFrozenRows(1);
     }
   }
@@ -464,30 +764,36 @@ function getOrCreateSheet(name) {
 }
 
 function findRowByCode(code) {
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-  for (let i = 1; i < data.length; i++) {
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
     if (data[i][0] === code) return { row: i + 1, data: data[i] };
   }
   return null;
 }
 
 function trimOldCodes(lrn) {
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-  const rows = [];
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var rows = [];
 
-  for (let i = 1; i < data.length; i++) {
+  for (var i = 1; i < data.length; i++) {
     if (data[i][1] === lrn) {
       rows.push({ rowIndex: i + 1, createdAt: new Date(data[i][6]) });
     }
   }
 
   if (rows.length > CONFIG.MAX_CODES_PER_STUDENT) {
-    rows.sort((a, b) => a.createdAt - b.createdAt);
-    const toDelete = rows.slice(0, rows.length - CONFIG.MAX_CODES_PER_STUDENT);
-    toDelete.reverse().forEach((r) => sheet.deleteRow(r.rowIndex));
+    rows.sort(function (a, b) { return a.createdAt - b.createdAt; });
+    var toDelete = rows.slice(0, rows.length - CONFIG.MAX_CODES_PER_STUDENT);
+    toDelete.reverse().forEach(function (r) { sheet.deleteRow(r.rowIndex); });
   }
+}
+
+function trimOldAttempts(lrn) {
+  // Attempts are NOT trimmed per-student like sync codes.
+  // Cleanup happens via archiveUsed() only.
+  // This function kept as a hook for future policy.
 }
 
 // ============================================================
@@ -496,14 +802,16 @@ function trimOldCodes(lrn) {
 
 function logAction(action, lrn, code, status, notes) {
   try {
-    const sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
+    var sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
+    // Keep Log from growing unbounded — trim in the background
+    if (sheet.getLastRow() > 5000) {
+      var toDelete = sheet.getLastRow() - 5000;
+      sheet.deleteRows(2, toDelete);
+    }
     sheet.appendRow([
       new Date().toISOString(),
-      action || '',
-      lrn || '',
-      code || '',
-      status || '',
-      notes || ''
+      action || '', lrn || '', code || '',
+      status || '', notes || ''
     ]);
   } catch (e) {
     console.error('Log error:', e);
@@ -511,50 +819,36 @@ function logAction(action, lrn, code, status, notes) {
 }
 
 // ============================================================
-// MANUAL MAINTENANCE FUNCTIONS
-// Run these from the Apps Script editor when needed.
+// MANUAL MAINTENANCE (run from Apps Script editor)
 // ============================================================
 
-/**
- * Delete sync codes older than 60 days (manual cleanup).
- */
 function cleanupOldCodes() {
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-  const cutoff = Date.now() - (60 * 24 * 60 * 60 * 1000);
-  const toDelete = [];
-
-  for (let i = 1; i < data.length; i++) {
-    const createdAt = new Date(data[i][6]).getTime();
-    if (createdAt < cutoff) toDelete.push(i + 1);
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var cutoff = Date.now() - (60 * 24 * 60 * 60 * 1000);
+  var toDelete = [];
+  for (var i = 1; i < data.length; i++) {
+    if (new Date(data[i][6]).getTime() < cutoff) toDelete.push(i + 1);
   }
-
-  toDelete.reverse().forEach((idx) => sheet.deleteRow(idx));
+  toDelete.reverse().forEach(function (idx) { sheet.deleteRow(idx); });
   return { deleted: toDelete.length };
 }
 
-/**
- * Reset the Log sheet.
- */
 function clearLog() {
-  const sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
+  var sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
   sheet.clear();
   sheet.appendRow(['timestamp', 'action', 'lrn', 'code', 'status', 'notes']);
   return { cleared: true };
 }
 
-/**
- * Manually check whether a stored code's signature matches.
- */
 function testSignatureCheck(code) {
-  const sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  const data = sheet.getDataRange().getValues();
-
-  for (let i = 1; i < data.length; i++) {
+  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
     if (data[i][0] === code) {
-      const payload = JSON.parse(data[i][4]);
-      const signature = data[i][5];
-      const expected = computeHMAC(JSON.stringify(payload), CONFIG.HMAC_SECRET);
+      var payload = JSON.parse(data[i][4]);
+      var signature = data[i][5];
+      var expected = computeHMAC(canonicalize(payload), CONFIG.HMAC_SECRET);
       return {
         code: code,
         matches: expected === signature,
@@ -563,28 +857,39 @@ function testSignatureCheck(code) {
       };
     }
   }
-
   return { error: 'Code not found' };
 }
 
-/**
- * Manually view the current term access state (debug helper).
- */
-function viewTermAccess() {
-  return getTermAccess({});
-}
+function viewTermAccess() { return getTermAccess({}); }
 
-/**
- * Reset term access for a section (debug helper).
- */
 function resetTermAccess(section) {
-  const sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
+  var sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
   sheet.appendRow([
     new Date().toISOString(),
     section || 'ACADEMIC A',
     'locked', 'locked', 'locked',
-    'system-reset',
-    'Manual reset'
+    'system-reset', 'Manual reset'
   ]);
   return { ok: true, message: 'Reset ' + (section || 'ACADEMIC A') + ' to all locked' };
+}
+
+/**
+ * Manually archive used attempts older than 60 days.
+ */
+function manualArchiveOld() {
+  return archiveUsed({ olderThanDays: 60, archivedBy: 'manual' });
+}
+
+/**
+ * Test the canonical-signing pipeline end-to-end.
+ */
+function testCanonicalSigning() {
+  var sample = {
+    version: '2.0.0',
+    student: { lrn: '123456789012', lastName: 'Dela Cruz', firstName: 'Juan', section: 'ACADEMIC A' },
+    attempt: { term: 'term1', assessment: 'quiz1', score: 18, total: 20 }
+  };
+  var canonical = canonicalize(sample);
+  var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
+  return { canonical: canonical, signature: sig, verified: verifyCanonicalSignature(sample, sig) };
 }
