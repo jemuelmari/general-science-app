@@ -2,186 +2,277 @@
   "title": "Summative Test 2 — Light, Sound & Chemistry in Everyday Life",
   "coverage": "Weeks 5–8",
   "items": 30,
+  "competencies": ["GENSCI-11-T1-W5-C1", "GENSCI-11-T1-W6-C1", "GENSCI-11-T1-W7-C1", "GENSCI-11-T1-W8-C1"],
   "questions": [
     {
       "id": "q1",
       "text": "Which of the following correctly describes light?",
       "options": ["Electromagnetic wave that travels at 3 × 10⁸ m/s in a vacuum", "Mechanical wave that needs a medium", "Sound wave with low frequency", "A type of seismic wave"],
-      "correct": "Electromagnetic wave that travels at 3 × 10⁸ m/s in a vacuum"
+      "correct": "Electromagnetic wave that travels at 3 × 10⁸ m/s in a vacuum",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light properties" }
     },
     {
       "id": "q2",
       "text": "Which property of light determines its brightness?",
       "options": ["Amplitude", "Wavelength", "Frequency", "Speed"],
-      "correct": "Amplitude"
+      "correct": "Amplitude",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light property" }
     },
     {
       "id": "q3",
       "text": "The angle of incidence equals the angle of reflection. This is known as:",
       "options": ["Law of Reflection", "Law of Refraction", "Snell's Law", "Law of Conservation"],
-      "correct": "Law of Reflection"
+      "correct": "Law of Reflection",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "law of reflection" }
     },
     {
       "id": "q4",
       "text": "Which type of reflection produces a clear image?",
       "options": ["Regular reflection (smooth surface like a mirror)", "Diffuse reflection (rough surface)", "Total internal reflection", "Random reflection"],
-      "correct": "Regular reflection (smooth surface like a mirror)"
+      "correct": "Regular reflection (smooth surface like a mirror)",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "reflection types" }
     },
     {
       "id": "q5",
       "text": "Why does a pencil look broken when placed in a glass of water?",
       "options": ["Light refracts when passing from air to water", "Light is absorbed by water", "Water is denser than air", "The pencil actually bends"],
-      "correct": "Light refracts when passing from air to water"
+      "correct": "Light refracts when passing from air to water",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "refraction" }
     },
     {
       "id": "q6",
       "text": "Which EM wave is used in WiFi routers?",
       "options": ["Radio waves", "X-rays", "Gamma rays", "Ultraviolet"],
-      "correct": "Radio waves"
+      "correct": "Radio waves",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM wave application" }
     },
     {
       "id": "q7",
       "text": "Which of the following correctly orders EM waves from LONGEST to SHORTEST wavelength?",
       "options": ["Radio → Infrared → Visible → UV → X-ray → Gamma", "Gamma → X-ray → UV → Visible → Infrared → Radio", "Visible → UV → Infrared → Radio → Gamma → X-ray", "X-ray → Visible → Radio → UV → Gamma → Infrared"],
-      "correct": "Radio → Infrared → Visible → UV → X-ray → Gamma"
+      "correct": "Radio → Infrared → Visible → UV → X-ray → Gamma",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM spectrum ordering" }
     },
     {
       "id": "q8",
       "text": "Why are sunglasses with UV protection important?",
       "options": ["They protect eyes from harmful ultraviolet radiation", "They make things look brighter", "They reduce the speed of light", "They block visible light only"],
-      "correct": "They protect eyes from harmful ultraviolet radiation"
+      "correct": "They protect eyes from harmful ultraviolet radiation",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "UV protection = light application" }
     },
     {
       "id": "q9",
       "text": "Which technology uses focused light beams for surgery and barcode scanning?",
       "options": ["Laser", "LED", "Fiber optics", "Microphone"],
-      "correct": "Laser"
+      "correct": "Laser",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "laser innovation" }
     },
     {
       "id": "q10",
       "text": "Fiber-optic cables transmit internet data using:",
       "options": ["Light through thin glass strands", "Copper wires", "Radio waves", "Sound waves"],
-      "correct": "Light through thin glass strands"
+      "correct": "Light through thin glass strands",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "fiber-optic = light application" }
     },
     {
       "id": "q11",
       "text": "What type of wave is sound?",
       "options": ["Mechanical longitudinal wave", "Electromagnetic wave", "Transverse light wave", "Radio wave"],
-      "correct": "Mechanical longitudinal wave"
+      "correct": "Mechanical longitudinal wave",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound wave nature" }
     },
     {
       "id": "q12",
       "text": "Why can't sound travel through a vacuum?",
       "options": ["There are no particles to vibrate and transmit the wave", "Sound is blocked by light", "Vacuum is too cold", "Sound is absorbed by gravity"],
-      "correct": "There are no particles to vibrate and transmit the wave"
+      "correct": "There are no particles to vibrate and transmit the wave",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound requires medium" }
     },
     {
       "id": "q13",
       "text": "Sound travels FASTEST through:",
       "options": ["Steel", "Air", "Water", "Vacuum"],
-      "correct": "Steel"
+      "correct": "Steel",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound speed in media" }
     },
     {
       "id": "q14",
       "text": "The pitch of a sound is determined by its:",
       "options": ["Frequency", "Amplitude", "Speed", "Wavelength in meters"],
-      "correct": "Frequency"
+      "correct": "Frequency",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pitch = frequency" }
     },
     {
       "id": "q15",
       "text": "What frequency range can the human ear typically hear?",
       "options": ["20 Hz – 20,000 Hz", "0 Hz – 1,000 Hz", "20,000 Hz – 40,000 Hz", "1 Hz – 10 Hz"],
-      "correct": "20 Hz – 20,000 Hz"
+      "correct": "20 Hz – 20,000 Hz",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hearing range" }
     },
     {
       "id": "q16",
       "text": "What is SONAR used for?",
       "options": ["Detecting underwater objects using reflected sound waves", "Taking X-ray images", "Measuring temperature", "Generating electricity"],
-      "correct": "Detecting underwater objects using reflected sound waves"
+      "correct": "Detecting underwater objects using reflected sound waves",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "SONAR application" }
     },
     {
       "id": "q17",
       "text": "Ultrasound in medicine uses sound waves with frequencies:",
       "options": ["Above 20,000 Hz", "Below 20 Hz", "Between 20 and 200 Hz", "Equal to visible light"],
-      "correct": "Above 20,000 Hz"
+      "correct": "Above 20,000 Hz",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ultrasound = sound in medicine" }
     },
     {
       "id": "q18",
       "text": "Which of the following is an effective way to reduce noise pollution in a home?",
       "options": ["Using acoustic foam panels and double-glazed windows", "Playing louder music", "Leaving doors open", "Removing all furniture"],
-      "correct": "Using acoustic foam panels and double-glazed windows"
+      "correct": "Using acoustic foam panels and double-glazed windows",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soundproofing" }
     },
     {
       "id": "q19",
       "text": "An amplifier increases which property of a sound wave?",
       "options": ["Amplitude", "Frequency", "Speed", "Wavelength"],
-      "correct": "Amplitude"
+      "correct": "Amplitude",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "amplifier = sound innovation" }
     },
     {
       "id": "q20",
       "text": "How do noise-cancelling headphones work?",
       "options": ["They emit inverse sound waves to cancel out background noise", "They block all sound with foam", "They increase sound frequency", "They slow the speed of sound"],
-      "correct": "They emit inverse sound waves to cancel out background noise"
+      "correct": "They emit inverse sound waves to cancel out background noise",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "noise cancellation" }
     },
     {
       "id": "q21",
       "text": "Louis Pasteur is best known for:",
       "options": ["Developing germ theory and pasteurization", "Discovering DNA", "Inventing the microscope", "Discovering penicillin"],
-      "correct": "Developing germ theory and pasteurization"
+      "correct": "Developing germ theory and pasteurization",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Louis Pasteur" }
     },
     {
       "id": "q22",
       "text": "Pasteur's swan-neck flask experiment disproved:",
       "options": ["Spontaneous generation", "Germ theory", "Cell theory", "Atomic theory"],
-      "correct": "Spontaneous generation"
+      "correct": "Spontaneous generation",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur experiment" }
     },
     {
       "id": "q23",
       "text": "What is pasteurization?",
       "options": ["Heating liquids to kill harmful bacteria without ruining flavor", "Freezing liquids to preserve them", "Adding antibiotics to food", "Removing water from milk"],
-      "correct": "Heating liquids to kill harmful bacteria without ruining flavor"
+      "correct": "Heating liquids to kill harmful bacteria without ruining flavor",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pasteurization" }
     },
     {
       "id": "q24",
       "text": "Which vaccine did Pasteur develop first for a human disease?",
       "options": ["Rabies", "Polio", "Smallpox", "Measles"],
-      "correct": "Rabies"
+      "correct": "Rabies",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur vaccine" }
     },
     {
       "id": "q25",
       "text": "Modern vaccines work by:",
       "options": ["Training the immune system with weakened or inactive pathogens", "Killing all bacteria in the body", "Replacing white blood cells", "Removing viruses through pasteurization"],
-      "correct": "Training the immune system with weakened or inactive pathogens"
+      "correct": "Training the immune system with weakened or inactive pathogens",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccines = germ theory application" }
     },
     {
       "id": "q26",
       "text": "What is the active ingredient in bleach?",
       "options": ["Sodium hypochlorite (NaClO)", "Sodium bicarbonate", "Sodium chloride", "Fluoride"],
-      "correct": "Sodium hypochlorite (NaClO)"
+      "correct": "Sodium hypochlorite (NaClO)",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "bleach = household product" }
     },
     {
       "id": "q27",
       "text": "Why must you NEVER mix bleach with ammonia cleaners?",
       "options": ["It releases toxic chloramine gas", "It makes a stronger bleach", "It produces harmless foam", "It becomes solid"],
-      "correct": "It releases toxic chloramine gas"
+      "correct": "It releases toxic chloramine gas",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product risk" }
     },
     {
       "id": "q28",
       "text": "Which agency in the Philippines approves cosmetics for sale?",
       "options": ["FDA Philippines", "DTI", "DENR", "DOH"],
-      "correct": "FDA Philippines"
+      "correct": "FDA Philippines",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "FDA reference" }
     },
     {
       "id": "q29",
       "text": "Phosphate-rich detergents can cause which environmental problem?",
       "options": ["Eutrophication (harmful algal blooms) in rivers and lakes", "Acid rain", "Ozone depletion", "Global warming"],
-      "correct": "Eutrophication (harmful algal blooms) in rivers and lakes"
+      "correct": "Eutrophication (harmful algal blooms) in rivers and lakes",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product environmental impact" }
     },
     {
       "id": "q30",
       "text": "Which practice is BEST for disposing of expired household chemicals?",
       "options": ["Follow DENR guidelines and check with local barangay for hazardous waste disposal", "Pour down the kitchen sink", "Throw in regular trash", "Bury in the backyard"],
-      "correct": "Follow DENR guidelines and check with local barangay for hazardous waste disposal"
+      "correct": "Follow DENR guidelines and check with local barangay for hazardous waste disposal",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "disposal best practice = DENR reference" }
     }
   ]
 }
