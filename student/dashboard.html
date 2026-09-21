@@ -6,6 +6,74 @@
   <title>Dashboard — General Science</title>
   <link rel="stylesheet" href="../assets/css/main.css?v=3" />
   <link rel="stylesheet" href="../assets/css/student.css?v=3" />
+    <style>
+    /* Floating sync badge */
+    .sync-badge-fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 9999;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .sync-badge-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .sync-badge-fab.synced   { background: #2e7d32; }
+    .sync-badge-fab.pending  { background: #ed6c02; }
+    .sync-badge-fab.failed   { background: #c62828; }
+    .sync-badge-fab.offline  { background: #78909c; }
+    .sync-badge-fab .badge-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 0.7rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .sync-panel {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      max-width: calc(100vw - 40px);
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 9998;
+      padding: 16px;
+      display: none;
+      font-size: 0.85rem;
+    }
+    .sync-panel.open { display: block; }
+    .sync-panel h3 { margin: 0 0 8px; font-size: 1rem; color: #0d47a1; }
+    .sync-panel .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .sync-panel .row .val { font-weight: 700; color: #1a1a1a; }
+    .sync-panel .actions { display: flex; gap: 8px; margin-top: 12px; }
+    .sync-panel .actions button {
+      flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer;
+      font-family: inherit; font-weight: 600; font-size: 0.8rem;
+    }
+    .sync-panel .actions button.primary { background: #0d47a1; color: #fff; }
+    .sync-panel .actions button.secondary { background: #eceff1; color: #37474f; }
+  </style>
 </head>
 <body>
 
@@ -79,6 +147,7 @@
   <script src="../assets/js/security.js?v=3"></script>
   <script src="../assets/js/transmutation.js?v=3"></script>
   <script src="../assets/js/sync.js?v=1.2.0"></script>
+  <script src="../assets/js/sync-auto.js?v=1.2.0"></script>
   <script src="../assets/js/backup.js?v=3"></script>
   <script src="../assets/js/term-access.js?v=3"></script>
   <script>
@@ -375,6 +444,115 @@
         }, 400);
       });
 
+    })();
+  </script>
+  <!-- ===== Floating Sync Badge ===== -->
+  <button id="sync-badge-fab" class="sync-badge-fab synced" title="Sync status">
+    🟢
+    <span id="sync-badge-count" class="badge-count" style="display:none;">0</span>
+  </button>
+
+  <div id="sync-panel" class="sync-panel">
+    <h3>📤 Sync Status</h3>
+    <div class="row"><span>Backend:</span><span class="val" id="sync-backend-status">—</span></div>
+    <div class="row"><span>Connection:</span><span class="val" id="sync-connection-status">—</span></div>
+    <div class="row"><span>Queue size:</span><span class="val" id="sync-queue-size">0</span></div>
+    <div class="row"><span>Failed:</span><span class="val" id="sync-failed-size">0</span></div>
+    <div class="row"><span>Last sync:</span><span class="val" id="sync-last-sync">—</span></div>
+    <div id="sync-error-msg" style="margin-top:8px;padding:8px;background:#ffebee;color:#c62828;border-radius:6px;font-size:0.75rem;display:none;"></div>
+    <div class="actions">
+      <button class="primary" id="sync-now-btn">🔄 Sync Now</button>
+      <button class="secondary" id="sync-retry-btn">↻ Retry Failed</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Sync Badge wiring =====
+    (function() {
+      'use strict';
+
+      var fab = document.getElementById('sync-badge-fab');
+      var panel = document.getElementById('sync-panel');
+      var countEl = document.getElementById('sync-badge-count');
+
+      if (typeof SyncAuto === 'undefined') {
+        fab.style.display = 'none';
+        return;
+      }
+
+      // Toggle panel on click
+      fab.addEventListener('click', function(e) {
+        e.stopPropagation();
+        panel.classList.toggle('open');
+      });
+      document.addEventListener('click', function(e) {
+        if (!panel.contains(e.target) && e.target !== fab) {
+          panel.classList.remove('open');
+        }
+      });
+
+      // Subscribe to status updates
+      SyncAuto.onStatus(function(status) {
+        var emoji, cls;
+        if (!status.backendEnabled) { emoji = '⚪'; cls = 'offline'; }
+        else if (!status.online)     { emoji = '⚫'; cls = 'offline'; }
+        else if (status.status === 'synced')  { emoji = '🟢'; cls = 'synced'; }
+        else if (status.status === 'pending') { emoji = '🟡'; cls = 'pending'; }
+        else if (status.status === 'failed')  { emoji = '🔴'; cls = 'failed'; }
+        else { emoji = '⚪'; cls = 'offline'; }
+
+        fab.className = 'sync-badge-fab ' + cls;
+        fab.childNodes[0].nodeValue = emoji + ' ';
+
+        if (status.queueSize > 0) {
+          countEl.textContent = status.queueSize;
+          countEl.style.display = 'flex';
+        } else {
+          countEl.style.display = 'none';
+        }
+
+        // Panel fields
+        document.getElementById('sync-backend-status').textContent =
+          status.backendEnabled ? '✅ Enabled' : '❌ Not configured';
+        document.getElementById('sync-connection-status').textContent =
+          status.online ? '🌐 Online' : '📴 Offline';
+        document.getElementById('sync-queue-size').textContent = status.queueSize;
+        document.getElementById('sync-failed-size').textContent = status.failed;
+        document.getElementById('sync-last-sync').textContent =
+          status.lastSync ? APP.formatDate(status.lastSync) : 'Never';
+
+        var errEl = document.getElementById('sync-error-msg');
+        if (status.lastError) {
+          errEl.textContent = '⚠️ ' + status.lastError;
+          errEl.style.display = 'block';
+        } else {
+          errEl.style.display = 'none';
+        }
+      });
+
+      // Sync Now button
+      document.getElementById('sync-now-btn').addEventListener('click', async function() {
+        var btn = this;
+        btn.disabled = true;
+        btn.textContent = '⏳ Syncing…';
+        var result = await SyncAuto.flushNow();
+        btn.disabled = false;
+        btn.textContent = '🔄 Sync Now';
+        if (result.pushed > 0) APP.toast('✅ Synced ' + result.pushed + ' attempt(s)', 'success');
+        else if (result.reason) APP.toast('Sync skipped: ' + result.reason, 'info');
+        else APP.toast('Nothing to sync', 'info');
+      });
+
+      // Retry Failed button
+      document.getElementById('sync-retry-btn').addEventListener('click', async function() {
+        var btn = this;
+        btn.disabled = true;
+        btn.textContent = '⏳ Retrying…';
+        await SyncAuto.retryFailed();
+        btn.disabled = false;
+        btn.textContent = '↻ Retry Failed';
+        APP.toast('Retry queued', 'info');
+      });
     })();
   </script>
 </body>
