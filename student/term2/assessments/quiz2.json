@@ -2,6 +2,7 @@
   "title": "Quiz 2 — Solutions & Chemical Safety",
   "coverage": "Weeks 3–4",
   "items": 20,
+  "competencies": ["GENSCI-11-T2-W3-C1", "GENSCI-11-T2-W4-C1"],
   "questions": [
     {
       "id": "q1",
@@ -12,19 +13,28 @@
         "A pure chemical substance",
         "A type of solid only"
       ],
-      "correct": "A homogeneous mixture of two or more substances"
+      "correct": "A homogeneous mixture of two or more substances",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution definition" }
     },
     {
       "id": "q2",
       "text": "In a sugar-water solution, which is the solute?",
       "options": ["Sugar", "Water", "Both", "Neither"],
-      "correct": "Sugar"
+      "correct": "Sugar",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solute identification" }
     },
     {
       "id": "q3",
       "text": "In a sugar-water solution, which is the solvent?",
       "options": ["Water", "Sugar", "Both", "Neither"],
-      "correct": "Water"
+      "correct": "Water",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solvent identification" }
     },
     {
       "id": "q4",
@@ -35,25 +45,37 @@
         "It has no charge",
         "It is denser than other liquids"
       ],
-      "correct": "It dissolves more substances than any other liquid"
+      "correct": "It dissolves more substances than any other liquid",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water as solvent" }
     },
     {
       "id": "q5",
       "text": "Soda (softdrink) is an example of what type of solution?",
       "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"],
-      "correct": "Gas-in-liquid"
+      "correct": "Gas-in-liquid",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" }
     },
     {
       "id": "q6",
       "text": "Air is best described as which type of solution?",
       "options": ["Gas-in-gas", "Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid"],
-      "correct": "Gas-in-gas"
+      "correct": "Gas-in-gas",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" }
     },
     {
       "id": "q7",
       "text": "Bronze (an alloy of copper and tin) is an example of what type of solution?",
       "options": ["Solid-in-solid", "Solid-in-liquid", "Liquid-in-solid", "Gas-in-solid"],
-      "correct": "Solid-in-solid"
+      "correct": "Solid-in-solid",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "alloy = solid-in-solid solution" }
     },
     {
       "id": "q8",
@@ -64,7 +86,10 @@
         "When a solute evaporates",
         "When a solvent freezes"
       ],
-      "correct": "The point where no more solute can dissolve in a solvent at a given temperature"
+      "correct": "The point where no more solute can dissolve in a solvent at a given temperature",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saturation definition" }
     },
     {
       "id": "q9",
@@ -75,7 +100,10 @@
         "It becomes saltwater-tolerant automatically",
         "Nothing changes"
       ],
-      "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting"
+      "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "salt effect on plants investigation" }
     },
     {
       "id": "q10",
@@ -86,7 +114,10 @@
         "Removing salt from seawater",
         "A type of water filtration"
       ],
-      "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable"
+      "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact = W4-C1" }
     },
     {
       "id": "q11",
@@ -97,7 +128,10 @@
         "Rivers drying up",
         "Fishermen dumping seawater"
       ],
-      "correct": "Over-pumping of groundwater and rising sea levels due to climate change"
+      "correct": "Over-pumping of groundwater and rising sea levels due to climate change",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental analysis" }
     },
     {
       "id": "q12",
@@ -108,7 +142,10 @@
         "Corrosive to metals",
         "Harmless"
       ],
-      "correct": "Acute toxicity — can cause death or serious harm"
+      "correct": "Acute toxicity — can cause death or serious harm",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS hazard symbol = safe handling" }
     },
     {
       "id": "q13",
@@ -119,13 +156,19 @@
         "The substance is toxic",
         "The substance is harmless"
       ],
-      "correct": "The substance is flammable and easily catches fire"
+      "correct": "The substance is flammable and easily catches fire",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" }
     },
     {
       "id": "q14",
       "text": "Which GHS symbol warns that a chemical can corrode skin or metals?",
       "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"],
-      "correct": "Corrosion (test tube dripping on surface)"
+      "correct": "Corrosion (test tube dripping on surface)",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion symbol" }
     },
     {
       "id": "q15",
@@ -136,7 +179,10 @@
         "They smell different",
         "They weigh differently"
       ],
-      "correct": "They can react violently if they touch"
+      "correct": "They can react violently if they touch",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage = W4-C1" }
     },
     {
       "id": "q16",
@@ -147,7 +193,10 @@
         "Mix all cleaners to save time",
         "Store them in food containers for easy access"
       ],
-      "correct": "Wear gloves, work in a well-ventilated area, and read the label"
+      "correct": "Wear gloves, work in a well-ventilated area, and read the label",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best handling practice" }
     },
     {
       "id": "q17",
@@ -158,7 +207,10 @@
         "Throw them in the regular trash",
         "Bury them in the backyard"
       ],
-      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines"
+      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal = W4-C1" }
     },
     {
       "id": "q18",
@@ -169,13 +221,19 @@
         "A form of distillation",
         "A method of water purification"
       ],
-      "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish"
+      "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact" }
     },
     {
       "id": "q19",
       "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?",
       "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"],
-      "correct": "RA 6969"
+      "correct": "RA 6969",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation law" }
     },
     {
       "id": "q20",
@@ -186,7 +244,10 @@
         "To save money",
         "To increase the volume of the ocean"
       ],
-      "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe"
+      "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "wastewater impact" }
     }
   ]
 }
