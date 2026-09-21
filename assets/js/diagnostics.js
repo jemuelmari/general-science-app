@@ -1,16 +1,18 @@
 /* ============================================================
    diagnostics.js — Self-diagnostic engine
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.2.0 (Phase 2.7 / X14b fix):
+     - checkFileIntegrity() regex fixed. Previous version used
+       /[\}\)]\s*$/ (no m flag) which failed to match files ending
+       in `;` (like `})();`). Now uses a robust last-char check
+       that accepts `;`, `}`, or `)` as valid closing characters.
+     - Clarified check labels to reduce false alarms.
+
    Changelog v1.1.0 (Phase 2 / X11 + X14 fix):
-     - getModule() no longer uses eval(). Uses safe global lookup
-       via window[name] and globalThis[name], with optional bare
-       identifier fallback via try/catch around typeof.
-     - checkFileIntegrity() truncation regex fixed: previously
-       /(…)$/m matched `}` on ANY line (defeating the check).
-       Now /[\}\)]\s*$/ (no m flag) only matches end of file.
-     - Minor: improved detail messages.
+     - getModule() no longer uses eval(). Safe global lookup.
+     - checkFileIntegrity() truncation regex — partial fix.
 
    Changelog v1.0.1: Fixed Module API lookup (const declarations)
    ============================================================ */
@@ -64,24 +66,10 @@ const Diagnostics = (() => {
   }
 
   /* ---------- Safe module lookup (no eval) ---------- */
-  /**
-   * ⚠️ X11 FIX: Try to fetch a module by name WITHOUT eval().
-   * Order:
-   *   1. window[name]           — works when the script attaches to window
-   *   2. globalThis[name]       — modern environments
-   *   3. try/catch bare ident   — for `const X = ...` in same scope
-   *      (only works when Diagnostics is in the same script scope,
-   *      which it usually isn't; hence the window fallback above
-   *      is the primary path for this codebase).
-   */
   function getModule(name) {
-    // 1. window
     if (typeof window !== 'undefined' && window[name]) return window[name];
-    // 2. globalThis
     if (typeof globalThis !== 'undefined' && globalThis[name]) return globalThis[name];
 
-    // 3. Bare identifier access (limited scope, no eval).
-    //    Only a curated allow-list to avoid evaluating arbitrary strings.
     const KNOWN = {
       APP: typeof APP !== 'undefined' ? APP : null,
       CONFIG: typeof CONFIG !== 'undefined' ? CONFIG : null,
@@ -234,7 +222,6 @@ const Diagnostics = (() => {
       pass(cat, 'App version', CONFIG.VERSION);
     }
 
-    // ⚠️ New: check SET_ASSIGNMENT and HOURS_PER_WEEK
     if (CONFIG.SET_ASSIGNMENT && typeof CONFIG.SET_ASSIGNMENT === 'object') {
       pass(cat, 'Set assignment configured', JSON.stringify(CONFIG.SET_ASSIGNMENT));
     } else {
@@ -251,7 +238,44 @@ const Diagnostics = (() => {
 
   /* ============================================================
      CHECK 5 — File Integrity (anti-truncation)
+     ------------------------------------------------------------
+     ⚠️ FIX (X14b): Robust last-char check.
+
+     Valid final characters for a JS file:
+       - `;` (e.g., `})();` or `};`)
+       - `}` (e.g., object literal at end)
+       - `)` (rare, but valid — e.g., wrapping function call)
+
+     Additionally, accepts files ending with a comment line
+     (e.g., `// end of file`), which we detect by looking for
+     a `//` or `/*` marker in the last 100 chars.
      ============================================================ */
+  function hasValidEnding(text) {
+    // Trim trailing whitespace
+    const trimmed = text.replace(/\s+$/, '');
+    if (!trimmed) return false;
+
+    // Case 1: last non-whitespace char is ; } or )
+    const lastChar = trimmed.slice(-1);
+    if (lastChar === ';' || lastChar === '}' || lastChar === ')') {
+      return true;
+    }
+
+    // Case 2: file ends with a line comment (// ...)
+    // Look for a // in the last line
+    const lastLine = trimmed.split('\n').pop() || '';
+    if (lastLine.trim().indexOf('//') === 0) {
+      return true;
+    }
+
+    // Case 3: file ends with a block comment (*/ or */ )
+    if (trimmed.slice(-2) === '*/') {
+      return true;
+    }
+
+    return false;
+  }
+
   async function checkFileIntegrity() {
     const cat = addCategory('File Integrity (anti-truncation)', '📄');
 
@@ -274,9 +298,9 @@ const Diagnostics = (() => {
       'assets/js/classrecord.js',
       'assets/js/term-access.js',
       'assets/js/diagnostics.js',
-      'assets/js/randomize.js',       // NEW (Phase 2)
-      'assets/js/mastery-scales.js',  // NEW (Phase 2)
-      'assets/js/tos-engine.js',      // NEW (Phase 2)
+      'assets/js/randomize.js',
+      'assets/js/mastery-scales.js',
+      'assets/js/tos-engine.js',
       'config.js'
     ];
 
@@ -291,16 +315,13 @@ const Diagnostics = (() => {
       }
 
       const text = res.text;
-      const trimmed = text.trimEnd();
       const sizeKB = (text.length / 1024).toFixed(1);
 
-      // ⚠️ X14 FIX: use /[\}\)]\s*$/ (no `m` flag) so it only
-      // matches at the END OF FILE, not at any line's `}`.
-      const endsOK = /[\}\)]\s*$/.test(trimmed);
-
-      if (!endsOK) {
+      // ⚠️ X14b FIX: robust ending check
+      if (!hasValidEnding(text)) {
+        const tail = text.replace(/\s+$/, '').slice(-40);
         fail(cat, file + ' (' + sizeKB + ' KB)',
-          'Does not end with a valid closing brace — LIKELY TRUNCATED.',
+          'Last 40 chars: …"' + tail + '" — does not end with ; } or ) — LIKELY TRUNCATED.',
           'Re-push the complete ' + file + ' from GitHub.');
       } else if (text.length < 200) {
         warn(cat, file + ' (' + sizeKB + ' KB)',
