@@ -2,20 +2,13 @@
    security.js — HMAC-SHA256 signing + anti-cheat hooks
    Version: 1.0.2
    App: General Science
-   Changelog:
-     v1.0.2: Exposed SECRET for debugging; signString now handles
-             empty/undefined input gracefully.
-     v1.0.1: Added signString()/verifyString() for canonical JSON.
-     v1.0.0: Initial.
    ============================================================ */
 
 const Security = (() => {
   'use strict';
 
-  // v1: client-side secret (must match Code.gs HMAC_SECRET)
   const SECRET = 'GSA-2026-DEPED-SECRET-KEY-v1';
 
-  /* ---------- HMAC-SHA256 ---------- */
   async function _getKey() {
     const enc = new TextEncoder();
     return crypto.subtle.importKey(
@@ -33,7 +26,6 @@ const Security = (() => {
       .join('');
   }
 
-  /* ---------- Raw-string signing (matches backend canonicalize) ---------- */
   async function signString(rawString) {
     const key = await _getKey();
     const enc = new TextEncoder();
@@ -48,7 +40,6 @@ const Security = (() => {
     return expected === signature;
   }
 
-  /* ---------- Legacy: object signing (non-canonical) ---------- */
   async function sign(payload) {
     const key = await _getKey();
     const enc = new TextEncoder();
@@ -62,7 +53,6 @@ const Security = (() => {
     return expected === signature;
   }
 
-  /* ---------- Anti-Cheat: Tab-Switch Detection ---------- */
   function startTabMonitor(onViolation, threshold = 3) {
     let count = 0;
     let active = true;
@@ -91,7 +81,6 @@ const Security = (() => {
     return { stop: stopTabMonitor, getCount: () => count };
   }
 
-  /* ---------- Anti-Cheat: Copy/Paste/Cut Disable ---------- */
   function disableCopyPaste(rootEl = document) {
     const block = (e) => {
       e.preventDefault();
@@ -106,7 +95,6 @@ const Security = (() => {
     rootEl.addEventListener('contextmenu', block);
   }
 
-  /* ---------- Anti-Cheat: Keyboard shortcuts ---------- */
   function disableDevShortcuts() {
     document.addEventListener('keydown', (e) => {
       const blocked = ['c', 'v', 'x', 'a', 'p', 's', 'u'];
@@ -122,7 +110,6 @@ const Security = (() => {
     });
   }
 
-  /* ---------- Question + Option Shuffle (legacy) ---------- */
   function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -139,7 +126,6 @@ const Security = (() => {
     }));
   }
 
-  /* ---------- Timer ---------- */
   function createTimer(seconds, onTick, onExpire) {
     let remaining = seconds;
     const interval = setInterval(() => {
@@ -157,7 +143,6 @@ const Security = (() => {
     };
   }
 
-  /* ---------- Public API ---------- */
   return {
     signString,
     verifyString,
