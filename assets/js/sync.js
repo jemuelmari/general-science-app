@@ -1,8 +1,9 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.0
+   Version: 2.0.1
    App: General Science · v1.0.2
    Changelog:
+     v2.0.1: getSyncStatus now uses POST (was GET → Unknown action).
      v2.0.0: Canonical JSON signing (X36); new pushAttempt/pullAttempts/
              markUsedBulk/archiveUsed/getSyncStatus wrappers;
              legacy API preserved (registerSyncCode flow unchanged).
@@ -48,17 +49,13 @@ const Sync = (() => {
 
   /**
    * Sign a payload using canonical JSON.
-   * Uses Security.sign() under the hood but ensures canonical input.
    */
   async function signCanonical(payload) {
     var canonical = canonicalize(payload);
     if (typeof Security !== 'undefined' && typeof Security.signString === 'function') {
-      // Preferred: raw string signing
       return await Security.signString(canonical);
     }
     if (typeof Security !== 'undefined' && typeof Security.sign === 'function') {
-      // Fallback: Security.sign might re-serialize; we pass the canonical wrapper
-      // and document that Security.sign should canonicalize the same way.
       return await Security.sign(payload);
     }
     throw new Error('Security module unavailable — cannot sign payload');
@@ -329,10 +326,6 @@ const Sync = (() => {
      NEW v2.0.0 — Attempts (auto-push)
      ============================================================ */
 
-  /**
-   * Build a minimal signed payload for a single assessment attempt.
-   * Shape is symmetric with Code.gs pushAttempt() payload.
-   */
   function buildAttemptPayload(lrn, term, assessment, attempt) {
     var user = Store.getUser(lrn);
     if (!user) throw new Error('User not found');
@@ -359,19 +352,11 @@ const Sync = (() => {
     };
   }
 
-  /**
-   * Generate a stable pushId for deduplication.
-   * Format: lrn-term-assessment-clientTimestamp(bucket)
-   */
   function makePushId(lrn, term, assessment, timestamp) {
     var ts = timestamp ? new Date(timestamp).getTime() : Date.now();
     return lrn + '-' + term + '-' + assessment + '-' + ts;
   }
 
-  /**
-   * Push one attempt to the backend.
-   * Returns: { ok, pushId, duplicate?, serverTimestamp?, error? }
-   */
   async function pushAttempt(lrn, term, assessment, attempt) {
     if (!backendEnabled()) {
       return { ok: false, error: 'Backend not configured', offline: true };
@@ -402,10 +387,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Pull pending attempts (teacher).
-   * filters = { section, lrn, term, assessment, includeUsed }
-   */
   async function pullAttempts(filters) {
     if (!backendEnabled()) {
       return { ok: false, error: 'Backend not configured' };
@@ -416,7 +397,6 @@ const Sync = (() => {
       var res = await backendPost(body);
       if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
 
-      // Verify each record's signature
       var verified = [];
       for (var i = 0; i < (res.records || []).length; i++) {
         var r = res.records[i];
@@ -434,9 +414,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Mark multiple pushIds as used (after applying locally).
-   */
   async function markUsedBulk(pushIds, usedBy) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
@@ -450,9 +427,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Archive used/old attempts.
-   */
   async function archiveUsed(opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
@@ -467,12 +441,15 @@ const Sync = (() => {
   }
 
   /**
-   * Get sync status summary.
+   * getSyncStatus — v2.0.1: switched from GET → POST to match doPost handler.
    */
   async function getSyncStatus(filters) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendGet({ action: 'getSyncStatus', section: (filters && filters.section) || '' });
+      return await backendPost({
+        action: 'getSyncStatus',
+        section: (filters && filters.section) || ''
+      });
     } catch (err) {
       return { ok: false, error: err.message };
     }
