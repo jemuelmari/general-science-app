@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=9" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=9" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.2.0" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.2.0" />
   <style>
-    .ia-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; margin-bottom:24px; }
-    .ia-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
+    .ia-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; padding:18px; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; }
+    .ia-filters .form-group { min-width:150px; flex:1; margin-bottom:0; }
     .ia-summary-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:14px; margin-bottom:24px; }
     .ia-summary-card { background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-left:4px solid #1976d2; }
     .ia-summary-card .val { font-size:1.8rem; font-weight:800; line-height:1; color:#1a1a1a; letter-spacing:-0.5px; }
@@ -16,36 +16,93 @@
     .ia-summary-card.green { border-left-color:#2e7d32; }
     .ia-summary-card.amber { border-left-color:#ed6c02; }
     .ia-summary-card.red   { border-left-color:#c62828; }
-    .ia-view-toggle { display:inline-flex; background:#f5f7fa; border-radius:10px; padding:4px; margin-bottom:16px; }
-    .ia-view-toggle button { padding:8px 16px; background:none; border:none; border-radius:8px; font-family:inherit; font-size:0.85rem; font-weight:600; color:#5f6368; cursor:pointer; transition:all 0.15s; }
-    .ia-view-toggle button.active { background:#fff; color:#0d47a1; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
-    .item-row { display:flex; align-items:flex-start; gap:14px; padding:14px 18px; background:#fff; border-radius:10px; margin-bottom:8px; border-left:4px solid #dadce0; transition:all 0.15s; }
+    .ia-tabs { display:flex; gap:4px; border-bottom:2px solid #eceff1; margin-bottom:20px; overflow-x:auto; }
+    .ia-tab { padding:12px 18px; background:none; border:none; border-bottom:3px solid transparent; font-family:inherit; font-size:0.88rem; font-weight:600; color:#5f6368; cursor:pointer; transition:all 0.15s; white-space:nowrap; margin-bottom:-2px; }
+    .ia-tab:hover { color:#0d47a1; background:#f5f7fa; }
+    .ia-tab.active { color:#0d47a1; border-bottom-color:#0d47a1; }
+    .ia-panel { display:none; }
+    .ia-panel.active { display:block; }
+    .ia-panel .card { margin-bottom:20px; }
+    .ia-empty { text-align:center; padding:48px 24px; color:#90a4ae; }
+    .item-row { padding:14px 18px; background:#fff; border-radius:10px; margin-bottom:10px; border-left:4px solid #dadce0; transition:all 0.15s; }
     .item-row:hover { box-shadow:0 4px 12px rgba(0,0,0,0.06); }
-    .item-row.mastered  { border-left-color:#2e7d32; }
-    .item-row.moving    { border-left-color:#ed6c02; }
-    .item-row.difficult { border-left-color:#c62828; }
+    .item-row.flag-easy    { border-left-color:#90a4ae; }
+    .item-row.flag-hard    { border-left-color:#c62828; }
+    .item-row.flag-negdisc { border-left-color:#c62828; background:#fff5f5; }
+    .item-row.flag-weakdisc { border-left-color:#ed6c02; }
+    .item-row.flag-dysfunc { border-left-color:#6a1b9a; }
+    .item-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:10px; }
     .item-num { font-family:'Consolas', monospace; font-weight:800; font-size:1rem; color:#0d47a1; min-width:44px; text-align:center; background:#e3f2fd; padding:8px; border-radius:8px; }
     .item-body { flex:1; min-width:0; }
-    .item-text { font-size:0.9rem; color:#37474f; line-height:1.4; margin-bottom:8px; }
-    .item-comp { font-size:0.72rem; color:#5f6368; background:#f5f7fa; display:inline-block; padding:2px 8px; border-radius:4px; margin-bottom:8px; font-family:'Consolas', monospace; }
-    .item-comp.unknown { background:#fce4ec; color:#ad1457; }
-    .item-bar-wrap { height:8px; background:#eceff1; border-radius:999px; overflow:hidden; }
-    .item-bar-fill { height:100%; border-radius:999px; transition:width 0.4s ease; }
-    .item-pct { font-weight:800; font-size:1.05rem; min-width:60px; text-align:right; font-variant-numeric:tabular-nums; }
-    .choice-dist { display:flex; gap:8px; margin-top:8px; font-size:0.75rem; flex-wrap:wrap; }
-    .choice-chip { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; background:#f5f7fa; border-radius:6px; color:#37474f; font-family:'Consolas', monospace; }
-    .choice-chip.correct { background:#e8f5e9; color:#1b5e20; font-weight:700; }
-    .item-bloom { font-size:0.68rem; padding:2px 8px; border-radius:999px; background:#f3e5f5; color:#6a1b9a; font-weight:700; letter-spacing:0.3px; }
-    .ia-empty { text-align:center; padding:48px 24px; color:#90a4ae; }
-    .comp-group { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:14px; overflow:hidden; }
+    .item-text { font-size:0.9rem; color:#37474f; line-height:1.45; margin-bottom:8px; }
+    .item-meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .meta-chip { font-size:0.7rem; padding:3px 9px; border-radius:999px; font-weight:700; letter-spacing:0.2px; }
+    .meta-comp { background:#f5f7fa; color:#0d47a1; font-family:'Consolas', monospace; }
+    .meta-comp.unknown { background:#fce4ec; color:#ad1457; }
+    .meta-bloom { background:#f3e5f5; color:#6a1b9a; }
+    .meta-flag { background:#ffebee; color:#c62828; }
+    .meta-flag.warn { background:#fff3e0; color:#e65100; }
+    .meta-flag.info { background:#e3f2fd; color:#0d47a1; }
+    .item-stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:10px; margin-top:10px; }
+    .stat-box { padding:8px 12px; background:#f8f9fb; border-radius:8px; }
+    .stat-box .stat-lbl { font-size:0.65rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; }
+    .stat-box .stat-val { font-size:1.05rem; font-weight:800; color:#1a1a1a; font-variant-numeric:tabular-nums; margin-top:2px; }
+    .stat-box .stat-note { font-size:0.68rem; margin-top:2px; font-weight:600; }
+    .choice-dist { margin-top:12px; }
+    .choice-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:0.82rem; }
+    .choice-letter { font-family:'Consolas', monospace; font-weight:800; color:#0d47a1; min-width:22px; }
+    .choice-bar-wrap { flex:1; height:14px; background:#eceff1; border-radius:999px; overflow:hidden; position:relative; }
+    .choice-bar-fill { height:100%; border-radius:999px; transition:width 0.4s ease; }
+    .choice-bar-fill.correct { background:#2e7d32; }
+    .choice-bar-fill.wrong { background:#90a4ae; }
+    .choice-bar-fill.dysfunctional { background:#eceff1; }
+    .choice-count { font-variant-numeric:tabular-nums; min-width:70px; text-align:right; font-size:0.78rem; color:#37474f; }
+    .choice-label { flex:1; color:#37474f; }
+    .choice-badge { font-size:0.65rem; padding:2px 7px; border-radius:999px; font-weight:700; margin-left:6px; }
+    .choice-badge.correct { background:#e8f5e9; color:#1b6e2e; }
+    .choice-badge.dysfunctional { background:#f3e5f5; color:#6a1b9a; }
+    .choice-badge.hots-weak { background:#fff3e0; color:#e65100; }
+    .mll-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-bottom:16px; }
+    .mll-table th, .mll-table td { border:1px solid #ddd; padding:10px 12px; vertical-align:top; }
+    .mll-table thead th { background:#f5f7fa; text-align:center; font-weight:700; font-size:0.8rem; }
+    .mll-table .rank-cell { width:50px; text-align:center; font-weight:700; background:#f5f7fa; }
+    .mll-table .mps-cell { width:80px; text-align:center; font-variant-numeric:tabular-nums; font-weight:700; }
+    .mll-table .most-col { background:#f1f8f4; }
+    .mll-table .least-col { background:#fff7ed; }
+    .comp-group { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:12px; overflow:hidden; }
     .comp-group-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#f5f7fa; border-left:5px solid #0d47a1; gap:12px; flex-wrap:wrap; }
     .comp-group-header .info { flex:1; min-width:220px; }
     .comp-group-header .code { font-family:'Consolas', monospace; font-size:0.75rem; color:#0d47a1; font-weight:700; margin-bottom:4px; }
     .comp-group-header .desc { font-size:0.85rem; color:#37474f; line-height:1.4; }
-    .comp-group-header .stat { text-align:right; }
+    .comp-group-header .stat { text-align:right; min-width:100px; }
     .comp-group-header .stat .val { font-size:1.5rem; font-weight:800; line-height:1; }
-    .comp-group-header .stat .lbl { font-size:0.68rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.4px; margin-top:3px; }
-    .comp-group-body { padding:12px 14px; }
+    .comp-group-header .stat .lbl { font-size:0.68rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.4px; margin-top:3px; font-weight:700; }
+    .comp-group-body { padding:14px 18px; }
+    .comp-action { background:#f8f9fb; padding:10px 14px; border-radius:8px; border-left:3px solid #0d47a1; font-size:0.82rem; color:#37474f; margin-top:8px; }
+    .comp-action strong { color:#0d47a1; }
+    .flag-group { margin-bottom:16px; }
+    .flag-group h4 { font-size:0.9rem; color:#1a1a1a; margin:0 0 8px; display:flex; align-items:center; gap:8px; }
+    .flag-group h4 .count { font-size:0.75rem; padding:2px 8px; border-radius:999px; background:#eceff1; color:#5f6368; font-weight:700; }
+    .flag-group h4.severity-high .count { background:#ffebee; color:#c62828; }
+    .flag-group h4.severity-med .count { background:#fff3e0; color:#e65100; }
+    .flag-group h4.severity-low .count { background:#e3f2fd; color:#0d47a1; }
+    .flag-item { padding:8px 12px; background:#fff; border:1px solid #eceff1; border-radius:8px; font-size:0.82rem; margin-bottom:6px; }
+    .flag-item .flag-no { font-family:'Consolas', monospace; color:#0d47a1; font-weight:800; margin-right:8px; }
+    .ia-actions { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+    .distribution-row { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+    .distribution-label { min-width:180px; font-size:0.82rem; color:#37474f; font-weight:600; }
+    .distribution-bar { flex:1; height:22px; background:#eceff1; border-radius:999px; overflow:hidden; position:relative; }
+    .distribution-fill { height:100%; color:#fff; font-size:0.7rem; font-weight:800; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; transition:width 0.4s; }
+    .distribution-count { min-width:80px; text-align:right; font-size:0.78rem; color:#5f6368; font-variant-numeric:tabular-nums; }
+    @media print {
+      .app-header, .app-footer, .ia-filters, .ia-tabs, .ia-actions, .no-print { display:none !important; }
+      body { background:#fff !important; }
+      .container { max-width:100% !important; padding:0 !important; }
+      .card { box-shadow:none !important; border:1px solid #ddd !important; break-inside:avoid; }
+      .item-row { break-inside:avoid; }
+      .ia-panel { display:block !important; page-break-before:always; }
+      .ia-panel:first-child { page-break-before:auto; }
+    }
   </style>
 </head>
 <body>
@@ -54,7 +111,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Item Analysis</h1>
-        <span class="version">v1.0.1</span>
+        <span class="version">v1.2.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -71,44 +128,42 @@
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
           <h1 style="font-size:1.4rem;">Per-Item Analysis with Competency Tracking</h1>
-          <p>Identify most learned and least learned competencies. Auto-generates intervention plans per mastery level.</p>
+          <p>Difficulty, discrimination, distractor analysis, and mastery-based interventions — set-aware (uses original index for cross-set aggregation).</p>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="ia-filters">
-        <div class="form-group">
-          <label class="form-label">Term</label>
-          <select id="filter-term" class="form-control">
-            <option value="term1">Term 1</option>
-            <option value="term2">Term 2</option>
-            <option value="term3">Term 3</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Assessment</label>
-          <select id="filter-assessment" class="form-control">
-            <option value="quiz1">Quiz 1</option>
-            <option value="quiz2">Quiz 2</option>
-            <option value="quiz3">Quiz 3</option>
-            <option value="st1">Summative Test 1</option>
-            <option value="st2">Summative Test 2</option>
-            <option value="te">Term Exam</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Section</label>
-          <select id="filter-section" class="form-control">
-            <option value="">All Sections</option>
-            <option value="ACADEMIC A">ACADEMIC A</option>
-            <option value="ACADEMIC B">ACADEMIC B</option>
-          </select>
-        </div>
-        <div class="form-group" style="flex:0;">
-          <label class="form-label">&nbsp;</label>
-          <button id="btn-run" class="btn btn-primary">🔍 Run Analysis</button>
-        </div>
+    <div class="ia-filters">
+      <div class="form-group">
+        <label class="form-label">Term</label>
+        <select id="filter-term" class="form-control">
+          <option value="term1">Term 1</option>
+          <option value="term2">Term 2</option>
+          <option value="term3">Term 3</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Assessment</label>
+        <select id="filter-assessment" class="form-control">
+          <option value="quiz1">Quiz 1</option>
+          <option value="quiz2">Quiz 2</option>
+          <option value="quiz3">Quiz 3</option>
+          <option value="st1">Summative Test 1</option>
+          <option value="st2">Summative Test 2</option>
+          <option value="te">Term Exam</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Section</label>
+        <select id="filter-section" class="form-control">
+          <option value="">All Sections</option>
+          <option value="ACADEMIC A">ACADEMIC A (Set A)</option>
+          <option value="ACADEMIC B">ACADEMIC B (Set B)</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:0;">
+        <label class="form-label">&nbsp;</label>
+        <button id="btn-run" class="btn btn-primary">🔍 Run Analysis</button>
       </div>
     </div>
 
@@ -121,17 +176,19 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.2</span></p>
   </footer>
 
-  <script src="../config.js?v=9"></script>
-  <script src="../assets/js/app.js?v=9"></script>
-  <script src="../assets/js/version-sync.js?v=1"></script>
-  <script src="../assets/js/store.js?v=9"></script>
-  <script src="../assets/js/ui-helpers.js?v=9"></script>
-  <script src="../assets/js/mastery-scales.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=9"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script src="../config.js?v=1.2.0"></script>
+  <script src="../assets/js/app.js?v=1.2.0"></script>
+  <script src="../assets/js/version-sync.js?v=1.2.0"></script>
+  <script src="../assets/js/store.js?v=1.2.0"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.2.0"></script>
+  <script src="../assets/js/mastery-scales.js?v=1.2.0"></script>
+  <script src="../assets/js/randomize.js?v=1.2.0"></script>
+  <script src="../assets/js/item-analysis-engine.js?v=1.2.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.2.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.2.0"></script>
   <script>
     (function() {
       'use strict';
@@ -140,13 +197,14 @@
         quiz1: 'Quiz 1', quiz2: 'Quiz 2', quiz3: 'Quiz 3',
         st1: 'Summative Test 1', st2: 'Summative Test 2', te: 'Term Exam'
       };
-      var RESULT_TYPE = {
-        quiz1: 'quizzes', quiz2: 'quizzes', quiz3: 'quizzes',
-        st1: 'st', st2: 'st', te: 'te'
+      var TERM_TITLES = {
+        term1: 'Term 1 — Physics & Chemistry',
+        term2: 'Term 2 — Chemistry & Life Science',
+        term3: 'Term 3 — Earth Science'
       };
 
-      var viewMode = 'item'; // 'item' or 'competency'
       var lastResults = null;
+      var currentTab = 'items';
 
       TeacherAuthBoot.ready(function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
@@ -165,82 +223,27 @@
       /* ============================================================
          RUN ANALYSIS
          ============================================================ */
-      function runAnalysis() {
+      async function runAnalysis() {
         var term = document.getElementById('filter-term').value;
         var assessment = document.getElementById('filter-assessment').value;
-        var sectionFilter = document.getElementById('filter-section').value;
+        var section = document.getElementById('filter-section').value;
+
         var area = document.getElementById('results-area');
+        area.innerHTML = '<div class="card ia-empty">⏳ Analyzing ' + (ASSESSMENT_TITLES[assessment] || assessment) + '…</div>';
 
-        area.innerHTML = '<div class="card ia-empty">⏳ Analyzing…</div>';
-
-        var students = Store.getAllUsers();
-        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
-
-        if (!students.length) {
-          area.innerHTML = '<div class="card ia-empty">👥 No students found</div>';
-          return;
-        }
-
-        fetch('../student/' + term + '/assessments/' + assessment + '.json')
-          .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-          .then(function(data) {
-            var questions = data.questions || [];
-            var type = RESULT_TYPE[assessment];
-            var studentResults = [];
-
-            students.forEach(function(s) {
-              var scores = Store.getScores(s.lrn);
-              var record = type === 'te'
-                ? (scores[term] && scores[term].te)
-                : (scores[term] && scores[term][type] && scores[term][type][assessment]);
-              if (record && record.itemResults) studentResults.push({ student: s, record: record });
-            });
-
-            if (!studentResults.length) {
-              area.innerHTML = '<div class="card ia-empty">📭 No attempts recorded yet</div>';
-              return;
-            }
-
-            var items = questions.map(function(q, i) {
-              var correctCount = 0, totalCount = 0;
-              var choiceCounts = {};
-              (q.options || []).forEach(function(o) { choiceCounts[o] = 0; });
-              studentResults.forEach(function(r) {
-                var item = r.record.itemResults.find(function(x) { return x.index === i; });
-                if (item) {
-                  totalCount++;
-                  if (item.correct) correctCount++;
-                  if (item.given != null) choiceCounts[item.given] = (choiceCounts[item.given] || 0) + 1;
-                }
-              });
-              return {
-                index: i,
-                text: q.text,
-                options: q.options || [],
-                correct: q.correct,
-                competency: q.competency || 'UNKNOWN',
-                bloomLevel: q.bloomLevel || '—',
-                correctCount: correctCount,
-                totalCount: totalCount,
-                pct: totalCount ? Math.round((correctCount / totalCount) * 100) : 0,
-                choiceCounts: choiceCounts
-              };
-            });
-
-            lastResults = {
-              term: term,
-              assessment: assessment,
-              sectionFilter: sectionFilter,
-              items: items,
-              studentResults: studentResults,
-              titles: ASSESSMENT_TITLES[assessment]
-            };
-
-            render();
-          })
-          .catch(function(err) {
-            area.innerHTML = '<div class="card ia-empty">⚠️ ' + err.message + '</div>';
+        try {
+          var result = await ItemAnalysisEngine.analyzeAssessment({
+            term: term,
+            assessment: assessment,
+            section: section
           });
+          lastResults = result;
+          render();
+        } catch (err) {
+          console.error('[IA] Error:', err);
+          area.innerHTML =
+            '<div class="card ia-empty" style="color:#c62828;">⚠️ ' + escapeHtml(err.message) + '</div>';
+        }
       }
 
       /* ============================================================
@@ -248,199 +251,465 @@
          ============================================================ */
       function render() {
         if (!lastResults) return;
+        var r = lastResults;
         var area = document.getElementById('results-area');
-        var items = lastResults.items;
 
-        // Overall stats
-        var totalAttempts = lastResults.studentResults.length;
-        var overallCorrect = items.reduce(function(a, i) { return a + i.correctCount; }, 0);
-        var overallTotal = items.reduce(function(a, i) { return a + i.totalCount; }, 0);
-        var overallMPS = overallTotal ? (overallCorrect / overallTotal) : 0;
-        var overallLevel = MasteryScales.getLevel(overallMPS);
+        if (!r.attempts) {
+          area.innerHTML =
+            '<div class="card ia-empty">📭 <strong>No attempts recorded</strong>' +
+            '<p style="margin-top:8px;font-size:0.85rem;">Students haven\'t taken this assessment yet, or no matching section/set filter.</p></div>';
+          return;
+        }
 
-        // Competency groups
-        var byComp = {};
-        items.forEach(function(it) {
-          if (!byComp[it.competency]) byComp[it.competency] = [];
-          byComp[it.competency].push(it);
-        });
-
-        var compStats = Object.keys(byComp).map(function(code) {
-          var list = byComp[code];
-          var correct = list.reduce(function(a, i) { return a + i.correctCount; }, 0);
-          var total = list.reduce(function(a, i) { return a + i.totalCount; }, 0);
-          var mps = total ? correct / total : 0;
-          return {
-            code: code,
-            items: list,
-            correct: correct,
-            total: total,
-            mps: mps,
-            level: MasteryScales.getLevel(mps)
-          };
-        });
-
-        // Sort by MPS
-        var sortedDesc = compStats.slice().sort(function(a, b) { return b.mps - a.mps; });
-        var sortedAsc = compStats.slice().sort(function(a, b) { return a.mps - b.mps; });
-        var most = sortedDesc.slice(0, 5);
-        var least = sortedAsc.slice(0, 5);
-
-        // Distribution summary
-        var dist = MasteryScales.summarize(compStats.map(function(c) { return c.mps; }));
+        var s = r.summary;
+        var overallClass = s.overallLevel.code === 'ES' ? 'green' :
+                           s.overallLevel.code === 'MS' ? '' :
+                           s.overallLevel.code === 'AS' ? 'amber' : 'red';
 
         var html =
           '<div class="ia-summary-grid">' +
-            '<div class="ia-summary-card"><div class="val">' + totalAttempts + '</div><div class="lbl">Attempts</div></div>' +
-            '<div class="ia-summary-card"><div class="val">' + items.length + '</div><div class="lbl">Items</div></div>' +
-            '<div class="ia-summary-card"><div class="val">' + compStats.length + '</div><div class="lbl">Competencies</div></div>' +
-            '<div class="ia-summary-card ' + (overallMPS >= 0.75 ? 'green' : overallMPS >= 0.5 ? 'amber' : 'red') + '">' +
-              '<div class="val">' + (overallMPS * 100).toFixed(1) + '%</div><div class="lbl">Class MPS</div>' +
-              '<div style="margin-top:6px;font-size:0.7rem;color:' + overallLevel.color + ';font-weight:700;">' + overallLevel.label + '</div>' +
+            '<div class="ia-summary-card"><div class="val">' + s.attemptCount + '</div><div class="lbl">Attempts</div></div>' +
+            '<div class="ia-summary-card"><div class="val">' + s.itemCount + '</div><div class="lbl">Items</div></div>' +
+            '<div class="ia-summary-card"><div class="val">' + s.competencyCount + '</div><div class="lbl">Competencies</div></div>' +
+            '<div class="ia-summary-card ' + overallClass + '">' +
+              '<div class="val">' + (s.overallMPS * 100).toFixed(1) + '%</div>' +
+              '<div class="lbl">Class MPS</div>' +
+              '<div style="margin-top:6px;font-size:0.7rem;color:' + s.overallLevel.color + ';font-weight:700;">' + s.overallLevel.label + '</div>' +
             '</div>' +
           '</div>' +
 
           // Mastery distribution
-          '<div class="card" style="margin-bottom:20px;">' +
+          '<div class="card">' +
             '<div class="card-header"><span class="card-title">📊 Competency Mastery Distribution</span></div>' +
-            renderDistributionRow('Exceeds Standard',   dist.ES, compStats.length, '#2e7d32') +
-            renderDistributionRow('Meets Standard',     dist.MS, compStats.length, '#0d47a1') +
-            renderDistributionRow('Approaching Standard', dist.AS, compStats.length, '#ed6c02') +
-            renderDistributionRow('Needs Intervention', dist.NI, compStats.length, '#c62828') +
+            renderDistributionRow('Exceeds Standard', s.distribution.ES, s.distribution.total, '#2e7d32') +
+            renderDistributionRow('Meets Standard', s.distribution.MS, s.distribution.total, '#0d47a1') +
+            renderDistributionRow('Approaching Standard', s.distribution.AS, s.distribution.total, '#ed6c02') +
+            renderDistributionRow('Needs Intervention', s.distribution.NI, s.distribution.total, '#c62828') +
           '</div>' +
 
-          // Most / Least Learned
-          '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:24px;">' +
-            '<div class="card" style="border-left:4px solid #2e7d32;">' +
-              '<div class="card-header"><span class="card-title" style="color:#2e7d32;">✅ Top 5 Most Learned Competencies</span></div>' +
-              (most.length ? most.map(function(c) {
-                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;">' +
-                  '<span style="font-size:0.82rem;color:#37474f;flex:1;">' +
-                    '<span style="font-family:Consolas,monospace;font-size:0.7rem;color:#0d47a1;">' + c.code + '</span><br>' +
-                    (c.items[0] ? truncate(c.items[0].text, 90) : '—') +
-                  '</span>' +
-                  '<span style="font-weight:800;color:#2e7d32;min-width:50px;text-align:right;">' + (c.mps * 100).toFixed(1) + '%</span>' +
-                '</div>';
-              }).join('') : '<p class="text-muted text-small">No data.</p>') +
-            '</div>' +
-            '<div class="card" style="border-left:4px solid #c62828;">' +
-              '<div class="card-header"><span class="card-title" style="color:#c62828;">⚠️ Top 5 Least Learned Competencies</span></div>' +
-              (least.length ? least.map(function(c) {
-                return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;gap:12px;">' +
-                  '<span style="font-size:0.82rem;color:#37474f;flex:1;">' +
-                    '<span style="font-family:Consolas,monospace;font-size:0.7rem;color:#0d47a1;">' + c.code + '</span><br>' +
-                    (c.items[0] ? truncate(c.items[0].text, 90) : '—') +
-                  '</span>' +
-                  '<span style="font-weight:800;color:#c62828;min-width:50px;text-align:right;">' + (c.mps * 100).toFixed(1) + '%</span>' +
-                '</div>';
-              }).join('') : '<p class="text-muted text-small">No data.</p>') +
-            '</div>' +
+          // Tabs
+          '<div class="ia-tabs no-print">' +
+            '<button class="ia-tab ' + (currentTab === 'items' ? 'active' : '') + '" data-tab="items">📋 Items</button>' +
+            '<button class="ia-tab ' + (currentTab === 'distractors' ? 'active' : '') + '" data-tab="distractors">🎯 Distractors</button>' +
+            '<button class="ia-tab ' + (currentTab === 'competencies' ? 'active' : '') + '" data-tab="competencies">📚 Competencies</button>' +
+            '<button class="ia-tab ' + (currentTab === 'mll' ? 'active' : '') + '" data-tab="mll">🏆 Most / Least Learned</button>' +
+            '<button class="ia-tab ' + (currentTab === 'flags' ? 'active' : '') + '" data-tab="flags">⚠️ Flags</button>' +
           '</div>' +
 
-          // View toggle
-          '<div class="section-header"><h2 class="section-title">📋 Detailed Analysis</h2></div>' +
-          '<div class="ia-view-toggle">' +
-            '<button data-view="item" class="' + (viewMode === 'item' ? 'active' : '') + '">Per Item</button>' +
-            '<button data-view="competency" class="' + (viewMode === 'competency' ? 'active' : '') + '">Per Competency</button>' +
+          // Actions
+          '<div class="ia-actions no-print">' +
+            '<button id="btn-print" class="btn btn-primary">🖨️ Print / Save as PDF</button>' +
+            '<button id="btn-export-csv" class="btn btn-outline">📥 Export CSV</button>' +
           '</div>' +
-          '<div id="detail-list"></div>';
+
+          // Panels
+          '<div class="ia-panel ' + (currentTab === 'items' ? 'active' : '') + '" id="panel-items">' + renderItemsPanel() + '</div>' +
+          '<div class="ia-panel ' + (currentTab === 'distractors' ? 'active' : '') + '" id="panel-distractors">' + renderDistractorsPanel() + '</div>' +
+          '<div class="ia-panel ' + (currentTab === 'competencies' ? 'active' : '') + '" id="panel-competencies">' + renderCompetenciesPanel() + '</div>' +
+          '<div class="ia-panel ' + (currentTab === 'mll' ? 'active' : '') + '" id="panel-mll">' + renderMLLPanel() + '</div>' +
+          '<div class="ia-panel ' + (currentTab === 'flags' ? 'active' : '') + '" id="panel-flags">' + renderFlagsPanel() + '</div>';
 
         area.innerHTML = html;
 
-        // Attach toggle
-        area.querySelectorAll('.ia-view-toggle button').forEach(function(btn) {
+        // Wire tab switching
+        area.querySelectorAll('.ia-tab').forEach(function(btn) {
           btn.addEventListener('click', function() {
-            viewMode = btn.dataset.view;
+            currentTab = btn.dataset.tab;
             render();
           });
         });
 
-        // Render detail list
-        var detail = document.getElementById('detail-list');
-        if (viewMode === 'item') renderItemList(detail, items);
-        else renderCompetencyList(detail, compStats);
+        document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
+        document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
       }
 
       /* ============================================================
-         ITEM LIST
+         PANEL — ITEMS
          ============================================================ */
-      function renderItemList(container, items) {
+      function renderItemsPanel() {
+        var items = lastResults.items;
+        var html = '<div class="card">' +
+          '<div class="card-header"><span class="card-title">📋 Per-Item Summary · ' + items.length + ' items</span></div>';
+
         items.forEach(function(it) {
-          var level = MasteryScales.getLevel(it.pct / 100);
-          var choiceChips = it.options.map(function(opt, idx) {
-            var count = it.choiceCounts[opt] || 0;
-            var isCorrect = opt === it.correct;
-            return '<span class="choice-chip ' + (isCorrect ? 'correct' : '') + '">' +
-              String.fromCharCode(65 + idx) + (isCorrect ? ' ✓' : '') + ': ' + count +
-            '</span>';
-          }).join('');
+          var level = MasteryScales.getLevel(it.totalAttempts ? it.correctCount / it.totalAttempts : 0);
+          var flagClass = '';
+          var flagChips = [];
 
-          var row = document.createElement('div');
-          row.className = 'item-row ' + (it.pct >= 80 ? 'mastered' : it.pct >= 50 ? 'moving' : 'difficult');
-          row.innerHTML =
-            '<div class="item-num">' + (it.index + 1) + '</div>' +
-            '<div class="item-body">' +
-              '<div class="item-comp ' + (it.competency === 'UNKNOWN' ? 'unknown' : '') + '">' +
-                '📎 ' + it.competency +
-              '</div> ' +
-              '<span class="item-bloom">' + it.bloomLevel + '</span>' +
-              '<div class="item-text" style="margin-top:8px;">' + truncate(it.text, 140) + '</div>' +
-              '<div class="item-bar-wrap"><div class="item-bar-fill" style="width:' + it.pct + '%;background:' + level.color + ';"></div></div>' +
-              '<div class="choice-dist">' + choiceChips + '</div>' +
-            '</div>' +
-            '<div class="item-pct" style="color:' + level.color + ';">' + it.pct + '%</div>';
-          container.appendChild(row);
-        });
-      }
+          if (it.flags.indexOf('too_easy') !== -1) {
+            flagClass = 'flag-easy';
+            flagChips.push('<span class="meta-chip meta-flag info">Too Easy</span>');
+          }
+          if (it.flags.indexOf('too_hard') !== -1) {
+            flagClass = 'flag-hard';
+            flagChips.push('<span class="meta-chip meta-flag">Too Hard</span>');
+          }
+          if (it.flags.indexOf('negative_discrimination') !== -1) {
+            flagClass = 'flag-negdisc';
+            flagChips.push('<span class="meta-chip meta-flag">Negative Disc.</span>');
+          } else if (it.flags.indexOf('weak_discrimination') !== -1) {
+            if (!flagClass) flagClass = 'flag-weakdisc';
+            flagChips.push('<span class="meta-chip meta-flag warn">Weak Disc.</span>');
+          }
+          if (it.flags.indexOf('dysfunctional_distractor') !== -1) {
+            if (!flagClass) flagClass = 'flag-dysfunc';
+            flagChips.push('<span class="meta-chip meta-flag">Dysfunctional</span>');
+          }
+          if (it.flags.indexOf('hots_weak_distractors') !== -1) {
+            flagChips.push('<span class="meta-chip meta-flag warn">HOTS Weak Dist.</span>');
+          }
 
-      /* ============================================================
-         COMPETENCY LIST
-         ============================================================ */
-      function renderCompetencyList(container, compStats) {
-        compStats.slice().sort(function(a, b) { return a.mps - b.mps; }).forEach(function(c) {
-          var group = document.createElement('div');
-          group.className = 'comp-group';
-          group.innerHTML =
-            '<div class="comp-group-header">' +
-              '<div class="info">' +
-                '<div class="code">' + c.code + '</div>' +
-                '<div class="desc">' + (c.items[0] ? truncate(c.items[0].text, 160) : 'No items') + '</div>' +
-              '</div>' +
-              '<div class="stat">' +
-                '<div class="val" style="color:' + c.level.color + ';">' + (c.mps * 100).toFixed(1) + '%</div>' +
-                '<div class="lbl">' + c.level.label + '</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="comp-group-body">' +
-              '<div style="font-size:0.82rem;color:#37474f;margin-bottom:8px;">' +
-                '<strong>Items in this competency:</strong> ' + c.items.map(function(i) { return (i.index + 1); }).join(', ') +
-              '</div>' +
-              '<div style="background:' + c.level.colorLight + ';padding:10px 14px;border-radius:8px;border-left:3px solid ' + c.level.color + ';font-size:0.82rem;color:' + c.level.color + ';">' +
-                '<strong>📋 Suggested Intervention:</strong> ' + c.level.action +
+          var dPct = it.difficulty.p != null ? (it.difficulty.p * 100).toFixed(1) + '%' : '—';
+          var dVal = it.discrimination.d != null ? it.discrimination.d.toFixed(2) : '—';
+
+          html +=
+            '<div class="item-row ' + flagClass + '">' +
+              '<div class="item-header">' +
+                '<div class="item-num">' + it.itemNo + '</div>' +
+                '<div class="item-body">' +
+                  '<div class="item-meta">' +
+                    '<span class="meta-chip meta-comp' + (it.competency === 'UNKNOWN' ? ' unknown' : '') + '">📎 ' + escapeHtml(it.competency) + '</span>' +
+                    '<span class="meta-chip meta-bloom">' + escapeHtml(it.bloomLevel) + '</span>' +
+                    flagChips.join('') +
+                  '</div>' +
+                  '<div class="item-text">' + escapeHtml(it.text) + '</div>' +
+                  '<div class="item-stats">' +
+                    '<div class="stat-box">' +
+                      '<div class="stat-lbl">Difficulty (p)</div>' +
+                      '<div class="stat-val">' + dPct + '</div>' +
+                      '<div class="stat-note" style="color:' + it.difficulty.flag === 'ok' ? '#2e7d32' : (it.difficulty.flag === 'too_easy' ? '#5f6368' : '#c62828') + ';">' + it.difficulty.label + '</div>' +
+                    '</div>' +
+                    '<div class="stat-box">' +
+                      '<div class="stat-lbl">Discrimination (D)</div>' +
+                      '<div class="stat-val">' + dVal + '</div>' +
+                      '<div class="stat-note" style="color:' + (it.discrimination.flag === 'ok' ? '#2e7d32' : '#ed6c02') + ';">' + it.discrimination.label + '</div>' +
+                    '</div>' +
+                    '<div class="stat-box">' +
+                      '<div class="stat-lbl">Correct</div>' +
+                      '<div class="stat-val">' + it.correctCount + ' / ' + it.totalAttempts + '</div>' +
+                      '<div class="stat-note" style="color:' + level.color + ';">' + level.shortLabel + '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
               '</div>' +
             '</div>';
-          container.appendChild(group);
         });
+
+        html += '</div>';
+        return html;
       }
 
       /* ============================================================
-         DISTRIBUTION ROW HELPER
+         PANEL — DISTRACTORS
+         ============================================================ */
+      function renderDistractorsPanel() {
+        var items = lastResults.items;
+        var html = '<div class="card">' +
+          '<div class="card-header"><span class="card-title">🎯 Distractor Analysis · ' + items.length + ' items</span></div>' +
+          '<p class="text-muted text-small" style="margin-bottom:14px;">' +
+            'Each option is shown with how many students chose it. <strong style="color:#6a1b9a;">Purple</strong> = dysfunctional (0 picks with 10+ attempts).' +
+          '</p>';
+
+        items.forEach(function(it) {
+          var opts = it.distractor.options;
+          var rowsHtml = '';
+          opts.forEach(function(o, idx) {
+            var pct = it.totalAttempts ? (o.count / it.totalAttempts) * 100 : 0;
+            var cls = o.isCorrect ? 'correct' : (o.dysfunctional ? 'dysfunctional' : 'wrong');
+            var badges = '';
+            if (o.isCorrect) badges += '<span class="choice-badge correct">CORRECT</span>';
+            if (o.dysfunctional) badges += '<span class="choice-badge dysfunctional">DYSFUNCTIONAL</span>';
+            if (!o.isCorrect && it.distractor.hotsWeak && pct < 5 && o.count > 0) {
+              badges += '<span class="choice-badge hots-weak">WEAK</span>';
+            }
+
+            rowsHtml +=
+              '<div class="choice-row">' +
+                '<span class="choice-letter">' + String.fromCharCode(65 + idx) + '</span>' +
+                '<span class="choice-label">' + escapeHtml(o.text) + badges + '</span>' +
+                '<div class="choice-bar-wrap">' +
+                  '<div class="choice-bar-fill ' + cls + '" style="width:' + pct.toFixed(1) + '%"></div>' +
+                '</div>' +
+                '<span class="choice-count">' + o.count + ' (' + pct.toFixed(1) + '%)</span>' +
+              '</div>';
+          });
+
+          html +=
+            '<div class="item-row">' +
+              '<div class="item-header">' +
+                '<div class="item-num">' + it.itemNo + '</div>' +
+                '<div class="item-body">' +
+                  '<div class="item-meta">' +
+                    '<span class="meta-chip meta-comp">📎 ' + escapeHtml(it.competency) + '</span>' +
+                    '<span class="meta-chip meta-bloom">' + escapeHtml(it.bloomLevel) + '</span>' +
+                    '<span class="meta-chip" style="background:#f5f7fa;color:#5f6368;">Total: ' + it.totalAttempts + '</span>' +
+                  '</div>' +
+                  '<div class="item-text" style="margin-bottom:6px;">' + escapeHtml(it.text) + '</div>' +
+                  '<div class="choice-dist">' + rowsHtml + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+
+        html += '</div>';
+        return html;
+      }
+
+      /* ============================================================
+         PANEL — COMPETENCIES
+         ============================================================ */
+      function renderCompetenciesPanel() {
+        var comps = lastResults.competencies;
+        var html = '<div class="card">' +
+          '<div class="card-header"><span class="card-title">📚 Competency Breakdown · ' + comps.length + ' competencies</span></div>' +
+          '<p class="text-muted text-small" style="margin-bottom:14px;">Sorted from <strong>weakest</strong> (lowest MPS) to strongest. Intervention is suggested per mastery level.</p>';
+
+        comps.forEach(function(c) {
+          var color = c.level.color;
+          var colorLight = c.level.colorLight;
+
+          html +=
+            '<div class="comp-group">' +
+              '<div class="comp-group-header" style="border-left-color:' + color + ';">' +
+                '<div class="info">' +
+                  '<div class="code">' + escapeHtml(c.code) + '</div>' +
+                  '<div class="desc">' +
+                    '<strong>Items:</strong> ' + c.itemNos.join(', ') +
+                    ' &nbsp;·&nbsp; ' +
+                    '<strong>Correct:</strong> ' + c.correct + ' / ' + c.total +
+                  '</div>' +
+                '</div>' +
+                '<div class="stat">' +
+                  '<div class="val" style="color:' + color + ';">' + (c.mps * 100).toFixed(1) + '%</div>' +
+                  '<div class="lbl">' + c.level.label + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="comp-group-body">' +
+                '<div class="comp-action" style="border-left-color:' + color + ';background:' + colorLight + ';">' +
+                  '<strong>📋 Suggested Intervention:</strong> ' + escapeHtml(c.level.action) +
+                  '<div style="margin-top:4px;font-size:0.78rem;opacity:0.85;">' + escapeHtml(c.level.description || '') + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+
+        html += '</div>';
+        return html;
+      }
+
+      /* ============================================================
+         PANEL — MOST / LEAST LEARNED
+         ============================================================ */
+      function renderMLLPanel() {
+        var comps = lastResults.competencies;
+        var strongest = lastResults.flags.strongestCompetencies;
+        var weakest = lastResults.flags.weakestCompetencies;
+
+        var html =
+          '<div class="card">' +
+            '<div class="card-header"><span class="card-title">🏆 Most & Least Learned Competencies</span></div>' +
+            '<div style="text-align:center;font-family:\'Times New Roman\',serif;font-size:0.88rem;margin-bottom:14px;">' +
+              'Subject: <strong>GENERAL SCIENCE 11</strong> · ' +
+              TERM_TITLES[lastResults.term] +
+              ' · ' + ASSESSMENT_TITLES[lastResults.assessment] +
+              ' · Attempts: ' + lastResults.attempts +
+            '</div>' +
+            '<table class="mll-table">' +
+              '<thead>' +
+                '<tr>' +
+                  '<th colspan="3">Most Learned Competencies</th>' +
+                  '<th colspan="3">Least Learned Competencies</th>' +
+                '</tr>' +
+                '<tr>' +
+                  '<th style="width:50px;">Rank</th>' +
+                  '<th>Competency</th>' +
+                  '<th class="mps-cell">MPS</th>' +
+                  '<th style="width:50px;">Rank</th>' +
+                  '<th>Competency</th>' +
+                  '<th class="mps-cell">MPS</th>' +
+                '</tr>' +
+              '</thead>' +
+              '<tbody>';
+
+        for (var i = 0; i < 5; i++) {
+          var most = strongest[i];
+          var least = weakest[i];
+          html +=
+            '<tr>' +
+              '<td class="rank-cell">' + (i + 1) + '</td>' +
+              '<td class="most-col">' +
+                (most ? '<div style="font-family:Consolas,monospace;font-size:0.72rem;color:#0d47a1;">' + escapeHtml(most.code) + '</div>Items: ' + most.itemNos.join(', ') : '&nbsp;') +
+              '</td>' +
+              '<td class="mps-cell" style="color:#2e7d32;">' + (most ? (most.mps * 100).toFixed(1) + '%' : '—') + '</td>' +
+              '<td class="rank-cell">' + (i + 1) + '</td>' +
+              '<td class="least-col">' +
+                (least ? '<div style="font-family:Consolas,monospace;font-size:0.72rem;color:#0d47a1;">' + escapeHtml(least.code) + '</div>Items: ' + least.itemNos.join(', ') : '&nbsp;') +
+              '</td>' +
+              '<td class="mps-cell" style="color:#c62828;">' + (least ? (least.mps * 100).toFixed(1) + '%' : '—') + '</td>' +
+            '</tr>';
+        }
+
+        html +=
+              '</tbody>' +
+            '</table>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="card-header"><span class="card-title">📋 Intervention Plan by Competency</span></div>' +
+            '<table class="mll-table">' +
+              '<thead><tr>' +
+                '<th>Code</th><th>MPS</th><th>Level</th><th>Suggested Intervention</th>' +
+              '</tr></thead>' +
+              '<tbody>';
+
+        comps.forEach(function(c) {
+          html +=
+            '<tr>' +
+              '<td style="font-family:Consolas,monospace;font-size:0.75rem;">' + escapeHtml(c.code) + '</td>' +
+              '<td class="mps-cell" style="color:' + c.level.color + ';">' + (c.mps * 100).toFixed(1) + '%</td>' +
+              '<td><strong style="color:' + c.level.color + ';">' + c.level.label + '</strong></td>' +
+              '<td>' + escapeHtml(c.level.action) + '</td>' +
+            '</tr>';
+        });
+
+        html += '</tbody></table></div>';
+        return html;
+      }
+
+      /* ============================================================
+         PANEL — FLAGS
+         ============================================================ */
+      function renderFlagsPanel() {
+        var f = lastResults.flags;
+        var html = '<div class="card">' +
+          '<div class="card-header"><span class="card-title">⚠️ Flags & Recommendations</span></div>';
+
+        html += renderFlagGroup(
+          'Negative Discrimination (remove or revise these items)',
+          f.negativeDiscrimination, 'severity-high',
+          function(it) { return 'Item ' + it.itemNo + ': D = ' + it.discrimination.d.toFixed(2) + ' — ' + escapeHtml(it.text.substring(0, 100)) + (it.text.length > 100 ? '…' : ''); }
+        );
+
+        html += renderFlagGroup(
+          'Dysfunctional Distractors (0 students chose — revise the option)',
+          f.dysfunctionalDistractors, 'severity-high',
+          function(w) { return 'Item ' + w.item.itemNo + ': ' + w.options.length + ' option(s) never chosen — ' + escapeHtml(w.options.join(' / ')); }
+        );
+
+        html += renderFlagGroup(
+          'Too Difficult (p < 0.20 — reteach or simplify)',
+          f.tooHard, 'severity-med',
+          function(it) { return 'Item ' + it.itemNo + ': p = ' + it.difficulty.p.toFixed(2) + ' — ' + escapeHtml(it.text.substring(0, 100)) + (it.text.length > 100 ? '…' : ''); }
+        );
+
+        html += renderFlagGroup(
+          'Weak Discrimination (D < 0.20 — review for possible revision)',
+          f.weakDiscrimination, 'severity-med',
+          function(it) { return 'Item ' + it.itemNo + ': D = ' + it.discrimination.d.toFixed(2) + ' — ' + escapeHtml(it.text.substring(0, 100)) + (it.text.length > 100 ? '…' : ''); }
+        );
+
+        html += renderFlagGroup(
+          'Too Easy (p > 0.80 — consider rewording)',
+          f.tooEasy, 'severity-low',
+          function(it) { return 'Item ' + it.itemNo + ': p = ' + it.difficulty.p.toFixed(2) + ' — ' + escapeHtml(it.text.substring(0, 100)) + (it.text.length > 100 ? '…' : ''); }
+        );
+
+        html += renderFlagGroup(
+          'HOTS Questions with Weak Distractors (no wrong option above 5%)',
+          f.hotsWeakDistractors, 'severity-low',
+          function(it) { return 'Item ' + it.itemNo + ' (' + it.bloomLevel + '): ' + escapeHtml(it.text.substring(0, 100)) + (it.text.length > 100 ? '…' : ''); }
+        );
+
+        if (f.negativeDiscrimination.length === 0 &&
+            f.dysfunctionalDistractors.length === 0 &&
+            f.tooHard.length === 0 &&
+            f.weakDiscrimination.length === 0 &&
+            f.tooEasy.length === 0 &&
+            f.hotsWeakDistractors.length === 0) {
+          html += '<div class="ia-empty" style="padding:24px;">✅ No flags. All items are within acceptable ranges.</div>';
+        }
+
+        html += '</div>';
+        return html;
+      }
+
+      function renderFlagGroup(title, list, severity, formatter) {
+        var html = '<div class="flag-group">' +
+          '<h4 class="' + severity + '">' +
+            '<span>' + escapeHtml(title) + '</span>' +
+            '<span class="count">' + list.length + '</span>' +
+          '</h4>';
+        if (!list.length) {
+          html += '<div class="flag-item" style="color:#2e7d32;background:#f1f8f4;border-color:#c8e6c9;">✅ None</div>';
+        } else {
+          list.forEach(function(x) {
+            html += '<div class="flag-item">' + formatter(x) + '</div>';
+          });
+        }
+        html += '</div>';
+        return html;
+      }
+
+      /* ============================================================
+         DISTRIBUTION ROW
          ============================================================ */
       function renderDistributionRow(label, count, total, color) {
         var pct = total ? Math.round((count / total) * 100) : 0;
         return '<div class="distribution-row">' +
-          '<span class="distribution-label" style="min-width:200px;font-size:0.78rem;">' + label + '</span>' +
+          '<span class="distribution-label">' + escapeHtml(label) + '</span>' +
           '<div class="distribution-bar"><div class="distribution-fill" style="width:' + pct + '%;background:' + color + ';">' + (count > 0 ? count : '') + '</div></div>' +
           '<span class="distribution-count">' + count + ' of ' + total + '</span>' +
         '</div>';
       }
 
       /* ============================================================
+         CSV EXPORT
+         ============================================================ */
+      function exportCSV() {
+        if (!lastResults) return;
+        var rows = [
+          ['Item #', 'Competency', 'Bloom', 'Correct', 'Attempts', 'Difficulty (p)', 'Difficulty Flag', 'Discrimination (D)', 'Discrimination Flag', 'Flags']
+        ];
+        lastResults.items.forEach(function(it) {
+          rows.push([
+            it.itemNo,
+            it.competency,
+            it.bloomLevel,
+            it.correctCount,
+            it.totalAttempts,
+            it.difficulty.p != null ? it.difficulty.p.toFixed(3) : '',
+            it.difficulty.label,
+            it.discrimination.d != null ? it.discrimination.d.toFixed(3) : '',
+            it.discrimination.label,
+            it.flags.join('; ')
+          ]);
+        });
+
+        var csv = rows.map(function(row) {
+          return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
+        }).join('\n');
+
+        var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'ItemAnalysis_' + lastResults.term + '_' + lastResults.assessment + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        APP.toast('CSV exported', 'success');
+      }
+
+      /* ============================================================
          HELPERS
          ============================================================ */
-      function truncate(str, n) {
-        if (!str) return '';
-        return str.length > n ? str.slice(0, n) + '…' : str;
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
       }
     })();
   </script>
