@@ -1,13 +1,14 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.1
+   Version: 2.0.2
    App: General Science · v1.0.2
    Changelog:
+     v2.0.2: signCanonical now REQUIRES Security.signString (no silent
+             fallback to legacy sign()). Fixes signature mismatch when
+             Security was partially loaded.
      v2.0.1: getSyncStatus now uses POST (was GET → Unknown action).
-     v2.0.0: Canonical JSON signing (X36); new pushAttempt/pullAttempts/
-             markUsedBulk/archiveUsed/getSyncStatus wrappers;
-             legacy API preserved (registerSyncCode flow unchanged).
-     v1.1.0: Added pullAllPending() for teacher Sync Center.
+     v2.0.0: Canonical JSON signing (X36); auto-push wrappers.
+     v1.1.0: Added pullAllPending().
    ============================================================ */
 
 const Sync = (() => {
@@ -16,12 +17,8 @@ const Sync = (() => {
   const NS = 'gsa_v1_';
 
   /* ============================================================
-     CANONICAL JSON (X36 fix — matches Code.gs)
+     CANONICAL JSON
      ============================================================ */
-  /**
-   * Canonicalize: keys sorted recursively, no whitespace, no signature field.
-   * MUST match Code.gs canonicalize() exactly, or HMAC will mismatch.
-   */
   function canonicalize(obj) {
     if (obj === null || obj === undefined) return 'null';
     if (typeof obj === 'number') {
@@ -49,27 +46,31 @@ const Sync = (() => {
 
   /**
    * Sign a payload using canonical JSON.
+   * REQUIRES Security.signString — no silent fallback.
    */
   async function signCanonical(payload) {
+    if (typeof Security === 'undefined') {
+      throw new Error('Security module not loaded — cannot sign payload');
+    }
+    if (typeof Security.signString !== 'function') {
+      throw new Error('Security.signString unavailable — reload the page (cache may be stale)');
+    }
     var canonical = canonicalize(payload);
-    if (typeof Security !== 'undefined' && typeof Security.signString === 'function') {
-      return await Security.signString(canonical);
-    }
-    if (typeof Security !== 'undefined' && typeof Security.sign === 'function') {
-      return await Security.sign(payload);
-    }
-    throw new Error('Security module unavailable — cannot sign payload');
+    return await Security.signString(canonical);
   }
 
   async function verifyCanonical(payload, signature) {
-    var canonical = canonicalize(payload);
-    if (typeof Security !== 'undefined' && typeof Security.verifyString === 'function') {
+    if (typeof Security === 'undefined') {
+      throw new Error('Security module not loaded — cannot verify payload');
+    }
+    if (typeof Security.verifyString === 'function') {
+      var canonical = canonicalize(payload);
       return await Security.verifyString(canonical, signature);
     }
-    if (typeof Security !== 'undefined' && typeof Security.verify === 'function') {
+    if (typeof Security.verify === 'function') {
       return await Security.verify(payload, signature);
     }
-    throw new Error('Security module unavailable — cannot verify payload');
+    throw new Error('Security.verifyString unavailable — reload the page');
   }
 
   /* ============================================================
@@ -130,7 +131,7 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     Sync Code (legacy, unchanged)
+     Sync Code
      ============================================================ */
   async function generateSyncCode(lrn, term) {
     var built = await buildPayload(lrn, term);
@@ -153,9 +154,14 @@ const Sync = (() => {
           signature: signature
         });
         if (res.ok) mode = 'backend';
-        else console.warn('[Sync] Backend register failed:', res.error);
+        else {
+          console.warn('[Sync] Backend register failed:', res.error);
+          // Bubble up the error so the student knows
+          throw new Error('Backend rejected sync code: ' + res.error);
+        }
       } catch (err) {
-        console.warn('[Sync] Backend unreachable, saving locally:', err);
+        console.warn('[Sync] Backend register failed:', err.message);
+        throw err;
       }
     }
 
@@ -216,7 +222,7 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     JSON File Export / Import (legacy)
+     JSON File Export / Import
      ============================================================ */
   async function exportAsFile(lrn, term) {
     var built = await buildPayload(lrn, term);
@@ -277,7 +283,7 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     LEGACY: pullAllPending (sync codes)
+     pullAllPending (legacy sync codes)
      ============================================================ */
   async function pullAllPending(filters) {
     if (!backendEnabled()) {
@@ -323,9 +329,8 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     NEW v2.0.0 — Attempts (auto-push)
+     Attempts (auto-push)
      ============================================================ */
-
   function buildAttemptPayload(lrn, term, assessment, attempt) {
     var user = Store.getUser(lrn);
     if (!user) throw new Error('User not found');
@@ -388,9 +393,7 @@ const Sync = (() => {
   }
 
   async function pullAttempts(filters) {
-    if (!backendEnabled()) {
-      return { ok: false, error: 'Backend not configured' };
-    }
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
       var body = { action: 'pullAttempts' };
       Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
@@ -440,9 +443,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * getSyncStatus — v2.0.1: switched from GET → POST to match doPost handler.
-   */
   async function getSyncStatus(filters) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
@@ -478,16 +478,11 @@ const Sync = (() => {
      Public API
      ============================================================ */
   return {
-    // Canonical (new)
     canonicalize: canonicalize,
     signCanonical: signCanonical,
     verifyCanonical: verifyCanonical,
-
-    // Backend
     backendEnabled: backendEnabled,
     pingBackend: pingBackend,
-
-    // Legacy — sync codes
     buildPayload: buildPayload,
     generateSyncCode: generateSyncCode,
     lookupSyncCode: lookupSyncCode,
@@ -496,8 +491,6 @@ const Sync = (() => {
     importFromCode: importFromCode,
     pullAllPending: pullAllPending,
     markCodeUsed: markCodeUsed,
-
-    // New — attempts (auto-push)
     buildAttemptPayload: buildAttemptPayload,
     makePushId: makePushId,
     pushAttempt: pushAttempt,
