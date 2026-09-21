@@ -2,6 +2,7 @@
   "title": "Quiz 3 — Earth Materials, Geohazards & PAGASA",
   "coverage": "Weeks 5–9",
   "items": 20,
+  "competencies": ["GENSCI-11-T3-W5-C1", "GENSCI-11-T3-W6-C1", "GENSCI-11-T3-W7-C1", "GENSCI-11-T3-W8-C1", "GENSCI-11-T3-W9-C1"],
   "questions": [
     {
       "id": "q1",
@@ -12,7 +13,10 @@
         "Minerals are bigger than rocks",
         "Rocks are always igneous"
       ],
-      "correct": "Rocks are made of one or more minerals; minerals have a definite chemical composition"
+      "correct": "Rocks are made of one or more minerals; minerals have a definite chemical composition",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rocks vs minerals = W5-C1" }
     },
     {
       "id": "q2",
@@ -23,19 +27,28 @@
         "Heat and pressure on existing rocks",
         "Evaporation of seawater"
       ],
-      "correct": "Cooling and solidifying of magma or lava"
+      "correct": "Cooling and solidifying of magma or lava",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rock types" }
     },
     {
       "id": "q3",
       "text": "Which rock type is formed from heat and pressure on existing rocks?",
       "options": ["Metamorphic", "Igneous", "Sedimentary", "Volcanic"],
-      "correct": "Metamorphic"
+      "correct": "Metamorphic",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rock types" }
     },
     {
       "id": "q4",
       "text": "Which mineral is used to make cement?",
       "options": ["Limestone", "Gold", "Copper", "Mica"],
-      "correct": "Limestone"
+      "correct": "Limestone",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mineral use in industry" }
     },
     {
       "id": "q5",
@@ -46,41 +59,46 @@
         "Clay soil",
         "Gravel"
       ],
-      "correct": "Loam — balanced mix of sand, silt, and clay"
+      "correct": "Loam — balanced mix of sand, silt, and clay",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soil properties = W5-C1" }
     },
     {
       "id": "q6",
       "text": "Which Philippine province is known for its marble?",
       "options": ["Romblon", "Batanes", "Bohol", "Cebu"],
-      "correct": "Romblon"
+      "correct": "Romblon",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "local mineral resources = W5-C1" }
     },
     {
       "id": "q7",
       "text": "What is a tsunami usually caused by?",
-      "options": [
-        "An underwater earthquake",
-        "Strong winds",
-        "Tides",
-        "Fish migration"
-      ],
-      "correct": "An underwater earthquake"
+      "options": ["An underwater earthquake", "Strong winds", "Tides", "Fish migration"],
+      "correct": "An underwater earthquake",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "geologic processes = W6-C1" }
     },
     {
       "id": "q8",
       "text": "What is the point on Earth's surface directly above an earthquake's origin called?",
       "options": ["Epicenter", "Focus", "Fault", "Crater"],
-      "correct": "Epicenter"
+      "correct": "Epicenter",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "earthquake terminology = W6-C1" }
     },
     {
       "id": "q9",
       "text": "Which of the following is a SLOW geologic process?",
-      "options": [
-        "Saltwater intrusion",
-        "Volcanic eruption",
-        "Tsunami",
-        "Earthquake"
-      ],
-      "correct": "Saltwater intrusion"
+      "options": ["Saltwater intrusion", "Volcanic eruption", "Tsunami", "Earthquake"],
+      "correct": "Saltwater intrusion",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "slow vs fast processes = W6-C1" }
     },
     {
       "id": "q10",
@@ -91,13 +109,19 @@
         "The formation of new soil",
         "Volcanic ashfall"
       ],
-      "correct": "The gradual removal of topsoil by wind, water, or human activity"
+      "correct": "The gradual removal of topsoil by wind, water, or human activity",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "slow geologic process = W6-C1" }
     },
     {
       "id": "q11",
       "text": "Which agency monitors volcanic and seismic activity in the Philippines?",
       "options": ["PHIVOLCS", "PAGASA", "DENR", "NDRRMC"],
-      "correct": "PHIVOLCS"
+      "correct": "PHIVOLCS",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "geologic monitoring agency" }
     },
     {
       "id": "q12",
@@ -108,13 +132,19 @@
         "Take an elevator to the ground floor",
         "Stand under a window"
       ],
-      "correct": "Drop, cover, and hold under a sturdy table"
+      "correct": "Drop, cover, and hold under a sturdy table",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "natural hazard response = W8-C1" }
     },
     {
       "id": "q13",
       "text": "About how many tropical cyclones enter Philippine waters each year?",
       "options": ["About 20", "About 3", "About 50", "About 100"],
-      "correct": "About 20"
+      "correct": "About 20",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "typhoon frequency = W7-C1" }
     },
     {
       "id": "q14",
@@ -125,13 +155,19 @@
         "Lunar tides only",
         "Volcanic eruptions"
       ],
-      "correct": "A typhoon's strong winds and low pressure pushing sea water onto the coast"
+      "correct": "A typhoon's strong winds and low pressure pushing sea water onto the coast",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "storm surge = hydrometeorological process W7-C1" }
     },
     {
       "id": "q15",
       "text": "Which of the following is the STRONGEST part of a typhoon?",
       "options": ["The eyewall", "The eye", "The outer rain bands", "The tail"],
-      "correct": "The eyewall"
+      "correct": "The eyewall",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "typhoon structure = W7-C1" }
     },
     {
       "id": "q16",
@@ -142,7 +178,10 @@
         "The temperature of the ocean",
         "The temperature inside the house"
       ],
-      "correct": "The 'feels like' temperature combining heat and humidity"
+      "correct": "The 'feels like' temperature combining heat and humidity",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index = W9-C1 iHEAT" }
     },
     {
       "id": "q17",
@@ -153,7 +192,10 @@
         "Philippine Atmospheric and Geological Assessment",
         "Pacific Atmospheric Group of Science Agencies"
       ],
-      "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration"
+      "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PAGASA = W9-C1" }
     },
     {
       "id": "q18",
@@ -164,13 +206,19 @@
         "Earthquake epicenters",
         "Tsunami warnings only"
       ],
-      "correct": "Real-time and forecast heat index values across the Philippines"
+      "correct": "Real-time and forecast heat index values across the Philippines",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "iHEAT map = W9-C1" }
     },
     {
       "id": "q19",
       "text": "Which heat index range is categorized as DANGER?",
       "options": ["42–51°C", "27–32°C", "33–41°C", "52°C and above"],
-      "correct": "42–51°C"
+      "correct": "42–51°C",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index categories = W9-C1" }
     },
     {
       "id": "q20",
@@ -181,7 +229,10 @@
         "Heat escapes only at night",
         "Urban areas have more rain"
       ],
-      "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat"
+      "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index context = W9-C1" }
     }
   ]
 }
