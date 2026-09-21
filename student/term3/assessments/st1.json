@@ -2,271 +2,37 @@
   "title": "Summative Test 1 — Earth, Greenhouse & Philippine Geology",
   "coverage": "Weeks 1–4",
   "items": 30,
+  "competencies": ["GENSCI-11-T3-W1-C1", "GENSCI-11-T3-W2-C1", "GENSCI-11-T3-W3-C1", "GENSCI-11-T3-W4-C1"],
   "questions": [
-    {
-      "id": "q1",
-      "text": "What fraction of Earth's surface is covered by water?",
-      "options": ["About 71%", "About 50%", "About 30%", "About 90%"],
-      "correct": "About 71%"
-    },
-    {
-      "id": "q2",
-      "text": "What is Earth's average surface temperature?",
-      "options": ["15°C", "0°C", "30°C", "50°C"],
-      "correct": "15°C"
-    },
-    {
-      "id": "q3",
-      "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?",
-      "options": ["About −18°C", "About 15°C", "About 0°C", "About 100°C"],
-      "correct": "About −18°C"
-    },
-    {
-      "id": "q4",
-      "text": "Which planet has a runaway greenhouse effect and is the hottest in the Solar System?",
-      "options": ["Venus", "Mercury", "Mars", "Jupiter"],
-      "correct": "Venus"
-    },
-    {
-      "id": "q5",
-      "text": "Why is liquid water essential for life on Earth?",
-      "options": [
-        "It acts as a universal solvent for chemical reactions and transports nutrients",
-        "It looks pretty",
-        "It is rare in the universe",
-        "It has no function"
-      ],
-      "correct": "It acts as a universal solvent for chemical reactions and transports nutrients"
-    },
-    {
-      "id": "q6",
-      "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?",
-      "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"],
-      "correct": "Stratosphere"
-    },
-    {
-      "id": "q7",
-      "text": "What generates Earth's protective magnetic field?",
-      "options": [
-        "Its molten iron core",
-        "Its atmosphere",
-        "The Moon",
-        "Solar wind"
-      ],
-      "correct": "Its molten iron core"
-    },
-    {
-      "id": "q8",
-      "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?",
-      "options": [
-        "It's not too hot and not too cold — just right for liquid water",
-        "It's the closest planet to the Sun",
-        "It has three moons",
-        "It matches the color of gold"
-      ],
-      "correct": "It's not too hot and not too cold — just right for liquid water"
-    },
-    {
-      "id": "q9",
-      "text": "Why does ice float on water, and why is this important for life?",
-      "options": [
-        "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
-        "Ice is heavier than water",
-        "Ice is a metal",
-        "Floating ice has no effect on life"
-      ],
-      "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter"
-    },
-    {
-      "id": "q10",
-      "text": "What is the greenhouse effect?",
-      "options": [
-        "Gases in the atmosphere trap infrared radiation, warming Earth's surface",
-        "A greenhouse covering plants",
-        "The Earth reflecting all sunlight",
-        "Cooling of the atmosphere by clouds"
-      ],
-      "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface"
-    },
-    {
-      "id": "q11",
-      "text": "What kind of radiation do greenhouse gases absorb?",
-      "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"],
-      "correct": "Infrared (heat)"
-    },
-    {
-      "id": "q12",
-      "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?",
-      "options": ["Water vapor (H₂O)", "Carbon dioxide (CO₂)", "Methane (CH₄)", "Ozone (O₃)"],
-      "correct": "Water vapor (H₂O)"
-    },
-    {
-      "id": "q13",
-      "text": "Which human activity is the MAIN source of carbon dioxide emissions?",
-      "options": [
-        "Burning fossil fuels for electricity and transportation",
-        "Planting trees",
-        "Volcanic eruptions",
-        "Ocean evaporation"
-      ],
-      "correct": "Burning fossil fuels for electricity and transportation"
-    },
-    {
-      "id": "q14",
-      "text": "Approximately how much more potent is methane (CH₄) at trapping heat than carbon dioxide?",
-      "options": ["About 28× CO₂", "About 2× CO₂", "About 1000× CO₂", "Same as CO₂"],
-      "correct": "About 28× CO₂"
-    },
-    {
-      "id": "q15",
-      "text": "What is the DIFFERENCE between the natural and enhanced greenhouse effect?",
-      "options": [
-        "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs",
-        "They are identical",
-        "Natural is bad, enhanced is good",
-        "Natural only happens in the tropics"
-      ],
-      "correct": "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs"
-    },
-    {
-      "id": "q16",
-      "text": "What is the theory that Earth's outer shell is broken into moving plates called?",
-      "options": ["Plate tectonics", "Continental drift", "Big Bang theory", "Rock cycle"],
-      "correct": "Plate tectonics"
-    },
-    {
-      "id": "q17",
-      "text": "At which type of plate boundary do volcanoes MOST commonly form?",
-      "options": [
-        "Convergent boundary (subduction zones)",
-        "Divergent boundary only",
-        "Transform boundary",
-        "Volcanoes form randomly"
-      ],
-      "correct": "Convergent boundary (subduction zones)"
-    },
-    {
-      "id": "q18",
-      "text": "The Philippine Fault System is an example of which plate boundary type?",
-      "options": [
-        "Transform (plates slide past each other)",
-        "Convergent",
-        "Divergent",
-        "Accretion"
-      ],
-      "correct": "Transform (plates slide past each other)"
-    },
-    {
-      "id": "q19",
-      "text": "How were the Philippine islands primarily formed?",
-      "options": [
-        "Through volcanic arcs, collisions, and tectonic uplift over millions of years",
-        "They were carried by ocean currents",
-        "They are fragments of the Moon",
-        "They were always a single big island"
-      ],
-      "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years"
-    },
-    {
-      "id": "q20",
-      "text": "What is the Pacific Ring of Fire?",
-      "options": [
-        "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur",
-        "A ring of fire in Hawaii",
-        "A type of volcano",
-        "A boundary between continents"
-      ],
-      "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur"
-    },
-    {
-      "id": "q21",
-      "text": "Why are marine fossils found on Philippine mountains?",
-      "options": [
-        "The ocean once covered the area, and tectonic uplift raised the land above sea level",
-        "Fish used to live on land",
-        "People carried them up there",
-        "They fell from the sky"
-      ],
-      "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level"
-    },
-    {
-      "id": "q22",
-      "text": "Which geological feature is east of Mindanao and reaches depths over 10,000 meters?",
-      "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"],
-      "correct": "Philippine Trench"
-    },
-    {
-      "id": "q23",
-      "text": "Which of the following landforms is a karst landscape with an underground river?",
-      "options": [
-        "Puerto Princesa Underground River",
-        "Chocolate Hills",
-        "Banaue Rice Terraces",
-        "Mayon Volcano"
-      ],
-      "correct": "Puerto Princesa Underground River"
-    },
-    {
-      "id": "q24",
-      "text": "How many climate types does PAGASA classify in the Philippines?",
-      "options": ["Four (Types I–IV)", "Two", "Six", "One"],
-      "correct": "Four (Types I–IV)"
-    },
-    {
-      "id": "q25",
-      "text": "Which monsoon wind brings cool, dry weather from November to February?",
-      "options": [
-        "Amihan (NE monsoon)",
-        "Habagat (SW monsoon)",
-        "Trade winds",
-        "Sea breeze"
-      ],
-      "correct": "Amihan (NE monsoon)"
-    },
-    {
-      "id": "q26",
-      "text": "About how many tropical cyclones enter Philippine waters each year?",
-      "options": ["About 20", "About 5", "About 50", "About 100"],
-      "correct": "About 20"
-    },
-    {
-      "id": "q27",
-      "text": "What is the Coral Triangle?",
-      "options": [
-        "A marine region including the Philippines with 2,500+ fish species and 500+ coral species",
-        "A political alliance of three countries",
-        "A type of coral reef",
-        "A scientific lab"
-      ],
-      "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species"
-    },
-    {
-      "id": "q28",
-      "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?",
-      "options": ["About 65%", "About 10%", "About 100%", "About 5%"],
-      "correct": "About 65%"
-    },
-    {
-      "id": "q29",
-      "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?",
-      "options": [
-        "Philippine Eagle",
-        "Palawan Peacock-Pheasant",
-        "Philippine Tarsier",
-        "Visayan Warty Pig"
-      ],
-      "correct": "Philippine Eagle"
-    },
-    {
-      "id": "q30",
-      "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
-      "options": [
-        "Habitat loss from deforestation, mining, and land conversion",
-        "Too many protected areas",
-        "Overpopulation of endemic species",
-        "Excessive rainfall"
-      ],
-      "correct": "Habitat loss from deforestation, mining, and land conversion"
-    }
+    { "id": "q1", "text": "What fraction of Earth's surface is covered by water?", "options": ["About 71%", "About 50%", "About 30%", "About 90%"], "correct": "About 71%", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth characteristics" } },
+    { "id": "q2", "text": "What is Earth's average surface temperature?", "options": ["15°C", "0°C", "30°C", "50°C"], "correct": "15°C", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth characteristics" } },
+    { "id": "q3", "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?", "options": ["About −18°C", "About 15°C", "About 0°C", "About 100°C"], "correct": "About −18°C", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect" } },
+    { "id": "q4", "text": "Which planet has a runaway greenhouse effect and is the hottest in the Solar System?", "options": ["Venus", "Mercury", "Mars", "Jupiter"], "correct": "Venus", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth uniqueness" } },
+    { "id": "q5", "text": "Why is liquid water essential for life on Earth?", "options": ["It acts as a universal solvent for chemical reactions and transports nutrients", "It looks pretty", "It is rare in the universe", "It has no function"], "correct": "It acts as a universal solvent for chemical reactions and transports nutrients", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "liquid water condition" } },
+    { "id": "q6", "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?", "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"], "correct": "Stratosphere", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "protective atmosphere" } },
+    { "id": "q7", "text": "What generates Earth's protective magnetic field?", "options": ["Its molten iron core", "Its atmosphere", "The Moon", "Solar wind"], "correct": "Its molten iron core", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "magnetic field" } },
+    { "id": "q8", "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?", "options": ["It's not too hot and not too cold — just right for liquid water", "It's the closest planet to the Sun", "It has three moons", "It matches the color of gold"], "correct": "It's not too hot and not too cold — just right for liquid water", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "distance from sun" } },
+    { "id": "q9", "text": "Why does ice float on water, and why is this important for life?", "options": ["Ice is less dense than water and insulates the water below, letting aquatic life survive winter", "Ice is heavier than water", "Ice is a metal", "Floating ice has no effect on life"], "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water property supporting life" } },
+    { "id": "q10", "text": "What is the greenhouse effect?", "options": ["Gases in the atmosphere trap infrared radiation, warming Earth's surface", "A greenhouse covering plants", "The Earth reflecting all sunlight", "Cooling of the atmosphere by clouds"], "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect" } },
+    { "id": "q11", "text": "What kind of radiation do greenhouse gases absorb?", "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"], "correct": "Infrared (heat)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse radiation" } },
+    { "id": "q12", "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?", "options": ["Water vapor (H₂O)", "Carbon dioxide (CO₂)", "Methane (CH₄)", "Ozone (O₃)"], "correct": "Water vapor (H₂O)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gases" } },
+    { "id": "q13", "text": "Which human activity is the MAIN source of carbon dioxide emissions?", "options": ["Burning fossil fuels for electricity and transportation", "Planting trees", "Volcanic eruptions", "Ocean evaporation"], "correct": "Burning fossil fuels for electricity and transportation", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "CO2 sources" } },
+    { "id": "q14", "text": "Approximately how much more potent is methane (CH₄) at trapping heat than carbon dioxide?", "options": ["About 28× CO₂", "About 2× CO₂", "About 1000× CO₂", "Same as CO₂"], "correct": "About 28× CO₂", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "methane potency" } },
+    { "id": "q15", "text": "What is the DIFFERENCE between the natural and enhanced greenhouse effect?", "options": ["Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs", "They are identical", "Natural is bad, enhanced is good", "Natural only happens in the tropics"], "correct": "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "natural vs enhanced comparison" } },
+    { "id": "q16", "text": "What is the theory that Earth's outer shell is broken into moving plates called?", "options": ["Plate tectonics", "Continental drift", "Big Bang theory", "Rock cycle"], "correct": "Plate tectonics", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "plate tectonics" } },
+    { "id": "q17", "text": "At which type of plate boundary do volcanoes MOST commonly form?", "options": ["Convergent boundary (subduction zones)", "Divergent boundary only", "Transform boundary", "Volcanoes form randomly"], "correct": "Convergent boundary (subduction zones)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "plate boundary" } },
+    { "id": "q18", "text": "The Philippine Fault System is an example of which plate boundary type?", "options": ["Transform (plates slide past each other)", "Convergent", "Divergent", "Accretion"], "correct": "Transform (plates slide past each other)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine Fault" } },
+    { "id": "q19", "text": "How were the Philippine islands primarily formed?", "options": ["Through volcanic arcs, collisions, and tectonic uplift over millions of years", "They were carried by ocean currents", "They are fragments of the Moon", "They were always a single big island"], "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH formation" } },
+    { "id": "q20", "text": "What is the Pacific Ring of Fire?", "options": ["A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "A ring of fire in Hawaii", "A type of volcano", "A boundary between continents"], "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Ring of Fire" } },
+    { "id": "q21", "text": "Why are marine fossils found on Philippine mountains?", "options": ["The ocean once covered the area, and tectonic uplift raised the land above sea level", "Fish used to live on land", "People carried them up there", "They fell from the sky"], "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tectonic uplift analysis" } },
+    { "id": "q22", "text": "Which geological feature is east of Mindanao and reaches depths over 10,000 meters?", "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"], "correct": "Philippine Trench", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH landform" } },
+    { "id": "q23", "text": "Which of the following landforms is a karst landscape with an underground river?", "options": ["Puerto Princesa Underground River", "Chocolate Hills", "Banaue Rice Terraces", "Mayon Volcano"], "correct": "Puerto Princesa Underground River", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH landforms" } },
+    { "id": "q24", "text": "How many climate types does PAGASA classify in the Philippines?", "options": ["Four (Types I–IV)", "Two", "Six", "One"], "correct": "Four (Types I–IV)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH climate types" } },
+    { "id": "q25", "text": "Which monsoon wind brings cool, dry weather from November to February?", "options": ["Amihan (NE monsoon)", "Habagat (SW monsoon)", "Trade winds", "Sea breeze"], "correct": "Amihan (NE monsoon)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "monsoon winds" } },
+    { "id": "q26", "text": "About how many tropical cyclones enter Philippine waters each year?", "options": ["About 20", "About 5", "About 50", "About 100"], "correct": "About 20", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH climate" } },
+    { "id": "q27", "text": "What is the Coral Triangle?", "options": ["A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "A political alliance of three countries", "A type of coral reef", "A scientific lab"], "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
+    { "id": "q28", "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?", "options": ["About 65%", "About 10%", "About 100%", "About 5%"], "correct": "About 65%", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
+    { "id": "q29", "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?", "options": ["Philippine Eagle", "Palawan Peacock-Pheasant", "Philippine Tarsier", "Visayan Warty Pig"], "correct": "Philippine Eagle", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
+    { "id": "q30", "text": "Which of the following is the MOST serious threat to Philippine biodiversity?", "options": ["Habitat loss from deforestation, mining, and land conversion", "Too many protected areas", "Overpopulation of endemic species", "Excessive rainfall"], "correct": "Habitat loss from deforestation, mining, and land conversion", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity threats" } }
   ]
 }
