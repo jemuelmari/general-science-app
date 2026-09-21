@@ -1,26 +1,16 @@
 /* ============================================================
    security.js — HMAC-SHA256 signing + anti-cheat hooks
-   Version: 1.1.0
+   Version: 1.0.1
    App: General Science
-   ------------------------------------------------------------
-   Changelog v1.1.0 (Phase 2 / X5 + X39 fix):
-     - shuffleQuestions() now preserves `originalIndex` on each
-       question. This fixes the mapping bug that broke item
-       analysis and TOS competency lookup.
-     - Delegates shuffle to Randomize when available (deterministic
-       by assessmentId + setLetter). Falls back to Fisher-Yates
-       with a warning if Randomize is missing.
-     - verify() uses constant-time comparison (timing attack fix).
-
-   ⚠️ SECURITY NOTE: The SECRET below is client-side. It provides
-   INTEGRITY (tamper detection) but NOT AUTHENTICITY, because
-   anyone can read it in DevTools. Move to server-side HMAC in v2.
+   Changelog v1.0.1: Added signString()/verifyString() for canonical
+   JSON signing matching Code.gs (X38 fix). Existing sign()/verify()
+   kept for backward compatibility.
    ============================================================ */
 
 const Security = (() => {
   'use strict';
 
-  // v1: client-side secret (move to Apps Script backend in v2)
+  // v1: client-side secret (must match Code.gs HMAC_SECRET)
   const SECRET = 'GSA-2026-DEPED-SECRET-KEY-v1';
 
   /* ---------- HMAC-SHA256 ---------- */
@@ -41,6 +31,21 @@ const Security = (() => {
       .join('');
   }
 
+  /* ---------- Raw-string signing (matches backend canonicalize) ---------- */
+  async function signString(rawString) {
+    const key = await _getKey();
+    const enc = new TextEncoder();
+    const data = enc.encode(String(rawString));
+    const sig = await crypto.subtle.sign('HMAC', key, data);
+    return _bufToHex(sig);
+  }
+
+  async function verifyString(rawString, signature) {
+    const expected = await signString(rawString);
+    return expected === signature;
+  }
+
+  /* ---------- Legacy: object signing (non-canonical) ---------- */
   async function sign(payload) {
     const key = await _getKey();
     const enc = new TextEncoder();
@@ -49,32 +54,9 @@ const Security = (() => {
     return _bufToHex(sig);
   }
 
-  /**
-   * Constant-time string comparison to avoid timing attacks.
-   * Always compares the full length, regardless of early mismatches.
-   */
-  function _constantTimeEqual(a, b) {
-    const sa = String(a == null ? '' : a);
-    const sb = String(b == null ? '' : b);
-    if (sa.length !== sb.length) {
-      // Still iterate to keep timing similar; result will be false.
-      let diff = 1;
-      const len = Math.max(sa.length, sb.length);
-      for (let i = 0; i < len; i++) {
-        diff |= (sa.charCodeAt(i) || 0) ^ (sb.charCodeAt(i) || 0);
-      }
-      return false;
-    }
-    let diff = 0;
-    for (let i = 0; i < sa.length; i++) {
-      diff |= sa.charCodeAt(i) ^ sb.charCodeAt(i);
-    }
-    return diff === 0;
-  }
-
   async function verify(payload, signature) {
     const expected = await sign(payload);
-    return _constantTimeEqual(expected, signature);
+    return expected === signature;
   }
 
   /* ---------- Anti-Cheat: Tab-Switch Detection ---------- */
@@ -124,12 +106,10 @@ const Security = (() => {
   /* ---------- Anti-Cheat: Keyboard shortcuts ---------- */
   function disableDevShortcuts() {
     document.addEventListener('keydown', (e) => {
-      // Ctrl/Cmd + C, V, X, A, P, S, U
       const blocked = ['c', 'v', 'x', 'a', 'p', 's', 'u'];
       if ((e.ctrlKey || e.metaKey) && blocked.includes(e.key.toLowerCase())) {
         e.preventDefault();
       }
-      // F12, Ctrl+Shift+I/J/C
       if (
         e.key === 'F12' ||
         ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))
@@ -139,8 +119,8 @@ const Security = (() => {
     });
   }
 
-  /* ---------- Shuffle (fallback if Randomize missing) ---------- */
-  function _fallbackShuffle(arr) {
+  /* ---------- Question + Option Shuffle (legacy) ---------- */
+  function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -149,56 +129,11 @@ const Security = (() => {
     return a;
   }
 
-  /**
-   * Shuffle a set of questions while preserving `originalIndex`.
-   *
-   * ⚠️ FIX (X39): Each returned question carries `originalIndex`,
-   * so item analysis can map back to the master question bank
-   * (and thus look up its competency + bloom level) regardless of
-   * the shuffled position the student saw.
-   *
-   * ⚠️ X5 partial: Delegates to Randomize if available, so
-   * Set A / Set B are deterministic and identical across devices.
-   *
-   * @param {Array} questions - array of question objects
-   * @param {Object} [opts] - { assessmentId, setLetter }
-   * @returns {Array} shuffled questions with originalIndex + shuffled options
-   */
-  function shuffleQuestions(questions, opts) {
-    const list = Array.isArray(questions) ? questions : [];
-    const options = opts || {};
-
-    // Snapshot originals with originalIndex
-    const withIndex = list.map((q, i) => ({
+  function shuffleQuestions(questions) {
+    return shuffle(questions).map((q) => ({
       ...q,
-      originalIndex: q.originalIndex != null ? q.originalIndex : i
+      options: shuffle(q.options || [])
     }));
-
-    // Deterministic path — uses Randomize if loaded
-    if (
-      typeof Randomize !== 'undefined' &&
-      typeof Randomize.generateSet === 'function' &&
-      options.assessmentId
-    ) {
-      const bank = { questions: list };
-      const setLetter = options.setLetter || 'A';
-      const set = Randomize.generateSet(bank, options.assessmentId, setLetter);
-      // Randomize already returns originalIndex + shuffled options
-      return set.questions;
-    }
-
-    // Fallback — nondeterministic Fisher-Yates, but still preserves originalIndex
-    if (typeof Randomize === 'undefined') {
-      console.warn('[Security] Randomize not loaded — using nondeterministic shuffle. ' +
-        'Item analysis across sets will still work via originalIndex.');
-    }
-    const shuffled = _fallbackShuffle(withIndex);
-
-    // Also shuffle each question's options
-    return shuffled.map((q) => {
-      const opts2 = Array.isArray(q.options) ? _fallbackShuffle(q.options) : q.options;
-      return { ...q, options: opts2 };
-    });
   }
 
   /* ---------- Timer ---------- */
@@ -221,12 +156,14 @@ const Security = (() => {
 
   /* ---------- Public API ---------- */
   return {
+    signString,
+    verifyString,
     sign,
     verify,
     startTabMonitor,
     disableCopyPaste,
     disableDevShortcuts,
-    shuffle: _fallbackShuffle,
+    shuffle,
     shuffleQuestions,
     createTimer
   };
