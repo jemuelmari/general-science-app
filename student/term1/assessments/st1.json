@@ -2,186 +2,277 @@
   "title": "Summative Test 1 — Physics Foundations & Machines",
   "coverage": "Weeks 1–4",
   "items": 30,
+  "competencies": ["GENSCI-11-T1-W1-C1", "GENSCI-11-T1-W2-C1", "GENSCI-11-T1-W3-C1", "GENSCI-11-T1-W4-C1"],
   "questions": [
     {
       "id": "q1",
       "text": "Which of the following is NOT one of the four life areas improved by physics?",
       "options": ["Astronomy research", "Household", "Health & safety", "Work productivity"],
-      "correct": "Astronomy research"
+      "correct": "Astronomy research",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "four life areas = W1-C1" }
     },
     {
       "id": "q2",
       "text": "Which branch of science studies matter, energy, motion, force, light, and heat?",
       "options": ["Physics", "Chemistry", "Biology", "Geology"],
-      "correct": "Physics"
+      "correct": "Physics",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics definition" }
     },
     {
       "id": "q3",
       "text": "Which physics concept explains why a ball rolls downhill?",
       "options": ["Gravity and motion", "Refraction", "Combustion", "Fermentation"],
-      "correct": "Gravity and motion"
+      "correct": "Gravity and motion",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics concept in daily life" }
     },
     {
       "id": "q4",
       "text": "An object moves from point A to point B without rotating. This is:",
       "options": ["Translational motion", "Rotational motion", "Vibrational motion", "Circular motion only"],
-      "correct": "Translational motion"
+      "correct": "Translational motion",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "translational motion" }
     },
     {
       "id": "q5",
       "text": "The ceiling fan's blades spin around a fixed axis. This is:",
       "options": ["Rotational motion", "Translational motion", "Linear motion", "Static equilibrium"],
-      "correct": "Rotational motion"
+      "correct": "Rotational motion",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rotational motion" }
     },
     {
       "id": "q6",
       "text": "Which formula relates linear velocity to angular velocity?",
       "options": ["v = r × ω", "v = r + ω", "v = ω ÷ r", "v = r ÷ ω"],
-      "correct": "v = r × ω"
+      "correct": "v = r × ω",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω formula" }
     },
     {
       "id": "q7",
       "text": "The unit of angular displacement is:",
       "options": ["Radians", "Meters", "Meters per second", "Newtons"],
-      "correct": "Radians"
+      "correct": "Radians",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular displacement unit" }
     },
     {
       "id": "q8",
       "text": "A wheel with radius 0.6 m rotates at 3 rad/s. What is the linear velocity at the rim?",
       "options": ["1.8 m/s", "0.2 m/s", "3.6 m/s", "5 m/s"],
-      "correct": "1.8 m/s"
+      "correct": "1.8 m/s",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "numeric v = r × ω" }
     },
     {
       "id": "q9",
       "text": "Why does the tip of a long propeller blade move faster than the hub?",
       "options": ["The tip is farther from the axis, so v = r × ω gives it higher linear velocity", "The tip has more mass", "The hub has more friction", "The tip is warmer"],
-      "correct": "The tip is farther from the axis, so v = r × ω gives it higher linear velocity"
+      "correct": "The tip is farther from the axis, so v = r × ω gives it higher linear velocity",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω conceptual" }
     },
     {
       "id": "q10",
       "text": "Which of the following is an example of translational motion?",
       "options": ["A car driving on a straight highway", "A spinning top", "A ceiling fan blade", "A rotating Ferris wheel car"],
-      "correct": "A car driving on a straight highway"
+      "correct": "A car driving on a straight highway",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "translational motion example" }
     },
     {
       "id": "q11",
       "text": "What is the unit of angular velocity?",
       "options": ["rad/s", "m/s", "rad", "m/s²"],
-      "correct": "rad/s"
+      "correct": "rad/s",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular velocity unit" }
     },
     {
       "id": "q12",
       "text": "Which of the following is a simple machine?",
       "options": ["Lever", "Electric motor", "Television", "Calculator"],
-      "correct": "Lever"
+      "correct": "Lever",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine" }
     },
     {
       "id": "q13",
       "text": "A crowbar prying a nail uses which simple machine?",
       "options": ["Lever", "Pulley", "Inclined plane", "Screw"],
-      "correct": "Lever"
+      "correct": "Lever",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine identification" }
     },
     {
       "id": "q14",
       "text": "A flagpole rope raising a flag uses which simple machine?",
       "options": ["Pulley", "Lever", "Wedge", "Screw"],
-      "correct": "Pulley"
+      "correct": "Pulley",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine identification" }
     },
     {
       "id": "q15",
       "text": "A ramp for loading goods into a truck is which simple machine?",
       "options": ["Inclined plane", "Wedge", "Lever", "Pulley"],
-      "correct": "Inclined plane"
+      "correct": "Inclined plane",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine identification" }
     },
     {
       "id": "q16",
       "text": "A pair of scissors is best described as:",
       "options": ["A compound machine combining two levers and two wedges", "A single lever", "An inclined plane", "A pulley system"],
-      "correct": "A compound machine combining two levers and two wedges"
+      "correct": "A compound machine combining two levers and two wedges",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compound machine analysis" }
     },
     {
       "id": "q17",
       "text": "Mechanical advantage is calculated as:",
       "options": ["Output force ÷ input force", "Input force ÷ output force", "Force × distance", "Mass × acceleration"],
-      "correct": "Output force ÷ input force"
+      "correct": "Output force ÷ input force",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mechanical advantage formula" }
     },
     {
       "id": "q18",
       "text": "A machine has an output force of 400 N and an input force of 100 N. What is its mechanical advantage?",
       "options": ["4", "0.25", "300", "500"],
-      "correct": "4"
+      "correct": "4",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "MA computation" }
     },
     {
       "id": "q19",
       "text": "Why is a bicycle considered a compound machine?",
       "options": ["It combines multiple simple machines (wheels, levers, pulleys, screws)", "It uses electricity", "It has a motor", "It is made of metal"],
-      "correct": "It combines multiple simple machines (wheels, levers, pulleys, screws)"
+      "correct": "It combines multiple simple machines (wheels, levers, pulleys, screws)",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compound machine concept" }
     },
     {
       "id": "q20",
       "text": "Which simple machine converts rotational force into forward motion?",
       "options": ["Screw", "Lever", "Pulley", "Wedge"],
-      "correct": "Screw"
+      "correct": "Screw",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine function" }
     },
     {
       "id": "q21",
       "text": "What is pressure?",
       "options": ["Force per unit area", "Force times area", "Mass times acceleration", "Energy per unit time"],
-      "correct": "Force per unit area"
+      "correct": "Force per unit area",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pressure definition = hydraulics" }
     },
     {
       "id": "q22",
       "text": "The SI unit of pressure is:",
       "options": ["Pascal (Pa)", "Newton (N)", "Joule (J)", "Watt (W)"],
-      "correct": "Pascal (Pa)"
+      "correct": "Pascal (Pa)",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pressure unit" }
     },
     {
       "id": "q23",
       "text": "Pascal's Principle states that:",
       "options": ["Pressure applied to an enclosed fluid is transmitted equally throughout", "Pressure decreases with depth", "Fluids cannot transmit force", "Pressure equals force times area"],
-      "correct": "Pressure applied to an enclosed fluid is transmitted equally throughout"
+      "correct": "Pressure applied to an enclosed fluid is transmitted equally throughout",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Remembering",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pascal's principle" }
     },
     {
       "id": "q24",
       "text": "In a hydraulic system, if the output piston has a LARGER area than the input piston, the output force will:",
       "options": ["Increase", "Decrease", "Stay the same", "Become zero"],
-      "correct": "Increase"
+      "correct": "Increase",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hydraulic force amplification" }
     },
     {
       "id": "q25",
       "text": "A hydraulic jack has an input piston of area 0.01 m² and an output piston of area 0.5 m². If you apply 50 N on the input, what is the output force?",
       "options": ["2,500 N", "500 N", "50 N", "10 N"],
-      "correct": "2,500 N"
+      "correct": "2,500 N",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hydraulic calculation" }
     },
     {
       "id": "q26",
       "text": "Which of the following is NOT an application of hydraulics?",
       "options": ["Solar panel electricity generation", "Car brake systems", "Excavators", "Dentist chairs"],
-      "correct": "Solar panel electricity generation"
+      "correct": "Solar panel electricity generation",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hydraulics applications" }
     },
     {
       "id": "q27",
       "text": "A household appliance uses 1,000 W and runs 5 hours per day. How much energy does it consume per day?",
       "options": ["5 kWh", "1 kWh", "0.5 kWh", "50 kWh"],
-      "correct": "5 kWh"
+      "correct": "5 kWh",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 5, "confidence": "FALLBACK", "rationale": "energy efficiency application; W3-C1 machine efficiency is closest" }
     },
     {
       "id": "q28",
       "text": "Which practice BEST improves household energy efficiency?",
       "options": ["Unplugging appliances when not in use and using LED bulbs", "Using incandescent bulbs", "Running the air conditioner at 18°C", "Leaving lights on all night"],
-      "correct": "Unplugging appliances when not in use and using LED bulbs"
+      "correct": "Unplugging appliances when not in use and using LED bulbs",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 5, "confidence": "FALLBACK", "rationale": "efficiency application; W3-C1 closest" }
     },
     {
       "id": "q29",
       "text": "A car's brake pedal has a small piston, and the brake pads have a large piston. This is an application of:",
       "options": ["Pascal's Principle", "Newton's Third Law", "Law of Refraction", "Law of Conservation of Energy"],
-      "correct": "Pascal's Principle"
+      "correct": "Pascal's Principle",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pascal's principle application" }
     },
     {
       "id": "q30",
       "text": "Why is a longer wrench more effective at loosening a tight bolt?",
       "options": ["It increases the lever arm distance, increasing torque", "It is heavier", "It has more friction", "It uses electricity"],
-      "correct": "It increases the lever arm distance, increasing torque"
+      "correct": "It increases the lever arm distance, increasing torque",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "torque + lever arm" }
     }
   ]
 }
