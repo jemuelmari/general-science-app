@@ -2,13 +2,6 @@
    sync.js — Sync Code + JSON payload + backend bridge
    Version: 2.0.2
    App: General Science · v1.0.2
-   Changelog:
-     v2.0.2: signCanonical now REQUIRES Security.signString (no silent
-             fallback to legacy sign()). Fixes signature mismatch when
-             Security was partially loaded.
-     v2.0.1: getSyncStatus now uses POST (was GET → Unknown action).
-     v2.0.0: Canonical JSON signing (X36); auto-push wrappers.
-     v1.1.0: Added pullAllPending().
    ============================================================ */
 
 const Sync = (() => {
@@ -16,9 +9,6 @@ const Sync = (() => {
 
   const NS = 'gsa_v1_';
 
-  /* ============================================================
-     CANONICAL JSON
-     ============================================================ */
   function canonicalize(obj) {
     if (obj === null || obj === undefined) return 'null';
     if (typeof obj === 'number') {
@@ -44,16 +34,12 @@ const Sync = (() => {
     return 'null';
   }
 
-  /**
-   * Sign a payload using canonical JSON.
-   * REQUIRES Security.signString — no silent fallback.
-   */
   async function signCanonical(payload) {
     if (typeof Security === 'undefined') {
       throw new Error('Security module not loaded — cannot sign payload');
     }
     if (typeof Security.signString !== 'function') {
-      throw new Error('Security.signString unavailable — reload the page (cache may be stale)');
+      throw new Error('Security.signString unavailable — reload the page');
     }
     var canonical = canonicalize(payload);
     return await Security.signString(canonical);
@@ -61,7 +47,7 @@ const Sync = (() => {
 
   async function verifyCanonical(payload, signature) {
     if (typeof Security === 'undefined') {
-      throw new Error('Security module not loaded — cannot verify payload');
+      throw new Error('Security module not loaded');
     }
     if (typeof Security.verifyString === 'function') {
       var canonical = canonicalize(payload);
@@ -70,12 +56,9 @@ const Sync = (() => {
     if (typeof Security.verify === 'function') {
       return await Security.verify(payload, signature);
     }
-    throw new Error('Security.verifyString unavailable — reload the page');
+    throw new Error('Security.verifyString unavailable');
   }
 
-  /* ============================================================
-     Backend helpers
-     ============================================================ */
   function backendEnabled() {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
@@ -96,9 +79,6 @@ const Sync = (() => {
     return res.json();
   }
 
-  /* ============================================================
-     Payload Builder (legacy)
-     ============================================================ */
   async function buildPayload(lrn, term) {
     var user = Store.getUser(lrn);
     if (!user) throw new Error('User not found');
@@ -130,9 +110,6 @@ const Sync = (() => {
     return { payload: payload, signature: signature };
   }
 
-  /* ============================================================
-     Sync Code
-     ============================================================ */
   async function generateSyncCode(lrn, term) {
     var built = await buildPayload(lrn, term);
     var payload = built.payload;
@@ -145,34 +122,22 @@ const Sync = (() => {
     var mode = 'local';
 
     if (backendEnabled()) {
-      try {
-        var res = await backendPost({
-          action: 'registerSyncCode',
-          code: code,
-          lrn: lrn,
-          payload: payload,
-          signature: signature
-        });
-        if (res.ok) mode = 'backend';
-        else {
-          console.warn('[Sync] Backend register failed:', res.error);
-          // Bubble up the error so the student knows
-          throw new Error('Backend rejected sync code: ' + res.error);
-        }
-      } catch (err) {
-        console.warn('[Sync] Backend register failed:', err.message);
-        throw err;
+      var res = await backendPost({
+        action: 'registerSyncCode',
+        code: code, lrn: lrn, payload: payload, signature: signature
+      });
+      if (res.ok) {
+        mode = 'backend';
+      } else {
+        throw new Error('Backend rejected sync code: ' + (res.error || 'unknown'));
       }
     }
 
     _saveLocalCode(code, { payload: payload, signature: signature });
 
     return {
-      code: code,
-      payload: payload,
-      signature: signature,
-      mode: mode,
-      createdAt: new Date().toISOString()
+      code: code, payload: payload, signature: signature,
+      mode: mode, createdAt: new Date().toISOString()
     };
   }
 
@@ -181,18 +146,12 @@ const Sync = (() => {
       try {
         var res = await backendPost({ action: 'resolveSyncCode', code: code });
         if (res.ok) {
-          return {
-            payload: res.payload,
-            signature: res.signature,
-            source: 'backend',
-            createdAt: res.createdAt
-          };
+          return { payload: res.payload, signature: res.signature, source: 'backend', createdAt: res.createdAt };
         }
       } catch (err) {
         console.warn('[Sync] Backend lookup failed, trying local:', err);
       }
     }
-
     var local = _getLocalCode(code);
     if (local) {
       var copy = {};
@@ -200,7 +159,6 @@ const Sync = (() => {
       copy.source = 'local';
       return copy;
     }
-
     return null;
   }
 
@@ -208,9 +166,7 @@ const Sync = (() => {
     var codes = JSON.parse(localStorage.getItem(NS + 'sync_codes') || '{}');
     codes[code] = Object.assign({}, data, { savedAt: new Date().toISOString() });
     var entries = Object.keys(codes).map(function (k) { return [k, codes[k]]; });
-    entries.sort(function (a, b) {
-      return new Date(b[1].savedAt) - new Date(a[1].savedAt);
-    });
+    entries.sort(function (a, b) { return new Date(b[1].savedAt) - new Date(a[1].savedAt); });
     var trimmed = {};
     entries.slice(0, 10).forEach(function (pair) { trimmed[pair[0]] = pair[1]; });
     localStorage.setItem(NS + 'sync_codes', JSON.stringify(trimmed));
@@ -221,16 +177,12 @@ const Sync = (() => {
     return codes[code] || null;
   }
 
-  /* ============================================================
-     JSON File Export / Import
-     ============================================================ */
   async function exportAsFile(lrn, term) {
     var built = await buildPayload(lrn, term);
     var envelope = { payload: built.payload, signature: built.signature };
     var json = JSON.stringify(envelope, null, 2);
     var blob = new Blob([json], { type: 'application/json' });
     var url = URL.createObjectURL(blob);
-
     var filename = 'GSA_' + built.payload.student.lrn + '_' + (term || 'all') + '_' + _dateStamp() + '.json';
     var a = document.createElement('a');
     a.href = url;
@@ -239,7 +191,6 @@ const Sync = (() => {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
-
     return filename;
   }
 
@@ -254,9 +205,7 @@ const Sync = (() => {
           if (!payload || !signature) throw new Error('Missing payload or signature');
           var valid = await verifyCanonical(payload, signature);
           resolve({ payload: payload, signature: signature, valid: valid });
-        } catch (err) {
-          reject(err);
-        }
+        } catch (err) { reject(err); }
       };
       reader.onerror = function () { reject(new Error('File read error')); };
       reader.readAsText(file);
@@ -270,38 +219,29 @@ const Sync = (() => {
         valid: false,
         error: backendEnabled()
           ? 'Code not found (checked backend and this device)'
-          : 'Code not found on this device. Enable the backend for cross-device sync.'
+          : 'Code not found on this device.'
       };
     }
     var valid = await verifyCanonical(record.payload, record.signature);
     return {
-      payload: record.payload,
-      signature: record.signature,
-      valid: valid,
-      source: record.source
+      payload: record.payload, signature: record.signature,
+      valid: valid, source: record.source
     };
   }
 
-  /* ============================================================
-     pullAllPending (legacy sync codes)
-     ============================================================ */
   async function pullAllPending(filters) {
-    if (!backendEnabled()) {
-      return { ok: false, error: 'Backend not configured. Set CONFIG.BACKEND_URL.' };
-    }
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
       var body = { action: 'pullAllPending' };
       Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
       var res = await backendPost(body);
-      if (!res.ok) return { ok: false, error: res.error || 'Unknown backend error' };
-
+      if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
       var records = (res.records || []).map(function (r) {
         var copy = {};
         Object.keys(r).forEach(function (k) { copy[k] = r[k]; });
         copy.verified = true;
         return copy;
       });
-
       return { ok: true, count: records.length, records: records };
     } catch (err) {
       return { ok: false, error: err.message };
@@ -328,28 +268,19 @@ const Sync = (() => {
     }
   }
 
-  /* ============================================================
-     Attempts (auto-push)
-     ============================================================ */
   function buildAttemptPayload(lrn, term, assessment, attempt) {
     var user = Store.getUser(lrn);
     if (!user) throw new Error('User not found');
-
     return {
       version: '2.0.0',
       student: {
-        lrn: user.lrn,
-        lastName: user.lastName,
-        firstName: user.firstName,
+        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
         middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel,
-        section: user.section
+        gradeLevel: user.gradeLevel, section: user.section
       },
       attempt: {
-        term: term,
-        assessment: assessment,
-        score: attempt.score,
-        total: attempt.total,
+        term: term, assessment: assessment,
+        score: attempt.score, total: attempt.total,
         itemResults: attempt.itemResults || [],
         set: attempt.set || '',
         timestamp: attempt.timestamp || new Date().toISOString()
@@ -366,7 +297,6 @@ const Sync = (() => {
     if (!backendEnabled()) {
       return { ok: false, error: 'Backend not configured', offline: true };
     }
-
     var payload = buildAttemptPayload(lrn, term, assessment, attempt);
     var signature = await signCanonical(payload);
     var pushId = makePushId(lrn, term, assessment, attempt.timestamp);
@@ -374,17 +304,12 @@ const Sync = (() => {
     try {
       var res = await backendPost({
         action: 'pushAttempt',
-        pushId: pushId,
-        lrn: lrn,
-        term: term,
-        assessment: assessment,
-        score: attempt.score,
-        total: attempt.total,
+        pushId: pushId, lrn: lrn, term: term, assessment: assessment,
+        score: attempt.score, total: attempt.total,
         itemResults: attempt.itemResults || [],
         set: attempt.set || '',
         clientTimestamp: attempt.timestamp || new Date().toISOString(),
-        payload: payload,
-        signature: signature
+        payload: payload, signature: signature
       });
       return Object.assign({ pushId: pushId }, res);
     } catch (err) {
@@ -455,9 +380,6 @@ const Sync = (() => {
     }
   }
 
-  /* ============================================================
-     Helpers
-     ============================================================ */
   function _shortHash(str) {
     var h = 0x811c9dc5;
     for (var i = 0; i < str.length; i++) {
@@ -474,9 +396,6 @@ const Sync = (() => {
       String(d.getDate()).padStart(2, '0');
   }
 
-  /* ============================================================
-     Public API
-     ============================================================ */
   return {
     canonicalize: canonicalize,
     signCanonical: signCanonical,
