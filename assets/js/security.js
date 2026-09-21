@@ -1,10 +1,12 @@
 /* ============================================================
    security.js — HMAC-SHA256 signing + anti-cheat hooks
-   Version: 1.0.1
+   Version: 1.0.2
    App: General Science
-   Changelog v1.0.1: Added signString()/verifyString() for canonical
-   JSON signing matching Code.gs (X38 fix). Existing sign()/verify()
-   kept for backward compatibility.
+   Changelog:
+     v1.0.2: Exposed SECRET for debugging; signString now handles
+             empty/undefined input gracefully.
+     v1.0.1: Added signString()/verifyString() for canonical JSON.
+     v1.0.0: Initial.
    ============================================================ */
 
 const Security = (() => {
@@ -35,7 +37,8 @@ const Security = (() => {
   async function signString(rawString) {
     const key = await _getKey();
     const enc = new TextEncoder();
-    const data = enc.encode(String(rawString));
+    const str = String(rawString == null ? '' : rawString);
+    const data = enc.encode(str);
     const sig = await crypto.subtle.sign('HMAC', key, data);
     return _bufToHex(sig);
   }
@@ -71,7 +74,7 @@ const Security = (() => {
         onViolation?.(count);
         if (count >= threshold) {
           stopTabMonitor();
-          onViolation?.(count, true); // final
+          onViolation?.(count, true);
         }
       }
     };
