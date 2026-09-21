@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOS Generator — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.2.0" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.2.0" />
   <style>
     .tos-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; padding:18px; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; }
     .tos-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
@@ -18,6 +18,7 @@
     .tos-alert { padding:14px 18px; border-radius:10px; margin-bottom:20px; font-size:0.88rem; display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
     .tos-alert.warn { background:#fff3e0; border-left:4px solid #ed6c02; color:#e65100; }
     .tos-alert.success { background:#e8f5e9; border-left:4px solid #2e7d32; color:#1b5e20; }
+    .tos-alert.error { background:#ffebee; border-left:4px solid #c62828; color:#b71c1c; }
     .tos-doc { background:#fff; border-radius:14px; padding:28px 24px; box-shadow:0 2px 12px rgba(0,0,0,0.06); margin-bottom:24px; }
     .tos-doc-header { text-align:center; font-family:'Times New Roman', serif; color:#1a1a1a; line-height:1.5; margin-bottom:20px; }
     .tos-doc-header .country { font-size:0.85rem; }
@@ -40,6 +41,12 @@
     .tos-table .item-num { text-align:center; font-size:0.72rem; }
     .tos-table tbody tr:hover { background:#fafbfc; }
     .tos-table tfoot td { background:#f5f7fa; font-weight:700; text-align:center; }
+    .tos-table .bloom-edit { width:100%; border:none; background:transparent; text-align:center; font-family:'Times New Roman', serif; font-size:0.78rem; padding:2px; }
+    .tos-table .bloom-edit:focus { outline:2px solid #0d47a1; background:#fff; }
+    .tos-table .bloom-edit.dirty { background:#fff8e1; font-weight:700; }
+    .tos-table .bloom-edit.invalid { background:#ffebee; color:#c62828; font-weight:700; }
+    .tos-edit-banner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; margin-bottom:16px; background:#e3f2fd; border-radius:10px; font-size:0.85rem; color:#0d47a1; flex-wrap:wrap; }
+    .tos-edit-banner .btns { display:flex; gap:8px; flex-wrap:wrap; }
     .tos-answer-key { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px; font-family:'Consolas', monospace; font-size:0.85rem; margin-top:12px; }
     .tos-answer-key .ak-item { padding:8px 12px; background:#f5f7fa; border-radius:8px; border-left:4px solid #0d47a1; }
     .tos-answer-key .ak-item .num { font-weight:700; color:#0d47a1; margin-right:8px; }
@@ -49,6 +56,7 @@
     .mll-table th, .mll-table td { border:1px solid #333; padding:10px 12px; vertical-align:top; }
     .mll-table thead th { background:#e3f2fd; text-align:center; font-weight:700; }
     .mll-table .rank-cell { width:50px; text-align:center; font-weight:700; background:#f5f7fa; }
+    .mll-table .mps-cell { width:70px; text-align:center; font-variant-numeric:tabular-nums; font-size:0.78rem; }
     .mll-table .most-col { background:#f1f8f4; }
     .mll-table .least-col { background:#fff7ed; }
     .signatories { display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; margin-top:40px; font-family:'Times New Roman', serif; font-size:0.88rem; text-align:center; }
@@ -70,13 +78,15 @@
     .sig-modal-group input { width:100%; padding:10px 12px; font-family:inherit; font-size:0.9rem; border:1.5px solid #cfd8dc; border-radius:8px; box-sizing:border-box; }
     .sig-modal-group input:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.1); }
     @media print {
-      .app-header, .app-footer, .tos-filters, .tos-tabs, .tos-actions, .no-print { display:none !important; }
+      .app-header, .app-footer, .tos-filters, .tos-tabs, .tos-actions, .no-print, .tos-edit-banner { display:none !important; }
       body { background:#fff !important; }
       main { padding:0 !important; }
       .container { max-width:100% !important; padding:0 !important; }
       .tos-doc { box-shadow:none !important; padding:0 !important; margin:0 !important; }
       .tos-table { font-size:0.7rem; }
       .tos-table th, .tos-table td { padding:4px 6px; }
+      .tos-table .bloom-edit { background:transparent !important; font-weight:inherit; }
+      .tos-table .bloom-edit.dirty { background:transparent !important; }
       .tos-answer-key { grid-template-columns:repeat(6,1fr); gap:4px; }
       .tos-answer-key .ak-item { padding:4px 6px; font-size:0.7rem; }
     }
@@ -88,7 +98,7 @@
     <div class="container flex-between">
       <div>
         <h1>📐 TOS Generator</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.2.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -105,7 +115,7 @@
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
           <h1 style="font-size:1.4rem;">Table of Specification Generator</h1>
-          <p>Auto-generate TOS for Summative Tests and Term Exams based on BOW competencies.</p>
+          <p>Auto-generate TOS for Summative Tests and Term Exams based on BOW competencies. Per-competency Bloom's cells are editable.</p>
         </div>
         <div class="teacher-hero-actions">
           <button id="btn-edit-signatories" class="outline" style="border-color:#00e676;color:#00e676;">✏️ Edit Signatories</button>
@@ -186,59 +196,43 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.2</span></p>
   </footer>
-  <script src="../config.js?v=8"></script>
-  <script src="../assets/js/app.js?v=8"></script>
-  <script src="../assets/js/version-sync.js?v=1"></script>
-  <script src="../assets/js/store.js?v=8"></script>
-  <script src="../assets/js/ui-helpers.js?v=8"></script>
-  <script src="../assets/js/mastery-scales.js?v=1"></script>
-  <script src="../assets/js/tos-engine.js?v=1"></script>
-  <script src="../assets/js/teacher-auth.js?v=8"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script src="../config.js?v=1.2.0"></script>
+  <script src="../assets/js/app.js?v=1.2.0"></script>
+  <script src="../assets/js/version-sync.js?v=1.2.0"></script>
+  <script src="../assets/js/store.js?v=1.2.0"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.2.0"></script>
+  <script src="../assets/js/mastery-scales.js?v=1.2.0"></script>
+  <script src="../assets/js/sync.js?v=1.2.0"></script>
+  <script src="../assets/js/tos-engine.js?v=1.2.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.2.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.2.0"></script>
   <script>
     (function() {
       'use strict';
 
-      /* ============================================================
-         SIGNATORIES — localStorage-backed, all 6 fields editable
-         ============================================================ */
-      var SIG_KEY = 'gsa_v1_signatories';
-
-      var DEFAULT_SIGS = {
-        prepared: { name: 'JEMUEL C. MARI, MAN, RN, LPT', position: 'Teacher II' },
-        checked:  { name: '', position: '' },
-        noted:    { name: '', position: '' }
-      };
-
-      function loadSignatories() {
-        try {
-          var raw = localStorage.getItem(SIG_KEY);
-          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_SIGS));
-          var parsed = JSON.parse(raw);
-          return {
-            prepared: Object.assign({}, DEFAULT_SIGS.prepared, parsed.prepared || {}),
-            checked:  Object.assign({}, DEFAULT_SIGS.checked,  parsed.checked  || {}),
-            noted:    Object.assign({}, DEFAULT_SIGS.noted,    parsed.noted    || {})
-          };
-        } catch (e) {
-          return JSON.parse(JSON.stringify(DEFAULT_SIGS));
-        }
-      }
-
-      function saveSignatories(sigs) {
-        try { localStorage.setItem(SIG_KEY, JSON.stringify(sigs)); } catch (e) {}
-      }
-
-      var signatories = loadSignatories();
+      var signatories = null;
       var currentTOS = null;
+      var manualOverrides = {};   // per-competency Bloom's overrides
+      var mllCache = null;
 
       /* ============================================================
          INIT
          ============================================================ */
-      TeacherAuthBoot.ready(function(auth) {
+      TeacherAuthBoot.ready(async function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+
+        // Load signatories (backend + fallback)
+        try {
+          var result = await TOSEngine.getSignatories();
+          signatories = result.sigs;
+          if (result.source === 'local' && result.warning) {
+            // silent — will warn on save
+          }
+        } catch (e) {
+          signatories = TOSEngine.loadLocalSignatories();
+        }
 
         document.getElementById('btn-generate').addEventListener('click', generateTOS);
         document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
@@ -258,15 +252,21 @@
         });
 
         checkTEAvailability();
-        document.getElementById('filter-term').addEventListener('change', checkTEAvailability);
-        document.getElementById('filter-assessment').addEventListener('change', checkTEAvailability);
+        document.getElementById('filter-term').addEventListener('change', function() {
+          checkTEAvailability();
+          manualOverrides = {};
+        });
+        document.getElementById('filter-assessment').addEventListener('change', function() {
+          checkTEAvailability();
+          manualOverrides = {};
+        });
       }, function() {
         document.getElementById('tos-doc-container').innerHTML =
           '<div class="card" style="text-align:center;padding:40px;color:#c62828;">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
       /* ============================================================
-         TE AVAILABILITY CHECK
+         TE AVAILABILITY CHECK  (schema-aligned with Store.getScores)
          ============================================================ */
       function checkTEAvailability() {
         var assessment = document.getElementById('filter-assessment').value;
@@ -275,14 +275,14 @@
 
         if (assessment !== 'te') { banner.innerHTML = ''; return; }
 
-        var students = Store.getAllUsers();
+        var students = Store.getAllUsers ? Store.getAllUsers() : [];
         var st1Count = 0, st2Count = 0;
         students.forEach(function(s) {
           var scores = Store.getScores(s.lrn);
-          if (scores[term] && scores[term].st) {
-            if (scores[term].st.st1) st1Count++;
-            if (scores[term].st.st2) st2Count++;
-          }
+          if (!scores || !scores[term]) return;
+          var st = scores[term].st || {};
+          if (st.st1) st1Count++;
+          if (st.st2) st2Count++;
         });
 
         var total = students.length;
@@ -302,40 +302,11 @@
          ST RANKING (for TE)
          ============================================================ */
       async function computeSTRanking(term) {
-        var students = Store.getAllUsers();
+        var students = Store.getAllUsers ? Store.getAllUsers() : [];
         var sectionFilter = document.getElementById('filter-section').value;
         if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
 
-        var st1Bank, st2Bank;
-        try {
-          st1Bank = await TOSEngine.loadQuestionBank(term, 'st1');
-          st2Bank = await TOSEngine.loadQuestionBank(term, 'st2');
-        } catch (e) {
-          console.warn('[TOS] Could not load ST banks:', e);
-          return [];
-        }
-
-        st1Bank.id = 'st1';
-        st2Bank.id = 'st2';
-
-        var mps1 = TOSEngine.computeCompetencyMPS(students, term, 'st', st1Bank);
-        var mps2 = TOSEngine.computeCompetencyMPS(students, term, 'st', st2Bank);
-
-        var merged = {};
-        Object.keys(mps1).forEach(function(code) {
-          merged[code] = { code: code, correct: mps1[code].correct, total: mps1[code].total };
-        });
-        Object.keys(mps2).forEach(function(code) {
-          if (!merged[code]) merged[code] = { code: code, correct: 0, total: 0 };
-          merged[code].correct += mps2[code].correct;
-          merged[code].total += mps2[code].total;
-        });
-
-        var ranking = Object.values(merged).map(function(r) {
-          return { code: r.code, mps: r.total ? r.correct / r.total : 0 };
-        });
-        ranking.sort(function(a, b) { return a.mps - b.mps; });
-        return ranking;
+        return TOSEngine.computeAllCompetencyMPS(students, term);
       }
 
       /* ============================================================
@@ -358,17 +329,37 @@
             term: term,
             assessment: assessment,
             totalItems: totalItems,
-            stRanking: stRanking
+            stRanking: stRanking,
+            manualOverrides: manualOverrides
           });
 
           currentTOS = result;
           renderTOSDoc(result);
+
+          // Compute MLL once per (term, section) and cache
+          try {
+            mllCache = await TOSEngine.computeAllCompetencyMPS(
+              (function(){
+                var s = Store.getAllUsers ? Store.getAllUsers() : [];
+                var sf = document.getElementById('filter-section').value;
+                if (sf) s = s.filter(function(u){ return u.section === sf; });
+                return s;
+              })(),
+              term
+            );
+          } catch (e) { mllCache = []; }
+
           renderAnswerKey(result);
           renderMostLeastLearned(result);
 
           document.getElementById('tos-tabs').style.display = 'flex';
           document.getElementById('tos-actions').style.display = 'flex';
-          APP.toast('TOS generated successfully!', 'success', 3000);
+
+          if (result.answerKeyMismatches && result.answerKeyMismatches.length) {
+            APP.toast('TOS generated with ' + result.answerKeyMismatches.length + ' competency mismatch warning(s)', 'warning', 5000);
+          } else {
+            APP.toast('TOS generated successfully!', 'success', 3000);
+          }
         } catch (err) {
           console.error('[TOS] Generate error:', err);
           document.getElementById('tos-doc-container').innerHTML =
@@ -380,7 +371,7 @@
       }
 
       /* ============================================================
-         RENDER — TOS DOC
+         RENDER — TOS DOC  (with editable Bloom's cells)
          ============================================================ */
       function renderTOSDoc(tos) {
         var termLabel = { term1: 'Physics & Chemistry', term2: 'Chemistry & Life Science', term3: 'Earth Science' }[tos.term];
@@ -407,6 +398,13 @@
               '<div><span class="lbl">Total Items:</span><span class="val">' + tos.totalItems + '</span></div>' +
               '<div><span class="lbl">Total Hours:</span><span class="val">' + tos.totals.hours + '</span></div>' +
             '</div>' +
+            '<div class="tos-edit-banner no-print">' +
+              '<div>💡 <strong>Tip:</strong> Click any Bloom\'s number to edit it. The sum per competency must match its item count.</div>' +
+              '<div class="btns">' +
+                '<button class="btn btn-outline" id="btn-reset-blooms">🔄 Reset All to Auto 30:70</button>' +
+                '<button class="btn btn-primary" id="btn-apply-blooms">✓ Apply Changes</button>' +
+              '</div>' +
+            '</div>' +
             '<div class="tos-table-wrap">' +
               '<table class="tos-table">' +
                 '<thead>' +
@@ -429,24 +427,32 @@
                 '</thead>' +
                 '<tbody>';
 
+        var BLOOMS = ['Remembering', 'Understanding', 'Applying', 'Analyzing', 'Evaluating', 'Creating'];
+
         tos.rows.forEach(function(r) {
           var b = r.bloomDistribution;
           var range = r.itemFrom === r.itemTo ? String(r.itemFrom) : (r.itemFrom + '–' + r.itemTo);
-          html += '<tr>' +
+          var sourceTag = r.bloomSource === 'manual' ? ' <span style="color:#ed6c02;font-size:0.65rem;">(manual)</span>' : '';
+
+          html += '<tr data-code="' + r.code + '" data-items="' + r.items + '">' +
             '<td class="competency-cell">' +
-              '<div style="font-size:0.68rem;color:#0d47a1;font-weight:700;margin-bottom:2px;">' + r.code + '</div>' +
+              '<div style="font-size:0.68rem;color:#0d47a1;font-weight:700;margin-bottom:2px;">' + r.code + sourceTag + '</div>' +
               r.description +
             '</td>' +
             '<td class="num">' + r.hours + '</td>' +
             '<td class="num">' + r.weightPercent + '%</td>' +
-            '<td class="num">' + r.items + '</td>' +
-            '<td class="num">' + (b.Remembering || 0) + '</td>' +
-            '<td class="num">' + (b.Understanding || 0) + '</td>' +
-            '<td class="num">' + (b.Applying || 0) + '</td>' +
-            '<td class="num">' + (b.Analyzing || 0) + '</td>' +
-            '<td class="num">' + (b.Evaluating || 0) + '</td>' +
-            '<td class="num">' + (b.Creating || 0) + '</td>' +
-            '<td class="item-num">' + range + '</td>' +
+            '<td class="num">' + r.items + '</td>';
+
+          BLOOMS.forEach(function(level) {
+            var val = b[level] || 0;
+            html += '<td class="num">' +
+              '<input type="number" min="0" step="1" value="' + val + '" ' +
+                'class="bloom-edit" data-code="' + r.code + '" data-level="' + level + '" ' +
+                '/>' +
+            '</td>';
+          });
+
+          html += '<td class="item-num">' + range + '</td>' +
           '</tr>';
         });
 
@@ -457,20 +463,20 @@
                     '<td style="text-align:right;">TOTAL</td>' +
                     '<td>' + tos.totals.hours + '</td>' +
                     '<td>' + tos.totals.weightPercent + '%</td>' +
-                    '<td>' + tos.totals.items + '</td>' +
-                    '<td>' + tos.totals.blooms.Remembering + '</td>' +
-                    '<td>' + tos.totals.blooms.Understanding + '</td>' +
-                    '<td>' + tos.totals.blooms.Applying + '</td>' +
-                    '<td>' + tos.totals.blooms.Analyzing + '</td>' +
-                    '<td>' + tos.totals.blooms.Evaluating + '</td>' +
-                    '<td>' + tos.totals.blooms.Creating + '</td>' +
+                    '<td id="tfoot-items">' + tos.totals.items + '</td>' +
+                    '<td id="tfoot-rem">' + tos.totals.blooms.Remembering + '</td>' +
+                    '<td id="tfoot-und">' + tos.totals.blooms.Understanding + '</td>' +
+                    '<td id="tfoot-app">' + tos.totals.blooms.Applying + '</td>' +
+                    '<td id="tfoot-ana">' + tos.totals.blooms.Analyzing + '</td>' +
+                    '<td id="tfoot-eva">' + tos.totals.blooms.Evaluating + '</td>' +
+                    '<td id="tfoot-cre">' + tos.totals.blooms.Creating + '</td>' +
                     '<td></td>' +
                   '</tr>' +
                   '<tr>' +
                     '<td colspan="4" style="text-align:right;font-size:0.75rem;">LOTS:</td>' +
-                    '<td colspan="2">' + tos.totals.lotsCount + ' (' + tos.totals.lotsPercent + '%)</td>' +
+                    '<td colspan="2" id="tfoot-lots">' + tos.totals.lotsCount + ' (' + tos.totals.lotsPercent + '%)</td>' +
                     '<td colspan="4" style="text-align:right;font-size:0.75rem;">HOTS:</td>' +
-                    '<td>' + tos.totals.hotsCount + ' (' + tos.totals.hotsPercent + '%)</td>' +
+                    '<td id="tfoot-hots">' + tos.totals.hotsCount + ' (' + tos.totals.hotsPercent + '%)</td>' +
                   '</tr>' +
                 '</tfoot>' +
               '</table>' +
@@ -479,13 +485,100 @@
           '</div>';
 
         document.getElementById('tos-doc-container').innerHTML = html;
+
+        // Wire editable cells
+        document.querySelectorAll('.bloom-edit').forEach(function(input) {
+          input.addEventListener('input', onBloomEdit);
+          input.addEventListener('change', onBloomEdit);
+        });
+
+        document.getElementById('btn-reset-blooms').addEventListener('click', function() {
+          manualOverrides = {};
+          APP.toast('Reset to auto 30:70 distribution', 'info', 2000);
+          generateTOS();
+        });
+
+        document.getElementById('btn-apply-blooms').addEventListener('click', function() {
+          applyBloomChanges();
+        });
+      }
+
+      /* ============================================================
+         BLOOM EDIT HANDLERS
+         ============================================================ */
+      function onBloomEdit(e) {
+        var input = e.target;
+        var code = input.dataset.code;
+        var level = input.dataset.level;
+        var val = parseInt(input.value, 10);
+        if (isNaN(val) || val < 0) val = 0;
+
+        if (!manualOverrides[code]) manualOverrides[code] = {};
+        manualOverrides[code][level] = val;
+
+        // Live validation
+        validateRow(code);
+        updateFooterLive();
+      }
+
+      function validateRow(code) {
+        var row = document.querySelector('tr[data-code="' + code + '"]');
+        if (!row) return;
+        var items = parseInt(row.dataset.items, 10);
+        var inputs = row.querySelectorAll('.bloom-edit');
+        var sum = 0;
+        inputs.forEach(function(inp) {
+          var v = parseInt(inp.value, 10);
+          if (isNaN(v) || v < 0) v = 0;
+          sum += v;
+        });
+        inputs.forEach(function(inp) {
+          inp.classList.toggle('invalid', sum !== items);
+          inp.classList.toggle('dirty', manualOverrides[code] && manualOverrides[code][inp.dataset.level] !== undefined);
+        });
+      }
+
+      function updateFooterLive() {
+        // Recompute totals from current inputs
+        var BLOOMS = ['Remembering', 'Understanding', 'Applying', 'Analyzing', 'Evaluating', 'Creating'];
+        var map = { Remembering: 'rem', Understanding: 'und', Applying: 'app', Analyzing: 'ana', Evaluating: 'eva', Creating: 'cre' };
+        var totals = { Remembering: 0, Understanding: 0, Applying: 0, Analyzing: 0, Evaluating: 0, Creating: 0 };
+        var items = 0;
+        document.querySelectorAll('tr[data-code]').forEach(function(row) {
+          row.querySelectorAll('.bloom-edit').forEach(function(inp) {
+            var v = parseInt(inp.value, 10);
+            if (isNaN(v) || v < 0) v = 0;
+            totals[inp.dataset.level] += v;
+          });
+          items += parseInt(row.dataset.items, 10);
+        });
+        BLOOMS.forEach(function(level) {
+          var el = document.getElementById('tfoot-' + map[level]);
+          if (el) el.textContent = totals[level];
+        });
+        var lots = totals.Remembering + totals.Understanding;
+        var hots = items - lots;
+        var lotsPct = items ? Math.round((lots / items) * 100) : 0;
+        var elL = document.getElementById('tfoot-lots');
+        var elH = document.getElementById('tfoot-hots');
+        if (elL) elL.textContent = lots + ' (' + lotsPct + '%)';
+        if (elH) elH.textContent = hots + ' (' + (100 - lotsPct) + '%)';
+      }
+
+      async function applyBloomChanges() {
+        // Re-generate with current manualOverrides; TOSEngine validates sums
+        try {
+          await generateTOS();
+        } catch (e) {
+          APP.toast('Apply failed: ' + e.message, 'error', 5000);
+        }
       }
 
       /* ============================================================
          SIGNATORIES BLOCK
          ============================================================ */
       function renderSignatoriesBlock() {
-        var s = signatories;
+        var s = signatories || TOSEngine.loadLocalSignatories();
         var blocks = [];
 
         if (s.prepared && (s.prepared.name || s.prepared.position)) {
@@ -528,26 +621,27 @@
          SIGNATORY MODAL
          ============================================================ */
       function openSignatoryModal() {
+        var s = signatories || TOSEngine.loadLocalSignatories();
         var overlay = document.createElement('div');
         overlay.className = 'sig-overlay';
         overlay.innerHTML =
           '<div class="sig-modal">' +
             '<h3>✏️ Edit Signatories</h3>' +
-            '<p>Leave any field blank to hide that signatory block from the document.</p>' +
+            '<p>Leave any field blank to hide that signatory block. Changes sync to backend if available, else saved locally.</p>' +
             '<div class="sig-modal-group">' +
               '<div class="row-label">Prepared by</div>' +
-              '<div class="field"><label>Name</label><input id="sig-prepared-name" type="text" value="' + escapeAttr(signatories.prepared.name) + '" /></div>' +
-              '<div class="field"><label>Position</label><input id="sig-prepared-position" type="text" value="' + escapeAttr(signatories.prepared.position) + '" /></div>' +
+              '<div class="field"><label>Name</label><input id="sig-prepared-name" type="text" value="' + escapeAttr(s.prepared.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-prepared-position" type="text" value="' + escapeAttr(s.prepared.position) + '" /></div>' +
             '</div>' +
             '<div class="sig-modal-group">' +
               '<div class="row-label">Checked by</div>' +
-              '<div class="field"><label>Name</label><input id="sig-checked-name" type="text" value="' + escapeAttr(signatories.checked.name) + '" /></div>' +
-              '<div class="field"><label>Position</label><input id="sig-checked-position" type="text" value="' + escapeAttr(signatories.checked.position) + '" /></div>' +
+              '<div class="field"><label>Name</label><input id="sig-checked-name" type="text" value="' + escapeAttr(s.checked.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-checked-position" type="text" value="' + escapeAttr(s.checked.position) + '" /></div>' +
             '</div>' +
             '<div class="sig-modal-group">' +
               '<div class="row-label">Noted by</div>' +
-              '<div class="field"><label>Name</label><input id="sig-noted-name" type="text" value="' + escapeAttr(signatories.noted.name) + '" /></div>' +
-              '<div class="field"><label>Position</label><input id="sig-noted-position" type="text" value="' + escapeAttr(signatories.noted.position) + '" /></div>' +
+              '<div class="field"><label>Name</label><input id="sig-noted-name" type="text" value="' + escapeAttr(s.noted.name) + '" /></div>' +
+              '<div class="field"><label>Position</label><input id="sig-noted-position" type="text" value="' + escapeAttr(s.noted.position) + '" /></div>' +
             '</div>' +
             '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px;">' +
               '<button class="btn btn-outline" id="sig-cancel">Cancel</button>' +
@@ -560,8 +654,8 @@
 
         overlay.querySelector('#sig-cancel').addEventListener('click', close);
         overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
-        overlay.querySelector('#sig-save').addEventListener('click', function() {
-          signatories = {
+        overlay.querySelector('#sig-save').addEventListener('click', async function() {
+          var newSigs = {
             prepared: {
               name: overlay.querySelector('#sig-prepared-name').value.trim(),
               position: overlay.querySelector('#sig-prepared-position').value.trim()
@@ -575,10 +669,19 @@
               position: overlay.querySelector('#sig-noted-position').value.trim()
             }
           };
-          saveSignatories(signatories);
-          close();
-          APP.toast('✅ Signatories saved', 'success', 2500);
-          if (currentTOS) renderTOSDoc(currentTOS);
+          try {
+            var res = await TOSEngine.saveSignatories(newSigs);
+            signatories = newSigs;
+            close();
+            if (res.warning) {
+              APP.toast('⚠️ ' + res.warning, 'warning', 4000);
+            } else {
+              APP.toast('✅ Signatories saved (synced to backend)', 'success', 2500);
+            }
+            if (currentTOS) renderTOSDoc(currentTOS);
+          } catch (e) {
+            APP.toast('Save failed: ' + e.message, 'error', 4000);
+          }
         });
       }
 
@@ -592,7 +695,15 @@
           return;
         }
 
+        var mismatchBanner = '';
+        if (tos.answerKeyMismatches && tos.answerKeyMismatches.length) {
+          mismatchBanner = '<div class="tos-alert warn" style="margin-bottom:16px;"><span>⚠️</span><div><strong>' +
+            tos.answerKeyMismatches.length +
+            ' competency mismatch(es) detected</strong><div style="margin-top:4px;">Questions tagged with a competency different from their TOS row. Check the DevTools console for details.</div></div></div>';
+        }
+
         var html =
+          mismatchBanner +
           '<div class="card">' +
             '<div class="card-header"><span class="card-title">✅ Answer Key · ' + tos.totalItems + ' items</span></div>' +
             '<div class="tos-answer-key">';
@@ -610,18 +721,31 @@
       }
 
       /* ============================================================
-         RENDER — MOST & LEAST LEARNED
+         RENDER — MOST & LEAST LEARNED  (real MPS)
          ============================================================ */
       function renderMostLeastLearned(tos) {
         var container = document.getElementById('mll-container');
+        if (!mllCache || !mllCache.length) {
+          container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#90a4ae;">No ST attempt data yet. Students must complete ST1 and ST2 for M/L Learned to populate.</div>';
+          return;
+        }
 
-        // Compute MPS per competency from the ST ranking (or use the row items)
-        // We compute from ranking when available, else fall back to zeros.
-        var rows = tos.rows.map(function(r) {
-          return { code: r.code, description: r.description, shortLabel: r.shortLabel, mps: 0 };
-        });
+        // Filter to competencies in this TOS
+        var codesInTOS = {};
+        tos.rows.forEach(function(r) { codesInTOS[r.code] = r; });
 
-        // Sort descending for most learned, ascending for least
+        var rows = mllCache
+          .filter(function(r) { return codesInTOS[r.code]; })
+          .map(function(r) {
+            return {
+              code: r.code,
+              description: codesInTOS[r.code].description,
+              mps: r.mps,
+              pct: Math.round(r.mps * 1000) / 10
+            };
+          });
+
+        // Most learned = highest MPS, Least learned = lowest MPS
         var sortedDesc = rows.slice().sort(function(a, b) { return b.mps - a.mps; });
         var sortedAsc  = rows.slice().sort(function(a, b) { return a.mps - b.mps; });
 
@@ -643,15 +767,20 @@
             '<div style="text-align:center;font-family:\'Times New Roman\',serif;font-size:0.9rem;margin-bottom:16px;">' +
               'Subject: <strong>GENERAL SCIENCE 11</strong> · ' +
               (tos.term === 'term1' ? 'First Term' : tos.term === 'term2' ? 'Second Term' : 'Third Term') +
+              ' · Based on ST1 + ST2 MPS' +
             '</div>' +
             '<table class="mll-table">' +
               '<thead><tr>' +
-                '<th colspan="2">Most Learned Competencies</th>' +
-                '<th colspan="2">Least Learned Competencies</th>' +
+                '<th colspan="3">Most Learned Competencies</th>' +
+                '<th colspan="3">Least Learned Competencies</th>' +
               '</tr>' +
               '<tr>' +
-                '<th style="width:50px;">Rank</th><th>Competency</th>' +
-                '<th style="width:50px;">Rank</th><th>Competency</th>' +
+                '<th style="width:50px;">Rank</th>' +
+                '<th>Competency</th>' +
+                '<th class="mps-cell">MPS</th>' +
+                '<th style="width:50px;">Rank</th>' +
+                '<th>Competency</th>' +
+                '<th class="mps-cell">MPS</th>' +
               '</tr></thead>' +
               '<tbody>';
 
@@ -660,9 +789,11 @@
           var least = bot5[i];
           html += '<tr>' +
             '<td class="rank-cell">' + (i + 1) + '</td>' +
-            '<td class="most-col">' + (most ? most.description : '&nbsp;') + '</td>' +
+            '<td class="most-col">' + (most ? escapeHtml(most.description) : '&nbsp;') + '</td>' +
+            '<td class="mps-cell">' + (most ? most.pct + '%' : '—') + '</td>' +
             '<td class="rank-cell">' + (i + 1) + '</td>' +
-            '<td class="least-col">' + (least ? least.description : '&nbsp;') + '</td>' +
+            '<td class="least-col">' + (least ? escapeHtml(least.description) : '&nbsp;') + '</td>' +
+            '<td class="mps-cell">' + (least ? least.pct + '%' : '—') + '</td>' +
           '</tr>';
         }
 
