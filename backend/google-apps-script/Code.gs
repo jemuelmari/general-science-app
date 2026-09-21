@@ -1,44 +1,19 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.2.0
+   Version: 1.2.1
    ------------------------------------------------------------
    Changelog:
-     v1.2.0: Added Attempts + History sheets, 5 new actions
-             (pushAttempt, pullAttempts, markUsedBulk, archiveUsed,
-             getSyncStatus), canonical JSON signing, rate limiting.
+     v1.2.1: Fixed canonicalize() — removed arguments.callee hack
+             that caused inconsistent canonical strings on V8.
+             Now matches frontend sync.js exactly.
+     v1.2.0: Added Attempts + History sheets, 5 new actions.
      v1.1.0: Added TermAccess sheet + 2 actions.
      v1.0.0: Initial — SyncCodes + Log.
 
-   PURPOSE:
-   - Cross-device Sync Codes for students (existing, unchanged)
-   - NEW: Auto-push quiz attempts from students → Google Sheet
-   - NEW: Teacher pulls all pending attempts
-   - NEW: Archive-then-delete cleanup policy
-   - HMAC signature verification (canonical JSON, constant-time compare)
-
-   SHEETS STRUCTURE (auto-created):
-   - Sheet 1: "SyncCodes" (v1.0.0, unchanged)
-     code | lrn | studentName | section | payload | signature | createdAt | used
-   - Sheet 2: "TermAccess" (v1.1.0, unchanged)
-     timestamp | section | term1 | term2 | term3 | updatedBy | notes
-   - Sheet 3: "Log" (v1.0.0, unchanged)
-     timestamp | action | lrn | code | status | notes
-   - Sheet 4: "Attempts" (v1.2.0, NEW)
-     pushId | lrn | studentName | section | term | assessment | score | total
-     | itemResults | set | clientTimestamp | serverTimestamp | signature
-     | used | usedAt | usedBy
-   - Sheet 5: "History" (v1.2.0, NEW) — archive of used/old rows
-     (same columns as Attempts, plus archivedAt, archivedBy)
-
-   REDEPLOY NOTES:
-   After updating this file, click:
+   REDEPLOY (CRITICAL):
      Deploy → Manage deployments → (pencil) → Version: New version → Deploy
    The Web App URL stays the same. No config.js change needed.
    ============================================================ */
-
-// ============================================================
-// CONFIGURATION
-// ============================================================
 
 const CONFIG = {
   SYNC_CODES_SHEET: 'SyncCodes',
@@ -51,11 +26,9 @@ const CONFIG = {
   ATTEMPT_EXPIRY_DAYS: 90,
   MAX_CODES_PER_STUDENT: 5,
 
-  // Rate limiting
   RATE_LIMIT_WINDOW_SEC: 60,
   RATE_LIMIT_MAX_PER_WINDOW: 30,
 
-  // Secret must match HMAC_SECRET in assets/js/security.js
   HMAC_SECRET: 'GSA-2026-DEPED-SECRET-KEY-v1',
 
   ALLOWED_ORIGINS: '*',
@@ -76,7 +49,6 @@ function doPost(e) {
 
     logAction(action, body.lrn, body.pushId || body.code, 'received');
 
-    // Rate limit check (except health)
     if (action !== 'health') {
       var rl = checkRateLimit(body.lrn || body.ip || 'anonymous', action);
       if (!rl.ok) {
@@ -87,7 +59,6 @@ function doPost(e) {
 
     var response;
     switch (action) {
-      // Existing v1.0.0 / v1.1.0
       case 'registerSyncCode':  response = registerSyncCode(body); break;
       case 'resolveSyncCode':   response = resolveSyncCode(body); break;
       case 'pullAllPending':    response = pullAllPending(body); break;
@@ -95,16 +66,13 @@ function doPost(e) {
       case 'getTermAccess':     response = getTermAccess(body); break;
       case 'setTermAccess':     response = setTermAccess(body); break;
       case 'health':
-        response = { ok: true, message: 'GSA backend is running', version: '1.2.0', time: new Date().toISOString() };
+        response = { ok: true, message: 'GSA backend is running', version: '1.2.1', time: new Date().toISOString() };
         break;
-
-      // New v1.2.0 — Auto-push
       case 'pushAttempt':       response = pushAttempt(body); break;
       case 'pullAttempts':      response = pullAttempts(body); break;
       case 'markUsedBulk':      response = markUsedBulk(body); break;
       case 'archiveUsed':       response = archiveUsed(body); break;
       case 'getSyncStatus':     response = getSyncStatus(body); break;
-
       default:
         response = { ok: false, error: 'Unknown action: ' + action };
     }
@@ -128,7 +96,7 @@ function doGet(e) {
   var action = e.parameter.action;
 
   if (action === 'ping') {
-    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.0', time: new Date().toISOString() });
+    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.1', time: new Date().toISOString() });
   }
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -145,19 +113,11 @@ function doGet(e) {
   return respond({ ok: false, error: 'Unknown action' });
 }
 
-// ============================================================
-// RESPONSE HELPER
-// ============================================================
-
 function respond(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
-
-// ============================================================
-// PARSE BODY
-// ============================================================
 
 function parseBody(e) {
   if (!e || !e.postData || !e.postData.contents) return {};
@@ -166,22 +126,100 @@ function parseBody(e) {
 }
 
 // ============================================================
-// ACTION: pushAttempt  (NEW v1.2.0)
+// CANONICAL JSON + HMAC  (v1.2.1 — matches frontend exactly)
 // ============================================================
-/**
- * Receives a single quiz attempt from a student.
- * Strict: HMAC verified. Rejected if invalid.
- *
- * body = {
- *   action: 'pushAttempt',
- *   pushId: unique string (student-generated, e.g. lrn + '-' + term + '-' + assessment + '-' + ts),
- *   lrn, term, assessment,
- *   score, total, itemResults[], set,
- *   clientTimestamp (ISO),
- *   payload: { student: {...}, attempt: {...} },
- *   signature: HMAC of canonical(payload)
- * }
- */
+
+function canonicalize(obj) {
+  if (obj === null || obj === undefined) return 'null';
+  if (typeof obj === 'number') {
+    if (isNaN(obj) || !isFinite(obj)) return 'null';
+    return String(obj);
+  }
+  if (typeof obj === 'boolean') return obj ? 'true' : 'false';
+  if (typeof obj === 'string') return JSON.stringify(obj);
+  if (Array.isArray(obj)) {
+    return '[' + obj.map(canonicalize).join(',') + ']';
+  }
+  if (typeof obj === 'object') {
+    var keys = Object.keys(obj).filter(function (k) {
+      if (k === 'signature') return false;
+      return obj[k] !== undefined && typeof obj[k] !== 'function';
+    });
+    keys.sort();
+    var parts = keys.map(function (k) {
+      return JSON.stringify(k) + ':' + canonicalize(obj[k]);
+    });
+    return '{' + parts.join(',') + '}';
+  }
+  return 'null';
+}
+
+function computeHMAC(message, secret) {
+  var rawHmac = Utilities.computeHmacSha256Signature(message, secret);
+  return rawHmac
+    .map(function (byte) { return ((byte < 0 ? byte + 256 : byte).toString(16).padStart(2, '0')); })
+    .join('');
+}
+
+function verifyCanonicalSignature(payload, signature) {
+  try {
+    if (!payload || !signature) return false;
+    var canonical = canonicalize(payload);
+    var expected = computeHMAC(canonical, CONFIG.HMAC_SECRET);
+    return constantTimeEquals(expected, signature);
+  } catch (e) {
+    return false;
+  }
+}
+
+function constantTimeEquals(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  if (a.length !== b.length) return false;
+  var diff = 0;
+  for (var i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+// ============================================================
+// RATE LIMITING
+// ============================================================
+
+var _rateCache = {};
+
+function checkRateLimit(key, action) {
+  var now = Date.now();
+  var windowMs = CONFIG.RATE_LIMIT_WINDOW_SEC * 1000;
+  var cacheKey = key + '::' + action;
+
+  if (!_rateCache[cacheKey]) {
+    _rateCache[cacheKey] = { count: 1, windowStart: now };
+    return { ok: true };
+  }
+
+  var entry = _rateCache[cacheKey];
+  if (now - entry.windowStart > windowMs) {
+    entry.count = 1;
+    entry.windowStart = now;
+    return { ok: true };
+  }
+
+  entry.count++;
+  if (entry.count > CONFIG.RATE_LIMIT_MAX_PER_WINDOW) {
+    return {
+      ok: false,
+      reason: 'Exceeded ' + CONFIG.RATE_LIMIT_MAX_PER_WINDOW + ' per ' + CONFIG.RATE_LIMIT_WINDOW_SEC + 's',
+      retryAfter: Math.ceil((entry.windowStart + windowMs - now) / 1000)
+    };
+  }
+  return { ok: true };
+}
+
+// ============================================================
+// ACTION: pushAttempt
+// ============================================================
+
 function pushAttempt(body) {
   var required = ['pushId', 'lrn', 'term', 'assessment', 'payload', 'signature'];
   for (var i = 0; i < required.length; i++) {
@@ -197,7 +235,6 @@ function pushAttempt(body) {
     return { ok: false, error: 'Invalid assessment: ' + body.assessment };
   }
 
-  // Strict signature verification (canonical JSON)
   if (!verifyCanonicalSignature(body.payload, body.signature)) {
     return { ok: false, error: 'Signature verification failed' };
   }
@@ -205,15 +242,9 @@ function pushAttempt(body) {
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
   var data = sheet.getDataRange().getValues();
 
-  // Idempotency: if pushId already exists, treat as success (already synced)
   for (var r = 1; r < data.length; r++) {
     if (data[r][0] === body.pushId) {
-      return {
-        ok: true,
-        pushId: body.pushId,
-        duplicate: true,
-        message: 'Attempt already recorded'
-      };
+      return { ok: true, pushId: body.pushId, duplicate: true, message: 'Attempt already recorded' };
     }
   }
 
@@ -225,42 +256,23 @@ function pushAttempt(body) {
   var clientTimestamp = body.clientTimestamp || attempt.timestamp || '';
 
   sheet.appendRow([
-    body.pushId,
-    body.lrn,
-    studentName,
-    section,
-    body.term,
-    body.assessment,
-    Number(body.score || 0),
-    Number(body.total || 0),
+    body.pushId, body.lrn, studentName, section,
+    body.term, body.assessment,
+    Number(body.score || 0), Number(body.total || 0),
     JSON.stringify(body.itemResults || []),
     body.set || '',
-    clientTimestamp,
-    serverTimestamp,
+    clientTimestamp, serverTimestamp,
     body.signature,
-    'false',   // used
-    '',        // usedAt
-    ''         // usedBy
+    'false', '', ''
   ]);
 
-  trimOldAttempts(body.lrn);
-
-  return {
-    ok: true,
-    pushId: body.pushId,
-    serverTimestamp: serverTimestamp,
-    message: 'Attempt recorded'
-  };
+  return { ok: true, pushId: body.pushId, serverTimestamp: serverTimestamp, message: 'Attempt recorded' };
 }
 
 // ============================================================
-// ACTION: pullAttempts  (NEW v1.2.0)
+// ACTION: pullAttempts
 // ============================================================
-/**
- * Teacher pulls pending attempts.
- * Filters: section, lrn, term, assessment, used (default false)
- * Returns: { ok, count, records: [...] }
- */
+
 function pullAttempts(body) {
   body = body || {};
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
@@ -286,22 +298,15 @@ function pullAttempts(body) {
     var serverMs = serverTs ? new Date(serverTs).getTime() : 0;
     if (serverMs && serverMs < cutoffMs) continue;
 
-    var payload, itemResults;
-    try {
-      itemResults = JSON.parse(row[8] || '[]');
-    } catch (e) { itemResults = []; }
+    var itemResults;
+    try { itemResults = JSON.parse(row[8] || '[]'); }
+    catch (e) { itemResults = []; }
 
-    payload = {
-      student: {
-        lrn: rowLrn,
-        name: row[2],
-        section: rowSection
-      },
+    var payload = {
+      student: { lrn: rowLrn, name: row[2], section: rowSection },
       attempt: {
-        term: rowTerm,
-        assessment: rowAssessment,
-        score: Number(row[6] || 0),
-        total: Number(row[7] || 0),
+        term: rowTerm, assessment: rowAssessment,
+        score: Number(row[6] || 0), total: Number(row[7] || 0),
         itemResults: itemResults,
         set: row[9] || '',
         timestamp: row[10] || ''
@@ -309,20 +314,12 @@ function pullAttempts(body) {
     };
 
     records.push({
-      pushId: row[0],
-      lrn: rowLrn,
-      studentName: row[2],
-      section: rowSection,
-      term: rowTerm,
-      assessment: rowAssessment,
-      score: Number(row[6] || 0),
-      total: Number(row[7] || 0),
-      itemResults: itemResults,
-      set: row[9] || '',
-      clientTimestamp: row[10] || '',
-      serverTimestamp: serverTs,
-      signature: row[12],
-      payload: payload,
+      pushId: row[0], lrn: rowLrn, studentName: row[2], section: rowSection,
+      term: rowTerm, assessment: rowAssessment,
+      score: Number(row[6] || 0), total: Number(row[7] || 0),
+      itemResults: itemResults, set: row[9] || '',
+      clientTimestamp: row[10] || '', serverTimestamp: serverTs,
+      signature: row[12], payload: payload,
       verified: verifyCanonicalSignature(payload, row[12])
     });
   }
@@ -331,12 +328,9 @@ function pullAttempts(body) {
 }
 
 // ============================================================
-// ACTION: markUsedBulk  (NEW v1.2.0)
+// ACTION: markUsedBulk
 // ============================================================
-/**
- * Mark multiple pushIds as used (after teacher has applied them locally).
- * body = { action: 'markUsedBulk', pushIds: [...], usedBy: 'teacher' }
- */
+
 function markUsedBulk(body) {
   if (!body || !body.pushIds || !body.pushIds.length) {
     return { ok: false, error: 'Missing pushIds array' };
@@ -352,8 +346,7 @@ function markUsedBulk(body) {
   var marked = 0;
 
   for (var i = 1; i < data.length; i++) {
-    var pid = data[i][0];
-    if (ids[pid]) {
+    if (ids[data[i][0]]) {
       sheet.getRange(i + 1, 14).setValue('true');
       sheet.getRange(i + 1, 15).setValue(now);
       sheet.getRange(i + 1, 16).setValue(usedBy);
@@ -365,21 +358,14 @@ function markUsedBulk(body) {
 }
 
 // ============================================================
-// ACTION: archiveUsed  (NEW v1.2.0)
+// ACTION: archiveUsed
 // ============================================================
-/**
- * Archive used/old attempts to History sheet, then delete from Attempts.
- * body = { action: 'archiveUsed', olderThanDays: 60, archivedBy: 'teacher' }
- * - Rows where used=true AND serverTimestamp < (now - olderThanDays) are archived.
- * - If olderThanDays not provided, only used=true rows are archived.
- */
+
 function archiveUsed(body) {
   body = body || {};
   var olderThanDays = body.olderThanDays;
   var archivedBy = body.archivedBy || 'system';
-  var cutoffMs = olderThanDays
-    ? Date.now() - (olderThanDays * 24 * 60 * 60 * 1000)
-    : Infinity;
+  var cutoffMs = olderThanDays ? Date.now() - (olderThanDays * 24 * 60 * 60 * 1000) : Infinity;
 
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
   var histSheet = getOrCreateSheet(CONFIG.HISTORY_SHEET);
@@ -394,43 +380,28 @@ function archiveUsed(body) {
     if (!used) continue;
     var serverMs = row[11] ? new Date(row[11]).getTime() : 0;
     if (serverMs && serverMs > cutoffMs) continue;
-
     toArchive.push(row);
     rowIndices.push(i + 1);
   }
 
-  if (!toArchive.length) {
-    return { ok: true, archived: 0, message: 'Nothing to archive' };
-  }
+  if (!toArchive.length) return { ok: true, archived: 0, message: 'Nothing to archive' };
 
   var archivedAt = new Date().toISOString();
   toArchive.forEach(function (row) {
     histSheet.appendRow(row.concat([archivedAt, archivedBy]));
   });
 
-  // Delete in reverse to preserve indices
-  rowIndices.reverse().forEach(function (idx) {
-    sheet.deleteRow(idx);
-  });
+  rowIndices.reverse().forEach(function (idx) { sheet.deleteRow(idx); });
 
-  return {
-    ok: true,
-    archived: toArchive.length,
-    archivedAt: archivedAt,
-    archivedBy: archivedBy
-  };
+  return { ok: true, archived: toArchive.length, archivedAt: archivedAt, archivedBy: archivedBy };
 }
 
 // ============================================================
-// ACTION: getSyncStatus  (NEW v1.2.0)
+// ACTION: getSyncStatus
 // ============================================================
-/**
- * Lightweight status for dashboards.
- * Returns: { ok, totalPending, totalUsed, totalArchived, perSection: {...} }
- */
+
 function getSyncStatus(body) {
   body = body || {};
-
   var attempts = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
   var aData = attempts.getDataRange().getValues();
 
@@ -441,7 +412,6 @@ function getSyncStatus(body) {
     var row = aData[i];
     var section = row[3] || 'UNKNOWN';
     var used = row[13] === 'true' || row[13] === true;
-
     if (body.section && section !== body.section) continue;
 
     if (!perSection[section]) perSection[section] = { pending: 0, used: 0 };
@@ -454,16 +424,13 @@ function getSyncStatus(body) {
 
   return {
     ok: true,
-    totalPending: totalPending,
-    totalUsed: totalUsed,
-    totalArchived: totalArchived,
-    perSection: perSection,
-    serverTime: new Date().toISOString()
+    totalPending: totalPending, totalUsed: totalUsed, totalArchived: totalArchived,
+    perSection: perSection, serverTime: new Date().toISOString()
   };
 }
 
 // ============================================================
-// EXISTING ACTIONS (v1.0.0 / v1.1.0) — UNCHANGED
+// EXISTING ACTIONS
 // ============================================================
 
 function registerSyncCode(body) {
@@ -531,10 +498,8 @@ function pullAllPending(body) {
     if (ageDays > CONFIG.CODE_EXPIRY_DAYS) continue;
 
     var payload, signature;
-    try {
-      payload = JSON.parse(row[4]);
-      signature = row[5];
-    } catch (e) { continue; }
+    try { payload = JSON.parse(row[4]); signature = row[5]; }
+    catch (e) { continue; }
 
     records.push({
       code: row[0], lrn: row[1], studentName: row[2], section: row[3],
@@ -600,8 +565,7 @@ function setTermAccess(body) {
 
   var sheet = getOrCreateSheet(CONFIG.TERM_ACCESS_SHEET);
   sheet.appendRow([
-    new Date().toISOString(),
-    section,
+    new Date().toISOString(), section,
     access.term1 === 'open' ? 'open' : 'locked',
     access.term2 === 'open' ? 'open' : 'locked',
     access.term3 === 'open' ? 'open' : 'locked',
@@ -617,108 +581,6 @@ function setTermAccess(body) {
       term3: access.term3 === 'open' ? 'open' : 'locked'
     }
   };
-}
-
-// ============================================================
-// CANONICAL JSON + HMAC (X36 fix — constant-time compare)
-// ============================================================
-
-/**
- * Produce a canonical JSON string:
- *   - Keys sorted recursively
- *   - No whitespace
- *   - Undefined/function values omitted
- *   - Top-level "signature" field removed if present
- */
-function canonicalize(obj) {
-  if (obj === null || obj === undefined) return 'null';
-  if (typeof obj === 'number') {
-    if (isNaN(obj) || !isFinite(obj)) return 'null';
-    return String(obj);
-  }
-  if (typeof obj === 'boolean') return obj ? 'true' : 'false';
-  if (typeof obj === 'string') return JSON.stringify(obj);
-  if (Array.isArray(obj)) {
-    return '[' + obj.map(canonicalize).join(',') + ']';
-  }
-  if (typeof obj === 'object') {
-    var keys = Object.keys(obj).filter(function (k) {
-      if (k === 'signature' && obj === arguments.callee) return false;
-      return obj[k] !== undefined && typeof obj[k] !== 'function';
-    });
-    keys.sort();
-    var parts = keys.map(function (k) {
-      return JSON.stringify(k) + ':' + canonicalize(obj[k]);
-    });
-    return '{' + parts.join(',') + '}';
-  }
-  return 'null';
-}
-
-function computeHMAC(message, secret) {
-  var rawHmac = Utilities.computeHmacSha256Signature(message, secret);
-  return rawHmac
-    .map(function (byte) { return ((byte < 0 ? byte + 256 : byte).toString(16).padStart(2, '0')); })
-    .join('');
-}
-
-/**
- * Verify signature using canonical JSON.
- * Constant-time comparison to avoid timing attacks.
- */
-function verifyCanonicalSignature(payload, signature) {
-  try {
-    if (!payload || !signature) return false;
-    var canonical = canonicalize(payload);
-    var expected = computeHMAC(canonical, CONFIG.HMAC_SECRET);
-    return constantTimeEquals(expected, signature);
-  } catch (e) {
-    return false;
-  }
-}
-
-function constantTimeEquals(a, b) {
-  if (typeof a !== 'string' || typeof b !== 'string') return false;
-  if (a.length !== b.length) return false;
-  var diff = 0;
-  for (var i = 0; i < a.length; i++) {
-    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return diff === 0;
-}
-
-// ============================================================
-// RATE LIMITING (in-memory, per Apps Script execution)
-// ============================================================
-
-var _rateCache = {};
-
-function checkRateLimit(key, action) {
-  var now = Date.now();
-  var windowMs = CONFIG.RATE_LIMIT_WINDOW_SEC * 1000;
-  var cacheKey = key + '::' + action;
-
-  if (!_rateCache[cacheKey]) {
-    _rateCache[cacheKey] = { count: 1, windowStart: now };
-    return { ok: true };
-  }
-
-  var entry = _rateCache[cacheKey];
-  if (now - entry.windowStart > windowMs) {
-    entry.count = 1;
-    entry.windowStart = now;
-    return { ok: true };
-  }
-
-  entry.count++;
-  if (entry.count > CONFIG.RATE_LIMIT_MAX_PER_WINDOW) {
-    return {
-      ok: false,
-      reason: 'Exceeded ' + CONFIG.RATE_LIMIT_MAX_PER_WINDOW + ' per ' + CONFIG.RATE_LIMIT_WINDOW_SEC + 's',
-      retryAfter: Math.ceil((entry.windowStart + windowMs - now) / 1000)
-    };
-  }
-  return { ok: true };
 }
 
 // ============================================================
@@ -790,12 +652,6 @@ function trimOldCodes(lrn) {
   }
 }
 
-function trimOldAttempts(lrn) {
-  // Attempts are NOT trimmed per-student like sync codes.
-  // Cleanup happens via archiveUsed() only.
-  // This function kept as a hook for future policy.
-}
-
 // ============================================================
 // LOGGING
 // ============================================================
@@ -803,7 +659,6 @@ function trimOldAttempts(lrn) {
 function logAction(action, lrn, code, status, notes) {
   try {
     var sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
-    // Keep Log from growing unbounded — trim in the background
     if (sheet.getLastRow() > 5000) {
       var toDelete = sheet.getLastRow() - 5000;
       sheet.deleteRows(2, toDelete);
@@ -819,7 +674,7 @@ function logAction(action, lrn, code, status, notes) {
 }
 
 // ============================================================
-// MANUAL MAINTENANCE (run from Apps Script editor)
+// MANUAL MAINTENANCE
 // ============================================================
 
 function cleanupOldCodes() {
@@ -853,7 +708,8 @@ function testSignatureCheck(code) {
         code: code,
         matches: expected === signature,
         storedSignature: signature,
-        computedSignature: expected
+        computedSignature: expected,
+        canonical: canonicalize(payload)
       };
     }
   }
@@ -873,16 +729,10 @@ function resetTermAccess(section) {
   return { ok: true, message: 'Reset ' + (section || 'ACADEMIC A') + ' to all locked' };
 }
 
-/**
- * Manually archive used attempts older than 60 days.
- */
 function manualArchiveOld() {
   return archiveUsed({ olderThanDays: 60, archivedBy: 'manual' });
 }
 
-/**
- * Test the canonical-signing pipeline end-to-end.
- */
 function testCanonicalSigning() {
   var sample = {
     version: '2.0.0',
@@ -891,5 +741,9 @@ function testCanonicalSigning() {
   };
   var canonical = canonicalize(sample);
   var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
-  return { canonical: canonical, signature: sig, verified: verifyCanonicalSignature(sample, sig) };
+  return {
+    canonical: canonical,
+    signature: sig,
+    verified: verifyCanonicalSignature(sample, sig)
+  };
 }
