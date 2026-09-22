@@ -4,225 +4,64 @@
   "items": 20,
   "competencies": ["GENSCI-11-T3-W1-C1", "GENSCI-11-T3-W2-C1"],
   "questions": [
-    {
-      "id": "q1",
-      "text": "What fraction of Earth's surface is covered by water?",
-      "options": ["About 71%", "About 50%", "About 30%", "About 90%"],
-      "correct": "About 71%",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's characteristics supporting life" }
-    },
-    {
-      "id": "q2",
-      "text": "What is Earth's average surface temperature?",
-      "options": ["15°C", "0°C", "30°C", "50°C"],
-      "correct": "15°C",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth temperature" }
-    },
-    {
-      "id": "q3",
-      "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?",
-      "options": ["About −18°C", "About 15°C", "About 0°C", "About 100°C"],
-      "correct": "About −18°C",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect regulation" }
-    },
-    {
-      "id": "q4",
-      "text": "Which planet has a runaway greenhouse effect and is the hottest in the Solar System?",
-      "options": ["Venus", "Mercury", "Mars", "Jupiter"],
-      "correct": "Venus",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth uniqueness comparison" }
-    },
-    {
-      "id": "q5",
-      "text": "Why is liquid water essential for life on Earth?",
-      "options": [
-        "It acts as a universal solvent for chemical reactions and transports nutrients",
-        "It looks pretty",
-        "It is rare in the universe",
-        "It has no function"
-      ],
-      "correct": "It acts as a universal solvent for chemical reactions and transports nutrients",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's life-support conditions" }
-    },
-    {
-      "id": "q6",
-      "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?",
-      "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"],
-      "correct": "Stratosphere",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's protective atmosphere" }
-    },
-    {
-      "id": "q7",
-      "text": "What generates Earth's protective magnetic field?",
-      "options": ["Its molten iron core", "Its atmosphere", "The Moon", "Solar wind"],
-      "correct": "Its molten iron core",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's magnetic field" }
-    },
-    {
-      "id": "q8",
-      "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?",
-      "options": [
-        "It's not too hot and not too cold — just right for liquid water",
-        "It's the closest planet to the Sun",
-        "It has three moons",
-        "It matches the color of gold"
-      ],
-      "correct": "It's not too hot and not too cold — just right for liquid water",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "correct distance = life condition" }
-    },
-    {
-      "id": "q9",
-      "text": "Which planet is closest to Earth in size and is often called its 'sister planet'?",
-      "options": ["Venus", "Mars", "Mercury", "Neptune"],
-      "correct": "Venus",
-      "competency": "GENSCI-11-T3-W1-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "comparison Earth vs other planets" }
-    },
+    { "id": "q1", "text": "What fraction of Earth's surface is covered by water?", "options": ["About 71%", "About 50%", "About 30%", "About 90%"], "correct": "About 71%", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth characteristics" } },
+    { "id": "q2", "text": "What is Earth's average surface temperature?", "options": ["15°C", "0°C", "30°C", "50°C"], "correct": "15°C", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth temperature" } },
+    { "id": "q3", "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?", "options": ["About −18°C", "About 15°C", "About 0°C", "About 100°C"], "correct": "About −18°C", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect regulation" } },
+    { "id": "q4", "text": "Which planet has a runaway greenhouse effect and is the hottest in the Solar System?", "options": ["Venus", "Mercury", "Mars", "Jupiter"], "correct": "Venus", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth uniqueness comparison" } },
+    { "id": "q5", "text": "Why is liquid water essential for life on Earth?", "options": ["It acts as a universal solvent for chemical reactions and transports nutrients", "It looks pretty", "It is rare in the universe", "It has no function"], "correct": "It acts as a universal solvent for chemical reactions and transports nutrients", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's life-support conditions" } },
+    { "id": "q6", "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?", "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"], "correct": "Stratosphere", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's protective atmosphere" } },
+    { "id": "q7", "text": "What generates Earth's protective magnetic field?", "options": ["Its molten iron core", "Its atmosphere", "The Moon", "Solar wind"], "correct": "Its molten iron core", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Earth's magnetic field" } },
+    { "id": "q8", "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?", "options": ["It's not too hot and not too cold — just right for liquid water", "It's the closest planet to the Sun", "It has three moons", "It matches the color of gold"], "correct": "It's not too hot and not too cold — just right for liquid water", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "correct distance = life condition" } },
+    { "id": "q9", "text": "Which planet is closest to Earth in size and is often called its 'sister planet'?", "options": ["Venus", "Mars", "Mercury", "Neptune"], "correct": "Venus", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "comparison Earth vs other planets" } },
     {
       "id": "q10",
       "text": "Why does ice float on water, and why is this important for life?",
       "options": [
         "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
-        "Ice is heavier than water",
-        "Ice is a metal",
-        "Floating ice has no effect on life"
+        "Ice is heavier than liquid water because it is frozen solid",
+        "Ice is a metallic substance that conducts heat away rapidly",
+        "Floating ice has no measurable effect on aquatic life below"
       ],
       "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
       "competency": "GENSCI-11-T3-W1-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water property supporting life" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water property supporting life; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q11",
-      "text": "What is the greenhouse effect?",
-      "options": [
-        "Gases in the atmosphere trap infrared radiation, warming Earth's surface",
-        "A greenhouse covering plants",
-        "The Earth reflecting all sunlight",
-        "Cooling of the atmosphere by clouds"
-      ],
-      "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect definition" }
-    },
-    {
-      "id": "q12",
-      "text": "What kind of radiation do greenhouse gases absorb?",
-      "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"],
-      "correct": "Infrared (heat)",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gas absorption" }
-    },
-    {
-      "id": "q13",
-      "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?",
-      "options": ["Water vapor (H₂O)", "Carbon dioxide (CO₂)", "Methane (CH₄)", "Ozone (O₃)"],
-      "correct": "Water vapor (H₂O)",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gases" }
-    },
-    {
-      "id": "q14",
-      "text": "Which human activity is the MAIN source of carbon dioxide emissions?",
-      "options": [
-        "Burning fossil fuels for electricity and transportation",
-        "Planting trees",
-        "Volcanic eruptions",
-        "Ocean evaporation"
-      ],
-      "correct": "Burning fossil fuels for electricity and transportation",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect human cause" }
-    },
-    {
-      "id": "q15",
-      "text": "Approximately how much more potent is methane (CH₄) at trapping heat than carbon dioxide?",
-      "options": ["About 28× CO₂", "About 2× CO₂", "About 1000× CO₂", "Same as CO₂"],
-      "correct": "About 28× CO₂",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gas potency" }
-    },
+    { "id": "q11", "text": "What is the greenhouse effect?", "options": ["Gases in the atmosphere trap infrared radiation, warming Earth's surface", "A greenhouse covering plants", "The Earth reflecting all sunlight", "Cooling of the atmosphere by clouds"], "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect definition" } },
+    { "id": "q12", "text": "What kind of radiation do greenhouse gases absorb?", "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"], "correct": "Infrared (heat)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gas absorption" } },
+    { "id": "q13", "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?", "options": ["Water vapor (H₂O)", "Carbon dioxide (CO₂)", "Methane (CH₄)", "Ozone (O₃)"], "correct": "Water vapor (H₂O)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gases" } },
+    { "id": "q14", "text": "Which human activity is the MAIN source of carbon dioxide emissions?", "options": ["Burning fossil fuels for electricity and transportation", "Planting trees", "Volcanic eruptions", "Ocean evaporation"], "correct": "Burning fossil fuels for electricity and transportation", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect human cause" } },
+    { "id": "q15", "text": "Approximately how much more potent is methane (CH₄) at trapping heat than carbon dioxide?", "options": ["About 28× CO₂", "About 2× CO₂", "About 1000× CO₂", "Same as CO₂"], "correct": "About 28× CO₂", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gas potency" } },
     {
       "id": "q16",
       "text": "What is the DIFFERENCE between the natural and enhanced greenhouse effect?",
       "options": [
         "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs",
-        "They are identical",
-        "Natural is bad, enhanced is good",
-        "Natural only happens in the tropics"
+        "They are identical processes with no measurable difference",
+        "Natural is bad for the planet while enhanced is beneficial",
+        "Natural only happens in the tropics, enhanced only near poles"
       ],
       "correct": "Natural is caused by naturally occurring GHGs; enhanced is caused by human-added GHGs",
       "competency": "GENSCI-11-T3-W2-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compare natural vs enhanced greenhouse effect" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compare natural vs enhanced greenhouse effect; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q17",
-      "text": "Roughly what percentage of incoming sunlight is reflected back to space by clouds, ice, and bright surfaces (albedo)?",
-      "options": ["About 30%", "About 5%", "About 90%", "About 50%"],
-      "correct": "About 30%",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect energy balance" }
-    },
-    {
-      "id": "q18",
-      "text": "Why is the Philippines considered highly vulnerable to climate change even though it emits little CO₂?",
-      "options": [
-        "It's an archipelago in the typhoon belt with thousands of coastal communities",
-        "It has the largest population",
-        "It burns the most fossil fuels",
-        "It has no greenhouse gases"
-      ],
-      "correct": "It's an archipelago in the typhoon belt with thousands of coastal communities",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect consequence for PH" }
-    },
-    {
-      "id": "q19",
-      "text": "Which gas has the HIGHEST global warming potential per molecule among the following?",
-      "options": ["Fluorinated gases (CFCs, HFCs)", "Carbon dioxide", "Water vapor", "Oxygen"],
-      "correct": "Fluorinated gases (CFCs, HFCs)",
-      "competency": "GENSCI-11-T3-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gases" }
-    },
+    { "id": "q17", "text": "Roughly what percentage of incoming sunlight is reflected back to space by clouds, ice, and bright surfaces (albedo)?", "options": ["About 30%", "About 5%", "About 90%", "About 50%"], "correct": "About 30%", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect energy balance" } },
+    { "id": "q18", "text": "Why is the Philippines considered highly vulnerable to climate change even though it emits little CO₂?", "options": ["It's an archipelago in the typhoon belt with thousands of coastal communities", "It has the largest population", "It burns the most fossil fuels", "It has no greenhouse gases"], "correct": "It's an archipelago in the typhoon belt with thousands of coastal communities", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect consequence for PH" } },
+    { "id": "q19", "text": "Which gas has the HIGHEST global warming potential per molecule among the following?", "options": ["Fluorinated gases (CFCs, HFCs)", "Carbon dioxide", "Water vapor", "Oxygen"], "correct": "Fluorinated gases (CFCs, HFCs)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse gases" } },
     {
       "id": "q20",
       "text": "Why does sunlight pass through the atmosphere more easily than heat can escape?",
       "options": [
         "Sunlight is visible light (short wavelength, not absorbed well by GHGs); heat is infrared (long wavelength, absorbed by GHGs)",
-        "Sunlight is stronger than heat",
-        "The atmosphere is solid",
-        "Gravity holds heat in place"
+        "Sunlight is fundamentally stronger than heat radiation",
+        "The atmosphere behaves like a solid wall for heat",
+        "Gravity pulls and holds heat molecules close to the surface"
       ],
       "correct": "Sunlight is visible light (short wavelength, not absorbed well by GHGs); heat is infrared (long wavelength, absorbed by GHGs)",
       "competency": "GENSCI-11-T3-W2-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect mechanism" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect mechanism; distractors balanced (Phase 6)" }
     }
   ]
 }
