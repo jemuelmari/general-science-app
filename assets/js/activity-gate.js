@@ -1,10 +1,18 @@
 /* ============================================================
    activity-gate.js — Simple per-day activity gate
-   Version: 2.0.1
+   Version: 2.1.0
    App: General Science
    ------------------------------------------------------------
-   Changelog v2.0.1: Re-detect visible container at every render
-   (fixes detection running before day.html hides unused cards)
+   Changelog v2.1.0 (Phase 2.7 / X46 fix):
+     - Session restore logic: "running" and "failed" states now
+       reset to "ready" on page reload. Only "passed" persists.
+       This fixes the bug where a stuck "running" state prevented
+       the activity from ever rendering.
+     - render(): when status === 'running' but container is empty,
+       re-dispatches activity:start to trigger lesson-engine render.
+       Defensive fix for race conditions.
+
+   Changelog v2.0.1: Re-detect visible container at every render.
    ============================================================ */
 
 const ActivityGate = (() => {
@@ -28,12 +36,18 @@ const ActivityGate = (() => {
       activityLabel: null
     };
 
-    // Restore saved status
+    // ⚠️ FIX (X46): Restore only terminal states.
+    // "running" and "failed" reset to "ready" on reload so the
+    // activity always renders fresh. Only "passed" persists.
     const saved = sessionStorage.getItem(session.key);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        session.status = parsed.status || 'ready';
+        if (parsed.status === 'passed') {
+          session.status = 'passed';
+        } else {
+          session.status = 'ready';
+        }
         session.score = parsed.score || 0;
         session.attempts = parsed.attempts || 0;
       } catch (e) {
@@ -153,7 +167,6 @@ const ActivityGate = (() => {
   function render() {
     if (!session) return;
 
-    // Re-detect on every call — day.html hides cards asynchronously
     const visible = detectVisibleActivity();
     if (visible) {
       session.containerId = visible.containerId;
@@ -170,10 +183,8 @@ const ActivityGate = (() => {
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
 
-    // Skip if parent card is hidden (it may not be our turn yet)
     if (isHidden(parentCard)) return;
 
-    // Clear existing overlays
     parentCard.querySelectorAll('.gate-overlay').forEach(function (el) { el.remove(); });
 
     console.log('[ActivityGate] Render:', session.containerId, 'status:', session.status);
@@ -183,6 +194,16 @@ const ActivityGate = (() => {
       parentCard.appendChild(buildReadyOverlay());
     } else if (session.status === 'running') {
       container.style.display = '';
+      // ⚠️ FIX (X46b): if the container is empty, the lesson-engine
+      // hasn't rendered the activity yet. Re-dispatch activity:start.
+      if (container.innerHTML.trim() === '') {
+        const stateKey = session.containerId === 'activity-1' ? 'activity1'
+                       : session.containerId === 'activity-2' ? 'activity2'
+                       : 'formative';
+        setTimeout(function () {
+          document.dispatchEvent(new CustomEvent('activity:start', { detail: { activity: stateKey } }));
+        }, 50);
+      }
     } else if (session.status === 'passed') {
       container.style.display = 'none';
       parentCard.appendChild(buildPassedOverlay());
