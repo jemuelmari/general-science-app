@@ -142,11 +142,16 @@
     {
       "id": "q16",
       "text": "Which observation BEST shows physics improving safety in daily life?",
-      "options": ["A car's airbag reducing impact force during a crash", "A television playing a movie", "A refrigerator keeping food cold", "A fan circulating air"],
+      "options": [
+        "A car's airbag reducing impact force during a crash",
+        "A television's screen brightening a room",
+        "A refrigerator's coolant absorbing heat",
+        "A fan's blades rotating to move air"
+      ],
       "correct": "A car's airbag reducing impact force during a crash",
       "competency": "GENSCI-11-T1-W1-C1",
       "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics improving safety = W1-C1" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics improving safety = W1-C1; distractors balanced (Phase 6)" }
     },
     {
       "id": "q17",
@@ -173,7 +178,7 @@
       "correct": "Newton's First Law of Motion (inertia)",
       "competency": "GENSCI-11-T1-W1-C1",
       "bloomLevel": "Applying",
-      "_tag": { "layer": 3, "confidence": "MEDIUM", "rationale": "daily-life physics principle = W1-C1; single-token 'physics'" }
+      "_tag": { "layer": 3, "confidence": "MEDIUM", "rationale": "daily-life physics principle = W1-C1" }
     },
     {
       "id": "q20",
