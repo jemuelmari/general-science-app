@@ -4,230 +4,77 @@
   "items": 20,
   "competencies": ["GENSCI-11-T2-W5-C1", "GENSCI-11-T2-W6-C1", "GENSCI-11-T2-W7-C1", "GENSCI-11-T2-W8-C1"],
   "questions": [
-    {
-      "id": "q1",
-      "text": "What is the basic structural and functional unit of all living things?",
-      "options": ["The cell", "The atom", "The tissue", "The organ"],
-      "correct": "The cell",
-      "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "cell = unifying theme" }
-    },
-    {
-      "id": "q2",
-      "text": "Which theme of life science explains why you sweat when it's hot?",
-      "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"],
-      "correct": "Homeostasis",
-      "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unifying theme = homeostasis" }
-    },
-    {
-      "id": "q3",
-      "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?",
-      "options": [
-        "Cell → Tissue → Organ → Organ System → Organism",
-        "Organism → Cell → Tissue → Organ",
-        "Organ → Cell → Tissue → Organism",
-        "Tissue → Cell → Organ → Organism"
-      ],
-      "correct": "Cell → Tissue → Organ → Organ System → Organism",
-      "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "levels of organization" }
-    },
-    {
-      "id": "q4",
-      "text": "Which statement BEST describes the structure-function relationship?",
-      "options": [
-        "The shape of a biological part determines what job it can perform",
-        "All structures look the same",
-        "Function is random and unrelated to structure",
-        "Only animals have structure-function relationships"
-      ],
-      "correct": "The shape of a biological part determines what job it can perform",
-      "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function theme" }
-    },
+    { "id": "q1", "text": "What is the basic structural and functional unit of all living things?", "options": ["The cell", "The atom", "The tissue", "The organ"], "correct": "The cell", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "cell = unifying theme" } },
+    { "id": "q2", "text": "Which theme of life science explains why you sweat when it's hot?", "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"], "correct": "Homeostasis", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unifying theme = homeostasis" } },
+    { "id": "q3", "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?", "options": ["Cell → Tissue → Organ → Organ System → Organism", "Organism → Cell → Tissue → Organ", "Organ → Cell → Tissue → Organism", "Tissue → Cell → Organ → Organism"], "correct": "Cell → Tissue → Organ → Organ System → Organism", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "levels of organization" } },
+    { "id": "q4", "text": "Which statement BEST describes the structure-function relationship?", "options": ["The shape of a biological part determines what job it can perform", "All structures look the same", "Function is random and unrelated to structure", "Only animals have structure-function relationships"], "correct": "The shape of a biological part determines what job it can perform", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function theme" } },
     {
       "id": "q5",
       "text": "Why are alveoli in the lungs so tiny and numerous?",
       "options": [
         "To create a huge surface area for gas exchange",
-        "To make them easier to see",
-        "To reduce oxygen intake",
-        "To store water"
+        "To make the lung tissue easier to see under microscope",
+        "To reduce the amount of oxygen taken in per breath",
+        "To store water that can be used during dehydration"
       ],
       "correct": "To create a huge surface area for gas exchange",
       "competency": "GENSCI-11-T2-W5-C1",
       "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function example" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function example; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q6",
-      "text": "Which organelle is known as the 'powerhouse of the cell'?",
-      "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"],
-      "correct": "Mitochondria",
-      "competency": "GENSCI-11-T2-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitochondria = cell energy" }
-    },
-    {
-      "id": "q7",
-      "text": "What is the energy currency of the cell?",
-      "options": ["ATP", "DNA", "Glucose", "Oxygen"],
-      "correct": "ATP",
-      "competency": "GENSCI-11-T2-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP = cell energy" }
-    },
-    {
-      "id": "q8",
-      "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy (ATP)?",
-      "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"],
-      "correct": "Active transport",
-      "competency": "GENSCI-11-T2-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "active transport = cell nutrient acquisition" }
-    },
+    { "id": "q6", "text": "Which organelle is known as the 'powerhouse of the cell'?", "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitochondria = cell energy" } },
+    { "id": "q7", "text": "What is the energy currency of the cell?", "options": ["ATP", "DNA", "Glucose", "Oxygen"], "correct": "ATP", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP = cell energy" } },
+    { "id": "q8", "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy (ATP)?", "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"], "correct": "Active transport", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "active transport = cell nutrient acquisition" } },
     {
       "id": "q9",
       "text": "A potato slice placed in salty water becomes soft and shriveled. Why?",
       "options": [
         "Water left the potato cells by osmosis because the salt solution had lower water concentration",
-        "Salt destroyed the potato cells chemically",
-        "The potato absorbed the salt",
-        "The potato froze"
+        "Salt destroyed the potato cells chemically by breaking the cell walls",
+        "The potato absorbed the salt from the water into its cells",
+        "The potato froze because the salt lowered the water temperature"
       ],
       "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration",
       "competency": "GENSCI-11-T2-W6-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "osmosis = cell transport" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "osmosis = cell transport; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q10",
-      "text": "Which equation correctly represents cellular respiration?",
-      "options": [
-        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
-        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
-        "2H₂ + O₂ → 2H₂O",
-        "CO₂ + H₂O → CH₄ + O₂"
-      ],
-      "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
-      "competency": "GENSCI-11-T2-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration = cell energy" }
-    },
-    {
-      "id": "q11",
-      "text": "Which organelle performs photosynthesis in plant cells?",
-      "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"],
-      "correct": "Chloroplast",
-      "competency": "GENSCI-11-T2-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chloroplast = plant cell" }
-    },
-    {
-      "id": "q12",
-      "text": "Which plant organ is primarily responsible for absorbing water and minerals?",
-      "options": ["Roots", "Leaves", "Flowers", "Fruit"],
-      "correct": "Roots",
-      "competency": "GENSCI-11-T2-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "plant organ function" }
-    },
-    {
-      "id": "q13",
-      "text": "Which vascular tissue transports water upward from the roots to the leaves?",
-      "options": ["Xylem", "Phloem", "Cambium", "Epidermis"],
-      "correct": "Xylem",
-      "competency": "GENSCI-11-T2-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "xylem function" }
-    },
-    {
-      "id": "q14",
-      "text": "Which vascular tissue transports sugar (food) throughout the plant?",
-      "options": ["Phloem", "Xylem", "Stomata", "Cuticle"],
-      "correct": "Phloem",
-      "competency": "GENSCI-11-T2-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "phloem function" }
-    },
-    {
-      "id": "q15",
-      "text": "What is transpiration?",
-      "options": [
-        "Loss of water vapor from leaves through stomata",
-        "Movement of food through phloem",
-        "Absorption of minerals by the roots",
-        "Production of glucose in leaves"
-      ],
-      "correct": "Loss of water vapor from leaves through stomata",
-      "competency": "GENSCI-11-T2-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transpiration" }
-    },
+    { "id": "q10", "text": "Which equation correctly represents cellular respiration?", "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"], "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration = cell energy" } },
+    { "id": "q11", "text": "Which organelle performs photosynthesis in plant cells?", "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"], "correct": "Chloroplast", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chloroplast = plant cell" } },
+    { "id": "q12", "text": "Which plant organ is primarily responsible for absorbing water and minerals?", "options": ["Roots", "Leaves", "Flowers", "Fruit"], "correct": "Roots", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "plant organ function" } },
+    { "id": "q13", "text": "Which vascular tissue transports water upward from the roots to the leaves?", "options": ["Xylem", "Phloem", "Cambium", "Epidermis"], "correct": "Xylem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "xylem function" } },
+    { "id": "q14", "text": "Which vascular tissue transports sugar (food) throughout the plant?", "options": ["Phloem", "Xylem", "Stomata", "Cuticle"], "correct": "Phloem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "phloem function" } },
+    { "id": "q15", "text": "What is transpiration?", "options": ["Loss of water vapor from leaves through stomata", "Movement of food through phloem", "Absorption of minerals by the roots", "Production of glucose in leaves"], "correct": "Loss of water vapor from leaves through stomata", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transpiration" } },
     {
       "id": "q16",
       "text": "Why does removing a complete ring of bark kill a tree?",
       "options": [
         "It cuts the phloem, so sugars cannot reach the roots, which then starve and die",
-        "It removes the tree's protective armor",
-        "It prevents photosynthesis",
-        "It stops transpiration"
+        "It removes the tree's protective outer armor against insects",
+        "It prevents photosynthesis by blocking all sunlight",
+        "It stops transpiration from the leaves to the roots"
       ],
       "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die",
       "competency": "GENSCI-11-T2-W7-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transport system analysis" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transport system analysis; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q17",
-      "text": "Which brain region coordinates body temperature?",
-      "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"],
-      "correct": "Hypothalamus",
-      "competency": "GENSCI-11-T2-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "temperature regulation = W8-C1" }
-    },
-    {
-      "id": "q18",
-      "text": "What is the 1st line of defense against pathogens?",
-      "options": [
-        "Physical barriers like skin and mucous membranes",
-        "Antibodies",
-        "Memory cells",
-        "Vaccines"
-      ],
-      "correct": "Physical barriers like skin and mucous membranes",
-      "competency": "GENSCI-11-T2-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune defense = W8-C1" }
-    },
+    { "id": "q17", "text": "Which brain region coordinates body temperature?", "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"], "correct": "Hypothalamus", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "temperature regulation = W8-C1" } },
+    { "id": "q18", "text": "What is the 1st line of defense against pathogens?", "options": ["Physical barriers like skin and mucous membranes", "Antibodies", "Memory cells", "Vaccines"], "correct": "Physical barriers like skin and mucous membranes", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune defense = W8-C1" } },
     {
       "id": "q19",
       "text": "How do vaccines protect you from future infections?",
       "options": [
         "They create memory B and T cells that respond quickly if the real pathogen appears",
-        "They kill all pathogens in your body permanently",
-        "They replace your immune system",
-        "They cause the disease in a mild form only"
+        "They kill all pathogens currently in your body permanently",
+        "They replace your immune system with a stronger artificial one",
+        "They cause the disease in a mild form to build up resistance"
       ],
       "correct": "They create memory B and T cells that respond quickly if the real pathogen appears",
       "competency": "GENSCI-11-T2-W8-C1",
       "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccine mechanism = W8-C1" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccine mechanism = W8-C1; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q20",
-      "text": "A torn ACL is a common sports injury affecting which body part?",
-      "options": ["The knee joint", "The heart", "The lungs", "The brain"],
-      "correct": "The knee joint",
-      "competency": "GENSCI-11-T2-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "damaged body part = W8-C1" }
-    }
+    { "id": "q20", "text": "A torn ACL is a common sports injury affecting which body part?", "options": ["The knee joint", "The heart", "The lungs", "The brain"], "correct": "The knee joint", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "damaged body part = W8-C1" } }
   ]
 }
