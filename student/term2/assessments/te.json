@@ -30,7 +30,20 @@
     { "id": "q24", "text": "What does the GHS skull-and-crossbones symbol mean?", "options": ["Acute toxicity — can cause death or serious harm", "Flammable liquid", "Corrosive to metals", "Harmless"], "correct": "Acute toxicity — can cause death or serious harm", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" } },
     { "id": "q25", "text": "Which GHS symbol warns that a chemical can corrode skin or metals?", "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"], "correct": "Corrosion (test tube dripping on surface)", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion" } },
     { "id": "q26", "text": "Why must acids and bases be stored separately?", "options": ["They can react violently if they touch", "They have different colors", "They smell different", "They weigh differently"], "correct": "They can react violently if they touch", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage" } },
-    { "id": "q27", "text": "What is the BEST way to dispose of leftover household chemicals?", "options": ["Take them to a designated hazardous waste collection point following DENR guidelines", "Pour them into the storm drain", "Throw them in the regular trash", "Bury them in the backyard"], "correct": "Take them to a designated hazardous waste collection point following DENR guidelines", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal" } },
+    {
+      "id": "q27",
+      "text": "What is the BEST way to dispose of leftover household chemicals?",
+      "options": [
+        "Take them to a designated hazardous waste collection point following DENR guidelines",
+        "Pour them slowly into the nearest storm drain with running water",
+        "Throw them in the regular household trash for weekly pickup",
+        "Bury them in the backyard, away from any vegetable gardens"
+      ],
+      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal; distractors balanced (Phase 6)" }
+    },
     { "id": "q28", "text": "What is eutrophication?", "options": ["Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "A cleaning process for detergents", "A form of distillation", "A method of water purification"], "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "eutrophication" } },
     { "id": "q29", "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?", "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"], "correct": "RA 6969", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation" } },
     { "id": "q30", "text": "Why is proper chemical disposal important?", "options": ["To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe", "Because the government requires it", "To save money", "To increase the volume of the ocean"], "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "disposal impact" } },
@@ -59,7 +72,20 @@
     { "id": "q53", "text": "What happens to corals when water temperature rises too much?", "options": ["They expel their symbiotic algae and bleach, slowly starving", "They grow faster", "They change color to red", "Nothing happens — corals are immune"], "correct": "They expel their symbiotic algae and bleach, slowly starving", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate change impact on ecosystems" } },
     { "id": "q54", "text": "Which of the following is a BIOLOGICAL response to climate change?", "options": ["Species shifting to cooler areas (range shift)", "Building more factories", "Rising electricity prices", "Decreasing internet speed"], "correct": "Species shifting to cooler areas (range shift)", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "biological response = W9-C1" } },
     { "id": "q55", "text": "Why is the Philippines highly vulnerable to climate change?", "options": ["It's an archipelago in the typhoon belt with thousands of coastal communities", "It has no coastline", "It has no forests", "It's located far from the ocean"], "correct": "It's an archipelago in the typhoon belt with thousands of coastal communities", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine ecosystem vulnerability" } },
-    { "id": "q56", "text": "What is the difference between adaptation and mitigation?", "options": ["Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change", "Adaptation reduces emissions; mitigation adjusts to impacts", "They are the same thing", "Both only apply to farming"], "correct": "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "adaptation vs mitigation = W10-C1" } },
+    {
+      "id": "q56",
+      "text": "What is the difference between adaptation and mitigation?",
+      "options": [
+        "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change",
+        "Adaptation reduces greenhouse gas emissions while mitigation adjusts to impacts",
+        "They are exactly the same concept with no meaningful difference",
+        "Both terms only apply to farming and agricultural practices"
+      ],
+      "correct": "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "adaptation vs mitigation; distractors balanced (Phase 6)" }
+    },
     { "id": "q57", "text": "Which of the following is an example of MITIGATION?", "options": ["Switching to solar energy to reduce fossil fuel use", "Building a sea wall", "Planting drought-resistant crops", "Elevating homes above flood level"], "correct": "Switching to solar energy to reduce fossil fuel use", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitigation strategy" } },
     { "id": "q58", "text": "Which Philippine law created the Climate Change Commission?", "options": ["RA 9729", "RA 9147", "RA 6969", "RA 9003"], "correct": "RA 9729", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate law" } },
     { "id": "q59", "text": "How does overpopulation affect the environment?", "options": ["It increases resource demand, deforestation, waste, and greenhouse gas emissions", "It reduces pollution", "It has no environmental impact", "It only affects cities, not farms"], "correct": "It increases resource demand, deforestation, waste, and greenhouse gas emissions", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "overpopulation effects = W10-C1" } },
