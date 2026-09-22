@@ -11,7 +11,20 @@
     { "id": "q5", "text": "What layer of the atmosphere contains the ozone layer that protects us from UV radiation?", "options": ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"], "correct": "Stratosphere", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "protective atmosphere" } },
     { "id": "q6", "text": "What generates Earth's protective magnetic field?", "options": ["Its molten iron core", "Its atmosphere", "The Moon", "Solar wind"], "correct": "Its molten iron core", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "magnetic field" } },
     { "id": "q7", "text": "Why is Earth's distance from the Sun called the 'Goldilocks zone'?", "options": ["It's not too hot and not too cold — just right for liquid water", "It's the closest planet to the Sun", "It has three moons", "It matches the color of gold"], "correct": "It's not too hot and not too cold — just right for liquid water", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "distance = life condition" } },
-    { "id": "q8", "text": "Why does ice float on water, and why is this important for life?", "options": ["Ice is less dense than water and insulates the water below, letting aquatic life survive winter", "Ice is heavier than water", "Ice is a metal", "Floating ice has no effect on life"], "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water property supporting life" } },
+    {
+      "id": "q8",
+      "text": "Why does ice float on water, and why is this important for life?",
+      "options": [
+        "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
+        "Ice is heavier than liquid water because it is frozen solid",
+        "Ice is a metallic substance that conducts heat away rapidly",
+        "Floating ice has no measurable effect on aquatic life below"
+      ],
+      "correct": "Ice is less dense than water and insulates the water below, letting aquatic life survive winter",
+      "competency": "GENSCI-11-T3-W1-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water property supporting life; distractors balanced (Phase 6)" }
+    },
     { "id": "q9", "text": "Why is liquid water essential for life on Earth?", "options": ["It acts as a universal solvent for chemical reactions and transports nutrients", "It looks pretty", "It is rare in the universe", "It has no function"], "correct": "It acts as a universal solvent for chemical reactions and transports nutrients", "competency": "GENSCI-11-T3-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "liquid water condition" } },
     { "id": "q10", "text": "What is the greenhouse effect?", "options": ["Gases in the atmosphere trap infrared radiation, warming Earth's surface", "A greenhouse covering plants", "The Earth reflecting all sunlight", "Cooling of the atmosphere by clouds"], "correct": "Gases in the atmosphere trap infrared radiation, warming Earth's surface", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse effect" } },
     { "id": "q11", "text": "What kind of radiation do greenhouse gases absorb?", "options": ["Infrared (heat)", "Visible light", "Ultraviolet", "X-rays"], "correct": "Infrared (heat)", "competency": "GENSCI-11-T3-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "greenhouse radiation" } },
@@ -24,7 +37,20 @@
     { "id": "q18", "text": "The Philippine Fault System is an example of which plate boundary type?", "options": ["Transform (plates slide past each other)", "Convergent", "Divergent", "Accretion"], "correct": "Transform (plates slide past each other)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine Fault" } },
     { "id": "q19", "text": "How were the Philippine islands primarily formed?", "options": ["Through volcanic arcs, collisions, and tectonic uplift over millions of years", "They were carried by ocean currents", "They are fragments of the Moon", "They were always a single big island"], "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH formation" } },
     { "id": "q20", "text": "What is the Pacific Ring of Fire?", "options": ["A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "A ring of fire in Hawaii", "A type of volcano", "A boundary between continents"], "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Ring of Fire" } },
-    { "id": "q21", "text": "Why are marine fossils found on Philippine mountains?", "options": ["The ocean once covered the area, and tectonic uplift raised the land above sea level", "Fish used to live on land", "People carried them up there", "They fell from the sky"], "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tectonic uplift analysis" } },
+    {
+      "id": "q21",
+      "text": "Why are marine fossils found on Philippine mountains?",
+      "options": [
+        "The ocean once covered the area, and tectonic uplift raised the land above sea level",
+        "Fish used to live on dry land millions of years ago",
+        "Ancient people carried the fossils up the mountains",
+        "They fell from the sky during meteor showers long ago"
+      ],
+      "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tectonic uplift analysis; distractors balanced (Phase 6)" }
+    },
     { "id": "q22", "text": "Which geological feature is east of Mindanao and reaches depths over 10,000 meters?", "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"], "correct": "Philippine Trench", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH landform" } },
     { "id": "q23", "text": "Which of the following landforms is a karst landscape with an underground river?", "options": ["Puerto Princesa Underground River", "Chocolate Hills", "Banaue Rice Terraces", "Mayon Volcano"], "correct": "Puerto Princesa Underground River", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH landforms" } },
     { "id": "q24", "text": "How many climate types does PAGASA classify in the Philippines?", "options": ["Four (Types I–IV)", "Two", "Six", "One"], "correct": "Four (Types I–IV)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH climate types" } },
@@ -33,7 +59,20 @@
     { "id": "q27", "text": "What is the Coral Triangle?", "options": ["A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "A political alliance of three countries", "A type of coral reef", "A scientific lab"], "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
     { "id": "q28", "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?", "options": ["About 65%", "About 10%", "About 100%", "About 5%"], "correct": "About 65%", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
     { "id": "q29", "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?", "options": ["Philippine Eagle", "Palawan Peacock-Pheasant", "Philippine Tarsier", "Visayan Warty Pig"], "correct": "Philippine Eagle", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity" } },
-    { "id": "q30", "text": "Which of the following is the MOST serious threat to Philippine biodiversity?", "options": ["Habitat loss from deforestation, mining, and land conversion", "Too many protected areas", "Overpopulation of endemic species", "Excessive rainfall"], "correct": "Habitat loss from deforestation, mining, and land conversion", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity threats" } },
+    {
+      "id": "q30",
+      "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
+      "options": [
+        "Habitat loss from deforestation, mining, and land conversion",
+        "Too many protected areas being set aside by government",
+        "Overpopulation of endemic species in the wild",
+        "Excessive rainfall and flooding during typhoon season"
+      ],
+      "correct": "Habitat loss from deforestation, mining, and land conversion",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PH biodiversity threats; distractors balanced (Phase 6)" }
+    },
     { "id": "q31", "text": "What is a tsunami usually caused by?", "options": ["An underwater earthquake", "Strong winds", "Tides", "Fish migration"], "correct": "An underwater earthquake", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tsunami" } },
     { "id": "q32", "text": "What is the point on Earth's surface directly above an earthquake's origin called?", "options": ["Epicenter", "Focus", "Fault", "Crater"], "correct": "Epicenter", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "epicenter" } },
     { "id": "q33", "text": "Which of the following is a SLOW geologic process?", "options": ["Saltwater intrusion", "Volcanic eruption", "Tsunami", "Earthquake"], "correct": "Saltwater intrusion", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "slow process" } },
@@ -45,24 +84,76 @@
     { "id": "q39", "text": "Which of the following is the STRONGEST part of a typhoon?", "options": ["The eyewall", "The eye", "The outer rain bands", "The tail"], "correct": "The eyewall", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "typhoon structure" } },
     { "id": "q40", "text": "Which PAGASA signal number corresponds to winds of 89–117 km/h?", "options": ["Signal No. 3", "Signal No. 1", "Signal No. 2", "Signal No. 4"], "correct": "Signal No. 3", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PAGASA signals" } },
     { "id": "q41", "text": "What is a flash flood?", "options": ["Sudden, fast-rising water — common in mountain areas after heavy rain", "A slow-rising flood lasting weeks", "A flood caused by tsunamis", "A flood from ocean tides"], "correct": "Sudden, fast-rising water — common in mountain areas after heavy rain", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "flash flood" } },
-    { "id": "q42", "text": "Which of the following is a warning sign of a possible landslide?", "options": ["Cracks in the ground and tilting trees", "Bright sunny weather", "Sudden increase in ocean temperature", "The presence of birds"], "correct": "Cracks in the ground and tilting trees", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide" } },
+    {
+      "id": "q42",
+      "text": "Which of the following is a warning sign of a possible landslide?",
+      "options": [
+        "Cracks in the ground and tilting trees",
+        "Bright, sunny weather lasting several days",
+        "A sudden increase in the ocean's surface temperature",
+        "An unusual presence of birds flying overhead"
+      ],
+      "correct": "Cracks in the ground and tilting trees",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Understanding",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide warning sign; distractors balanced (Phase 6)" }
+    },
     { "id": "q43", "text": "What is the heat index?", "options": ["The 'feels like' temperature combining heat and humidity", "The actual air temperature", "The temperature of the ocean", "The temperature inside the house"], "correct": "The 'feels like' temperature combining heat and humidity", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index" } },
     { "id": "q44", "text": "What does PAGASA stand for?", "options": ["Philippine Atmospheric, Geophysical and Astronomical Services Administration", "Philippine Agency for General Science and Astronomy", "Philippine Atmospheric and Geological Assessment", "Pacific Atmospheric Group of Science Agencies"], "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PAGASA" } },
     { "id": "q45", "text": "What does the PAGASA iHEAT map show?", "options": ["Real-time and forecast heat index values across the Philippines", "Volcano locations", "Earthquake epicenters", "Tsunami warnings only"], "correct": "Real-time and forecast heat index values across the Philippines", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "iHEAT map" } },
     { "id": "q46", "text": "Which heat index range is categorized as DANGER?", "options": ["42–51°C", "27–32°C", "33–41°C", "52°C and above"], "correct": "42–51°C", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index categories" } },
-    { "id": "q47", "text": "What should you do if someone shows signs of heat stroke (confusion, no sweating, high body temp)?", "options": ["Call emergency help and cool the person's body immediately", "Wait and see if they feel better", "Give them coffee", "Let them continue working"], "correct": "Call emergency help and cool the person's body immediately", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat stroke response" } },
+    {
+      "id": "q47",
+      "text": "What should you do if someone shows signs of heat stroke (confusion, no sweating, high body temp)?",
+      "options": [
+        "Call emergency help and cool the person's body immediately",
+        "Wait and observe whether the symptoms improve on their own",
+        "Give them coffee to boost their energy and alertness",
+        "Let them continue working until they feel better naturally"
+      ],
+      "correct": "Call emergency help and cool the person's body immediately",
+      "competency": "GENSCI-11-T3-W9-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat stroke response; distractors balanced (Phase 6)" }
+    },
     { "id": "q48", "text": "What is the urban heat island effect?", "options": ["Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat", "Islands are always cooler than the mainland", "Heat escapes only at night", "Urban areas have more rain"], "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "urban heat island" } },
-    { "id": "q49", "text": "Which human activity MOST increases landslide risk?", "options": ["Deforestation on hillsides", "Planting trees", "Building on flat land", "Using solar power"], "correct": "Deforestation on hillsides", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide cause" } },
+    {
+      "id": "q49",
+      "text": "Which human activity MOST increases landslide risk?",
+      "options": [
+        "Deforestation on steep hillsides for farming",
+        "Planting native trees on hillside slopes",
+        "Building houses on flat, low-lying land",
+        "Installing solar power systems on rooftops"
+      ],
+      "correct": "Deforestation on steep hillsides for farming",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Analyzing",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide cause; distractors balanced (Phase 6)" }
+    },
     { "id": "q50", "text": "What is the difference between a hazard and a disaster?", "options": ["A hazard is a natural event; a disaster is when it strikes a vulnerable community", "They are the same thing", "Hazards are man-made; disasters are natural", "Hazards are always catastrophic"], "correct": "A hazard is a natural event; a disaster is when it strikes a vulnerable community", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hazard vs disaster" } },
     { "id": "q51", "text": "What is an ipo-ipo?", "options": ["A small, intense rotating column of air — a tornado or waterspout", "A type of typhoon", "A tropical fish", "A rain cloud"], "correct": "A small, intense rotating column of air — a tornado or waterspout", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ipo-ipo" } },
-    { "id": "q52", "text": "Which agency coordinates national disaster response in the Philippines?", "options": ["NDRRMC", "PAGASA", "PHIVOLCS", "DepEd"], "correct": "NDRRMC", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "NDRRMC" } },
+    { "id": "q52", "text": "Which agency coordinates national disaster response in the Philippines?", "options": ["NDRRMC", "PAGASA", "PHIVOLCS", "DepEd"], "correct": "NDRRMC", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "NDRRMC; kept as-is per Phase 6 review" } },
     { "id": "q53", "text": "What does DRRM stand for?", "options": ["Disaster Risk Reduction and Management", "Department of Regional Risk Measures", "Disaster Response and Recovery Method", "Direct Rescue and Relief Management"], "correct": "Disaster Risk Reduction and Management", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DRRM = W10-C1" } },
     { "id": "q54", "text": "How many thematic pillars make up the DRRM framework?", "options": ["Four", "Two", "Six", "Ten"], "correct": "Four", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DRRM framework = W10-C1" } },
     { "id": "q55", "text": "Which pillar focuses on drills, Go Bags, and evacuation plans?", "options": ["Preparedness", "Response", "Recovery", "Prevention"], "correct": "Preparedness", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DRRM pillar = W10-C1" } },
     { "id": "q56", "text": "Which Philippine law institutionalized DRRM?", "options": ["RA 10121 — Philippine DRRM Act of 2010", "RA 9003", "RA 6969", "RA 9729"], "correct": "RA 10121 — Philippine DRRM Act of 2010", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DRRM law = W10-C1" } },
-    { "id": "q57", "text": "What should a family do FIRST when a typhoon warning is issued?", "options": ["Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA", "Wait until the last minute", "Go outside and watch the storm", "Ignore warnings"], "correct": "Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "family DRRM response = W10-C1" } },
+    {
+      "id": "q57",
+      "text": "What should a family do FIRST when a typhoon warning is issued?",
+      "options": [
+        "Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA",
+        "Wait until the last minute before doing anything at all",
+        "Go outside immediately to watch the storm approach",
+        "Ignore the warnings and continue normal daily activities"
+      ],
+      "correct": "Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA",
+      "competency": "GENSCI-11-T3-W10-C1",
+      "bloomLevel": "Applying",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "family DRRM response; distractors balanced (Phase 6)" }
+    },
     { "id": "q58", "text": "Which activity is an example of MITIGATION in DRRM?", "options": ["Planting mangroves to reduce storm surge impact", "Distributing relief goods after a typhoon", "Rebuilding houses after a flood", "Conducting search and rescue"], "correct": "Planting mangroves to reduce storm surge impact", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DRRM mitigation = W10-C1" } },
     { "id": "q59", "text": "Which of the following BEST describes what the iHEAT map helps LGUs do?", "options": ["Issue heat advisories and open cooling centers based on forecast heat index", "Predict earthquakes", "Monitor volcanic activity", "Track typhoon paths"], "correct": "Issue heat advisories and open cooling centers based on forecast heat index", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "iHEAT map application = W9-C1" } },
-    { "id": "q60", "text": "Which of the following BEST summarizes the main idea of Term 3?", "options": ["Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe", "Earth is a static, unchanging planet", "Natural hazards cannot be studied scientifically", "Only earthquakes matter in the Philippines"], "correct": "Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "term synthesis = W10-C1" } }
+    { "id": "q60", "text": "Which of the following BEST summarizes the main idea of Term 3?", "options": ["Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe", "Earth is a static, unchanging planet", "Natural hazards cannot be studied scientifically", "Only earthquakes matter in the Philippines"], "correct": "Earth is uniquely suited for life — but it is dynamic and hazardous, requiring scientific understanding and DRRM preparedness to keep communities safe", "competency": "GENSCI-11-T3-W10-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "term synthesis; kept as-is per Phase 6 review" } }
   ]
 }
