@@ -10,7 +10,20 @@
     { "id": "q4", "text": "Which mineral is used to make cement?", "options": ["Limestone", "Gold", "Copper", "Mica"], "correct": "Limestone", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mineral in industry" } },
     { "id": "q5", "text": "Which soil type is BEST for most crops?", "options": ["Loam — balanced mix of sand, silt, and clay", "Sandy soil", "Clay soil", "Gravel"], "correct": "Loam — balanced mix of sand, silt, and clay", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soil properties" } },
     { "id": "q6", "text": "Which Philippine province is known for its marble?", "options": ["Romblon", "Batanes", "Bohol", "Cebu"], "correct": "Romblon", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "local mineral resource" } },
-    { "id": "q7", "text": "Which type of mining practice helps minimize environmental impact?", "options": ["Sustainable mining with rehabilitation of mined areas", "Unregulated open-pit mining", "Dumping tailings into rivers", "Clearing forests for mining roads"], "correct": "Sustainable mining with rehabilitation of mined areas", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "minerals harnessed sustainably" } },
+        {
+      "id": "q7",
+      "text": "Which type of mining practice helps minimize environmental impact?",
+      "options": [
+        "Sustainable mining with rehabilitation of mined areas",
+        "Unregulated open-pit mining without environmental permits",
+        "Dumping mining tailings directly into nearby rivers",
+        "Clearing forests to make room for wide mining access roads"
+      ],
+      "correct": "Sustainable mining with rehabilitation of mined areas",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Evaluating",
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "minerals harnessed sustainably; distractors balanced (Phase 6)" }
+    },
     { "id": "q8", "text": "What is a tsunami usually caused by?", "options": ["An underwater earthquake", "Strong winds", "Tides", "Fish migration"], "correct": "An underwater earthquake", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tsunami cause" } },
     { "id": "q9", "text": "What is the point on Earth's surface directly above an earthquake's origin called?", "options": ["Epicenter", "Focus", "Fault", "Crater"], "correct": "Epicenter", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "epicenter" } },
     { "id": "q10", "text": "Which of the following is a SLOW geologic process?", "options": ["Saltwater intrusion", "Volcanic eruption", "Tsunami", "Earthquake"], "correct": "Saltwater intrusion", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "slow geologic process" } },
