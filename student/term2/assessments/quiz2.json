@@ -4,250 +4,90 @@
   "items": 20,
   "competencies": ["GENSCI-11-T2-W3-C1", "GENSCI-11-T2-W4-C1"],
   "questions": [
-    {
-      "id": "q1",
-      "text": "What is a solution?",
-      "options": [
-        "A homogeneous mixture of two or more substances",
-        "A heterogeneous mixture where particles settle at the bottom",
-        "A pure chemical substance",
-        "A type of solid only"
-      ],
-      "correct": "A homogeneous mixture of two or more substances",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution definition" }
-    },
-    {
-      "id": "q2",
-      "text": "In a sugar-water solution, which is the solute?",
-      "options": ["Sugar", "Water", "Both", "Neither"],
-      "correct": "Sugar",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solute identification" }
-    },
-    {
-      "id": "q3",
-      "text": "In a sugar-water solution, which is the solvent?",
-      "options": ["Water", "Sugar", "Both", "Neither"],
-      "correct": "Water",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solvent identification" }
-    },
-    {
-      "id": "q4",
-      "text": "Why is water called the 'universal solvent'?",
-      "options": [
-        "It dissolves more substances than any other liquid",
-        "It is found everywhere",
-        "It has no charge",
-        "It is denser than other liquids"
-      ],
-      "correct": "It dissolves more substances than any other liquid",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water as solvent" }
-    },
-    {
-      "id": "q5",
-      "text": "Soda (softdrink) is an example of what type of solution?",
-      "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"],
-      "correct": "Gas-in-liquid",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" }
-    },
-    {
-      "id": "q6",
-      "text": "Air is best described as which type of solution?",
-      "options": ["Gas-in-gas", "Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid"],
-      "correct": "Gas-in-gas",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" }
-    },
-    {
-      "id": "q7",
-      "text": "Bronze (an alloy of copper and tin) is an example of what type of solution?",
-      "options": ["Solid-in-solid", "Solid-in-liquid", "Liquid-in-solid", "Gas-in-solid"],
-      "correct": "Solid-in-solid",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "alloy = solid-in-solid solution" }
-    },
-    {
-      "id": "q8",
-      "text": "What is saturation?",
-      "options": [
-        "The point where no more solute can dissolve in a solvent at a given temperature",
-        "When a solution is diluted with water",
-        "When a solute evaporates",
-        "When a solvent freezes"
-      ],
-      "correct": "The point where no more solute can dissolve in a solvent at a given temperature",
-      "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saturation definition" }
-    },
+    { "id": "q1", "text": "What is a solution?", "options": ["A homogeneous mixture of two or more substances", "A heterogeneous mixture where particles settle at the bottom", "A pure chemical substance", "A type of solid only"], "correct": "A homogeneous mixture of two or more substances", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution definition" } },
+    { "id": "q2", "text": "In a sugar-water solution, which is the solute?", "options": ["Sugar", "Water", "Both", "Neither"], "correct": "Sugar", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solute identification" } },
+    { "id": "q3", "text": "In a sugar-water solution, which is the solvent?", "options": ["Water", "Sugar", "Both", "Neither"], "correct": "Water", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solvent identification" } },
+    { "id": "q4", "text": "Why is water called the 'universal solvent'?", "options": ["It dissolves more substances than any other liquid", "It is found everywhere", "It has no charge", "It is denser than other liquids"], "correct": "It dissolves more substances than any other liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water as solvent" } },
+    { "id": "q5", "text": "Soda (softdrink) is an example of what type of solution?", "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"], "correct": "Gas-in-liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" } },
+    { "id": "q6", "text": "Air is best described as which type of solution?", "options": ["Gas-in-gas", "Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid"], "correct": "Gas-in-gas", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" } },
+    { "id": "q7", "text": "Bronze (an alloy of copper and tin) is an example of what type of solution?", "options": ["Solid-in-solid", "Solid-in-liquid", "Liquid-in-solid", "Gas-in-solid"], "correct": "Solid-in-solid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "alloy = solid-in-solid solution" } },
+    { "id": "q8", "text": "What is saturation?", "options": ["The point where no more solute can dissolve in a solvent at a given temperature", "When a solution is diluted with water", "When a solute evaporates", "When a solvent freezes"], "correct": "The point where no more solute can dissolve in a solvent at a given temperature", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saturation definition" } },
     {
       "id": "q9",
       "text": "What happens to a plant when grown in soil with very high salt concentration?",
       "options": [
         "Water moves out of the plant roots due to osmotic stress, causing wilting",
-        "It grows faster because salt is a nutrient",
-        "It becomes saltwater-tolerant automatically",
-        "Nothing changes"
+        "It grows faster because the salt acts as an extra nutrient",
+        "It becomes saltwater-tolerant automatically over time",
+        "Nothing changes because soil salt is not absorbed"
       ],
       "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting",
       "competency": "GENSCI-11-T2-W3-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "salt effect on plants investigation" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "salt effect on plants investigation; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q10",
-      "text": "What is saltwater intrusion?",
-      "options": [
-        "Seawater seeping into freshwater aquifers, making them salty and unusable",
-        "Adding salt to freshwater for drinking",
-        "Removing salt from seawater",
-        "A type of water filtration"
-      ],
-      "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact = W4-C1" }
-    },
+    { "id": "q10", "text": "What is saltwater intrusion?", "options": ["Seawater seeping into freshwater aquifers, making them salty and unusable", "Adding salt to freshwater for drinking", "Removing salt from seawater", "A type of water filtration"], "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact = W4-C1" } },
     {
       "id": "q11",
       "text": "Which of the following is a MAJOR cause of saltwater intrusion in Philippine coastal areas?",
       "options": [
         "Over-pumping of groundwater and rising sea levels due to climate change",
-        "Farmers adding too much salt to soil",
-        "Rivers drying up",
-        "Fishermen dumping seawater"
+        "Farmers over-applying salt-based fertilizers to their soil",
+        "Rivers drying up completely during the summer months",
+        "Fishermen dumping seawater into freshwater wells"
       ],
       "correct": "Over-pumping of groundwater and rising sea levels due to climate change",
       "competency": "GENSCI-11-T2-W4-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental analysis" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental analysis; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q12",
-      "text": "What does the GHS skull-and-crossbones symbol mean?",
-      "options": [
-        "Acute toxicity — can cause death or serious harm",
-        "Flammable liquid",
-        "Corrosive to metals",
-        "Harmless"
-      ],
-      "correct": "Acute toxicity — can cause death or serious harm",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS hazard symbol = safe handling" }
-    },
-    {
-      "id": "q13",
-      "text": "What does the GHS flame symbol indicate?",
-      "options": [
-        "The substance is flammable and easily catches fire",
-        "The substance is corrosive",
-        "The substance is toxic",
-        "The substance is harmless"
-      ],
-      "correct": "The substance is flammable and easily catches fire",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" }
-    },
-    {
-      "id": "q14",
-      "text": "Which GHS symbol warns that a chemical can corrode skin or metals?",
-      "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"],
-      "correct": "Corrosion (test tube dripping on surface)",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion symbol" }
-    },
-    {
-      "id": "q15",
-      "text": "Why must acids and bases be stored separately?",
-      "options": [
-        "They can react violently if they touch",
-        "They have different colors",
-        "They smell different",
-        "They weigh differently"
-      ],
-      "correct": "They can react violently if they touch",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage = W4-C1" }
-    },
+    { "id": "q12", "text": "What does the GHS skull-and-crossbones symbol mean?", "options": ["Acute toxicity — can cause death or serious harm", "Flammable liquid", "Corrosive to metals", "Harmless"], "correct": "Acute toxicity — can cause death or serious harm", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS hazard symbol = safe handling" } },
+    { "id": "q13", "text": "What does the GHS flame symbol indicate?", "options": ["The substance is flammable and easily catches fire", "The substance is corrosive", "The substance is toxic", "The substance is harmless"], "correct": "The substance is flammable and easily catches fire", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" } },
+    { "id": "q14", "text": "Which GHS symbol warns that a chemical can corrode skin or metals?", "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"], "correct": "Corrosion (test tube dripping on surface)", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion symbol" } },
+    { "id": "q15", "text": "Why must acids and bases be stored separately?", "options": ["They can react violently if they touch", "They have different colors", "They smell different", "They weigh differently"], "correct": "They can react violently if they touch", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage = W4-C1" } },
     {
       "id": "q16",
       "text": "What is the BEST practice when handling chemicals at home?",
       "options": [
         "Wear gloves, work in a well-ventilated area, and read the label",
-        "Work in a closed room to avoid drafts",
-        "Mix all cleaners to save time",
-        "Store them in food containers for easy access"
+        "Work in a closed room to avoid drafts disturbing the chemicals",
+        "Mix all household cleaners together to save time and effort",
+        "Store the chemicals in food containers for easy kitchen access"
       ],
       "correct": "Wear gloves, work in a well-ventilated area, and read the label",
       "competency": "GENSCI-11-T2-W4-C1",
       "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best handling practice" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best handling practice; distractors balanced (Phase 6)" }
     },
     {
       "id": "q17",
       "text": "What is the BEST way to dispose of leftover household chemicals?",
       "options": [
         "Take them to a designated hazardous waste collection point following DENR guidelines",
-        "Pour them into the storm drain",
-        "Throw them in the regular trash",
-        "Bury them in the backyard"
+        "Pour them slowly into the nearest storm drain with running water",
+        "Throw them in the regular household trash for weekly pickup",
+        "Bury them in the backyard, away from any vegetable gardens"
       ],
       "correct": "Take them to a designated hazardous waste collection point following DENR guidelines",
       "competency": "GENSCI-11-T2-W4-C1",
       "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal = W4-C1" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal = W4-C1; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q18",
-      "text": "What is eutrophication?",
-      "options": [
-        "Algal blooms caused by excess nutrients (phosphates) in water — kills fish",
-        "A cleaning process for detergents",
-        "A form of distillation",
-        "A method of water purification"
-      ],
-      "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact" }
-    },
-    {
-      "id": "q19",
-      "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?",
-      "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"],
-      "correct": "RA 6969",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation law" }
-    },
+    { "id": "q18", "text": "What is eutrophication?", "options": ["Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "A cleaning process for detergents", "A form of distillation", "A method of water purification"], "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact" } },
+    { "id": "q19", "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?", "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"], "correct": "RA 6969", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation law" } },
     {
       "id": "q20",
       "text": "Why is it important to properly dispose of chemical wastewater?",
       "options": [
         "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
-        "Because the government requires it",
-        "To save money",
-        "To increase the volume of the ocean"
+        "Because the government strictly requires it by law",
+        "To save money on water treatment and disposal fees",
+        "To increase the total volume of the ocean over time"
       ],
       "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
       "competency": "GENSCI-11-T2-W4-C1",
       "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "wastewater impact" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "wastewater impact; distractors balanced (Phase 6)" }
     }
   ]
 }
