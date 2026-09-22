@@ -111,7 +111,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Item Analysis</h1>
-        <span class="version">v1.2.0</span>
+        <span class="version">v1.2.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -128,7 +128,7 @@
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
           <h1 style="font-size:1.4rem;">Per-Item Analysis with Competency Tracking</h1>
-          <p>Difficulty, discrimination, distractor analysis, and mastery-based interventions — set-aware (uses original index for cross-set aggregation).</p>
+          <p>Difficulty, discrimination, distractor analysis, and mastery-based interventions — set-aware.</p>
         </div>
       </div>
     </div>
@@ -176,7 +176,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.2</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.3</span></p>
   </footer>
 
   <script src="../config.js?v=1.2.0"></script>
@@ -220,9 +220,6 @@
           '<div class="card ia-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
-      /* ============================================================
-         RUN ANALYSIS
-         ============================================================ */
       async function runAnalysis() {
         var term = document.getElementById('filter-term').value;
         var assessment = document.getElementById('filter-assessment').value;
@@ -246,9 +243,6 @@
         }
       }
 
-      /* ============================================================
-         RENDER
-         ============================================================ */
       function render() {
         if (!lastResults) return;
         var r = lastResults;
@@ -257,7 +251,7 @@
         if (!r.attempts) {
           area.innerHTML =
             '<div class="card ia-empty">📭 <strong>No attempts recorded</strong>' +
-            '<p style="margin-top:8px;font-size:0.85rem;">Students haven\'t taken this assessment yet, or no matching section/set filter.</p></div>';
+            '<p style="margin-top:8px;font-size:0.85rem;">Students haven\'t taken this assessment yet, or no matching section filter.</p></div>';
           return;
         }
 
@@ -278,7 +272,6 @@
             '</div>' +
           '</div>' +
 
-          // Mastery distribution
           '<div class="card">' +
             '<div class="card-header"><span class="card-title">📊 Competency Mastery Distribution</span></div>' +
             renderDistributionRow('Exceeds Standard', s.distribution.ES, s.distribution.total, '#2e7d32') +
@@ -287,7 +280,6 @@
             renderDistributionRow('Needs Intervention', s.distribution.NI, s.distribution.total, '#c62828') +
           '</div>' +
 
-          // Tabs
           '<div class="ia-tabs no-print">' +
             '<button class="ia-tab ' + (currentTab === 'items' ? 'active' : '') + '" data-tab="items">📋 Items</button>' +
             '<button class="ia-tab ' + (currentTab === 'distractors' ? 'active' : '') + '" data-tab="distractors">🎯 Distractors</button>' +
@@ -296,13 +288,11 @@
             '<button class="ia-tab ' + (currentTab === 'flags' ? 'active' : '') + '" data-tab="flags">⚠️ Flags</button>' +
           '</div>' +
 
-          // Actions
           '<div class="ia-actions no-print">' +
             '<button id="btn-print" class="btn btn-primary">🖨️ Print / Save as PDF</button>' +
             '<button id="btn-export-csv" class="btn btn-outline">📥 Export CSV</button>' +
           '</div>' +
 
-          // Panels
           '<div class="ia-panel ' + (currentTab === 'items' ? 'active' : '') + '" id="panel-items">' + renderItemsPanel() + '</div>' +
           '<div class="ia-panel ' + (currentTab === 'distractors' ? 'active' : '') + '" id="panel-distractors">' + renderDistractorsPanel() + '</div>' +
           '<div class="ia-panel ' + (currentTab === 'competencies' ? 'active' : '') + '" id="panel-competencies">' + renderCompetenciesPanel() + '</div>' +
@@ -311,7 +301,6 @@
 
         area.innerHTML = html;
 
-        // Wire tab switching
         area.querySelectorAll('.ia-tab').forEach(function(btn) {
           btn.addEventListener('click', function() {
             currentTab = btn.dataset.tab;
@@ -324,7 +313,21 @@
       }
 
       /* ============================================================
-         PANEL — ITEMS
+         Helper: pick a color for a difficulty flag
+         ============================================================ */
+      function colorForDifficulty(flag) {
+        if (flag === 'ok') return '#2e7d32';
+        if (flag === 'too_easy') return '#5f6368';
+        return '#c62828';
+      }
+
+      function colorForDiscrimination(flag) {
+        if (flag === 'ok') return '#2e7d32';
+        return '#ed6c02';
+      }
+
+      /* ============================================================
+         PANEL — ITEMS  (fix applied: color helpers)
          ============================================================ */
       function renderItemsPanel() {
         var items = lastResults.items;
@@ -361,6 +364,8 @@
 
           var dPct = it.difficulty.p != null ? (it.difficulty.p * 100).toFixed(1) + '%' : '—';
           var dVal = it.discrimination.d != null ? it.discrimination.d.toFixed(2) : '—';
+          var diffColor = colorForDifficulty(it.difficulty.flag);
+          var discColor = colorForDiscrimination(it.discrimination.flag);
 
           html +=
             '<div class="item-row ' + flagClass + '">' +
@@ -377,17 +382,17 @@
                     '<div class="stat-box">' +
                       '<div class="stat-lbl">Difficulty (p)</div>' +
                       '<div class="stat-val">' + dPct + '</div>' +
-                      '<div class="stat-note" style="color:' + it.difficulty.flag === 'ok' ? '#2e7d32' : (it.difficulty.flag === 'too_easy' ? '#5f6368' : '#c62828') + ';">' + it.difficulty.label + '</div>' +
+                      '<div class="stat-note" style="color:' + diffColor + ';">' + escapeHtml(it.difficulty.label) + '</div>' +
                     '</div>' +
                     '<div class="stat-box">' +
                       '<div class="stat-lbl">Discrimination (D)</div>' +
                       '<div class="stat-val">' + dVal + '</div>' +
-                      '<div class="stat-note" style="color:' + (it.discrimination.flag === 'ok' ? '#2e7d32' : '#ed6c02') + ';">' + it.discrimination.label + '</div>' +
+                      '<div class="stat-note" style="color:' + discColor + ';">' + escapeHtml(it.discrimination.label) + '</div>' +
                     '</div>' +
                     '<div class="stat-box">' +
                       '<div class="stat-lbl">Correct</div>' +
                       '<div class="stat-val">' + it.correctCount + ' / ' + it.totalAttempts + '</div>' +
-                      '<div class="stat-note" style="color:' + level.color + ';">' + level.shortLabel + '</div>' +
+                      '<div class="stat-note" style="color:' + level.color + ';">' + escapeHtml(level.shortLabel) + '</div>' +
                     '</div>' +
                   '</div>' +
                 '</div>' +
@@ -399,9 +404,6 @@
         return html;
       }
 
-      /* ============================================================
-         PANEL — DISTRACTORS
-         ============================================================ */
       function renderDistractorsPanel() {
         var items = lastResults.items;
         var html = '<div class="card">' +
@@ -455,9 +457,6 @@
         return html;
       }
 
-      /* ============================================================
-         PANEL — COMPETENCIES
-         ============================================================ */
       function renderCompetenciesPanel() {
         var comps = lastResults.competencies;
         var html = '<div class="card">' +
@@ -481,7 +480,7 @@
                 '</div>' +
                 '<div class="stat">' +
                   '<div class="val" style="color:' + color + ';">' + (c.mps * 100).toFixed(1) + '%</div>' +
-                  '<div class="lbl">' + c.level.label + '</div>' +
+                  '<div class="lbl">' + escapeHtml(c.level.label) + '</div>' +
                 '</div>' +
               '</div>' +
               '<div class="comp-group-body">' +
@@ -497,9 +496,6 @@
         return html;
       }
 
-      /* ============================================================
-         PANEL — MOST / LEAST LEARNED
-         ============================================================ */
       function renderMLLPanel() {
         var comps = lastResults.competencies;
         var strongest = lastResults.flags.strongestCompetencies;
@@ -567,7 +563,7 @@
             '<tr>' +
               '<td style="font-family:Consolas,monospace;font-size:0.75rem;">' + escapeHtml(c.code) + '</td>' +
               '<td class="mps-cell" style="color:' + c.level.color + ';">' + (c.mps * 100).toFixed(1) + '%</td>' +
-              '<td><strong style="color:' + c.level.color + ';">' + c.level.label + '</strong></td>' +
+              '<td><strong style="color:' + c.level.color + ';">' + escapeHtml(c.level.label) + '</strong></td>' +
               '<td>' + escapeHtml(c.level.action) + '</td>' +
             '</tr>';
         });
@@ -576,9 +572,6 @@
         return html;
       }
 
-      /* ============================================================
-         PANEL — FLAGS
-         ============================================================ */
       function renderFlagsPanel() {
         var f = lastResults.flags;
         var html = '<div class="card">' +
@@ -650,9 +643,6 @@
         return html;
       }
 
-      /* ============================================================
-         DISTRIBUTION ROW
-         ============================================================ */
       function renderDistributionRow(label, count, total, color) {
         var pct = total ? Math.round((count / total) * 100) : 0;
         return '<div class="distribution-row">' +
@@ -662,9 +652,6 @@
         '</div>';
       }
 
-      /* ============================================================
-         CSV EXPORT
-         ============================================================ */
       function exportCSV() {
         if (!lastResults) return;
         var rows = [
@@ -701,9 +688,6 @@
         APP.toast('CSV exported', 'success');
       }
 
-      /* ============================================================
-         HELPERS
-         ============================================================ */
       function escapeHtml(str) {
         return String(str == null ? '' : str)
           .replace(/&/g, '&amp;')
