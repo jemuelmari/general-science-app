@@ -4,185 +4,38 @@
   "items": 20,
   "competencies": ["GENSCI-11-T1-W7-C1", "GENSCI-11-T1-W8-C1", "GENSCI-11-T1-W9-C1"],
   "questions": [
-    {
-      "id": "q1",
-      "text": "Louis Pasteur is best known for developing which scientific concept?",
-      "options": ["Germ theory of disease", "Theory of relativity", "Theory of evolution", "Atomic theory"],
-      "correct": "Germ theory of disease",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Louis Pasteur competency" }
-    },
-    {
-      "id": "q2",
-      "text": "Pasteur's swan-neck flask experiment disproved which theory?",
-      "options": ["Spontaneous generation", "Germ theory", "Cell theory", "Theory of plate tectonics"],
-      "correct": "Spontaneous generation",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur experiment" }
-    },
-    {
-      "id": "q3",
-      "text": "What is pasteurization?",
-      "options": ["Heating liquids to kill harmful bacteria without ruining flavor", "Freezing liquids to preserve them", "Adding preservatives to food", "Removing water from milk"],
-      "correct": "Heating liquids to kill harmful bacteria without ruining flavor",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pasteurization" }
-    },
-    {
-      "id": "q4",
-      "text": "Which vaccine did Louis Pasteur develop first for a human disease?",
-      "options": ["Rabies", "Polio", "Smallpox", "COVID-19"],
-      "correct": "Rabies",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur vaccine" }
-    },
-    {
-      "id": "q5",
-      "text": "Pasteur's work proved that microorganisms in fermentation come from:",
-      "options": ["Pre-existing microorganisms", "Spontaneous generation", "Pure chemicals", "Air pressure"],
-      "correct": "Pre-existing microorganisms",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur findings" }
-    },
-    {
-      "id": "q6",
-      "text": "Which modern practice is a direct result of Pasteur's germ theory?",
-      "options": ["Handwashing in hospitals", "Using telescopes to study stars", "Building taller bridges", "Using solar panels"],
-      "correct": "Handwashing in hospitals",
-      "competency": "GENSCI-11-T1-W7-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "germ theory application" }
-    },
-    {
-      "id": "q7",
-      "text": "What is the active ingredient in household bleach?",
-      "options": ["Sodium hypochlorite (NaClO)", "Sodium bicarbonate", "Sodium chloride", "Hydrogen peroxide"],
-      "correct": "Sodium hypochlorite (NaClO)",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "household product chemistry" }
-    },
-    {
-      "id": "q8",
-      "text": "Why is it dangerous to mix bleach with ammonia-based cleaners?",
-      "options": ["It releases toxic chloramine gas that can damage lungs", "It creates a stronger bleach", "It becomes solid", "It produces harmless foam"],
-      "correct": "It releases toxic chloramine gas that can damage lungs",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product risk = household products" }
-    },
-    {
-      "id": "q9",
-      "text": "Which government agency in the Philippines approves cosmetics and personal care products for sale?",
-      "options": ["FDA Philippines", "DTI", "DENR", "DepEd"],
-      "correct": "FDA Philippines",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "FDA = W8-C1 agency reference" }
-    },
-    {
-      "id": "q10",
-      "text": "Which agency is responsible for regulating chemical disposal to protect the environment?",
-      "options": ["DENR", "DTI", "FDA", "DOH"],
-      "correct": "DENR",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DENR = W8-C1 agency reference" }
-    },
-    {
-      "id": "q11",
-      "text": "What is the primary function of baking powder in baked goods?",
-      "options": ["Releases CO₂ to make them rise", "Adds sweetness", "Preserves them longer", "Adds color"],
-      "correct": "Releases CO₂ to make them rise",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "household product function" }
-    },
-    {
-      "id": "q12",
-      "text": "Why should you never pour household chemicals down a storm drain?",
-      "options": ["They can contaminate rivers and harm aquatic life", "They will clog the drain", "They evaporate quickly", "They are flammable in water"],
-      "correct": "They can contaminate rivers and harm aquatic life",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product disposal" }
-    },
-    {
-      "id": "q13",
-      "text": "What is eutrophication?",
-      "options": ["Harmful algal blooms from excess nutrients like phosphates in water", "A cleaning process for detergents", "A type of bleaching reaction", "A method of pasteurization"],
-      "correct": "Harmful algal blooms from excess nutrients like phosphates in water",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact of products" }
-    },
-    {
-      "id": "q14",
-      "text": "Which of the following is a BENEFIT of using household chemical products properly?",
-      "options": ["They improve hygiene and prevent disease", "They cause water pollution", "They release toxic fumes", "They destroy fabric colors"],
-      "correct": "They improve hygiene and prevent disease",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "benefits/risks of products" }
-    },
-    {
-      "id": "q15",
-      "text": "A common active ingredient in shampoo that removes oil and dirt is:",
-      "options": ["Surfactants", "Sodium hypochlorite", "Fluoride", "Ammonia"],
-      "correct": "Surfactants",
-      "competency": "GENSCI-11-T1-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "personal care product chemistry" }
-    },
-    {
-      "id": "q16",
-      "text": "A car engine is an example of:",
-      "options": ["Both physics and chemistry working together", "Only physics", "Only chemistry", "Neither physics nor chemistry"],
-      "correct": "Both physics and chemistry working together",
-      "competency": "GENSCI-11-T1-W9-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry synthesis = W9-C1" }
-    },
-    {
-      "id": "q17",
-      "text": "Which chemical reaction occurs inside a battery to produce electrical energy?",
-      "options": ["Redox (oxidation-reduction) reaction", "Combustion", "Neutralization", "Decomposition"],
-      "correct": "Redox (oxidation-reduction) reaction",
-      "competency": "GENSCI-11-T1-W9-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemistry in tech application" }
-    },
-    {
-      "id": "q18",
-      "text": "What chemistry process turns bread brown and flavorful when toasted?",
-      "options": ["Maillard reaction", "Photosynthesis", "Neutralization", "Fermentation"],
-      "correct": "Maillard reaction",
-      "competency": "GENSCI-11-T1-W9-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemistry in daily life" }
-    },
+    { "id": "q1", "text": "Louis Pasteur is best known for developing which scientific concept?", "options": ["Germ theory of disease", "Theory of relativity", "Theory of evolution", "Atomic theory"], "correct": "Germ theory of disease", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Louis Pasteur competency" } },
+    { "id": "q2", "text": "Pasteur's swan-neck flask experiment disproved which theory?", "options": ["Spontaneous generation", "Germ theory", "Cell theory", "Theory of plate tectonics"], "correct": "Spontaneous generation", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur experiment" } },
+    { "id": "q3", "text": "What is pasteurization?", "options": ["Heating liquids to kill harmful bacteria without ruining flavor", "Freezing liquids to preserve them", "Adding preservatives to food", "Removing water from milk"], "correct": "Heating liquids to kill harmful bacteria without ruining flavor", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pasteurization" } },
+    { "id": "q4", "text": "Which vaccine did Louis Pasteur develop first for a human disease?", "options": ["Rabies", "Polio", "Smallpox", "COVID-19"], "correct": "Rabies", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur vaccine" } },
+    { "id": "q5", "text": "Pasteur's work proved that microorganisms in fermentation come from:", "options": ["Pre-existing microorganisms", "Spontaneous generation", "Pure chemicals", "Air pressure"], "correct": "Pre-existing microorganisms", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur findings" } },
+    { "id": "q6", "text": "Which modern practice is a direct result of Pasteur's germ theory?", "options": ["Handwashing in hospitals", "Using telescopes to study stars", "Building taller bridges", "Using solar panels"], "correct": "Handwashing in hospitals", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "germ theory application" } },
+    { "id": "q7", "text": "What is the active ingredient in household bleach?", "options": ["Sodium hypochlorite (NaClO)", "Sodium bicarbonate", "Sodium chloride", "Hydrogen peroxide"], "correct": "Sodium hypochlorite (NaClO)", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "household product chemistry" } },
+    { "id": "q8", "text": "Why is it dangerous to mix bleach with ammonia-based cleaners?", "options": ["It releases toxic chloramine gas that can damage lungs", "It creates a stronger bleach", "It becomes solid", "It produces harmless foam"], "correct": "It releases toxic chloramine gas that can damage lungs", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product risk = household products" } },
+    { "id": "q9", "text": "Which government agency in the Philippines approves cosmetics and personal care products for sale?", "options": ["FDA Philippines", "DTI", "DENR", "DepEd"], "correct": "FDA Philippines", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "FDA = W8-C1 agency reference" } },
+    { "id": "q10", "text": "Which agency is responsible for regulating chemical disposal to protect the environment?", "options": ["DENR", "DTI", "FDA", "DOH"], "correct": "DENR", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DENR = W8-C1 agency reference" } },
+    { "id": "q11", "text": "What is the primary function of baking powder in baked goods?", "options": ["Releases CO₂ to make them rise", "Adds sweetness", "Preserves them longer", "Adds color"], "correct": "Releases CO₂ to make them rise", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "household product function" } },
+    { "id": "q12", "text": "Why should you never pour household chemicals down a storm drain?", "options": ["They can contaminate rivers and harm aquatic life", "They will clog the drain", "They evaporate quickly", "They are flammable in water"], "correct": "They can contaminate rivers and harm aquatic life", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product disposal" } },
+    { "id": "q13", "text": "What is eutrophication?", "options": ["Harmful algal blooms from excess nutrients like phosphates in water", "A cleaning process for detergents", "A type of bleaching reaction", "A method of pasteurization"], "correct": "Harmful algal blooms from excess nutrients like phosphates in water", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact of products" } },
+    { "id": "q14", "text": "Which of the following is a BENEFIT of using household chemical products properly?", "options": ["They improve hygiene and prevent disease", "They cause water pollution", "They release toxic fumes", "They destroy fabric colors"], "correct": "They improve hygiene and prevent disease", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "benefits/risks of products" } },
+    { "id": "q15", "text": "A common active ingredient in shampoo that removes oil and dirt is:", "options": ["Surfactants", "Sodium hypochlorite", "Fluoride", "Ammonia"], "correct": "Surfactants", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "personal care product chemistry" } },
+    { "id": "q16", "text": "A car engine is an example of:", "options": ["Both physics and chemistry working together", "Only physics", "Only chemistry", "Neither physics nor chemistry"], "correct": "Both physics and chemistry working together", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry synthesis = W9-C1" } },
+    { "id": "q17", "text": "Which chemical reaction occurs inside a battery to produce electrical energy?", "options": ["Redox (oxidation-reduction) reaction", "Combustion", "Neutralization", "Decomposition"], "correct": "Redox (oxidation-reduction) reaction", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemistry in tech application" } },
+    { "id": "q18", "text": "What chemistry process turns bread brown and flavorful when toasted?", "options": ["Maillard reaction", "Photosynthesis", "Neutralization", "Fermentation"], "correct": "Maillard reaction", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemistry in daily life" } },
     {
       "id": "q19",
       "text": "Why is a rice cooker both a physics and chemistry system?",
-      "options": ["Electrical resistance heats the coil (physics) and water boils (chemistry)", "It uses magnets only", "It works only on chemistry", "It works only on physics"],
+      "options": [
+        "Electrical resistance heats the coil (physics) and water boils (chemistry)",
+        "It uses magnets to heat the inner pot",
+        "It works only on chemistry (water boiling)",
+        "It works only on physics (resistance heating)"
+      ],
       "correct": "Electrical resistance heats the coil (physics) and water boils (chemistry)",
       "competency": "GENSCI-11-T1-W9-C1",
       "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry integration" }
+      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry integration; distractors balanced (Phase 6)" }
     },
-    {
-      "id": "q20",
-      "text": "An air conditioner cools a room primarily by:",
-      "options": ["Refrigerant absorbing heat inside and releasing it outside", "Creating cold air from nothing", "Removing all humidity", "Using magnets"],
-      "correct": "Refrigerant absorbing heat inside and releasing it outside",
-      "competency": "GENSCI-11-T1-W9-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry in appliance" }
-    }
+    { "id": "q20", "text": "An air conditioner cools a room primarily by:", "options": ["Refrigerant absorbing heat inside and releasing it outside", "Creating cold air from nothing", "Removing all humidity", "Using magnets"], "correct": "Refrigerant absorbing heat inside and releasing it outside", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry in appliance" } }
   ]
 }
