@@ -26,7 +26,7 @@ const CONFIG = {
     department: 'Department of Education'
   },
 
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyRrtXVdXvkRjGhNpuj8Xwnwk5WGQ4eXgJ5kuIS4yUxdEEdAE4BjRruY75elXfFnogD/exec',
+  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbwv2AS8JiLQLL1YsUg5lZkUcBaXOSZKJk86X-HQPtqQ0x6M_5CyX_UYk_PTMWsVTsLM/exec',
 
   get backendEnabled() {
     return this.BACKEND_URL && this.BACKEND_URL.length > 20;
