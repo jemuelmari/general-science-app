@@ -1,17 +1,34 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.3
-   App: General Science · v1.0.2
-   Changelog v2.0.3: signCanonical/verifyCanonical now JSON
-   round-trip the payload BEFORE canonicalizing, so the signed
-   string matches exactly what the backend receives after
-   JSON.stringify/JSON.parse. Fixes persistent signature mismatches.
+   Version: 2.0.4
+   App: General Science · v1.0.5
+   Changelog v2.0.4: canonicalize() now escapes all non-ASCII
+   characters as \uXXXX before signing. This ensures byte-for-byte
+   identical canonical strings between V8 (browser) and Apps Script
+   (Rhino/V8), fixing Unicode-induced HMAC mismatches.
    ============================================================ */
 
 const Sync = (() => {
   'use strict';
 
   const NS = 'gsa_v1_';
+
+  /**
+   * Escape all non-ASCII characters as \uXXXX.
+   * Guarantees pure-ASCII output.
+   */
+  function escapeNonAscii(str) {
+    var out = '';
+    for (var i = 0; i < str.length; i++) {
+      var code = str.charCodeAt(i);
+      if (code < 128) {
+        out += str.charAt(i);
+      } else {
+        out += '\\u' + code.toString(16).padStart(4, '0');
+      }
+    }
+    return out;
+  }
 
   function canonicalize(obj) {
     if (obj === null || obj === undefined) return 'null';
@@ -20,7 +37,14 @@ const Sync = (() => {
       return String(obj);
     }
     if (typeof obj === 'boolean') return obj ? 'true' : 'false';
-    if (typeof obj === 'string') return JSON.stringify(obj);
+    if (typeof obj === 'string') {
+      // JSON.stringify gives us a valid JSON string, then escape non-ASCII
+      var jsonStr = JSON.stringify(obj);
+      // jsonStr includes the surrounding double quotes already
+      // We escape any non-ASCII inside those quotes
+      var inner = jsonStr.substring(1, jsonStr.length - 1);
+      return '"' + escapeNonAscii(inner) + '"';
+    }
     if (Array.isArray(obj)) {
       return '[' + obj.map(canonicalize).join(',') + ']';
     }
@@ -31,17 +55,13 @@ const Sync = (() => {
       });
       keys.sort();
       var parts = keys.map(function (k) {
-        return JSON.stringify(k) + ':' + canonicalize(obj[k]);
+        return '"' + escapeNonAscii(k) + '":' + canonicalize(obj[k]);
       });
       return '{' + parts.join(',') + '}';
     }
     return 'null';
   }
 
-  /**
-   * Round-trip through JSON so the payload we sign matches what
-   * the backend will receive after its own JSON.parse().
-   */
   function roundTrip(payload) {
     try {
       return JSON.parse(JSON.stringify(payload));
