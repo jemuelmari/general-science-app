@@ -1,14 +1,16 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.2.1
+   Version: 1.2.2
    ------------------------------------------------------------
    Changelog:
-     v1.2.1: Fixed canonicalize() — removed arguments.callee hack
-             that caused inconsistent canonical strings on V8.
-             Now matches frontend sync.js exactly.
+     v1.2.2: canonicalize() now escapes all non-ASCII as \uXXXX.
+             Matches frontend sync.js v2.0.4. Fixes signature
+             verification failures for payloads containing Unicode
+             (→ ₂ × π ω — ñ etc.) in question text or names.
+     v1.2.1: Fixed canonicalize() arguments.callee hack.
      v1.2.0: Added Attempts + History sheets, 5 new actions.
      v1.1.0: Added TermAccess sheet + 2 actions.
-     v1.0.0: Initial — SyncCodes + Log.
+     v1.0.0: Initial.
 
    REDEPLOY (CRITICAL):
      Deploy → Manage deployments → (pencil) → Version: New version → Deploy
@@ -66,7 +68,7 @@ function doPost(e) {
       case 'getTermAccess':     response = getTermAccess(body); break;
       case 'setTermAccess':     response = setTermAccess(body); break;
       case 'health':
-        response = { ok: true, message: 'GSA backend is running', version: '1.2.1', time: new Date().toISOString() };
+        response = { ok: true, message: 'GSA backend is running', version: '1.2.2', time: new Date().toISOString() };
         break;
       case 'pushAttempt':       response = pushAttempt(body); break;
       case 'pullAttempts':      response = pullAttempts(body); break;
@@ -96,7 +98,7 @@ function doGet(e) {
   var action = e.parameter.action;
 
   if (action === 'ping') {
-    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.1', time: new Date().toISOString() });
+    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.2', time: new Date().toISOString() });
   }
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -126,8 +128,27 @@ function parseBody(e) {
 }
 
 // ============================================================
-// CANONICAL JSON + HMAC  (v1.2.1 — matches frontend exactly)
+// CANONICAL JSON + HMAC  (v1.2.2 — non-ASCII escaped)
 // ============================================================
+
+/**
+ * Escape all non-ASCII characters as \uXXXX.
+ * Guarantees pure-ASCII output.
+ */
+function escapeNonAscii(str) {
+  var out = '';
+  for (var i = 0; i < str.length; i++) {
+    var code = str.charCodeAt(i);
+    if (code < 128) {
+      out += str.charAt(i);
+    } else {
+      var hex = code.toString(16);
+      while (hex.length < 4) hex = '0' + hex;
+      out += '\\u' + hex;
+    }
+  }
+  return out;
+}
 
 function canonicalize(obj) {
   if (obj === null || obj === undefined) return 'null';
@@ -136,7 +157,11 @@ function canonicalize(obj) {
     return String(obj);
   }
   if (typeof obj === 'boolean') return obj ? 'true' : 'false';
-  if (typeof obj === 'string') return JSON.stringify(obj);
+  if (typeof obj === 'string') {
+    var jsonStr = JSON.stringify(obj);
+    var inner = jsonStr.substring(1, jsonStr.length - 1);
+    return '"' + escapeNonAscii(inner) + '"';
+  }
   if (Array.isArray(obj)) {
     return '[' + obj.map(canonicalize).join(',') + ']';
   }
@@ -147,7 +172,7 @@ function canonicalize(obj) {
     });
     keys.sort();
     var parts = keys.map(function (k) {
-      return JSON.stringify(k) + ':' + canonicalize(obj[k]);
+      return '"' + escapeNonAscii(k) + '":' + canonicalize(obj[k]);
     });
     return '{' + parts.join(',') + '}';
   }
@@ -745,5 +770,22 @@ function testCanonicalSigning() {
     canonical: canonical,
     signature: sig,
     verified: verifyCanonicalSignature(sample, sig)
+  };
+}
+
+function testUnicodeEscaping() {
+  var sample = {
+    version: '1.0.0',
+    test: '6CO₂ + 6H₂O → C₆H₁₂O₆',
+    name: 'Castañeda',
+    greek: 'π ω θ'
+  };
+  var canonical = canonicalize(sample);
+  var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
+  return {
+    canonical: canonical,
+    signature: sig,
+    verified: verifyCanonicalSignature(sample, sig),
+    hasNonAscii: /[^\x00-\x7F]/.test(canonical)
   };
 }
