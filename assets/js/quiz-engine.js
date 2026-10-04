@@ -1,16 +1,7 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 2.0.1
+   Version: 2.1.0
    App: General Science
-   ------------------------------------------------------------
-   Changelog:
-     v2.0.1: Added console.log inside lock block for visibility.
-             Lock events also pushed to backend (via Sync.pushLock)
-             when backend is enabled. Preserves all v2.0.0 behavior.
-     v2.0.0: Uses Randomize (seeded shuffle) instead of Math.random.
-             Attaches competency/bloomLevel/set/originalIndex to
-             itemResults. Auto-enqueues attempts via SyncAuto.
-     v1.0.1: Show review screen when reopening a passed quiz.
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -29,9 +20,6 @@ const QuizEngine = (() => {
   let startTime = null;
   let submitting = false;
 
-  /* ============================================================
-     INIT
-     ============================================================ */
   async function init(config) {
     const user = Store.getCurrentUser();
     if (!user) {
@@ -56,6 +44,9 @@ const QuizEngine = (() => {
       allowRetake: config.allowRetake === true
     };
 
+    // Check backend for pending unlocks BEFORE checking local lock
+    await _checkBackendUnlocks(ctx.lrn);
+
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
       renderLocked();
       return;
@@ -77,6 +68,29 @@ const QuizEngine = (() => {
     renderIntro();
   }
 
+  async function _checkBackendUnlocks(lrn) {
+    if (typeof Sync === 'undefined' || typeof Sync.pullUnlocks !== 'function') return;
+    if (typeof CONFIG === 'undefined' || !CONFIG.backendEnabled) return;
+
+    try {
+      var res = await Sync.pullUnlocks(lrn);
+      if (!res || !res.ok || !res.records || !res.records.length) return;
+
+      res.records.forEach(function (u) {
+        var lockKey = u.term + '_' + u.assessment;
+        if (Store.isAssessmentLocked(lrn, lockKey)) {
+          Store.unlockAssessment(lrn, lockKey);
+          console.log('[QuizEngine] 🔓 Remote unlock applied:', lockKey);
+        }
+        if (typeof Sync.markUnlockApplied === 'function') {
+          Sync.markUnlockApplied(u.unlockId).catch(function () {});
+        }
+      });
+    } catch (e) {
+      console.warn('[QuizEngine] Unlock check failed:', e.message);
+    }
+  }
+
   function _getSetLetter(section) {
     if (typeof CONFIG !== 'undefined' && CONFIG.SET_ASSIGNMENT && CONFIG.SET_ASSIGNMENT[section]) {
       return CONFIG.SET_ASSIGNMENT[section];
@@ -94,13 +108,9 @@ const QuizEngine = (() => {
     return null;
   }
 
-  /* ============================================================
-     INTRO SCREEN
-     ============================================================ */
   function renderIntro() {
     const container = document.getElementById('quiz-root');
     if (!container) return;
-
     const mins = Math.round(ctx.timeLimit / 60);
 
     container.innerHTML = `
@@ -136,9 +146,6 @@ const QuizEngine = (() => {
     document.getElementById('quiz-start').addEventListener('click', startQuiz);
   }
 
-  /* ============================================================
-     PASSED REVIEW SCREEN
-     ============================================================ */
   function renderPassedReview(prev) {
     const container = document.getElementById('quiz-root');
     if (!container) return;
@@ -149,7 +156,6 @@ const QuizEngine = (() => {
     const percent = prev.percent || Math.round((correctCount / total) * 100);
     const timeUsed = prev.timeUsed != null ? APP.formatTime(prev.timeUsed) : '—';
     const completedAt = prev.timestamp ? APP.formatDate(prev.timestamp) : '—';
-
     const emoji = percent >= 90 ? '🏆' : '🎉';
     const titleText = percent >= 90 ? 'Mastered!' : 'Passed!';
 
@@ -180,36 +186,16 @@ const QuizEngine = (() => {
                 let border = '1px solid #e0e0e0';
                 let color = '#5f6368';
                 let icon = '';
-
-                if (isExpected) {
-                  bg = '#e8f5e9';
-                  border = '1px solid #2e7d32';
-                  color = '#1b5e20';
-                  icon = ' ✓';
-                } else if (isGiven && !isCorrect) {
-                  bg = '#ffebee';
-                  border = '1px solid #c62828';
-                  color = '#b71c1c';
-                  icon = ' ✗';
-                }
-
-                return `
-                  <div style="padding:6px 10px;border-radius:6px;background:${bg};border:${border};color:${color};">
-                    ${opt}${icon}
-                  </div>
-                `;
+                if (isExpected) { bg = '#e8f5e9'; border = '1px solid #2e7d32'; color = '#1b5e20'; icon = ' ✓'; }
+                else if (isGiven && !isCorrect) { bg = '#ffebee'; border = '1px solid #c62828'; color = '#b71c1c'; icon = ' ✗'; }
+                return `<div style="padding:6px 10px;border-radius:6px;background:${bg};border:${border};color:${color};">${opt}${icon}</div>`;
               }).join('')}
             </div>
           </div>
         `;
       }).join('');
     } else {
-      itemAnalysisHTML = `
-        <div class="alert alert-info">
-          <strong>ℹ️ No item-level data</strong>
-          <p style="margin-top:6px;font-size:0.85rem;">This attempt was submitted before item tracking was enabled.</p>
-        </div>
-      `;
+      itemAnalysisHTML = `<div class="alert alert-info"><strong>ℹ️ No item-level data</strong><p style="margin-top:6px;font-size:0.85rem;">This attempt was submitted before item tracking was enabled.</p></div>`;
     }
 
     container.innerHTML = `
@@ -219,22 +205,10 @@ const QuizEngine = (() => {
         <p class="quiz-result-message">${ctx.title} · Completed ${completedAt}</p>
 
         <div class="quiz-result-stats">
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:#2e7d32;">${correctCount}</div>
-            <div class="text-small text-muted">Correct</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:#5f6368;">${total - correctCount}</div>
-            <div class="text-small text-muted">Wrong</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:#2e7d32;">${percent}%</div>
-            <div class="text-small text-muted">Score</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:#5f6368;">${timeUsed}</div>
-            <div class="text-small text-muted">Time Used</div>
-          </div>
+          <div><div style="font-size:2rem;font-weight:800;color:#2e7d32;">${correctCount}</div><div class="text-small text-muted">Correct</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:#5f6368;">${total - correctCount}</div><div class="text-small text-muted">Wrong</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:#2e7d32;">${percent}%</div><div class="text-small text-muted">Score</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:#5f6368;">${timeUsed}</div><div class="text-small text-muted">Time Used</div></div>
         </div>
 
         <div class="alert alert-success" style="text-align:left;">
@@ -258,33 +232,24 @@ const QuizEngine = (() => {
     `;
   }
 
-  /* ============================================================
-     RETRY SCREEN
-     ============================================================ */
   function renderRetryScreen(prev) {
     const container = document.getElementById('quiz-root');
     if (!container) return;
-
     const percent = prev.percent || 0;
 
     container.innerHTML = `
       <div class="card" style="max-width:640px;margin:0 auto;">
-        <div class="card-header">
-          <span class="card-title">📝 ${ctx.title}</span>
-        </div>
-
+        <div class="card-header"><span class="card-title">📝 ${ctx.title}</span></div>
         <div style="text-align:center;padding:20px 0;">
           <div style="font-size:3rem;">📖</div>
           <h2 style="color:var(--color-primary-dark);margin:12px 0;">Previous Attempt</h2>
           <p class="text-muted">Your previous score: <strong>${percent}%</strong> (${prev.score}/${prev.total})</p>
           <p class="text-muted text-small">Passing score: ${ctx.passScore}%</p>
         </div>
-
         <div class="alert alert-warning" style="text-align:left;">
           <strong>📖 Below passing score</strong>
           <p style="margin-top:6px;font-size:0.88rem;">Please review your previous attempt below, then try again when ready.</p>
         </div>
-
         <div style="display:flex;gap:12px;margin-top:20px;">
           <button id="quiz-retry" class="btn btn-primary" style="flex:1;">🔄 Retake Now</button>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
@@ -295,18 +260,11 @@ const QuizEngine = (() => {
     document.getElementById('quiz-retry').addEventListener('click', () => renderIntro());
   }
 
-  /* ============================================================
-     START QUIZ
-     ============================================================ */
   async function startQuiz() {
     try {
       if (typeof Randomize !== 'undefined' && Randomize.generateSet) {
         const assessmentId = ctx.term + '-' + ctx.id;
-        shuffledSet = Randomize.generateSet(
-          { questions: ctx.questions },
-          assessmentId,
-          ctx.setLetter
-        );
+        shuffledSet = Randomize.generateSet({ questions: ctx.questions }, assessmentId, ctx.setLetter);
       }
     } catch (e) {
       console.warn('[QuizEngine] Randomize unavailable, using legacy shuffle:', e.message);
@@ -319,14 +277,8 @@ const QuizEngine = (() => {
         assessmentId: ctx.term + '-' + ctx.id,
         setLetter: ctx.setLetter,
         questions: legacy.map((q, i) => ({
-          setIndex: i,
-          originalIndex: i,
-          id: q.id,
-          text: q.text,
-          options: q.options,
-          correct: q.correct,
-          competency: q.competency || null,
-          bloomLevel: q.bloomLevel || null
+          setIndex: i, originalIndex: i, id: q.id, text: q.text, options: q.options, correct: q.correct,
+          competency: q.competency || null, bloomLevel: q.bloomLevel || null
         }))
       };
     }
@@ -348,14 +300,10 @@ const QuizEngine = (() => {
       }
     }, 3);
 
-    timer = Security.createTimer(
-      ctx.timeLimit,
-      updateTimerDisplay,
-      () => {
-        APP.toast('⏰ Time is up! Submitting...', 'warning', 3000);
-        submitQuiz(true);
-      }
-    );
+    timer = Security.createTimer(ctx.timeLimit, updateTimerDisplay, () => {
+      APP.toast('⏰ Time is up! Submitting...', 'warning', 3000);
+      submitQuiz(true);
+    });
 
     autosaveTimer = setInterval(saveProgress, AUTOSAVE_INTERVAL);
     restoreSaved();
@@ -364,9 +312,6 @@ const QuizEngine = (() => {
     renderQuestion();
   }
 
-  /* ============================================================
-     QUIZ SHELL
-     ============================================================ */
   function renderQuizShell() {
     const container = document.getElementById('quiz-root');
     container.innerHTML = `
@@ -378,20 +323,16 @@ const QuizEngine = (() => {
           </div>
           <div class="activity-timer" id="quiz-timer" style="font-family:'Consolas',monospace;font-size:1.1rem;">--:--</div>
         </div>
-
         <div class="progress-bar" style="margin-bottom:20px;">
           <div class="progress-fill" id="quiz-progress" style="width:0%;"></div>
         </div>
-
         <div id="question-body"></div>
         <div id="quiz-nav" style="display:flex;gap:8px;margin-top:20px;"></div>
         <div class="autosave-indicator" id="autosave-indicator"></div>
-
         <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
           <button id="quiz-prev" class="btn btn-outline" style="flex:1;">← Previous</button>
           <button id="quiz-next" class="btn btn-primary" style="flex:1;">Next →</button>
         </div>
-
         <div style="text-align:center;margin-top:16px;">
           <button id="quiz-submit" class="btn btn-accent" style="padding:12px 32px;">✅ Submit Assessment</button>
         </div>
@@ -401,13 +342,9 @@ const QuizEngine = (() => {
     document.getElementById('quiz-prev').addEventListener('click', () => goTo(currentIndex - 1));
     document.getElementById('quiz-next').addEventListener('click', () => goTo(currentIndex + 1));
     document.getElementById('quiz-submit').addEventListener('click', confirmSubmit);
-
     renderNav();
   }
 
-  /* ============================================================
-     QUESTION RENDER
-     ============================================================ */
   function renderQuestion() {
     const q = shuffledSet.questions[currentIndex];
     const body = document.getElementById('question-body');
@@ -415,9 +352,7 @@ const QuizEngine = (() => {
 
     body.innerHTML = `
       <div style="padding:16px 0;">
-        <div style="font-size:1.05rem;font-weight:600;color:#1a1a1a;margin-bottom:16px;">
-          ${currentIndex + 1}. ${q.text}
-        </div>
+        <div style="font-size:1.05rem;font-weight:600;color:#1a1a1a;margin-bottom:16px;">${currentIndex + 1}. ${q.text}</div>
         <div id="options" style="display:flex;flex-direction:column;gap:10px;"></div>
       </div>
     `;
@@ -427,26 +362,16 @@ const QuizEngine = (() => {
       const isSelected = answers[currentIndex] === opt;
       const optEl = document.createElement('label');
       optEl.className = 'quiz-option';
-      optEl.style.cssText = `
-        display:flex;align-items:center;gap:12px;
-        padding:14px 16px;border:2px solid ${isSelected ? 'var(--color-primary)' : '#dadce0'};
-        border-radius:10px;cursor:pointer;transition:all 0.15s ease;
-        background:${isSelected ? 'var(--color-primary-light)' : '#fff'};
-      `;
-      optEl.innerHTML = `
-        <input type="radio" name="q-${currentIndex}" value="${escapeHtml(opt)}" ${isSelected ? 'checked' : ''} />
-        <span style="font-size:0.95rem;">${escapeHtml(opt)}</span>
-      `;
+      optEl.style.cssText = `display:flex;align-items:center;gap:12px;padding:14px 16px;border:2px solid ${isSelected ? 'var(--color-primary)' : '#dadce0'};border-radius:10px;cursor:pointer;transition:all 0.15s ease;background:${isSelected ? 'var(--color-primary-light)' : '#fff'};`;
+      optEl.innerHTML = `<input type="radio" name="q-${currentIndex}" value="${escapeHtml(opt)}" ${isSelected ? 'checked' : ''} /><span style="font-size:0.95rem;">${escapeHtml(opt)}</span>`;
       optEl.addEventListener('click', () => selectAnswer(opt));
       optionsEl.appendChild(optEl);
     });
 
     document.getElementById('q-current').textContent = currentIndex + 1;
     document.getElementById('quiz-progress').style.width = `${((currentIndex + 1) / shuffledSet.questions.length) * 100}%`;
-
     document.getElementById('quiz-prev').disabled = currentIndex === 0;
     document.getElementById('quiz-next').disabled = currentIndex === shuffledSet.questions.length - 1;
-
     renderNav();
   }
 
@@ -462,15 +387,11 @@ const QuizEngine = (() => {
     renderQuestion();
   }
 
-  /* ============================================================
-     NAVIGATION DOTS
-     ============================================================ */
   function renderNav() {
     const nav = document.getElementById('quiz-nav');
     if (!nav) return;
     nav.innerHTML = '';
     nav.style.flexWrap = 'wrap';
-
     shuffledSet.questions.forEach((_, i) => {
       const dot = document.createElement('span');
       const isCurrent = i === currentIndex;
@@ -482,40 +403,22 @@ const QuizEngine = (() => {
     });
   }
 
-  /* ============================================================
-     TIMER
-     ============================================================ */
   function updateTimerDisplay(remaining) {
     const el = document.getElementById('quiz-timer');
     if (!el) return;
     el.textContent = APP.formatTime(Math.max(0, remaining));
-
-    if (remaining <= 60) {
-      el.style.color = 'var(--color-danger)';
-      el.style.fontWeight = '800';
-    } else if (remaining <= 300) {
-      el.style.color = 'var(--color-warning)';
-    }
+    if (remaining <= 60) { el.style.color = 'var(--color-danger)'; el.style.fontWeight = '800'; }
+    else if (remaining <= 300) { el.style.color = 'var(--color-warning)'; }
   }
 
-  /* ============================================================
-     AUTOSAVE
-     ============================================================ */
   function saveProgress() {
     if (!ctx) return;
     try {
       sessionStorage.setItem(`gsa_quiz_${ctx.term}_${ctx.id}`, JSON.stringify({
-        answers,
-        currentIndex,
-        elapsed: ctx.timeLimit - (timer?.getRemaining() || 0),
-        savedAt: Date.now()
+        answers, currentIndex, elapsed: ctx.timeLimit - (timer?.getRemaining() || 0), savedAt: Date.now()
       }));
       const ind = document.getElementById('autosave-indicator');
-      if (ind) {
-        ind.textContent = '💾 Progress saved';
-        ind.style.opacity = '1';
-        setTimeout(() => { ind.style.opacity = '0'; }, 1500);
-      }
+      if (ind) { ind.textContent = '💾 Progress saved'; ind.style.opacity = '1'; setTimeout(() => { ind.style.opacity = '0'; }, 1500); }
     } catch (e) { /* ignore */ }
   }
 
@@ -532,9 +435,6 @@ const QuizEngine = (() => {
     } catch (e) { /* ignore */ }
   }
 
-  /* ============================================================
-     SUBMIT
-     ============================================================ */
   function confirmSubmit() {
     const unanswered = shuffledSet.questions.length - Object.keys(answers).length;
     const msg = unanswered > 0
@@ -562,23 +462,13 @@ const QuizEngine = (() => {
         const isCorrect = given === q.correct;
         if (isCorrect) correct++;
         itemResults.push({
-          index: i,
-          originalIndex: q.originalIndex != null ? q.originalIndex : i,
-          questionId: q.id || null,
-          correct: isCorrect,
-          given: given || null,
-          expected: q.correct,
-          competency: q.competency || null,
-          bloomLevel: q.bloomLevel || null
+          index: i, originalIndex: q.originalIndex != null ? q.originalIndex : i,
+          questionId: q.id || null, correct: isCorrect, given: given || null,
+          expected: q.correct, competency: q.competency || null, bloomLevel: q.bloomLevel || null
         });
       });
       const total = shuffledSet.questions.length;
-      scoreResult = {
-        correct,
-        total,
-        percent: Math.round((correct / total) * 100),
-        itemResults
-      };
+      scoreResult = { correct, total, percent: Math.round((correct / total) * 100), itemResults };
     }
 
     const scorePercent = scoreResult.percent;
@@ -587,35 +477,24 @@ const QuizEngine = (() => {
     const timestamp = new Date().toISOString();
 
     const payload = {
-      score: scoreResult.correct,
-      total: scoreResult.total,
-      percent: scorePercent,
-      passed,
-      timeUsed,
-      itemResults: scoreResult.itemResults,
-      set: ctx.setLetter,
-      timestamp
+      score: scoreResult.correct, total: scoreResult.total, percent: scorePercent, passed,
+      timeUsed, itemResults: scoreResult.itemResults, set: ctx.setLetter, timestamp
     };
 
     Store.saveScore(ctx.lrn, ctx.term, ctx.type, ctx.id, payload);
     console.log('[QuizEngine] Score saved:', ctx.term, ctx.id, '=', scorePercent + '%', passed ? '(PASS)' : '(FAIL)');
 
-    // Auto-enqueue for background sync (fire-and-forget)
     try {
       if (typeof SyncAuto !== 'undefined' && SyncAuto.enqueue) {
         SyncAuto.enqueue(ctx.lrn, ctx.term, ctx.id, {
-          score: payload.score,
-          total: payload.total,
-          itemResults: payload.itemResults,
-          set: payload.set,
-          timestamp: payload.timestamp
+          score: payload.score, total: payload.total,
+          itemResults: payload.itemResults, set: payload.set, timestamp: payload.timestamp
         });
       }
     } catch (e) {
       console.warn('[QuizEngine] Auto-enqueue failed:', e.message);
     }
 
-    // Lock if failed or forced (tab-switch, timeout)
     if (!passed || forceLock) {
       const lockKey = `${ctx.term}_${ctx.id}`;
       Store.lockAssessment(ctx.lrn, lockKey, {
@@ -623,31 +502,14 @@ const QuizEngine = (() => {
         score: scorePercent
       });
       console.log('[QuizEngine] 🔒 Locked:', lockKey, 'at', scorePercent + '%', '| Reason:', forceLock ? 'tab-switch' : 'failed');
-
-      // Push lock to backend for cross-device sync (fire-and-forget)
-      try {
-        if (typeof Sync !== 'undefined' && typeof Sync.pushLock === 'function') {
-          Sync.pushLock(ctx.lrn, ctx.term, ctx.id, {
-            reason: forceLock ? 'tab-switch' : 'failed',
-            score: scorePercent,
-            timestamp: timestamp
-          });
-        }
-      } catch (e) {
-        console.warn('[QuizEngine] Lock push failed:', e.message);
-      }
     }
 
     sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
     document.body.classList.remove('quiz-active');
-
     renderResults(payload);
     submitting = false;
   }
 
-  /* ============================================================
-     RESULTS
-     ============================================================ */
   function renderResults(result) {
     const container = document.getElementById('quiz-root');
     const emoji = result.percent >= 90 ? '🏆' : result.percent >= 75 ? '🎉' : '📖';
@@ -658,32 +520,17 @@ const QuizEngine = (() => {
         <span class="quiz-result-emoji">${emoji}</span>
         <h2 class="quiz-result-title ${result.passed ? 'passed' : 'failed'}">${title}</h2>
         <p class="quiz-result-message">${ctx.title}</p>
-
         <div class="quiz-result-stats">
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:var(--color-primary);">${result.score}</div>
-            <div class="text-small text-muted">Correct</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:var(--color-text-muted);">${result.total - result.score}</div>
-            <div class="text-small text-muted">Wrong</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:${result.passed ? 'var(--color-success)' : 'var(--color-warning)'};">${result.percent}%</div>
-            <div class="text-small text-muted">Score</div>
-          </div>
-          <div>
-            <div style="font-size:2rem;font-weight:800;color:var(--color-text-muted);">${APP.formatTime(result.timeUsed)}</div>
-            <div class="text-small text-muted">Time Used</div>
-          </div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-primary);">${result.score}</div><div class="text-small text-muted">Correct</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-text-muted);">${result.total - result.score}</div><div class="text-small text-muted">Wrong</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:${result.passed ? 'var(--color-success)' : 'var(--color-warning)'};">${result.percent}%</div><div class="text-small text-muted">Score</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-text-muted);">${APP.formatTime(result.timeUsed)}</div><div class="text-small text-muted">Time Used</div></div>
         </div>
 
         ${!result.passed ? `
           <div class="alert alert-warning" style="text-align:left;margin-top:16px;">
             <strong>📖 Below passing score</strong>
-            <p style="margin-top:6px;font-size:0.9rem;">
-              You need ${ctx.passScore}% to pass. Please review the lesson and ask your teacher to unlock this assessment for a retake.
-            </p>
+            <p style="margin-top:6px;font-size:0.9rem;">You need ${ctx.passScore}% to pass. Please review the lesson and ask your teacher to unlock this assessment for a retake.</p>
           </div>
         ` : `
           <div class="alert alert-success" style="text-align:left;margin-top:16px;">
@@ -700,37 +547,23 @@ const QuizEngine = (() => {
     `;
   }
 
-  /* ============================================================
-     LOCKED
-     ============================================================ */
   function renderLocked() {
     const container = document.getElementById('quiz-root');
     container.innerHTML = `
       <div class="card quiz-locked" style="max-width:520px;margin:0 auto;">
         <span class="lock-icon">🔒</span>
         <h2 style="color:var(--color-danger);">Assessment Locked</h2>
-        <p class="text-muted" style="margin:12px 0;">
-          This assessment was locked because you did not reach the passing score, or a security violation was detected.
-        </p>
+        <p class="text-muted" style="margin:12px 0;">This assessment was locked because you did not reach the passing score, or a security violation was detected.</p>
         <p class="text-small text-muted">Please ask your teacher to unlock this assessment for a retake.</p>
         <a href="../../student/dashboard.html" class="btn btn-primary mt-lg">🏠 Back to Dashboard</a>
       </div>
     `;
   }
 
-  /* ============================================================
-     HELPERS
-     ============================================================ */
   function escapeHtml(str) {
     return String(str == null ? '' : str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  /* ============================================================
-     PUBLIC API
-     ============================================================ */
   return { init };
 })();
