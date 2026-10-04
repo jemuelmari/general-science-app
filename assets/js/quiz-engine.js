@@ -23,7 +23,7 @@ const QuizEngine = (() => {
   async function init(config) {
     const user = Store.getCurrentUser();
     if (!user) {
-      window.location.href = '../../student/login.html';
+      window.location.href = '../../login.html';
       return;
     }
 
