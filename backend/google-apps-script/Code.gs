@@ -1,10 +1,13 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.2.3
+   Version: 1.2.4
    ------------------------------------------------------------
    Changelog:
-     v1.2.3: Added pushUnlock + pullUnlocks actions for
-             cross-device lock removal. New Unlocks sheet.
+     v1.2.4: Fixed LRN type coercion. Google Sheets stores long
+             numeric LRNs as numbers, but the frontend sends them
+             as strings. String() coercion on both read and write
+             fixes the pullUnlocks empty-results bug.
+     v1.2.3: Added pushUnlock + pullUnlocks + markUnlockApplied.
      v1.2.2: canonicalize() escapes non-ASCII as \uXXXX.
      v1.2.1: Fixed canonicalize() arguments.callee hack.
      v1.2.0: Added Attempts + History sheets, 5 new actions.
@@ -38,10 +41,6 @@ const CONFIG = {
   VALID_TERMS: ['term1', 'term2', 'term3']
 };
 
-// ============================================================
-// MAIN ROUTER — POST
-// ============================================================
-
 function doPost(e) {
   var startedAt = Date.now();
   try {
@@ -67,7 +66,7 @@ function doPost(e) {
       case 'getTermAccess':     response = getTermAccess(body); break;
       case 'setTermAccess':     response = setTermAccess(body); break;
       case 'health':
-        response = { ok: true, message: 'GSA backend is running', version: '1.2.3', time: new Date().toISOString() };
+        response = { ok: true, message: 'GSA backend is running', version: '1.2.4', time: new Date().toISOString() };
         break;
       case 'pushAttempt':       response = pushAttempt(body); break;
       case 'pullAttempts':      response = pullAttempts(body); break;
@@ -96,7 +95,7 @@ function doGet(e) {
   var action = e.parameter.action;
 
   if (action === 'ping') {
-    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.3', time: new Date().toISOString() });
+    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.4', time: new Date().toISOString() });
   }
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -124,10 +123,6 @@ function parseBody(e) {
   try { return JSON.parse(e.postData.contents); }
   catch (err) { throw new Error('Invalid JSON body: ' + err.message); }
 }
-
-// ============================================================
-// CANONICAL JSON + HMAC
-// ============================================================
 
 function escapeNonAscii(str) {
   var out = '';
@@ -232,22 +227,9 @@ function checkRateLimit(key, action) {
 }
 
 // ============================================================
-// ACTION: pushUnlock  (NEW v1.2.3)
+// ACTION: pushUnlock
 // ============================================================
 
-/**
- * Teacher pushes an unlock for a specific student+assessment.
- * The student's device will poll for unlocks and clear local locks.
- *
- * body = {
- *   action: 'pushUnlock',
- *   lrn: student LRN,
- *   term: 'term2',
- *   assessment: 'quiz1',
- *   reason: 'retake-approved',
- *   unlockedBy: 'teacher' (optional)
- * }
- */
 function pushUnlock(body) {
   var required = ['lrn', 'term', 'assessment'];
   for (var i = 0; i < required.length; i++) {
@@ -263,14 +245,14 @@ function pushUnlock(body) {
     return { ok: false, error: 'Invalid assessment: ' + body.assessment };
   }
 
+  var searchLrn = String(body.lrn);
   var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
   var data = sheet.getDataRange().getValues();
   var now = new Date().toISOString();
-  var unlockId = body.lrn + '-' + body.term + '-' + body.assessment + '-' + Date.now();
+  var unlockId = searchLrn + '-' + body.term + '-' + body.assessment + '-' + Date.now();
 
-  // Check for existing pending unlock (dedupe)
   for (var r = 1; r < data.length; r++) {
-    if (data[r][1] === body.lrn &&
+    if (String(data[r][1]) === searchLrn &&
         data[r][2] === body.term &&
         data[r][3] === body.assessment &&
         data[r][6] !== 'applied') {
@@ -285,7 +267,7 @@ function pushUnlock(body) {
 
   sheet.appendRow([
     unlockId,
-    body.lrn,
+    searchLrn,
     body.term,
     body.assessment,
     body.reason || 'retake-approved',
@@ -304,20 +286,16 @@ function pushUnlock(body) {
 }
 
 // ============================================================
-// ACTION: pullUnlocks  (NEW v1.2.3)
+// ACTION: pullUnlocks
 // ============================================================
 
-/**
- * Student device polls for pending unlocks.
- * Filters: lrn (required)
- * Returns: { ok, count, records }
- */
 function pullUnlocks(body) {
   body = body || {};
   if (!body.lrn) {
     return { ok: false, error: 'Missing lrn' };
   }
 
+  var searchLrn = String(body.lrn);
   var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
   var data = sheet.getDataRange().getValues();
   var records = [];
@@ -325,7 +303,7 @@ function pullUnlocks(body) {
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    if (row[1] !== body.lrn) continue;
+    if (String(row[1]) !== searchLrn) continue;
     if (row[6] === 'applied') continue;
 
     var pushedTs = row[5];
@@ -334,7 +312,7 @@ function pullUnlocks(body) {
 
     records.push({
       unlockId: row[0],
-      lrn: row[1],
+      lrn: String(row[1]),
       term: row[2],
       assessment: row[3],
       reason: row[4],
@@ -348,13 +326,9 @@ function pullUnlocks(body) {
 }
 
 // ============================================================
-// ACTION: markUnlockApplied  (NEW v1.2.3)
+// ACTION: markUnlockApplied
 // ============================================================
 
-/**
- * Student device confirms the unlock was applied.
- * body = { action: 'markUnlockApplied', unlockId: '...' }
- */
 function markUnlockApplied(body) {
   if (!body || !body.unlockId) {
     return { ok: false, error: 'Missing unlockId' };
@@ -414,7 +388,7 @@ function pushAttempt(body) {
   var clientTimestamp = body.clientTimestamp || attempt.timestamp || '';
 
   sheet.appendRow([
-    body.pushId, body.lrn, studentName, section,
+    body.pushId, String(body.lrn), studentName, section,
     body.term, body.assessment,
     Number(body.score || 0), Number(body.total || 0),
     JSON.stringify(body.itemResults || []),
@@ -427,10 +401,6 @@ function pushAttempt(body) {
   return { ok: true, pushId: body.pushId, serverTimestamp: serverTimestamp, message: 'Attempt recorded' };
 }
 
-// ============================================================
-// ACTION: pullAttempts
-// ============================================================
-
 function pullAttempts(body) {
   body = body || {};
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
@@ -440,13 +410,13 @@ function pullAttempts(body) {
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    var rowLrn = row[1];
+    var rowLrn = String(row[1]);
     var rowSection = row[3];
     var rowTerm = row[4];
     var rowAssessment = row[5];
     var used = row[13] === 'true' || row[13] === true;
 
-    if (body.lrn && rowLrn !== body.lrn) continue;
+    if (body.lrn && rowLrn !== String(body.lrn)) continue;
     if (body.section && rowSection !== body.section) continue;
     if (body.term && rowTerm !== body.term) continue;
     if (body.assessment && rowAssessment !== body.assessment) continue;
@@ -598,8 +568,8 @@ function registerSyncCode(body) {
   var section = student.section || '';
   var createdAt = new Date().toISOString();
 
-  sheet.appendRow([code, lrn, studentName, section, JSON.stringify(payload), signature, createdAt, 'false']);
-  trimOldCodes(lrn);
+  sheet.appendRow([code, String(lrn), studentName, section, JSON.stringify(payload), signature, createdAt, 'false']);
+  trimOldCodes(String(lrn));
 
   return { ok: true, code: code, createdAt: createdAt, message: 'Sync code registered' };
 }
@@ -637,7 +607,7 @@ function pullAllPending(body) {
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
     var used = row[7] === 'true' || row[7] === true;
-    if (body.lrn && row[1] !== body.lrn) continue;
+    if (body.lrn && String(row[1]) !== String(body.lrn)) continue;
     if (body.section && row[3] !== body.section) continue;
     if (used) continue;
 
@@ -650,7 +620,7 @@ function pullAllPending(body) {
     catch (e) { continue; }
 
     records.push({
-      code: row[0], lrn: row[1], studentName: row[2], section: row[3],
+      code: row[0], lrn: String(row[1]), studentName: row[2], section: row[3],
       payload: payload, signature: signature, createdAt: row[6]
     });
   }
@@ -790,7 +760,7 @@ function trimOldCodes(lrn) {
   var rows = [];
 
   for (var i = 1; i < data.length; i++) {
-    if (data[i][1] === lrn) {
+    if (String(data[i][1]) === String(lrn)) {
       rows.push({ rowIndex: i + 1, createdAt: new Date(data[i][6]) });
     }
   }
