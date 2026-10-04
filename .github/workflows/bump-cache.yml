@@ -1,7 +1,7 @@
 name: Bump cache-bust versions
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -33,100 +33,124 @@ jobs:
           echo "VERSION=1.3.0-${SHORT_SHA}" >> $GITHUB_OUTPUT
           echo "New version: 1.3.0-${SHORT_SHA}"
 
-      - name: Bump existing ?v= strings in all HTML files
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bump existing ?v= strings + inject sync scripts
+        env:
+          NEW_VERSION: ${{ steps.ver.outputs.VERSION }}
         run: |
-          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
-          FOUND=0
-          UPDATED=0
+          python3 << 'PYEOF'
+          import os
+          import re
 
-          while IFS= read -r file; do
-            FOUND=$((FOUND + 1))
-            if grep -qE '\?v=[a-zA-Z0-9._-]+' "$file"; then
-              sed -i -E "s/\?v=[a-zA-Z0-9._-]+/\?v=${NEW_VERSION}/g" "$file"
-              UPDATED=$((UPDATED + 1))
-              echo "  ✅ Bumped: $file"
-            fi
-          done < <(find . -type f -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*")
+          NEW_VERSION = os.environ['NEW_VERSION']
+          print(f'New version: {NEW_VERSION}')
 
-          echo ""
-          echo "📊 Scanned: $FOUND HTML files"
-          echo "📊 Bumped: $UPDATED HTML files"
+          # Step 1 — Bump existing ?v= strings in all HTML files
+          bumped = 0
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  new_content = re.sub(r'\?v=[a-zA-Z0-9._-]+', f'?v={NEW_VERSION}', content)
+                  if new_content != content:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(new_content)
+                      bumped += 1
+                      print(f'  ✅ Bumped: {path}')
+          print(f'')
+          print(f'📊 Bumped: {bumped} HTML files')
 
-      - name: Inject sync.js + sync-auto.js into quiz pages
+          # Step 2 — Inject sync.js + sync-auto.js into quiz pages
+          injected = 0
+          skipped = 0
+          for root, dirs, files in os.walk('./student'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  # Only inject into assessment pages
+                  if '/assessments/' not in path.replace('\\', '/'):
+                      continue
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  if 'quiz-engine.js' not in content:
+                      continue
+                  if 'assets/js/sync.js' in content:
+                      skipped += 1
+                      print(f'  ⏭️  Already has sync.js: {path}')
+                      continue
+
+                  # Determine relative path prefix
+                  # student/term1/assessments/quiz1.html → ../../../
+                  depth = path.count(os.sep) - path.count('./')
+                  rel = '../' * (depth - 1) if depth > 1 else '../'
+
+                  # Insert sync.js and sync-auto.js before quiz-engine.js line
+                  lines = content.split('\n')
+                  new_lines = []
+                  done = False
+                  for line in lines:
+                      if 'quiz-engine.js' in line and not done:
+                          indent = line[:len(line) - len(line.lstrip())]
+                          new_lines.append(f'{indent}<script src="{rel}assets/js/sync.js?v=2.0.5"></script>')
+                          new_lines.append(f'{indent}<script src="{rel}assets/js/sync-auto.js?v=1.1.0"></script>')
+                          done = True
+                      new_lines.append(line)
+
+                  with open(path, 'w', encoding='utf-8') as f:
+                      f.write('\n'.join(new_lines))
+                  injected += 1
+                  print(f'  🔧 Injected: {path}')
+          print(f'')
+          print(f'📊 Injected: {injected} quiz files')
+          print(f'📊 Already had sync.js: {skipped} quiz files')
+
+          # Step 3 — Add ?v= to scripts that are missing it
+          added = 0
+          patterns = [
+              (r'(src="([^"]*\/)?config\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
+              (r'(src="([^"]*\/)?app\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
+              (r'(src="([^"]*\/)?store\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
+              (r'(src="([^"]*\/)?security\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
+              (r'(src="([^"]*\/)?transmutation\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
+          ]
+
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  orig = content
+                  for pattern, replacement in patterns:
+                      content = re.sub(pattern, replacement, content)
+                  if content != orig:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(content)
+                      added += 1
+                      print(f'  ✅ Added ?v=: {path}')
+          print(f'')
+          print(f'📊 Files with newly-added ?v=: {added}')
+          PYEOF
+
+      - name: Show git diff summary
         run: |
-          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
-          INJECTED=0
-          SKIPPED=0
-
-          # Find quiz/assessment HTML files in student/term*/assessments/
-          while IFS= read -r file; do
-            # Check if file loads quiz-engine.js
-            if ! grep -q 'quiz-engine.js' "$file"; then
-              continue
-            fi
-
-            # Check if sync.js already loaded
-            if grep -q 'assets/js/sync.js' "$file"; then
-              SKIPPED=$((SKIPPED + 1))
-              echo "  ⏭️  Already has sync.js: $file"
-              continue
-            fi
-
-            echo "  🔧 Injecting sync.js + sync-auto.js into: $file"
-
-            # Determine the relative path prefix based on location depth
-            # student/term1/assessments/quiz1.html → ../../../ 
-            REL_PATH="../../../"
-
-            # Find the line with quiz-engine.js and insert sync lines before it
-            # Use awk to insert before the quiz-engine.js line
-            awk -v rel="$REL_PATH" -v ver="$NEW_VERSION" '
-              /quiz-engine\.js/ && !done {
-                print "  <script src=\"" rel "assets/js/sync.js?v=2.0.5\"></script>";
-                print "  <script src=\"" rel "assets/js/sync-auto.js?v=1.1.0\"></script>";
-                done=1
-              }
-              { print }
-            ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-
-            INJECTED=$((INJECTED + 1))
-          done < <(find ./student -type f -name "*.html" -path "*/assessments/*" -not -path "./.git/*")
-
+          echo "=== Git status ==="
+          git status --short
           echo ""
-          echo "📊 Injected: $INJECTED quiz files"
-          echo "📊 Already had sync.js: $SKIPPED quiz files"
-
-      - name: Add ?v= to scripts that are missing it
-        run: |
-          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
-          UPDATED=0
-
-          # Find all HTML files, add ?v= to config.js/app.js/store.js/security.js/transmutation.js if missing
-          while IFS= read -r file; do
-            ORIGINAL="$file.tmp.orig"
-            cp "$file" "$ORIGINAL"
-
-            # Add ?v= to config.js if missing
-            sed -i -E 's/(src="[^"]*\/config\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
-            # Add ?v= to app.js if missing
-            sed -i -E 's/(src="[^"]*\/app\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
-            # Add ?v= to store.js if missing
-            sed -i -E 's/(src="[^"]*\/store\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
-            # Add ?v= to security.js if missing
-            sed -i -E 's/(src="[^"]*\/security\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
-            # Add ?v= to transmutation.js if missing
-            sed -i -E 's/(src="[^"]*\/transmutation\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
-
-            if ! diff -q "$ORIGINAL" "$file" > /dev/null; then
-              UPDATED=$((UPDATED + 1))
-              echo "  ✅ Added ?v= to missing scripts: $file"
-            fi
-
-            rm -f "$ORIGINAL"
-          done < <(find . -type f -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*")
-
-          echo ""
-          echo "📊 Files with newly-added ?v=: $UPDATED"
+          echo "=== Files changed ==="
+          git diff --stat
 
       - name: Commit changes
         run: |
