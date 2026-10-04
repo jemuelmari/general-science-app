@@ -9,6 +9,10 @@ on:
       - 'assets/js/sync.js'
       - 'assets/js/sync-auto.js'
       - 'config.js'
+      - 'assets/js/security.js'
+      - 'assets/js/store.js'
+      - 'assets/js/app.js'
+      - '.github/workflows/bump-cache.yml'
 
 jobs:
   bump:
@@ -25,34 +29,104 @@ jobs:
       - name: Compute new version string
         id: ver
         run: |
-          # Use short commit SHA + timestamp for uniqueness
           SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          TIMESTAMP=$(date +%Y%m%d%H%M)
           echo "VERSION=1.3.0-${SHORT_SHA}" >> $GITHUB_OUTPUT
           echo "New version: 1.3.0-${SHORT_SHA}"
 
-      - name: Find and update all HTML files
+      - name: Bump existing ?v= strings in all HTML files
         run: |
           NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
           FOUND=0
           UPDATED=0
 
-          # Find all HTML files in the repo
           while IFS= read -r file; do
             FOUND=$((FOUND + 1))
-            # Replace any ?v=... query in script/link tags with the new version
-            # Match patterns like: file.js?v=3, file.js?v=2.0.0, file.js?v=1.3.0-abc1234
             if grep -qE '\?v=[a-zA-Z0-9._-]+' "$file"; then
               sed -i -E "s/\?v=[a-zA-Z0-9._-]+/\?v=${NEW_VERSION}/g" "$file"
               UPDATED=$((UPDATED + 1))
-              echo "  ✅ Updated: $file"
+              echo "  ✅ Bumped: $file"
             fi
           done < <(find . -type f -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*")
 
           echo ""
           echo "📊 Scanned: $FOUND HTML files"
-          echo "📊 Updated: $UPDATED HTML files"
-          echo "🎯 New version string: ?v=${NEW_VERSION}"
+          echo "📊 Bumped: $UPDATED HTML files"
+
+      - name: Inject sync.js + sync-auto.js into quiz pages
+        run: |
+          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
+          INJECTED=0
+          SKIPPED=0
+
+          # Find quiz/assessment HTML files in student/term*/assessments/
+          while IFS= read -r file; do
+            # Check if file loads quiz-engine.js
+            if ! grep -q 'quiz-engine.js' "$file"; then
+              continue
+            fi
+
+            # Check if sync.js already loaded
+            if grep -q 'assets/js/sync.js' "$file"; then
+              SKIPPED=$((SKIPPED + 1))
+              echo "  ⏭️  Already has sync.js: $file"
+              continue
+            fi
+
+            echo "  🔧 Injecting sync.js + sync-auto.js into: $file"
+
+            # Determine the relative path prefix based on location depth
+            # student/term1/assessments/quiz1.html → ../../../ 
+            REL_PATH="../../../"
+
+            # Find the line with quiz-engine.js and insert sync lines before it
+            # Use awk to insert before the quiz-engine.js line
+            awk -v rel="$REL_PATH" -v ver="$NEW_VERSION" '
+              /quiz-engine\.js/ && !done {
+                print "  <script src=\"" rel "assets/js/sync.js?v=2.0.5\"></script>";
+                print "  <script src=\"" rel "assets/js/sync-auto.js?v=1.1.0\"></script>";
+                done=1
+              }
+              { print }
+            ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+
+            INJECTED=$((INJECTED + 1))
+          done < <(find ./student -type f -name "*.html" -path "*/assessments/*" -not -path "./.git/*")
+
+          echo ""
+          echo "📊 Injected: $INJECTED quiz files"
+          echo "📊 Already had sync.js: $SKIPPED quiz files"
+
+      - name: Add ?v= to scripts that are missing it
+        run: |
+          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
+          UPDATED=0
+
+          # Find all HTML files, add ?v= to config.js/app.js/store.js/security.js/transmutation.js if missing
+          while IFS= read -r file; do
+            ORIGINAL="$file.tmp.orig"
+            cp "$file" "$ORIGINAL"
+
+            # Add ?v= to config.js if missing
+            sed -i -E 's/(src="[^"]*\/config\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
+            # Add ?v= to app.js if missing
+            sed -i -E 's/(src="[^"]*\/app\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
+            # Add ?v= to store.js if missing
+            sed -i -E 's/(src="[^"]*\/store\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
+            # Add ?v= to security.js if missing
+            sed -i -E 's/(src="[^"]*\/security\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
+            # Add ?v= to transmutation.js if missing
+            sed -i -E 's/(src="[^"]*\/transmutation\.js)("|')/\1?v='"$NEW_VERSION"'\2/g' "$file"
+
+            if ! diff -q "$ORIGINAL" "$file" > /dev/null; then
+              UPDATED=$((UPDATED + 1))
+              echo "  ✅ Added ?v= to missing scripts: $file"
+            fi
+
+            rm -f "$ORIGINAL"
+          done < <(find . -type f -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*")
+
+          echo ""
+          echo "📊 Files with newly-added ?v=: $UPDATED"
 
       - name: Commit changes
         run: |
@@ -62,6 +136,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: auto-bump cache-bust to ${{ steps.ver.outputs.VERSION }}"
+            git commit -m "chore: auto-bump cache-bust + inject sync scripts"
             git push
           fi
