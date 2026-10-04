@@ -45,6 +45,7 @@ jobs:
 
           NEW_VERSION = os.environ['NEW_VERSION']
           print(f'New version: {NEW_VERSION}')
+          print()
 
           # Step 1 — Bump existing ?v= strings
           bumped = 0
@@ -64,7 +65,7 @@ jobs:
           print(f'📊 Bumped: {bumped} HTML files')
           print()
 
-          # Step 2 — Fix sync script injection (remove wrong ones, add correct ones)
+          # Step 2 — Fix sync script injection
           fixed = 0
           skipped = 0
           for root, dirs, files in os.walk('./student'):
@@ -83,21 +84,20 @@ jobs:
                   if 'quiz-engine.js' not in content:
                       continue
 
-                  # Compute correct relative path to repo root
-                  # student/term2/assessments/quiz1.html → ../../../
+                  # Compute correct relative path
                   if normalized.startswith('./'):
                       normalized_dir = normalized[2:]
                   else:
                       normalized_dir = normalized
-                  dir_parts = normalized_dir.split('/')[:-1]  # exclude filename
+                  dir_parts = normalized_dir.split('/')[:-1]
                   levels_up = len(dir_parts)
                   rel = '../' * levels_up
 
-                  # Remove ANY existing sync.js / sync-auto.js lines (correct or wrong)
+                  # Remove ANY existing sync.js / sync-auto.js lines
                   content = re.sub(r'[ \t]*<script src="[^"]*sync\.js[^"]*"></script>\s*\n', '', content)
                   content = re.sub(r'[ \t]*<script src="[^"]*sync-auto\.js[^"]*"></script>\s*\n', '', content)
 
-                  # Find the quiz-engine.js line, insert sync lines before it
+                  # Insert correct lines before quiz-engine.js
                   lines = content.split('\n')
                   new_lines = []
                   inserted = False
@@ -120,8 +120,9 @@ jobs:
           print()
           print(f'📊 Fixed: {fixed} quiz files')
           print(f'📊 Skipped: {skipped} quiz files')
+          print()
 
-          # Step 3 — Add ?v= to scripts missing it
+          # Step 3 — Add ?v= to scripts missing it (SAFE VERSION)
           added = 0
           scripts = ['config.js', 'app.js', 'store.js', 'security.js', 'transmutation.js']
           for root, dirs, files in os.walk('.'):
@@ -134,15 +135,19 @@ jobs:
                       content = f.read()
                   orig = content
                   for s in scripts:
-                      # Add ?v= if not present before the closing quote
-                      pattern = rf'(src="[^"]*/\{s})(")'
-                      replacement = rf'\1?v={NEW_VERSION}\2'
+                      # Only add ?v= if the script tag doesn't already have one
+                      # Pattern: src="...FILENAME" (no ?v= after it, but " right after)
+                      escaped_name = s.replace('.', r'\.')
+                      pattern = r'(src="[^"]*/' + escaped_name + r')(")'
+                      replacement = r'\1?v=' + NEW_VERSION + r'\2'
                       content = re.sub(pattern, replacement, content)
                   if content != orig:
                       with open(path, 'w', encoding='utf-8') as f:
                           f.write(content)
                       added += 1
           print(f'📊 Files with newly-added ?v=: {added}')
+          print()
+          print('✅ Done')
           PYEOF
 
       - name: Commit changes
