@@ -1,13 +1,15 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 2.0.0
+   Version: 2.0.1
    App: General Science
    ------------------------------------------------------------
    Changelog:
+     v2.0.1: Added console.log inside lock block for visibility.
+             Lock events also pushed to backend (via Sync.pushLock)
+             when backend is enabled. Preserves all v2.0.0 behavior.
      v2.0.0: Uses Randomize (seeded shuffle) instead of Math.random.
              Attaches competency/bloomLevel/set/originalIndex to
              itemResults. Auto-enqueues attempts via SyncAuto.
-             Preserves v1.0.1 review screens.
      v1.0.1: Show review screen when reopening a passed quiz.
    ============================================================ */
 
@@ -21,8 +23,8 @@ const QuizEngine = (() => {
   let timer = null;
   let autosaveTimer = null;
   let tabMonitor = null;
-  let shuffledSet = null;   // Randomize set object
-  let answers = {};         // { setIndex: optionText }
+  let shuffledSet = null;
+  let answers = {};
   let currentIndex = 0;
   let startTime = null;
   let submitting = false;
@@ -37,7 +39,6 @@ const QuizEngine = (() => {
       return;
     }
 
-    // Determine set letter from student's section
     const setLetter = _getSetLetter(user.section);
 
     ctx = {
@@ -55,13 +56,11 @@ const QuizEngine = (() => {
       allowRetake: config.allowRetake === true
     };
 
-    // Check if locked (failed or tampered)
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
       renderLocked();
       return;
     }
 
-    // Check previous score
     const scores = Store.getScores(ctx.lrn);
     const prev = _getPrevScore(scores, ctx.term, ctx.type, ctx.id);
 
@@ -300,7 +299,6 @@ const QuizEngine = (() => {
      START QUIZ
      ============================================================ */
   async function startQuiz() {
-    // Build a seeded set (same on every device, deterministic per set-letter)
     try {
       if (typeof Randomize !== 'undefined' && Randomize.generateSet) {
         const assessmentId = ctx.term + '-' + ctx.id;
@@ -315,7 +313,6 @@ const QuizEngine = (() => {
       shuffledSet = null;
     }
 
-    // Fallback: legacy shuffle if Randomize failed
     if (!shuffledSet) {
       const legacy = Security.shuffleQuestions(ctx.questions);
       shuffledSet = {
@@ -554,12 +551,10 @@ const QuizEngine = (() => {
     tabMonitor?.stop();
     clearInterval(autosaveTimer);
 
-    // Score via Randomize (attaches originalIndex, competency, bloomLevel, given, expected)
     let scoreResult;
     if (typeof Randomize !== 'undefined' && Randomize.scoreAttempt) {
       scoreResult = Randomize.scoreAttempt(answers, shuffledSet);
     } else {
-      // Legacy fallback
       let correct = 0;
       const itemResults = [];
       shuffledSet.questions.forEach((q, i) => {
@@ -603,6 +598,7 @@ const QuizEngine = (() => {
     };
 
     Store.saveScore(ctx.lrn, ctx.term, ctx.type, ctx.id, payload);
+    console.log('[QuizEngine] Score saved:', ctx.term, ctx.id, '=', scorePercent + '%', passed ? '(PASS)' : '(FAIL)');
 
     // Auto-enqueue for background sync (fire-and-forget)
     try {
@@ -619,11 +615,27 @@ const QuizEngine = (() => {
       console.warn('[QuizEngine] Auto-enqueue failed:', e.message);
     }
 
+    // Lock if failed or forced (tab-switch, timeout)
     if (!passed || forceLock) {
-      Store.lockAssessment(ctx.lrn, `${ctx.term}_${ctx.id}`, {
+      const lockKey = `${ctx.term}_${ctx.id}`;
+      Store.lockAssessment(ctx.lrn, lockKey, {
         reason: forceLock ? 'tab-switch' : 'failed',
         score: scorePercent
       });
+      console.log('[QuizEngine] 🔒 Locked:', lockKey, 'at', scorePercent + '%', '| Reason:', forceLock ? 'tab-switch' : 'failed');
+
+      // Push lock to backend for cross-device sync (fire-and-forget)
+      try {
+        if (typeof Sync !== 'undefined' && typeof Sync.pushLock === 'function') {
+          Sync.pushLock(ctx.lrn, ctx.term, ctx.id, {
+            reason: forceLock ? 'tab-switch' : 'failed',
+            score: scorePercent,
+            timestamp: timestamp
+          });
+        }
+      } catch (e) {
+        console.warn('[QuizEngine] Lock push failed:', e.message);
+      }
     }
 
     sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
