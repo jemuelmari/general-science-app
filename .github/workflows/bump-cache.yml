@@ -9,9 +9,6 @@ on:
       - 'assets/js/sync.js'
       - 'assets/js/sync-auto.js'
       - 'config.js'
-      - 'assets/js/security.js'
-      - 'assets/js/store.js'
-      - 'assets/js/app.js'
       - '.github/workflows/bump-cache.yml'
 
 jobs:
@@ -38,7 +35,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Bump existing ?v= strings + inject sync scripts
+      - name: Bump + fix sync script injection
         env:
           NEW_VERSION: ${{ steps.ver.outputs.VERSION }}
         run: |
@@ -49,7 +46,7 @@ jobs:
           NEW_VERSION = os.environ['NEW_VERSION']
           print(f'New version: {NEW_VERSION}')
 
-          # Step 1 — Bump existing ?v= strings in all HTML files
+          # Step 1 — Bump existing ?v= strings
           bumped = 0
           for root, dirs, files in os.walk('.'):
               dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
@@ -64,12 +61,11 @@ jobs:
                       with open(path, 'w', encoding='utf-8') as f:
                           f.write(new_content)
                       bumped += 1
-                      print(f'  ✅ Bumped: {path}')
-          print(f'')
           print(f'📊 Bumped: {bumped} HTML files')
+          print()
 
-          # Step 2 — Inject sync.js + sync-auto.js into quiz pages
-          injected = 0
+          # Step 2 — Fix sync script injection (remove wrong ones, add correct ones)
+          fixed = 0
           skipped = 0
           for root, dirs, files in os.walk('./student'):
               dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
@@ -77,53 +73,57 @@ jobs:
                   if not fname.endswith('.html'):
                       continue
                   path = os.path.join(root, fname)
-                  # Only inject into assessment pages
-                  if '/assessments/' not in path.replace('\\', '/'):
+                  normalized = path.replace('\\', '/')
+                  if '/assessments/' not in normalized:
                       continue
+
                   with open(path, 'r', encoding='utf-8') as f:
                       content = f.read()
+
                   if 'quiz-engine.js' not in content:
                       continue
-                  if 'assets/js/sync.js' in content:
-                      skipped += 1
-                      print(f'  ⏭️  Already has sync.js: {path}')
-                      continue
 
-                  # Determine relative path prefix
-                  # student/term1/assessments/quiz1.html → ../../../
-                  depth = path.count(os.sep) - path.count('./')
-                  rel = '../' * (depth - 1) if depth > 1 else '../'
+                  # Compute correct relative path to repo root
+                  # student/term2/assessments/quiz1.html → ../../../
+                  if normalized.startswith('./'):
+                      normalized_dir = normalized[2:]
+                  else:
+                      normalized_dir = normalized
+                  dir_parts = normalized_dir.split('/')[:-1]  # exclude filename
+                  levels_up = len(dir_parts)
+                  rel = '../' * levels_up
 
-                  # Insert sync.js and sync-auto.js before quiz-engine.js line
+                  # Remove ANY existing sync.js / sync-auto.js lines (correct or wrong)
+                  content = re.sub(r'[ \t]*<script src="[^"]*sync\.js[^"]*"></script>\s*\n', '', content)
+                  content = re.sub(r'[ \t]*<script src="[^"]*sync-auto\.js[^"]*"></script>\s*\n', '', content)
+
+                  # Find the quiz-engine.js line, insert sync lines before it
                   lines = content.split('\n')
                   new_lines = []
-                  done = False
+                  inserted = False
                   for line in lines:
-                      if 'quiz-engine.js' in line and not done:
+                      if 'quiz-engine.js' in line and not inserted:
                           indent = line[:len(line) - len(line.lstrip())]
                           new_lines.append(f'{indent}<script src="{rel}assets/js/sync.js?v=2.0.5"></script>')
                           new_lines.append(f'{indent}<script src="{rel}assets/js/sync-auto.js?v=1.1.0"></script>')
-                          done = True
+                          inserted = True
                       new_lines.append(line)
 
-                  with open(path, 'w', encoding='utf-8') as f:
-                      f.write('\n'.join(new_lines))
-                  injected += 1
-                  print(f'  🔧 Injected: {path}')
-          print(f'')
-          print(f'📊 Injected: {injected} quiz files')
-          print(f'📊 Already had sync.js: {skipped} quiz files')
+                  new_content = '\n'.join(new_lines)
+                  if new_content != content:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(new_content)
+                      fixed += 1
+                      print(f'  🔧 Fixed ({rel}): {path}')
+                  else:
+                      skipped += 1
+          print()
+          print(f'📊 Fixed: {fixed} quiz files')
+          print(f'📊 Skipped: {skipped} quiz files')
 
-          # Step 3 — Add ?v= to scripts that are missing it
+          # Step 3 — Add ?v= to scripts missing it
           added = 0
-          patterns = [
-              (r'(src="([^"]*\/)?config\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
-              (r'(src="([^"]*\/)?app\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
-              (r'(src="([^"]*\/)?store\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
-              (r'(src="([^"]*\/)?security\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
-              (r'(src="([^"]*\/)?transmutation\.js)("|)', r'\1?v=' + NEW_VERSION + r'\3'),
-          ]
-
+          scripts = ['config.js', 'app.js', 'store.js', 'security.js', 'transmutation.js']
           for root, dirs, files in os.walk('.'):
               dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
               for fname in files:
@@ -133,24 +133,17 @@ jobs:
                   with open(path, 'r', encoding='utf-8') as f:
                       content = f.read()
                   orig = content
-                  for pattern, replacement in patterns:
+                  for s in scripts:
+                      # Add ?v= if not present before the closing quote
+                      pattern = rf'(src="[^"]*/\{s})(")'
+                      replacement = rf'\1?v={NEW_VERSION}\2'
                       content = re.sub(pattern, replacement, content)
                   if content != orig:
                       with open(path, 'w', encoding='utf-8') as f:
                           f.write(content)
                       added += 1
-                      print(f'  ✅ Added ?v=: {path}')
-          print(f'')
           print(f'📊 Files with newly-added ?v=: {added}')
           PYEOF
-
-      - name: Show git diff summary
-        run: |
-          echo "=== Git status ==="
-          git status --short
-          echo ""
-          echo "=== Files changed ==="
-          git diff --stat
 
       - name: Commit changes
         run: |
@@ -160,6 +153,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: auto-bump cache-bust + inject sync scripts"
+            git commit -m "chore: fix sync script injection paths + cache-bust"
             git push
           fi
