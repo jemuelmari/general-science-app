@@ -1,0 +1,67 @@
+name: Bump cache-bust versions
+
+on:
+  workflow_dispatch:  # Manual trigger from GitHub UI
+  push:
+    branches: [main]
+    paths:
+      - 'assets/js/quiz-engine.js'
+      - 'assets/js/sync.js'
+      - 'assets/js/sync-auto.js'
+      - 'config.js'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute new version string
+        id: ver
+        run: |
+          # Use short commit SHA + timestamp for uniqueness
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          TIMESTAMP=$(date +%Y%m%d%H%M)
+          echo "VERSION=1.3.0-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          echo "New version: 1.3.0-${SHORT_SHA}"
+
+      - name: Find and update all HTML files
+        run: |
+          NEW_VERSION="${{ steps.ver.outputs.VERSION }}"
+          FOUND=0
+          UPDATED=0
+
+          # Find all HTML files in the repo
+          while IFS= read -r file; do
+            FOUND=$((FOUND + 1))
+            # Replace any ?v=... query in script/link tags with the new version
+            # Match patterns like: file.js?v=3, file.js?v=2.0.0, file.js?v=1.3.0-abc1234
+            if grep -qE '\?v=[a-zA-Z0-9._-]+' "$file"; then
+              sed -i -E "s/\?v=[a-zA-Z0-9._-]+/\?v=${NEW_VERSION}/g" "$file"
+              UPDATED=$((UPDATED + 1))
+              echo "  ✅ Updated: $file"
+            fi
+          done < <(find . -type f -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*")
+
+          echo ""
+          echo "📊 Scanned: $FOUND HTML files"
+          echo "📊 Updated: $UPDATED HTML files"
+          echo "🎯 New version string: ?v=${NEW_VERSION}"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto-bump cache-bust to ${{ steps.ver.outputs.VERSION }}"
+            git push
+          fi
