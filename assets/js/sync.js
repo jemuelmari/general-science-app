@@ -1,11 +1,9 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.4
-   App: General Science · v1.0.5
-   Changelog v2.0.4: canonicalize() now escapes all non-ASCII
-   characters as \uXXXX before signing. This ensures byte-for-byte
-   identical canonical strings between V8 (browser) and Apps Script
-   (Rhino/V8), fixing Unicode-induced HMAC mismatches.
+   Version: 2.0.5
+   App: General Science · v1.0.6
+   Changelog v2.0.5: Added pushUnlock/pullUnlocks/markUnlockApplied
+   for cross-device lock removal.
    ============================================================ */
 
 const Sync = (() => {
@@ -13,19 +11,12 @@ const Sync = (() => {
 
   const NS = 'gsa_v1_';
 
-  /**
-   * Escape all non-ASCII characters as \uXXXX.
-   * Guarantees pure-ASCII output.
-   */
   function escapeNonAscii(str) {
     var out = '';
     for (var i = 0; i < str.length; i++) {
       var code = str.charCodeAt(i);
-      if (code < 128) {
-        out += str.charAt(i);
-      } else {
-        out += '\\u' + code.toString(16).padStart(4, '0');
-      }
+      if (code < 128) out += str.charAt(i);
+      else out += '\\u' + code.toString(16).padStart(4, '0');
     }
     return out;
   }
@@ -38,58 +29,40 @@ const Sync = (() => {
     }
     if (typeof obj === 'boolean') return obj ? 'true' : 'false';
     if (typeof obj === 'string') {
-      // JSON.stringify gives us a valid JSON string, then escape non-ASCII
       var jsonStr = JSON.stringify(obj);
-      // jsonStr includes the surrounding double quotes already
-      // We escape any non-ASCII inside those quotes
       var inner = jsonStr.substring(1, jsonStr.length - 1);
       return '"' + escapeNonAscii(inner) + '"';
     }
-    if (Array.isArray(obj)) {
-      return '[' + obj.map(canonicalize).join(',') + ']';
-    }
+    if (Array.isArray(obj)) return '[' + obj.map(canonicalize).join(',') + ']';
     if (typeof obj === 'object') {
       var keys = Object.keys(obj).filter(function (k) {
         if (k === 'signature') return false;
         return obj[k] !== undefined && typeof obj[k] !== 'function';
       });
       keys.sort();
-      var parts = keys.map(function (k) {
+      return '{' + keys.map(function (k) {
         return '"' + escapeNonAscii(k) + '":' + canonicalize(obj[k]);
-      });
-      return '{' + parts.join(',') + '}';
+      }).join(',') + '}';
     }
     return 'null';
   }
 
   function roundTrip(payload) {
-    try {
-      return JSON.parse(JSON.stringify(payload));
-    } catch (e) {
-      return payload;
-    }
+    try { return JSON.parse(JSON.stringify(payload)); }
+    catch (e) { return payload; }
   }
 
   async function signCanonical(payload) {
-    if (typeof Security === 'undefined') {
-      throw new Error('Security module not loaded — cannot sign payload');
-    }
-    if (typeof Security.signString !== 'function') {
-      throw new Error('Security.signString unavailable — reload the page');
-    }
-    var clean = roundTrip(payload);
-    var canonical = canonicalize(clean);
-    return await Security.signString(canonical);
+    if (typeof Security === 'undefined') throw new Error('Security module not loaded');
+    if (typeof Security.signString !== 'function') throw new Error('Security.signString unavailable');
+    return await Security.signString(canonicalize(roundTrip(payload)));
   }
 
   async function verifyCanonical(payload, signature) {
-    if (typeof Security === 'undefined') {
-      throw new Error('Security module not loaded');
-    }
+    if (typeof Security === 'undefined') throw new Error('Security module not loaded');
     var clean = roundTrip(payload);
     if (typeof Security.verifyString === 'function') {
-      var canonical = canonicalize(clean);
-      return await Security.verifyString(canonical, signature);
+      return await Security.verifyString(canonicalize(clean), signature);
     }
     if (typeof Security.verify === 'function') {
       return await Security.verify(clean, signature);
@@ -120,7 +93,6 @@ const Sync = (() => {
   async function buildPayload(lrn, term) {
     var user = Store.getUser(lrn);
     if (!user) throw new Error('User not found');
-
     var progress = Store.getProgress(lrn);
     var scores = Store.getScores(lrn);
     var badges = Store.getBadges(lrn);
@@ -130,13 +102,9 @@ const Sync = (() => {
       app: 'General Science',
       generatedAt: new Date().toISOString(),
       student: {
-        lrn: user.lrn,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel,
-        section: user.section,
-        sex: user.sex || ''
+        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
+        middleName: user.middleName || '', gradeLevel: user.gradeLevel,
+        section: user.section, sex: user.sex || ''
       },
       term: term || 'all',
       progress: term ? (function () { var o = {}; o[term] = progress[term]; return o; })() : progress,
@@ -158,17 +126,13 @@ const Sync = (() => {
     var code = 'GS11-' + hash.slice(0, 4) + '-' + hash.slice(4, 8) + '-' + signatureShort;
 
     var mode = 'local';
-
     if (backendEnabled()) {
       var res = await backendPost({
         action: 'registerSyncCode',
         code: code, lrn: lrn, payload: payload, signature: signature
       });
-      if (res.ok) {
-        mode = 'backend';
-      } else {
-        throw new Error('Backend rejected sync code: ' + (res.error || 'unknown'));
-      }
+      if (res.ok) mode = 'backend';
+      else throw new Error('Backend rejected sync code: ' + (res.error || 'unknown'));
     }
 
     _saveLocalCode(code, { payload: payload, signature: signature });
@@ -183,9 +147,7 @@ const Sync = (() => {
     if (backendEnabled()) {
       try {
         var res = await backendPost({ action: 'resolveSyncCode', code: code });
-        if (res.ok) {
-          return { payload: res.payload, signature: res.signature, source: 'backend', createdAt: res.createdAt };
-        }
+        if (res.ok) return { payload: res.payload, signature: res.signature, source: 'backend', createdAt: res.createdAt };
       } catch (err) {
         console.warn('[Sync] Backend lookup failed, trying local:', err);
       }
@@ -255,16 +217,11 @@ const Sync = (() => {
     if (!record) {
       return {
         valid: false,
-        error: backendEnabled()
-          ? 'Code not found (checked backend and this device)'
-          : 'Code not found on this device.'
+        error: backendEnabled() ? 'Code not found' : 'Code not found on this device.'
       };
     }
     var valid = await verifyCanonical(record.payload, record.signature);
-    return {
-      payload: record.payload, signature: record.signature,
-      valid: valid, source: record.source
-    };
+    return { payload: record.payload, signature: record.signature, valid: valid, source: record.source };
   }
 
   async function pullAllPending(filters) {
@@ -274,13 +231,7 @@ const Sync = (() => {
       Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
       var res = await backendPost(body);
       if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
-      var records = (res.records || []).map(function (r) {
-        var copy = {};
-        Object.keys(r).forEach(function (k) { copy[k] = r[k]; });
-        copy.verified = true;
-        return copy;
-      });
-      return { ok: true, count: records.length, records: records };
+      return { ok: true, count: (res.records || []).length, records: res.records || [] };
     } catch (err) {
       return { ok: false, error: err.message };
     }
@@ -313,8 +264,7 @@ const Sync = (() => {
       version: '2.0.0',
       student: {
         lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
-        middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel, section: user.section
+        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
       },
       attempt: {
         term: term, assessment: assessment,
@@ -332,9 +282,7 @@ const Sync = (() => {
   }
 
   async function pushAttempt(lrn, term, assessment, attempt) {
-    if (!backendEnabled()) {
-      return { ok: false, error: 'Backend not configured', offline: true };
-    }
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured', offline: true };
     var payload = buildAttemptPayload(lrn, term, assessment, attempt);
     var signature = await signCanonical(payload);
     var pushId = makePushId(lrn, term, assessment, attempt.timestamp);
@@ -362,13 +310,11 @@ const Sync = (() => {
       Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
       var res = await backendPost(body);
       if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
-
       var verified = [];
       for (var i = 0; i < (res.records || []).length; i++) {
         var r = res.records[i];
         var isValid = false;
-        try { isValid = await verifyCanonical(r.payload, r.signature); }
-        catch (e) { isValid = false; }
+        try { isValid = await verifyCanonical(r.payload, r.signature); } catch (e) { isValid = false; }
         var copy = {};
         Object.keys(r).forEach(function (k) { copy[k] = r[k]; });
         copy.verified = isValid;
@@ -383,11 +329,7 @@ const Sync = (() => {
   async function markUsedBulk(pushIds, usedBy) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'markUsedBulk',
-        pushIds: pushIds || [],
-        usedBy: usedBy || 'teacher'
-      });
+      return await backendPost({ action: 'markUsedBulk', pushIds: pushIds || [], usedBy: usedBy || 'teacher' });
     } catch (err) {
       return { ok: false, error: err.message };
     }
@@ -418,6 +360,45 @@ const Sync = (() => {
     }
   }
 
+  /* ============================================================
+     NEW — Unlock sync
+     ============================================================ */
+
+  async function pushUnlock(lrn, term, assessment, opts) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    opts = opts || {};
+    try {
+      return await backendPost({
+        action: 'pushUnlock',
+        lrn: lrn,
+        term: term,
+        assessment: assessment,
+        reason: opts.reason || 'retake-approved',
+        unlockedBy: opts.unlockedBy || 'teacher'
+      });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  async function pullUnlocks(lrn) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({ action: 'pullUnlocks', lrn: lrn });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  async function markUnlockApplied(unlockId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({ action: 'markUnlockApplied', unlockId: unlockId });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
   function _shortHash(str) {
     var h = 0x811c9dc5;
     for (var i = 0; i < str.length; i++) {
@@ -429,9 +410,7 @@ const Sync = (() => {
 
   function _dateStamp() {
     var d = new Date();
-    return d.getFullYear() +
-      String(d.getMonth() + 1).padStart(2, '0') +
-      String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
   }
 
   return {
@@ -455,6 +434,9 @@ const Sync = (() => {
     pullAttempts: pullAttempts,
     markUsedBulk: markUsedBulk,
     archiveUsed: archiveUsed,
-    getSyncStatus: getSyncStatus
+    getSyncStatus: getSyncStatus,
+    pushUnlock: pushUnlock,
+    pullUnlocks: pullUnlocks,
+    markUnlockApplied: markUnlockApplied
   };
 })();
