@@ -1,20 +1,17 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.2.2
+   Version: 1.2.3
    ------------------------------------------------------------
    Changelog:
-     v1.2.2: canonicalize() now escapes all non-ASCII as \uXXXX.
-             Matches frontend sync.js v2.0.4. Fixes signature
-             verification failures for payloads containing Unicode
-             (→ ₂ × π ω — ñ etc.) in question text or names.
+     v1.2.3: Added pushUnlock + pullUnlocks actions for
+             cross-device lock removal. New Unlocks sheet.
+     v1.2.2: canonicalize() escapes non-ASCII as \uXXXX.
      v1.2.1: Fixed canonicalize() arguments.callee hack.
      v1.2.0: Added Attempts + History sheets, 5 new actions.
      v1.1.0: Added TermAccess sheet + 2 actions.
      v1.0.0: Initial.
 
-   REDEPLOY (CRITICAL):
-     Deploy → Manage deployments → (pencil) → Version: New version → Deploy
-   The Web App URL stays the same. No config.js change needed.
+   REDEPLOY: Deploy → Manage deployments → pencil → Version: New version → Deploy
    ============================================================ */
 
 const CONFIG = {
@@ -23,9 +20,11 @@ const CONFIG = {
   LOG_SHEET: 'Log',
   ATTEMPTS_SHEET: 'Attempts',
   HISTORY_SHEET: 'History',
+  UNLOCKS_SHEET: 'Unlocks',
 
   CODE_EXPIRY_DAYS: 30,
   ATTEMPT_EXPIRY_DAYS: 90,
+  UNLOCK_EXPIRY_DAYS: 60,
   MAX_CODES_PER_STUDENT: 5,
 
   RATE_LIMIT_WINDOW_SEC: 60,
@@ -68,13 +67,16 @@ function doPost(e) {
       case 'getTermAccess':     response = getTermAccess(body); break;
       case 'setTermAccess':     response = setTermAccess(body); break;
       case 'health':
-        response = { ok: true, message: 'GSA backend is running', version: '1.2.2', time: new Date().toISOString() };
+        response = { ok: true, message: 'GSA backend is running', version: '1.2.3', time: new Date().toISOString() };
         break;
       case 'pushAttempt':       response = pushAttempt(body); break;
       case 'pullAttempts':      response = pullAttempts(body); break;
       case 'markUsedBulk':      response = markUsedBulk(body); break;
       case 'archiveUsed':       response = archiveUsed(body); break;
       case 'getSyncStatus':     response = getSyncStatus(body); break;
+      case 'pushUnlock':        response = pushUnlock(body); break;
+      case 'pullUnlocks':       response = pullUnlocks(body); break;
+      case 'markUnlockApplied': response = markUnlockApplied(body); break;
       default:
         response = { ok: false, error: 'Unknown action: ' + action };
     }
@@ -90,15 +92,11 @@ function doPost(e) {
   }
 }
 
-// ============================================================
-// MAIN ROUTER — GET
-// ============================================================
-
 function doGet(e) {
   var action = e.parameter.action;
 
   if (action === 'ping') {
-    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.2', time: new Date().toISOString() });
+    return respond({ ok: true, service: 'GSA Sync Backend', version: '1.2.3', time: new Date().toISOString() });
   }
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -128,13 +126,9 @@ function parseBody(e) {
 }
 
 // ============================================================
-// CANONICAL JSON + HMAC  (v1.2.2 — non-ASCII escaped)
+// CANONICAL JSON + HMAC
 // ============================================================
 
-/**
- * Escape all non-ASCII characters as \uXXXX.
- * Guarantees pure-ASCII output.
- */
 function escapeNonAscii(str) {
   var out = '';
   for (var i = 0; i < str.length; i++) {
@@ -207,10 +201,6 @@ function constantTimeEquals(a, b) {
   return diff === 0;
 }
 
-// ============================================================
-// RATE LIMITING
-// ============================================================
-
 var _rateCache = {};
 
 function checkRateLimit(key, action) {
@@ -239,6 +229,149 @@ function checkRateLimit(key, action) {
     };
   }
   return { ok: true };
+}
+
+// ============================================================
+// ACTION: pushUnlock  (NEW v1.2.3)
+// ============================================================
+
+/**
+ * Teacher pushes an unlock for a specific student+assessment.
+ * The student's device will poll for unlocks and clear local locks.
+ *
+ * body = {
+ *   action: 'pushUnlock',
+ *   lrn: student LRN,
+ *   term: 'term2',
+ *   assessment: 'quiz1',
+ *   reason: 'retake-approved',
+ *   unlockedBy: 'teacher' (optional)
+ * }
+ */
+function pushUnlock(body) {
+  var required = ['lrn', 'term', 'assessment'];
+  for (var i = 0; i < required.length; i++) {
+    if (!body[required[i]]) {
+      return { ok: false, error: 'Missing required field: ' + required[i] };
+    }
+  }
+
+  if (CONFIG.VALID_TERMS.indexOf(body.term) === -1) {
+    return { ok: false, error: 'Invalid term: ' + body.term };
+  }
+  if (CONFIG.VALID_ASSESSMENTS.indexOf(body.assessment) === -1) {
+    return { ok: false, error: 'Invalid assessment: ' + body.assessment };
+  }
+
+  var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var now = new Date().toISOString();
+  var unlockId = body.lrn + '-' + body.term + '-' + body.assessment + '-' + Date.now();
+
+  // Check for existing pending unlock (dedupe)
+  for (var r = 1; r < data.length; r++) {
+    if (data[r][1] === body.lrn &&
+        data[r][2] === body.term &&
+        data[r][3] === body.assessment &&
+        data[r][6] !== 'applied') {
+      return {
+        ok: true,
+        unlockId: data[r][0],
+        duplicate: true,
+        message: 'Unlock already pending for this student+assessment'
+      };
+    }
+  }
+
+  sheet.appendRow([
+    unlockId,
+    body.lrn,
+    body.term,
+    body.assessment,
+    body.reason || 'retake-approved',
+    now,
+    'pending',
+    '',
+    body.unlockedBy || 'teacher'
+  ]);
+
+  return {
+    ok: true,
+    unlockId: unlockId,
+    pushedAt: now,
+    message: 'Unlock pushed'
+  };
+}
+
+// ============================================================
+// ACTION: pullUnlocks  (NEW v1.2.3)
+// ============================================================
+
+/**
+ * Student device polls for pending unlocks.
+ * Filters: lrn (required)
+ * Returns: { ok, count, records }
+ */
+function pullUnlocks(body) {
+  body = body || {};
+  if (!body.lrn) {
+    return { ok: false, error: 'Missing lrn' };
+  }
+
+  var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var records = [];
+  var cutoffMs = Date.now() - (CONFIG.UNLOCK_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (row[1] !== body.lrn) continue;
+    if (row[6] === 'applied') continue;
+
+    var pushedTs = row[5];
+    var pushedMs = pushedTs ? new Date(pushedTs).getTime() : 0;
+    if (pushedMs && pushedMs < cutoffMs) continue;
+
+    records.push({
+      unlockId: row[0],
+      lrn: row[1],
+      term: row[2],
+      assessment: row[3],
+      reason: row[4],
+      pushedAt: row[5],
+      status: row[6],
+      unlockedBy: row[8]
+    });
+  }
+
+  return { ok: true, count: records.length, records: records };
+}
+
+// ============================================================
+// ACTION: markUnlockApplied  (NEW v1.2.3)
+// ============================================================
+
+/**
+ * Student device confirms the unlock was applied.
+ * body = { action: 'markUnlockApplied', unlockId: '...' }
+ */
+function markUnlockApplied(body) {
+  if (!body || !body.unlockId) {
+    return { ok: false, error: 'Missing unlockId' };
+  }
+
+  var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
+  var data = sheet.getDataRange().getValues();
+
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0] === body.unlockId) {
+      sheet.getRange(i + 1, 7).setValue('applied');
+      sheet.getRange(i + 1, 8).setValue(new Date().toISOString());
+      return { ok: true, unlockId: body.unlockId, status: 'applied' };
+    }
+  }
+
+  return { ok: false, error: 'Unlock not found' };
 }
 
 // ============================================================
@@ -352,15 +485,10 @@ function pullAttempts(body) {
   return { ok: true, count: records.length, records: records };
 }
 
-// ============================================================
-// ACTION: markUsedBulk
-// ============================================================
-
 function markUsedBulk(body) {
   if (!body || !body.pushIds || !body.pushIds.length) {
     return { ok: false, error: 'Missing pushIds array' };
   }
-
   var usedBy = body.usedBy || 'teacher';
   var now = new Date().toISOString();
   var ids = {};
@@ -378,13 +506,8 @@ function markUsedBulk(body) {
       marked++;
     }
   }
-
   return { ok: true, marked: marked, usedBy: usedBy, usedAt: now };
 }
-
-// ============================================================
-// ACTION: archiveUsed
-// ============================================================
 
 function archiveUsed(body) {
   body = body || {};
@@ -395,7 +518,6 @@ function archiveUsed(body) {
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
   var histSheet = getOrCreateSheet(CONFIG.HISTORY_SHEET);
   var data = sheet.getDataRange().getValues();
-
   var toArchive = [];
   var rowIndices = [];
 
@@ -415,15 +537,10 @@ function archiveUsed(body) {
   toArchive.forEach(function (row) {
     histSheet.appendRow(row.concat([archivedAt, archivedBy]));
   });
-
   rowIndices.reverse().forEach(function (idx) { sheet.deleteRow(idx); });
 
   return { ok: true, archived: toArchive.length, archivedAt: archivedAt, archivedBy: archivedBy };
 }
-
-// ============================================================
-// ACTION: getSyncStatus
-// ============================================================
 
 function getSyncStatus(body) {
   body = body || {};
@@ -447,16 +564,22 @@ function getSyncStatus(body) {
   var hist = getOrCreateSheet(CONFIG.HISTORY_SHEET);
   var totalArchived = Math.max(0, hist.getLastRow() - 1);
 
+  var unlocks = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
+  var uData = unlocks.getDataRange().getValues();
+  var totalUnlocksPending = 0;
+  var totalUnlocksApplied = 0;
+  for (var j = 1; j < uData.length; j++) {
+    if (uData[j][6] === 'applied') totalUnlocksApplied++;
+    else totalUnlocksPending++;
+  }
+
   return {
     ok: true,
     totalPending: totalPending, totalUsed: totalUsed, totalArchived: totalArchived,
+    totalUnlocksPending: totalUnlocksPending, totalUnlocksApplied: totalUnlocksApplied,
     perSection: perSection, serverTime: new Date().toISOString()
   };
 }
-
-// ============================================================
-// EXISTING ACTIONS
-// ============================================================
 
 function registerSyncCode(body) {
   var code = body.code, lrn = body.lrn, payload = body.payload, signature = body.signature;
@@ -608,10 +731,6 @@ function setTermAccess(body) {
   };
 }
 
-// ============================================================
-// SHEET HELPERS
-// ============================================================
-
 function getOrCreateSheet(name) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(name);
@@ -642,6 +761,12 @@ function getOrCreateSheet(name) {
         'itemResults', 'set', 'clientTimestamp', 'serverTimestamp',
         'signature', 'used', 'usedAt', 'usedBy',
         'archivedAt', 'archivedBy'
+      ]);
+      sheet.setFrozenRows(1);
+    } else if (name === CONFIG.UNLOCKS_SHEET) {
+      sheet.appendRow([
+        'unlockId', 'lrn', 'term', 'assessment', 'reason',
+        'pushedAt', 'status', 'appliedAt', 'unlockedBy'
       ]);
       sheet.setFrozenRows(1);
     }
@@ -677,10 +802,6 @@ function trimOldCodes(lrn) {
   }
 }
 
-// ============================================================
-// LOGGING
-// ============================================================
-
 function logAction(action, lrn, code, status, notes) {
   try {
     var sheet = getOrCreateSheet(CONFIG.LOG_SHEET);
@@ -697,10 +818,6 @@ function logAction(action, lrn, code, status, notes) {
     console.error('Log error:', e);
   }
 }
-
-// ============================================================
-// MANUAL MAINTENANCE
-// ============================================================
 
 function cleanupOldCodes() {
   var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
@@ -721,24 +838,19 @@ function clearLog() {
   return { cleared: true };
 }
 
-function testSignatureCheck(code) {
-  var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
-  var data = sheet.getDataRange().getValues();
-  for (var i = 1; i < data.length; i++) {
-    if (data[i][0] === code) {
-      var payload = JSON.parse(data[i][4]);
-      var signature = data[i][5];
-      var expected = computeHMAC(canonicalize(payload), CONFIG.HMAC_SECRET);
-      return {
-        code: code,
-        matches: expected === signature,
-        storedSignature: signature,
-        computedSignature: expected,
-        canonical: canonicalize(payload)
-      };
-    }
-  }
-  return { error: 'Code not found' };
+function testCanonicalSigning() {
+  var sample = {
+    version: '2.0.0',
+    student: { lrn: '123456789012', lastName: 'Dela Cruz', firstName: 'Juan', section: 'ACADEMIC A' },
+    attempt: { term: 'term1', assessment: 'quiz1', score: 18, total: 20 }
+  };
+  var canonical = canonicalize(sample);
+  var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
+  return {
+    canonical: canonical,
+    signature: sig,
+    verified: verifyCanonicalSignature(sample, sig)
+  };
 }
 
 function viewTermAccess() { return getTermAccess({}); }
@@ -758,34 +870,17 @@ function manualArchiveOld() {
   return archiveUsed({ olderThanDays: 60, archivedBy: 'manual' });
 }
 
-function testCanonicalSigning() {
-  var sample = {
-    version: '2.0.0',
-    student: { lrn: '123456789012', lastName: 'Dela Cruz', firstName: 'Juan', section: 'ACADEMIC A' },
-    attempt: { term: 'term1', assessment: 'quiz1', score: 18, total: 20 }
-  };
-  var canonical = canonicalize(sample);
-  var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
-  return {
-    canonical: canonical,
-    signature: sig,
-    verified: verifyCanonicalSignature(sample, sig)
-  };
-}
-
-function testUnicodeEscaping() {
-  var sample = {
-    version: '1.0.0',
-    test: '6CO₂ + 6H₂O → C₆H₁₂O₆',
-    name: 'Castañeda',
-    greek: 'π ω θ'
-  };
-  var canonical = canonicalize(sample);
-  var sig = computeHMAC(canonical, CONFIG.HMAC_SECRET);
-  return {
-    canonical: canonical,
-    signature: sig,
-    verified: verifyCanonicalSignature(sample, sig),
-    hasNonAscii: /[^\x00-\x7F]/.test(canonical)
-  };
+function cleanupOldUnlocks() {
+  var sheet = getOrCreateSheet(CONFIG.UNLOCKS_SHEET);
+  var data = sheet.getDataRange().getValues();
+  var cutoff = Date.now() - (CONFIG.UNLOCK_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+  var toDelete = [];
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][6] === 'applied') {
+      var appliedMs = data[i][7] ? new Date(data[i][7]).getTime() : 0;
+      if (appliedMs && appliedMs < cutoff) toDelete.push(i + 1);
+    }
+  }
+  toDelete.reverse().forEach(function (idx) { sheet.deleteRow(idx); });
+  return { deleted: toDelete.length };
 }
