@@ -225,7 +225,7 @@ const QuizEngine = (() => {
         </div>
 
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
@@ -540,7 +540,7 @@ const QuizEngine = (() => {
         `}
 
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
