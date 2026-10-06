@@ -1,10 +1,7 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.6
-   App: General Science · v1.0.6
-   Changelog v2.0.6: Added teacher token auth to pushUnlock.
-                     Added revokeUnlock, getAllUnlocks, getUnlockStatus.
-                     Added getTeacherToken helper.
+   Version: 2.0.7
+   Changelog v2.0.7: Added pushLock, pullLocks, deleteLock.
    ============================================================ */
 
 const Sync = (() => {
@@ -91,10 +88,6 @@ const Sync = (() => {
     return res.json();
   }
 
-  /**
-   * Retrieve the teacher token from the current session.
-   * Set by teacher-auth.js on successful login.
-   */
   function getTeacherToken() {
     try {
       var t = sessionStorage.getItem('gsa_teacher_token');
@@ -379,13 +372,54 @@ const Sync = (() => {
   }
 
   /* ============================================================
+     LOCK ACTIONS
+     ============================================================ */
+
+  async function pushLock(lrn, term, assessment, opts) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    opts = opts || {};
+    try {
+      return await backendPost({
+        action: 'pushLock',
+        lrn: lrn,
+        term: term,
+        assessment: assessment,
+        reason: opts.reason || 'failed',
+        score: opts.score || 0,
+        lockedAt: opts.lockedAt || new Date().toISOString(),
+        student: opts.student || {}
+      });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  async function pullLocks(filters) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      var body = { action: 'pullLocks' };
+      Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
+      var res = await backendPost(body);
+      if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
+      return { ok: true, count: (res.records || []).length, records: res.records || [] };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  async function deleteLock(lockId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({ action: 'deleteLock', lockId: lockId });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /* ============================================================
      UNLOCK ACTIONS
      ============================================================ */
 
-  /**
-   * Teacher pushes an unlock. Requires teacher token.
-   * opts = { reason, unlockedBy, forceUnlock }
-   */
   async function pushUnlock(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     opts = opts || {};
@@ -423,47 +457,28 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Teacher revokes a pending unlock. Requires token.
-   */
   async function revokeUnlock(unlockId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'revokeUnlock',
-        token: getTeacherToken(),
-        unlockId: unlockId
-      });
+      return await backendPost({ action: 'revokeUnlock', token: getTeacherToken(), unlockId: unlockId });
     } catch (err) {
       return { ok: false, error: err.message };
     }
   }
 
-  /**
-   * Teacher lists all unlocks. Requires token.
-   */
   async function getAllUnlocks() {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'getAllUnlocks',
-        token: getTeacherToken()
-      });
+      return await backendPost({ action: 'getAllUnlocks', token: getTeacherToken() });
     } catch (err) {
       return { ok: false, error: err.message };
     }
   }
 
-  /**
-   * Teacher gets unlock stats. Requires token.
-   */
   async function getUnlockStatus() {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'getUnlockStatus',
-        token: getTeacherToken()
-      });
+      return await backendPost({ action: 'getUnlockStatus', token: getTeacherToken() });
     } catch (err) {
       return { ok: false, error: err.message };
     }
@@ -506,6 +521,9 @@ const Sync = (() => {
     markUsedBulk: markUsedBulk,
     archiveUsed: archiveUsed,
     getSyncStatus: getSyncStatus,
+    pushLock: pushLock,
+    pullLocks: pullLocks,
+    deleteLock: deleteLock,
     pushUnlock: pushUnlock,
     pullUnlocks: pullUnlocks,
     markUnlockApplied: markUnlockApplied,
