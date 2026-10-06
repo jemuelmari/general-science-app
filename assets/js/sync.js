@@ -1,9 +1,10 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.5
+   Version: 2.0.6
    App: General Science · v1.0.6
-   Changelog v2.0.5: Added pushUnlock/pullUnlocks/markUnlockApplied
-   for cross-device lock removal.
+   Changelog v2.0.6: Added teacher token auth to pushUnlock.
+                     Added revokeUnlock, getAllUnlocks, getUnlockStatus.
+                     Added getTeacherToken helper.
    ============================================================ */
 
 const Sync = (() => {
@@ -88,6 +89,23 @@ const Sync = (() => {
     Object.keys(params).forEach(function (k) { url.searchParams.set(k, params[k]); });
     var res = await fetch(url.toString());
     return res.json();
+  }
+
+  /**
+   * Retrieve the teacher token from the current session.
+   * Set by teacher-auth.js on successful login.
+   */
+  function getTeacherToken() {
+    try {
+      var t = sessionStorage.getItem('gsa_teacher_token');
+      if (t) return t;
+      var session = sessionStorage.getItem('gsa_teacher_session');
+      if (session) {
+        var s = JSON.parse(session);
+        if (s && s.token) return s.token;
+      }
+    } catch (e) {}
+    return null;
   }
 
   async function buildPayload(lrn, term) {
@@ -361,20 +379,26 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     NEW — Unlock sync
+     UNLOCK ACTIONS
      ============================================================ */
 
+  /**
+   * Teacher pushes an unlock. Requires teacher token.
+   * opts = { reason, unlockedBy, forceUnlock }
+   */
   async function pushUnlock(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     opts = opts || {};
     try {
       return await backendPost({
         action: 'pushUnlock',
+        token: getTeacherToken(),
         lrn: lrn,
         term: term,
         assessment: assessment,
         reason: opts.reason || 'retake-approved',
-        unlockedBy: opts.unlockedBy || 'teacher'
+        unlockedBy: opts.unlockedBy || 'teacher',
+        forceUnlock: !!opts.forceUnlock
       });
     } catch (err) {
       return { ok: false, error: err.message };
@@ -394,6 +418,52 @@ const Sync = (() => {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
       return await backendPost({ action: 'markUnlockApplied', unlockId: unlockId });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Teacher revokes a pending unlock. Requires token.
+   */
+  async function revokeUnlock(unlockId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({
+        action: 'revokeUnlock',
+        token: getTeacherToken(),
+        unlockId: unlockId
+      });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Teacher lists all unlocks. Requires token.
+   */
+  async function getAllUnlocks() {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({
+        action: 'getAllUnlocks',
+        token: getTeacherToken()
+      });
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Teacher gets unlock stats. Requires token.
+   */
+  async function getUnlockStatus() {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({
+        action: 'getUnlockStatus',
+        token: getTeacherToken()
+      });
     } catch (err) {
       return { ok: false, error: err.message };
     }
@@ -420,6 +490,7 @@ const Sync = (() => {
     verifyCanonical: verifyCanonical,
     backendEnabled: backendEnabled,
     pingBackend: pingBackend,
+    getTeacherToken: getTeacherToken,
     buildPayload: buildPayload,
     generateSyncCode: generateSyncCode,
     lookupSyncCode: lookupSyncCode,
@@ -437,6 +508,9 @@ const Sync = (() => {
     getSyncStatus: getSyncStatus,
     pushUnlock: pushUnlock,
     pullUnlocks: pullUnlocks,
-    markUnlockApplied: markUnlockApplied
+    markUnlockApplied: markUnlockApplied,
+    revokeUnlock: revokeUnlock,
+    getAllUnlocks: getAllUnlocks,
+    getUnlockStatus: getUnlockStatus
   };
 })();
