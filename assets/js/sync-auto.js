@@ -1,10 +1,10 @@
 /* ============================================================
    sync-auto.js — Offline-first auto-push + unlock poller
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science
-   Changelog v1.1.0: Added periodic unlock polling. When backend
-   has pending unlocks for the current user, they're applied
-   locally and acknowledged.
+   Changelog v1.2.0: 15-second unlock polling while on quiz pages.
+                     Auto-reload after applying a remote unlock.
+                     Kept 5-min polling for other pages.
    ============================================================ */
 
 const SyncAuto = (() => {
@@ -18,7 +18,8 @@ const SyncAuto = (() => {
   const BASE_RETRY_DELAY_MS = 2000;
   const MAX_RETRY_DELAY_MS = 60000;
   const FLUSH_INTERVAL_MS = 30000;
-  const UNLOCK_POLL_INTERVAL_MS = 5 * 60 * 1000;
+  const UNLOCK_POLL_FAST_MS = 15 * 1000;      // 15s — on quiz pages
+  const UNLOCK_POLL_SLOW_MS = 5 * 60 * 1000;  // 5min — everywhere else
 
   var _statusCallbacks = [];
   var _flushTimer = null;
@@ -116,6 +117,10 @@ const SyncAuto = (() => {
      UNLOCK POLLING
      ============================================================ */
 
+  function _isOnQuizPage() {
+    return !!document.getElementById('quiz-root');
+  }
+
   async function pollUnlocks() {
     if (!navigator.onLine) return;
     if (typeof Sync === 'undefined' || typeof Sync.pullUnlocks !== 'function') return;
@@ -128,6 +133,7 @@ const SyncAuto = (() => {
       var res = await Sync.pullUnlocks(user.lrn);
       if (!res || !res.ok || !res.records || !res.records.length) return;
 
+      var applied = 0;
       res.records.forEach(function (u) {
         var lockKey = u.term + '_' + u.assessment;
         if (Store.isAssessmentLocked(user.lrn, lockKey)) {
@@ -137,7 +143,13 @@ const SyncAuto = (() => {
         if (typeof Sync.markUnlockApplied === 'function') {
           Sync.markUnlockApplied(u.unlockId).catch(function () {});
         }
+        applied++;
       });
+
+      if (applied > 0 && _isOnQuizPage()) {
+        console.log('[SyncAuto] Reloading quiz page to reflect unlock...');
+        setTimeout(function () { location.reload(); }, 500);
+      }
     } catch (e) {
       console.warn('[SyncAuto] Unlock poll failed:', e.message);
     }
@@ -180,6 +192,14 @@ const SyncAuto = (() => {
     });
   }
 
+  function _scheduleUnlockPoll() {
+    if (_unlockTimer) clearTimeout(_unlockTimer);
+    var interval = _isOnQuizPage() ? UNLOCK_POLL_FAST_MS : UNLOCK_POLL_SLOW_MS;
+    _unlockTimer = setTimeout(function () {
+      pollUnlocks().then(function () { _scheduleUnlockPoll(); });
+    }, interval);
+  }
+
   function _start() {
     window.addEventListener('online', function () {
       console.info('[SyncAuto] Back online — flushing queue');
@@ -194,10 +214,12 @@ const SyncAuto = (() => {
       if (navigator.onLine && _loadQueue().length > 0) flushNow();
     }, FLUSH_INTERVAL_MS);
 
-    if (_unlockTimer) clearInterval(_unlockTimer);
-    _unlockTimer = setInterval(pollUnlocks, UNLOCK_POLL_INTERVAL_MS);
+    // Kick off the first unlock poll 1s after load, then reschedule adaptively
+    setTimeout(function () {
+      pollUnlocks().then(function () { _scheduleUnlockPoll(); });
+    }, 1000);
 
-    setTimeout(function () { flushNow(); pollUnlocks(); }, 2000);
+    setTimeout(function () { flushNow(); }, 2000);
     _emitStatus();
   }
 
