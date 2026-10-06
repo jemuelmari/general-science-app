@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Locked Assessments — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6e09253" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6e09253" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .la-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .la-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -25,6 +25,7 @@
     .confirm-modal { background: #fff; border-radius: 14px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
     .confirm-modal h3 { margin: 0 0 8px; color: #0d47a1; font-size: 1.15rem; }
     .confirm-modal p { margin: 0 0 16px; color: #5f6368; font-size: 0.9rem; line-height: 1.5; }
+    .confirm-modal label { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #37474f; margin-bottom: 16px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -33,7 +34,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Locked Assessments</h1>
-        <span class="version">v1.0.5</span>
+        <span class="version">v1.0.7</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -49,7 +50,7 @@
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
           <h1 style="font-size:1.4rem;">Locked Assessments Review</h1>
-          <p>Review failed or tampered assessments and unlock them for retake when appropriate.</p>
+          <p>Review failed or tampered assessments and unlock them for retake. Unlock reaches the student's device within ~15 seconds.</p>
         </div>
       </div>
     </div>
@@ -89,18 +90,18 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.6</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.7</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6e09253"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6e09253"></script>
+  <script src="../config.js?v=1.3.0"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/sync.js?v=2.0.6"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
@@ -220,7 +221,13 @@
         area.innerHTML = html;
         area.querySelectorAll('[data-unlock]').forEach(function(btn) {
           btn.addEventListener('click', function() {
-            promptUnlock(btn.dataset.unlock, btn.dataset.student, btn.dataset.label, btn.dataset.term, btn.dataset.assessment);
+            promptUnlock(
+              btn.dataset.unlock,
+              btn.dataset.student,
+              btn.dataset.label,
+              btn.dataset.term,
+              btn.dataset.assessment
+            );
           });
         });
       }
@@ -248,7 +255,7 @@
           '<div class="lock-reason ' + (isTampered ? 'tampered' : 'failed') + '">' +
             (isTampered
               ? '⚠️ Auto-locked because the student switched tabs or attempted to copy content.'
-              : '📖 Student did not reach the 75% passing score. Consider remediation before unlocking for retake.') +
+              : '📖 Student did not reach the 75% passing score. Unlock will reach their device within ~15 seconds.') +
           '</div>' +
           '<div class="lock-actions">' +
             '<button class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;" ' +
@@ -265,25 +272,34 @@
       function promptUnlock(lockKey, studentLrn, label, term, assessment) {
         showConfirm({
           title: 'Unlock "' + label + '"?',
-          message: 'This will allow the student to retake the assessment. The unlock will be pushed to the backend so the student\'s device clears the lock on their next visit.',
+          message: 'This pushes an unlock to the backend. The student\'s device will clear the lock on its next poll (~15 seconds if they\'re on the quiz page).',
           confirmText: '🔓 Unlock Now',
-          onConfirm: async function() {
+          onConfirm: async function(forceUnlock) {
+            var token = (typeof Sync !== 'undefined' && Sync.getTeacherToken) ? Sync.getTeacherToken() : null;
+            if (!token) {
+              APP.toast('⚠️ No teacher token — please log in again.', 'danger', 5000);
+              return;
+            }
+
             Store.unlockAssessment(studentLrn, lockKey);
-            APP.toast('🔓 Local unlock done. Pushing to backend…', 'info', 2500);
 
             try {
               if (typeof Sync !== 'undefined' && typeof Sync.pushUnlock === 'function' && Sync.backendEnabled()) {
-                var res = await Sync.pushUnlock(studentLrn, term, assessment, { reason: 'retake-approved', unlockedBy: 'teacher' });
+                var res = await Sync.pushUnlock(studentLrn, term, assessment, {
+                  reason: 'retake-approved',
+                  unlockedBy: 'teacher',
+                  forceUnlock: forceUnlock
+                });
                 if (res && res.ok) {
-                  APP.toast('✅ Synced to backend. Student will see unlock on next visit.', 'success', 4000);
+                  APP.toast('✅ Student will see the unlock within ~15 seconds.', 'success', 4000);
                 } else {
-                  APP.toast('⚠️ Local unlock only. Backend push failed: ' + (res && res.error || 'unknown'), 'warning', 5000);
+                  APP.toast('⚠️ Local only. Backend: ' + ((res && res.error) || 'unknown'), 'warning', 5000);
                 }
               } else {
-                APP.toast('⚠️ Local unlock only. Backend not configured.', 'warning', 4000);
+                APP.toast('⚠️ Local only. Backend not configured.', 'warning', 4000);
               }
             } catch (e) {
-              APP.toast('⚠️ Local unlock only. Push error: ' + e.message, 'warning', 5000);
+              APP.toast('⚠️ Local only. Push error: ' + e.message, 'warning', 5000);
             }
 
             render();
@@ -298,6 +314,7 @@
         modal.className = 'confirm-modal';
         modal.innerHTML =
           '<h3>' + opts.title + '</h3><p>' + opts.message + '</p>' +
+          '<label><input type="checkbox" id="cc-force" /> Unlock regardless of score (force override)</label>' +
           '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">' +
             '<button class="btn btn-outline" id="cc-cancel">Cancel</button>' +
             '<button class="btn btn-primary" id="cc-confirm">' + opts.confirmText + '</button>' +
@@ -306,7 +323,11 @@
         document.body.appendChild(overlay);
         function close() { overlay.remove(); }
         modal.querySelector('#cc-cancel').addEventListener('click', close);
-        modal.querySelector('#cc-confirm').addEventListener('click', function() { close(); opts.onConfirm(); });
+        modal.querySelector('#cc-confirm').addEventListener('click', function() {
+          var force = modal.querySelector('#cc-force').checked;
+          close();
+          opts.onConfirm(force);
+        });
         overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
       }
     })();
