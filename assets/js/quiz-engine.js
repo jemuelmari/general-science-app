@@ -1,7 +1,9 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 2.1.0
-   App: General Science
+   Version: 2.1.1
+   Changelog v2.1.1: Pushes failed locks to backend via
+                     Sync.pushLock so teacher's Locked Assessments
+                     page sees them.
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -44,7 +46,6 @@ const QuizEngine = (() => {
       allowRetake: config.allowRetake === true
     };
 
-    // Check backend for pending unlocks BEFORE checking local lock
     await _checkBackendUnlocks(ctx.lrn);
 
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
@@ -118,13 +119,11 @@ const QuizEngine = (() => {
         <div class="card-header">
           <span class="card-title">📝 ${ctx.title}</span>
         </div>
-
         <div style="text-align:center;padding:20px 0;">
           <div style="font-size:3rem;">📝</div>
           <h2 style="color:var(--color-primary-dark);margin:12px 0;">${ctx.title}</h2>
           <p class="text-muted">${ctx.questions.length} items · ${mins} minutes · Set ${ctx.setLetter}</p>
         </div>
-
         <div class="alert alert-info">
           <strong>📋 Instructions</strong>
           <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
@@ -135,21 +134,18 @@ const QuizEngine = (() => {
             <li>3 tab-switches will lock your attempt.</li>
           </ul>
         </div>
-
         <div style="display:flex;gap:12px;margin-top:20px;">
           <button id="quiz-start" class="btn btn-primary btn-full">▶️ Start Assessment</button>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:0 0 auto;">Cancel</a>
         </div>
       </div>
     `;
-
     document.getElementById('quiz-start').addEventListener('click', startQuiz);
   }
 
   function renderPassedReview(prev) {
     const container = document.getElementById('quiz-root');
     if (!container) return;
-
     const itemResults = prev.itemResults || [];
     const correctCount = prev.score || 0;
     const total = prev.total || ctx.questions.length;
@@ -168,7 +164,6 @@ const QuizEngine = (() => {
         const isCorrect = r.correct;
         const given = r.given;
         const expected = r.expected || q.correct;
-
         return `
           <div style="padding:14px 16px;margin-bottom:10px;background:#fff;border-radius:10px;border-left:4px solid ${isCorrect ? '#2e7d32' : '#c62828'};box-shadow:0 1px 4px rgba(0,0,0,0.04);">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
@@ -203,19 +198,16 @@ const QuizEngine = (() => {
         <span class="quiz-result-emoji">${emoji}</span>
         <h2 class="quiz-result-title passed">${titleText}</h2>
         <p class="quiz-result-message">${ctx.title} · Completed ${completedAt}</p>
-
         <div class="quiz-result-stats">
           <div><div style="font-size:2rem;font-weight:800;color:#2e7d32;">${correctCount}</div><div class="text-small text-muted">Correct</div></div>
           <div><div style="font-size:2rem;font-weight:800;color:#5f6368;">${total - correctCount}</div><div class="text-small text-muted">Wrong</div></div>
           <div><div style="font-size:2rem;font-weight:800;color:#2e7d32;">${percent}%</div><div class="text-small text-muted">Score</div></div>
           <div><div style="font-size:2rem;font-weight:800;color:#5f6368;">${timeUsed}</div><div class="text-small text-muted">Time Used</div></div>
         </div>
-
         <div class="alert alert-success" style="text-align:left;">
           <strong>✅ You have already passed this assessment.</strong>
           <p style="margin-top:6px;font-size:0.88rem;">This is a read-only review of your previous attempt.</p>
         </div>
-
         <div style="text-align:left;margin-top:28px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
             <span style="display:inline-block;width:4px;height:20px;background:linear-gradient(180deg,#0d47a1,#00acc1);border-radius:2px;"></span>
@@ -223,9 +215,8 @@ const QuizEngine = (() => {
           </div>
           ${itemAnalysisHTML}
         </div>
-
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
@@ -256,7 +247,6 @@ const QuizEngine = (() => {
         </div>
       </div>
     `;
-
     document.getElementById('quiz-retry').addEventListener('click', () => renderIntro());
   }
 
@@ -338,7 +328,6 @@ const QuizEngine = (() => {
         </div>
       </div>
     `;
-
     document.getElementById('quiz-prev').addEventListener('click', () => goTo(currentIndex - 1));
     document.getElementById('quiz-next').addEventListener('click', () => goTo(currentIndex + 1));
     document.getElementById('quiz-submit').addEventListener('click', confirmSubmit);
@@ -475,6 +464,7 @@ const QuizEngine = (() => {
     const passed = scorePercent >= ctx.passScore;
     const timeUsed = ctx.timeLimit - (timer?.getRemaining() || 0);
     const timestamp = new Date().toISOString();
+    const user = Store.getCurrentUser();
 
     const payload = {
       score: scoreResult.correct, total: scoreResult.total, percent: scorePercent, passed,
@@ -497,11 +487,36 @@ const QuizEngine = (() => {
 
     if (!passed || forceLock) {
       const lockKey = `${ctx.term}_${ctx.id}`;
+      const reason = forceLock ? 'tab-switch' : 'failed';
       Store.lockAssessment(ctx.lrn, lockKey, {
-        reason: forceLock ? 'tab-switch' : 'failed',
+        reason: reason,
         score: scorePercent
       });
-      console.log('[QuizEngine] 🔒 Locked:', lockKey, 'at', scorePercent + '%', '| Reason:', forceLock ? 'tab-switch' : 'failed');
+      console.log('[QuizEngine] 🔒 Locked:', lockKey, 'at', scorePercent + '%', '| Reason:', reason);
+
+      // Push lock to backend so teacher's Locked Assessments page sees it
+      try {
+        if (typeof Sync !== 'undefined' && typeof Sync.pushLock === 'function' && Sync.backendEnabled()) {
+          Sync.pushLock(ctx.lrn, ctx.term, ctx.id, {
+            reason: reason,
+            score: scorePercent,
+            lockedAt: timestamp,
+            student: user ? {
+              lrn: user.lrn,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              middleName: user.middleName || '',
+              section: user.section
+            } : {}
+          }).then(function (res) {
+            console.log('[QuizEngine] ✅ Lock pushed to backend:', res);
+          }).catch(function (e) {
+            console.warn('[QuizEngine] Lock push failed:', e.message);
+          });
+        }
+      } catch (e) {
+        console.warn('[QuizEngine] Lock push error:', e.message);
+      }
     }
 
     sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
@@ -526,7 +541,6 @@ const QuizEngine = (() => {
           <div><div style="font-size:2rem;font-weight:800;color:${result.passed ? 'var(--color-success)' : 'var(--color-warning)'};">${result.percent}%</div><div class="text-small text-muted">Score</div></div>
           <div><div style="font-size:2rem;font-weight:800;color:var(--color-text-muted);">${APP.formatTime(result.timeUsed)}</div><div class="text-small text-muted">Time Used</div></div>
         </div>
-
         ${!result.passed ? `
           <div class="alert alert-warning" style="text-align:left;margin-top:16px;">
             <strong>📖 Below passing score</strong>
@@ -538,9 +552,8 @@ const QuizEngine = (() => {
             <p style="margin-top:6px;font-size:0.9rem;">You have successfully completed this assessment.</p>
           </div>
         `}
-
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
