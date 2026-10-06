@@ -1,19 +1,14 @@
 /* ============================================================
    teacher-auth.js — Teacher password authentication
-   Version: 1.5.0
+   Version: 1.6.0
    App: General Science
    ------------------------------------------------------------
-   Changelog v1.5.0 (Phase 2 / X6 + X34 fix):
-     - REMOVED DEFAULT_HASH fallback. If CONFIG.TEACHER_PASSWORD_HASH
-       is missing or invalid, login FAILS CLOSED (no default password).
-     - Session schema unified: { authenticatedAt, lastActivity, token }.
-     - setSession() writes BOTH session + LAST_ACTIVITY_KEY so
-       isAuthenticated() has a consistent source of truth.
-     - logout() accepts optional skipConfirm for programmatic logout.
-
-   ⚠️ SECURITY NOTE: Password is client-side. Change it immediately
-   after deploy via CONFIG.TEACHER_PASSWORD_HASH. For real security,
-   move auth to the Apps Script backend.
+   Changelog v1.6.0:
+     - Stores raw password as gsa_teacher_token on login so
+       teacher-authenticated backend actions (pushUnlock etc.)
+       can be verified.
+     - Clears token on logout.
+     - Also mirrors token into session object for convenience.
    ============================================================ */
 
 const TeacherAuth = (() => {
@@ -23,13 +18,10 @@ const TeacherAuth = (() => {
   const ATTEMPTS_KEY = 'gsa_teacher_attempts';
   const LOCKOUT_KEY = 'gsa_teacher_lockout';
   const LAST_ACTIVITY_KEY = 'gsa_teacher_last_activity';
+  const TOKEN_KEY = 'gsa_teacher_token';
 
   let heartbeatInterval = null;
 
-  /**
-   * Read the teacher password hash from CONFIG.
-   * ⚠️ X6 FIX: No fallback. Return null if missing → login fails closed.
-   */
   function _getStoredHash() {
     if (typeof CONFIG === 'undefined' || !CONFIG.TEACHER_PASSWORD_HASH) {
       console.error('[TeacherAuth] CONFIG.TEACHER_PASSWORD_HASH is not set. Login is disabled.');
@@ -79,7 +71,7 @@ const TeacherAuth = (() => {
     if (inputHash === storedHash) {
       clearAttempts();
       clearLockout();
-      setSession();
+      setSession(password);
       startHeartbeat();
       trackActivity();
       return true;
@@ -95,11 +87,7 @@ const TeacherAuth = (() => {
     return false;
   }
 
-  /**
-   * ⚠️ X34: Session schema now matches teacher-login.html.
-   * Writes BOTH session and LAST_ACTIVITY_KEY.
-   */
-  function setSession() {
+  function setSession(password) {
     const now = Date.now();
     const session = {
       authenticatedAt: now,
@@ -108,6 +96,10 @@ const TeacherAuth = (() => {
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
     sessionStorage.setItem(LAST_ACTIVITY_KEY, String(now));
+
+    if (password) {
+      sessionStorage.setItem(TOKEN_KEY, String(password));
+    }
   }
 
   function getSession() {
@@ -164,13 +156,10 @@ const TeacherAuth = (() => {
   function clearSession() {
     sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
     stopHeartbeat();
   }
 
-  /**
-   * Logout. By default prompts for confirmation.
-   * Pass skipConfirm=true for programmatic logout.
-   */
   function logout(skipConfirm) {
     if (!skipConfirm) {
       if (!confirm('Log out of teacher access? You will need to enter the password again.')) {
