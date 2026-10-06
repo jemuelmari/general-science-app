@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Locked Assessments — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-29a3f12" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-29a3f12" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
     .la-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
     .la-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -34,7 +34,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Locked Assessments</h1>
-        <span class="version">v1.0.7</span>
+        <span class="version">v1.0.8</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -50,7 +50,7 @@
       <div class="teacher-hero-content" style="align-items:flex-start;">
         <div class="teacher-hero-text">
           <h1 style="font-size:1.4rem;">Locked Assessments Review</h1>
-          <p>Review failed or tampered assessments and unlock them for retake. Unlock reaches the student's device within ~15 seconds.</p>
+          <p>Pulls locks from the backend — sees failed attempts from all student devices. Unlock reaches the student within ~15 seconds.</p>
         </div>
       </div>
     </div>
@@ -90,18 +90,18 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.7</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.8</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/app.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/store.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/security.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-29a3f12"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-29a3f12"></script>
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/version-sync.js?v=1"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/sync.js?v=2.0.7"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
     (function() {
       'use strict';
@@ -122,41 +122,45 @@
           '<div class="card la-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
-      function scanLocked() {
+      async function scanLocked() {
         var termFilter = document.getElementById('filter-term').value;
         var sectionFilter = document.getElementById('filter-section').value;
+
+        if (typeof Sync === 'undefined' || typeof Sync.pullLocks !== 'function' || !Sync.backendEnabled()) {
+          console.warn('[Locked] Sync not available or backend disabled');
+          return [];
+        }
+
+        var filters = {};
+        if (termFilter) filters.term = termFilter;
+        if (sectionFilter) filters.section = sectionFilter;
+
+        var res = await Sync.pullLocks(filters);
+        if (!res.ok) {
+          console.warn('[Locked] pullLocks failed:', res.error);
+          return [];
+        }
+
         var students = Store.getAllUsers();
-        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
-        if (!students.length) return [];
+        var byLrn = {};
+        students.forEach(function(s) { byLrn[s.lrn] = s; });
 
         var found = [];
-        var termsToScan = termFilter ? [termFilter] : TERMS;
-
-        students.forEach(function(s) {
-          termsToScan.forEach(function(term) {
-            ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te'].forEach(function(id) {
-              var lockKey = term + '_' + id;
-              var locked = Store.isAssessmentLocked && Store.isAssessmentLocked(s.lrn, lockKey);
-              if (!locked) return;
-
-              var NS = 'gsa_v1_';
-              var raw = localStorage.getItem(NS + 'lock_' + s.lrn + '_' + lockKey);
-              var lockData = {};
-              try { lockData = raw ? JSON.parse(raw) : {}; } catch (e) { lockData = {}; }
-
-              var scores = Store.getScores(s.lrn);
-              var t = scores[term] || {};
-              var record = null;
-              if (id === 'te') record = t.te;
-              else if (t.quizzes && t.quizzes[id]) record = t.quizzes[id];
-              else if (t.st && t.st[id]) record = t.st[id];
-
-              found.push({
-                student: s, term: term, assessmentId: id,
-                assessmentLabel: LABELS[id] || id,
-                lockKey: lockKey, lockData: lockData, record: record
-              });
-            });
+        (res.records || []).forEach(function(lock) {
+          var student = byLrn[lock.lrn];
+          if (!student) return;
+          found.push({
+            student: student,
+            term: lock.term,
+            assessmentId: lock.assessment,
+            assessmentLabel: LABELS[lock.assessment] || lock.assessment,
+            lockKey: lock.term + '_' + lock.assessment,
+            lockId: lock.lockId,
+            lockData: {
+              reason: lock.reason,
+              score: lock.score,
+              lockedAt: lock.lockedAt
+            }
           });
         });
 
@@ -169,16 +173,18 @@
         return found;
       }
 
-      function render() {
+      async function render() {
         var area = document.getElementById('results-area');
-        var locked = scanLocked();
+        area.innerHTML = '<div class="card la-empty">⏳ Loading locks from backend…</div>';
+
+        var locked = await scanLocked();
 
         if (!locked.length) {
           area.innerHTML =
             '<div class="card la-empty success">' +
               '<div style="font-size:3rem;margin-bottom:12px;">✅</div>' +
               '<div style="font-weight:700;color:#1b5e20;font-size:1.1rem;margin-bottom:6px;">No locked assessments</div>' +
-              '<p style="font-size:0.9rem;max-width:480px;margin:0 auto;">All students are clear to take their assessments.</p>' +
+              '<p style="font-size:0.9rem;max-width:480px;margin:0 auto;">No failed attempts have been pushed to the backend yet, or all have already been unlocked.</p>' +
             '</div>';
           return;
         }
@@ -222,7 +228,7 @@
         area.querySelectorAll('[data-unlock]').forEach(function(btn) {
           btn.addEventListener('click', function() {
             promptUnlock(
-              btn.dataset.unlock,
+              btn.dataset.lockId,
               btn.dataset.student,
               btn.dataset.label,
               btn.dataset.term,
@@ -236,8 +242,7 @@
         var isTampered = l.lockData.reason === 'tab-switch';
         var termLabel = l.term.replace('term', 'Term ');
         var lockedDate = l.lockData.lockedAt ? APP.formatDate(l.lockData.lockedAt) : '—';
-        var score = (l.lockData.score !== undefined && l.lockData.score !== null) ? l.lockData.score + '%'
-          : (l.record && l.record.percent !== undefined ? l.record.percent + '%' : '—');
+        var score = (l.lockData.score !== undefined && l.lockData.score !== null) ? l.lockData.score + '%' : '—';
 
         return '<div class="lock-card ' + (isTampered ? 'tampered' : '') + '">' +
           '<div class="lock-head">' +
@@ -255,11 +260,11 @@
           '<div class="lock-reason ' + (isTampered ? 'tampered' : 'failed') + '">' +
             (isTampered
               ? '⚠️ Auto-locked because the student switched tabs or attempted to copy content.'
-              : '📖 Student did not reach the 75% passing score. Unlock will reach their device within ~15 seconds.') +
+              : '📖 Student did not reach the 75% passing score. Unlock reaches their device within ~15 seconds.') +
           '</div>' +
           '<div class="lock-actions">' +
             '<button class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;" ' +
-              'data-unlock="' + l.lockKey + '" ' +
+              'data-lock-id="' + l.lockId + '" ' +
               'data-student="' + l.student.lrn + '" ' +
               'data-label="' + l.assessmentLabel + '" ' +
               'data-term="' + l.term + '" ' +
@@ -269,10 +274,10 @@
         '</div>';
       }
 
-      function promptUnlock(lockKey, studentLrn, label, term, assessment) {
+      function promptUnlock(lockId, studentLrn, label, term, assessment) {
         showConfirm({
           title: 'Unlock "' + label + '"?',
-          message: 'This pushes an unlock to the backend. The student\'s device will clear the lock on its next poll (~15 seconds if they\'re on the quiz page).',
+          message: 'Pushes an unlock to the backend. Student device clears the lock on next poll (~15 seconds if on the quiz page). Lock record is deleted.',
           confirmText: '🔓 Unlock Now',
           onConfirm: async function(forceUnlock) {
             var token = (typeof Sync !== 'undefined' && Sync.getTeacherToken) ? Sync.getTeacherToken() : null;
@@ -281,25 +286,22 @@
               return;
             }
 
-            Store.unlockAssessment(studentLrn, lockKey);
-
             try {
-              if (typeof Sync !== 'undefined' && typeof Sync.pushUnlock === 'function' && Sync.backendEnabled()) {
-                var res = await Sync.pushUnlock(studentLrn, term, assessment, {
-                  reason: 'retake-approved',
-                  unlockedBy: 'teacher',
-                  forceUnlock: forceUnlock
-                });
-                if (res && res.ok) {
-                  APP.toast('✅ Student will see the unlock within ~15 seconds.', 'success', 4000);
-                } else {
-                  APP.toast('⚠️ Local only. Backend: ' + ((res && res.error) || 'unknown'), 'warning', 5000);
+              var res = await Sync.pushUnlock(studentLrn, term, assessment, {
+                reason: 'retake-approved',
+                unlockedBy: 'teacher',
+                forceUnlock: forceUnlock
+              });
+              if (res && res.ok) {
+                if (lockId) {
+                  await Sync.deleteLock(lockId).catch(function() {});
                 }
+                APP.toast('✅ Student will see the unlock within ~15 seconds.', 'success', 4000);
               } else {
-                APP.toast('⚠️ Local only. Backend not configured.', 'warning', 4000);
+                APP.toast('⚠️ Backend: ' + ((res && res.error) || 'unknown'), 'warning', 5000);
               }
             } catch (e) {
-              APP.toast('⚠️ Local only. Push error: ' + e.message, 'warning', 5000);
+              APP.toast('⚠️ Push error: ' + e.message, 'warning', 5000);
             }
 
             render();
