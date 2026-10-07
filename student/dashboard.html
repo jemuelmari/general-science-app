@@ -4,76 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-f4f646d" />
-  <link rel="stylesheet" href="../assets/css/student.css?v=1.3.0-f4f646d" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.5.0" />
+  <link rel="stylesheet" href="../assets/css/student.css?v=1.5.0" />
   <style>
-    /* ===== Floating Sync Badge ===== */
-    .sync-badge-fab {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      font-size: 1.4rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      z-index: 9999;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      background: #2e7d32;
-    }
+    .sync-badge-fab { position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 9999; transition: transform 0.2s, box-shadow 0.2s; display: flex; align-items: center; justify-content: center; color: #fff; background: #2e7d32; }
     .sync-badge-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
-    .sync-badge-fab.synced   { background: #2e7d32; }
-    .sync-badge-fab.pending  { background: #ed6c02; }
-    .sync-badge-fab.failed   { background: #c62828; }
-    .sync-badge-fab.offline  { background: #78909c; }
-    .sync-badge-fab .badge-count {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #fff;
-      color: #1a1a1a;
-      font-size: 0.7rem;
-      font-weight: 800;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 5px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-    .sync-panel {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 320px;
-      max-width: calc(100vw - 40px);
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      z-index: 9998;
-      padding: 16px;
-      display: none;
-      font-size: 0.85rem;
-    }
+    .sync-badge-fab.synced { background: #2e7d32; }
+    .sync-badge-fab.pending { background: #ed6c02; }
+    .sync-badge-fab.failed { background: #c62828; }
+    .sync-badge-fab.offline { background: #78909c; }
+    .sync-badge-fab .badge-count { position: absolute; top: -4px; right: -4px; background: #fff; color: #1a1a1a; font-size: 0.7rem; font-weight: 800; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .sync-panel { position: fixed; bottom: 90px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); z-index: 9998; padding: 16px; display: none; font-size: 0.85rem; }
     .sync-panel.open { display: block; }
     .sync-panel h3 { margin: 0 0 10px; font-size: 1rem; color: #0d47a1; }
     .sync-panel .row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem; }
     .sync-panel .row .val { font-weight: 700; color: #1a1a1a; }
     .sync-panel .actions { display: flex; gap: 8px; margin-top: 12px; }
-    .sync-panel .actions button {
-      flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer;
-      font-family: inherit; font-weight: 600; font-size: 0.8rem;
-    }
+    .sync-panel .actions button { flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 0.8rem; }
     .sync-panel .actions button.primary { background: #0d47a1; color: #fff; }
     .sync-panel .actions button.secondary { background: #eceff1; color: #37474f; }
+
+    /* Retake request cards */
+    .failed-item { padding: 14px 16px; background: #fff; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #ed6c02; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+    .failed-item.awaiting { border-left-color: #2e7d32; }
+    .failed-item.waiting { border-left-color: #ed6c02; }
+    .failed-item.applied { border-left-color: #0277bd; opacity: 0.75; }
+    .failed-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+    .failed-title { font-weight: 700; font-size: 0.95rem; color: #1a1a1a; }
+    .failed-meta { font-size: 0.78rem; color: #78909c; margin-top: 2px; }
+    .failed-score { font-weight: 700; font-size: 0.88rem; color: #c62828; }
+    .retake-code-input { display: flex; gap: 8px; margin-top: 8px; }
+    .retake-code-input input { flex: 1; padding: 8px 12px; border: 2px solid #cfd8dc; border-radius: 6px; font-family: monospace; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .retake-code-input input:focus { outline: none; border-color: #0277bd; }
+    .retake-code-input button { padding: 8px 16px; background: #0277bd; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+    .btn-request-retake { width: 100%; padding: 10px 14px; background: #ed6c02; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; margin-top: 8px; }
+    .btn-request-retake:hover { background: #e65100; }
+    .btn-request-retake:disabled { background: #b0bec5; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -105,6 +71,12 @@
         </div>
         <div id="standing-badge"></div>
       </div>
+    </div>
+
+    <!-- ===== NEW: Failed Assessments / Retake Requests ===== -->
+    <div id="failed-section" style="display:none;">
+      <div class="dash-section-title">⚠️ Failed Assessments & Retake Requests</div>
+      <div id="failed-list"></div>
     </div>
 
     <div class="dash-section-title">📊 Your Progress</div>
@@ -142,7 +114,6 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <!-- ===== Floating Sync Badge ===== -->
   <button id="sync-badge-fab" class="sync-badge-fab synced" title="Sync status">
     🟢 <span id="sync-badge-count" class="badge-count" style="display:none;">0</span>
   </button>
@@ -161,15 +132,15 @@
     </div>
   </div>
 
-  <script src="../config.js?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/security.js?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/transmutation.js?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/sync-auto.js?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/backup.js?v=1.3.0-f4f646d"></script>
-  <script src="../assets/js/term-access.js?v=1.3.0-f4f646d"></script>
+  <script src="../config.js?v=1.5.0"></script>
+  <script src="../assets/js/app.js?v=1.5.0"></script>
+  <script src="../assets/js/store.js?v=1.5.0"></script>
+  <script src="../assets/js/security.js?v=1.5.0"></script>
+  <script src="../assets/js/transmutation.js?v=1.5.0"></script>
+  <script src="../assets/js/sync.js?v=2.1.0"></script>
+  <script src="../assets/js/sync-auto.js?v=1.2.0"></script>
+  <script src="../assets/js/backup.js?v=1.5.0"></script>
+  <script src="../assets/js/term-access.js?v=1.5.0"></script>
   <script>
     (function() {
       'use strict';
@@ -335,6 +306,191 @@
         `;
       }).join('');
 
+      /* ============================================================
+         FAILED ASSESSMENTS + RETAKE REQUEST FLOW
+         ============================================================ */
+
+      var ASSESSMENT_LABELS = {
+        quiz1: 'Quiz 1', quiz2: 'Quiz 2', quiz3: 'Quiz 3',
+        st1: 'Summative Test 1', st2: 'Summative Test 2', te: 'Term Exam',
+        pt1: 'PT 1', pt2: 'PT 2', pt3: 'PT 3'
+      };
+
+      var allRequests = [];
+      var failedCache = [];
+
+      async function loadRequests() {
+        if (typeof Sync === 'undefined' || typeof Sync.getStudentRequests !== 'function') return;
+        if (!Sync.backendEnabled()) return;
+        try {
+          var res = await Sync.getStudentRequests(user.lrn);
+          allRequests = (res && res.ok && res.records) ? res.records : [];
+        } catch (e) {
+          allRequests = [];
+        }
+      }
+
+      function getRequest(term, assessment) {
+        return allRequests.find(function(r) {
+          return r.term === term && r.assessment === assessment;
+        }) || null;
+      }
+
+      function scanFailedAssessments() {
+        var scores = Store.getScores(user.lrn);
+        var found = [];
+        ['term1', 'term2', 'term3'].forEach(function(term) {
+          var t = scores[term] || {};
+          var buckets = [
+            { key: 'quizzes', type: 'quizzes' },
+            { key: 'st', type: 'st' },
+            { key: 'te', type: 'te' }
+          ];
+          buckets.forEach(function(b) {
+            var bucket = t[b.key] || {};
+            if (b.key === 'te') {
+              var te = bucket;
+              if (te && te.percent != null && te.percent < 75) {
+                found.push({ term: term, assessment: 'te', score: te.score, total: te.total, percent: te.percent });
+              }
+            } else {
+              Object.keys(bucket).forEach(function(id) {
+                var r = bucket[id];
+                if (r && r.percent != null && r.percent < 75) {
+                  found.push({ term: term, assessment: id, score: r.score, total: r.total, percent: r.percent });
+                }
+              });
+            }
+          });
+        });
+        return found;
+      }
+
+      async function renderFailedSection() {
+        await loadRequests();
+        failedCache = scanFailedAssessments();
+
+        var section = document.getElementById('failed-section');
+        var list = document.getElementById('failed-list');
+
+        if (!failedCache.length) {
+          section.style.display = 'none';
+          return;
+        }
+        section.style.display = 'block';
+
+        list.innerHTML = failedCache.map(function(f) {
+          var req = getRequest(f.term, f.assessment);
+          var termLabel = f.term.replace('term', 'Term ');
+          var assessmentLabel = ASSESSMENT_LABELS[f.assessment] || f.assessment;
+          var badge = '';
+          var extra = '';
+          var cls = '';
+
+          if (req && req.status === 'approved' && req.unlockCode) {
+            cls = 'awaiting';
+            badge = '<span class="badge" style="background:#e8f5e9;color:#1b5e20;font-weight:700;">🔑 Code Ready</span>';
+            extra =
+              '<p style="margin:6px 0 0;font-size:0.82rem;color:#37474f;">Your teacher approved your retake! Enter the code:</p>' +
+              '<div class="retake-code-input">' +
+                '<input type="text" data-code-input="' + f.term + '|' + f.assessment + '" placeholder="RTK-XXXX-XXXX" maxlength="13" />' +
+                '<button data-redeem="' + f.term + '|' + f.assessment + '">Redeem</button>' +
+              '</div>';
+          } else if (req && req.status === 'pending') {
+            cls = 'waiting';
+            badge = '<span class="badge" style="background:#fff3e0;color:#e65100;font-weight:700;">⏳ Waiting</span>';
+            extra =
+              '<p style="margin:6px 0 0;font-size:0.82rem;color:#37474f;">Request submitted. Your teacher will send you a code via chat once approved.</p>';
+          } else if (req && req.status === 'applied') {
+            cls = 'applied';
+            badge = '<span class="badge" style="background:#e1f5fe;color:#01579b;font-weight:700;">✅ Code Applied</span>';
+            extra =
+              '<p style="margin:6px 0 0;font-size:0.82rem;color:#5f6368;">You already redeemed the code on ' + APP.formatDate(req.appliedAt) + '. You may retake this assessment.</p>';
+          } else {
+            badge = '<span class="badge badge-warning">🔒 Retake Locked</span>';
+            extra =
+              '<button class="btn-request-retake" data-request="' + f.term + '|' + f.assessment + '">🔑 Request Retake Code</button>';
+          }
+
+          return '<div class="failed-item ' + cls + '">' +
+            '<div class="failed-header">' +
+              '<div>' +
+                '<div class="failed-title">' + termLabel + ' · ' + assessmentLabel + '</div>' +
+                '<div class="failed-meta">Failed attempt · ' + APP.formatDate(new Date().toISOString()) + '</div>' +
+              '</div>' +
+              '<div style="text-align:right;">' +
+                badge +
+                '<div class="failed-score" style="margin-top:4px;">' + f.score + '/' + f.total + ' (' + f.percent + '%)</div>' +
+              '</div>' +
+            '</div>' +
+            extra +
+          '</div>';
+        }).join('');
+
+        list.querySelectorAll('[data-request]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var parts = btn.dataset.request.split('|');
+            requestRetake(parts[0], parts[1]);
+          });
+        });
+
+        list.querySelectorAll('[data-redeem]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var parts = btn.dataset.redeem.split('|');
+            var input = list.querySelector('[data-code-input="' + btn.dataset.redeem + '"]');
+            redeemCode(parts[0], parts[1], input.value.trim());
+          });
+        });
+      }
+
+      async function requestRetake(term, assessment) {
+        if (!confirm('Send a retake request to your teacher?')) return;
+        var f = failedCache.find(function(x) { return x.term === term && x.assessment === assessment; });
+        if (!f) return;
+
+        try {
+          var res = await Sync.requestRetake(user.lrn, term, assessment, {
+            reason: 'failed-attempt',
+            score: f.score || 0,
+            total: f.total || 0
+          });
+          if (res && res.ok) {
+            APP.toast('✅ Request sent to your teacher!', 'success', 4000);
+            await renderFailedSection();
+          } else {
+            APP.toast('❌ Failed: ' + ((res && res.error) || 'Unknown'), 'danger', 5000);
+          }
+        } catch (err) {
+          APP.toast('❌ ' + err.message, 'danger');
+        }
+      }
+
+      async function redeemCode(term, assessment, code) {
+        if (!code || code.length < 8) {
+          APP.toast('Please enter a valid code', 'warning');
+          return;
+        }
+        try {
+          var res = await Sync.redeemUnlockCode(user.lrn, code);
+          if (res && res.ok) {
+            APP.toast('🎉 Unlock applied! You can retake now.', 'success', 5000);
+            await renderFailedSection();
+          } else {
+            APP.toast('❌ ' + ((res && res.error) || 'Invalid code'), 'danger', 5000);
+          }
+        } catch (err) {
+          APP.toast('❌ ' + err.message, 'danger');
+        }
+      }
+
+      // Initial render + poll every 30s for updates
+      renderFailedSection();
+      setInterval(renderFailedSection, 30000);
+
+      /* ============================================================
+         SYNC + BACKUP CONTROLS
+         ============================================================ */
+
       const syncBtnCode = APP.$('#btn-sync-code');
 
       if (syncBtnCode) {
@@ -455,7 +611,6 @@
         }, 400);
       });
 
-      // ===== Sync Badge wiring =====
       (function() {
         var fab = document.getElementById('sync-badge-fab');
         var panel = document.getElementById('sync-panel');
@@ -486,7 +641,6 @@
           else { emoji = '⚪'; cls = 'offline'; }
 
           fab.className = 'sync-badge-fab ' + cls;
-          // Update emoji in first text node
           if (fab.firstChild && fab.firstChild.nodeType === 3) {
             fab.firstChild.nodeValue = emoji + ' ';
           }
