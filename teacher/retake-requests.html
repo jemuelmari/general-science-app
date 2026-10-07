@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retake Requests — Teacher · General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
+  <style>
+    .rr-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 20px; }
+    .rr-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
+    .request-card { background: #fff; border-radius: 12px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid #ed6c02; margin-bottom: 12px; }
+    .request-card.approved { border-left-color: #2e7d32; }
+    .request-card.applied { border-left-color: #0277bd; opacity: 0.75; }
+    .request-card.cancelled { border-left-color: #bdbdbd; opacity: 0.6; }
+    .code-display { display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px; background: #f5f7fa; border: 2px dashed #0277bd; border-radius: 8px; margin-top: 10px; font-family: Consolas, monospace; font-size: 1.15rem; font-weight: 800; letter-spacing: 2px; color: #01579b; }
+    .code-display button { background: #0277bd; color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; letter-spacing: normal; }
+    .la-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔑 Retake Requests</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="locked-assessments.html">🔒 Locked</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div class="teacher-hero" style="padding:24px;">
+      <div class="teacher-hero-content" style="align-items:flex-start;">
+        <div class="teacher-hero-text">
+          <h1 style="font-size:1.4rem;">Manage Retake Requests</h1>
+          <p>Approve student requests, generate codes, and send them via chat. Students redeem the code on their device.</p>
+          <div id="hero-meta" style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;font-size:0.85rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:20px;margin-bottom:24px;">
+      <div class="rr-filters">
+        <div class="form-group">
+          <label class="form-label">Term</label>
+          <select id="filter-term" class="form-control">
+            <option value="">All Terms</option>
+            <option value="term1">Term 1</option>
+            <option value="term2">Term 2</option>
+            <option value="term3">Term 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Section</label>
+          <select id="filter-section" class="form-control">
+            <option value="">All Sections</option>
+            <option value="ACADEMIC A">ACADEMIC A</option>
+            <option value="ACADEMIC B">ACADEMIC B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Search</label>
+          <input type="text" id="la-search" class="form-control" placeholder="Name or LRN…" />
+        </div>
+        <div class="form-group" style="flex:0;">
+          <label class="form-label">&nbsp;</label>
+          <button id="btn-refresh" class="btn btn-primary">📥 Load Requests</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="stats"></div>
+    <div id="list"></div>
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js?v=1.5.0"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/sync.js?v=2.1.0"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      var LABELS = {
+        quiz1: 'Quiz 1', quiz2: 'Quiz 2', quiz3: 'Quiz 3',
+        st1: 'Summative Test 1', st2: 'Summative Test 2', te: 'Term Exam',
+        pt1: 'PT 1', pt2: 'PT 2', pt3: 'PT 3'
+      };
+
+      var allRequests = [];
+
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+
+        document.getElementById('btn-refresh').addEventListener('click', fetchAndRender);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+        document.getElementById('la-search').addEventListener('input', render);
+        document.getElementById('filter-term').addEventListener('change', fetchAndRender);
+        document.getElementById('filter-section').addEventListener('change', fetchAndRender);
+
+        fetchAndRender();
+      }, function() {
+        document.getElementById('list').innerHTML = '<div class="card la-empty">⚠️ Auth module failed to load</div>';
+      });
+
+      async function fetchAndRender() {
+        var listEl = document.getElementById('list');
+        listEl.innerHTML = '<div class="card la-empty">⏳ Loading requests…</div>';
+
+        var filters = {
+          term: document.getElementById('filter-term').value,
+          section: document.getElementById('filter-section').value
+        };
+
+        try {
+          var res = await Sync.getUnlockRequests(filters);
+          if (!res.ok) {
+            listEl.innerHTML = '<div class="card la-empty" style="color:#c62828;">❌ ' + (res.error || 'Backend error') + '</div>';
+            allRequests = [];
+          } else {
+            allRequests = res.records || [];
+          }
+        } catch (err) {
+          listEl.innerHTML = '<div class="card la-empty" style="color:#c62828;">❌ ' + err.message + '</div>';
+          allRequests = [];
+        }
+        renderStats();
+        render();
+      }
+
+      function renderStats() {
+        var pending = allRequests.filter(function(r) { return r.status === 'pending'; }).length;
+        var approved = allRequests.filter(function(r) { return r.status === 'approved'; }).length;
+        var applied = allRequests.filter(function(r) { return r.status === 'applied'; }).length;
+
+        document.getElementById('hero-meta').innerHTML =
+          '<div>⏳ <strong>' + pending + '</strong> Pending</div>' +
+          '<div>🔑 <strong>' + approved + '</strong> Code Ready</div>' +
+          '<div>✅ <strong>' + applied + '</strong> Redeemed</div>';
+
+        document.getElementById('stats').innerHTML =
+          '<div class="stat-card amber"><div class="stat-icon">⏳</div><div class="stat-value">' + pending + '</div><div class="stat-label">Pending</div></div>' +
+          '<div class="stat-card green"><div class="stat-icon">🔑</div><div class="stat-value">' + approved + '</div><div class="stat-label">Code Ready</div></div>' +
+          '<div class="stat-card blue"><div class="stat-icon">✅</div><div class="stat-value">' + applied + '</div><div class="stat-label">Redeemed</div></div>';
+      }
+
+      function render() {
+        var listEl = document.getElementById('list');
+        var q = (document.getElementById('la-search').value || '').toLowerCase().trim();
+
+        var filtered = allRequests;
+        if (q) {
+          filtered = allRequests.filter(function(r) {
+            return (r.studentName || '').toLowerCase().indexOf(q) !== -1 ||
+                   (r.lrn || '').indexOf(q) !== -1;
+          });
+        }
+
+        if (!filtered.length) {
+          listEl.innerHTML =
+            '<div class="card la-empty">' +
+              '<div style="font-size:3rem;margin-bottom:12px;">🎉</div>' +
+              '<div style="font-weight:700;color:#1b5e20;margin-bottom:6px;">No requests</div>' +
+              '<p style="font-size:0.9rem;">Students have not requested any retakes yet.</p>' +
+            '</div>';
+          return;
+        }
+
+        listEl.innerHTML = filtered.map(renderCard).join('');
+
+        listEl.querySelectorAll('[data-approve]').forEach(function(btn) {
+          btn.addEventListener('click', function() { approveRequest(btn.dataset.approve); });
+        });
+        listEl.querySelectorAll('[data-cancel]').forEach(function(btn) {
+          btn.addEventListener('click', function() { cancelRequest(btn.dataset.cancel); });
+        });
+        listEl.querySelectorAll('[data-copy]').forEach(function(btn) {
+          btn.addEventListener('click', function() { copyCode(btn.dataset.copy); });
+        });
+      }
+
+      function renderCard(r) {
+        var percent = r.total > 0 ? Math.round((r.score / r.total) * 100) : 0;
+        var termLabel = (r.term || '').replace('term', 'Term ');
+        var assessmentLabel = LABELS[r.assessment] || r.assessment;
+        var badge = '', actions = '';
+
+        if (r.status === 'pending') {
+          badge = '<span class="badge-pill warning" style="font-size:0.7rem;">⏳ PENDING</span>';
+          actions =
+            '<button class="btn btn-primary" style="font-size:0.85rem;padding:9px 16px;font-weight:600;" data-approve="' + r.requestId + '">🔑 Generate Code</button>' +
+            ' ' +
+            '<button class="btn btn-outline" style="font-size:0.82rem;padding:9px 14px;" data-cancel="' + r.requestId + '">❌ Cancel</button>';
+        } else if (r.status === 'approved') {
+          badge = '<span class="badge-pill success" style="font-size:0.7rem;">🔑 CODE READY</span>';
+          actions =
+            '<div class="code-display">' +
+              '<span>' + r.unlockCode + '</span>' +
+              '<button data-copy="' + r.unlockCode + '">📋 Copy</button>' +
+            '</div>' +
+            '<p style="font-size:0.78rem;color:#78909c;margin-top:8px;">Send this code to ' + (r.studentName || r.lrn) + ' via chat. Expires ' + APP.formatDate(r.codeExpiresAt) + '.</p>';
+        } else if (r.status === 'applied') {
+          badge = '<span class="badge-pill" style="font-size:0.7rem;background:#0277bd;color:#fff;">✅ REDEEMED</span>';
+          actions = '<p style="font-size:0.82rem;color:#5f6368;">✅ Student redeemed on ' + APP.formatDate(r.appliedAt) + '.</p>';
+        } else if (r.status === 'cancelled') {
+          badge = '<span class="badge-pill" style="font-size:0.7rem;background:#bdbdbd;color:#fff;">❌ CANCELLED</span>';
+          actions = '<p style="font-size:0.82rem;color:#90a4ae;">Cancelled.</p>';
+        }
+
+        return '<div class="request-card ' + r.status + '">' +
+          '<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">' +
+            '<div style="flex:1;min-width:220px;">' +
+              '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">' +
+                '<strong style="font-size:0.95rem;color:#1a1a1a;">' + (r.studentName || r.lrn) + '</strong>' + badge +
+              '</div>' +
+              '<div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">LRN: ' + APP.formatLRN(r.lrn) + ' · ' + (r.section || '—') + '</div>' +
+              '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:0.88rem;align-items:center;">' +
+                '<span style="font-weight:600;color:#37474f;">' + termLabel + ' · ' + assessmentLabel + '</span>' +
+                '<span style="color:#c62828;font-weight:700;">' + r.score + '/' + r.total + ' (' + percent + '%)</span>' +
+                '<span style="color:#b0bec5;font-size:0.75rem;">· ' + APP.formatDate(r.requestedAt) + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:12px;">' + actions + '</div>' +
+        '</div>';
+      }
+
+      async function approveRequest(requestId) {
+        if (!confirm('Generate a retake code for this student?')) return;
+        var res = await Sync.approveRetake(requestId);
+        if (res.ok) {
+          APP.toast('🔑 Code generated: ' + res.unlockCode, 'success', 6000);
+          await fetchAndRender();
+        } else {
+          APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+        }
+      }
+
+      async function cancelRequest(requestId) {
+        if (!confirm('Cancel this request?')) return;
+        var res = await Sync.cancelRequest(requestId);
+        if (res.ok) {
+          APP.toast('✅ Cancelled', 'success');
+          await fetchAndRender();
+        } else {
+          APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+        }
+      }
+
+      function copyCode(code) {
+        navigator.clipboard.writeText(code).then(function() {
+          APP.toast('📋 Copied: ' + code, 'success');
+        }).catch(function() {
+          prompt('Copy this code:', code);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
