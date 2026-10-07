@@ -1,7 +1,9 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.0.7
-   Changelog v2.0.7: Added pushLock, pullLocks, deleteLock.
+   Version: 2.1.0
+   Changelog v2.1.0: Added retake request wrappers:
+     requestRetake, getStudentRequests, getUnlockRequests,
+     approveRetake, cancelRequest, redeemUnlockCode.
    ============================================================ */
 
 const Sync = (() => {
@@ -138,20 +140,14 @@ const Sync = (() => {
 
     var mode = 'local';
     if (backendEnabled()) {
-      var res = await backendPost({
-        action: 'registerSyncCode',
-        code: code, lrn: lrn, payload: payload, signature: signature
-      });
+      var res = await backendPost({ action: 'registerSyncCode', code: code, lrn: lrn, payload: payload, signature: signature });
       if (res.ok) mode = 'backend';
       else throw new Error('Backend rejected sync code: ' + (res.error || 'unknown'));
     }
 
     _saveLocalCode(code, { payload: payload, signature: signature });
 
-    return {
-      code: code, payload: payload, signature: signature,
-      mode: mode, createdAt: new Date().toISOString()
-    };
+    return { code: code, payload: payload, signature: signature, mode: mode, createdAt: new Date().toISOString() };
   }
 
   async function lookupSyncCode(code) {
@@ -159,9 +155,7 @@ const Sync = (() => {
       try {
         var res = await backendPost({ action: 'resolveSyncCode', code: code });
         if (res.ok) return { payload: res.payload, signature: res.signature, source: 'backend', createdAt: res.createdAt };
-      } catch (err) {
-        console.warn('[Sync] Backend lookup failed, trying local:', err);
-      }
+      } catch (err) { console.warn('[Sync] Backend lookup failed:', err); }
     }
     var local = _getLocalCode(code);
     if (local) {
@@ -211,11 +205,9 @@ const Sync = (() => {
       reader.onload = async function (e) {
         try {
           var envelope = JSON.parse(e.target.result);
-          var payload = envelope.payload;
-          var signature = envelope.signature;
-          if (!payload || !signature) throw new Error('Missing payload or signature');
-          var valid = await verifyCanonical(payload, signature);
-          resolve({ payload: payload, signature: signature, valid: valid });
+          if (!envelope.payload || !envelope.signature) throw new Error('Missing payload or signature');
+          var valid = await verifyCanonical(envelope.payload, envelope.signature);
+          resolve({ payload: envelope.payload, signature: envelope.signature, valid: valid });
         } catch (err) { reject(err); }
       };
       reader.onerror = function () { reject(new Error('File read error')); };
@@ -226,10 +218,7 @@ const Sync = (() => {
   async function importFromCode(code) {
     var record = await lookupSyncCode(code);
     if (!record) {
-      return {
-        valid: false,
-        error: backendEnabled() ? 'Code not found' : 'Code not found on this device.'
-      };
+      return { valid: false, error: backendEnabled() ? 'Code not found' : 'Code not found on this device.' };
     }
     var valid = await verifyCanonical(record.payload, record.signature);
     return { payload: record.payload, signature: record.signature, valid: valid, source: record.source };
@@ -243,18 +232,13 @@ const Sync = (() => {
       var res = await backendPost(body);
       if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
       return { ok: true, count: (res.records || []).length, records: res.records || [] };
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function markCodeUsed(code) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'deleteSyncCode', code: code });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'deleteSyncCode', code: code }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function pingBackend() {
@@ -263,9 +247,7 @@ const Sync = (() => {
       var start = Date.now();
       var res = await backendGet({ action: 'ping' });
       return Object.assign({}, res, { ms: Date.now() - start });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   function buildAttemptPayload(lrn, term, assessment, attempt) {
@@ -273,17 +255,8 @@ const Sync = (() => {
     if (!user) throw new Error('User not found');
     return {
       version: '2.0.0',
-      student: {
-        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
-        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
-      },
-      attempt: {
-        term: term, assessment: assessment,
-        score: attempt.score, total: attempt.total,
-        itemResults: attempt.itemResults || [],
-        set: attempt.set || '',
-        timestamp: attempt.timestamp || new Date().toISOString()
-      }
+      student: { lrn: user.lrn, lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
+      attempt: { term: term, assessment: assessment, score: attempt.score, total: attempt.total, itemResults: attempt.itemResults || [], set: attempt.set || '', timestamp: attempt.timestamp || new Date().toISOString() }
     };
   }
 
@@ -309,9 +282,7 @@ const Sync = (() => {
         payload: payload, signature: signature
       });
       return Object.assign({ pushId: pushId }, res);
-    } catch (err) {
-      return { ok: false, error: err.message, pushId: pushId, offline: true };
-    }
+    } catch (err) { return { ok: false, error: err.message, pushId: pushId, offline: true }; }
   }
 
   async function pullAttempts(filters) {
@@ -332,43 +303,27 @@ const Sync = (() => {
         verified.push(copy);
       }
       return { ok: true, count: verified.length, records: verified };
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function markUsedBulk(pushIds, usedBy) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'markUsedBulk', pushIds: pushIds || [], usedBy: usedBy || 'teacher' });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'markUsedBulk', pushIds: pushIds || [], usedBy: usedBy || 'teacher' }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function archiveUsed(opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'archiveUsed',
-        olderThanDays: opts && opts.olderThanDays,
-        archivedBy: (opts && opts.archivedBy) || 'teacher'
-      });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+      return await backendPost({ action: 'archiveUsed', olderThanDays: opts && opts.olderThanDays, archivedBy: (opts && opts.archivedBy) || 'teacher' });
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function getSyncStatus(filters) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      return await backendPost({
-        action: 'getSyncStatus',
-        section: (filters && filters.section) || ''
-      });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+      return await backendPost({ action: 'getSyncStatus', section: (filters && filters.section) || '' });
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   /* ============================================================
@@ -380,18 +335,12 @@ const Sync = (() => {
     opts = opts || {};
     try {
       return await backendPost({
-        action: 'pushLock',
-        lrn: lrn,
-        term: term,
-        assessment: assessment,
-        reason: opts.reason || 'failed',
-        score: opts.score || 0,
+        action: 'pushLock', lrn: lrn, term: term, assessment: assessment,
+        reason: opts.reason || 'failed', score: opts.score || 0,
         lockedAt: opts.lockedAt || new Date().toISOString(),
         student: opts.student || {}
       });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function pullLocks(filters) {
@@ -402,18 +351,13 @@ const Sync = (() => {
       var res = await backendPost(body);
       if (!res.ok) return { ok: false, error: res.error || 'Backend error' };
       return { ok: true, count: (res.records || []).length, records: res.records || [] };
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function deleteLock(lockId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'deleteLock', lockId: lockId });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'deleteLock', lockId: lockId }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   /* ============================================================
@@ -425,63 +369,116 @@ const Sync = (() => {
     opts = opts || {};
     try {
       return await backendPost({
-        action: 'pushUnlock',
-        token: getTeacherToken(),
-        lrn: lrn,
-        term: term,
-        assessment: assessment,
+        action: 'pushUnlock', token: getTeacherToken(),
+        lrn: lrn, term: term, assessment: assessment,
         reason: opts.reason || 'retake-approved',
         unlockedBy: opts.unlockedBy || 'teacher',
         forceUnlock: !!opts.forceUnlock
       });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function pullUnlocks(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'pullUnlocks', lrn: lrn });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'pullUnlocks', lrn: lrn }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function markUnlockApplied(unlockId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'markUnlockApplied', unlockId: unlockId });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'markUnlockApplied', unlockId: unlockId }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function revokeUnlock(unlockId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'revokeUnlock', token: getTeacherToken(), unlockId: unlockId });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'revokeUnlock', token: getTeacherToken(), unlockId: unlockId }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function getAllUnlocks() {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
-    try {
-      return await backendPost({ action: 'getAllUnlocks', token: getTeacherToken() });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+    try { return await backendPost({ action: 'getAllUnlocks', token: getTeacherToken() }); }
+    catch (err) { return { ok: false, error: err.message }; }
   }
 
   async function getUnlockStatus() {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try { return await backendPost({ action: 'getUnlockStatus', token: getTeacherToken() }); }
+    catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  /* ============================================================
+     REQUEST ACTIONS (NEW v2.1.0)
+     ============================================================ */
+
+  async function requestRetake(lrn, term, assessment, opts) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    opts = opts || {};
+    var user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
     try {
-      return await backendPost({ action: 'getUnlockStatus', token: getTeacherToken() });
-    } catch (err) {
-      return { ok: false, error: err.message };
-    }
+      return await backendPost({
+        action: 'requestRetake',
+        lrn: lrn,
+        term: term,
+        assessment: assessment,
+        reason: opts.reason || 'failed-attempt',
+        score: opts.score || 0,
+        total: opts.total || 0,
+        student: {
+          lastName: user.lastName, firstName: user.firstName,
+          middleName: user.middleName || '', section: user.section
+        }
+      });
+    } catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  async function getStudentRequests(lrn) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try { return await backendPost({ action: 'getStudentRequests', lrn: lrn }); }
+    catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  async function getUnlockRequests(filters) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    filters = filters || {};
+    try {
+      return await backendPost({
+        action: 'getUnlockRequests',
+        token: getTeacherToken(),
+        filterTerm: filters.term || '',
+        filterSection: filters.section || ''
+      });
+    } catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  async function approveRetake(requestId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({ action: 'approveRetake', token: getTeacherToken(), requestId: requestId });
+    } catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  async function cancelRequest(requestId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    try {
+      return await backendPost({ action: 'cancelRequest', token: getTeacherToken(), requestId: requestId });
+    } catch (err) { return { ok: false, error: err.message }; }
+  }
+
+  async function redeemUnlockCode(lrn, code) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
+    if (!lrn || !code) return { ok: false, error: 'Missing lrn or code' };
+    try {
+      var res = await backendPost({ action: 'redeemUnlockCode', lrn: lrn, code: code });
+      if (res.ok && res.term && res.assessment) {
+        var lockKey = res.term + '_' + res.assessment;
+        Store.unlockAssessment(lrn, lockKey);
+        console.log('[Sync] 🔓 Unlock applied via code:', lockKey);
+      }
+      return res;
+    } catch (err) { return { ok: false, error: err.message }; }
   }
 
   function _shortHash(str) {
@@ -529,6 +526,12 @@ const Sync = (() => {
     markUnlockApplied: markUnlockApplied,
     revokeUnlock: revokeUnlock,
     getAllUnlocks: getAllUnlocks,
-    getUnlockStatus: getUnlockStatus
+    getUnlockStatus: getUnlockStatus,
+    requestRetake: requestRetake,
+    getStudentRequests: getStudentRequests,
+    getUnlockRequests: getUnlockRequests,
+    approveRetake: approveRetake,
+    cancelRequest: cancelRequest,
+    redeemUnlockCode: redeemUnlockCode
   };
 })();
