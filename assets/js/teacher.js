@@ -270,8 +270,9 @@
           </div>
         </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <a href="classrecord.html" class="btn btn-primary" style="flex:1;text-align:center;">📊 Open in Class Record</a>
+          <a href="teacher/evidence.html?lrn=${student.lrn}" class="btn" style="flex:1;text-align:center;background:#0d47a1;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.85rem;">📄 Generate Evidence</a>
           <button id="detail-export" class="btn btn-outline" style="flex:1;">📥 Export Data</button>
         </div>
 
