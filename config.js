@@ -48,4 +48,23 @@ const CONFIG = {
     gradebook: '#00695c',
     gradebookDark: '#004d40'
   }
+   /* ============================================================
+   SCHOOL_INFO — Phase 4.5
+   Hardcoded school/teacher info used by evidence generator.
+   Edit here only — never hardcode in evidence.js.
+   ============================================================ */
+const SCHOOL_INFO = {
+  region:        'Region III',
+  division:      'Schools Division of Tarlac Province',
+  schoolName:    'IBA HIGH SCHOOL',
+  schoolAddress: 'Iba, San Jose, Tarlac',
+  schoolYear:    'S.Y. 2026-2027',
+  teacherName:   'JEMUEL C. MARI',
+  teacherPosition: 'Teacher II',
+  subject:       'General Science',
+  gradeLevel:    'Grade 11'
+};
+
+// Expose globally for scripts that don't use modules
+window.SCHOOL_INFO = SCHOOL_INFO;
 };
