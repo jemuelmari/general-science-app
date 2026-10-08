@@ -1,13 +1,14 @@
 /* ============================================================
    evidence.js — Phase 4.5
    Individual Exam Evidence Generator (.docx)
+   Version: 1.0.0
    Depends: docx@8.5.0 (UMD), config.js, randomize.js, store.js
    ============================================================ */
 (function () {
   'use strict';
 
   const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          WidthType, AlignmentType, BorderStyle, HeadingLevel } = window.docx;
+          WidthType, AlignmentType, BorderStyle } = window.docx;
 
   const SCORES_PREFIX = 'gsa_v1_scores_';
 
@@ -15,11 +16,10 @@
      STATE
      ------------------------------------------------------------ */
   let _students = [];
-  let _studentMap = {};      // LRN -> student object
-  let _lastPayload = null;   // for preview
+  let _studentMap = {};
 
   /* ------------------------------------------------------------
-     HELPERS
+     FORMATTERS
      ------------------------------------------------------------ */
   function fmtDate(d) {
     if (!d) return '—';
@@ -44,7 +44,7 @@
   }
 
   function lastFirstMiddle(stu) {
-    // Expected shape: { lastName, firstName, middleName } OR { name: "LAST, First Middle" }
+    if (!stu) return '(Unknown)';
     if (stu.lastName) {
       const mid = stu.middleName ? ' ' + stu.middleName : '';
       return stu.lastName + ', ' + (stu.firstName || '') + mid;
@@ -52,22 +52,27 @@
     return stu.name || stu.fullName || '(Unnamed)';
   }
 
-  function getLrn(stu) {
-    return stu.lrn || stu.LRN || stu.id || '';
-  }
+  function getLrn(stu)    { return stu.lrn || stu.LRN || stu.id || ''; }
+  function getSection(stu){ return stu.section || stu.Section || ''; }
 
-  function getSection(stu) {
-    return stu.section || stu.Section || '';
-  }
-
+  /* ------------------------------------------------------------
+     ROSTER LOADING
+     ------------------------------------------------------------ */
   function loadStudents() {
-    // Try multiple known sources — adapt to whatever store.js exposes.
     let roster = [];
+
     try {
-      if (window.Store && typeof Store.getStudents === 'function') {
-        roster = Store.getStudents() || [];
+      if (window.Store && typeof Store.getAllUsers === 'function') {
+        roster = Store.getAllUsers() || [];
       }
     } catch (e) { /* ignore */ }
+
+    if (!roster.length) {
+      try {
+        const raw = localStorage.getItem('gsa_v1_users');
+        if (raw) roster = JSON.parse(raw);
+      } catch (e) { /* ignore */ }
+    }
 
     if (!roster.length) {
       try {
@@ -76,18 +81,18 @@
       } catch (e) { /* ignore */ }
     }
 
-    if (!roster.length) {
-      try {
-        const raw = localStorage.getItem('gsa_v1_roster');
-        if (raw) roster = JSON.parse(raw);
-      } catch (e) { /* ignore */ }
-    }
-
-    if (!Array.isArray(roster)) roster = [];
-    return roster;
+    return Array.isArray(roster) ? roster : [];
   }
 
   function loadScores(lrn) {
+    // Prefer Store if available
+    try {
+      if (window.Store && typeof Store.getScores === 'function') {
+        const s = Store.getScores(lrn);
+        if (s && Object.keys(s).length) return s;
+      }
+    } catch (e) { /* ignore */ }
+
     try {
       const raw = localStorage.getItem(SCORES_PREFIX + lrn);
       return raw ? JSON.parse(raw) : null;
@@ -99,15 +104,12 @@
 
   /* ------------------------------------------------------------
      ASSESSMENT RESOLUTION
+     Handles both shapes:
+       scores.termN.st.stM          OR   scores.termN.stM
+       scores.termN.quizzes.quizM   OR   scores.termN.quizM
+       scores.termN.te
      ------------------------------------------------------------ */
   function resolveAssessment(scores, term, type, index) {
-    /**
-     * Returns { record, label, filename, bankFolder } or null.
-     * Scores shape:
-     *   scores.term1.st.st1  = { itemResults:[], score, total, percent, ... }
-     *   scores.term1.quizzes.quiz1 = {...}
-     *   scores.term1.te = {...}
-     */
     if (!scores) return null;
     const t = scores['term' + term];
     if (!t) return null;
@@ -123,7 +125,7 @@
     }
 
     if (type === 'quiz') {
-      const q = t.quizzes && t.quizzes['quiz' + index];
+      const q = (t.quizzes && t.quizzes['quiz' + index]) || t['quiz' + index];
       if (!q) return null;
       return {
         record: q,
@@ -134,7 +136,7 @@
     }
 
     if (type === 'st') {
-      const st = t.st && t.st['st' + index];
+      const st = (t.st && t.st['st' + index]) || t['st' + index];
       if (!st) return null;
       return {
         record: st,
@@ -148,7 +150,10 @@
   }
 
   async function loadQuestionBank(bankFolder, filename) {
-    const base = (window.Randomize && Randomize.getRepoBase) ? Randomize.getRepoBase() : '../';
+    const base = (window.Randomize && Randomize.getRepoBase)
+      ? Randomize.getRepoBase()
+      : '../';
+
     const candidates = [
       base + 'student/' + bankFolder + '/assessments/' + filename + '.json',
       '../student/' + bankFolder + '/assessments/' + filename + '.json',
@@ -161,7 +166,7 @@
       if (seen.has(path)) continue;
       seen.add(path);
       try {
-        const res = await fetch(path + '?v=1.5.0');
+        const res = await fetch(path + '?v=1.3.0-7b373e6');
         if (!res.ok) continue;
         const text = await res.text();
         return JSON.parse(text);
@@ -171,7 +176,7 @@
   }
 
   /* ------------------------------------------------------------
-     BUILD DOCX
+     DOCX PRIMITIVES
      ------------------------------------------------------------ */
   function border() {
     return { style: BorderStyle.SINGLE, size: 4, color: '000000' };
@@ -182,7 +187,7 @@
     return new TableCell({
       width: opts.width ? { size: opts.width, type: WidthType.PERCENTAGE } : undefined,
       borders: opts.borders,
-      shading: opts.shading,
+      shading: opts.shading ? { fill: opts.shading } : undefined,
       children: [new Paragraph({
         alignment: opts.align || AlignmentType.LEFT,
         children: [new TextRun({
@@ -211,17 +216,20 @@
     });
   }
 
+  /* ------------------------------------------------------------
+     DOCX BUILDERS
+     ------------------------------------------------------------ */
   function buildHeader() {
     const s = window.SCHOOL_INFO || {};
     const lines = [
-      ['REPUBLIC OF THE PHILIPPINES', { bold: true, align: AlignmentType.CENTER, size: 22 }],
-      ['DEPARTMENT OF EDUCATION', { bold: true, align: AlignmentType.CENTER, size: 22 }],
+      ['REPUBLIC OF THE PHILIPPINES',  { bold: true, align: AlignmentType.CENTER, size: 22 }],
+      ['DEPARTMENT OF EDUCATION',      { bold: true, align: AlignmentType.CENTER, size: 22 }],
       [(s.region || '') + ' — ' + (s.division || ''), { align: AlignmentType.CENTER, size: 20 }],
-      [s.schoolName || '', { bold: true, align: AlignmentType.CENTER, size: 26 }],
-      [s.schoolAddress || '', { align: AlignmentType.CENTER, size: 20 }],
-      [s.schoolYear || '', { align: AlignmentType.CENTER, size: 20 }],
+      [s.schoolName || '',             { bold: true, align: AlignmentType.CENTER, size: 26 }],
+      [s.schoolAddress || '',          { align: AlignmentType.CENTER, size: 20 }],
+      [s.schoolYear || '',             { align: AlignmentType.CENTER, size: 20 }],
       ['', {}],
-      ['EXAMINATION EVIDENCE RECORD', { bold: true, align: AlignmentType.CENTER, size: 28 }],
+      ['EXAMINATION EVIDENCE RECORD',  { bold: true, align: AlignmentType.CENTER, size: 28 }],
       ['', {}]
     ];
     return lines.map(function (l) { return p(l[0], l[1]); });
@@ -230,15 +238,15 @@
   function buildStudentInfoTable(stu, assessment) {
     const s = window.SCHOOL_INFO || {};
     const rows = [
-      ['Student Name', lastFirstMiddle(stu)],
-      ['LRN', getLrn(stu)],
-      ['Grade & Section', (s.gradeLevel || 'Grade 11') + ' - ' + getSection(stu)],
-      ['Subject', s.subject || 'General Science'],
-      ['Assessment', assessment.label],
-      ['Date Taken', fmtDate(assessment.record.date || assessment.record.takenAt)],
-      ['Time Started', fmtTime(assessment.record.startedAt)],
-      ['Time Finished', fmtTime(assessment.record.finishedAt)],
-      ['Time Used', fmtDuration(assessment.record.durationMs)]
+      ['Student Name',     lastFirstMiddle(stu)],
+      ['LRN',              getLrn(stu)],
+      ['Grade & Section',  (s.gradeLevel || 'Grade 11') + ' - ' + getSection(stu)],
+      ['Subject',          s.subject || 'General Science'],
+      ['Assessment',       assessment.label],
+      ['Date Taken',       fmtDate(assessment.record.date || assessment.record.takenAt)],
+      ['Time Started',     fmtTime(assessment.record.startedAt)],
+      ['Time Finished',    fmtTime(assessment.record.finishedAt)],
+      ['Time Used',        fmtDuration(assessment.record.durationMs)]
     ];
 
     return new Table({
@@ -319,10 +327,12 @@
   }
 
   function buildSummary(record) {
-    const correct = record.correct != null ? record.correct : 0;
-    const total = record.total != null ? record.total : (record.itemResults || []).length;
-    const wrong = Math.max(0, total - correct);
-    const percent = record.percent != null ? record.percent : (total ? Math.round(correct / total * 100) : 0);
+    const correct = record.correct != null ? record.correct : (record.score || 0);
+    const total   = record.total   != null ? record.total   : (record.itemResults || []).length;
+    const wrong   = Math.max(0, total - correct);
+    const percent = record.percent != null
+      ? record.percent
+      : (total ? Math.round((correct / total) * 100) : 0);
     const passed = percent >= 75;
 
     return [
@@ -372,7 +382,7 @@
       sections: [{
         properties: {
           page: {
-            size: { width: 12240, height: 15840 }, // Letter
+            size: { width: 12240, height: 15840 },
             margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 }
           }
         },
@@ -399,23 +409,24 @@
   }
 
   /* ------------------------------------------------------------
-     PREVIEW RENDER (screen only — not part of docx)
+     PREVIEW
      ------------------------------------------------------------ */
   function renderPreview(stu, assessment, bank) {
     const wrap = document.getElementById('ev-preview-wrap');
     const el = document.getElementById('ev-preview');
     const r = assessment.record;
     const total = r.total != null ? r.total : (r.itemResults || []).length;
-    const correct = r.correct != null ? r.correct : 0;
-    const percent = r.percent != null ? r.percent : (total ? Math.round(correct / total * 100) : 0);
+    const correct = r.correct != null ? r.correct : (r.score || 0);
+    const percent = r.percent != null ? r.percent : (total ? Math.round((correct / total) * 100) : 0);
 
+    const S = window.SCHOOL_INFO || {};
     const lines = [
       'REPUBLIC OF THE PHILIPPINES',
       'DEPARTMENT OF EDUCATION',
-      (SCHOOL_INFO.region || '') + ' — ' + (SCHOOL_INFO.division || ''),
-      (SCHOOL_INFO.schoolName || ''),
-      (SCHOOL_INFO.schoolAddress || ''),
-      (SCHOOL_INFO.schoolYear || ''),
+      (S.region || '') + ' — ' + (S.division || ''),
+      S.schoolName || '',
+      S.schoolAddress || '',
+      S.schoolYear || '',
       '',
       'EXAMINATION EVIDENCE RECORD',
       '',
@@ -426,7 +437,7 @@
       'Correct: ' + correct + '   Wrong: ' + (total - correct) +
         '   Score: ' + percent + '%   ' + (percent >= 75 ? 'PASSED' : 'FAILED'),
       '',
-      '→ Downloading full .docx with per-item analysis…'
+      '→ The .docx contains the full per-item analysis.'
     ];
 
     el.textContent = lines.join('\n');
@@ -434,7 +445,7 @@
   }
 
   /* ------------------------------------------------------------
-     MAIN ENTRY
+     MAIN
      ------------------------------------------------------------ */
   async function generateOne(stu, term, type, index) {
     const lrn = getLrn(stu);
@@ -446,14 +457,17 @@
 
     const assessment = resolveAssessment(scores, term, type, index);
     if (!assessment) {
-      alert('Assessment not found for this student.');
+      alert('Assessment not found for this student.\n\n' +
+            'Type: ' + type + (index ? ' #' + index : '') + '\n' +
+            'Term: ' + term);
       return false;
     }
 
     const bank = await loadQuestionBank(assessment.bankFolder, assessment.filename);
     if (!bank) {
-      alert('Could not load question bank: ' + assessment.filename + '.json\n' +
-            'Make sure /student/' + assessment.bankFolder + '/assessments/' + assessment.filename + '.json exists.');
+      alert('Could not load question bank:\n' +
+            'student/' + assessment.bankFolder + '/assessments/' + assessment.filename + '.json\n\n' +
+            'Check that the file exists.');
       return false;
     }
 
@@ -490,7 +504,7 @@
   function refreshIndexOptions() {
     const type = document.getElementById('ev-type').value;
     const wrap = document.getElementById('ev-index-wrap');
-    const sel = document.getElementById('ev-index');
+    const sel  = document.getElementById('ev-index');
 
     if (type === 'st' || type === 'quiz') {
       wrap.style.display = 'block';
@@ -510,18 +524,19 @@
 
   function setStatus(msg, isErr) {
     const el = document.getElementById('ev-status');
+    if (!el) return;
     el.textContent = msg;
     el.style.color = isErr ? '#c62828' : '#2e7d32';
   }
 
   async function handleGenerateOne() {
-    const lrn = document.getElementById('ev-student').value;
-    const term = document.getElementById('ev-term').value;
-    const type = document.getElementById('ev-type').value;
+    const lrn   = document.getElementById('ev-student').value;
+    const term  = document.getElementById('ev-term').value;
+    const type  = document.getElementById('ev-type').value;
     const index = document.getElementById('ev-index').value;
 
-    if (!lrn) return setStatus('Please select a student.', true);
-    if (!type) return setStatus('Please select an assessment type.', true);
+    if (!lrn)   return setStatus('Please select a student.', true);
+    if (!type)  return setStatus('Please select an assessment type.', true);
     if ((type === 'st' || type === 'quiz') && !index)
       return setStatus('Please select an assessment #.', true);
 
@@ -537,16 +552,15 @@
   }
 
   async function handleGenerateAll() {
-    const lrn = document.getElementById('ev-student').value;
-    const term = document.getElementById('ev-term').value;
-    const type = document.getElementById('ev-type').value;
+    const lrn   = document.getElementById('ev-student').value;
+    const term  = document.getElementById('ev-term').value;
+    const type  = document.getElementById('ev-type').value;
     const index = document.getElementById('ev-index').value;
 
-    if (!type) return setStatus('Please select an assessment type first.', true);
+    if (!type)  return setStatus('Please select an assessment type first.', true);
     if ((type === 'st' || type === 'quiz') && !index)
       return setStatus('Please select an assessment #.', true);
 
-    // Determine target section: from selected student, or all students
     let targets = _students;
     if (lrn && _studentMap[lrn]) {
       const sec = getSection(_studentMap[lrn]);
@@ -572,7 +586,6 @@
         console.warn('[Evidence] Failed for', targets[i], e);
         fail++;
       }
-      // Small delay so browser allows multiple downloads
       await new Promise(function (r) { setTimeout(r, 350); });
     }
 
@@ -594,11 +607,19 @@
     populateStudents();
     refreshIndexOptions();
 
+    // Phase 4.5 — auto-select student from ?lrn= query param
+    try {
+      const lrnParam = new URLSearchParams(location.search).get('lrn');
+      if (lrnParam && _studentMap[lrnParam]) {
+        document.getElementById('ev-student').value = lrnParam;
+        setStatus('Student preselected — choose term & assessment.', false);
+      }
+    } catch (e) { /* ignore */ }
+
     document.getElementById('ev-type').addEventListener('change', refreshIndexOptions);
     document.getElementById('ev-generate').addEventListener('click', handleGenerateOne);
     document.getElementById('ev-generate-all').addEventListener('click', handleGenerateAll);
 
-    // Logout
     const btn = document.getElementById('btn-logout');
     if (btn) {
       btn.addEventListener('click', function () {
