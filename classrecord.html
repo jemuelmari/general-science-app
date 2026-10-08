@@ -19,7 +19,7 @@
         <a href="instructor.html">🏠 Dashboard</a>
         <a href="classrecord/grading-sheet.html">📋 Grading Sheet</a>
         <a href="classrecord/reports.html">📈 Reports</a>
-        <a href="teacher/evidence.html">📄 Exam Evidence</a>
+        <a href="teacher/evidence.html" style="color:#ffd54f;border-color:#ffd54f;">📄 Exam Evidence</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -143,12 +143,6 @@
       var WEIGHTS = { ww: 0.20, pt: 0.50, ex: 0.30 };
       var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
 
-      var TERM_LABELS = {
-        term1: 'Term 1 — Physics & Chemistry',
-        term2: 'Term 2 — Chemistry & Life Science',
-        term3: 'Term 3 — Earth Science'
-      };
-
       var currentTab = 'summary';
 
       TeacherAuthBoot.ready(function(auth) {
@@ -166,7 +160,6 @@
         document.getElementById('btn-export').addEventListener('click', exportCSV);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
 
-        // Tab switching
         document.querySelectorAll('.cr-tab').forEach(function(tab) {
           tab.addEventListener('click', function() {
             document.querySelectorAll('.cr-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -185,9 +178,6 @@
           '<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">⚠️ Auth module failed to load</td></tr>';
       });
 
-      /* ============================================================
-         DATA HELPERS
-         ============================================================ */
       function getScorePercent(lrn, term, type, id) {
         var scores = Store.getScores(lrn);
         var t = scores[term] || {};
@@ -223,7 +213,6 @@
             exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
           }
 
-          var rawFinal = ((wwAvg || 0) * WEIGHTS.ww) + ((ptAvg || 0) * WEIGHTS.pt) + ((exAvg || 0) * WEIGHTS.ex);
           var finalGrade = Transmutation.computeFinalGrade(wwAvg || 0, ptAvg || 0, exAvg || 0, WEIGHTS);
 
           return {
@@ -234,9 +223,6 @@
         });
       }
 
-      /* ============================================================
-         RENDER
-         ============================================================ */
       function render() {
         var term = document.getElementById('filter-term').value;
         var section = document.getElementById('filter-section').value;
