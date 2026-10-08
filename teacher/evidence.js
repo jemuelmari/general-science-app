@@ -1,12 +1,13 @@
 /* ============================================================
    evidence.js — Phase 4.5
    Individual Exam Evidence Generator (.docx)
-   Version: 1.0.9
+   Version: 1.1.0
    Depends: docx@8.5.0 (UMD), config.js, randomize.js, store.js
    Changelog:
-     v1.0.9 — Fixed TE filename to 'te.json' (was 'term-exam.json')
+     v1.1.0 — Fixed item analysis alignment: use questionId lookup
+              (originalIndex in scores is unreliable — equals index)
+     v1.0.9 — Fixed TE filename to 'te.json'
      v1.0.8 — Fixed ST/Quiz filenames (removed termN- prefix)
-     v1.0.7 — Fixed SCHOOL_INFO placement + cache-bust
    ============================================================ */
 (function () {
   'use strict';
@@ -104,11 +105,6 @@
 
   /* ------------------------------------------------------------
      ASSESSMENT RESOLUTION
-     v1.0.9: All filenames now match /student/termN/assessments/
-        st1.json, st2.json, ...
-        quiz1.json, quiz2.json, ...
-        pt1.json, pt2.json, ...
-        te.json
      ------------------------------------------------------------ */
   function resolveAssessment(scores, term, type, index) {
     if (!scores) return null;
@@ -120,7 +116,7 @@
       return {
         record: t.te,
         label: 'Term Exam — Term ' + term,
-        filename: 'te',                // ✅ v1.0.9
+        filename: 'te',
         bankFolder: 'term' + term
       };
     }
@@ -167,7 +163,7 @@
       if (seen.has(path)) continue;
       seen.add(path);
       try {
-        const res = await fetch(path + '?v=1.0.9');
+        const res = await fetch(path + '?v=1.1.0');
         if (!res.ok) continue;
         const text = await res.text();
         return JSON.parse(text);
@@ -267,10 +263,21 @@
     });
   }
 
+  /* ------------------------------------------------------------
+     ITEM ANALYSIS — v1.1.0
+     Uses questionId lookup (stable) instead of originalIndex
+     (which currently equals index and is unreliable for shuffle).
+     ------------------------------------------------------------ */
   function buildItemAnalysis(bank, record) {
     const out = [];
     const items = record.itemResults || [];
     const questions = (bank && bank.questions) || [];
+
+    // Build ID → question lookup map for O(1) access
+    const byId = {};
+    questions.forEach(function (q) {
+      if (q && q.id != null) byId[String(q.id)] = q;
+    });
 
     out.push(new Paragraph({
       spacing: { before: 200, after: 100 },
@@ -278,7 +285,16 @@
     }));
 
     items.forEach(function (r, i) {
-      const q = questions[r.originalIndex] || questions[r.index] || {};
+      // PRIMARY: lookup by questionId (stable across shuffles)
+      let q = null;
+      if (r.questionId != null) {
+        q = byId[String(r.questionId)] || null;
+      }
+      // FALLBACK: by originalIndex / index
+      if (!q && r.originalIndex != null) q = questions[r.originalIndex] || null;
+      if (!q && r.index != null)          q = questions[r.index] || null;
+      if (!q) q = {};
+
       const qText = q.text || '(Question text unavailable)';
       const opts = q.options || [];
       const givenText = r.given != null ? String(r.given) : '(no answer)';
