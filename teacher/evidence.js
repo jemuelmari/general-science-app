@@ -1,8 +1,11 @@
 /* ============================================================
    evidence.js — Phase 4.5
    Individual Exam Evidence Generator (.docx)
-   Version: 1.0.0
+   Version: 1.0.8
    Depends: docx@8.5.0 (UMD), config.js, randomize.js, store.js
+   Changelog:
+     v1.0.8 — Fixed question bank filenames (removed termN- prefix)
+     v1.0.7 — Fixed SCHOOL_INFO placement + cache-bust
    ============================================================ */
 (function () {
   'use strict';
@@ -12,9 +15,6 @@
 
   const SCORES_PREFIX = 'gsa_v1_scores_';
 
-  /* ------------------------------------------------------------
-     STATE
-     ------------------------------------------------------------ */
   let _students = [];
   let _studentMap = {};
 
@@ -85,7 +85,6 @@
   }
 
   function loadScores(lrn) {
-    // Prefer Store if available
     try {
       if (window.Store && typeof Store.getScores === 'function') {
         const s = Store.getScores(lrn);
@@ -104,10 +103,10 @@
 
   /* ------------------------------------------------------------
      ASSESSMENT RESOLUTION
-     Handles both shapes:
-       scores.termN.st.stM          OR   scores.termN.stM
-       scores.termN.quizzes.quizM   OR   scores.termN.quizM
-       scores.termN.te
+     v1.0.8: Filenames now match /student/termN/assessments/
+        st1.json, st2.json, ...
+        quiz1.json, quiz2.json, ...
+        pt1.json, pt2.json, ...
      ------------------------------------------------------------ */
   function resolveAssessment(scores, term, type, index) {
     if (!scores) return null;
@@ -119,7 +118,7 @@
       return {
         record: t.te,
         label: 'Term Exam — Term ' + term,
-        filename: 'term' + term + '-term-exam',
+        filename: 'term-exam',
         bankFolder: 'term' + term
       };
     }
@@ -130,7 +129,7 @@
       return {
         record: q,
         label: 'Quiz ' + index + ' — Term ' + term,
-        filename: 'term' + term + '-quiz' + index,
+        filename: 'quiz' + index,
         bankFolder: 'term' + term
       };
     }
@@ -141,7 +140,7 @@
       return {
         record: st,
         label: 'Summative Test ' + index + ' — Term ' + term,
-        filename: 'term' + term + '-st' + index,
+        filename: 'st' + index,
         bankFolder: 'term' + term
       };
     }
@@ -166,7 +165,7 @@
       if (seen.has(path)) continue;
       seen.add(path);
       try {
-        const res = await fetch(path + '?v=1.3.0-7b373e6');
+        const res = await fetch(path + '?v=1.0.8');
         if (!res.ok) continue;
         const text = await res.text();
         return JSON.parse(text);
@@ -408,9 +407,6 @@
     return String(s).replace(/[^A-Za-z0-9._-]+/g, '_').slice(0, 80);
   }
 
-  /* ------------------------------------------------------------
-     PREVIEW
-     ------------------------------------------------------------ */
   function renderPreview(stu, assessment, bank) {
     const wrap = document.getElementById('ev-preview-wrap');
     const el = document.getElementById('ev-preview');
@@ -444,9 +440,6 @@
     wrap.style.display = 'block';
   }
 
-  /* ------------------------------------------------------------
-     MAIN
-     ------------------------------------------------------------ */
   async function generateOne(stu, term, type, index) {
     const lrn = getLrn(stu);
     const scores = loadScores(lrn);
@@ -481,9 +474,6 @@
     return true;
   }
 
-  /* ------------------------------------------------------------
-     UI WIRING
-     ------------------------------------------------------------ */
   function populateStudents() {
     _students = loadStudents();
     _studentMap = {};
@@ -592,9 +582,6 @@
     setStatus('✅ Done — ' + ok + ' generated, ' + fail + ' skipped.', fail > 0);
   }
 
-  /* ------------------------------------------------------------
-     BOOT
-     ------------------------------------------------------------ */
   document.addEventListener('DOMContentLoaded', function () {
     if (!window.docx) {
       alert('docx.js failed to load. Check your internet connection.');
@@ -607,7 +594,6 @@
     populateStudents();
     refreshIndexOptions();
 
-    // Phase 4.5 — auto-select student from ?lrn= query param
     try {
       const lrnParam = new URLSearchParams(location.search).get('lrn');
       if (lrnParam && _studentMap[lrnParam]) {
