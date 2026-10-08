@@ -1,16 +1,19 @@
 /* ============================================================
    randomize.js — Set A / Set B shuffle engine
-   Version: 1.3.0
+   Version: 1.4.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.4.0:
+     - DISABLED option shuffling. Options stay in original JSON
+       order. Question order is still shuffled (anti-cheat).
+       Reason: students report confusion when option positions
+       change between attempts. Score correctness is unaffected.
    Changelog v1.3.0 (Phase 2.6 / X45 fix):
      - getSet() now uses res.text() + JSON.parse() with deduped
        candidates and static ?v=1.3.0 cache-bust.
      - Matches tos-engine.js loading strategy for consistency.
-
    Changelog v1.2.0 (Phase 2.5 / X44 fix):
      - Added getRepoBase() helper.
-
    Changelog v1.1.0 (Phase 2):
      - scoreAttempt() includes originalIndex.
      - Added getOriginalIndex() and validateSets().
@@ -19,13 +22,14 @@
    - Same questions for both sets, different fixed shuffle
    - Deterministic: same seed → same order across all devices
    - Correct answer tracked per (set, question index)
+   - Options NOT shuffled (v1.4.0)
    ============================================================ */
 
 const Randomize = (() => {
   'use strict';
 
   const STORAGE_KEY = 'gsa_v1_shuffled_sets';
-  const CACHE_BUST = '?v=1.3.0';
+  const CACHE_BUST = '?v=1.4.0';
 
   let _repoBase = null;
 
@@ -107,6 +111,8 @@ const Randomize = (() => {
 
   /* ============================================================
      GENERATE SET
+     ------------------------------------------------------------
+     v1.4.0: Options are NOT shuffled. Only questions are shuffled.
      ============================================================ */
   function generateSet(questionBank, assessmentId, setLetter) {
     const questions = questionBank.questions || [];
@@ -115,8 +121,9 @@ const Randomize = (() => {
 
     const setQuestions = order.map(function(originalIndex, newIndex) {
       const q = questions[originalIndex];
-      const optionRng = mulberry32(hashSeed(assessmentId + '-q' + originalIndex, setLetter));
-      const optionOrder = seededShuffle(q.options.slice(), optionRng);
+
+      // v1.4.0: Options stay in original order (no shuffle)
+      const optionOrder = q.options.slice();
 
       return {
         setIndex: newIndex,
