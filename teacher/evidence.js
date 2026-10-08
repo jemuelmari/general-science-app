@@ -1,10 +1,11 @@
 /* ============================================================
    evidence.js — Phase 4.5
    Individual Exam Evidence Generator (.docx)
-   Version: 1.0.8
+   Version: 1.0.9
    Depends: docx@8.5.0 (UMD), config.js, randomize.js, store.js
    Changelog:
-     v1.0.8 — Fixed question bank filenames (removed termN- prefix)
+     v1.0.9 — Fixed TE filename to 'te.json' (was 'term-exam.json')
+     v1.0.8 — Fixed ST/Quiz filenames (removed termN- prefix)
      v1.0.7 — Fixed SCHOOL_INFO placement + cache-bust
    ============================================================ */
 (function () {
@@ -103,10 +104,11 @@
 
   /* ------------------------------------------------------------
      ASSESSMENT RESOLUTION
-     v1.0.8: Filenames now match /student/termN/assessments/
+     v1.0.9: All filenames now match /student/termN/assessments/
         st1.json, st2.json, ...
         quiz1.json, quiz2.json, ...
         pt1.json, pt2.json, ...
+        te.json
      ------------------------------------------------------------ */
   function resolveAssessment(scores, term, type, index) {
     if (!scores) return null;
@@ -118,7 +120,7 @@
       return {
         record: t.te,
         label: 'Term Exam — Term ' + term,
-        filename: 'term-exam',
+        filename: 'te',                // ✅ v1.0.9
         bankFolder: 'term' + term
       };
     }
@@ -165,7 +167,7 @@
       if (seen.has(path)) continue;
       seen.add(path);
       try {
-        const res = await fetch(path + '?v=1.0.8');
+        const res = await fetch(path + '?v=1.0.9');
         if (!res.ok) continue;
         const text = await res.text();
         return JSON.parse(text);
