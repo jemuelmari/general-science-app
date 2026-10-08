@@ -1,15 +1,15 @@
 /* ============================================================
    teacher.js — Teacher dashboard logic
-   Version: 1.1.0
+   Version: 1.2.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.2.0: Added "Generate Evidence" button in student modal
    Changelog v1.1.0: Added Term Control feature integration
    ============================================================ */
 
 (() => {
   'use strict';
 
-  // ---------- Auth guard ----------
   TeacherAuth.init();
   if (!TeacherAuth.require()) return;
 
@@ -31,13 +31,7 @@
     const t1 = countCompletedDays(lrn, 'term1');
     const t2 = countCompletedDays(lrn, 'term2');
     const t3 = countCompletedDays(lrn, 'term3');
-    return {
-      term1: t1,
-      term2: t2,
-      term3: t3,
-      total: t1 + t2 + t3,
-      max: 120
-    };
+    return { term1: t1, term2: t2, term3: t3, total: t1 + t2 + t3, max: 120 };
   }
 
   function countAssessmentsCompleted(lrn, term) {
@@ -270,7 +264,7 @@
           </div>
         </div>
 
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <a href="classrecord.html" class="btn btn-primary" style="flex:1;text-align:center;">📊 Open in Class Record</a>
           <a href="teacher/evidence.html?lrn=${student.lrn}" class="btn" style="flex:1;text-align:center;background:#0d47a1;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.85rem;">📄 Generate Evidence</a>
           <button id="detail-export" class="btn btn-outline" style="flex:1;">📥 Export Data</button>
