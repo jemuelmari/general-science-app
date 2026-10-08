@@ -1,0 +1,77 @@
+/* ============================================================
+   evidence-print.css — Phase 4.5
+   Print styles for Exam Evidence generator page
+   ============================================================ */
+
+@media print {
+  /* Hide chrome */
+  .app-header,
+  .app-footer,
+  .teacher-nav,
+  #btn-logout,
+  .card > h2 + p,
+  .form-row,
+  #ev-generate,
+  #ev-generate-all,
+  #ev-status {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  #ev-preview-wrap {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  #ev-preview {
+    font-family: 'Courier New', monospace;
+    font-size: 10pt;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    color: #000;
+    padding: 0;
+  }
+
+  /* Page setup */
+  @page {
+    size: Letter;
+    margin: 0.75in;
+  }
+}
+
+/* Screen helpers for the preview panel */
+#ev-preview-wrap {
+  background: #fff;
+  border-radius: 8px;
+}
+
+#ev-preview {
+  background: #fafafa;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transition: opacity 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
