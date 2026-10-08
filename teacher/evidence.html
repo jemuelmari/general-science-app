@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Evidence — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.5.0" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.5.0" />
+  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.5.0" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📄 Exam Evidence Generator</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="evidence.html" class="active">📄 Exam Evidence</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card" style="padding:24px;margin-bottom:20px;">
+      <h2 style="margin:0 0 6px;color:#0d47a1;">Generate Printable Exam Evidence</h2>
+      <p style="color:#546e7a;margin:0 0 20px;font-size:0.9rem;">
+        Create a Word (.docx) file per student showing their full exam — questions, answers,
+        correct answers, score, and signature blocks. Editable and printable.
+      </p>
+
+      <div class="form-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+
+        <div>
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">
+            Student
+          </label>
+          <select id="ev-student" class="form-control" style="width:100%;padding:10px 12px;">
+            <option value="">— Select student —</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">
+            Term
+          </label>
+          <select id="ev-term" class="form-control" style="width:100%;padding:10px 12px;">
+            <option value="1">Term 1</option>
+            <option value="2">Term 2</option>
+            <option value="3">Term 3</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">
+            Assessment Type
+          </label>
+          <select id="ev-type" class="form-control" style="width:100%;padding:10px 12px;">
+            <option value="">— Select type —</option>
+            <option value="st">Summative Test (ST)</option>
+            <option value="quiz">Quiz</option>
+            <option value="te">Term Exam (TE)</option>
+          </select>
+        </div>
+
+        <div id="ev-index-wrap" style="display:none;">
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">
+            Assessment #
+          </label>
+          <select id="ev-index" class="form-control" style="width:100%;padding:10px 12px;">
+            <option value="">— Select # —</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button id="ev-generate" class="btn btn-primary"
+                style="padding:12px 22px;font-weight:600;background:#0d47a1;color:#fff;border:none;border-radius:8px;cursor:pointer;">
+          📄 Generate Evidence (.docx)
+        </button>
+        <button id="ev-generate-all" class="btn"
+                style="padding:12px 22px;font-weight:600;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;cursor:pointer;">
+          📦 Generate for ALL students in section
+        </button>
+        <span id="ev-status" style="font-size:0.85rem;color:#546e7a;"></span>
+      </div>
+    </div>
+
+    <!-- Preview panel -->
+    <div id="ev-preview-wrap" class="card" style="padding:0;overflow:hidden;display:none;">
+      <div style="padding:14px 20px;background:#f5f7fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;">
+        <strong style="color:#0d47a1;">Preview</strong>
+        <span style="font-size:0.8rem;color:#78909c;">This is a summary — the .docx contains the full item analysis.</span>
+      </div>
+      <div id="ev-preview" style="padding:20px;font-family:'Courier New',monospace;font-size:0.85rem;white-space:pre-wrap;line-height:1.55;"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="../config.js?v=1.5.0"></script>
+  <script src="../assets/js/app.js?v=1.5.0"></script>
+  <script src="../assets/js/version-sync.js?v=1.5.0"></script>
+  <script src="../assets/js/store.js?v=1.5.0"></script>
+  <script src="../assets/js/security.js?v=1.5.0"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.5.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.5.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.5.0"></script>
+  <script src="../assets/js/randomize.js?v=1.4.0"></script>
+  <script src="evidence.js?v=1.0.0"></script>
+</body>
+</html>
