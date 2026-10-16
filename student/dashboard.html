@@ -40,6 +40,27 @@
     .btn-request-retake { width: 100%; padding: 10px 14px; background: #ed6c02; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; margin-top: 8px; }
     .btn-request-retake:hover { background: #e65100; }
     .btn-request-retake:disabled { background: #b0bec5; cursor: not-allowed; }
+
+    /* ===== PT GRADES ===== */
+    .pt-grades-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+    .pt-grade-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid #0d47a1; }
+    .pt-grade-card.graded { border-left-color: #2e7d32; background: linear-gradient(135deg, #f1f8f4, #ffffff); }
+    .pt-grade-card.pending { border-left-color: #ed6c02; background: linear-gradient(135deg, #fff8e1, #ffffff); }
+    .pt-grade-card.term2 { border-left-color: #00695c; }
+    .pt-grade-card.term2.graded { border-left-color: #2e7d32; }
+    .pt-grade-card.term3 { border-left-color: #004d40; }
+    .pt-grade-card.term3.graded { border-left-color: #2e7d32; }
+    .pt-grade-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+    .pt-grade-title { font-weight: 700; font-size: 1rem; color: #1a1a1a; }
+    .pt-grade-term { font-size: 0.75rem; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; }
+    .pt-grade-score { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .pt-grade-score.graded { color: #1b5e20; }
+    .pt-grade-score.pending { color: #e65100; font-size: 1rem; font-weight: 600; margin-top: 6px; }
+    .pt-grade-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .pt-grade-badge.graded { background: #e8f5e9; color: #1b5e20; }
+    .pt-grade-badge.pending { background: #fff3e0; color: #e65100; }
+    .pt-grade-notes { margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 8px; font-size: 0.8rem; color: #37474f; line-height: 1.5; }
+    .pt-grade-empty { padding: 30px; text-align: center; color: #90a4ae; background: #fff; border-radius: 12px; }
   </style>
 </head>
 <body>
@@ -73,7 +94,6 @@
       </div>
     </div>
 
-    <!-- ===== NEW: Failed Assessments / Retake Requests ===== -->
     <div id="failed-section" style="display:none;">
       <div class="dash-section-title">⚠️ Failed Assessments & Retake Requests</div>
       <div id="failed-list"></div>
@@ -92,6 +112,12 @@
         <span class="text-muted text-small" id="badge-week">This week: 0</span>
       </div>
       <div class="badge-gallery" id="badge-gallery"></div>
+    </div>
+
+    <!-- ===== NEW: PT GRADES SECTION ===== -->
+    <div class="dash-section-title">📝 My PT Grades</div>
+    <div id="pt-grades-list">
+      <div class="pt-grade-empty">⏳ Loading PT grades…</div>
     </div>
 
     <div class="dash-section-title">📤 Sync & Backup</div>
@@ -132,15 +158,16 @@
     </div>
   </div>
 
-  <script src="../config.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/app.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/store.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/security.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/transmutation.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/sync-auto.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/backup.js?v=1.3.0-17f9f22"></script>
-  <script src="../assets/js/term-access.js?v=1.3.0-17f9f22"></script>
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=1.4.0"></script>
+  <script src="../assets/js/store.js?v=1.4.0"></script>
+  <script src="../assets/js/security.js?v=1.4.0"></script>
+  <script src="../assets/js/transmutation.js?v=1.4.0"></script>
+  <script src="../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../assets/js/sync-auto.js?v=1.4.0"></script>
+  <script src="../assets/js/backup.js?v=1.4.0"></script>
+  <script src="../assets/js/term-access.js?v=1.4.0"></script>
+  <script src="../assets/js/pt-upload.js?v=1.0.0"></script>
   <script>
     (function() {
       'use strict';
@@ -305,6 +332,75 @@
           </div>
         `;
       }).join('');
+
+      /* ============================================================
+         NEW: PT GRADES
+         ============================================================ */
+      async function renderPTGrades() {
+        const container = document.getElementById('pt-grades-list');
+        if (!container) return;
+
+        const PT_LABELS = {
+          'term1-pt1': { title: 'PT1 — Physics Around Me', icon: '⚛️' },
+          'term1-pt2': { title: 'PT2 — Simple Machines', icon: '⚙️' },
+          'term1-pt3': { title: 'PT3 — Light & Sound', icon: '🔊' },
+          'term2-pt1': { title: 'PT1 — Chemical Reactions', icon: '🧪' },
+          'term2-pt2': { title: 'PT2 — Solutions & Mixtures', icon: '💧' },
+          'term2-pt3': { title: 'PT3 — Cells & Systems', icon: '🔬' },
+          'term3-pt1': { title: 'PT1 — Earth\'s Uniqueness', icon: '🌏' },
+          'term3-pt2': { title: 'PT2 — Philippine Geology', icon: '⛰️' },
+          'term3-pt3': { title: 'PT3 — DRRM Plan', icon: '🚨' }
+        };
+
+        try {
+          const res = await PTUpload.pullMyGrades(user.lrn);
+          const records = (res && res.ok && res.records) ? res.records : [];
+
+          if (!records.length) {
+            container.innerHTML = '<div class="pt-grade-empty">📭 No PT grades yet. Submit your performance tasks and wait for your teacher to grade them.</div>';
+            return;
+          }
+
+          const cards = records
+            .slice()
+            .sort(function(a, b) {
+              if (a.term !== b.term) return a.term.localeCompare(b.term);
+              return a.ptId.localeCompare(b.ptId);
+            })
+            .map(function(r) {
+              const key = r.term + '-' + r.ptId;
+              const label = PT_LABELS[key] || { title: r.ptId.toUpperCase(), icon: '📋' };
+              const termClass = r.term === 'term2' ? 'term2' : (r.term === 'term3' ? 'term3' : '');
+              const termLabel = r.term.replace('term', 'Term ');
+
+              return '<div class="pt-grade-card graded ' + termClass + '">' +
+                '<div class="pt-grade-head">' +
+                  '<div>' +
+                    '<div class="pt-grade-term">' + termLabel + '</div>' +
+                    '<div class="pt-grade-title">' + label.icon + ' ' + label.title + '</div>' +
+                  '</div>' +
+                  '<span class="pt-grade-badge graded">✓ Graded</span>' +
+                '</div>' +
+                '<div class="pt-grade-score graded">' + r.totalScore + '<span style="font-size:1rem;color:#2e7d32;">/100</span></div>' +
+                (r.teacherNotes ? '<div class="pt-grade-notes"><strong>📝 Note:</strong> ' + escapeHtml(r.teacherNotes) + '</div>' : '') +
+                '<div style="margin-top:10px;font-size:0.78rem;color:#78909c;">Graded by ' + escapeHtml(r.gradedBy || 'Teacher') + ' · ' + APP.formatDate(r.gradedAt) + '</div>' +
+                '</div>';
+            }).join('');
+
+          container.innerHTML = '<div class="pt-grades-grid">' + cards + '</div>';
+        } catch (err) {
+          console.warn('[Dashboard] PT grades load failed:', err);
+          container.innerHTML = '<div class="pt-grade-empty">⚠️ Could not load PT grades. Try again later.</div>';
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      renderPTGrades();
 
       /* ============================================================
          FAILED ASSESSMENTS + RETAKE REQUEST FLOW
@@ -483,7 +579,6 @@
         }
       }
 
-      // Initial render + poll every 30s for updates
       renderFailedSection();
       setInterval(renderFailedSection, 30000);
 
