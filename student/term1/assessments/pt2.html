@@ -397,7 +397,7 @@
           let driveResult = null;
           if (selectedFile) {
             try {
-              driveResult = await PTUpload.uploadFile(selectedFile, TERM, meta.id);
+              driveResult = await PTUpload.uploadFile(selectedFile, TERM, meta.id, reflectionTrim, option);
             } catch (err) {
               console.error('[PT] Upload error:', err);
               errEl.textContent = 'Upload failed: ' + err.message;
