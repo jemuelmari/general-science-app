@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade PT — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .grade-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:20px; align-items:start; }
+    @media (max-width:960px) { .grade-grid { grid-template-columns:1fr; } }
+
+    .panel { background:#fff; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); overflow:hidden; }
+    .panel-header { padding:16px 20px; background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; }
+    .panel-header h3 { margin:0; font-size:1rem; font-weight:700; }
+    .panel-header .sub { font-size:0.78rem; opacity:0.85; margin-top:4px; }
+    .panel-body { padding:20px; }
+
+    .student-card { padding:16px; background:#f5f7fa; border-radius:10px; margin-bottom:14px; }
+    .student-card .name { font-size:1.1rem; font-weight:700; color:#0d47a1; }
+    .student-card .meta { font-size:0.85rem; color:#5f6368; margin-top:4px; }
+    .student-card .meta strong { color:#37474f; }
+
+    .file-preview { width:100%; height:520px; border:1.5px solid #cfd8dc; border-radius:10px; background:#fafafa; }
+    .file-actions { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .file-actions a, .file-actions button { padding:9px 18px; border:none; border-radius:8px; font-family:inherit; font-size:0.85rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+    .btn-open { background:#e3f2fd; color:#0d47a1; }
+    .btn-open:hover { background:#bbdefb; }
+    .btn-download { background:#e8f5e9; color:#1b5e20; }
+    .btn-download:hover { background:#c8e6c9; }
+
+    .reflection-box { padding:14px; background:#f5f7fa; border-radius:10px; font-size:0.9rem; color:#37474f; line-height:1.6; margin-top:14px; }
+    .reflection-box .label { font-size:0.72rem; text-transform:uppercase; color:#5f6368; font-weight:700; letter-spacing:0.5px; margin-bottom:6px; }
+
+    .rubric-input { width:70px; padding:8px 10px; border:1.5px solid #cfd8dc; border-radius:6px; text-align:center; font-family:inherit; font-size:0.95rem; font-weight:700; }
+    .rubric-input:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.15); }
+
+    .notes-area { width:100%; padding:12px 14px; border:1.5px solid #cfd8dc; border-radius:10px; font-family:inherit; font-size:0.9rem; resize:vertical; min-height:100px; }
+    .notes-area:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.1); }
+
+    .grade-summary { margin-top:16px; padding:16px; background:linear-gradient(135deg,#e8f5e9,#c8e6c9); border-radius:12px; display:flex; justify-content:space-between; align-items:center; }
+    .grade-summary .label { font-size:0.82rem; color:#2e7d32; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+    .grade-summary .score { font-size:2.4rem; font-weight:800; color:#1b5e20; line-height:1; }
+
+    .save-btn { width:100%; padding:16px 20px; background:linear-gradient(135deg,#2e7d32,#1b5e20); color:#fff; border:none; border-radius:10px; font-family:inherit; font-size:1rem; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(46,125,50,0.25); margin-top:16px; }
+    .save-btn:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(46,125,50,0.35); }
+    .save-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+    .alert-danger { padding:12px 16px; background:#ffebee; color:#b71c1c; border-radius:8px; font-size:0.9rem; margin-bottom:14px; border-left:4px solid #c62828; }
+    .alert-success { padding:12px 16px; background:#e8f5e9; color:#1b5e20; border-radius:8px; font-size:0.9rem; margin-bottom:14px; border-left:4px solid #2e7d32; }
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🎯 Grade Performance Task</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="pt-submissions.html">📋 PT Submissions</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div id="loading" style="text-align:center;padding:60px;color:#90a4ae;">
+      <div style="font-size:2.5rem;">⏳</div>
+      <p>Loading submission…</p>
+    </div>
+
+    <div id="error-box" class="hidden" style="text-align:center;padding:60px;">
+      <div style="font-size:2.5rem;">⚠️</div>
+      <h2 style="color:#c62828;">Cannot load submission</h2>
+      <p id="error-msg" style="color:#5f6368;"></p>
+      <a href="pt-submissions.html" class="btn btn-primary mt-md" style="display:inline-block;padding:10px 20px;background:#0d47a1;color:#fff;border-radius:8px;text-decoration:none;">← Back to Submissions</a>
+    </div>
+
+    <div id="grade-content" class="hidden">
+      <div style="margin-bottom:16px;">
+        <a href="pt-submissions.html" style="color:#0d47a1;text-decoration:none;font-size:0.9rem;">← Back to PT Submissions</a>
+      </div>
+
+      <div class="grade-grid">
+
+        <!-- LEFT: File preview -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>📄 Student Submission</h3>
+            <div class="sub" id="file-sub"></div>
+          </div>
+          <div class="panel-body">
+            <div id="file-embed-container">
+              <iframe id="file-preview" class="file-preview" src="about:blank"></iframe>
+            </div>
+
+            <div class="file-actions">
+              <a id="link-open" href="#" target="_blank" rel="noopener" class="btn-open">🔗 Open in Drive</a>
+              <a id="link-download" href="#" class="btn-download">⬇️ Download</a>
+            </div>
+
+            <div id="reflection-container"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Grading -->
+        <div class="panel">
+          <div class="panel-header" style="background:linear-gradient(135deg,#2e7d32,#1b5e20);">
+            <h3>✏️ Rubric Grading</h3>
+            <div class="sub">Enter score per criterion (0 to max)</div>
+          </div>
+          <div class="panel-body">
+            <div id="student-card" class="student-card"></div>
+
+            <div id="error-msg-box" class="alert-danger hidden"></div>
+            <div id="success-msg-box" class="alert-success hidden"></div>
+
+            <div id="rubric-container"></div>
+
+            <div class="grade-summary">
+              <div>
+                <div class="label">Total Score</div>
+                <div style="font-size:0.75rem;color:#5f6368;margin-top:4px;">sum of all criteria</div>
+              </div>
+              <div class="score"><span id="grade-total">0</span><span style="font-size:1.2rem;color:#2e7d32;">/100</span></div>
+            </div>
+
+            <div style="margin-top:16px;">
+              <label style="display:block;font-size:0.78rem;text-transform:uppercase;color:#5f6368;font-weight:700;letter-spacing:0.5px;margin-bottom:6px;">Teacher's Notes (optional)</label>
+              <textarea id="teacher-notes" class="notes-area" placeholder="Feedback or comments for the student…"></textarea>
+            </div>
+
+            <button class="save-btn" id="btn-save-grade">💾 Save Grade & Send to Student</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=1.4.0"></script>
+  <script src="../assets/js/store.js?v=1.4.0"></script>
+  <script src="../assets/js/security.js?v=1.4.0"></script>
+  <script src="../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.4.0"></script>
+  <script src="../assets/js/pt-grade.js?v=1.0.0"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const params = new URLSearchParams(window.location.search);
+      const LRN = params.get('lrn');
+      const TERM = params.get('term');
+      const PTID = params.get('ptId');
+
+      let submission = null;
+      let existingGrade = null;
+      let rubric = null;
+
+      function showError(msg) {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('error-box').classList.remove('hidden');
+        document.getElementById('error-msg').textContent = msg;
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      async function loadAll() {
+        if (!LRN || !TERM || !PTID) { showError('Missing URL parameters (lrn, term, ptId)'); return; }
+
+        try {
+          // 1. Load submission via listPTFiles filter
+          const subsResult = await PTGrade.listSubmissions({ lrn: LRN, term: TERM, ptId: PTID, includeLegacy: true });
+          if (!subsResult.ok || !subsResult.records || !subsResult.records.length) {
+            showError('No submission found for this student/term/PT.');
+            return;
+          }
+          submission = subsResult.records[0];
+
+          // 2. Load existing grade (if any)
+          const gradesResult = await PTGrade.pullGrades({ lrn: LRN, term: TERM, ptId: PTID });
+          if (gradesResult && gradesResult.ok && gradesResult.records && gradesResult.records.length) {
+            existingGrade = gradesResult.records[0];
+          }
+
+          // 3. Load rubric from JSON
+          const rubricFile = '../student/' + TERM + '/assessments/' + PTID + '.json';
+          const r = await fetch(rubricFile);
+          if (!r.ok) throw new Error('Could not load ' + rubricFile);
+          const ptJson = await r.json();
+          rubric = ptJson.rubric || [];
+
+          render();
+        } catch (err) {
+          console.error('[PT-Grade] Load error:', err);
+          showError(err.message);
+        }
+      }
+
+      function render() {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('grade-content').classList.remove('hidden');
+
+        // File subtitle
+        document.getElementById('file-sub').textContent =
+          (submission.renamedFilename || submission.originalFilename || 'file') +
+          ' · ' + PTGrade.formatBytes ? '' : ''; // placeholder
+
+        // Embed preview (Drive preview URL)
+        if (submission.driveFileId) {
+          const previewUrl = 'https://drive.google.com/file/d/' + submission.driveFileId + '/preview';
+          document.getElementById('file-preview').src = previewUrl;
+        } else {
+          document.getElementById('file-embed-container').innerHTML =
+            '<div style="padding:40px;text-align:center;color:#90a4ae;background:#fafafa;border:1.5px solid #cfd8dc;border-radius:10px;">📭 No file attached to this submission</div>';
+        }
+
+        // Link buttons
+        document.getElementById('link-open').href = submission.driveUrl || '#';
+        document.getElementById('link-download').href = submission.driveUrl ? (submission.driveUrl + '?export=download') : '#';
+        if (!submission.driveUrl) {
+          document.getElementById('link-open').style.pointerEvents = 'none';
+          document.getElementById('link-open').style.opacity = '0.4';
+          document.getElementById('link-download').style.pointerEvents = 'none';
+          document.getElementById('link-download').style.opacity = '0.4';
+        }
+
+        // Student card
+        document.getElementById('student-card').innerHTML =
+          '<div class="name">' + escapeHtml(submission.studentName || 'Unknown') + '</div>' +
+          '<div class="meta">' +
+          '<strong>LRN:</strong> ' + escapeHtml(submission.lrn) + ' &nbsp;|&nbsp; ' +
+          '<strong>Section:</strong> ' + escapeHtml(submission.section || '—') + '<br>' +
+          '<strong>' + escapeHtml(TERM.replace('term', 'Term ')) + ' · ' + escapeHtml(PTID.toUpperCase()) + '</strong>' +
+          ' &nbsp;|&nbsp; Submitted: ' + escapeHtml(formatDate(submission.uploadedAt)) +
+          '</div>';
+
+        // Reflection
+        // (Reflection lives in student's localStorage — not synced to backend via this flow.
+        //  For now, show a note that reflection is stored locally.)
+        document.getElementById('reflection-container').innerHTML =
+          '<div class="reflection-box">' +
+          '<div class="label">✍️ Student Reflection</div>' +
+          '<div style="color:#90a4ae;font-style:italic;">Reflection is stored on the student\'s device and may not be synced. Ask the student to resubmit if needed.</div>' +
+          '</div>';
+
+        // Rubric
+        const existingScores = existingGrade ? existingGrade.rubricScores : null;
+        document.getElementById('rubric-container').innerHTML =
+          PTGrade.renderRubricInputs(rubric, existingScores);
+
+        // Teacher notes
+        if (existingGrade && existingGrade.teacherNotes) {
+          document.getElementById('teacher-notes').value = existingGrade.teacherNotes;
+        }
+
+        // Wire total update
+        PTGrade.wireRubricTotal();
+
+        // If existing grade, show success banner
+        if (existingGrade) {
+          const box = document.getElementById('success-msg-box');
+          box.textContent = '✅ Existing grade loaded (' + existingGrade.totalScore + '/100). Editing will overwrite it.';
+          box.classList.remove('hidden');
+        }
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          const d = new Date(iso);
+          const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+          return month + ' ' + d.getDate() + ', ' + d.getFullYear() + ' ' +
+            String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+        } catch (e) { return iso; }
+      }
+
+      async function saveGrade() {
+        const btn = document.getElementById('btn-save-grade');
+        const errBox = document.getElementById('error-msg-box');
+        const okBox = document.getElementById('success-msg-box');
+        errBox.classList.add('hidden');
+        okBox.classList.add('hidden');
+
+        const rubricScores = PTGrade.collectRubricScores();
+        const total = PTGrade.computeTotal();
+        const notes = document.getElementById('teacher-notes').value.trim();
+
+        // Validate — all inputs filled
+        for (let i = 0; i < rubricScores.length; i++) {
+          if (rubricScores[i].score === undefined || rubricScores[i].score === null || isNaN(rubricScores[i].score)) {
+            errBox.textContent = 'Please enter a score for: ' + rubricScores[i].criterion;
+            errBox.classList.remove('hidden');
+            return;
+          }
+        }
+
+        btn.disabled = true;
+        btn.textContent = '⏳ Saving…';
+
+        try {
+          // Build student object from submission
+          const parts = (submission.studentName || '').split(',').map(function(s) { return s.trim(); });
+          const studentObj = {
+            lastName: parts[0] || '',
+            firstName: parts[1] || '',
+            section: submission.section || ''
+          };
+
+          const result = await PTGrade.saveGrade({
+            lrn: LRN,
+            term: TERM,
+            ptId: PTID,
+            rubricScores: rubricScores,
+            totalScore: total.total,
+            teacherNotes: notes,
+            gradedBy: 'JEMUEL C. MARI',
+            student: studentObj
+          });
+
+          if (!result.ok) {
+            errBox.textContent = '❌ ' + (result.error || 'Save failed');
+            errBox.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = '💾 Save Grade & Send to Student';
+            return;
+          }
+
+          okBox.innerHTML = '✅ <strong>Grade saved!</strong> Student will see <strong>' + total.total + '/100</strong> on their next login.';
+          okBox.classList.remove('hidden');
+          btn.textContent = '✅ Grade Saved';
+          setTimeout(function() {
+            btn.disabled = false;
+            btn.textContent = '💾 Save Grade (Update)';
+          }, 2000);
+        } catch (err) {
+          console.error('[PT-Grade] Save error:', err);
+          errBox.textContent = '❌ ' + err.message;
+          errBox.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = '💾 Save Grade & Send to Student';
+        }
+      }
+
+      document.getElementById('btn-save-grade').addEventListener('click', saveGrade);
+
+      const logoutBtn = document.getElementById('btn-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (typeof TeacherAuth !== 'undefined' && TeacherAuth.logout) TeacherAuth.logout();
+          else {
+            sessionStorage.removeItem('gsa_teacher_token');
+            sessionStorage.removeItem('gsa_teacher_session');
+            window.location.href = '../login.html';
+          }
+        });
+      }
+
+      loadAll();
+    })();
+  </script>
+</body>
+</html>
