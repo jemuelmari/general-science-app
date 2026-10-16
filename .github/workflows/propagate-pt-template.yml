@@ -1,0 +1,109 @@
+name: Propagate PT Template to All Terms
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "yes" to confirm propagation'
+        required: true
+        default: 'no'
+
+jobs:
+  propagate:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'yes'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify master template exists
+        run: |
+          if [ ! -f "student/term1/assessments/pt1.html" ]; then
+            echo "❌ Master template not found at student/term1/assessments/pt1.html"
+            exit 1
+          fi
+          echo "✅ Master template found"
+
+      - name: Propagate to term1 pt2, pt3
+        run: |
+          python3 << 'PYEOF'
+          import re, pathlib
+
+          master_path = pathlib.Path("student/term1/assessments/pt1.html")
+          master = master_path.read_text(encoding="utf-8")
+
+          # Term 1: only change nothing (same term, same theme)
+          for target in ["pt2.html", "pt3.html"]:
+              out = pathlib.Path(f"student/term1/assessments/{target}")
+              out.write_text(master, encoding="utf-8")
+              print(f"✅ Wrote {out}")
+
+          PYEOF
+
+      - name: Propagate to term2 (blue → teal)
+        run: |
+          python3 << 'PYEOF'
+          import pathlib
+
+          master = pathlib.Path("student/term1/assessments/pt1.html").read_text(encoding="utf-8")
+
+          # Term 2 transformations
+          term2 = master
+          term2 = term2.replace("const TERM = 'term1';", "const TERM = 'term2';")
+          term2 = term2.replace("← Term 1", "← Term 2")
+          term2 = term2.replace("Term 1 · ", "Term 2 · ")
+          term2 = term2.replace("#0d47a1", "#00695c")   # primary blue → teal
+          term2 = term2.replace("#1565c0", "#00897b")   # darker blue → darker teal
+          term2 = term2.replace("rgba(13,71,161,", "rgba(0,105,92,")
+          term2 = term2.replace("#e3f2fd", "#e0f2f1")   # light blue → light teal
+
+          for target in ["pt1.html", "pt2.html", "pt3.html"]:
+              out = pathlib.Path(f"student/term2/assessments/{target}")
+              out.write_text(term2, encoding="utf-8")
+              print(f"✅ Wrote {out}")
+          PYEOF
+
+      - name: Propagate to term3 (blue → dark green)
+        run: |
+          python3 << 'PYEOF'
+          import pathlib
+
+          master = pathlib.Path("student/term1/assessments/pt1.html").read_text(encoding="utf-8")
+
+          # Term 3 transformations
+          term3 = master
+          term3 = term3.replace("const TERM = 'term1';", "const TERM = 'term3';")
+          term3 = term3.replace("← Term 1", "← Term 3")
+          term3 = term3.replace("Term 1 · ", "Term 3 · ")
+          term3 = term3.replace("#0d47a1", "#004d40")   # primary blue → dark green
+          term3 = term3.replace("#1565c0", "#00695c")   # darker blue → teal
+          term3 = term3.replace("rgba(13,71,161,", "rgba(0,77,64,")
+          term3 = term3.replace("#e3f2fd", "#e0f2f1")   # light blue → light teal
+
+          for target in ["pt1.html", "pt2.html", "pt3.html"]:
+              out = pathlib.Path(f"student/term3/assessments/{target}")
+              out.write_text(term3, encoding="utf-8")
+              print(f"✅ Wrote {out}")
+          PYEOF
+
+      - name: Show diff summary
+        run: |
+          git diff --stat
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add student/term1/assessments/pt2.html student/term1/assessments/pt3.html
+          git add student/term2/assessments/pt1.html student/term2/assessments/pt2.html student/term2/assessments/pt3.html
+          git add student/term3/assessments/pt1.html student/term3/assessments/pt2.html student/term3/assessments/pt3.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: propagate PT template to all 9 files [skip ci]"
+            git push
+            echo "✅ Pushed"
+          fi
