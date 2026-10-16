@@ -16,13 +16,14 @@ const PTGrade = (() => {
       return { ok: false, error: 'Backend not configured' };
     }
     filters = filters || {};
-    var body = {
-      action: 'listPTFiles',
-      term: filters.term || '',
-      ptId: filters.ptId || '',
-      section: filters.section || '',
-      includeLegacy: !!filters.includeLegacy
-    };
+var body = {
+  action: 'listPTFiles',
+  lrn: filters.lrn || '',         // ← IDAGDAG ITO
+  term: filters.term || '',
+  ptId: filters.ptId || '',
+  section: filters.section || '',
+  includeLegacy: !!filters.includeLegacy
+};
     try {
       var res = await _post(body);
       if (!res.ok) return { ok: false, error: res.error };
