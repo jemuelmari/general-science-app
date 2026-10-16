@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PT Submissions — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .filter-bar { background:#fff; border-radius:14px; padding:16px 20px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:12px; align-items:end; }
+    .filter-bar label { font-size:0.78rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; display:block; margin-bottom:6px; }
+    .filter-bar select, .filter-bar input { padding:10px 12px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.9rem; background:#fff; min-width:160px; }
+    .filter-bar select:focus, .filter-bar input:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.1); }
+    .filter-bar button { padding:10px 20px; background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; border:none; border-radius:8px; font-family:inherit; font-size:0.9rem; font-weight:700; cursor:pointer; }
+    .filter-bar button:hover { transform:translateY(-1px); }
+
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px; margin-bottom:20px; }
+    .stat-card { background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-top:4px solid #0d47a1; }
+    .stat-card.pending { border-top-color:#ed6c02; }
+    .stat-card.graded { border-top-color:#2e7d32; }
+    .stat-card .label { font-size:0.75rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+    .stat-card .value { font-size:2rem; font-weight:800; color:#1a1a1a; margin-top:6px; line-height:1; }
+    .stat-card .sub { font-size:0.75rem; color:#90a4ae; margin-top:4px; }
+
+    .sub-table { background:#fff; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); overflow:hidden; }
+    .sub-table table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    .sub-table thead { background:#f5f7fa; }
+    .sub-table th { text-align:left; padding:14px 16px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; color:#5f6368; border-bottom:2px solid #e0e0e0; font-weight:700; }
+    .sub-table td { padding:14px 16px; border-bottom:1px solid #f0f0f0; color:#1a1a1a; vertical-align:middle; }
+    .sub-table tr:last-child td { border-bottom:none; }
+    .sub-table tr:hover { background:#fafbfc; }
+
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+    .badge.pending { background:#fff3e0; color:#e65100; }
+    .badge.graded { background:#e8f5e9; color:#1b5e20; }
+    .badge.legacy { background:#eceff1; color:#455a64; }
+    .badge.new { background:#e3f2fd; color:#0d47a1; }
+
+    .btn-sm { padding:7px 14px; border:none; border-radius:6px; font-family:inherit; font-size:0.82rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; }
+    .btn-grade { background:#0d47a1; color:#fff; }
+    .btn-grade:hover { background:#062b5f; }
+    .btn-view { background:#e3f2fd; color:#0d47a1; }
+    .btn-view:hover { background:#bbdefb; }
+
+    .empty-state { text-align:center; padding:60px 20px; color:#90a4ae; }
+    .empty-state .icon { font-size:3rem; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📋 PT Submissions</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="pt-submissions.html" style="color:#ffd54f;border-color:#ffd54f;">📋 PT Submissions</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="filter-bar">
+      <div>
+        <label>Term</label>
+        <select id="filter-term">
+          <option value="">All terms</option>
+          <option value="term1">Term 1</option>
+          <option value="term2">Term 2</option>
+          <option value="term3">Term 3</option>
+        </select>
+      </div>
+      <div>
+        <label>PT</label>
+        <select id="filter-pt">
+          <option value="">All PTs</option>
+          <option value="pt1">PT1</option>
+          <option value="pt2">PT2</option>
+          <option value="pt3">PT3</option>
+        </select>
+      </div>
+      <div>
+        <label>Section</label>
+        <select id="filter-section">
+          <option value="">All sections</option>
+          <option value="ACADEMIC A">ACADEMIC A</option>
+          <option value="ACADEMIC B">ACADEMIC B</option>
+        </select>
+      </div>
+      <div>
+        <label>Search</label>
+        <input type="text" id="filter-search" placeholder="Name or LRN…" />
+      </div>
+      <button id="btn-refresh">🔄 Refresh</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="label">Total Submissions</div>
+        <div class="value" id="stat-total">—</div>
+        <div class="sub">filtered view</div>
+      </div>
+      <div class="stat-card pending">
+        <div class="label">Pending Grade</div>
+        <div class="value" id="stat-pending">—</div>
+        <div class="sub">awaiting grading</div>
+      </div>
+      <div class="stat-card graded">
+        <div class="label">Graded</div>
+        <div class="value" id="stat-graded">—</div>
+        <div class="sub">completed</div>
+      </div>
+    </div>
+
+    <div class="sub-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>LRN</th>
+            <th>Section</th>
+            <th>Term</th>
+            <th>PT</th>
+            <th>File</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="submissions-body">
+          <tr><td colspan="9" style="text-align:center;padding:40px;color:#90a4ae;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=1.4.0"></script>
+  <script src="../assets/js/store.js?v=1.4.0"></script>
+  <script src="../assets/js/security.js?v=1.4.0"></script>
+  <script src="../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.4.0"></script>
+  <script src="../assets/js/pt-grade.js?v=1.0.0"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const user = Store.getCurrentUser ? Store.getCurrentUser() : null;
+      let allSubmissions = [];
+      let allGrades = [];
+
+      async function loadData() {
+        const tbody = document.getElementById('submissions-body');
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Loading submissions…</td></tr>';
+
+        try {
+          // Pull submissions
+          const subsResult = await PTGrade.listSubmissions({
+            term: document.getElementById('filter-term').value,
+            ptId: document.getElementById('filter-pt').value,
+            section: document.getElementById('filter-section').value,
+            includeLegacy: false
+          });
+
+          // Pull grades (all)
+          const gradesResult = await PTGrade.pullGrades({});
+
+          if (!subsResult.ok) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#c62828;">❌ Failed to load: ' + (subsResult.error || 'unknown') + '</td></tr>';
+            return;
+          }
+
+          allSubmissions = subsResult.records || [];
+          allGrades = (gradesResult && gradesResult.ok && gradesResult.records) ? gradesResult.records : [];
+
+          renderStats();
+          renderTable();
+        } catch (err) {
+          console.error('[PT-Submissions] Load error:', err);
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#c62828;">❌ Error: ' + err.message + '</td></tr>';
+        }
+      }
+
+      function findGradeFor(lrn, term, ptId) {
+        for (let i = 0; i < allGrades.length; i++) {
+          const g = allGrades[i];
+          if (g.lrn === lrn && g.term === term && g.ptId === ptId) return g;
+        }
+        return null;
+      }
+
+      function renderStats() {
+        const filtered = getFiltered();
+        let pending = 0, graded = 0;
+        filtered.forEach(function(s) {
+          if (findGradeFor(s.lrn, s.term, s.ptId)) graded++;
+          else pending++;
+        });
+        document.getElementById('stat-total').textContent = filtered.length;
+        document.getElementById('stat-pending').textContent = pending;
+        document.getElementById('stat-graded').textContent = graded;
+      }
+
+      function getFiltered() {
+        const search = (document.getElementById('filter-search').value || '').toLowerCase().trim();
+        return allSubmissions.filter(function(s) {
+          if (!search) return true;
+          return (s.studentName || '').toLowerCase().indexOf(search) !== -1 ||
+                 (s.lrn || '').indexOf(search) !== -1;
+        });
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById('submissions-body');
+        const filtered = getFiltered();
+
+        if (!filtered.length) {
+          tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><div class="icon">📭</div><div>No submissions found for the selected filters.</div></td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(function(s) {
+          const grade = findGradeFor(s.lrn, s.term, s.ptId);
+          const isGraded = !!grade;
+          const statusBadge = isGraded
+            ? '<span class="badge graded">✓ Graded · ' + grade.totalScore + '/100</span>'
+            : '<span class="badge pending">⏳ Pending</span>';
+          const legacyBadge = s.isLegacy ? ' <span class="badge legacy">Legacy</span>' : '';
+
+          const fileLink = s.driveUrl
+            ? '<a href="' + s.driveUrl + '" target="_blank" rel="noopener" class="btn-sm btn-view" style="margin-right:6px;">📎 View</a>'
+            : '<span style="color:#90a4ae;font-size:0.85rem;">(no file)</span>';
+
+          const gradeBtn = '<a href="pt-grade.html?lrn=' + encodeURIComponent(s.lrn) +
+            '&term=' + encodeURIComponent(s.term) +
+            '&ptId=' + encodeURIComponent(s.ptId) +
+            '" class="btn-sm btn-grade">' + (isGraded ? '✏️ Edit Grade' : '🎯 Grade Now') + '</a>';
+
+          return '<tr>' +
+            '<td><strong>' + escapeHtml(s.studentName || 'Unknown') + '</strong>' + legacyBadge + '</td>' +
+            '<td style="font-family:monospace;font-size:0.82rem;">' + escapeHtml(s.lrn) + '</td>' +
+            '<td>' + escapeHtml(s.section || '—') + '</td>' +
+            '<td>' + escapeHtml(s.term.replace('term', 'Term ')) + '</td>' +
+            '<td><strong>' + escapeHtml(s.ptId.toUpperCase()) + '</strong></td>' +
+            '<td>' + fileLink + '</td>' +
+            '<td style="font-size:0.82rem;color:#5f6368;">' + formatDate(s.uploadedAt) + '</td>' +
+            '<td>' + statusBadge + '</td>' +
+            '<td>' + gradeBtn + '</td>' +
+            '</tr>';
+        }).join('');
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          const d = new Date(iso);
+          const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+          return month + ' ' + d.getDate() + ', ' + d.getFullYear() + ' ' +
+            String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+        } catch (e) { return iso; }
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Wire up
+      document.getElementById('btn-refresh').addEventListener('click', loadData);
+      document.getElementById('filter-term').addEventListener('change', loadData);
+      document.getElementById('filter-pt').addEventListener('change', loadData);
+      document.getElementById('filter-section').addEventListener('change', loadData);
+      document.getElementById('filter-search').addEventListener('input', function() {
+        renderStats();
+        renderTable();
+      });
+
+      // Logout
+      const logoutBtn = document.getElementById('btn-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (typeof TeacherAuth !== 'undefined' && TeacherAuth.logout) TeacherAuth.logout();
+          else {
+            sessionStorage.removeItem('gsa_teacher_token');
+            sessionStorage.removeItem('gsa_teacher_session');
+            window.location.href = '../login.html';
+          }
+        });
+      }
+
+      // Initial load
+      loadData();
+    })();
+  </script>
+</body>
+</html>
