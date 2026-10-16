@@ -1,0 +1,86 @@
+name: Patch PT Upload Call
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "yes" to confirm patch'
+        required: true
+        default: 'no'
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'yes'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Patch all 9 ptN.html files
+        run: |
+          set -e
+
+          FILES=(
+            "student/term1/assessments/pt1.html"
+            "student/term1/assessments/pt2.html"
+            "student/term1/assessments/pt3.html"
+            "student/term2/assessments/pt1.html"
+            "student/term2/assessments/pt2.html"
+            "student/term2/assessments/pt3.html"
+            "student/term3/assessments/pt1.html"
+            "student/term3/assessments/pt2.html"
+            "student/term3/assessments/pt3.html"
+          )
+
+          OLD='await PTUpload.uploadFile(selectedFile, TERM, meta.id)'
+          NEW='await PTUpload.uploadFile(selectedFile, TERM, meta.id, reflectionTrim, option)'
+
+          for f in "${FILES[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Missing: $f"
+              exit 1
+            fi
+
+            if grep -q "$NEW" "$f"; then
+              echo "⏭️  Already patched: $f"
+              continue
+            fi
+
+            if grep -q "$OLD" "$f"; then
+              # Use perl for safe literal replacement (no regex metachar issues)
+              perl -i -pe "s/\Q$OLD\E/$NEW/g" "$f"
+              echo "✅ Patched: $f"
+            else
+              echo "⚠️  Pattern not found: $f"
+            fi
+          done
+
+      - name: Show diff
+        run: |
+          git diff --stat
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add student/term1/assessments/pt1.html
+          git add student/term1/assessments/pt2.html
+          git add student/term1/assessments/pt3.html
+          git add student/term2/assessments/pt1.html
+          git add student/term2/assessments/pt2.html
+          git add student/term2/assessments/pt3.html
+          git add student/term3/assessments/pt1.html
+          git add student/term3/assessments/pt2.html
+          git add student/term3/assessments/pt3.html
+
+          if git diff --cached --quiet; then
+            echo "✅ No changes to commit"
+          else
+            git commit -m "chore: pass reflection + option to PTUpload.uploadFile [skip ci]"
+            git push
+            echo "✅ Pushed"
+          fi
