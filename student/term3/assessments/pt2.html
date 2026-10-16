@@ -9,130 +9,60 @@
   <style>
     .pt-hero {
       position: relative;
-      background: linear-gradient(135deg, #004d40 0%, #00695c 60%, #26a69a 100%);
-      color: #fff;
-      border-radius: 18px;
-      padding: 28px 24px;
-      margin-bottom: 24px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 77, 64, 0.25);
+      background: linear-gradient(135deg, #004d40 0%, #00695c 60%, #00acc1 100%);
+      color: #fff; border-radius: 18px; padding: 28px 24px;
+      margin-bottom: 24px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(13, 71, 161, 0.25);
     }
-    .pt-hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-    }
+    .pt-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.08); }
     .pt-hero-content { position: relative; z-index: 1; }
-    .pt-hero-label {
-      font-size: 0.75rem; text-transform: uppercase;
-      letter-spacing: 1px; opacity: 0.85; margin-bottom: 4px;
-    }
+    .pt-hero-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; margin-bottom: 4px; }
     .pt-hero h2 { color: #fff; font-size: 1.6rem; margin: 0 0 8px; font-weight: 700; }
     .pt-hero p { opacity: 0.92; margin: 0; font-size: 0.9rem; }
 
-    .pt-section {
-      background: #fff; border-radius: 14px; padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-bottom: 20px;
-    }
-    .pt-section h3 {
-      font-size: 1rem; color: #004d40; margin: 0 0 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .pt-section h3::before {
-      content: ''; width: 4px; height: 18px;
-      background: linear-gradient(180deg, #004d40, #26a69a);
-      border-radius: 2px;
-    }
+    .pt-section { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    .pt-section h3 { font-size: 1rem; color: #004d40; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+    .pt-section h3::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #004d40, #00acc1); border-radius: 2px; }
 
-    .pt-textarea {
-      width: 100%; min-height: 140px; padding: 12px 14px;
-      font-family: inherit; font-size: 0.95rem;
-      border: 1.5px solid #cfd8dc; border-radius: 10px;
-      resize: vertical; line-height: 1.5; color: #1a1a1a;
-      transition: all 0.15s ease;
-    }
-    .pt-textarea:focus {
-      outline: none; border-color: #004d40;
-      box-shadow: 0 0 0 4px rgba(0, 77, 64, 0.1);
-    }
+    .pt-textarea { width: 100%; min-height: 140px; padding: 12px 14px; font-family: inherit; font-size: 0.95rem; border: 1.5px solid #cfd8dc; border-radius: 10px; resize: vertical; line-height: 1.5; color: #1a1a1a; }
+    .pt-textarea:focus { outline: none; border-color: #004d40; box-shadow: 0 0 0 4px rgba(0,77,64,0.1); }
 
-    .pt-file-input-wrap {
-      display: block; padding: 20px;
-      border: 2px dashed #cfd8dc; border-radius: 10px;
-      text-align: center; cursor: pointer;
-      transition: all 0.15s ease; background: #fafafa;
-    }
-    .pt-file-input-wrap:hover {
-      border-color: #004d40; background: #f0fdf9;
-    }
-    .pt-file-input-wrap.has-file {
-      border-color: #2e7d32; background: #f1f8f4; border-style: solid;
-    }
+    .pt-file-input-wrap { display: block; padding: 20px; border: 2px dashed #cfd8dc; border-radius: 10px; text-align: center; cursor: pointer; background: #fafafa; }
+    .pt-file-input-wrap:hover { border-color: #004d40; background: #f5f9ff; }
+    .pt-file-input-wrap.has-file { border-color: #2e7d32; background: #f1f8f4; border-style: solid; }
     .pt-file-input-wrap input[type="file"] { display: none; }
 
     .pt-option-list { display: flex; flex-direction: column; gap: 10px; }
-    .pt-option {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px;
-      border: 2px solid #dadce0; border-radius: 10px;
-      cursor: pointer; transition: all 0.15s ease; background: #fff;
-    }
-    .pt-option:hover { border-color: #004d40; background: #f0fdf9; }
-    .pt-option.selected {
-      border-color: #004d40; background: #e0f2f1; font-weight: 600;
-    }
-    .pt-option input[type="radio"] {
-      accent-color: #004d40; width: 18px; height: 18px; cursor: pointer;
-    }
+    .pt-option { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid #dadce0; border-radius: 10px; cursor: pointer; background: #fff; }
+    .pt-option.selected { border-color: #004d40; background: #e0f2f1; font-weight: 600; }
+    .pt-option input[type="radio"] { accent-color: #004d40; width: 18px; height: 18px; cursor: pointer; }
 
     .pt-checklist { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
-    .pt-checklist li {
-      padding: 8px 0 8px 28px; border-bottom: 1px solid #f5f5f5;
-      position: relative; color: #37474f; line-height: 1.5;
-    }
+    .pt-checklist li { padding: 8px 0 8px 28px; border-bottom: 1px solid #f5f5f5; position: relative; color: #37474f; line-height: 1.5; }
     .pt-checklist li:last-child { border-bottom: none; }
-    .pt-checklist li::before {
-      content: '☐'; position: absolute; left: 0; top: 8px;
-      color: #004d40; font-size: 1.1rem; font-weight: 700;
-    }
+    .pt-checklist li::before { content: '☐'; position: absolute; left: 0; top: 8px; color: #004d40; font-size: 1.1rem; font-weight: 700; }
 
-    .pt-submit-btn {
-      width: 100%; padding: 16px 20px;
-      background: linear-gradient(135deg, #004d40, #00695c);
-      color: #fff; border: none; border-radius: 10px;
-      font-family: inherit; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 77, 64, 0.25);
-    }
-    .pt-submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 77, 64, 0.35);
-    }
+    .pt-submit-btn { width: 100%; padding: 16px 20px; background: linear-gradient(135deg, #004d40, #00695c); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,77,64,0.25); }
+    .pt-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,77,64,0.35); }
     .pt-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    .pt-status-banner {
-      padding: 14px 18px; border-radius: 10px; margin-bottom: 20px;
-      font-size: 0.9rem; display: flex; align-items: center; gap: 10px;
-    }
-    .pt-status-banner.submitted {
-      background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20;
-    }
-    .pt-status-banner.pending {
-      background: #fff3e0; border-left: 4px solid #ed6c02; color: #e65100;
-    }
+    .pt-status-banner { padding: 14px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
+    .pt-status-banner.submitted { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; }
+    .pt-status-banner.pending { background: #fff3e0; border-left: 4px solid #ed6c02; color: #e65100; }
+    .pt-status-banner.locked { background: #ffebee; border-left: 4px solid #c62828; color: #b71c1c; }
+    .pt-status-banner.graded { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; font-weight: 500; }
 
-    .pt-rubric {
-      background: #f5f7fa; border-radius: 10px; padding: 16px; font-size: 0.85rem;
-    }
-    .pt-rubric-row {
-      display: flex; justify-content: space-between;
-      padding: 8px 0; border-bottom: 1px solid #e0e0e0; color: #37474f;
-    }
+    .pt-rubric { background: #f5f7fa; border-radius: 10px; padding: 16px; font-size: 0.85rem; }
+    .pt-rubric-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0; color: #37474f; }
     .pt-rubric-row:last-child { border-bottom: none; }
     .pt-rubric-row strong { color: #004d40; }
+    .pt-rubric-row.graded { background: #e8f5e9; padding-left: 8px; padding-right: 8px; border-radius: 4px; }
+    .pt-rubric-score { font-weight: 700; color: #2e7d32; }
+
+    .pt-grade-summary { padding: 18px; background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 12px; margin-bottom: 16px; text-align: center; }
+    .pt-grade-summary .score { font-size: 2.8rem; font-weight: 800; color: #1b5e20; line-height: 1; }
+    .pt-grade-summary .label { font-size: 0.85rem; color: #2e7d32; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    .pt-grade-summary .teacher-notes { margin-top: 12px; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 8px; font-size: 0.85rem; color: #1b5e20; text-align: left; }
   </style>
 </head>
 <body>
@@ -141,7 +71,7 @@
     <div class="container flex-between">
       <div>
         <h1 id="header-title">📋 Performance Task</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.1.0</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 3</a>
     </div>
@@ -157,18 +87,20 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.1.0</span></p>
   </footer>
 
-  <script src="../../../config.js?v=1.3.0-17f9f22?v=1.3.0-17f9f22?v=1.3.0-17f9f22"></script>
-  <script src="../../../assets/js/app.js?v=1.3.0-17f9f22?v=1.3.0-17f9f22?v=1.3.0-17f9f22"></script>
-  <script src="../../../assets/js/store.js?v=1.3.0-17f9f22?v=1.3.0-17f9f22?v=1.3.0-17f9f22"></script>
+  <script src="../../../config.js?v=1.4.0"></script>
+  <script src="../../../assets/js/app.js?v=1.4.0"></script>
+  <script src="../../../assets/js/store.js?v=1.4.0"></script>
+  <script src="../../../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../../../assets/js/pt-upload.js?v=1.0.0"></script>
   <script>
     (function() {
       'use strict';
 
       const filename = window.location.pathname.split('/').pop().replace('.html', '');
-      const TERM = 'term3';
+      const TERM = 'term3';  // ← CHANGE per file
 
       const PT_META = {
         pt1: { id: 'pt1', file: 'pt1.json' },
@@ -180,10 +112,8 @@
       if (!meta) {
         document.getElementById('pt-root').innerHTML = `
           <div class="card" style="text-align:center;padding:40px;">
-            <div style="font-size:2rem;">⚠️</div>
             <h2 style="color:#c62828;">Performance Task not found</h2>
-            <p class="text-muted">The file <code>${filename}.html</code> is not recognized.</p>
-            <a href="../index.html" class="btn btn-primary mt-md">← Back to Term 3</a>
+            <a href="../index.html" class="btn btn-primary mt-md">← Back to Term 1</a>
           </div>
         `;
         return;
@@ -192,170 +122,240 @@
       const user = Store.getCurrentUser();
       if (!user) { window.location.replace('../../login.html'); return; }
 
-      fetch(meta.file)
-        .then((r) => {
-          if (!r.ok) throw new Error(`Failed to load ${meta.file}`);
-          return r.json();
-        })
-        .then((data) => {
-          document.title = `${data.title} — General Science`;
-          document.getElementById('header-title').textContent = `📋 ${data.shortTitle || data.title}`;
-          renderPT(data);
-        })
-        .catch((err) => {
-          console.error('[PT] Load error:', err);
-          document.getElementById('pt-root').innerHTML = `
-            <div class="card" style="text-align:center;padding:40px;">
-              <div style="font-size:2rem;">⚠️</div>
-              <h2 style="color:#c62828;">Failed to load</h2>
-              <p class="text-muted text-small">${err.message}</p>
-              <button onclick="location.reload()" class="btn btn-primary mt-md">🔄 Retry</button>
-            </div>
-          `;
-        });
+      let currentGrade = null;
+      let selectedFile = null;
 
+      /* ============================================================
+         LOAD PT + GRADES IN PARALLEL
+         ============================================================ */
+      Promise.all([
+        fetch(meta.file).then(function(r) {
+          if (!r.ok) throw new Error('Failed to load ' + meta.file);
+          return r.json();
+        }),
+        PTUpload.pullMyGrades(user.lrn).catch(function() { return { ok: false, records: [] }; })
+      ]).then(function(results) {
+        const data = results[0];
+        const gradesResult = results[1];
+        if (gradesResult && gradesResult.ok && gradesResult.records) {
+          currentGrade = PTUpload.findGradeFor(gradesResult.records, TERM, meta.id);
+        }
+        document.title = data.title + ' — General Science';
+        document.getElementById('header-title').textContent = '📋 ' + (data.shortTitle || data.title);
+        renderPT(data);
+      }).catch(function(err) {
+        console.error('[PT] Load error:', err);
+        document.getElementById('pt-root').innerHTML =
+          '<div class="card" style="text-align:center;padding:40px;">' +
+          '<h2 style="color:#c62828;">Failed to load</h2>' +
+          '<p class="text-muted text-small">' + err.message + '</p>' +
+          '<button onclick="location.reload()" class="btn btn-primary mt-md">🔄 Retry</button>' +
+          '</div>';
+      });
+
+      /* ============================================================
+         RENDER
+         ============================================================ */
       function renderPT(pt) {
         const scores = Store.getScores(user.lrn);
-        const existing = scores[TERM]?.pt?.[meta.id] || null;
+        const existing = (scores[TERM] && scores[TERM].pt && scores[TERM].pt[meta.id]) || null;
         const root = document.getElementById('pt-root');
 
+        // Status banner
         let statusHTML = '';
-        if (existing && existing.submittedAt) {
-          statusHTML = `
-            <div class="pt-status-banner submitted">
-              <span style="font-size:1.3rem;">✅</span>
-              <div>
-                <strong>Submitted</strong> on ${APP.formatDate(existing.submittedAt)}
-                ${existing.score != null ? ` · Score: <strong>${existing.score}/100</strong>` : ' · Awaiting teacher grading'}
-              </div>
-            </div>
-          `;
+        const submitted = existing && existing.submittedAt;
+        const isGraded = !!currentGrade;
+
+        if (isGraded) {
+          statusHTML =
+            '<div class="pt-status-banner graded">' +
+            '<span style="font-size:1.3rem;">🎓</span>' +
+            '<div><strong>Graded</strong> on ' + APP.formatDate(currentGrade.gradedAt) +
+            ' · Score: <strong>' + currentGrade.totalScore + '/100</strong></div></div>';
+        } else if (submitted) {
+          statusHTML =
+            '<div class="pt-status-banner submitted">' +
+            '<span style="font-size:1.3rem;">✅</span>' +
+            '<div><strong>Submitted</strong> on ' + APP.formatDate(existing.submittedAt) +
+            ' · Awaiting teacher grading</div></div>';
         } else {
-          statusHTML = `
-            <div class="pt-status-banner pending">
-              <span style="font-size:1.3rem;">⏳</span>
-              <div>Not yet submitted — complete the form below and click Submit.</div>
-            </div>
-          `;
+          statusHTML =
+            '<div class="pt-status-banner pending">' +
+            '<span style="font-size:1.3rem;">⏳</span>' +
+            '<div>Not yet submitted — complete the form below and click Submit.</div></div>';
         }
 
+        // Options
         let optionsHTML = '';
         if (pt.options && pt.options.length) {
-          optionsHTML = `
-            <div class="pt-section">
-              <h3>Choose your option</h3>
-              <div class="pt-option-list" id="pt-option-list">
-                ${pt.options.map((opt) => `
-                  <label class="pt-option" data-value="${opt}">
-                    <input type="radio" name="pt-option" value="${opt}" ${existing?.option === opt ? 'checked' : ''} />
-                    <span>${opt}</span>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-          `;
+          optionsHTML =
+            '<div class="pt-section"><h3>Choose your option</h3>' +
+            '<div class="pt-option-list" id="pt-option-list">' +
+            pt.options.map(function(opt) {
+              return '<label class="pt-option">' +
+                '<input type="radio" name="pt-option" value="' + escapeAttr(opt) + '" ' +
+                (existing && existing.option === opt ? 'checked' : '') + ' />' +
+                '<span>' + escapeHtml(opt) + '</span></label>';
+            }).join('') + '</div></div>';
         }
 
-        root.innerHTML = `
-          <div class="pt-hero">
-            <div class="pt-hero-content">
-              <div class="pt-hero-label">Term 3 · ${pt.coverage || ''}</div>
-              <h2>📋 ${pt.title}</h2>
-              <p>${pt.summary || ''}</p>
-            </div>
-          </div>
+        // Grade summary (if graded)
+        let gradeSummaryHTML = '';
+        if (isGraded) {
+          gradeSummaryHTML =
+            '<div class="pt-grade-summary">' +
+            '<div class="score">' + currentGrade.totalScore + '</div>' +
+            '<div class="label">out of 100 · Graded by ' + escapeHtml(currentGrade.gradedBy || 'Teacher') + '</div>' +
+            (currentGrade.teacherNotes ? '<div class="teacher-notes"><strong>📝 Teacher\'s Notes:</strong> ' + escapeHtml(currentGrade.teacherNotes) + '</div>' : '') +
+            '</div>';
+        }
 
-          ${statusHTML}
+        // Rubric — with scores if graded
+        const rubricHTML = (pt.rubric || []).map(function(r) {
+          var earned = null;
+          if (isGraded && Array.isArray(currentGrade.rubricScores)) {
+            for (var i = 0; i < currentGrade.rubricScores.length; i++) {
+              if (currentGrade.rubricScores[i].criterion === r.criterion) {
+                earned = currentGrade.rubricScores[i].score;
+                break;
+              }
+            }
+          }
+          if (earned !== null) {
+            return '<div class="pt-rubric-row graded"><span>' + escapeHtml(r.criterion) + '</span>' +
+              '<span><strong class="pt-rubric-score">' + earned + '</strong> / ' + r.points + ' pts</span></div>';
+          }
+          return '<div class="pt-rubric-row"><span>' + escapeHtml(r.criterion) + '</span><strong>' + r.points + ' pts</strong></div>';
+        }).join('');
 
-          <div class="pt-section">
-            <h3>📝 Instructions</h3>
-            <div style="font-size:0.92rem;line-height:1.7;color:#37474f;">
-              ${pt.instructions || '<p>Follow the task details below.</p>'}
-            </div>
-          </div>
+        // Submit button — depends on state
+        let submitBtnHTML = '';
+        let fileSectionHTML = '';
+        let reflectionSectionHTML = '';
+        let reuploadSectionHTML = '';
 
-          <div class="pt-section">
-            <h3>🎯 Requirements Checklist</h3>
-            <ul class="pt-checklist">
-              ${(pt.requirements || []).map(r => `<li>${r}</li>`).join('')}
-            </ul>
-          </div>
+        if (!isGraded) {
+          // Free to submit or re-upload
+          fileSectionHTML =
+            '<div class="pt-section"><h3>📎 Submit your work</h3>' +
+            '<label class="pt-file-input-wrap ' + (existing && existing.fileName ? 'has-file' : '') + '" id="pt-file-wrap">' +
+            '<input type="file" id="pt-file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp4,.mp3" />' +
+            '<div id="pt-file-label">' +
+            (existing && existing.fileName
+              ? '📎 ' + escapeHtml(existing.fileName) + ' (previously submitted) — click to re-upload'
+              : '📎 Click to upload your file (PDF, DOCX, JPG, PNG, MP4, MP3)') +
+            '</div>' +
+            '<div style="font-size:0.78rem;color:#90a4ae;margin-top:6px;">Max 25 MB · PDF, DOCX, JPG, PNG, MP4, MP3</div>' +
+            '</label>' +
+            (existing && existing.driveUrl
+              ? '<div style="margin-top:10px;font-size:0.85rem;"><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#004d40;">🔗 View your submitted file in Drive</a></div>'
+              : '') +
+            '</div>';
 
-          ${optionsHTML}
+          reflectionSectionHTML =
+            '<div class="pt-section"><h3>✍️ Reflection (required)</h3>' +
+            '<p style="font-size:0.85rem;color:#5f6368;margin:0 0 10px;">In 3–5 sentences, describe what you did, what you learned, and how you could improve next time.</p>' +
+            '<textarea id="pt-reflection" class="pt-textarea" placeholder="Type your reflection here…">' +
+            (existing && existing.reflection ? escapeHtml(existing.reflection) : '') +
+            '</textarea></div>';
 
-          <div class="pt-section">
-            <h3>📎 Submit your work (optional file)</h3>
-            <label class="pt-file-input-wrap ${existing?.fileName ? 'has-file' : ''}" id="pt-file-wrap">
-              <input type="file" id="pt-file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp4,.mp3" />
-              <div id="pt-file-label">
-                ${existing?.fileName
-                  ? `📎 ${existing.fileName} (previously submitted)`
-                  : '📎 Click to upload your file (PDF, DOCX, JPG, PNG, MP4, MP3)'}
-              </div>
-              <div style="font-size:0.78rem;color:#90a4ae;margin-top:6px;">
-                Max 25 MB · You may also paste a link in the reflection below
-              </div>
-            </label>
-          </div>
+          submitBtnHTML =
+            '<button class="pt-submit-btn" id="pt-submit">' +
+            (submitted ? '🔄 Re-upload & Resubmit' : '📤 Submit Performance Task') +
+            '</button>';
+        } else {
+          // Post-grade: show file link + re-upload request
+          fileSectionHTML =
+            '<div class="pt-section"><h3>📎 Your Submission</h3>' +
+            '<div style="font-size:0.9rem;color:#37474f;line-height:1.8;">' +
+            '<div><strong>File:</strong> ' + escapeHtml(existing && existing.fileName || 'N/A') + '</div>' +
+            '<div><strong>Size:</strong> ' + (existing && existing.fileSize ? PTUpload.formatFileSize(existing.fileSize) : 'N/A') + '</div>' +
+            (existing && existing.driveUrl
+              ? '<div><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#004d40;">🔗 Open in Drive</a></div>'
+              : '') +
+            '</div></div>';
 
-          <div class="pt-section">
-            <h3>✍️ Reflection (required)</h3>
-            <p style="font-size:0.85rem;color:#5f6368;margin:0 0 10px;">
-              In 3–5 sentences, describe what you did, what you learned, and how you could improve next time.
-            </p>
-            <textarea id="pt-reflection" class="pt-textarea" placeholder="Type your reflection here…">${existing?.reflection || ''}</textarea>
-          </div>
+          reflectionSectionHTML =
+            '<div class="pt-section"><h3>✍️ Your Reflection</h3>' +
+            '<p style="font-size:0.9rem;color:#37474f;line-height:1.6;">' +
+            escapeHtml(existing && existing.reflection || '(no reflection)') +
+            '</p></div>';
 
-          <div class="pt-section">
-            <h3>📊 Rubric (100 points)</h3>
-            <div class="pt-rubric">
-              ${(pt.rubric || []).map(r => `
-                <div class="pt-rubric-row">
-                  <span>${r.criterion}</span>
-                  <strong>${r.points} pts</strong>
-                </div>
-              `).join('')}
-            </div>
-          </div>
+          reuploadSectionHTML =
+            '<div class="pt-section" style="background:#fff8e1;border:1.5px solid #ffb300;">' +
+            '<h3 style="color:#e65100;">🔄 Want to Improve Your Score?</h3>' +
+            '<p style="font-size:0.88rem;color:#5f6368;margin:0 0 12px;">Since this PT has already been graded, you need teacher approval to re-upload. Click below to request.</p>' +
+            '<button id="pt-request-reupload" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#ed6c02,#f57c00);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;">📩 Request Re-upload</button>' +
+            '<div id="pt-code-section" style="display:none;margin-top:16px;padding:14px;background:#fff;border-radius:10px;border:1.5px solid #cfd8dc;">' +
+            '<div style="font-size:0.85rem;color:#5f6368;margin-bottom:10px;">Enter the code your teacher gave you:</div>' +
+            '<div style="display:flex;gap:8px;">' +
+            '<input type="text" id="pt-code-input" placeholder="PTRK-XXXX-XXXX" style="flex:1;padding:10px 12px;border:1.5px solid #cfd8dc;border-radius:8px;font-family:monospace;text-transform:uppercase;font-size:0.95rem;" />' +
+            '<button id="pt-redeem-btn" style="padding:10px 20px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-family:inherit;font-weight:700;cursor:pointer;">✓ Apply</button>' +
+            '</div>' +
+            '<div id="pt-code-msg" style="margin-top:8px;font-size:0.85rem;"></div>' +
+            '</div>' +
+            '</div>';
 
-          <button class="pt-submit-btn" id="pt-submit" ${existing?.submittedAt ? 'disabled' : ''}>
-            ${existing?.submittedAt ? '✓ Already Submitted' : '📤 Submit Performance Task'}
-          </button>
+          submitBtnHTML = '';
+        }
 
-          <div id="pt-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
-          <div id="pt-success" class="alert alert-success hidden" style="margin-top:16px;"></div>
-        `;
+        root.innerHTML =
+          '<div class="pt-hero"><div class="pt-hero-content">' +
+          '<div class="pt-hero-label">Term 3 · ' + (pt.coverage || '') + '</div>' +
+          '<h2>📋 ' + escapeHtml(pt.title) + '</h2>' +
+          '<p>' + (pt.summary || '') + '</p>' +
+          '</div></div>' +
+          gradeSummaryHTML +
+          statusHTML +
+          '<div class="pt-section"><h3>📝 Instructions</h3>' +
+          '<div style="font-size:0.92rem;line-height:1.7;color:#37474f;">' + (pt.instructions || '') + '</div></div>' +
+          '<div class="pt-section"><h3>🎯 Requirements Checklist</h3>' +
+          '<ul class="pt-checklist">' + (pt.requirements || []).map(function(r) { return '<li>' + escapeHtml(r) + '</li>'; }).join('') + '</ul></div>' +
+          optionsHTML +
+          fileSectionHTML +
+          reflectionSectionHTML +
+          reuploadSectionHTML +
+          '<div class="pt-section"><h3>📊 Rubric (100 points)</h3>' +
+          '<div class="pt-rubric">' + rubricHTML + '</div></div>' +
+          submitBtnHTML +
+          '<div id="pt-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>' +
+          '<div id="pt-success" class="alert alert-success hidden" style="margin-top:16px;"></div>';
 
+        // Wire up
         wireOptions(existing);
-        wireFileInput();
-        wireSubmit(pt, existing);
+        if (!isGraded) {
+          wireFileInput();
+          wireSubmit(pt, existing);
+        } else {
+          wireReuploadFlow(pt);
+        }
       }
 
+      /* ============================================================
+         WIRING
+         ============================================================ */
       function wireOptions(existing) {
         const list = document.getElementById('pt-option-list');
         if (!list) return;
         const opts = list.querySelectorAll('.pt-option');
-        opts.forEach((o) => {
-          o.addEventListener('click', () => {
-            opts.forEach(x => x.classList.remove('selected'));
+        opts.forEach(function(o) {
+          o.addEventListener('click', function() {
+            opts.forEach(function(x) { x.classList.remove('selected'); });
             o.classList.add('selected');
           });
           if (o.querySelector('input').checked) o.classList.add('selected');
         });
       }
 
-      let selectedFile = null;
-
       function wireFileInput() {
         const input = document.getElementById('pt-file');
         const label = document.getElementById('pt-file-label');
         const wrap = document.getElementById('pt-file-wrap');
         if (!input) return;
-
-        input.addEventListener('change', () => {
+        input.addEventListener('change', function() {
           if (input.files && input.files[0]) {
             selectedFile = input.files[0];
-            label.textContent = `📎 ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(0)} KB)`;
+            label.textContent = '📎 ' + selectedFile.name + ' (' + PTUpload.formatFileSize(selectedFile.size) + ')';
             wrap.classList.add('has-file');
           }
         });
@@ -363,54 +363,134 @@
 
       function wireSubmit(pt, existing) {
         const btn = document.getElementById('pt-submit');
-        if (!btn || existing?.submittedAt) return;
-
-        btn.addEventListener('click', () => {
+        if (!btn) return;
+        btn.addEventListener('click', async function() {
           const errEl = document.getElementById('pt-error');
           const okEl = document.getElementById('pt-success');
           errEl.classList.add('hidden');
           okEl.classList.add('hidden');
 
-          const reflection = document.getElementById('pt-reflection')?.value.trim() || '';
-          const option = document.querySelector('input[name="pt-option"]:checked')?.value || null;
+          const reflection = (document.getElementById('pt-reflection') || {}).value || '';
+          const reflectionTrim = reflection.trim();
+          const option = (document.querySelector('input[name="pt-option"]:checked') || {}).value || null;
 
           if (pt.options && pt.options.length && !option) {
             errEl.textContent = 'Please select an option before submitting.';
             errEl.classList.remove('hidden');
             return;
           }
-
-          if (reflection.length < 50) {
+          if (reflectionTrim.length < 50) {
             errEl.textContent = 'Reflection must be at least 50 characters.';
             errEl.classList.remove('hidden');
             return;
           }
+          if (!selectedFile && !(existing && existing.fileName)) {
+            if (!confirm('You have not attached a file. Submit anyway?')) return;
+          }
 
-          if (!selectedFile && !existing?.fileName) {
-            const proceed = confirm('You have not attached a file. Submit anyway?');
-            if (!proceed) return;
+          btn.disabled = true;
+          const originalText = btn.textContent;
+          btn.textContent = '⏳ Uploading…';
+          okEl.textContent = selectedFile ? '⏳ Uploading your file to Google Drive…' : '⏳ Saving your submission…';
+          okEl.classList.remove('hidden');
+
+          let driveResult = null;
+          if (selectedFile) {
+            try {
+              driveResult = await PTUpload.uploadFile(selectedFile, TERM, meta.id);
+            } catch (err) {
+              console.error('[PT] Upload error:', err);
+              errEl.textContent = 'Upload failed: ' + err.message;
+              errEl.classList.remove('hidden');
+              okEl.classList.add('hidden');
+              btn.disabled = false;
+              btn.textContent = originalText;
+              return;
+            }
           }
 
           const payload = {
             option: option,
-            reflection: reflection,
-            fileName: selectedFile ? selectedFile.name : (existing?.fileName || null),
-            fileSize: selectedFile ? selectedFile.size : (existing?.fileSize || null),
+            reflection: reflectionTrim,
+            fileName: selectedFile ? selectedFile.name : (existing && existing.fileName || null),
+            fileSize: selectedFile ? selectedFile.size : (existing && existing.fileSize || null),
+            fileId: driveResult ? driveResult.fileId : (existing && existing.fileId || null),
+            driveFileId: driveResult ? driveResult.driveFileId : (existing && existing.driveFileId || null),
+            driveUrl: driveResult ? driveResult.driveUrl : (existing && existing.driveUrl || null),
+            renamedFilename: driveResult ? driveResult.renamedFilename : (existing && existing.renamedFilename || null),
             submittedAt: new Date().toISOString(),
             score: null
           };
 
           Store.saveScore(user.lrn, TERM, 'pt', meta.id, payload);
-
-          okEl.textContent = '✅ Performance Task submitted! Your teacher will grade it soon.';
-          okEl.classList.remove('hidden');
-          btn.disabled = true;
-          btn.textContent = '✓ Already Submitted';
-
-          APP.toast('Performance Task submitted!', 'success', 3500);
-          setTimeout(() => location.reload(), 2000);
+          okEl.textContent = '✅ Submitted! Reloading…';
+          APP.toast('Performance Task submitted!', 'success', 3000);
+          setTimeout(function() { location.reload(); }, 1500);
         });
       }
+
+      function wireReuploadFlow(pt) {
+        const reqBtn = document.getElementById('pt-request-reupload');
+        const codeSection = document.getElementById('pt-code-section');
+        const redeemBtn = document.getElementById('pt-redeem-btn');
+
+        if (reqBtn) {
+          reqBtn.addEventListener('click', async function() {
+            reqBtn.disabled = true;
+            reqBtn.textContent = '⏳ Sending request…';
+            try {
+              await PTUpload.requestReupload(TERM, meta.id, currentGrade.totalScore, 'wants-to-improve');
+              APP.toast('Re-upload request sent to your teacher!', 'success', 4000);
+              codeSection.style.display = 'block';
+              reqBtn.textContent = '✅ Request Sent — Awaiting Code';
+            } catch (err) {
+              APP.toast('Request failed: ' + err.message, 'danger', 4000);
+              reqBtn.disabled = false;
+              reqBtn.textContent = '📩 Request Re-upload';
+            }
+          });
+        }
+
+        if (redeemBtn) {
+          redeemBtn.addEventListener('click', async function() {
+            const input = document.getElementById('pt-code-input');
+            const msg = document.getElementById('pt-code-msg');
+            const code = (input.value || '').trim().toUpperCase();
+            if (!code) { msg.textContent = 'Please enter the code.'; msg.style.color = '#c62828'; return; }
+            redeemBtn.disabled = true;
+            redeemBtn.textContent = '⏳ Checking…';
+            try {
+              const res = await PTUpload.redeemReuploadCode(code);
+              if (res.ok) {
+                msg.textContent = '✅ Code accepted! Reloading to unlock re-upload…';
+                msg.style.color = '#2e7d32';
+                // Clear grade state so re-upload is allowed — reload will re-fetch
+                setTimeout(function() { location.reload(); }, 1500);
+              } else {
+                msg.textContent = '❌ ' + (res.error || 'Invalid code');
+                msg.style.color = '#c62828';
+                redeemBtn.disabled = false;
+                redeemBtn.textContent = '✓ Apply';
+              }
+            } catch (err) {
+              msg.textContent = '❌ ' + err.message;
+              msg.style.color = '#c62828';
+              redeemBtn.disabled = false;
+              redeemBtn.textContent = '✓ Apply';
+            }
+          });
+        }
+      }
+
+      /* ============================================================
+         HELPERS
+         ============================================================ */
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function escapeAttr(str) { return escapeHtml(str); }
     })();
   </script>
 </body>
