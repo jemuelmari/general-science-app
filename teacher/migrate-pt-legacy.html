@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migrate PT Legacy — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .migration-box { max-width:720px; margin:40px auto; background:#fff; border-radius:14px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+    .migration-box h2 { color:#0d47a1; margin-bottom:12px; }
+    .migration-box p { color:#5f6368; line-height:1.6; margin-bottom:16px; }
+    .warning-banner { padding:14px 18px; background:#fff3e0; border-left:4px solid #ed6c02; border-radius:8px; color:#e65100; margin-bottom:20px; font-size:0.9rem; }
+    .log-box { background:#1a1a1a; color:#00e676; padding:16px; border-radius:10px; font-family:monospace; font-size:0.85rem; max-height:400px; overflow-y:auto; margin-top:16px; white-space:pre-wrap; line-height:1.5; }
+    .action-btn { padding:14px 28px; background:linear-gradient(135deg,#ed6c02,#f57c00); color:#fff; border:none; border-radius:10px; font-family:inherit; font-size:1rem; font-weight:700; cursor:pointer; }
+    .action-btn:hover { transform:translateY(-1px); }
+    .action-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .result-box { margin-top:16px; padding:16px; background:#e8f5e9; border-radius:10px; border-left:4px solid #2e7d32; color:#1b5e20; font-size:0.9rem; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔄 Migrate Legacy PT Submissions</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="pt-submissions.html">📋 PT Submissions</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="migration-box">
+      <h2>🧹 One-time Migration</h2>
+
+      <div class="warning-banner">
+        ⚠️ <strong>Run this ONCE only.</strong> This marks all existing PT submissions that have no actual file (legacy entries) as <code>isLegacy = true</code>. They will be hidden from the teacher submissions list but kept in the Google Sheet for audit.
+      </div>
+
+      <p>
+        <strong>What it does:</strong>
+      </p>
+      <ol style="color:#5f6368;line-height:1.8;margin-left:20px;">
+        <li>Pulls all PT files from the <code>PTFiles</code> sheet</li>
+        <li>Finds entries where <code>driveFileId</code> is empty (legacy — filename only, no actual file)</li>
+        <li>Marks them as <code>isLegacy = true</code></li>
+        <li>Legacy entries will be hidden from the submissions list</li>
+      </ol>
+
+      <p style="margin-top:20px;">
+        <strong>After running:</strong> Students who submitted before this date will need to re-upload their files. New submissions will upload to Google Drive automatically.
+      </p>
+
+      <button class="action-btn" id="btn-run-migration">🚀 Run Migration</button>
+
+      <div id="log-box" class="log-box hidden" style="display:none;"></div>
+      <div id="result-box" class="result-box hidden" style="display:none;"></div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+  </footer>
+
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=1.4.0"></script>
+  <script src="../assets/js/store.js?v=1.4.0"></script>
+  <script src="../assets/js/security.js?v=1.4.0"></script>
+  <script src="../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.4.0"></script>
+  <script src="../assets/js/pt-grade.js?v=1.0.0"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const logBox = document.getElementById('log-box');
+      const resultBox = document.getElementById('result-box');
+
+      function log(msg) {
+        logBox.style.display = 'block';
+        logBox.textContent += msg + '\n';
+        logBox.scrollTop = logBox.scrollHeight;
+      }
+
+      async function runMigration() {
+        const btn = document.getElementById('btn-run-migration');
+        btn.disabled = true;
+        btn.textContent = '⏳ Running…';
+        logBox.textContent = '';
+        resultBox.style.display = 'none';
+
+        log('⏳ Fetching all PT submissions…');
+
+        try {
+          const res = await PTGrade.listSubmissions({ includeLegacy: true });
+          if (!res.ok) {
+            log('❌ Failed: ' + (res.error || 'unknown error'));
+            btn.disabled = false;
+            btn.textContent = '🚀 Run Migration';
+            return;
+          }
+
+          const all = res.records || [];
+          log('📊 Total submissions found: ' + all.length);
+
+          const legacyOnes = all.filter(function(s) {
+            return !s.driveFileId || s.driveFileId === '';
+          });
+
+          log('🔍 Legacy entries (no driveFileId): ' + legacyOnes.length);
+
+          if (!legacyOnes.length) {
+            log('✅ No legacy entries to migrate.');
+            resultBox.style.display = 'block';
+            resultBox.textContent = '✅ Nothing to migrate — all submissions already have files.';
+            btn.disabled = false;
+            btn.textContent = '🚀 Run Migration';
+            return;
+          }
+
+          log('🚀 Marking legacy entries…');
+
+          let marked = 0;
+          for (let i = 0; i < legacyOnes.length; i++) {
+            const s = legacyOnes[i];
+            try {
+              const r = await fetch(CONFIG.BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  action: 'markPTLegacy',
+                  fileId: s.fileId
+                })
+              });
+              const j = await r.json();
+              if (j.ok) {
+                marked++;
+                log('  ✓ ' + s.studentName + ' (' + s.term + ' ' + s.ptId + ')');
+              } else {
+                log('  ⚠️ ' + s.studentName + ': ' + (j.error || 'failed'));
+              }
+            } catch (e) {
+              log('  ❌ ' + s.studentName + ': ' + e.message);
+            }
+          }
+
+          log('\n✅ Migration complete!');
+          log('Total marked as legacy: ' + marked);
+
+          resultBox.style.display = 'block';
+          resultBox.textContent = '✅ Marked ' + marked + ' of ' + legacyOnes.length + ' submissions as legacy.';
+        } catch (err) {
+          log('❌ Error: ' + err.message);
+        }
+
+        btn.disabled = false;
+        btn.textContent = '🚀 Run Migration Again';
+      }
+
+      document.getElementById('btn-run-migration').addEventListener('click', function() {
+        if (!confirm('⚠️ Run migration ONCE only. Continue?')) return;
+        runMigration();
+      });
+
+      const logoutBtn = document.getElementById('btn-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (typeof TeacherAuth !== 'undefined' && TeacherAuth.logout) TeacherAuth.logout();
+          else {
+            sessionStorage.removeItem('gsa_teacher_token');
+            sessionStorage.removeItem('gsa_teacher_session');
+            window.location.href = '../login.html';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
