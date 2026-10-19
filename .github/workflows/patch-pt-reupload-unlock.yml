@@ -1,10 +1,10 @@
-name: Patch PT Re-upload Unlock Logic v2
+name: Fix PT Unlock Crash
 
 on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type "yes" to apply FIXED unlock logic'
+        description: 'Type "yes" to apply the crash fix to all 9 ptN.html files'
         required: true
         default: 'no'
 
@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Revert previous bad patch + Apply new safe patch
+      - name: Apply crash fix
         run: |
           set -e
           
@@ -38,13 +38,10 @@ jobs:
           for f in "${FILES[@]}"; do
             if [ ! -f "$f" ]; then continue; fi
             
-            # REVERT: Remove the previous bad patch na may duplicate 'var user'
-            perl -0777 -i -pe "s/\/\/ FIX: Check kung naka-unlock na siya via code\s*var user = Store\.getCurrentUser\(\);\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ user\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*var isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\/\/ Kung naka-unlock na, hindi na siya \"graded\" para payagan mag-upload\s*const isGraded = !!currentGrade && !isUnlocked;//g" "$f"
+            # Replace the crash-prone unlock check with a safe one
+            perl -0777 -i -pe "s/\/\/ FIX: Safe unlock check\s*var currentUser = Store\.getCurrentUser\(\);\s*var isUnlocked = false;\s*if \(currentUser && currentUser\.lrn\) \{\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ currentUser\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\}\s*const isGraded = !!currentGrade && !isUnlocked;/\/\/ FIX: Safe unlock check with fallback\n        var isUnlocked = false;\n        try {\n          var currentUser = Store.getCurrentUser();\n          if (currentUser \&\& currentUser.lrn) {\n            var unlockKey = 'gsa_v1_pt_unlocked_' + currentUser.lrn + '_' + TERM + '_' + meta.id;\n            isUnlocked = localStorage.getItem(unlockKey) === 'true';\n          }\n        } catch(e) {}\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
             
-            # APPLY: Safe version with defensive check
-            if ! grep -q "gsa_v1_pt_unlocked_" "$f"; then
-              perl -0777 -i -pe "s/const submitted = existing && existing\.submittedAt;\s*const isGraded = !!currentGrade;/const submitted = existing \&\& existing.submittedAt;\n        \/\/ FIX: Safe unlock check\n        var currentUser = Store.getCurrentUser();\n        var isUnlocked = false;\n        if (currentUser \&\& currentUser.lrn) {\n          var unlockKey = 'gsa_v1_pt_unlocked_' + currentUser.lrn + '_' + TERM + '_' + meta.id;\n          isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        }\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
-            fi
+            echo "✅ Patched: $f"
           done
 
       - name: Show diff
@@ -61,6 +58,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "✅ No changes to commit"
           else
-            git commit -m "fix: revert duplicate var user + add defensive null check in PT unlock [skip ci]"
+            git commit -m "fix: add safe fallback for user.lrn in PT unlock check [skip ci]"
             git push
           fi
