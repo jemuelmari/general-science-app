@@ -1,0 +1,110 @@
+name: Patch PT Re-upload Unlock Logic
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "yes" to apply unlock logic to all 9 ptN.html files'
+        required: true
+        default: 'no'
+
+jobs:
+  patch-pt-unlock:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'yes'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply unlock logic patch
+        run: |
+          python3 << 'PYEOF'
+          import pathlib
+          import re
+
+          files = [
+              "student/term1/assessments/pt1.html",
+              "student/term1/assessments/pt2.html",
+              "student/term1/assessments/pt3.html",
+              "student/term2/assessments/pt1.html",
+              "student/term2/assessments/pt2.html",
+              "student/term2/assessments/pt3.html",
+              "student/term3/assessments/pt1.html",
+              "student/term3/assessments/pt2.html",
+              "student/term3/assessments/pt3.html"
+          ]
+
+          # Regex pattern to replace renderPT start block
+          render_old_pattern = re.compile(
+              r"const submitted = existing && existing\.submittedAt;\s*"
+              r"const isGraded = !!currentGrade;",
+              re.MULTILINE
+          )
+          
+          render_new_code = """const submitted = existing && existing.submittedAt;
+        
+        // 🚨 FIX: Check kung naka-unlock na siya via code
+        var user = Store.getCurrentUser();
+        var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
+        var isUnlocked = localStorage.getItem(unlockKey) === 'true';
+
+        // Kung naka-unlock na, hindi na siya "graded" para payagan mag-upload
+        const isGraded = !!currentGrade && !isUnlocked;"""
+
+          # Regex pattern to replace redeem success block in wireReuploadFlow
+          redeem_old_pattern = re.compile(
+              r"(msg\.textContent = '✅ Code accepted!.*?)(setTimeout\(function\(\) \{ location\.reload\(\); \}, 1500\);)(.*?\n\s*\}\s*else\s*\{\s*msg\.textContent = '❌ ')",
+              re.DOTALL
+          )
+          
+          redeem_new_code = r"""\1          // 🚨 FIX: I-save sa localStorage na naka-unlock na siya
+                  var user = Store.getCurrentUser();
+                  var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
+                  localStorage.setItem(unlockKey, 'true');
+                  
+                  \2\3"""
+
+          for f in files:
+              p = pathlib.Path(f)
+              if not p.exists():
+                  print(f"⚠️ Missing: {f}")
+                  continue
+
+              content = p.read_text(encoding="utf-8")
+              original_content = content
+
+              # Apply render fix
+              content, count1 = render_old_pattern.subn(render_new_code, content)
+              
+              # Apply redeem fix
+              content, count2 = redeem_old_pattern.subn(redeem_new_code, content)
+
+              if content != original_content:
+                  p.write_text(content, encoding="utf-8")
+                  print(f"✅ Patched: {f}")
+              else:
+                  print(f"⏭️ No changes needed or pattern not found: {f}")
+          PYEOF
+
+      - name: Show diff
+        run: |
+          git diff --stat
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add student/term1/assessments/pt*.html
+          git add student/term2/assessments/pt*.html
+          git add student/term3/assessments/pt*.html
+          
+          if git diff --cached --quiet; then
+            echo "✅ No changes to commit"
+          else
+            git commit -m "fix: persist PT reupload unlock state in localStorage across all terms [skip ci]"
+            git push
+            echo "✅ Pushed"
+          fi
