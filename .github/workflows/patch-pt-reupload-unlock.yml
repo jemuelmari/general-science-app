@@ -1,10 +1,10 @@
-name: Fix PT Unlock Crash
+name: Final Fix for PT Crash & Cache
 
 on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type "yes" to apply the crash fix to all 9 ptN.html files'
+        description: 'Type "yes" to fix crash and bump version'
         required: true
         default: 'no'
 
@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Apply crash fix
+      - name: Apply final fix
         run: |
           set -e
           
@@ -38,14 +38,14 @@ jobs:
           for f in "${FILES[@]}"; do
             if [ ! -f "$f" ]; then continue; fi
             
-            # Replace the crash-prone unlock check with a safe one
-            perl -0777 -i -pe "s/\/\/ FIX: Safe unlock check\s*var currentUser = Store\.getCurrentUser\(\);\s*var isUnlocked = false;\s*if \(currentUser && currentUser\.lrn\) \{\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ currentUser\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\}\s*const isGraded = !!currentGrade && !isUnlocked;/\/\/ FIX: Safe unlock check with fallback\n        var isUnlocked = false;\n        try {\n          var currentUser = Store.getCurrentUser();\n          if (currentUser \&\& currentUser.lrn) {\n            var unlockKey = 'gsa_v1_pt_unlocked_' + currentUser.lrn + '_' + TERM + '_' + meta.id;\n            isUnlocked = localStorage.getItem(unlockKey) === 'true';\n          }\n        } catch(e) {}\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
+            # 1. I-update ang version para ma-force ang cache refresh
+            sed -i 's/<span class="version">v1.0.7<\/span>/<span class="version">v1.0.8<\/span>/g' "$f"
+            
+            # 2. Ayusin ang code para hindi mag-crash pag wala pang user
+            perl -0777 -i -pe "s/\/\/ FIX: Safe unlock check with fallback\s*var isUnlocked = false;\s*try \{\s*var currentUser = Store\.getCurrentUser\(\);\s*if \(currentUser && currentUser\.lrn\) \{\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ currentUser\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\}\s*\} catch\(e\) \{\}\s*const isGraded = !!currentGrade && !isUnlocked;/\/\/ FIX: Safe unlock check\n        var isUnlocked = false;\n        if (typeof user !== 'undefined' \&\& user \&\& user.lrn) {\n          var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n          isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        }\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
             
             echo "✅ Patched: $f"
           done
-
-      - name: Show diff
-        run: git diff --stat
 
       - name: Commit and push
         run: |
@@ -58,6 +58,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "✅ No changes to commit"
           else
-            git commit -m "fix: add safe fallback for user.lrn in PT unlock check [skip ci]"
+            git commit -m "fix: final safe unlock check + version bump to 1.0.8 [skip ci]"
             git push
           fi
