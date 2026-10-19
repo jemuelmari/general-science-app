@@ -164,7 +164,11 @@
         // Status banner
         let statusHTML = '';
         const submitted = existing && existing.submittedAt;
-        const isGraded = !!currentGrade;
+        // FIX: Check if unlocked via code
+        var user = Store.getCurrentUser();
+        var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
+        var isUnlocked = localStorage.getItem(unlockKey) === 'true';
+        const isGraded = !!currentGrade && !isUnlocked;
 
         if (isGraded) {
           statusHTML =
@@ -465,7 +469,11 @@
                 msg.textContent = '✅ Code accepted! Reloading to unlock re-upload…';
                 msg.style.color = '#2e7d32';
                 // Clear grade state so re-upload is allowed — reload will re-fetch
-                setTimeout(function() { location.reload(); }, 1500);
+                  // FIX: Save unlock to localStorage
+                  var user = Store.getCurrentUser();
+                  var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
+                  localStorage.setItem(unlockKey, 'true');
+                  setTimeout(function() { location.reload(); }, 1500);
               } else {
                 msg.textContent = '❌ ' + (res.error || 'Invalid code');
                 msg.style.color = '#c62828';
