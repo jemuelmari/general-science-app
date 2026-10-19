@@ -1,29 +1,6 @@
 /* ============================================================
    classrecord.js — Gradebook logic
-   Version: 1.0.2
-   App: General Science
-   ------------------------------------------------------------
-   Changelog v1.0.2 (Phase 1.5):
-     - Relaxed Top/Bottom filters to include students with partial
-       data (any score exists). Final grade displays "—" until
-       complete.
-     - Stats now use partial renormalized average when finals are
-       incomplete, so Class Average is meaningful mid-term.
-     - Added "partial" awareness to export CSV.
-
-   Changelog v1.0.1 (Phase 1):
-     - X3 fix: EX uses null when any ST/TE missing; final grade
-       falls back to `insufficient: true` (displays "—").
-     - Uses Transmutation.computeFinalGradeSafe().
-
-   Features:
-   - Auth guard via TeacherAuth
-   - Term + section filters
-   - Weighted final grade (20% WW / 50% PT / 30% EX)
-   - EX internal breakdown (ST1 30%, ST2 30%, TE 40%)
-   - 4 tabs: Summary, Distribution, Most/Least Learned, Transmutation
-   - CSV export
-   - Auto-refresh on filter change
+   Version: 1.1.0 (Backend PT Sync)
    ============================================================ */
 
 (() => {
@@ -47,12 +24,8 @@
     te: 0.40
   };
 
-  const ASSESSMENT_MAX = {
-    quiz1: 20, quiz2: 20, quiz3: 20,
-    st1: 30, st2: 30,
-    pt1: 100, pt2: 100, pt3: 100,
-    te: 60
-  };
+  // Cache para hindi paulit-ulit mag-fetch sa backend
+  let backendPTGrades = {};
 
   /* ============================================================
      HELPERS
@@ -63,7 +36,31 @@
     return APP.sortStudents(all, 'last', 'asc');
   }
 
+  async function fetchPTGrades() {
+    if (typeof PTGrade === 'undefined' || typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) return;
+    try {
+      var res = await PTGrade.pullGrades({});
+      if (res && res.ok && res.records) {
+        var map = {};
+        res.records.forEach(function(g) {
+          if (!map[g.lrn]) map[g.lrn] = {};
+          if (!map[g.lrn][g.term]) map[g.lrn][g.term] = {};
+          map[g.lrn][g.term][g.ptId] = g.totalScore;
+        });
+        backendPTGrades = map;
+      }
+    } catch (e) {
+      console.warn('[ClassRecord] Failed to fetch PT grades from backend:', e);
+    }
+  }
+
   function getScorePercent(lrn, term, type, id) {
+    if (type === 'pt') {
+      var backendScore = backendPTGrades[lrn]?.[term]?.[id];
+      if (backendScore !== undefined) return backendScore;
+      return null;
+    }
+
     const scores = Store.getScores(lrn);
     const t = scores[term] || {};
     let record = null;
@@ -82,9 +79,11 @@
       const q3 = getScorePercent(s.lrn, term, 'quizzes', 'quiz3');
       const st1 = getScorePercent(s.lrn, term, 'st', 'st1');
       const st2 = getScorePercent(s.lrn, term, 'st', 'st2');
+      
       const pt1 = getScorePercent(s.lrn, term, 'pt', 'pt1');
       const pt2 = getScorePercent(s.lrn, term, 'pt', 'pt2');
       const pt3 = getScorePercent(s.lrn, term, 'pt', 'pt3');
+      
       const te = getScorePercent(s.lrn, term, 'te', 'te');
 
       const quizPcts = [q1, q2, q3].filter((v) => v != null);
@@ -100,7 +99,6 @@
 
       const finalGrade = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
 
-      // ⚠️ NEW: partial renormalized score for sorting / mid-term stats
       let availableSum = 0, availableWeight = 0;
       if (wwAvg !== null) { availableSum += wwAvg * WEIGHTS.ww; availableWeight += WEIGHTS.ww; }
       if (ptAvg !== null) { availableSum += ptAvg * WEIGHTS.pt; availableWeight += WEIGHTS.pt; }
@@ -197,12 +195,10 @@
       return;
     }
 
-    // ⚠️ Use partial scores for mid-term meaningfulness
     const rowsWithData = rows.filter((r) => r.compCount > 0);
     const partialScores = rowsWithData.map((r) => r.partialScore).filter((v) => v > 0);
     const avg = partialScores.length ? partialScores.reduce((a, b) => a + b, 0) / partialScores.length : 0;
 
-    // Passing/failing only counts complete finals
     const completeFinals = rows
       .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
       .filter((v) => v != null && v > 0);
@@ -462,9 +458,18 @@
   /* ============================================================
      MAIN RENDER
      ============================================================ */
-  function render() {
+  async function render() {
     const term = document.getElementById('filter-term').value;
     const section = document.getElementById('filter-section').value;
+
+    // Show loading if first time
+    const tbody = document.getElementById('summary-body');
+    if (tbody && !backendPTGrades.length) {
+       tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Syncing PT grades from backend...</td></tr>';
+    }
+
+    // Fetch latest PT grades from backend every time we render
+    await fetchPTGrades();
 
     const students = getStudents(term, section);
     const rows = computeGrade(students, term);
@@ -484,7 +489,7 @@
     document.getElementById('filter-section').addEventListener('change', render);
     document.getElementById('btn-refresh').addEventListener('click', () => {
       render();
-      APP.toast('Refreshed', 'success', 1500);
+      APP.toast('Syncing and refreshing...', 'success', 1500);
     });
     document.getElementById('btn-export').addEventListener('click', exportCSV);
     document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
