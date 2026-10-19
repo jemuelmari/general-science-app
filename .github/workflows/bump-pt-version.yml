@@ -1,0 +1,63 @@
+name: Bump PT Files Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version (e.g., 1.1.0)'
+        required: true
+        default: '1.1.0'
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump version in all 9 ptN.html files
+        run: |
+          set -e
+          NEW_VER="${{ github.event.inputs.version }}"
+          
+          FILES=(
+            "student/term1/assessments/pt1.html"
+            "student/term1/assessments/pt2.html"
+            "student/term1/assessments/pt3.html"
+            "student/term2/assessments/pt1.html"
+            "student/term2/assessments/pt2.html"
+            "student/term2/assessments/pt3.html"
+            "student/term3/assessments/pt1.html"
+            "student/term3/assessments/pt2.html"
+            "student/term3/assessments/pt3.html"
+          )
+          
+          for f in "${FILES[@]}"; do
+            if [ -f "$f" ]; then
+              # Replace the v1.0.7 span with new version
+              sed -i "s/<span class=\"version\">v[0-9]\+\.[0-9]\+\.[0-9]\+<\/span>/<span class=\"version\">v$NEW_VER<\/span>/g" "$f"
+              
+              # Replace the ?v=1.0.0 in script tags (if any) with new version
+              sed -i "s/pt-upload\.js?v=[0-9.]\+/pt-upload.js?v=$NEW_VER/g" "$f"
+              
+              echo "✅ Bumped to v$NEW_VER: $f"
+            fi
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add student/term1/assessments/pt*.html
+          git add student/term2/assessments/pt*.html
+          git add student/term3/assessments/pt*.html
+          
+          if git diff --cached --quiet; then
+            echo "✅ No changes"
+          else
+            git commit -m "chore: bump PT files to v${{ github.event.inputs.version }} [skip ci]"
+            git push
+          fi
