@@ -4,11 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Class Record — General Science</title>
-  
-  <!-- MGA CSS LINKS NA NAGBIBIGAY NG DESIGN -->
-  <link rel="stylesheet" href="assets/css/main.css?v=1.0.8" />
-  <link rel="stylesheet" href="assets/css/teacher.css?v=1.0.8" />
-  <link rel="stylesheet" href="assets/css/classrecord.css?v=1.0.8" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/teacher.css" />
+  <link rel="stylesheet" href="assets/css/classrecord.css" />
+  <style>
+    /* IDINAGDAG NA STYLES PARA BUMALIK SA DATING AYOS */
+    .cr-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.88rem;
+    }
+    .cr-table th {
+      background: #f5f7fa;
+      padding: 12px 8px;
+      text-align: center;
+      font-weight: 700;
+      color: #5f6368;
+      border-bottom: 2px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+    }
+    .cr-table th.group-header {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cr-table th.ww-header { background: #e3f2fd; color: #0d47a1; }
+    .cr-table th.pt-header { background: #e0f2f1; color: #00695c; }
+    .cr-table th.ex-header { background: #f3e5f5; color: #6a1b9a; }
+    
+    .cr-table td {
+      padding: 12px 8px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+      border-right: 1px solid #f0f0f0;
+      font-family: 'Consolas', monospace;
+      font-weight: 600;
+      color: #37474f;
+    }
+    .cr-table td.student-cell {
+      text-align: left;
+      font-family: inherit;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 2px solid #e0e0e0;
+    }
+    .student-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.75rem;
+    }
+    .student-info .name { font-weight: 700; color: #1a1a1a; font-size: 0.9rem; }
+    .student-info .meta { font-size: 0.75rem; color: #78909c; }
+    
+    .cr-table td.final-grade {
+      font-size: 1rem;
+      font-weight: 800;
+      border-right: none;
+      border-left: 2px solid #e0e0e0;
+    }
+    .cr-table td.final-grade.passing { color: #2e7d32; background: #e8f5e9; }
+    .cr-table td.final-grade.failing { color: #c62828; background: #ffebee; }
+    .cr-table td.empty-cell { color: #bdbdbd; }
+
+    /* Header scroll fix */
+    .sticky-col { position: sticky; left: 0; background: #f5f7fa; z-index: 2; }
+  </style>
 </head>
 <body class="cr-body">
 
@@ -31,43 +100,43 @@
   <main class="container cr-main" style="padding-top:24px;padding-bottom:64px;">
 
     <!-- FILTERS -->
-    <div class="cr-filters card">
-      <div class="cr-filter-group">
-        <label>TERM</label>
-        <select id="filter-term" class="form-control">
+    <div class="cr-filters card" style="display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px;">
+      <div class="cr-filter-group" style="flex:1; min-width:200px;">
+        <label style="display:block; font-size:0.75rem; font-weight:700; color:#5f6368; margin-bottom:6px; text-transform:uppercase;">TERM</label>
+        <select id="filter-term" class="form-control" style="width:100%; padding:10px; border:1.5px solid #cfd8dc; border-radius:8px;">
           <option value="term1">Term 1 — Physics &amp; Chemistry</option>
           <option value="term2" selected>Term 2 — Chemistry &amp; Life Science</option>
           <option value="term3">Term 3 — Earth Science</option>
         </select>
       </div>
-      <div class="cr-filter-group">
-        <label>SECTION</label>
-        <select id="filter-section" class="form-control">
+      <div class="cr-filter-group" style="flex:1; min-width:200px;">
+        <label style="display:block; font-size:0.75rem; font-weight:700; color:#5f6368; margin-bottom:6px; text-transform:uppercase;">SECTION</label>
+        <select id="filter-section" class="form-control" style="width:100%; padding:10px; border:1.5px solid #cfd8dc; border-radius:8px;">
           <option value="">All Sections</option>
           <option value="ACADEMIC A">ACADEMIC A</option>
           <option value="ACADEMIC B">ACADEMIC B</option>
         </select>
       </div>
-      <div class="cr-filter-actions">
-        <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
-        <button id="btn-export" class="btn btn-outline">📥 Export CSV</button>
+      <div class="cr-filter-actions" style="display:flex; gap:8px;">
+        <button id="btn-refresh" class="btn btn-primary" style="padding:10px 20px; background:#00695c; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer;">🔄 Refresh</button>
+        <button id="btn-export" class="btn btn-outline" style="padding:10px 20px; background:#fff; color:#00695c; border:1.5px solid #00695c; border-radius:8px; font-weight:700; cursor:pointer;">📥 Export CSV</button>
       </div>
     </div>
 
     <!-- STATS -->
-    <div class="cr-stats" id="cr-stats"></div>
+    <div class="cr-stats" id="cr-stats" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-bottom:20px;"></div>
 
     <!-- TABS -->
-    <div class="cr-tabs">
-      <button class="cr-tab active" data-tab="summary">📋 Summary</button>
-      <button class="cr-tab" data-tab="distribution">📊 Distribution</button>
-      <button class="cr-tab" data-tab="mll">🎯 Most/Least Learned</button>
-      <button class="cr-tab" data-tab="transmutation">📈 Transmutation</button>
+    <div class="cr-tabs" style="display:flex; gap:8px; border-bottom:2px solid #e0e0e0; margin-bottom:20px;">
+      <button class="cr-tab active" data-tab="summary" style="padding:10px 20px; background:none; border:none; border-bottom:3px solid #00695c; color:#00695c; font-weight:700; cursor:pointer;">📋 Summary</button>
+      <button class="cr-tab" data-tab="distribution" style="padding:10px 20px; background:none; border:none; color:#5f6368; font-weight:700; cursor:pointer;">📊 Distribution</button>
+      <button class="cr-tab" data-tab="mll" style="padding:10px 20px; background:none; border:none; color:#5f6368; font-weight:700; cursor:pointer;">🎯 Most/Least Learned</button>
+      <button class="cr-tab" data-tab="transmutation" style="padding:10px 20px; background:none; border:none; color:#5f6368; font-weight:700; cursor:pointer;">📈 Transmutation</button>
     </div>
 
     <!-- PANELS -->
     <div id="tab-summary" class="cr-tab-panel">
-      <div class="card" style="overflow-x:auto;padding:0;">
+      <div class="card" style="overflow-x:auto; padding:0; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
         <table class="cr-table">
           <thead>
             <tr>
@@ -89,19 +158,19 @@
     </div>
 
     <div id="tab-distribution" class="cr-tab-panel" style="display:none;">
-      <div class="report-grid" id="distribution-grid"></div>
+      <div class="report-grid" id="distribution-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;"></div>
     </div>
 
     <div id="tab-mll" class="cr-tab-panel" style="display:none;">
-      <div class="report-grid" id="mll-grid"></div>
+      <div class="report-grid" id="mll-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;"></div>
     </div>
 
     <div id="tab-transmutation" class="cr-tab-panel" style="display:none;">
-      <div class="report-card" style="max-width:600px;margin:0 auto;">
-        <h4>📈 Adjusted Transmutation Table (SY 2026-2027)</h4>
-        <p class="text-small text-muted" style="margin-bottom:16px;">Anchor: <strong>raw 70 → transmuted 75</strong>. Applies to Academic Electives.</p>
-        <table class="transmutation-table">
-          <thead><tr><th>Raw Score</th><th>Transmuted</th><th>Raw Score</th><th>Transmuted</th></tr></thead>
+      <div class="report-card" style="max-width:600px; margin:0 auto; background:#fff; padding:24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <h4 style="margin-top:0;">📈 Adjusted Transmutation Table (SY 2026-2027)</h4>
+        <p style="font-size:0.85rem; color:#5f6368; margin-bottom:16px;">Anchor: <strong>raw 70 → transmuted 75</strong>. Applies to Academic Electives.</p>
+        <table class="transmutation-table" style="width:100%; border-collapse:collapse;">
+          <thead><tr><th style="padding:10px; border-bottom:2px solid #e0e0e0; text-align:left;">Raw Score</th><th style="padding:10px; border-bottom:2px solid #e0e0e0; text-align:left;">Transmuted</th><th style="padding:10px; border-bottom:2px solid #e0e0e0; text-align:left;">Raw Score</th><th style="padding:10px; border-bottom:2px solid #e0e0e0; text-align:left;">Transmuted</th></tr></thead>
           <tbody id="transmutation-body"></tbody>
         </table>
       </div>
