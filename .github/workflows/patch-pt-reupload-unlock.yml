@@ -1,10 +1,10 @@
-name: Patch PT Re-upload Unlock Logic
+name: Patch PT Re-upload Unlock Logic v2
 
 on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type "yes" to apply unlock logic to all 9 ptN.html files'
+        description: 'Type "yes" to apply FIXED unlock logic'
         required: true
         default: 'no'
 
@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Apply unlock logic patch
+      - name: Revert previous bad patch + Apply new safe patch
         run: |
           set -e
           
@@ -36,31 +36,19 @@ jobs:
           )
           
           for f in "${FILES[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "⚠️ Missing: $f"
-              continue
-            fi
+            if [ ! -f "$f" ]; then continue; fi
             
-            # 1. Patch renderPT — add localStorage unlock check
+            # REVERT: Remove the previous bad patch na may duplicate 'var user'
+            perl -0777 -i -pe "s/\/\/ FIX: Check kung naka-unlock na siya via code\s*var user = Store\.getCurrentUser\(\);\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ user\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*var isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\/\/ Kung naka-unlock na, hindi na siya \"graded\" para payagan mag-upload\s*const isGraded = !!currentGrade && !isUnlocked;//g" "$f"
+            
+            # APPLY: Safe version with defensive check
             if ! grep -q "gsa_v1_pt_unlocked_" "$f"; then
-              perl -0777 -i -pe "s/const submitted = existing && existing\.submittedAt;\s*\n\s*const isGraded = !!currentGrade;/const submitted = existing \&\& existing.submittedAt;\n        \/\/ FIX: Check if unlocked via code\n        var user = Store.getCurrentUser();\n        var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n        var isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
-              echo "✅ Patched renderPT: $f"
-            else
-              echo "⏭️ renderPT already patched: $f"
-            fi
-            
-            # 2. Patch wireReuploadFlow — save to localStorage on redeem success
-            if ! grep -q "localStorage.setItem(unlockKey, 'true');" "$f"; then
-              perl -0777 -i -pe "s/(msg\.textContent = '✅ Code accepted!.*?)(setTimeout\(function\(\) \{ location\.reload\(\); \}, 1500\);)/\1  \/\/ FIX: Save unlock to localStorage\n                  var user = Store.getCurrentUser();\n                  var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n                  localStorage.setItem(unlockKey, 'true');\n                  \2/s" "$f"
-              echo "✅ Patched redeem: $f"
-            else
-              echo "⏭️ redeem already patched: $f"
+              perl -0777 -i -pe "s/const submitted = existing && existing\.submittedAt;\s*const isGraded = !!currentGrade;/const submitted = existing \&\& existing.submittedAt;\n        \/\/ FIX: Safe unlock check\n        var currentUser = Store.getCurrentUser();\n        var isUnlocked = false;\n        if (currentUser \&\& currentUser.lrn) {\n          var unlockKey = 'gsa_v1_pt_unlocked_' + currentUser.lrn + '_' + TERM + '_' + meta.id;\n          isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        }\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
             fi
           done
 
       - name: Show diff
-        run: |
-          git diff --stat
+        run: git diff --stat
 
       - name: Commit and push
         run: |
@@ -73,7 +61,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "✅ No changes to commit"
           else
-            git commit -m "fix: persist PT reupload unlock state in localStorage across all terms [skip ci]"
+            git commit -m "fix: revert duplicate var user + add defensive null check in PT unlock [skip ci]"
             git push
-            echo "✅ Pushed"
           fi
