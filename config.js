@@ -1,15 +1,15 @@
 /* ============================================================
    config.js — Global configuration
-   Version: 1.0.7
+   Version: 1.0.8
    App: General Science
    Changelog:
+     v1.0.8 — Bump version for PT sync and re-upload fixes
      v1.0.7 — Fixed SCHOOL_INFO placement (was inside CONFIG object)
-     v1.0.6 — (previous)
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Science',
-  VERSION: '1.0.7',
+  VERSION: '1.0.8',
   GRADE_LEVEL: 11,
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],
@@ -29,6 +29,7 @@ const CONFIG = {
     department: 'Department of Education'
   },
 
+  // ITO YUNG TAMANG BACKEND URL MO
   BACKEND_URL: 'https://script.google.com/macros/s/AKfycbzjxG5rTqpF_QQJ7SD5sKoFCrF5TmZIhI8iVXGCsQMkfRb4cuFlHAEQuKxS1CYUpBI/exec',
 
   get backendEnabled() {
@@ -41,6 +42,19 @@ const CONFIG = {
   TEACHER_MAX_ATTEMPTS: 3,
   TEACHER_LOCKOUT_TIME: 5 * 60 * 1000,
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
+
+  // IDINAGDAG ITO PARA SA FINAL GRADE COMPUTATION
+  WEIGHTS: {
+    ww: 0.20,
+    pt: 0.50,
+    ex: 0.30
+  },
+  
+  EX_INTERNAL: {
+    st1: 0.30,
+    st2: 0.30,
+    te: 0.40
+  },
 
   THEME: {
     primary: '#0d47a1',
