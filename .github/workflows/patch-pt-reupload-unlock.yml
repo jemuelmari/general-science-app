@@ -38,11 +38,16 @@ jobs:
           for f in "${FILES[@]}"; do
             if [ ! -f "$f" ]; then continue; fi
             
-            # 1. I-update ang version para ma-force ang cache refresh
-            sed -i 's/<span class="version">v1.0.7<\/span>/<span class="version">v1.0.8<\/span>/g' "$f"
+            # 1. I-update ang version
+            sed -i 's/v1.0.7/v1.0.8/g' "$f"
+            sed -i 's/v1.0.8/v1.0.9/g' "$f"
             
-            # 2. Ayusin ang code para hindi mag-crash pag wala pang user
-            perl -0777 -i -pe "s/\/\/ FIX: Safe unlock check with fallback\s*var isUnlocked = false;\s*try \{\s*var currentUser = Store\.getCurrentUser\(\);\s*if \(currentUser && currentUser\.lrn\) \{\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ currentUser\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*\}\s*\} catch\(e\) \{\}\s*const isGraded = !!currentGrade && !isUnlocked;/\/\/ FIX: Safe unlock check\n        var isUnlocked = false;\n        if (typeof user !== 'undefined' \&\& user \&\& user.lrn) {\n          var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n          isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        }\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
+            # 2. Ayusin ang renderPT crash (yung duplicate var user)
+            # Hinahanap nito yung exact code na naka-inject nung unang patch
+            perl -0777 -i -pe "s/\/\/ FIX: Check if unlocked via code\s*var user = Store\.getCurrentUser\(\);\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ user\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*var isUnlocked = localStorage\.getItem\(unlockKey\) === 'true';\s*const isGraded = !!currentGrade && !isUnlocked;/\/\/ FIX: Safe unlock check\n        var isUnlocked = false;\n        if (typeof user !== 'undefined' \&\& user \&\& user.lrn) {\n          var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n          isUnlocked = localStorage.getItem(unlockKey) === 'true';\n        }\n        const isGraded = !!currentGrade \&\& !isUnlocked;/gs" "$f"
+            
+            # 3. Ayusin ang wireReuploadFlow crash
+            perl -0777 -i -pe "s/var user = Store\.getCurrentUser\(\);\s*var unlockKey = 'gsa_v1_pt_unlocked_' \+ user\.lrn \+ '_' \+ TERM \+ '_' \+ meta\.id;\s*localStorage\.setItem\(unlockKey, 'true'\);/if (typeof user !== 'undefined' \&\& user \&\& user.lrn) {\n                  var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;\n                  localStorage.setItem(unlockKey, 'true');\n                }/gs" "$f"
             
             echo "✅ Patched: $f"
           done
@@ -58,6 +63,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "✅ No changes to commit"
           else
-            git commit -m "fix: final safe unlock check + version bump to 1.0.8 [skip ci]"
+            git commit -m "fix: final safe unlock check + version bump [skip ci]"
             git push
           fi
