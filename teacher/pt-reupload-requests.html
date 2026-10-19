@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PT Re-upload Requests — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .filter-bar { background:#fff; border-radius:14px; padding:16px 20px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:12px; align-items:end; }
+    .filter-bar label { font-size:0.78rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; display:block; margin-bottom:6px; }
+    .filter-bar select { padding:10px 12px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.9rem; background:#fff; min-width:160px; }
+    .filter-bar button { padding:10px 20px; background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; border:none; border-radius:8px; font-family:inherit; font-size:0.9rem; font-weight:700; cursor:pointer; }
+
+    .sub-table { background:#fff; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); overflow:hidden; }
+    .sub-table table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    .sub-table th { text-align:left; padding:14px 16px; background:#f5f7fa; font-size:0.78rem; text-transform:uppercase; color:#5f6368; border-bottom:2px solid #e0e0e0; }
+    .sub-table td { padding:14px 16px; border-bottom:1px solid #f0f0f0; }
+    .sub-table tr:last-child td { border-bottom:none; }
+
+    .badge { padding:4px 10px; border-radius:999px; font-size:0.72rem; font-weight:700; }
+    .badge.pending { background:#fff3e0; color:#e65100; }
+    .badge.approved { background:#e8f5e9; color:#1b5e20; }
+    
+    .code-display { font-family:monospace; font-size:1.1rem; font-weight:700; color:#2e7d32; background:#e8f5e9; padding:6px 12px; border-radius:6px; letter-spacing:1px; }
+    .btn-approve { padding:8px 16px; background:#2e7d32; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; }
+    .btn-approve:disabled { opacity:0.5; cursor:not-allowed; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔄 PT Re-upload Requests</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="pt-submissions.html">📋 PT Submissions</a>
+        <a href="pt-reupload-requests.html" style="color:#ffd54f;border-color:#ffd54f;">🔄 Re-uploads</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="filter-bar">
+      <div>
+        <label>Term</label>
+        <select id="filter-term">
+          <option value="">All terms</option>
+          <option value="term1">Term 1</option>
+          <option value="term2">Term 2</option>
+          <option value="term3">Term 3</option>
+        </select>
+      </div>
+      <div>
+        <label>Section</label>
+        <select id="filter-section">
+          <option value="">All sections</option>
+          <option value="ACADEMIC_A">ACADEMIC A</option>
+          <option value="ACADEMIC_B">ACADEMIC B</option>
+        </select>
+      </div>
+      <button id="btn-refresh">🔄 Refresh</button>
+    </div>
+
+    <div class="sub-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Term / PT</th>
+            <th>Current Grade</th>
+            <th>Requested At</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="requests-body">
+          <tr><td colspan="6" style="text-align:center;padding:40px;color:#90a4ae;">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="../config.js?v=1.4.0"></script>
+  <script src="../assets/js/app.js?v=1.4.0"></script>
+  <script src="../assets/js/store.js?v=1.4.0"></script>
+  <script src="../assets/js/security.js?v=1.4.0"></script>
+  <script src="../assets/js/sync.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.4.0"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.4.0"></script>
+  <script src="../assets/js/pt-grade.js?v=1.0.0"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      async function loadData() {
+        const tbody = document.getElementById('requests-body');
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;">⏳ Loading...</td></tr>';
+
+        try {
+          const term = document.getElementById('filter-term').value;
+          const section = document.getElementById('filter-section').value;
+          
+          // Use PTGrade module to fetch requests
+          const res = await PTGrade.getReuploadRequests({ term, section });
+          
+          if (!res || !res.ok) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#c62828;">❌ Error: ${res?.error || 'Unknown'}</td></tr>`;
+            return;
+          }
+
+          const records = res.records || [];
+          if (!records.length) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#90a4ae;">📭 No requests found.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = records.map(r => {
+            const statusBadge = r.status === 'pending' 
+              ? '<span class="badge pending">⏳ Pending</span>' 
+              : r.status === 'approved' 
+                ? '<span class="badge approved">✅ Approved</span>' 
+                : `<span class="badge">${r.status}</span>`;
+
+            let actionHTML = '';
+            if (r.status === 'pending') {
+              actionHTML = `<button class="btn-approve" onclick="approveReq('${r.requestId}')">Approve & Generate Code</button>`;
+            } else if (r.status === 'approved') {
+              actionHTML = `<div class="code-display">${r.unlockCode}</div>`;
+            } else {
+              actionHTML = `—`;
+            }
+
+            return `
+              <tr>
+                <td><strong>${escapeHtml(r.studentName)}</strong><br><small>LRN: ${escapeHtml(r.lrn)}</small></td>
+                <td>${escapeHtml(r.term)} · ${escapeHtml(r.ptId.toUpperCase())}</td>
+                <td><strong style="color:#e65100;">${r.currentGrade}/100</strong></td>
+                <td>${formatDate(r.requestedAt)}</td>
+                <td>${statusBadge}</td>
+                <td>${actionHTML}</td>
+              </tr>
+            `;
+          }).join('');
+
+        } catch (err) {
+          console.error(err);
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
+        }
+      }
+
+      window.approveReq = async function(requestId) {
+        if (!confirm('Generate code for this student?')) return;
+        try {
+          const res = await PTGrade.approveReupload(requestId);
+          if (res.ok) {
+            alert('✅ Code generated: ' + res.unlockCode + '\n\nSend this to the student.');
+            loadData();
+          } else {
+            alert('❌ Error: ' + res.error);
+          }
+        } catch (err) {
+          alert('❌ ' + err.message);
+        }
+      };
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          const d = new Date(iso);
+          return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (e) { return iso; }
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      document.getElementById('btn-refresh').addEventListener('click', loadData);
+      document.getElementById('filter-term').addEventListener('change', loadData);
+      document.getElementById('filter-section').addEventListener('change', loadData);
+      
+      const logoutBtn = document.getElementById('btn-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (typeof TeacherAuth !== 'undefined' && TeacherAuth.logout) TeacherAuth.logout();
+          else {
+            sessionStorage.removeItem('gsa_teacher_token');
+            sessionStorage.removeItem('gsa_teacher_session');
+            window.location.href = '../login.html';
+          }
+        });
+      }
+
+      loadData();
+    })();
+  </script>
+</body>
+</html>
