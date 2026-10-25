@@ -4,49 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Activity Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-f7b3fe7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-f7b3fe7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.10" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.10" />
   <style>
-    .at-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
-    .at-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
+    .at-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; align-items: end; }
+    .at-filters button { width: 100%; padding: 10px 12px; background: #0d47a1; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    
     .heatmap-wrapper { overflow-x: auto; padding: 16px 0; }
     .heatmap-table { width: 100%; border-collapse: separate; border-spacing: 3px; min-width: 700px; }
-    .heatmap-table th { font-size: 0.72rem; font-weight: 700; color: #5f6368; text-transform: uppercase; letter-spacing: 0.4px; padding: 6px 4px; text-align: center; }
+    .heatmap-table th { font-size: 0.72rem; font-weight: 700; color: #5f6368; padding: 6px 4px; text-align: center; }
     .heatmap-table th.row-header { text-align: left; padding-left: 12px; min-width: 200px; }
-    .heatmap-table td { padding: 4px; text-align: center; font-size: 0.72rem; font-weight: 700; color: #fff; border-radius: 5px; min-width: 32px; height: 32px; transition: all 0.15s; }
-    .heatmap-cell { cursor: pointer; }
-    .heatmap-cell:hover { transform: scale(1.15); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .heatmap-table td { padding: 4px; text-align: center; font-size: 0.72rem; font-weight: 700; color: #fff; border-radius: 5px; min-width: 32px; height: 32px; }
     .cell-0 { background: #eceff1; color: #bdbdbd !important; }
     .cell-1 { background: #ffcdd2; color: #b71c1c !important; }
     .cell-2 { background: #ffe0b2; color: #e65100 !important; }
     .cell-3 { background: #bbdefb; color: #0d47a1 !important; }
     .cell-4 { background: #a5d6a7; color: #1b5e20 !important; }
-    .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 0.78rem; color: #5f6368; }
-    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
-    .legend-swatch { width: 16px; height: 16px; border-radius: 4px; }
-    .week-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    
+    .week-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
     .week-summary-card { padding: 14px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); border-left: 4px solid #1976d2; }
-    .week-summary-card .wk-label { font-size: 0.72rem; color: #5f6368; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-    .week-summary-card .wk-value { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; margin-top: 4px; line-height: 1; }
-    .week-summary-card .wk-sub { font-size: 0.72rem; color: #90a4ae; margin-top: 4px; }
-    .week-summary-card.green { border-left-color: #2e7d32; }
-    .week-summary-card.amber { border-left-color: #ed6c02; }
-    .week-summary-card.red { border-left-color: #c62828; }
-    .at-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    .week-summary-card .wk-value { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; margin-top: 4px; }
+    .week-summary-card .wk-label { font-size: 0.72rem; color: #5f6368; font-weight: 700; text-transform: uppercase; }
+    
+    @media (max-width: 600px) {
+      .at-filters { grid-template-columns: 1fr; }
+      .at-filters select, .at-filters button { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
-
   <header class="app-header teacher-header">
     <div class="container flex-between">
-      <div>
-        <h1>📋 Activity Tracker</h1>
-        <span class="version">v1.0.0</span>
-      </div>
+      <div><h1>📋 Activity Tracker</h1><span class="version">v1.0.10</span></div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
-        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -80,136 +72,160 @@
             <option value="ACADEMIC B">ACADEMIC B</option>
           </select>
         </div>
-        <div class="form-group" style="flex:0;">
+        <div class="form-group">
           <label class="form-label">&nbsp;</label>
-          <button id="btn-run" class="btn btn-primary">🔄 Refresh</button>
+          <button id="btn-run">🔄 Refresh</button>
         </div>
       </div>
     </div>
 
     <div id="results-area">
-      <div class="card at-empty">
+      <div class="card" style="text-align:center;padding:40px;color:#90a4ae;">
         <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
-        <p>Loading auth module…</p>
+        <p>Loading from cloud...</p>
       </div>
     </div>
   </main>
 
-  <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
-  </footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../config.js?v=1.0.10"></script>
+  <script src="../assets/js/app.js?v=1.0.10"></script>
+  <script src="../assets/js/store.js?v=1.0.10"></script>
+  <script src="../assets/js/security.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.0.10"></script>
+  
   <script>
     (function() {
       'use strict';
 
-      TeacherAuthBoot.ready(function(auth) {
+      let allStudents = [];
+
+      TeacherAuthBoot.ready(async function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-        document.getElementById('btn-run').addEventListener('click', render);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-        render();
-      }, function() {
-        document.getElementById('results-area').innerHTML =
-          '<div class="card at-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+        document.getElementById('btn-run').addEventListener('click', render);
+
+        document.getElementById('results-area').innerHTML = '<div class="card" style="text-align:center;padding:40px;">⏳ Fetching students...</div>';
+        
+        try {
+          allStudents = await TeacherCloud.fetchStudents();
+          render();
+        } catch (err) {
+          document.getElementById('results-area').innerHTML = `<div class="card" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</div>`;
+        }
       });
 
       function render() {
-        var term = document.getElementById('filter-term').value;
-        var sectionFilter = document.getElementById('filter-section').value;
-        var area = document.getElementById('results-area');
+        const term = document.getElementById('filter-term').value;
+        const sectionFilter = document.getElementById('filter-section').value;
+        const area = document.getElementById('results-area');
 
-        var students = Store.getAllUsers();
-        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
+        let students = allStudents;
+        if (sectionFilter) students = students.filter(s => s.section === sectionFilter);
+        
+        if (!students.length) { area.innerHTML = '<div class="card" style="text-align:center;padding:40px;">👥 No students found.</div>'; return; }
+        students.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
 
-        if (!students.length) { area.innerHTML = '<div class="card at-empty">👥 No students found</div>'; return; }
-        students = APP.sortStudents(students, 'last', 'asc');
-
-        var totalDone = 0, totalPossible = students.length * 40, behind = [];
-        students.forEach(function(s) {
-          var done = getCompleted(s.lrn, term).length;
-          totalDone += done;
-          if (done < 30) behind.push({ student: s, done: done, missing: 40 - done });
+        let totalDone = 0, totalPossible = students.length * 40, behind = [];
+        
+        students.forEach(s => {
+          const p = s.progress?.progress?.[term]?.completed || [];
+          totalDone += p.length;
+          if (p.length < 30) behind.push({ student: s, done: p.length, missing: 40 - p.length });
         });
-        var classPct = totalPossible ? Math.round((totalDone / totalPossible) * 100) : 0;
+        
+        const classPct = totalPossible ? Math.round((totalDone / totalPossible) * 100) : 0;
 
-        var trend = [];
-        for (var w = 1; w <= 10; w++) {
-          var done = 0, possible = students.length * 4;
-          students.forEach(function(s) {
-            var completed = getCompleted(s.lrn, term);
-            for (var d = 1; d <= 4; d++) if (completed.indexOf(term + '-w' + w + '-d' + d) !== -1) done++;
+        let trend = [];
+        for (let w = 1; w <= 10; w++) {
+          let done = 0, possible = students.length * 4;
+          students.forEach(s => {
+            const comp = s.progress?.progress?.[term]?.completed || [];
+            for (let d = 1; d <= 4; d++) {
+              if (comp.includes(`${term}-w${w}-d${d}`)) done++;
+            }
           });
-          trend.push({ week: w, done: done, total: possible, pct: possible ? Math.round((done / possible) * 100) : 0 });
+          trend.push({ week: w, done, total: possible, pct: possible ? Math.round((done / possible) * 100) : 0 });
         }
 
-        area.innerHTML =
-          '<div class="stats-grid" style="margin-bottom:20px;">' +
-            '<div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value">' + students.length + '</div><div class="stat-label">Students</div></div>' +
-            '<div class="stat-card green"><div class="stat-icon">📖</div><div class="stat-value">' + totalDone + '</div><div class="stat-label">Days Completed</div></div>' +
-            '<div class="stat-card ' + (classPct >= 75 ? 'green' : classPct >= 50 ? 'amber' : 'red') + '"><div class="stat-icon">📊</div><div class="stat-value">' + classPct + '%</div><div class="stat-label">Class Completion</div></div>' +
-            '<div class="stat-card ' + (behind.length > 0 ? 'red' : 'green') + '"><div class="stat-icon">⚠️</div><div class="stat-value">' + behind.length + '</div><div class="stat-label">Behind Pace</div></div>' +
-          '</div>' +
-          '<div class="section-header"><h2 class="section-title">📈 Week-by-Week Completion</h2></div>' +
-          '<div class="week-summary-grid">' +
-            trend.map(function(t) {
-              var cls = t.pct >= 90 ? 'green' : t.pct >= 60 ? '' : t.pct >= 30 ? 'amber' : 'red';
-              return '<div class="week-summary-card ' + cls + '"><div class="wk-label">Week ' + t.week + '</div><div class="wk-value">' + t.pct + '%</div><div class="wk-sub">' + t.done + ' / ' + t.total + ' days</div></div>';
-            }).join('') +
-          '</div>' +
-          '<div class="section-header"><h2 class="section-title">🔥 Completion Heatmap</h2></div>' +
-          '<div class="card" style="padding:16px;">' +
-            '<div class="heatmap-wrapper"><table class="heatmap-table" id="heatmap-table"></table></div>' +
-            '<div class="legend">' +
-              '<span class="legend-item"><span class="legend-swatch cell-0"></span> 0 days</span>' +
-              '<span class="legend-item"><span class="legend-swatch cell-1"></span> 1 day</span>' +
-              '<span class="legend-item"><span class="legend-swatch cell-2"></span> 2 days</span>' +
-              '<span class="legend-item"><span class="legend-swatch cell-3"></span> 3 days</span>' +
-              '<span class="legend-item"><span class="legend-swatch cell-4"></span> 4 days</span>' +
-            '</div>' +
-          '</div>' +
-          (behind.length > 0 ?
-            '<div class="section-header"><h2 class="section-title" style="color:#c62828;">⚠️ Students Behind Pace</h2></div>' +
-            '<div class="card" style="padding:0;overflow:hidden;"><table class="modern-table"><thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead><tbody>' +
-            behind.map(function(b) {
-              return '<tr><td><strong>' + APP.formatFullName(b.student.lastName, b.student.firstName, b.student.middleName) + '</strong></td><td>' + b.student.section + '</td><td>' + b.done + '/40</td><td><span style="color:#c62828;font-weight:700;">' + b.missing + '</span></td></tr>';
-            }).join('') + '</tbody></table></div>' : '');
+        let html = `
+          <div class="stats-grid" style="margin-bottom:20px;">
+            <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value">${students.length}</div><div class="stat-label">Students</div></div>
+            <div class="stat-card green"><div class="stat-icon">📖</div><div class="stat-value">${totalDone}</div><div class="stat-label">Days Completed</div></div>
+            <div class="stat-card ${classPct >= 75 ? 'green' : classPct >= 50 ? 'amber' : 'red'}"><div class="stat-icon">📊</div><div class="stat-value">${classPct}%</div><div class="stat-label">Class Completion</div></div>
+            <div class="stat-card ${behind.length > 0 ? 'red' : 'green'}"><div class="stat-icon">⚠️</div><div class="stat-value">${behind.length}</div><div class="stat-label">Behind Pace</div></div>
+          </div>
+          <div style="font-weight:700;color:#0d47a1;margin-bottom:12px;font-size:1.1rem;">📈 Week-by-Week Completion</div>
+          <div class="week-summary-grid">
+            ${trend.map(t => `
+              <div class="week-summary-card ${t.pct >= 90 ? 'green' : t.pct >= 60 ? '' : t.pct >= 30 ? 'amber' : 'red'}">
+                <div class="wk-label">Week ${t.week}</div>
+                <div class="wk-value">${t.pct}%</div>
+                <div style="font-size:0.72rem;color:#90a4ae;">${t.done} / ${t.total} days</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="font-weight:700;color:#0d47a1;margin-bottom:12px;font-size:1.1rem;">🔥 Completion Heatmap</div>
+          <div class="card" style="padding:16px;">
+            <div class="heatmap-wrapper"><table class="heatmap-table" id="heatmap-table"></table></div>
+          </div>
+        `;
 
+        if (behind.length > 0) {
+          html += `
+            <div style="font-weight:700;color:#c62828;margin:24px 0 12px;font-size:1.1rem;">⚠️ Students Behind Pace</div>
+            <div class="table-responsive">
+              <table class="modern-table">
+                <thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead>
+                <tbody>
+                  ${behind.map(b => `
+                    <tr>
+                      <td><strong>${b.student.lastName}, ${b.student.firstName}</strong></td>
+                      <td>${b.student.section}</td>
+                      <td>${b.done}/40</td>
+                      <td><span style="color:#c62828;font-weight:700;">${b.missing}</span></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+
+        area.innerHTML = html;
         renderHeatmap(students, term);
-        APP.toast('Activity tracker refreshed', 'success', 2000);
-      }
-
-      function getCompleted(lrn, term) {
-        var progress = Store.getProgress(lrn);
-        return (progress[term] && progress[term].completed) || [];
       }
 
       function renderHeatmap(students, term) {
-        var table = document.getElementById('heatmap-table');
-        var progressMap = {};
-        students.forEach(function(s) { progressMap[s.lrn] = getCompleted(s.lrn, term); });
-        var html = '<thead><tr><th class="row-header">Student</th>';
-        for (var w = 1; w <= 10; w++) html += '<th>W' + w + '</th>';
+        const table = document.getElementById('heatmap-table');
+        let html = '<thead><tr><th class="row-header">Student</th>';
+        for (let w = 1; w <= 10; w++) html += `<th>W${w}</th>`;
         html += '<th>Total</th></tr></thead><tbody>';
-        students.forEach(function(s) {
-          var completed = progressMap[s.lrn] || [];
-          var initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-          var rowTotal = 0;
-          html += '<tr><td class="row-header"><div style="display:flex;align-items:center;gap:8px;padding:2px;"><div style="font-weight:700;font-size:0.75rem;color:#37474f;">' + initials + '</div><div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div></div></td>';
-          for (var w = 1; w <= 10; w++) {
-            var done = 0;
-            for (var d = 1; d <= 4; d++) if (completed.indexOf(term + '-w' + w + '-d' + d) !== -1) done++;
+        
+        students.forEach(s => {
+          const comp = s.progress?.progress?.[term]?.completed || [];
+          const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
+          let rowTotal = 0;
+          
+          html += `<tr><td class="row-header">
+            <div style="display:flex;align-items:center;gap:8px;padding:2px;">
+              <div style="font-weight:700;font-size:0.75rem;color:#37474f;">${initials}</div>
+              <div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">${s.lastName}, ${s.firstName}</div>
+            </div>
+          </td>`;
+          
+          for (let w = 1; w <= 10; w++) {
+            let done = 0;
+            for (let d = 1; d <= 4; d++) if (comp.includes(`${term}-w${w}-d${d}`)) done++;
             rowTotal += done;
-            html += '<td class="heatmap-cell cell-' + done + '" title="Week ' + w + ': ' + done + '/4 days">' + done + '</td>';
+            html += `<td class="heatmap-cell cell-${done}" title="Week ${w}: ${done}/4 days">${done}</td>`;
           }
-          html += '<td style="background:#e3f2fd;color:#0d47a1;font-weight:800;">' + rowTotal + '</td></tr>';
+          html += `<td style="background:#e3f2fd;color:#0d47a1;font-weight:800;">${rowTotal}</td></tr>`;
         });
+        
         html += '</tbody>';
         table.innerHTML = html;
       }
