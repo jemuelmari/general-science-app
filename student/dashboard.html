@@ -186,7 +186,7 @@
       APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
       APP.$('#greeting-meta').innerHTML = `
         <span>🎓 LRN: ${APP.formatLRN(user.lrn)}</span>
-        <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
+        <span>📘 Grade ${user.gradeLevel || '11'} — ${user.section}</span>
       `;
 
       function computeStanding() {
