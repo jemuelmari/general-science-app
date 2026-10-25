@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exam Evidence — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.10" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.10" />
-  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.0.10" />
+  <title>Item Analysis — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.20" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.20" />
   <style>
-    /* Responsive Layout */
-    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-    @media (max-width: 600px) {
-      .form-row { grid-template-columns: 1fr; }
-      .ev-actions { flex-direction: column; }
-      .ev-actions button { width: 100%; }
-    }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .analysis-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+    .analysis-table th, .analysis-table td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; }
+    .analysis-table th { background: #f5f7fa; font-weight: 600; color: #37474f; }
+    .analysis-table tr:nth-child(even) { background: #fafbfc; }
+    .badge-pass { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+    .badge-fail { background: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -22,162 +22,181 @@
   <header class="app-header teacher-header">
     <div class="container flex-between">
       <div>
-        <h1>📄 Exam Evidence Generator</h1>
-        <span class="version">v1.0.10</span>
+        <h1>📊 Item Analysis</h1>
+        <span class="version">v1.0.20</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
-        <a href="evidence.html" style="color:#ffd54f;border-color:#ffd54f;">📄 Exam Evidence</a>
+        <a href="item-analysis.html" style="color:#ffd54f;border-color:#ffd54f;">📊 Item Analysis</a>
+        <a href="evidence.html">📄 Exam Evidence</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
-
     <div class="card" style="padding:24px;margin-bottom:20px;">
-      <h2 style="margin:0 0 6px;color:#0d47a1;">Generate Printable Exam Evidence</h2>
+      <h2 style="margin:0 0 6px;color:#0d47a1;">Class Item Analysis</h2>
       <p style="color:#546e7a;margin:0 0 20px;font-size:0.9rem;">
-        Create a Word (.docx) file per student showing their full exam — questions, answers,
-        correct answers, score, and signature blocks. Editable and printable.
+        Analyze how students performed on individual questions across a specific assessment.
       </p>
 
       <div class="form-row">
         <div>
-          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Student</label>
-          <select id="ev-student" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="">— Select student —</option>
-          </select>
-        </div>
-        <div>
           <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Term</label>
-          <select id="ev-term" class="form-control" style="width:100%;padding:10px 12px;">
+          <select id="ia-term" class="form-control" style="width:100%;padding:10px 12px;">
             <option value="1">Term 1</option>
             <option value="2">Term 2</option>
             <option value="3">Term 3</option>
           </select>
         </div>
         <div>
-          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Assessment Type</label>
-          <select id="ev-type" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="">— Select type —</option>
-            <option value="st">Summative Test (ST)</option>
-            <option value="quiz">Quiz</option>
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Assessment</label>
+          <select id="ia-assessment" class="form-control" style="width:100%;padding:10px 12px;">
+            <option value="st1">Summative Test 1 (ST1)</option>
+            <option value="st2">Summative Test 2 (ST2)</option>
             <option value="te">Term Exam (TE)</option>
           </select>
         </div>
-        <div id="ev-index-wrap" style="display:none;">
-          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Assessment #</label>
-          <select id="ev-index" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="">— Select # —</option>
-          </select>
+        <div style="display:flex; align-items:flex-end;">
+          <button id="btn-analyze" style="padding:10px 20px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;width:100%;">Analyze Data</button>
         </div>
       </div>
-
-      <div class="ev-actions" style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <button id="ev-generate" style="padding:12px 22px;font-weight:600;background:#0d47a1;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;">📄 Generate Evidence (.docx)</button>
-        <button id="ev-generate-all" style="padding:12px 22px;font-weight:600;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;cursor:pointer;font-size:0.9rem;">📦 Generate for ALL students in section</button>
-        <span id="ev-status" style="font-size:0.85rem;color:#546e7a;"></span>
-      </div>
     </div>
 
-    <div id="ev-preview-wrap" class="card" style="padding:0;overflow:hidden;display:none;">
-      <div style="padding:14px 20px;background:#f5f7fa;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;">
-        <strong style="color:#0d47a1;">Preview</strong>
-        <span style="font-size:0.8rem;color:#78909c;">Summary only — the .docx contains the full item analysis.</span>
-      </div>
-      <div id="ev-preview" style="padding:20px;font-family:'Courier New',monospace;font-size:0.85rem;white-space:pre-wrap;line-height:1.55;"></div>
+    <div id="ia-loading" style="text-align:center; padding: 40px; color:#78909c; display:none;">
+      <p>⏳ Kinukuha ang data mula sa Cloud at nag-aanalyze...</p>
     </div>
 
+    <div id="ia-results" style="display:none;">
+      <div class="card" style="padding:24px;">
+        <h3 style="margin:0 0 16px;color:#0d47a1;" id="ia-title">Results</h3>
+        <div style="overflow-x:auto;">
+          <table class="analysis-table" id="ia-table">
+            <thead>
+              <tr>
+                <th>Q#</th>
+                <th>Competency</th>
+                <th>Correct</th>
+                <th>Wrong</th>
+                <th>MPS (%)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ia-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.20</span></p></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=1.0.10"></script>
-  <script src="../assets/js/app.js?v=1.0.10"></script>
-  <script src="../assets/js/store.js?v=1.0.10"></script>
-  <script src="../assets/js/security.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.0.10"></script>
+  <script src="../config.js?v=1.0.20"></script>
+  <script src="../assets/js/app.js?v=1.0.20"></script>
+  <script src="../assets/js/store.js?v=1.0.20"></script>
+  <script src="../assets/js/security.js?v=1.0.20"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.20"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.20"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.0.20"></script>
+  
   <script>
     (function() {
       'use strict';
-
       let allStudents = [];
 
       TeacherAuthBoot.ready(async function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-        
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-        
-        // Fetch students from Cloud backend
+
+        // Fetch Cloud Data
         try {
           allStudents = await TeacherCloud.fetchStudents();
-          allStudents.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
-          
-          const sel = document.getElementById('ev-student');
-          sel.innerHTML = '<option value="">— Select student —</option>' + 
-            allStudents.map(s => `<option value="${s.lrn}">${s.lastName}, ${s.firstName} (${s.lrn})</option>`).join('');
-        } catch (err) {
-          console.error('Error fetching students:', err);
-          document.getElementById('ev-student').innerHTML = '<option value="">Error loading students</option>';
+        } catch (e) {
+          console.error("Cloud error:", e);
         }
 
-        document.getElementById('ev-type').addEventListener('change', function() {
-          const type = this.value;
-          const wrap = document.getElementById('ev-index-wrap');
-          const idx = document.getElementById('ev-index');
-          if (type === 'st' || type === 'quiz') {
-            wrap.style.display = 'block';
-            idx.innerHTML = type === 'st' 
-              ? '<option value="1">ST 1</option><option value="2">ST 2</option>'
-              : '<option value="1">Quiz 1</option><option value="2">Quiz 2</option><option value="3">Quiz 3</option>';
-          } else {
-            wrap.style.display = 'none';
+        document.getElementById('btn-analyze').addEventListener('click', async function() {
+          const term = document.getElementById('ia-term').value;
+          const assessment = document.getElementById('ia-assessment').value;
+          
+          document.getElementById('ia-loading').style.display = 'block';
+          document.getElementById('ia-results').style.display = 'none';
+          this.disabled = true;
+
+          try {
+            // Kunin ang Question Bank para malaman ang Competencies
+            const bankUrl = `../student/term${term}/assessments/${assessment}.json`;
+            const bankRes = await fetch(bankUrl + '?v=' + Date.now());
+            if (!bankRes.ok) throw new Error("Hindi ma-load ang questions file para sa assessment na ito.");
+            const bank = await bankRes.json();
+            const questions = bank.questions || [];
+
+            // I-prepare ang stats array
+            let questionStats = questions.map((q, idx) => ({
+              qNum: idx + 1,
+              competency: q.competency || 'UNKNOWN',
+              correct: 0,
+              wrong: 0,
+              total: 0
+            }));
+
+            // I-count ang tamali at tama per question
+            allStudents.forEach(student => {
+              const progress = student.progress || {};
+              const scores = progress.scores && progress.scores['term' + term];
+              if (!scores) return;
+
+              let record = null;
+              if (assessment === 'te') record = scores.te;
+              else record = scores.st && scores.st[assessment];
+
+              if (!record || !record.itemResults) return;
+
+              record.itemResults.forEach(r => {
+                const idx = r.originalIndex != null ? r.originalIndex : r.index;
+                if (idx != null && questionStats[idx]) {
+                  questionStats[idx].total++;
+                  if (r.correct) questionStats[idx].correct++;
+                  else questionStats[idx].wrong++;
+                }
+              });
+            });
+
+            // I-render sa Table
+            const tbody = document.getElementById('ia-tbody');
+            tbody.innerHTML = '';
+            
+            questionStats.forEach(stat => {
+              const mps = stat.total ? Math.round((stat.correct / stat.total) * 100) : 0;
+              const statusBadge = mps >= 75 
+                ? '<span class="badge-pass">Mastered</span>' 
+                : '<span class="badge-fail">Least Learned</span>';
+
+              tbody.innerHTML += `
+                <tr>
+                  <td><strong>Q${stat.qNum}</strong></td>
+                  <td>${stat.competency}</td>
+                  <td>${stat.correct}</td>
+                  <td>${stat.wrong}</td>
+                  <td><strong>${mps}%</strong></td>
+                  <td>${statusBadge}</td>
+                </tr>
+              `;
+            });
+
+            document.getElementById('ia-title').textContent = `Results: Term ${term} - ${assessment.toUpperCase()}`;
+            document.getElementById('ia-results').style.display = 'block';
+
+          } catch (err) {
+            alert('Error: ' + err.message);
+          } finally {
+            document.getElementById('ia-loading').style.display = 'none';
+            this.disabled = false;
           }
         });
-
-        document.getElementById('ev-generate').addEventListener('click', handleGenerate);
       });
-
-      function handleGenerate() {
-        const lrn = document.getElementById('ev-student').value;
-        const term = document.getElementById('ev-term').value;
-        const type = document.getElementById('ev-type').value;
-        const idx = document.getElementById('ev-index').value;
-        
-        if (!lrn || !term || !type) {
-          alert('Please select student, term, and assessment type.');
-          return;
-        }
-
-        const student = allStudents.find(s => s.lrn === lrn);
-        const assessmentId = type === 'te' ? 'te' : (type === 'st' ? 'st' + idx : 'quiz' + idx);
-
-        // Get scores from progressJSON
-        const p = student.progress || {};
-        const scores = p.scores?.['term' + term] || {};
-        let record = null;
-        if (type === 'te') record = scores.te;
-        else record = scores[type + 's']?.[assessmentId];
-
-        if (!record) {
-          alert('No record found for this student in the selected assessment.');
-          return;
-        }
-
-        document.getElementById('ev-preview-wrap').style.display = 'block';
-        document.getElementById('ev-preview').textContent = 
-          `Student: ${student.lastName}, ${student.firstName}\n` +
-          `LRN: ${student.lrn}\n` +
-          `Term: ${term} | Assessment: ${assessmentId}\n` +
-          `Score: ${record.score}/${record.total} (${record.percent}%)\n\n` +
-          `Note: DOCX generation logic goes here (requires raw questions JSON to output items).`;
-      }
-
     })();
   </script>
 </body>
