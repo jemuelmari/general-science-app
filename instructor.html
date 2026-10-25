@@ -10,20 +10,12 @@
     /* HERO */
     .teacher-hero {
       background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
-      border-radius: 18px;
-      padding: 32px 24px;
-      color: #fff;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 24px rgba(13,71,161,0.25);
-      position: relative;
-      overflow: hidden;
+      border-radius: 18px; padding: 32px 24px; color: #fff; margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(13,71,161,0.25); position: relative; overflow: hidden;
     }
     .teacher-hero::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 250px; height: 250px;
-      border-radius: 50%;
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 250px; height: 250px; border-radius: 50%;
       background: rgba(255,255,255,0.08);
     }
     .teacher-hero-content { position: relative; z-index: 1; }
@@ -38,16 +30,13 @@
 
     /* STATS GRID */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px; margin-bottom: 24px;
     }
     .stat-card {
       background: #fff; border-radius: 14px; padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      display: flex; align-items: center; gap: 16px;
-      border-left: 4px solid #0d47a1;
+      display: flex; align-items: center; gap: 16px; border-left: 4px solid #0d47a1;
     }
     .stat-icon { font-size: 2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #e3f2fd; border-radius: 12px; flex-shrink: 0; }
     .stat-value { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: #1a1a1a; line-height: 1; }
@@ -138,27 +127,94 @@
       🧰 Teacher Tools
     </div>
 
+    <!-- FULL ACTION GRID -->
     <div class="action-grid">
       <a class="action-card" href="teacher/term-control.html" style="border-top-color:#0d47a1;">
         <div class="action-icon" style="background:#e3f2fd;">🔓</div>
         <h3>Term Access Control</h3>
         <p>Open or lock each term per section — students can't enter locked terms</p>
       </a>
+
       <a class="action-card" href="teacher/pt-submissions.html" style="border-top-color:#00695c;background:linear-gradient(135deg,#e0f2f1,#ffffff);">
         <div class="action-icon" style="background:#e0f2f1;">📋</div>
         <h3>PT Submissions</h3>
         <p>View student performance task submissions, grade with rubrics, and send scores back to students</p>
         <span class="action-badge" style="background:#e0f2f1;color:#00695c;">New</span>
       </a>
+
+      <a class="action-card" href="teacher/sync-center.html">
+        <div class="action-icon">🔄</div>
+        <h3>Sync Center</h3>
+        <p>Import student progress via sync codes, JSON files, or Google Sheets</p>
+      </a>
+
+      <a class="action-card" href="teacher/evidence.html" style="border-top-color:#0d47a1;background:linear-gradient(135deg,#e3f2fd,#ffffff);">
+        <div class="action-icon" style="background:#e3f2fd;">📄</div>
+        <h3>Exam Evidence</h3>
+        <p>Generate printable Word (.docx) proof of exam per student — with answers, correct answers, score, and signature blocks</p>
+        <span class="action-badge" style="background:#e3f2fd;color:#0d47a1;">New</span>
+      </a>
+
       <a class="action-card" href="teacher/retake-requests.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
         <div class="action-icon" style="background:#fff3e0;">🔑</div>
         <h3>Retake Requests</h3>
         <p>Review student retake requests, generate codes, and send them via chat</p>
+        <span class="action-badge" style="background:#fff3e0;color:#e65100;">New</span>
       </a>
+
+      <a class="action-card" href="teacher/tos-generator.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
+        <div class="action-icon" style="background:#fff3e0;">📐</div>
+        <h3>Table of Specification</h3>
+        <p>Auto-generate TOS for Summative Tests and Term Exams with Bloom's distribution and answer keys</p>
+      </a>
+
+      <a class="action-card" href="teacher/item-analysis.html">
+        <div class="action-icon">🔬</div>
+        <h3>Item Analysis</h3>
+        <p>Analyze quiz results per item — identify most/least learned competencies</p>
+      </a>
+
+      <a class="action-card" href="teacher/intervention.html">
+        <div class="action-icon">🎯</div>
+        <h3>Intervention</h3>
+        <p>Classify students by performance and generate targeted intervention plans</p>
+      </a>
+
+      <a class="action-card" href="teacher/activity-tracker.html">
+        <div class="action-icon">📋</div>
+        <h3>Activity Tracker</h3>
+        <p>Monitor weekly lesson completion and activity pass rates</p>
+      </a>
+
+      <a class="action-card" href="teacher/assessment-tracker.html">
+        <div class="action-icon">📈</div>
+        <h3>Assessment Tracker</h3>
+        <p>Track quizzes, STs, PTs, and Term Exam submissions at a glance</p>
+      </a>
+
+      <a class="action-card" href="teacher/locked-assessments.html">
+        <div class="action-icon">🔒</div>
+        <h3>Locked Assessments</h3>
+        <p>Review and unlock assessments that students failed or were locked out of</p>
+      </a>
+
+      <a class="action-card" href="teacher/normalize-names.html">
+        <div class="action-icon">📝</div>
+        <h3>Normalize Names</h3>
+        <p>Fix student name formatting (ALL CAPS last name, Title Case first name)</p>
+      </a>
+
       <a class="action-card" href="classrecord.html">
         <div class="action-icon">📊</div>
         <h3>Class Record</h3>
         <p>Complete gradebook with transmutation, reports, and item analytics</p>
+      </a>
+
+      <a class="action-card" href="diagnostics.html" style="border-top-color:#2e7d32;background:linear-gradient(135deg,#f1f8f4,#ffffff);">
+        <div class="action-icon" style="background:#e8f5e9;">🔬</div>
+        <h3>Self-Diagnostic</h3>
+        <p>Run a full health check on the app — detects missing files, broken JSON, backend issues, and more</p>
+        <span class="action-badge" style="background:#e8f5e9;color:#1b5e20;">Run anytime</span>
       </a>
     </div>
 
@@ -210,6 +266,7 @@
 
         try {
           allStudents = await TeacherCloud.fetchStudents();
+          
           if (!allStudents.length) {
             tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;">📭 No students found.</td></tr>';
           } else {
@@ -225,18 +282,21 @@
         const total = allStudents.length;
         let active = 0;
         let totalProgress = 0;
+        
         allStudents.forEach(s => {
           let daysDone = 0;
-          const p = s.progress || {};
+          const p = s.progress?.progress || {};
           ['term1', 'term2', 'term3'].forEach(t => {
-             if (p.progress && p.progress[t] && p.progress[t].completed) {
-               daysDone += p.progress[t].completed.length;
+             if (p[t] && p[t].completed) {
+               daysDone += p[t].completed.length;
              }
           });
           if (daysDone > 0) active++;
           totalProgress += daysDone;
         });
+        
         const avg = total > 0 ? Math.round((totalProgress / (total * 120)) * 100) : 0;
+        
         document.getElementById('stat-total-students').textContent = total;
         document.getElementById('stat-total').textContent = total;
         document.getElementById('stat-active-learners').textContent = active;
@@ -263,10 +323,11 @@
         }
 
         tbody.innerHTML = filtered.map(s => {
-          const p = s.progress || {};
-          const t1 = p.progress?.term1?.completed?.length || 0;
-          const t2 = p.progress?.term2?.completed?.length || 0;
-          const t3 = p.progress?.term3?.completed?.length || 0;
+          const p = s.progress?.progress || {};
+          const t1 = p.term1?.completed?.length || 0;
+          const t2 = p.term2?.completed?.length || 0;
+          const t3 = p.term3?.completed?.length || 0;
+          
           const fullName = `${s.lastName}, ${s.firstName}`;
           const initials = `${(s.firstName||' ')[0]}${(s.lastName||' ')[0]}`;
 
