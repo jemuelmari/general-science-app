@@ -4,8 +4,325 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Teacher Dashboard — General Science</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=1.0.9" />
-  <link rel="stylesheet" href="assets/css/teacher.css?v=1.0.9" />
+  <link rel="stylesheet" href="assets/css/main.css?v=1.0.10" />
+  <link rel="stylesheet" href="assets/css/teacher.css?v=1.0.10" />
+  <style>
+    /* ── RESPONSIVE TEACHER DASHBOARD ── */
+    
+    /* Hero Section */
+    .teacher-hero {
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
+      border-radius: 18px;
+      padding: 32px 24px;
+      color: #fff;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(13,71,161,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .teacher-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .teacher-hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .teacher-hero-text h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin: 0 0 6px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .teacher-hero-text p {
+      margin: 0 0 16px;
+      opacity: 0.95;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+    }
+    .teacher-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .teacher-hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      backdrop-filter: blur(10px);
+    }
+    .teacher-hero-stat span {
+      font-size: 1.1rem;
+    }
+    .teacher-hero-stat strong {
+      font-weight: 800;
+    }
+
+    /* Hero Actions */
+    .teacher-hero-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .teacher-hero-actions a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 16px;
+      background: #fff;
+      color: #0d47a1;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+      text-decoration: none;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .teacher-hero-actions a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .teacher-hero-actions a.outline {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.6);
+    }
+    .teacher-hero-actions a.outline:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-left: 4px solid #0d47a1;
+    }
+    .stat-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e3f2fd;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+    .stat-value {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Action Grid (Teacher Tools) */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .action-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      border-top: 4px solid transparent;
+    }
+    .action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .action-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f7fa;
+      border-radius: 12px;
+      margin-bottom: 4px;
+    }
+    .action-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .action-card p {
+      font-size: 0.82rem;
+      color: #5f6368;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .action-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Roster Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      font-weight: 700;
+      color: #0d47a1;
+      margin: 0;
+    }
+    .roster-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .roster-filters select, .roster-filters input {
+      padding: 8px 12px;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    .roster-filters select:focus, .roster-filters input:focus {
+      outline: none;
+      border-color: #0d47a1;
+    }
+    
+    /* Table Container */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background: #fff;
+    }
+    .modern-table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .modern-table th {
+      background: #f5f7fa;
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5f6368;
+      font-weight: 700;
+      border-bottom: 2px solid #e0e0e0;
+      white-space: nowrap;
+    }
+    .modern-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+    .modern-table tr:hover {
+      background: #fafbfc;
+    }
+
+    /* Mobile Fixes */
+    @media (max-width: 768px) {
+      .teacher-hero {
+        padding: 24px 18px;
+      }
+      .teacher-hero-content {
+        gap: 18px;
+      }
+      .teacher-hero-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+      .teacher-hero-actions a {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+      .action-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+      }
+      .stat-card {
+        padding: 16px;
+      }
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+      .roster-filters {
+        width: 100%;
+      }
+      .roster-filters select, .roster-filters input {
+        flex: 1;
+        min-width: 0;
+        font-size: 16px; /* Prevents iOS zoom */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .teacher-hero-actions {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .stat-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -13,7 +330,7 @@
     <div class="container flex-between">
       <div>
         <h1>👩‍🏫 Teacher Dashboard</h1>
-        <span class="version">v1.0.9</span>
+        <span class="version">v1.0.10</span>
       </div>
       <nav class="teacher-nav">
         <a href="instructor.html">🏠 Dashboard</a>
@@ -60,7 +377,6 @@
       </div>
     </div>
 
-    <!-- Quick Stats (to be populated from backend) -->
     <div class="stats-grid" id="quick-stats">
       <div class="stat-card">
         <div class="stat-icon">👥</div>
@@ -91,13 +407,13 @@
     </div>
 
     <div class="action-grid">
-      <a class="action-card" href="teacher/term-control.html" style="border-top:4px solid #0d47a1;">
+      <a class="action-card" href="teacher/term-control.html" style="border-top-color:#0d47a1;">
         <div class="action-icon" style="background:#e3f2fd;">🔓</div>
         <h3>Term Access Control</h3>
         <p>Open or lock each term per section — students can't enter locked terms</p>
       </a>
 
-      <a class="action-card" href="teacher/pt-submissions.html" style="border-top:4px solid #00695c;background:linear-gradient(135deg,#e0f2f1,#ffffff);">
+      <a class="action-card" href="teacher/pt-submissions.html" style="border-top-color:#00695c;background:linear-gradient(135deg,#e0f2f1,#ffffff);">
         <div class="action-icon" style="background:#e0f2f1;">📋</div>
         <h3>PT Submissions</h3>
         <p>View student performance task submissions, grade with rubrics, and send scores back to students</p>
@@ -110,21 +426,21 @@
         <p>Import student progress via sync codes, JSON files, or Google Sheets</p>
       </a>
 
-      <a class="action-card" href="teacher/evidence.html" style="border-top:4px solid #0d47a1;background:linear-gradient(135deg,#e3f2fd,#ffffff);">
+      <a class="action-card" href="teacher/evidence.html" style="border-top-color:#0d47a1;background:linear-gradient(135deg,#e3f2fd,#ffffff);">
         <div class="action-icon" style="background:#e3f2fd;">📄</div>
         <h3>Exam Evidence</h3>
         <p>Generate printable Word (.docx) proof of exam per student — with answers, correct answers, score, and signature blocks</p>
         <span class="action-badge" style="background:#e3f2fd;color:#0d47a1;">New</span>
       </a>
 
-      <a class="action-card" href="teacher/retake-requests.html" style="border-top:4px solid #ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
+      <a class="action-card" href="teacher/retake-requests.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
         <div class="action-icon" style="background:#fff3e0;">🔑</div>
         <h3>Retake Requests</h3>
         <p>Review student retake requests, generate codes, and send them via chat</p>
         <span class="action-badge" style="background:#fff3e0;color:#e65100;">New</span>
       </a>
 
-      <a class="action-card" href="teacher/tos-generator.html" style="border-top:4px solid #ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
+      <a class="action-card" href="teacher/tos-generator.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
         <div class="action-icon" style="background:#fff3e0;">📐</div>
         <h3>Table of Specification</h3>
         <p>Auto-generate TOS for Summative Tests and Term Exams with Bloom's distribution and answer keys</p>
@@ -172,7 +488,7 @@
         <p>Complete gradebook with transmutation, reports, and item analytics</p>
       </a>
 
-      <a class="action-card" href="diagnostics.html" style="border-top:4px solid #2e7d32;background:linear-gradient(135deg,#f1f8f4,#ffffff);">
+      <a class="action-card" href="diagnostics.html" style="border-top-color:#2e7d32;background:linear-gradient(135deg,#f1f8f4,#ffffff);">
         <div class="action-icon" style="background:#e8f5e9;">🔬</div>
         <h3>Self-Diagnostic</h3>
         <p>Run a full health check on the app — detects missing files, broken JSON, backend issues, and more</p>
@@ -182,19 +498,18 @@
 
     <div class="section-header">
       <h2 class="section-title">👥 Student Roster</h2>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <select id="roster-section" class="form-control" style="min-width:180px;padding:8px 12px;font-size:0.85rem;">
+      <div class="roster-filters">
+        <select id="roster-section">
           <option value="">All Sections</option>
           <option value="ACADEMIC A">ACADEMIC A</option>
           <option value="ACADEMIC B">ACADEMIC B</option>
         </select>
-        <input type="text" id="roster-search" class="form-control" placeholder="Search by name or LRN…"
-               style="min-width:220px;padding:8px 12px;font-size:0.85rem;" />
-        <button id="btn-refresh-roster" class="btn btn-primary" style="padding:8px 16px;font-size:0.85rem;">🔄 Refresh</button>
+        <input type="text" id="roster-search" placeholder="Search by name or LRN…" />
+        <button id="btn-refresh-roster" class="btn btn-primary" style="padding:8px 16px;font-size:0.85rem;border-radius:8px;background:#0d47a1;color:#fff;border:none;font-weight:700;cursor:pointer;">🔄 Refresh</button>
       </div>
     </div>
 
-    <div id="roster-container" class="card" style="padding:0;overflow:hidden;">
+    <div class="table-responsive">
       <table class="modern-table">
         <thead>
           <tr>
@@ -209,9 +524,7 @@
           </tr>
         </thead>
         <tbody id="roster-body">
-          <tr><td colspan="8" style="text-align:center;padding:40px;color:#90a4ae;">
-            Loading students from cloud…
-          </td></tr>
+          <tr><td colspan="8" style="text-align:center;padding:40px;color:#90a4ae;">Loading students from cloud…</td></tr>
         </tbody>
       </table>
     </div>
@@ -219,22 +532,20 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.9</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.10</span></p>
   </footer>
 
-  <script src="config.js?v=1.0.9"></script>
-  <script src="assets/js/app.js?v=1.0.9"></script>
-  <script src="assets/js/store.js?v=1.0.9"></script>
-  <script src="assets/js/security.js?v=1.0.9"></script>
-  <script src="assets/js/transmutation.js?v=1.0.9"></script>
-  <script src="assets/js/teacher-auth.js?v=1.0.9"></script>
-  <script src="assets/js/teacher-auth-boot.js?v=1.0.9"></script>
-  <script src="assets/js/teacher-cloud.js?v=1.0.9"></script>
+  <script src="config.js?v=1.0.10"></script>
+  <script src="assets/js/app.js?v=1.0.10"></script>
+  <script src="assets/js/store.js?v=1.0.10"></script>
+  <script src="assets/js/security.js?v=1.0.10"></script>
+  <script src="assets/js/transmutation.js?v=1.0.10"></script>
+  <script src="assets/js/teacher-auth.js?v=1.0.10"></script>
+  <script src="assets/js/teacher-auth-boot.js?v=1.0.10"></script>
+  <script src="assets/js/teacher-cloud.js?v=1.0.10"></script>
   <script>
     (function() {
       'use strict';
-
-      const user = Store.getCurrentUser(); // Or however TeacherAuth stores teacher info
 
       let allStudents = [];
 
@@ -277,7 +588,7 @@
         const avg = total > 0 ? Math.round((totalProgress / (total * 120)) * 100) : 0;
         
         document.getElementById('stat-total-students').textContent = total;
-        document.getElementById('stat-total').textContent = total; // hero section
+        document.getElementById('stat-total').textContent = total;
         document.getElementById('stat-active-learners').textContent = active;
         document.getElementById('stat-avg-progress').textContent = avg + '%';
       }
