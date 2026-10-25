@@ -3,7 +3,7 @@
    Version: 1.0.0
    ============================================================ */
 
-const CACHE_NAME = 'gensci-v1.0.9';
+const CACHE_NAME = 'gensci-v1.0.10';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -54,19 +54,26 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Always fetch fresh HTML from network, fallback to cache if offline
+  if (request.headers.get('accept').includes('text/html')) {
+    event.respondWith(
+      fetch(request).then((networkResponse) => {
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
+        return networkResponse;
+      }).catch(() => {
+        return caches.match(request);
+      })
+    );
+    return;
+  }
+
+  // For JS/CSS/Images: Cache-first, fallback to network
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Return cached version, but fetch update in background
-        fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
-          }
-        }).catch(() => {});
         return cachedResponse;
       }
-
-      // If not in cache, fetch from network and cache it
       return fetch(request).then((networkResponse) => {
         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
           return networkResponse;
