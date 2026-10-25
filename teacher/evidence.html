@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exam Evidence — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.10" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.10" />
-  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.0.10" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.11" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.11" />
+  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.0.11" />
   <style>
-    /* Responsive Layout */
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
     @media (max-width: 600px) {
       .form-row { grid-template-columns: 1fr; }
@@ -23,7 +22,7 @@
     <div class="container flex-between">
       <div>
         <h1>📄 Exam Evidence Generator</h1>
-        <span class="version">v1.0.10</span>
+        <span class="version">v1.0.11</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -47,7 +46,7 @@
         <div>
           <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Student</label>
           <select id="ev-student" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="">— Select student —</option>
+            <option value="">— Loading students... —</option>
           </select>
         </div>
         <div>
@@ -92,93 +91,17 @@
 
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.11</span></p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=1.0.10"></script>
-  <script src="../assets/js/app.js?v=1.0.10"></script>
-  <script src="../assets/js/store.js?v=1.0.10"></script>
-  <script src="../assets/js/security.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.0.10"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.0.10"></script>
-  <script>
-    (function() {
-      'use strict';
-
-      let allStudents = [];
-
-      TeacherAuthBoot.ready(async function(auth) {
-        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-        
-        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-        
-        // Fetch students from Cloud backend
-        try {
-          allStudents = await TeacherCloud.fetchStudents();
-          allStudents.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
-          
-          const sel = document.getElementById('ev-student');
-          sel.innerHTML = '<option value="">— Select student —</option>' + 
-            allStudents.map(s => `<option value="${s.lrn}">${s.lastName}, ${s.firstName} (${s.lrn})</option>`).join('');
-        } catch (err) {
-          console.error('Error fetching students:', err);
-          document.getElementById('ev-student').innerHTML = '<option value="">Error loading students</option>';
-        }
-
-        document.getElementById('ev-type').addEventListener('change', function() {
-          const type = this.value;
-          const wrap = document.getElementById('ev-index-wrap');
-          const idx = document.getElementById('ev-index');
-          if (type === 'st' || type === 'quiz') {
-            wrap.style.display = 'block';
-            idx.innerHTML = type === 'st' 
-              ? '<option value="1">ST 1</option><option value="2">ST 2</option>'
-              : '<option value="1">Quiz 1</option><option value="2">Quiz 2</option><option value="3">Quiz 3</option>';
-          } else {
-            wrap.style.display = 'none';
-          }
-        });
-
-        document.getElementById('ev-generate').addEventListener('click', handleGenerate);
-      });
-
-      function handleGenerate() {
-        const lrn = document.getElementById('ev-student').value;
-        const term = document.getElementById('ev-term').value;
-        const type = document.getElementById('ev-type').value;
-        const idx = document.getElementById('ev-index').value;
-        
-        if (!lrn || !term || !type) {
-          alert('Please select student, term, and assessment type.');
-          return;
-        }
-
-        const student = allStudents.find(s => s.lrn === lrn);
-        const assessmentId = type === 'te' ? 'te' : (type === 'st' ? 'st' + idx : 'quiz' + idx);
-
-        // Get scores from progressJSON
-        const p = student.progress || {};
-        const scores = p.scores?.['term' + term] || {};
-        let record = null;
-        if (type === 'te') record = scores.te;
-        else record = scores[type + 's']?.[assessmentId];
-
-        if (!record) {
-          alert('No record found for this student in the selected assessment.');
-          return;
-        }
-
-        document.getElementById('ev-preview-wrap').style.display = 'block';
-        document.getElementById('ev-preview').textContent = 
-          `Student: ${student.lastName}, ${student.firstName}\n` +
-          `LRN: ${student.lrn}\n` +
-          `Term: ${term} | Assessment: ${assessmentId}\n` +
-          `Score: ${record.score}/${record.total} (${record.percent}%)\n\n` +
-          `Note: DOCX generation logic goes here (requires raw questions JSON to output items).`;
-      }
-
-    })();
-  </script>
+  <script src="../config.js?v=1.0.11"></script>
+  <script src="../assets/js/app.js?v=1.0.11"></script>
+  <script src="../assets/js/store.js?v=1.0.11"></script>
+  <script src="../assets/js/security.js?v=1.0.11"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.11"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.11"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.0.11"></script>
+  <!-- Isinama na ang Evidence.js para gumana ang docx -->
+  <script src="../assets/js/evidence.js?v=1.1.1"></script> 
 </body>
 </html>
