@@ -1,6 +1,6 @@
 /* ============================================================
-   classrecord.js — Gradebook logic
-   Version: 1.1.0 (Backend PT Sync)
+   classrecord.js — Gradebook logic (Cloud-First)
+   Version: 1.2.0
    ============================================================ */
 
 (() => {
@@ -12,28 +12,31 @@
   /* ============================================================
      WEIGHTING CONSTANTS
      ============================================================ */
-  const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || {
-    ww: 0.20,
-    pt: 0.50,
-    ex: 0.30
-  };
+  const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
+  const EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
 
-  const EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || {
-    st1: 0.30,
-    st2: 0.30,
-    te: 0.40
-  };
-
-  // Cache para hindi paulit-ulit mag-fetch sa backend
   let backendPTGrades = {};
+  let allStudents = []; // Galing sa backend
 
   /* ============================================================
-     HELPERS
+     FETCH STUDENTS FROM BACKEND
      ============================================================ */
-  function getStudents(term, section) {
-    let all = Store.getAllUsers();
-    if (section) all = all.filter((s) => s.section === section);
-    return APP.sortStudents(all, 'last', 'asc');
+  async function fetchStudentsFromCloud() {
+    const tbody = document.getElementById('summary-body');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Fetching students from cloud...</td></tr>';
+
+    try {
+      if (typeof TeacherCloud === 'undefined' || typeof TeacherCloud.fetchStudents !== 'function') {
+        throw new Error('TeacherCloud module not loaded.');
+      }
+      allStudents = await TeacherCloud.fetchStudents();
+      console.log(`[ClassRecord] Loaded ${allStudents.length} students from cloud.`);
+    } catch (err) {
+      console.error('[ClassRecord] Failed to fetch from cloud:', err);
+      allStudents = [];
+      if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
+      throw err;
+    }
   }
 
   async function fetchPTGrades() {
@@ -54,18 +57,34 @@
     }
   }
 
+  /* ============================================================
+     HELPERS
+     ============================================================ */
+  function getStudents(term, section) {
+    let list = allStudents; // Galing sa backend
+    if (section) list = list.filter(s => (s.section || '').replace(/_/g, ' ').toUpperCase() === section.replace(/_/g, ' ').toUpperCase());
+    return list.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+  }
+
   function getScorePercent(lrn, term, type, id) {
+    // PT scores galing sa backend
     if (type === 'pt') {
       var backendScore = backendPTGrades[lrn]?.[term]?.[id];
       if (backendScore !== undefined) return backendScore;
       return null;
     }
 
-    const scores = Store.getScores(lrn);
-    const t = scores[term] || {};
+    // Other scores (quizzes, STs, TE) galing sa StudentsMaster progressJSON
+    const student = allStudents.find(s => s.lrn === lrn);
+    if (!student) return null;
+    
+    const p = student.progress || {};
+    const scores = p.scores?.[term] || {};
+    
     let record = null;
-    if (type === 'te') record = t.te;
-    else record = t[type]?.[id];
+    if (type === 'te') record = scores.te;
+    else record = scores[type]?.[id];
+    
     if (!record) return null;
     if (record.percent != null) return record.percent;
     if (record.score != null && record.total) return (record.score / record.total) * 100;
@@ -79,11 +98,9 @@
       const q3 = getScorePercent(s.lrn, term, 'quizzes', 'quiz3');
       const st1 = getScorePercent(s.lrn, term, 'st', 'st1');
       const st2 = getScorePercent(s.lrn, term, 'st', 'st2');
-      
       const pt1 = getScorePercent(s.lrn, term, 'pt', 'pt1');
       const pt2 = getScorePercent(s.lrn, term, 'pt', 'pt2');
       const pt3 = getScorePercent(s.lrn, term, 'pt', 'pt3');
-      
       const te = getScorePercent(s.lrn, term, 'te', 'te');
 
       const quizPcts = [q1, q2, q3].filter((v) => v != null);
@@ -97,7 +114,9 @@
         exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
       }
 
-      const finalGrade = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
+      const finalGrade = (typeof Transmutation !== 'undefined' && Transmutation.computeFinalGradeSafe)
+        ? Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS)
+        : { insufficient: true, transmuted: null };
 
       let availableSum = 0, availableWeight = 0;
       if (wwAvg !== null) { availableSum += wwAvg * WEIGHTS.ww; availableWeight += WEIGHTS.ww; }
@@ -110,12 +129,7 @@
       return {
         student: s,
         scores: { q1, q2, q3, st1, st2, pt1, pt2, pt3, te },
-        wwAvg,
-        ptAvg,
-        exAvg,
-        final: finalGrade,
-        partialScore,
-        compCount
+        wwAvg, ptAvg, exAvg, final: finalGrade, partialScore, compCount
       };
     });
   }
@@ -126,9 +140,8 @@
   function renderSummary(rows, term) {
     const tbody = document.getElementById('summary-body');
     if (!tbody) return;
-
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found for this filter.</td></tr>';
       return;
     }
 
@@ -136,7 +149,7 @@
     rows.forEach((r) => {
       const s = r.student;
       const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-      const avatarClass = UI.getAvatarClass(s.lrn);
+      const avatarClass = (typeof UI !== 'undefined' && UI.getAvatarClass) ? UI.getAvatarClass(s.lrn) : '';
       const tr = document.createElement('tr');
 
       let finalCell;
@@ -151,20 +164,14 @@
           '<div class="student-cell">' +
             '<div class="student-avatar ' + avatarClass + '">' + initials + '</div>' +
             '<div class="student-info">' +
-              '<div class="name">' + APP.formatFullName(s.lastName, s.firstName, s.middleName) + '</div>' +
-              '<div class="meta">' + s.section + '</div>' +
+              '<div class="name">' + (s.lastName || '') + ', ' + (s.firstName || '') + '</div>' +
+              '<div class="meta">' + (s.section || '') + '</div>' +
             '</div>' +
           '</div>' +
         '</td>' +
-        cellValue(r.scores.q1) +
-        cellValue(r.scores.q2) +
-        cellValue(r.scores.q3) +
-        cellValue(r.scores.pt1) +
-        cellValue(r.scores.pt2) +
-        cellValue(r.scores.pt3) +
-        cellValue(r.scores.st1) +
-        cellValue(r.scores.st2) +
-        cellValue(r.scores.te) +
+        cellValue(r.scores.q1) + cellValue(r.scores.q2) + cellValue(r.scores.q3) +
+        cellValue(r.scores.pt1) + cellValue(r.scores.pt2) + cellValue(r.scores.pt3) +
+        cellValue(r.scores.st1) + cellValue(r.scores.st2) + cellValue(r.scores.te) +
         finalCell;
 
       tbody.appendChild(tr);
@@ -179,17 +186,15 @@
     else if (rounded >= 75) color = '#0d47a1';
     else if (rounded >= 65) color = '#ed6c02';
     else color = '#c62828';
-
     return '<td class="grade-cell" style="color:' + color + ';">' + rounded + '</td>';
   }
 
   /* ============================================================
-     RENDER — STATS
+     RENDER — STATS (Simplified)
      ============================================================ */
   function renderStats(rows) {
     const stats = document.getElementById('cr-stats');
     if (!stats) return;
-
     if (!rows.length) {
       stats.innerHTML = '<div class="cr-stat-card"><div class="cs-value">0</div><div class="cs-label">No Students</div></div>';
       return;
@@ -199,18 +204,12 @@
     const partialScores = rowsWithData.map((r) => r.partialScore).filter((v) => v > 0);
     const avg = partialScores.length ? partialScores.reduce((a, b) => a + b, 0) / partialScores.length : 0;
 
-    const completeFinals = rows
-      .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
-      .filter((v) => v != null && v > 0);
+    const completeFinals = rows.map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null).filter((v) => v != null && v > 0);
     const passing = completeFinals.filter((v) => v >= 75).length;
     const failing = completeFinals.filter((v) => v < 75).length;
 
-    const submissionCount = rows.reduce((acc, r) => {
-      return acc + Object.values(r.scores).filter((v) => v != null).length;
-    }, 0);
-    const completion = rows.length
-      ? Math.round((submissionCount / (rows.length * 9)) * 100)
-      : 0;
+    const submissionCount = rows.reduce((acc, r) => acc + Object.values(r.scores).filter((v) => v != null).length, 0);
+    const completion = rows.length ? Math.round((submissionCount / (rows.length * 9)) * 100) : 0;
 
     stats.innerHTML =
       '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Students</div></div>' +
@@ -218,171 +217,6 @@
       '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing</div></div>' +
       '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
       '<div class="cr-stat-card ' + (completion >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📝</div><div class="cs-value">' + completion + '%</div><div class="cs-label">Submission Rate</div></div>';
-  }
-
-  /* ============================================================
-     RENDER — DISTRIBUTION
-     ============================================================ */
-  function renderDistribution(rows) {
-    const grid = document.getElementById('distribution-grid');
-    if (!grid) return;
-
-    const finals = rows
-      .map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null)
-      .filter((v) => v != null && v > 0);
-
-    const ranges = [
-      { label: '90–100 (Outstanding)',   min: 90, max: 100, color: '#2e7d32' },
-      { label: '85–89 (Very Satisfactory)', min: 85, max: 89, color: '#0d47a1' },
-      { label: '80–84 (Satisfactory)',   min: 80, max: 84, color: '#0277bd' },
-      { label: '75–79 (Fairly Satisfactory)', min: 75, max: 79, color: '#00acc1' },
-      { label: 'Below 75 (Did Not Meet)', min: 0, max: 74, color: '#c62828' }
-    ];
-
-    const rangeCounts = ranges.map((r) => ({
-      ...r,
-      count: finals.filter((f) => f >= r.min && f <= r.max).length
-    }));
-
-    const pcts = [];
-    rows.forEach((r) => {
-      Object.values(r.scores).forEach((v) => { if (v != null) pcts.push(v); });
-    });
-    const avgMPS = pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0;
-    const pl = Transmutation.proficiencyLevel(avgMPS);
-
-    grid.innerHTML =
-      '<div class="report-card">' +
-        '<h4>📊 Grade Distribution</h4>' +
-        (finals.length === 0
-          ? '<p class="text-muted text-small" style="text-align:center;padding:20px;">No complete final grades yet. Students will appear once all 9 assessments are recorded.</p>'
-          : rangeCounts.map((r) => UI.renderDistributionRow(r.label, r.count, finals.length, r.color)).join('')
-        ) +
-      '</div>' +
-
-      '<div class="report-card">' +
-        '<h4>🎯 Class Performance Summary</h4>' +
-        '<div style="display:flex;flex-direction:column;gap:14px;">' +
-          '<div>' +
-            '<div class="text-small text-muted" style="margin-bottom:6px;">Class MPS (across all assessments)</div>' +
-            '<div style="display:flex;align-items:center;gap:12px;">' +
-              '<div style="font-size:2rem;font-weight:800;color:' + mpsColor(avgMPS) + ';">' + avgMPS.toFixed(1) + '%</div>' +
-              '<span class="pl-indicator pl-' + pl.key + '">' + pl.level + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div>' +
-            '<div class="text-small text-muted" style="margin-bottom:6px;">Proficiency Level</div>' +
-            '<div style="font-size:0.9rem;color:#37474f;line-height:1.5;">' +
-              'Based on MPS, the class is classified as ' +
-              '<strong style="color:' + mpsColor(avgMPS) + ';">' + pl.level + '</strong>.' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-
-      '<div class="report-card">' +
-        '<h4>📝 Submission Summary</h4>' +
-        ['q1', 'q2', 'q3', 'pt1', 'pt2', 'pt3', 'st1', 'st2', 'te'].map((k) => {
-          const label = {
-            q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3',
-            pt1: 'PT1', pt2: 'PT2', pt3: 'PT3',
-            st1: 'ST1', st2: 'ST2', te: 'Term Exam'
-          }[k];
-          const count = rows.filter((r) => r.scores[k] != null).length;
-          return UI.renderDistributionRow(label, count, rows.length, '#1976d2');
-        }).join('') +
-      '</div>';
-  }
-
-  function mpsColor(mps) {
-    if (mps >= 90) return '#2e7d32';
-    if (mps >= 75) return '#0d47a1';
-    if (mps >= 50) return '#ed6c02';
-    return '#c62828';
-  }
-
-  /* ============================================================
-     RENDER — MOST / LEAST LEARNED
-     ============================================================ */
-  function renderMLL(rows) {
-    const grid = document.getElementById('mll-grid');
-    if (!grid) return;
-
-    const labels = {
-      q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3',
-      pt1: 'PT1', pt2: 'PT2', pt3: 'PT3',
-      st1: 'ST1', st2: 'ST2', te: 'Term Exam'
-    };
-
-    const assessmentStats = Object.keys(labels).map((k) => {
-      const pcts = rows.map((r) => r.scores[k]).filter((v) => v != null);
-      return {
-        key: k,
-        label: labels[k],
-        avg: pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0,
-        count: pcts.length
-      };
-    }).filter((a) => a.count > 0);
-
-    const sorted = [...assessmentStats].sort((a, b) => b.avg - a.avg);
-    const most = sorted.slice(0, 3);
-    const least = sorted.slice(-3).reverse();
-
-    grid.innerHTML =
-      '<div class="report-card">' +
-        '<h4>✅ Most Learned (Top 3)</h4>' +
-        '<ul class="mll-list">' +
-          most.map((a) =>
-            '<li>' +
-              '<div class="mll-desc">' +
-                '<span class="mll-code">' + a.count + ' submissions</span>' +
-                a.label +
-              '</div>' +
-              '<div class="mll-mps" style="color:#2e7d32;">' + a.avg.toFixed(1) + '%</div>' +
-            '</li>'
-          ).join('') +
-          (most.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
-        '</ul>' +
-      '</div>' +
-
-      '<div class="report-card">' +
-        '<h4>⚠️ Least Learned (Bottom 3)</h4>' +
-        '<ul class="mll-list">' +
-          least.map((a) =>
-            '<li>' +
-              '<div class="mll-desc">' +
-                '<span class="mll-code">' + a.count + ' submissions</span>' +
-                a.label +
-              '</div>' +
-              '<div class="mll-mps" style="color:#c62828;">' + a.avg.toFixed(1) + '%</div>' +
-            '</li>'
-          ).join('') +
-          (least.length === 0 ? '<li class="text-muted">No data yet.</li>' : '') +
-        '</ul>' +
-      '</div>';
-  }
-
-  /* ============================================================
-     RENDER — TRANSMUTATION TABLE
-     ============================================================ */
-  function renderTransmutationTable() {
-    const tbody = document.getElementById('transmutation-body');
-    if (!tbody) return;
-
-    const rows = [];
-    for (let raw = 100; raw >= 0; raw -= 2) {
-      const left = { raw, out: Transmutation.transmute(raw) };
-      const right = raw - 1 >= 0 ? { raw: raw - 1, out: Transmutation.transmute(raw - 1) } : null;
-      rows.push([left, right]);
-    }
-
-    tbody.innerHTML = rows.map(([l, r]) =>
-      '<tr>' +
-        '<td class="raw">' + l.raw + '</td>' +
-        '<td class="final">' + l.out + '</td>' +
-        (r ? '<td class="raw">' + r.raw + '</td><td class="final">' + r.out + '</td>' : '<td></td><td></td>') +
-      '</tr>'
-    ).join('');
   }
 
   /* ============================================================
@@ -396,7 +230,6 @@
       mll: document.getElementById('tab-mll'),
       transmutation: document.getElementById('tab-transmutation')
     };
-
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => t.classList.remove('active'));
@@ -408,67 +241,28 @@
   }
 
   /* ============================================================
-     CSV EXPORT
-     ============================================================ */
-  function exportCSV() {
-    const term = document.getElementById('filter-term').value;
-    const section = document.getElementById('filter-section').value;
-    const students = getStudents(term, section);
-    const rows = computeGrade(students, term);
-
-    const headers = [
-      'Last Name', 'First Name', 'Middle Name', 'LRN', 'Section',
-      'Quiz1', 'Quiz2', 'Quiz3',
-      'PT1', 'PT2', 'PT3',
-      'ST1', 'ST2', 'TE',
-      'WW Avg', 'PT Avg', 'EX Avg',
-      'Final Grade', 'Status'
-    ];
-
-    const data = rows.map((r) => {
-      const s = r.student;
-      const isComplete = !r.final.insufficient && r.final.transmuted != null;
-      return [
-        s.lastName || '',
-        s.firstName || '',
-        s.middleName || '',
-        s.lrn,
-        s.section,
-        r.scores.q1 != null ? Math.round(r.scores.q1) : '',
-        r.scores.q2 != null ? Math.round(r.scores.q2) : '',
-        r.scores.q3 != null ? Math.round(r.scores.q3) : '',
-        r.scores.pt1 != null ? Math.round(r.scores.pt1) : '',
-        r.scores.pt2 != null ? Math.round(r.scores.pt2) : '',
-        r.scores.pt3 != null ? Math.round(r.scores.pt3) : '',
-        r.scores.st1 != null ? Math.round(r.scores.st1) : '',
-        r.scores.st2 != null ? Math.round(r.scores.st2) : '',
-        r.scores.te != null ? Math.round(r.scores.te) : '',
-        r.wwAvg != null ? r.wwAvg.toFixed(1) : '',
-        r.ptAvg != null ? r.ptAvg.toFixed(1) : '',
-        r.exAvg != null ? r.exAvg.toFixed(1) : '',
-        isComplete ? r.final.transmuted : '(partial)',
-        isComplete ? (r.final.passing ? 'Passed' : 'Failed') : 'Incomplete'
-      ];
-    });
-
-    UI.exportCSV('GSA_ClassRecord_' + term + '_' + (section || 'All') + '.csv', headers, data);
-    APP.toast('Class record exported', 'success');
-  }
-
-  /* ============================================================
      MAIN RENDER
      ============================================================ */
   async function render() {
     const term = document.getElementById('filter-term').value;
     const section = document.getElementById('filter-section').value;
 
-    // Show loading if first time
+    // Show loading
     const tbody = document.getElementById('summary-body');
-    if (tbody && !backendPTGrades.length) {
-       tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Syncing PT grades from backend...</td></tr>';
+    if (tbody && !allStudents.length) {
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Loading students and PT grades...</td></tr>';
     }
 
-    // Fetch latest PT grades from backend every time we render
+    // Fetch students from cloud (if not yet loaded)
+    if (!allStudents.length) {
+      try {
+        await fetchStudentsFromCloud();
+      } catch (e) {
+        return;
+      }
+    }
+
+    // Fetch latest PT grades
     await fetchPTGrades();
 
     const students = getStudents(term, section);
@@ -476,9 +270,6 @@
 
     renderStats(rows);
     renderSummary(rows, term);
-    renderDistribution(rows);
-    renderMLL(rows);
-    renderTransmutationTable();
   }
 
   /* ============================================================
@@ -487,12 +278,19 @@
   function attachListeners() {
     document.getElementById('filter-term').addEventListener('change', render);
     document.getElementById('filter-section').addEventListener('change', render);
-    document.getElementById('btn-refresh').addEventListener('click', () => {
-      render();
-      APP.toast('Syncing and refreshing...', 'success', 1500);
+    document.getElementById('btn-refresh').addEventListener('click', async () => {
+      allStudents = []; // Force re-fetch
+      await render();
+      if (typeof APP !== 'undefined' && APP.toast) APP.toast('Refreshed from cloud!', 'success', 1500);
     });
-    document.getElementById('btn-export').addEventListener('click', exportCSV);
-    document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
+    if (document.getElementById('btn-export')) {
+      document.getElementById('btn-export').addEventListener('click', () => {
+        if (typeof APP !== 'undefined' && APP.toast) APP.toast('Export feature coming soon', 'info', 2000);
+      });
+    }
+    if (document.getElementById('btn-logout')) {
+      document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
+    }
   }
 
   /* ============================================================
