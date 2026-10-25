@@ -4,39 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Normalize Names — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-f7b3fe7" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-f7b3fe7" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.10" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.10" />
   <style>
-    .nn-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 24px; }
-    .nn-filters .form-group { min-width: 200px; flex: 1; margin-bottom: 0; }
-    .nn-row { background: #fff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #1976d2; display: grid; grid-template-columns: 40px 1fr 1fr 1fr 1fr 100px; gap: 12px; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: all 0.15s; }
-    .nn-row.changed { border-left-color: #ed6c02; background: #fffdf7; }
-    .nn-row.saved { border-left-color: #2e7d32; background: #f1f8f4; }
-    @media (max-width: 900px) { .nn-row { grid-template-columns: 1fr; gap: 6px; } }
-    .nn-cell-label { font-size: 0.68rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; display: none; }
-    @media (max-width: 900px) { .nn-cell-label { display: block; } }
-    .nn-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #0d47a1, #00acc1); flex-shrink: 0; }
-    .nn-field { display: flex; flex-direction: column; gap: 4px; }
-    .nn-input { padding: 8px 10px; font-family: inherit; font-size: 0.85rem; border: 1.5px solid #cfd8dc; border-radius: 8px; background: #fff; color: #1a1a1a; transition: all 0.15s; width: 100%; box-sizing: border-box; }
-    .nn-input:focus { outline: none; border-color: #0d47a1; box-shadow: 0 0 0 3px rgba(13,71,161,0.1); }
-    .nn-input.changed { border-color: #ed6c02; background: #fff8e1; }
-    .nn-actions { display: flex; flex-direction: column; gap: 6px; }
-    .nn-actions button { padding: 6px 10px; font-size: 0.75rem; }
-    .nn-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    .nn-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; align-items: end; }
+    .nn-filters button { width: 100%; padding: 10px 12px; background: #0d47a1; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    
+    .nn-row { background: #fff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #1976d2; display: grid; grid-template-columns: 40px 1fr 1fr 1fr 1fr 100px; gap: 12px; align-items: center; }
+    .nn-input { width: 100%; padding: 8px 10px; border: 1.5px solid #cfd8dc; border-radius: 6px; font-size: 0.85rem; }
+    .nn-input:focus { border-color: #0d47a1; outline: none; }
+    
+    @media (max-width: 900px) {
+      .nn-filters { grid-template-columns: 1fr; }
+      .nn-filters select, .nn-filters button { font-size: 16px; }
+      .nn-row { grid-template-columns: 1fr; gap: 8px; }
+      .nn-cell-label { display: block; font-size: 0.7rem; color: #78909c; margin-bottom: 2px; }
+    }
   </style>
 </head>
 <body>
 
   <header class="app-header teacher-header">
     <div class="container flex-between">
-      <div>
-        <h1>📝 Normalize Names</h1>
-        <span class="version">v1.0.0</span>
-      </div>
+      <div><h1>📝 Normalize Names</h1><span class="version">v1.0.10</span></div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
-        <a href="../diagnostics.html" style="color:#00e676;border-color:#00e676;">🔬 Diagnostic</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -49,13 +42,6 @@
           <h1 style="font-size:1.4rem;">Normalize Student Names</h1>
           <p>Fix inconsistencies — <strong>Last Name in ALL CAPS</strong> · First &amp; Middle in <strong>Title Case</strong>.</p>
         </div>
-      </div>
-    </div>
-
-    <div class="alert alert-info" style="font-size:0.85rem;">
-      <strong>ℹ️ How this works</strong>
-      <div style="margin-top:6px;">
-        Click <strong>Auto-Fix All</strong> to apply the standard formatting everywhere, or edit individual fields and click <strong>Save</strong> per student.
       </div>
     </div>
 
@@ -73,217 +59,152 @@
           <label class="form-label">Search</label>
           <input type="text" id="filter-search" class="form-control" placeholder="Name or LRN…" />
         </div>
-        <div class="form-group" style="flex:0;">
+        <div class="form-group">
           <label class="form-label">&nbsp;</label>
-          <button id="btn-autofix-all" class="btn btn-accent">✨ Auto-Fix All</button>
-        </div>
-        <div class="form-group" style="flex:0;">
-          <label class="form-label">&nbsp;</label>
-          <button id="btn-refresh" class="btn btn-outline">🔄 Refresh</button>
+          <button id="btn-autofix-all">✨ Auto-Fix All</button>
         </div>
       </div>
     </div>
 
     <div id="results-area">
-      <div class="card nn-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
-        <p>Loading auth module…</p>
-      </div>
+      <div class="card" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Loading from cloud...</div>
     </div>
   </main>
 
-  <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
-  </footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../config.js?v=1.0.10"></script>
+  <script src="../assets/js/app.js?v=1.0.10"></script>
+  <script src="../assets/js/store.js?v=1.0.10"></script>
+  <script src="../assets/js/security.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.10"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.0.10"></script>
+  
   <script>
     (function() {
       'use strict';
 
-      var students = [];
-      var pendingChanges = {};
+      let allStudents = [];
 
-      TeacherAuthBoot.ready(function(auth) {
+      TeacherAuthBoot.ready(async function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-        document.getElementById('btn-refresh').addEventListener('click', render);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
         document.getElementById('btn-autofix-all').addEventListener('click', autoFixAll);
         document.getElementById('filter-section').addEventListener('change', render);
         document.getElementById('filter-search').addEventListener('input', render);
-        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-        render();
-      }, function() {
-        document.getElementById('results-area').innerHTML =
-          '<div class="card nn-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+
+        try {
+          allStudents = await TeacherCloud.fetchStudents();
+          render();
+        } catch (err) {
+          document.getElementById('results-area').innerHTML = `<div class="card" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</div>`;
+        }
       });
 
       function render() {
-        var sectionFilter = document.getElementById('filter-section').value;
-        var search = document.getElementById('filter-search').value.trim().toLowerCase();
-        students = Store.getAllUsers();
-        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
+        const sectionFilter = document.getElementById('filter-section').value;
+        const search = document.getElementById('filter-search').value.trim().toLowerCase();
+        
+        let filtered = allStudents;
+        if (sectionFilter) filtered = filtered.filter(s => s.section === sectionFilter);
         if (search) {
-          students = students.filter(function(s) {
-            var full = ((s.lastName || '') + ' ' + (s.firstName || '') + ' ' + (s.middleName || '')).toLowerCase();
-            return full.indexOf(search) !== -1 || String(s.lrn).indexOf(search) !== -1;
-          });
+          filtered = filtered.filter(s => 
+            ((s.lastName || '') + ' ' + (s.firstName || '')).toLowerCase().includes(search) || 
+            String(s.lrn).includes(search)
+          );
         }
-        students = APP.sortStudents(students, 'last', 'asc');
-        var area = document.getElementById('results-area');
+        filtered.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
 
-        if (!students.length) {
-          area.innerHTML = '<div class="card nn-empty">👥 No students match</div>';
-          return;
-        }
+        const area = document.getElementById('results-area');
+        if (!filtered.length) { area.innerHTML = '<div class="card" style="text-align:center;padding:40px;">👥 No students found.</div>'; return; }
 
-        var needsFixCount = students.filter(needsFix).length;
-
-        area.innerHTML =
-          '<div class="stats-grid" style="margin-bottom:20px;">' +
-            '<div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value">' + students.length + '</div><div class="stat-label">Students Listed</div></div>' +
-            '<div class="stat-card ' + (needsFixCount > 0 ? 'amber' : 'green') + '"><div class="stat-icon">✏️</div><div class="stat-value">' + needsFixCount + '</div><div class="stat-label">Need Fixing</div></div>' +
-            '<div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-value">' + (students.length - needsFixCount) + '</div><div class="stat-label">Already Normalized</div></div>' +
-          '</div>' +
-          '<div id="nn-list"></div>';
-
-        var list = document.getElementById('nn-list');
-        students.forEach(function(s) { list.appendChild(buildRow(s)); });
-        attachRowHandlers();
+        area.innerHTML = filtered.map(s => {
+          const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
+          return `
+            <div class="nn-row" data-lrn="${s.lrn}">
+              <div style="width:40px;height:40px;border-radius:50%;background:#0d47a1;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;">${initials}</div>
+              <div><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="${s.lastName || ''}" /></div>
+              <div><div class="nn-cell-label">First Name</div><input class="nn-input" type="text" data-field="firstName" value="${s.firstName || ''}" /></div>
+              <div><div class="nn-cell-label">Middle Name</div><input class="nn-input" type="text" data-field="middleName" value="${s.middleName || ''}" /></div>
+              <div><div class="nn-cell-label">LRN</div><div style="font-family:monospace;padding:8px 10px;background:#f5f7fa;border-radius:6px;">${s.lrn}</div></div>
+              <div><button class="btn btn-primary" style="width:100%;font-size:0.75rem;padding:6px;" onclick="saveStudent('${s.lrn}')">💾 Save</button></div>
+            </div>
+          `;
+        }).join('');
       }
 
-      function buildRow(s) {
-        var current = { lastName: s.lastName || '', firstName: s.firstName || '', middleName: s.middleName || '' };
-        var pending = pendingChanges[s.lrn];
-        var shown = pending || current;
-        var initials = ((current.firstName || '?').charAt(0) + (current.lastName || '?').charAt(0)).toUpperCase();
-
-        var row = document.createElement('div');
-        row.className = 'nn-row' + (pending ? ' changed' : '');
-        row.dataset.lrn = s.lrn;
-        row.innerHTML =
-          '<div class="nn-avatar">' + initials + '</div>' +
-          '<div class="nn-field"><div class="nn-cell-label">Last Name</div><input class="nn-input" type="text" data-field="lastName" value="' + escapeAttr(shown.lastName) + '" /></div>' +
-          '<div class="nn-field"><div class="nn-cell-label">First Name</div><input class="nn-input" type="text" data-field="firstName" value="' + escapeAttr(shown.firstName) + '" /></div>' +
-          '<div class="nn-field"><div class="nn-cell-label">Middle Name</div><input class="nn-input" type="text" data-field="middleName" value="' + escapeAttr(shown.middleName) + '" /></div>' +
-          '<div class="nn-field"><div class="nn-cell-label">LRN</div><div style="font-family:Consolas,monospace;font-size:0.8rem;color:#37474f;padding:8px 10px;background:#f5f7fa;border-radius:8px;">' + APP.formatLRN(s.lrn) + '</div></div>' +
-          '<div class="nn-actions"><button class="btn btn-primary" data-save="' + s.lrn + '">💾 Save</button><button class="btn btn-outline" data-autofix="' + s.lrn + '" style="color:#ed6c02;border-color:#ed6c02;">✨ Auto</button></div>';
-
-        row.querySelectorAll('.nn-input').forEach(function(input) {
-          input.addEventListener('blur', function() {
-            var field = input.dataset.field;
-            if (field === 'lastName') input.value = APP.toLastNameFormat(input.value);
-            else input.value = APP.toTitleCase(input.value);
-            checkRowChange(row, s);
-          });
-          input.addEventListener('input', function() { checkRowChange(row, s); });
-        });
-        return row;
-      }
-
-      function attachRowHandlers() {
-        document.querySelectorAll('[data-save]').forEach(function(btn) {
-          btn.addEventListener('click', function() { saveStudent(btn.dataset.save); });
-        });
-        document.querySelectorAll('[data-autofix]').forEach(function(btn) {
-          btn.addEventListener('click', function() { autoFixOne(btn.dataset.autofix); });
-        });
-      }
-
-      function checkRowChange(row, s) {
-        var inputs = row.querySelectorAll('.nn-input');
-        var current = { lastName: s.lastName || '', firstName: s.firstName || '', middleName: s.middleName || '' };
-        var values = {};
-        inputs.forEach(function(i) { values[i.dataset.field] = i.value; });
-        var changed = Object.keys(values).some(function(k) { return values[k] !== current[k]; });
-        if (changed) {
-          row.classList.add('changed');
-          inputs.forEach(function(i) { i.classList.add('changed'); });
-          pendingChanges[s.lrn] = values;
-        } else {
-          row.classList.remove('changed');
-          inputs.forEach(function(i) { i.classList.remove('changed'); });
-          delete pendingChanges[s.lrn];
-        }
-      }
-
-      function saveStudent(lrn) {
-        var row = document.querySelector('.nn-row[data-lrn="' + lrn + '"]');
+      window.saveStudent = async function(lrn) {
+        const row = document.querySelector(`.nn-row[data-lrn="${lrn}"]`);
         if (!row) return;
-        var s = Store.getUser(lrn);
-        if (!s) return;
-        var inputs = row.querySelectorAll('.nn-input');
-        var updates = {};
-        inputs.forEach(function(i) {
-          var field = i.dataset.field;
-          if (field === 'lastName') updates.lastName = APP.toLastNameFormat(i.value.trim());
-          else if (field === 'firstName') updates.firstName = APP.toTitleCase(i.value.trim());
-          else updates.middleName = APP.toTitleCase(i.value.trim());
+        const inputs = row.querySelectorAll('.nn-input');
+        const student = allStudents.find(s => s.lrn === lrn);
+        
+        const updates = {};
+        inputs.forEach(i => {
+          const f = i.dataset.field;
+          if (f === 'lastName') updates[f] = i.value.trim().toUpperCase();
+          else updates[f] = i.value.trim().replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
         });
-        if (!updates.lastName || !updates.firstName) {
-          APP.toast('Last name and first name are required', 'danger', 3000);
-          return;
-        }
-        var merged = Object.assign({}, s, updates, { updatedAt: new Date().toISOString() });
-        Store.saveUser(merged);
-        delete pendingChanges[lrn];
-        inputs.forEach(function(i) { i.value = updates[i.dataset.field] || ''; });
-        row.classList.remove('changed');
-        row.classList.add('saved');
-        inputs.forEach(function(i) { i.classList.remove('changed'); });
-        APP.toast('✅ Saved: ' + updates.lastName + ', ' + updates.firstName, 'success', 2500);
-        setTimeout(function() { row.classList.remove('saved'); }, 1500);
-      }
 
-      function autoFixOne(lrn) {
-        var row = document.querySelector('.nn-row[data-lrn="' + lrn + '"]');
-        if (!row) return;
-        var inputs = row.querySelectorAll('.nn-input');
-        inputs.forEach(function(i) {
-          var field = i.dataset.field;
-          if (field === 'lastName') i.value = APP.toLastNameFormat(i.value);
-          else i.value = APP.toTitleCase(i.value);
-        });
-        var s = Store.getUser(lrn);
-        checkRowChange(row, s);
-        saveStudent(lrn);
-      }
-
-      function autoFixAll() {
-        if (!confirm('Apply normalized formatting to ' + students.length + ' student(s)? This will save immediately.')) return;
-        var fixed = 0;
-        students.forEach(function(s) {
-          var updates = {
-            lastName: APP.toLastNameFormat(s.lastName || ''),
-            firstName: APP.toTitleCase(s.firstName || ''),
-            middleName: s.middleName ? APP.toTitleCase(s.middleName) : ''
-          };
-          if (updates.lastName !== s.lastName || updates.firstName !== s.firstName || updates.middleName !== (s.middleName || '')) {
-            Store.saveUser(Object.assign({}, s, updates, { updatedAt: new Date().toISOString() }));
-            fixed++;
+        try {
+          const res = await fetch(CONFIG.BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'syncStudentProgress',
+              lrn: lrn,
+              progressJSON: student.progress || {}, // Preserve progress
+              studentInfo: {
+                lastName: updates.lastName,
+                firstName: updates.firstName,
+                middleName: updates.middleName,
+                sex: student.sex,
+                section: student.section
+              }
+            })
+          });
+          const data = await res.json();
+          if (data.ok) {
+            alert('✅ Name saved to backend!');
+            Object.assign(student, updates); // update local array
+            render();
+          } else {
+            alert('❌ Save failed: ' + data.error);
           }
-        });
-        pendingChanges = {};
-        APP.toast('✨ Auto-fixed ' + fixed + ' student name(s)', 'success', 3500);
+        } catch (err) {
+          alert('❌ Error: ' + err.message);
+        }
+      };
+
+      async function autoFixAll() {
+        if (!confirm('Apply normalized formatting to ALL students? This will save directly to the backend.')) return;
+        let fixed = 0;
+        for (const s of allStudents) {
+          const updates = {
+            lastName: (s.lastName || '').trim().toUpperCase(),
+            firstName: (s.firstName || '').trim().replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()),
+            middleName: (s.middleName || '').trim().replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+          };
+          if (updates.lastName !== s.lastName || updates.firstName !== s.firstName) {
+            try {
+              await fetch(CONFIG.BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  action: 'syncStudentProgress',
+                  lrn: s.lrn,
+                  progressJSON: s.progress || {},
+                  studentInfo: { lastName: updates.lastName, firstName: updates.firstName, middleName: updates.middleName, sex: s.sex, section: s.section }
+                })
+              });
+              Object.assign(s, updates);
+              fixed++;
+            } catch (e) {}
+          }
+        }
+        alert(`✅ Fixed ${fixed} students!`);
         render();
-      }
-
-      function needsFix(s) {
-        var l = s.lastName || '', f = s.firstName || '', m = s.middleName || '';
-        if (!l || !f) return true;
-        if (l !== APP.toLastNameFormat(l)) return true;
-        if (f !== APP.toTitleCase(f)) return true;
-        if (m && m !== APP.toTitleCase(m)) return true;
-        return false;
-      }
-
-      function escapeAttr(str) {
-        return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
     })();
   </script>
