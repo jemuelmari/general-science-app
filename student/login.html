@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Login — General Science</title>
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#0d47a1" />
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/student.css" />
   <style>
@@ -345,10 +347,23 @@
   <script src="../assets/js/app.js?v=1.0.9"></script>
   <script src="../assets/js/store.js?v=1.0.9"></script>
   <script src="../assets/js/security.js?v=1.0.9"></script>
-  <script src="../assets/js/sync.js?v=1.0.9"></script>
+  <!-- Removed sync.js to prevent conflict -->
   <script>
     (function() {
       'use strict';
+
+      // Helper: direct fetch to backend
+      async function backendPost(payload) {
+        if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
+          throw new Error('Backend URL not configured.');
+        }
+        const res = await fetch(CONFIG.BACKEND_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        return res.json();
+      }
 
       /* ============================================================
          TABS
@@ -386,7 +401,7 @@
       formatLrn(document.getElementById('reg-lrn'));
 
       /* ============================================================
-         LOGIN FORM (Cloud-First)
+         LOGIN FORM (Direct Fetch)
          ============================================================ */
       document.getElementById('login-form').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -406,14 +421,16 @@
         btn.textContent = '⏳ Checking...';
 
         try {
-          if (typeof Store.loginStudent !== 'function') {
-            throw new Error('Store.loginStudent not found. Please clear cache and try again.');
+          const res = await backendPost({
+            action: 'loginStudent',
+            lrn: lrnInput
+          });
+
+          if (!res || !res.ok) {
+            throw new Error(res.error || 'Login failed');
           }
-          
-          const res = await Store.loginStudent(lrnInput);
-          
+
           if (res.isNew) {
-            // Student doesn't have a profile yet — redirect to register tab
             document.querySelector('[data-tab="register"]').click();
             document.getElementById('reg-lrn').value = document.getElementById('login-lrn').value;
             errEl.textContent = 'No saved profile found. Please complete registration below.';
@@ -422,8 +439,18 @@
             btn.textContent = 'Log In →';
             return;
           }
+
+          // Save user session
+          Store.set('session', res.student);
           
-          // Existing student — redirect to dashboard
+          // 🔥 Merge data from backend
+          const lrn = res.student.lrn;
+          if (res.student.progress) {
+            if (res.student.progress.scores) Store.set('scores_' + lrn, res.student.progress.scores);
+            if (res.student.progress.progress) Store.set('progress_' + lrn, res.student.progress.progress);
+            if (res.student.progress.badges) Store.set('badges_' + lrn, res.student.progress.badges);
+          }
+
           window.location.href = 'dashboard.html';
         } catch (err) {
           console.error('[Login] Error:', err);
@@ -435,7 +462,7 @@
       });
 
       /* ============================================================
-         REGISTER FORM (Cloud-First)
+         REGISTER FORM (Direct Fetch)
          ============================================================ */
       document.getElementById('register-form').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -463,13 +490,6 @@
         btn.textContent = '⏳ Creating...';
 
         try {
-          if (typeof Sync === 'undefined' || typeof CONFIG === 'undefined') {
-            throw new Error('Backend not configured.');
-          }
-          
-          // Get device ID from Store
-          const deviceId = localStorage.getItem('gsa_v1_device_id') || 'DEV-unknown';
-          
           // Build progressJSON (empty for new student)
           const progressJSON = { scores: {}, progress: {}, badges: {}, locks: {}, unlocks: {} };
           const jsonString = JSON.stringify(progressJSON);
@@ -482,13 +502,12 @@
           }
           const integrityHash = (hash >>> 0).toString(16);
 
-          // Send to backend
-          const res = await Sync.backendPost({
+          const res = await backendPost({
             action: 'syncStudentProgress',
             lrn: lrnInput,
             progressJSON: progressJSON,
             integrityHash: integrityHash,
-            deviceId: deviceId,
+            deviceId: localStorage.getItem('gsa_v1_device_id') || 'DEV-unknown',
             studentInfo: {
               lastName: lastName,
               firstName: firstName,
@@ -502,7 +521,7 @@
             throw new Error(res.error || 'Registration failed');
           }
 
-          // Save user locally
+          // Save session
           const user = {
             lrn: lrnInput,
             lastName: lastName,
