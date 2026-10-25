@@ -1,13 +1,15 @@
 /* ============================================================
-   classrecord.js — Gradebook logic (Cloud-First)
-   Version: 1.2.0
+   classrecord.js — Gradebook logic (Cloud-First + Full Render)
+   Version: 2.1.0
    ============================================================ */
 
 (() => {
   'use strict';
 
-  TeacherAuth.init();
-  if (!TeacherAuth.require()) return;
+  if (typeof TeacherAuth !== 'undefined') {
+    TeacherAuth.init();
+    if (!TeacherAuth.require()) return;
+  }
 
   /* ============================================================
      WEIGHTING CONSTANTS
@@ -15,25 +17,21 @@
   const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
   const EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
 
+  let allStudents = [];
   let backendPTGrades = {};
-  let allStudents = []; // Galing sa backend
 
   /* ============================================================
-     FETCH STUDENTS FROM BACKEND
+     FETCH DATA FROM BACKEND
      ============================================================ */
   async function fetchStudentsFromCloud() {
     const tbody = document.getElementById('summary-body');
     if (tbody) tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Fetching students from cloud...</td></tr>';
-
+    
     try {
-      if (typeof TeacherCloud === 'undefined' || typeof TeacherCloud.fetchStudents !== 'function') {
-        throw new Error('TeacherCloud module not loaded.');
-      }
+      if (typeof TeacherCloud === 'undefined') throw new Error('TeacherCloud not loaded');
       allStudents = await TeacherCloud.fetchStudents();
-      console.log(`[ClassRecord] Loaded ${allStudents.length} students from cloud.`);
     } catch (err) {
-      console.error('[ClassRecord] Failed to fetch from cloud:', err);
-      allStudents = [];
+      console.error('[ClassRecord] Fetch error:', err);
       if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
       throw err;
     }
@@ -53,7 +51,7 @@
         backendPTGrades = map;
       }
     } catch (e) {
-      console.warn('[ClassRecord] Failed to fetch PT grades from backend:', e);
+      console.warn('[ClassRecord] Failed to fetch PT grades:', e);
     }
   }
 
@@ -61,26 +59,22 @@
      HELPERS
      ============================================================ */
   function getStudents(term, section) {
-    let list = allStudents; // Galing sa backend
+    let list = allStudents;
     if (section) list = list.filter(s => (s.section || '').replace(/_/g, ' ').toUpperCase() === section.replace(/_/g, ' ').toUpperCase());
     return list.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
   }
 
   function getScorePercent(lrn, term, type, id) {
-    // PT scores galing sa backend
     if (type === 'pt') {
       var backendScore = backendPTGrades[lrn]?.[term]?.[id];
       if (backendScore !== undefined) return backendScore;
       return null;
     }
 
-    // Other scores (quizzes, STs, TE) galing sa StudentsMaster progressJSON
     const student = allStudents.find(s => s.lrn === lrn);
     if (!student) return null;
     
-    const p = student.progress || {};
-    const scores = p.scores?.[term] || {};
-    
+    const scores = student.progress?.scores?.[term] || {};
     let record = null;
     if (type === 'te') record = scores.te;
     else record = scores[type]?.[id];
@@ -140,8 +134,9 @@
   function renderSummary(rows, term) {
     const tbody = document.getElementById('summary-body');
     if (!tbody) return;
+
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found for this filter.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">No students found.</td></tr>';
       return;
     }
 
@@ -190,7 +185,7 @@
   }
 
   /* ============================================================
-     RENDER — STATS (Simplified)
+     RENDER — STATS
      ============================================================ */
   function renderStats(rows) {
     const stats = document.getElementById('cr-stats');
@@ -220,16 +215,98 @@
   }
 
   /* ============================================================
+     RENDER — DISTRIBUTION
+     ============================================================ */
+  function renderDistribution(rows) {
+    const grid = document.getElementById('distribution-grid');
+    if (!grid) return;
+
+    const finals = rows.map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null).filter((v) => v != null && v > 0);
+    const ranges = [
+      { label: '90–100 (Outstanding)',   min: 90, max: 100, color: '#2e7d32' },
+      { label: '85–89 (Very Satisfactory)', min: 85, max: 89, color: '#0d47a1' },
+      { label: '80–84 (Satisfactory)',   min: 80, max: 84, color: '#0277bd' },
+      { label: '75–79 (Fairly Satisfactory)', min: 75, max: 79, color: '#00acc1' },
+      { label: 'Below 75 (Did Not Meet)', min: 0, max: 74, color: '#c62828' }
+    ];
+    const rangeCounts = ranges.map((r) => ({ ...r, count: finals.filter((f) => f >= r.min && f <= r.max).length }));
+
+    const pcts = [];
+    rows.forEach((r) => { Object.values(r.scores).forEach((v) => { if (v != null) pcts.push(v); }); });
+    const avgMPS = pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0;
+    const pl = Transmutation.proficiencyLevel ? Transmutation.proficiencyLevel(avgMPS) : { level: 'N/A', key: 'info' };
+
+    grid.innerHTML =
+      '<div class="report-card">' +
+        '<h4>📊 Grade Distribution</h4>' +
+        (finals.length === 0
+          ? '<p class="text-muted text-small" style="text-align:center;padding:20px;">No complete final grades yet.</p>'
+          : rangeCounts.map((r) => (typeof UI !== 'undefined' && UI.renderDistributionRow) ? UI.renderDistributionRow(r.label, r.count, finals.length, r.color) : `<div>${r.label}: ${r.count}</div>`).join('')
+        ) +
+      '</div>' +
+      '<div class="report-card">' +
+        '<h4>🎯 Class Performance Summary</h4>' +
+        '<div style="margin-top:16px;">' +
+          '<div class="text-small text-muted" style="margin-bottom:6px;">Class MPS</div>' +
+          '<div style="font-size:2rem;font-weight:800;color:' + mpsColor(avgMPS) + ';">' + avgMPS.toFixed(1) + '%</div>' +
+          '<div style="margin-top:12px;"><span class="pl-indicator pl-' + pl.key + '">' + pl.level + '</span></div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function mpsColor(mps) {
+    if (mps >= 90) return '#2e7d32';
+    if (mps >= 75) return '#0d47a1';
+    if (mps >= 50) return '#ed6c02';
+    return '#c62828';
+  }
+
+  /* ============================================================
+     RENDER — MLL
+     ============================================================ */
+  function renderMLL(rows) {
+    const grid = document.getElementById('mll-grid');
+    if (!grid) return;
+    const labels = { q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3', pt1: 'PT1', pt2: 'PT2', pt3: 'PT3', st1: 'ST1', st2: 'ST2', te: 'Term Exam' };
+    const assessmentStats = Object.keys(labels).map((k) => {
+      const pcts = rows.map((r) => r.scores[k]).filter((v) => v != null);
+      return { key: k, label: labels[k], avg: pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0, count: pcts.length };
+    }).filter((a) => a.count > 0);
+
+    const sorted = [...assessmentStats].sort((a, b) => b.avg - a.avg);
+    const most = sorted.slice(0, 3);
+    const least = sorted.slice(-3).reverse();
+
+    grid.innerHTML =
+      '<div class="report-card"><h4>✅ Most Learned</h4><ul class="mll-list">' +
+        most.map((a) => `<li><div class="mll-desc"><span class="mll-code">${a.count} sub</span>${a.label}</div><div class="mll-mps" style="color:#2e7d32;">${a.avg.toFixed(1)}%</div></li>`).join('') +
+      '</ul></div>' +
+      '<div class="report-card"><h4>⚠️ Least Learned</h4><ul class="mll-list">' +
+        least.map((a) => `<li><div class="mll-desc"><span class="mll-code">${a.count} sub</span>${a.label}</div><div class="mll-mps" style="color:#c62828;">${a.avg.toFixed(1)}%</div></li>`).join('') +
+      '</ul></div>';
+  }
+
+  /* ============================================================
+     RENDER — TRANSMUTATION
+     ============================================================ */
+  function renderTransmutationTable() {
+    const tbody = document.getElementById('transmutation-body');
+    if (!tbody) return;
+    const rows = [];
+    for (let raw = 100; raw >= 0; raw -= 2) {
+      const left = { raw, out: Transmutation.transmute ? Transmutation.transmute(raw) : raw };
+      const right = raw - 1 >= 0 ? { raw: raw - 1, out: Transmutation.transmute ? Transmutation.transmute(raw - 1) : raw - 1 } : null;
+      rows.push([left, right]);
+    }
+    tbody.innerHTML = rows.map(([l, r]) => '<tr><td class="raw">' + l.raw + '</td><td class="final">' + l.out + '</td>' + (r ? '<td class="raw">' + r.raw + '</td><td class="final">' + r.out + '</td>' : '<td></td><td></td>') + '</tr>').join('');
+  }
+
+  /* ============================================================
      TABS
      ============================================================ */
   function attachTabs() {
     const tabs = document.querySelectorAll('.cr-tab');
-    const panels = {
-      summary: document.getElementById('tab-summary'),
-      distribution: document.getElementById('tab-distribution'),
-      mll: document.getElementById('tab-mll'),
-      transmutation: document.getElementById('tab-transmutation')
-    };
+    const panels = { summary: document.getElementById('tab-summary'), distribution: document.getElementById('tab-distribution'), mll: document.getElementById('tab-mll'), transmutation: document.getElementById('tab-transmutation') };
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => t.classList.remove('active'));
@@ -247,22 +324,12 @@
     const term = document.getElementById('filter-term').value;
     const section = document.getElementById('filter-section').value;
 
-    // Show loading
     const tbody = document.getElementById('summary-body');
     if (tbody && !allStudents.length) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Loading students and PT grades...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Syncing data from backend...</td></tr>';
     }
 
-    // Fetch students from cloud (if not yet loaded)
-    if (!allStudents.length) {
-      try {
-        await fetchStudentsFromCloud();
-      } catch (e) {
-        return;
-      }
-    }
-
-    // Fetch latest PT grades
+    if (!allStudents.length) await fetchStudentsFromCloud();
     await fetchPTGrades();
 
     const students = getStudents(term, section);
@@ -270,35 +337,26 @@
 
     renderStats(rows);
     renderSummary(rows, term);
+    renderDistribution(rows);
+    renderMLL(rows);
+    renderTransmutationTable();
   }
 
   /* ============================================================
-     EVENT LISTENERS
-     ============================================================ */
-  function attachListeners() {
-    document.getElementById('filter-term').addEventListener('change', render);
-    document.getElementById('filter-section').addEventListener('change', render);
-    document.getElementById('btn-refresh').addEventListener('click', async () => {
-      allStudents = []; // Force re-fetch
-      await render();
-      if (typeof APP !== 'undefined' && APP.toast) APP.toast('Refreshed from cloud!', 'success', 1500);
-    });
-    if (document.getElementById('btn-export')) {
-      document.getElementById('btn-export').addEventListener('click', () => {
-        if (typeof APP !== 'undefined' && APP.toast) APP.toast('Export feature coming soon', 'info', 2000);
-      });
-    }
-    if (document.getElementById('btn-logout')) {
-      document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
-    }
-  }
-
-  /* ============================================================
-     INIT
+     EVENT LISTENERS & INIT
      ============================================================ */
   document.addEventListener('DOMContentLoaded', () => {
     attachTabs();
-    attachListeners();
+    document.getElementById('filter-term').addEventListener('change', render);
+    document.getElementById('filter-section').addEventListener('change', render);
+    document.getElementById('btn-refresh').addEventListener('click', async () => {
+      allStudents = []; // force re-fetch
+      await render();
+      if (typeof APP !== 'undefined' && APP.toast) APP.toast('Refreshed from cloud!', 'success', 1500);
+    });
+    if (document.getElementById('btn-export')) document.getElementById('btn-export').addEventListener('click', exportCSV);
+    if (document.getElementById('btn-logout')) document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
+
     render();
   });
 
