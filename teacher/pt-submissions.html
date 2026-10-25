@@ -7,35 +7,50 @@
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
   <style>
-    .filter-bar { background:#fff; border-radius:14px; padding:16px 20px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:12px; align-items:end; }
-    .filter-bar label { font-size:0.78rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; display:block; margin-bottom:6px; }
-    .filter-bar select, .filter-bar input { padding:10px 12px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.9rem; background:#fff; min-width:160px; }
+    /* ── Responsive Filters ── */
+    .filter-bar { 
+      background:#fff; border-radius:14px; padding:16px 20px; 
+      box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; 
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; align-items:end;
+    }
+    .filter-bar label { font-size:0.75rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; display:block; margin-bottom:6px; }
+    .filter-bar select, .filter-bar input { width:100%; padding:10px 12px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.9rem; background:#fff; box-sizing:border-box; }
     .filter-bar select:focus, .filter-bar input:focus { outline:none; border-color:#0d47a1; box-shadow:0 0 0 3px rgba(13,71,161,0.1); }
-    .filter-bar button { padding:10px 20px; background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; border:none; border-radius:8px; font-family:inherit; font-size:0.9rem; font-weight:700; cursor:pointer; }
-    .filter-bar button:hover { transform:translateY(-1px); }
+    .btn-refresh { width:100%; padding:10px 20px; background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; border:none; border-radius:8px; font-family:inherit; font-size:0.9rem; font-weight:700; cursor:pointer; }
+    .btn-refresh:hover { transform:translateY(-1px); }
 
-    .stats-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px; margin-bottom:20px; }
-    .stat-card { background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-top:4px solid #0d47a1; }
+    /* ── Responsive Stats ── */
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:14px; margin-bottom:20px; }
+    .stat-card { background:#fff; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-top:4px solid #0d47a1; }
     .stat-card.pending { border-top-color:#ed6c02; }
     .stat-card.graded { border-top-color:#2e7d32; }
-    .stat-card .label { font-size:0.75rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
-    .stat-card .value { font-size:2rem; font-weight:800; color:#1a1a1a; margin-top:6px; line-height:1; }
-    .stat-card .sub { font-size:0.75rem; color:#90a4ae; margin-top:4px; }
+    .stat-card .label { font-size:0.7rem; color:#5f6368; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+    .stat-card .value { font-size:1.8rem; font-weight:800; color:#1a1a1a; margin-top:6px; line-height:1; }
+    .stat-card .sub { font-size:0.7rem; color:#90a4ae; margin-top:4px; }
 
-    .sub-table { background:#fff; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); overflow:hidden; }
-    .sub-table table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    /* ── Responsive Table ── */
+    .table-container { 
+      width: 100%; 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; 
+      border-radius: 14px; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+      background: #fff;
+      margin-bottom: 20px;
+    }
+    .sub-table { width: 100%; min-width: 800px; border-collapse:collapse; font-size:0.85rem; }
     .sub-table thead { background:#f5f7fa; }
-    .sub-table th { text-align:left; padding:14px 16px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; color:#5f6368; border-bottom:2px solid #e0e0e0; font-weight:700; }
-    .sub-table td { padding:14px 16px; border-bottom:1px solid #f0f0f0; color:#1a1a1a; vertical-align:middle; }
+    .sub-table th { text-align:left; padding:12px 16px; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px; color:#5f6368; border-bottom:2px solid #e0e0e0; font-weight:700; white-space: nowrap; }
+    .sub-table td { padding:12px 16px; border-bottom:1px solid #f0f0f0; color:#1a1a1a; vertical-align:middle; }
     .sub-table tr:last-child td { border-bottom:none; }
     .sub-table tr:hover { background:#fafbfc; }
 
-    .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; white-space: nowrap; }
     .badge.pending { background:#fff3e0; color:#e65100; }
     .badge.graded { background:#e8f5e9; color:#1b5e20; }
     .badge.legacy { background:#eceff1; color:#455a64; }
 
-    .btn-sm { padding:7px 14px; border:none; border-radius:6px; font-family:inherit; font-size:0.82rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; }
+    .btn-sm { padding:6px 12px; border:none; border-radius:6px; font-family:inherit; font-size:0.78rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; white-space: nowrap; }
     .btn-grade { background:#0d47a1; color:#fff; }
     .btn-grade:hover { background:#062b5f; }
     .btn-view { background:#e3f2fd; color:#0d47a1; }
@@ -43,6 +58,15 @@
 
     .empty-state { text-align:center; padding:60px 20px; color:#90a4ae; }
     .empty-state .icon { font-size:3rem; margin-bottom:12px; }
+
+    /* ── Mobile Fixes ── */
+    @media (max-width: 600px) {
+      .filter-bar { padding: 12px; gap: 10px; grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 12px; }
+      .stat-card .value { font-size: 1.4rem; }
+      .filter-bar select, .filter-bar input, .btn-refresh { font-size: 16px; /* Prevent iOS zoom */ }
+    }
   </style>
 </head>
 <body>
@@ -51,7 +75,7 @@
     <div class="container flex-between">
       <div>
         <h1>📋 PT Submissions</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.9</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -65,6 +89,7 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
+    <!-- Filters -->
     <div class="filter-bar">
       <div>
         <label>Term</label>
@@ -96,9 +121,10 @@
         <label>Search</label>
         <input type="text" id="filter-search" placeholder="Name or LRN…" />
       </div>
-      <button id="btn-refresh">🔄 Refresh</button>
+      <button id="btn-refresh" class="btn-refresh">🔄 Refresh</button>
     </div>
 
+    <!-- Stats -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="label">Total Submissions</div>
@@ -117,8 +143,9 @@
       </div>
     </div>
 
-    <div class="sub-table">
-      <table>
+    <!-- Table -->
+    <div class="table-container">
+      <table class="sub-table">
         <thead>
           <tr>
             <th>Student</th>
@@ -141,17 +168,17 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.9</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/security.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/pt-grade.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../config.js?v=1.0.9"></script>
+  <script src="../assets/js/app.js?v=1.0.9"></script>
+  <script src="../assets/js/store.js?v=1.0.9"></script>
+  <script src="../assets/js/security.js?v=1.0.9"></script>
+  <script src="../assets/js/sync.js?v=1.0.9"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.9"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.9"></script>
+  <script src="../assets/js/pt-grade.js?v=1.0.9"></script>
   <script>
     (function() {
       'use strict';
@@ -164,10 +191,10 @@
         tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Loading submissions…</td></tr>';
 
         try {
+          // Get from backend using PTGrade module
           const subsResult = await PTGrade.listSubmissions({
             term: document.getElementById('filter-term').value,
             ptId: document.getElementById('filter-pt').value,
-            section: document.getElementById('filter-section').value, // Filter logic handles this
             includeLegacy: false
           });
 
@@ -197,6 +224,21 @@
         return null;
       }
 
+      function getFiltered() {
+        const search = (document.getElementById('filter-search').value || '').toLowerCase().trim();
+        const sectionFilter = document.getElementById('filter-section').value.replace(/_/g, ' ').toUpperCase();
+        
+        return allSubmissions.filter(s => {
+          // Section filter
+          const sSec = (s.section || '').replace(/_/g, ' ').toUpperCase();
+          if (sectionFilter && sSec !== sectionFilter) return false;
+          
+          // Search filter
+          if (!search) return true;
+          return (s.studentName || '').toLowerCase().includes(search) || (s.lrn || '').includes(search);
+        });
+      }
+
       function renderStats() {
         const filtered = getFiltered();
         let pending = 0, graded = 0;
@@ -207,15 +249,6 @@
         document.getElementById('stat-total').textContent = filtered.length;
         document.getElementById('stat-pending').textContent = pending;
         document.getElementById('stat-graded').textContent = graded;
-      }
-
-      function getFiltered() {
-        const search = (document.getElementById('filter-search').value || '').toLowerCase().trim();
-        return allSubmissions.filter(function(s) {
-          if (!search) return true;
-          return (s.studentName || '').toLowerCase().indexOf(search) !== -1 ||
-                 (s.lrn || '').indexOf(search) !== -1;
-        });
       }
 
       function renderTable() {
@@ -231,27 +264,27 @@
           const grade = findGradeFor(s.lrn, s.term, s.ptId);
           const isGraded = !!grade;
           const statusBadge = isGraded
-            ? '<span class="badge graded">✓ Graded · ' + grade.totalScore + '/100</span>'
+            ? '<span class="badge graded">✓ ' + grade.totalScore + '/100</span>'
             : '<span class="badge pending">⏳ Pending</span>';
           const legacyBadge = s.isLegacy ? ' <span class="badge legacy">Legacy</span>' : '';
 
           const fileLink = s.driveUrl
             ? '<a href="' + s.driveUrl + '" target="_blank" rel="noopener" class="btn-sm btn-view" style="margin-right:6px;">📎 View</a>'
-            : '<span style="color:#90a4ae;font-size:0.85rem;">(no file)</span>';
+            : '<span style="color:#90a4ae;font-size:0.8rem;">(no file)</span>';
 
           const gradeBtn = '<a href="pt-grade.html?lrn=' + encodeURIComponent(s.lrn) +
             '&term=' + encodeURIComponent(s.term) +
             '&ptId=' + encodeURIComponent(s.ptId) +
-            '" class="btn-sm btn-grade">' + (isGraded ? '✏️ Edit Grade' : '🎯 Grade Now') + '</a>';
+            '" class="btn-sm btn-grade">' + (isGraded ? '✏️ Edit' : '🎯 Grade') + '</a>';
 
           return '<tr>' +
             '<td><strong>' + escapeHtml(s.studentName || 'Unknown') + '</strong>' + legacyBadge + '</td>' +
-            '<td style="font-family:monospace;font-size:0.82rem;">' + escapeHtml(s.lrn) + '</td>' +
+            '<td style="font-family:monospace;font-size:0.8rem;">' + escapeHtml(s.lrn) + '</td>' +
             '<td>' + escapeHtml(s.section || '—') + '</td>' +
-            '<td>' + escapeHtml(s.term.replace('term', 'Term ')) + '</td>' +
+            '<td>' + escapeHtml(s.term.replace('term', 'T')) + '</td>' +
             '<td><strong>' + escapeHtml(s.ptId.toUpperCase()) + '</strong></td>' +
             '<td>' + fileLink + '</td>' +
-            '<td style="font-size:0.82rem;color:#5f6368;">' + formatDate(s.uploadedAt) + '</td>' +
+            '<td style="font-size:0.8rem;color:#5f6368;white-space:nowrap;">' + formatDate(s.uploadedAt) + '</td>' +
             '<td>' + statusBadge + '</td>' +
             '<td>' + gradeBtn + '</td>' +
             '</tr>';
@@ -263,8 +296,7 @@
         try {
           const d = new Date(iso);
           const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
-          return month + ' ' + d.getDate() + ', ' + d.getFullYear() + ' ' +
-            String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+          return month + ' ' + d.getDate() + ', ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
         } catch (e) { return iso; }
       }
 
@@ -277,11 +309,8 @@
       document.getElementById('btn-refresh').addEventListener('click', loadData);
       document.getElementById('filter-term').addEventListener('change', loadData);
       document.getElementById('filter-pt').addEventListener('change', loadData);
-      document.getElementById('filter-section').addEventListener('change', loadData);
-      document.getElementById('filter-search').addEventListener('input', function() {
-        renderStats();
-        renderTable();
-      });
+      document.getElementById('filter-section').addEventListener('change', function() { renderStats(); renderTable(); });
+      document.getElementById('filter-search').addEventListener('input', function() { renderStats(); renderTable(); });
 
       const logoutBtn = document.getElementById('btn-logout');
       if (logoutBtn) {
