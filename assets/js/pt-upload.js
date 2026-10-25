@@ -1,7 +1,6 @@
 /* ============================================================
    pt-upload.js — Performance Task upload + grade display
    Version: 1.1.0
-   Changelog v1.1.0: Added reflection + option to upload payload
    ============================================================ */
 
 const PTUpload = (() => {
@@ -10,16 +9,22 @@ const PTUpload = (() => {
   async function uploadFile(file, term, ptId, reflection, option) {
     if (!file) throw new Error('No file provided');
     if (file.size > 25 * 1024 * 1024) throw new Error('File too large (max 25 MB)');
+    
+    // SAFE CHECK
+    var user = Store.getCurrentUser();
+    if (!user || !user.lrn) {
+      throw new Error('Session expired. Please log out and log in again.');
+    }
+
     if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
       throw new Error('Backend not configured');
     }
-    if (typeof Sync === 'undefined' || typeof Sync.backendPost !== 'function') {
-      return _directUpload(file, term, ptId, reflection, option);
-    }
 
     var base64 = await _fileToBase64(file);
-    var user = Store.getCurrentUser();
-    if (!user) throw new Error('Not logged in');
+
+    if (typeof Sync === 'undefined' || typeof Sync.backendPost !== 'function') {
+      return _directUpload(file, term, ptId, reflection, option, user);
+    }
 
     var response = await Sync.backendPost({
       action: 'uploadPT',
@@ -44,11 +49,8 @@ const PTUpload = (() => {
     return response;
   }
 
-  async function _directUpload(file, term, ptId, reflection, option) {
+  async function _directUpload(file, term, ptId, reflection, option, user) {
     var base64 = await _fileToBase64(file);
-    var user = Store.getCurrentUser();
-    if (!user) throw new Error('Not logged in');
-
     var res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -62,11 +64,7 @@ const PTUpload = (() => {
         base64: base64,
         reflection: reflection || '',
         option: option || null,
-        student: {
-          firstName: user.firstName || '',
-          lastName: user.lastName || '',
-          section: user.section || ''
-        }
+        student: { firstName: user.firstName || '', lastName: user.lastName || '', section: user.section || '' }
       })
     });
     var result = await res.json();
@@ -89,10 +87,7 @@ const PTUpload = (() => {
 
   async function pullMyGrades(lrn) {
     if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) return { ok: false };
-    if (!lrn) {
-      var user = Store.getCurrentUser();
-      lrn = user && user.lrn;
-    }
+    if (!lrn) { var user = Store.getCurrentUser(); lrn = user && user.lrn; }
     if (!lrn) return { ok: false };
 
     try {
@@ -101,70 +96,31 @@ const PTUpload = (() => {
       if (typeof Sync !== 'undefined' && typeof Sync.backendPost === 'function') {
         res = await Sync.backendPost(body);
       } else {
-        var raw = await fetch(CONFIG.BACKEND_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(body)
-        });
+        var raw = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
         res = await raw.json();
       }
-      if (!res || !res.ok) return { ok: false, error: res && res.error };
       return res;
-    } catch (e) {
-      return { ok: false, error: e.message };
-    }
+    } catch (e) { return { ok: false, error: e.message }; }
   }
 
   async function requestReupload(term, ptId, currentGrade, reason) {
     var user = Store.getCurrentUser();
-    if (!user) throw new Error('Not logged in');
-
-    var body = {
-      action: 'requestPTReupload',
-      lrn: user.lrn,
-      term: term,
-      ptId: ptId,
-      reason: reason || 'wants-to-improve',
-      currentGrade: Number(currentGrade || 0),
-      student: {
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        section: user.section || ''
-      }
-    };
-
+    if (!user || !user.lrn) throw new Error('Session expired. Please log in again.');
+    var body = { action: 'requestPTReupload', lrn: user.lrn, term, ptId, reason, currentGrade: Number(currentGrade || 0), student: { firstName: user.firstName || '', lastName: user.lastName || '', section: user.section || '' } };
     var res;
-    if (typeof Sync !== 'undefined' && typeof Sync.backendPost === 'function') {
-      res = await Sync.backendPost(body);
-    } else {
-      var raw = await fetch(CONFIG.BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(body)
-      });
-      res = await raw.json();
-    }
+    if (typeof Sync !== 'undefined' && typeof Sync.backendPost === 'function') res = await Sync.backendPost(body);
+    else { var raw = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) }); res = await raw.json(); }
     if (!res || !res.ok) throw new Error((res && res.error) || 'Request failed');
     return res;
   }
 
   async function redeemReuploadCode(code) {
     var user = Store.getCurrentUser();
-    if (!user) throw new Error('Not logged in');
-
+    if (!user || !user.lrn) throw new Error('Session expired. Please log in again.');
     var body = { action: 'redeemPTReuploadCode', lrn: user.lrn, code: code };
-
     var res;
-    if (typeof Sync !== 'undefined' && typeof Sync.backendPost === 'function') {
-      res = await Sync.backendPost(body);
-    } else {
-      var raw = await fetch(CONFIG.BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(body)
-      });
-      res = await raw.json();
-    }
+    if (typeof Sync !== 'undefined' && typeof Sync.backendPost === 'function') res = await Sync.backendPost(body);
+    else { var raw = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) }); res = await raw.json(); }
     if (!res || !res.ok) throw new Error((res && res.error) || 'Redeem failed');
     return res;
   }
@@ -184,12 +140,5 @@ const PTUpload = (() => {
     return null;
   }
 
-  return {
-    uploadFile: uploadFile,
-    pullMyGrades: pullMyGrades,
-    requestReupload: requestReupload,
-    redeemReuploadCode: redeemReuploadCode,
-    formatFileSize: formatFileSize,
-    findGradeFor: findGradeFor
-  };
+  return { uploadFile, pullMyGrades, requestReupload, redeemReuploadCode, formatFileSize, findGradeFor };
 })();
