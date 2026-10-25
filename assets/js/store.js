@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — Local Storage + Cloud Sync Manager
-   Version: 2.0.0 (Cloud-First Architecture)
+   Version: 2.1.0 (Cloud-First Architecture + All Legacy Functions)
    ============================================================ */
 
 const Store = (() => {
@@ -128,10 +128,9 @@ const Store = (() => {
   });
 
   /* ============================================================
-     USER MANAGEMENT (Cloud-First)
+     USER MANAGEMENT (Cloud-First + Legacy)
      ============================================================ */
   
-  // Called by login.html
   async function loginStudent(lrn) {
     if (typeof Sync === 'undefined' || typeof CONFIG === 'undefined') {
       throw new Error('Backend not configured');
@@ -175,11 +174,29 @@ const Store = (() => {
     return get('session', null);
   }
 
+  function getUser(lrn) {
+    const users = get('users', {});
+    return users[lrn] || null;
+  }
+
+  function getAllUsers() {
+    const users = get('users', {});
+    return Object.values(users).sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+  }
+
+  function saveUser(user) {
+    const users = get('users', {});
+    users[user.lrn] = user;
+    set('users', users);
+  }
+
   function clearSession() {
     remove('session');
   }
 
-  // ... Existing getters/setters for Scores, Progress, etc. ...
+  /* ============================================================
+     SCORES & PROGRESS
+     ============================================================ */
   function saveScore(lrn, term, type, id, payload) {
     const scores = getScores(lrn);
     if (!scores[term]) scores[term] = {};
@@ -193,25 +210,84 @@ const Store = (() => {
     return get('scores_' + lrn, {});
   }
 
+  function saveProgress(lrn, term, data) {
+    const progress = getProgress(lrn);
+    if (!progress[term]) progress[term] = {};
+    progress[term] = Object.assign(progress[term], data);
+    set('progress_' + lrn, progress);
+  }
+
   function getProgress(lrn) {
     return get('progress_' + lrn, {});
+  }
+
+  function saveBadges(lrn, term, badges) {
+    const allBadges = getBadges(lrn);
+    allBadges[term] = badges;
+    set('badges_' + lrn, allBadges);
   }
 
   function getBadges(lrn) {
     return get('badges_' + lrn, {});
   }
 
-  // ... (I-keep mo na lang yung iba pang functions na kailangan mo sa store.js mo, basta't siguraduhin na yung `set()` function ang ginagamit nila para mag-trigger ng auto-sync) ...
+  /* ============================================================
+     LOCKS & UNLOCKS
+     ============================================================ */
+  function lockAssessment(lrn, lockKey, reason) {
+    const locks = get('locks_' + lrn, {});
+    locks[lockKey] = { lockedAt: new Date().toISOString(), reason: reason || 'failed' };
+    set('locks_' + lrn, locks);
+  }
+
+  function unlockAssessment(lrn, lockKey) {
+    const locks = get('locks_' + lrn, {});
+    delete locks[lockKey];
+    set('locks_' + lrn, locks);
+  }
+
+  function isAssessmentLocked(lrn, lockKey) {
+    const locks = get('locks_' + lrn, {});
+    return !!locks[lockKey];
+  }
+
+  function getAllLocks(lrn) {
+    return get('locks_' + lrn, {});
+  }
+
+  function getAllUnlocks(lrn) {
+    // Placeholder for unlocks (usually from backend)
+    return get('unlocks_' + lrn, {});
+  }
+
+  /* ============================================================
+     MISC
+     ============================================================ */
+  function clearAllData() {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith(NS));
+    keys.forEach(k => localStorage.removeItem(k));
+  }
 
   return {
     get, set, remove,
     loginStudent,
     getCurrentUser,
+    getUser,
+    getAllUsers,
+    saveUser,
     clearSession,
     saveScore,
     getScores,
+    saveProgress,
     getProgress,
+    saveBadges,
     getBadges,
-    syncToBackend // For manual sync button if needed
+    lockAssessment,
+    unlockAssessment,
+    isAssessmentLocked,
+    getAllLocks,
+    getAllUnlocks,
+    clearAllData,
+    syncToBackend
   };
 })();
