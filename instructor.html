@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="assets/css/main.css?v=1.0.10" />
   <link rel="stylesheet" href="assets/css/teacher.css?v=1.0.10" />
   <style>
-    /* ── RESPONSIVE TEACHER DASHBOARD ── */
-    
-    /* Hero Section */
+    /* HERO */
     .teacher-hero {
       background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
       border-radius: 18px;
@@ -28,82 +26,17 @@
       border-radius: 50%;
       background: rgba(255,255,255,0.08);
     }
-    .teacher-hero-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .teacher-hero-text h1 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      margin: 0 0 6px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-    .teacher-hero-text p {
-      margin: 0 0 16px;
-      opacity: 0.95;
-      font-size: clamp(0.85rem, 2vw, 1rem);
-    }
-    .teacher-hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .teacher-hero-content { position: relative; z-index: 1; }
+    .teacher-hero-text h1 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 6px; font-weight: 800; }
+    .teacher-hero-text p { margin: 0 0 16px; opacity: 0.95; font-size: clamp(0.85rem, 2vw, 1rem); }
+    .teacher-hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
     .teacher-hero-stat {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.15);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
-      backdrop-filter: blur(10px);
-    }
-    .teacher-hero-stat span {
-      font-size: 1.1rem;
-    }
-    .teacher-hero-stat strong {
-      font-weight: 800;
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); padding: 8px 14px;
+      border-radius: 999px; font-size: 0.85rem; backdrop-filter: blur(10px);
     }
 
-    /* Hero Actions */
-    .teacher-hero-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-    }
-    .teacher-hero-actions a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 12px 16px;
-      background: #fff;
-      color: #0d47a1;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-      text-decoration: none;
-      transition: all 0.15s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .teacher-hero-actions a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .teacher-hero-actions a.outline {
-      background: transparent;
-      color: #fff;
-      border: 1.5px solid rgba(255,255,255,0.6);
-    }
-    .teacher-hero-actions a.outline:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    /* Stats Grid */
+    /* STATS GRID */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -111,216 +44,43 @@
       margin-bottom: 24px;
     }
     .stat-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
+      background: #fff; border-radius: 14px; padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      display: flex; align-items: center; gap: 16px;
       border-left: 4px solid #0d47a1;
     }
-    .stat-icon {
-      font-size: 2rem;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #e3f2fd;
-      border-radius: 12px;
-      flex-shrink: 0;
-    }
-    .stat-value {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      font-weight: 800;
-      color: #1a1a1a;
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      color: #5f6368;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 700;
-      margin-top: 4px;
-    }
+    .stat-icon { font-size: 2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #e3f2fd; border-radius: 12px; flex-shrink: 0; }
+    .stat-value { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: #1a1a1a; line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-top: 4px; }
 
-    /* Action Grid (Teacher Tools) */
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-      margin-bottom: 32px;
-    }
+    /* ACTION GRID */
+    .action-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 32px; }
     .action-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      text-decoration: none;
-      color: inherit;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      transition: all 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      position: relative;
-      border-top: 4px solid transparent;
+      background: #fff; border-radius: 14px; padding: 20px; text-decoration: none; color: inherit;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.15s ease;
+      display: flex; flex-direction: column; gap: 8px; position: relative; border-top: 4px solid transparent;
     }
-    .action-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    }
-    .action-icon {
-      font-size: 2rem;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f5f7fa;
-      border-radius: 12px;
-      margin-bottom: 4px;
-    }
-    .action-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin: 0;
-    }
-    .action-card p {
-      font-size: 0.82rem;
-      color: #5f6368;
-      line-height: 1.5;
-      margin: 0;
-    }
-    .action-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    .action-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .action-icon { font-size: 2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f5f7fa; border-radius: 12px; margin-bottom: 4px; }
+    .action-card h3 { font-size: 1rem; font-weight: 700; color: #1a1a1a; margin: 0; }
+    .action-card p { font-size: 0.82rem; color: #5f6368; line-height: 1.5; margin: 0; }
+    .action-badge { position: absolute; top: 14px; right: 14px; padding: 3px 10px; border-radius: 999px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* Roster Section */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-      font-weight: 700;
-      color: #0d47a1;
-      margin: 0;
-    }
-    .roster-filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .roster-filters select, .roster-filters input {
-      padding: 8px 12px;
-      border: 1.5px solid #cfd8dc;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.85rem;
-    }
-    .roster-filters select:focus, .roster-filters input:focus {
-      outline: none;
-      border-color: #0d47a1;
-    }
-    
-    /* Table Container */
-    .table-responsive {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      background: #fff;
-    }
-    .modern-table {
-      width: 100%;
-      min-width: 700px;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-    }
-    .modern-table th {
-      background: #f5f7fa;
-      text-align: left;
-      padding: 12px 16px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #5f6368;
-      font-weight: 700;
-      border-bottom: 2px solid #e0e0e0;
-      white-space: nowrap;
-    }
-    .modern-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #f0f0f0;
-      vertical-align: middle;
-    }
-    .modern-table tr:hover {
-      background: #fafbfc;
-    }
+    /* ROSTER TABLE */
+    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+    .section-title { font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 700; color: #0d47a1; margin: 0; }
+    .roster-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+    .roster-filters select, .roster-filters input { padding: 8px 12px; border: 1.5px solid #cfd8dc; border-radius: 8px; font-family: inherit; font-size: 0.85rem; }
+    .table-responsive { width: 100%; overflow-x: auto; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); background: #fff; }
+    .modern-table { width: 100%; min-width: 700px; border-collapse: collapse; font-size: 0.85rem; }
+    .modern-table th { background: #f5f7fa; text-align: left; padding: 12px 16px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #5f6368; font-weight: 700; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
+    .modern-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
 
-    /* Mobile Fixes */
     @media (max-width: 768px) {
-      .teacher-hero {
-        padding: 24px 18px;
-      }
-      .teacher-hero-content {
-        gap: 18px;
-      }
-      .teacher-hero-actions {
-        grid-template-columns: 1fr 1fr;
-      }
-      .teacher-hero-actions a {
-        padding: 10px 12px;
-        font-size: 0.8rem;
-      }
-      .action-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-      }
-      .stat-card {
-        padding: 16px;
-      }
-      .stat-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-      }
-      .roster-filters {
-        width: 100%;
-      }
-      .roster-filters select, .roster-filters input {
-        flex: 1;
-        min-width: 0;
-        font-size: 16px; /* Prevents iOS zoom */
-      }
-    }
-
-    @media (max-width: 480px) {
-      .teacher-hero-actions {
-        grid-template-columns: 1fr;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .stat-card {
-        flex-direction: column;
-        text-align: center;
-      }
+      .teacher-hero { padding: 24px 18px; }
+      .action-grid { grid-template-columns: 1fr; }
+      .stat-card { padding: 16px; }
+      .roster-filters select, .roster-filters input { font-size: 16px; }
     }
   </style>
 </head>
@@ -336,8 +96,6 @@
         <a href="instructor.html">🏠 Dashboard</a>
         <a href="classrecord.html">📊 Class Record</a>
         <a href="teacher/pt-submissions.html" style="color:#ffd54f;border-color:#ffd54f;">📋 PT Submissions</a>
-        <a href="teacher/evidence.html" style="color:#ffd54f;border-color:#ffd54f;">📄 Exam Evidence</a>
-        <a href="teacher/retake-requests.html" style="color:#ffd54f;border-color:#ffd54f;">🔑 Retake Requests</a>
         <a href="teacher/pt-reupload-requests.html" style="color:#ffd54f;border-color:#ffd54f;">🔄 PT Re-uploads</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
@@ -352,27 +110,10 @@
           <h1>Welcome back, Teacher! 👋</h1>
           <p>General Science · Grade 11 · Academic A &amp; B</p>
           <div class="teacher-hero-meta">
-            <div class="teacher-hero-stat">
-              <span>👥</span>
-              <div><strong id="stat-total">0</strong> students</div>
-            </div>
-            <div class="teacher-hero-stat">
-              <span>📘</span>
-              <div><strong>3</strong> terms</div>
-            </div>
-            <div class="teacher-hero-stat">
-              <span>📝</span>
-              <div><strong>9</strong> assessments per term</div>
-            </div>
+            <div class="teacher-hero-stat"><span>👥</span><div><strong id="stat-total">0</strong> students</div></div>
+            <div class="teacher-hero-stat"><span>📘</span><div><strong>3</strong> terms</div></div>
+            <div class="teacher-hero-stat"><span>📝</span><div><strong>9</strong> assessments per term</div></div>
           </div>
-        </div>
-        <div class="teacher-hero-actions">
-          <a href="classrecord.html">📊 Open Class Record</a>
-          <a href="teacher/sync-center.html" class="outline">🔄 Sync Center</a>
-          <a href="teacher/pt-submissions.html" class="outline" style="border-color:#ffd54f;color:#ffd54f;">📋 PT Submissions</a>
-          <a href="teacher/evidence.html" class="outline" style="border-color:#ffd54f;color:#ffd54f;">📄 Exam Evidence</a>
-          <a href="teacher/tos-generator.html" class="outline" style="border-color:#ffd54f;color:#ffd54f;">📐 TOS Generator</a>
-          <a href="diagnostics.html" class="outline" style="border-color:#00e676;color:#00e676;">🔬 Self-Diagnostic</a>
         </div>
       </div>
     </div>
@@ -380,24 +121,15 @@
     <div class="stats-grid" id="quick-stats">
       <div class="stat-card">
         <div class="stat-icon">👥</div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-total-students">0</div>
-          <div class="stat-label">Total Students</div>
-        </div>
+        <div><div class="stat-value" id="stat-total-students">0</div><div class="stat-label">Total Students</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">✍️</div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-active-learners">0</div>
-          <div class="stat-label">Active Learners</div>
-        </div>
+        <div><div class="stat-value" id="stat-active-learners">0</div><div class="stat-label">Active Learners</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">📈</div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-avg-progress">0%</div>
-          <div class="stat-label">Avg Progress</div>
-        </div>
+        <div><div class="stat-value" id="stat-avg-progress">0%</div><div class="stat-label">Avg Progress</div></div>
       </div>
     </div>
 
@@ -412,87 +144,21 @@
         <h3>Term Access Control</h3>
         <p>Open or lock each term per section — students can't enter locked terms</p>
       </a>
-
       <a class="action-card" href="teacher/pt-submissions.html" style="border-top-color:#00695c;background:linear-gradient(135deg,#e0f2f1,#ffffff);">
         <div class="action-icon" style="background:#e0f2f1;">📋</div>
         <h3>PT Submissions</h3>
         <p>View student performance task submissions, grade with rubrics, and send scores back to students</p>
         <span class="action-badge" style="background:#e0f2f1;color:#00695c;">New</span>
       </a>
-
-      <a class="action-card" href="teacher/sync-center.html">
-        <div class="action-icon">🔄</div>
-        <h3>Sync Center</h3>
-        <p>Import student progress via sync codes, JSON files, or Google Sheets</p>
-      </a>
-
-      <a class="action-card" href="teacher/evidence.html" style="border-top-color:#0d47a1;background:linear-gradient(135deg,#e3f2fd,#ffffff);">
-        <div class="action-icon" style="background:#e3f2fd;">📄</div>
-        <h3>Exam Evidence</h3>
-        <p>Generate printable Word (.docx) proof of exam per student — with answers, correct answers, score, and signature blocks</p>
-        <span class="action-badge" style="background:#e3f2fd;color:#0d47a1;">New</span>
-      </a>
-
       <a class="action-card" href="teacher/retake-requests.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
         <div class="action-icon" style="background:#fff3e0;">🔑</div>
         <h3>Retake Requests</h3>
         <p>Review student retake requests, generate codes, and send them via chat</p>
-        <span class="action-badge" style="background:#fff3e0;color:#e65100;">New</span>
       </a>
-
-      <a class="action-card" href="teacher/tos-generator.html" style="border-top-color:#ed6c02;background:linear-gradient(135deg,#fff8e1,#ffffff);">
-        <div class="action-icon" style="background:#fff3e0;">📐</div>
-        <h3>Table of Specification</h3>
-        <p>Auto-generate TOS for Summative Tests and Term Exams with Bloom's distribution and answer keys</p>
-      </a>
-
-      <a class="action-card" href="teacher/item-analysis.html">
-        <div class="action-icon">🔬</div>
-        <h3>Item Analysis</h3>
-        <p>Analyze quiz results per item — identify most/least learned competencies</p>
-      </a>
-
-      <a class="action-card" href="teacher/intervention.html">
-        <div class="action-icon">🎯</div>
-        <h3>Intervention</h3>
-        <p>Classify students by performance and generate targeted intervention plans</p>
-      </a>
-
-      <a class="action-card" href="teacher/activity-tracker.html">
-        <div class="action-icon">📋</div>
-        <h3>Activity Tracker</h3>
-        <p>Monitor weekly lesson completion and activity pass rates</p>
-      </a>
-
-      <a class="action-card" href="teacher/assessment-tracker.html">
-        <div class="action-icon">📈</div>
-        <h3>Assessment Tracker</h3>
-        <p>Track quizzes, STs, PTs, and Term Exam submissions at a glance</p>
-      </a>
-
-      <a class="action-card" href="teacher/locked-assessments.html">
-        <div class="action-icon">🔒</div>
-        <h3>Locked Assessments</h3>
-        <p>Review and unlock assessments that students failed or were locked out of</p>
-      </a>
-
-      <a class="action-card" href="teacher/normalize-names.html">
-        <div class="action-icon">📝</div>
-        <h3>Normalize Names</h3>
-        <p>Fix student name formatting (ALL CAPS last name, Title Case first name)</p>
-      </a>
-
       <a class="action-card" href="classrecord.html">
         <div class="action-icon">📊</div>
         <h3>Class Record</h3>
         <p>Complete gradebook with transmutation, reports, and item analytics</p>
-      </a>
-
-      <a class="action-card" href="diagnostics.html" style="border-top-color:#2e7d32;background:linear-gradient(135deg,#f1f8f4,#ffffff);">
-        <div class="action-icon" style="background:#e8f5e9;">🔬</div>
-        <h3>Self-Diagnostic</h3>
-        <p>Run a full health check on the app — detects missing files, broken JSON, backend issues, and more</p>
-        <span class="action-badge" style="background:#e8f5e9;color:#1b5e20;">Run anytime</span>
       </a>
     </div>
 
@@ -512,16 +178,7 @@
     <div class="table-responsive">
       <table class="modern-table">
         <thead>
-          <tr>
-            <th>Student</th>
-            <th>LRN</th>
-            <th>Section</th>
-            <th>Sex</th>
-            <th>T1 Days</th>
-            <th>T2 Days</th>
-            <th>T3 Days</th>
-            <th>Actions</th>
-          </tr>
+          <tr><th>Student</th><th>LRN</th><th>Section</th><th>Sex</th><th>T1 Days</th><th>T2 Days</th><th>T3 Days</th><th>Actions</th></tr>
         </thead>
         <tbody id="roster-body">
           <tr><td colspan="8" style="text-align:center;padding:40px;color:#90a4ae;">Loading students from cloud…</td></tr>
@@ -531,9 +188,7 @@
 
   </main>
 
-  <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.10</span></p>
-  </footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
 
   <script src="config.js?v=1.0.10"></script>
   <script src="assets/js/app.js?v=1.0.10"></script>
@@ -555,15 +210,13 @@
 
         try {
           allStudents = await TeacherCloud.fetchStudents();
-          
           if (!allStudents.length) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;">📭 No students found in database yet.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;">📭 No students found.</td></tr>';
           } else {
             renderStats();
             renderRoster();
           }
         } catch (err) {
-          console.error('[Teacher] Error loading students:', err);
           tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
         }
       }
@@ -572,7 +225,6 @@
         const total = allStudents.length;
         let active = 0;
         let totalProgress = 0;
-        
         allStudents.forEach(s => {
           let daysDone = 0;
           const p = s.progress || {};
@@ -584,9 +236,7 @@
           if (daysDone > 0) active++;
           totalProgress += daysDone;
         });
-        
         const avg = total > 0 ? Math.round((totalProgress / (total * 120)) * 100) : 0;
-        
         document.getElementById('stat-total-students').textContent = total;
         document.getElementById('stat-total').textContent = total;
         document.getElementById('stat-active-learners').textContent = active;
@@ -617,30 +267,14 @@
           const t1 = p.progress?.term1?.completed?.length || 0;
           const t2 = p.progress?.term2?.completed?.length || 0;
           const t3 = p.progress?.term3?.completed?.length || 0;
-          
           const fullName = `${s.lastName}, ${s.firstName}`;
           const initials = `${(s.firstName||' ')[0]}${(s.lastName||' ')[0]}`;
 
           return `<tr>
-            <td>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:32px; height:32px; border-radius:50%; background:#0d47a1; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">
-                  ${initials}
-                </div>
-                <div>
-                  <div style="font-weight:600;">${fullName}</div>
-                </div>
-              </div>
-            </td>
-            <td style="font-family:monospace;">${s.lrn}</td>
-            <td>${s.section}</td>
-            <td>${s.sex || '—'}</td>
-            <td>${t1}</td>
-            <td>${t2}</td>
-            <td>${t3}</td>
-            <td>
-              <a href="classrecord.html" class="btn btn-sm btn-outline" style="font-size:0.75rem; padding:4px 8px;">View</a>
-            </td>
+            <td><div style="display:flex; align-items:center; gap:10px;"><div style="width:32px; height:32px; border-radius:50%; background:#0d47a1; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">${initials}</div><div><div style="font-weight:600;">${fullName}</div></div></div></td>
+            <td style="font-family:monospace;">${s.lrn}</td><td>${s.section}</td><td>${s.sex || '—'}</td>
+            <td>${t1}</td><td>${t2}</td><td>${t3}</td>
+            <td><a href="classrecord.html" class="btn btn-sm btn-outline" style="font-size:0.75rem; padding:4px 8px;">View</a></td>
           </tr>`;
         }).join('');
       }
@@ -649,9 +283,7 @@
       document.getElementById('roster-section').addEventListener('change', renderRoster);
       document.getElementById('roster-search').addEventListener('input', renderRoster);
       document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
-
       loadStudents();
-
     })();
   </script>
 </body>
