@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exam Evidence — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.13" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.13" />
-  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.0.13" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.0.14" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.0.14" />
+  <link rel="stylesheet" href="../assets/css/evidence-print.css?v=1.0.14" />
   <style>
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
     @media (max-width: 600px) {
@@ -22,7 +22,7 @@
     <div class="container flex-between">
       <div>
         <h1>📄 Exam Evidence Generator</h1>
-        <span class="version">v1.0.13</span>
+        <span class="version">v1.0.14</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -46,7 +46,7 @@
         <div>
           <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Student</label>
           <select id="ev-student" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="">— Loading students... —</option>
+            <option value="">— Fetching from Cloud... —</option>
           </select>
         </div>
         <div>
@@ -91,17 +91,16 @@
 
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.13</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.14</span></p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=1.0.13"></script>
-  <script src="../assets/js/app.js?v=1.0.13"></script>
-  <script src="../assets/js/store.js?v=1.0.13"></script>
-  <script src="../assets/js/security.js?v=1.0.13"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.0.13"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.0.13"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.0.13"></script>
-  <script src="../assets/js/evidence.js?v=1.1.3"></script>
+  <script src="../config.js?v=1.0.14"></script>
+  <script src="../assets/js/app.js?v=1.0.14"></script>
+  <script src="../assets/js/store.js?v=1.0.14"></script>
+  <script src="../assets/js/security.js?v=1.0.14"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.0.14"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.0.14"></script>
+  <script src="../assets/js/evidence.js?v=1.1.4"></script>
   
   <script>
     (function() {
@@ -114,29 +113,44 @@
         
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
         
-        // KUNIN ANG MGA ESTUDYANTE MULA SA CLOUD (TeacherCloud)
+        const sel = document.getElementById('ev-student');
+        sel.innerHTML = '<option value="">— Fetching from Cloud... —</option>';
+
+        // DIREKTANG FETCH SA BACKEND (GAS) GAMIT ANG PULLTEACHERDASHBOARD ACTION
         try {
-          if (window.TeacherCloud && typeof TeacherCloud.fetchStudents === 'function') {
-            allStudents = await TeacherCloud.fetchStudents();
+          const url = CONFIG.BACKEND_URL;
+          const res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ 
+              action: 'pullTeacherDashboard',
+              token: sessionStorage.getItem('gsa_teacher_token') || CONFIG.TEACHER_PASSWORD_HASH 
+            })
+          });
+          
+          const data = await res.json();
+          
+          if (data.ok && data.students && data.students.length > 0) {
+            allStudents = data.students;
+          } else if (data.ok && data.records && data.records.length > 0) {
+            allStudents = data.records; // Fallback kung 'records' ang naka-return
           } else {
-            throw new Error("TeacherCloud not found");
+            throw new Error(data.error || 'No students returned from cloud.');
           }
 
           allStudents.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
           
-          const sel = document.getElementById('ev-student');
-          if (allStudents && allStudents.length > 0) {
+          if (allStudents.length > 0) {
             sel.innerHTML = '<option value="">— Select student —</option>' + 
               allStudents.map(s => `<option value="${s.lrn}">${s.lastName}, ${s.firstName} (${s.section || 'No section'})</option>`).join('');
           } else {
-            sel.innerHTML = '<option value="">— No students found in Cloud —</option>';
+            sel.innerHTML = '<option value="">— No students found —</option>';
           }
         } catch (err) {
-          console.error('Error fetching students from Cloud:', err);
-          document.getElementById('ev-student').innerHTML = '<option value="">— Failed to load from Cloud —</option>';
+          console.error('Cloud Fetch Error:', err);
+          sel.innerHTML = '<option value="">— Error: ' + err.message + ' —</option>';
         }
 
-        // Type Dropdown
+        // Type Dropdown Logic
         document.getElementById('ev-type').addEventListener('change', function() {
           const type = this.value;
           const wrap = document.getElementById('ev-index-wrap');
@@ -163,8 +177,11 @@
             return;
           }
 
-          const student = allStudents.find(s => s.lrn === lrn);
-          if (!student) return;
+          const student = allStudents.find(s => String(s.lrn) === String(lrn));
+          if (!student) {
+            alert('Student data not found in memory.');
+            return;
+          }
 
           // Tawagin ang generateOne function galing evidence.js
           if (typeof window.generateOne === 'function') {
