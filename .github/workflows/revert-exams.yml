@@ -1,0 +1,48 @@
+name: Revert Exam Files
+
+on:
+  workflow_dispatch: # Gagawin natin itong manual trigger para ikaw ang magpapatakbo
+
+jobs:
+  revert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Kailangan nito para mabasa ang history ng commits
+
+      - name: Revert Exam Files
+        run: |
+          # Awtomatikong hahanapin ang pinakahuling commit BAGO natin pinatakbo ang script kanina.
+          # Kukunin natin ang version ng files noong "9 minutes ago" (bago ma-corrupt)
+          
+          echo "Naghahanap ng tamang commit..."
+          
+          # Hahanapin natin ang pinakabagong commit na may message na "Update [filename].json"
+          # o kaya ay yung pinakalumang commit na hindi pa kasama ang console script.
+          
+          # Dahil alam natin na ginawa mo ito kanina, i-revert natin ang lahat ng .json files
+          # sa mismong state bago magka-mismatch.
+          
+          # Simpleng paraan: Ibabalik natin sa commit na "Update st1.json" (last month)
+          # PERO, mas safe kung ibabalik natin sa commit na "Update competencies.json" (last month)
+          
+          LAST_GOOD_COMMIT=$(git log --format="%H" -n 1 --before="2 hours ago" -- student/term1/assessments/ student/term2/assessments/ student/term3/assessments/)
+          
+          if [ -z "$LAST_GOOD_COMMIT" ]; then
+            echo "Error: Hindi mahanap ang lumang commit."
+            exit 1
+          fi
+          
+          echo "Ibinabalik ang files sa commit: $LAST_GOOD_COMMIT"
+          
+          # I-restore ang lahat ng JSON files sa folder na iyon
+          git checkout $LAST_GOOD_COMMIT -- student/term1/assessments/ student/term2/assessments/ student/term3/assessments/
+          
+          # I-commit ang mga pagbabago
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git commit -m "fix: revert exam files to last known good state (before mismatch)"
+          git push
