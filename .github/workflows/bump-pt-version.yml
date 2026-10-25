@@ -1,4 +1,4 @@
-name: Apply New PT HTML Codes
+name: Apply New PT HTML Codes (Fixed)
 
 on:
   workflow_dispatch:
@@ -19,12 +19,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Apply Template to all 9 files
+      - name: Create Template File
         run: |
-          set -e
-          
-          # Template for Term 1 (Blue)
-          cat << 'EOF' > /tmp/pt_template.html
+          mkdir -p /tmp
+          cat << 'ENDOFTEMPLATE' > /tmp/pt_template.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,39 +178,36 @@ jobs:
   </script>
 </body>
 </html>
-EOF
+ENDOFTEMPLATE
 
-          # Term 1 (Blue) - pt1, pt2, pt3
-          for i in 1 2 3; do
-            cp /tmp/pt_template.html "student/term1/assessments/pt$i.html"
-            sed -i "s/TERM_PLACEHOLDER/term1/g" "student/term1/assessments/pt$i.html"
-            echo "✅ Created term1 pt$i"
-          done
-
-          # Term 2 (Teal) - pt1, pt2, pt3
-          for i in 1 2 3; do
-            cp /tmp/pt_template.html "student/term2/assessments/pt$i.html"
-            sed -i "s/TERM_PLACEHOLDER/term2/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/← Term 1/← Term 2/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/Term 1 ·/Term 2 ·/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/#0d47a1/#00695c/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/#1565c0/#00897b/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/rgba(13,71,161,/rgba(0,105,92,/g" "student/term2/assessments/pt$i.html"
-            sed -i "s/#e3f2fd/#e0f2f1/g" "student/term2/assessments/pt$i.html"
-            echo "✅ Created term2 pt$i"
-          done
-
-          # Term 3 (Dark Green) - pt1, pt2, pt3
-          for i in 1 2 3; do
-            cp /tmp/pt_template.html "student/term3/assessments/pt$i.html"
-            sed -i "s/TERM_PLACEHOLDER/term3/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/← Term 1/← Term 3/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/Term 1 ·/Term 3 ·/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/#0d47a1/#004d40/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/#1565c0/#00695c/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/rgba(13,71,161,/rgba(0,77,64,/g" "student/term3/assessments/pt$i.html"
-            sed -i "s/#e3f2fd/#e0f2f1/g" "student/term3/assessments/pt$i.html"
-            echo "✅ Created term3 pt$i"
+          # Loop through terms and files
+          for term in 1 2 3; do
+            for pt in 1 2 3; do
+              file_path="student/term${term}/assessments/pt${pt}.html"
+              cp /tmp/pt_template.html "$file_path"
+              
+              # Replace TERM
+              sed -i "s/TERM_PLACEHOLDER/term${term}/g" "$file_path"
+              
+              # Replace Back Link and Hero Label
+              sed -i "s/← Term 1/← Term ${term}/g" "$file_path"
+              sed -i "s/Term 1 ·/Term ${term} ·/g" "$file_path"
+              
+              # Apply Colors per term
+              if [ "$term" -eq 2 ]; then
+                sed -i "s/#0d47a1/#00695c/g" "$file_path"
+                sed -i "s/#1565c0/#00897b/g" "$file_path"
+                sed -i "s/rgba(13,71,161,/rgba(0,105,92,/g" "$file_path"
+                sed -i "s/#e3f2fd/#e0f2f1/g" "$file_path"
+              elif [ "$term" -eq 3 ]; then
+                sed -i "s/#0d47a1/#004d40/g" "$file_path"
+                sed -i "s/#1565c0/#00695c/g" "$file_path"
+                sed -i "s/rgba(13,71,161,/rgba(0,77,64,/g" "$file_path"
+                sed -i "s/#e3f2fd/#e0f2f1/g" "$file_path"
+              fi
+              
+              echo "✅ Created $file_path"
+            done
           done
 
       - name: Commit and push
@@ -224,7 +219,7 @@ EOF
           git add student/term3/assessments/pt*.html
           
           if git diff --cached --quiet; then
-            echo "✅ No changes to commit"
+            echo "✅ No changes"
           else
             git commit -m "fix: auto-apply correct PT templates per term with proper colors and safe unlock logic [skip ci]"
             git push
