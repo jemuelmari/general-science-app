@@ -1,20 +1,13 @@
 /* ============================================================
    tos-engine.js — Table of Specification computation engine
-   Version: 2.0.0
-   App: General Science · v1.0.2
+   Version: 2.0.1
+   App: General Science · v1.0.3
    ------------------------------------------------------------
-   Responsibilities:
-     1. Load data/competencies.json (Phase 2.5 path detection)
-     2. Determine covered competencies per assessment
-     3. Compute hours, weight %, item count per competency
-     4. Distribute items across Bloom's levels (30% LOTS / 70% HOTS)
-     5. Support per-competency manual Bloom's overrides
-     6. Assign item numbers sequentially
-     7. Build answer key with competency cross-check
-     8. Compute per-competency MPS across ST1+ST2
-     9. Signatory persistence (backend sync + localStorage fallback)
-
-   Backward-compatible public API preserved from v1.0.0.
+   Changelog v2.0.1:
+     - Fixed getRepoBase() to support Vercel and GitHub Pages
+       without producing double-slash `//` URLs.
+     - Updated MPS computation to work with Cloud-First
+       StudentsMaster data structure (async fetching).
    ============================================================ */
 
 const TOSEngine = (() => {
@@ -27,7 +20,7 @@ const TOSEngine = (() => {
   const LOTS_RATIO = 0.30;
   const HOTS_RATIO = 0.70;
 
-  const CACHE_VERSION = '1.2.0';
+  const CACHE_VERSION = '1.2.1';
   const SIG_KEY = 'gsa_v1_signatories';
 
   const DEFAULT_SIGS = {
@@ -39,33 +32,43 @@ const TOSEngine = (() => {
   let _compData = null;
 
   /* ============================================================
-     REPO BASE PATH DETECTION  (Phase 2.5)
+     REPO BASE PATH DETECTION  (Vercel & GitHub Pages safe)
      ============================================================ */
   function getRepoBase() {
-    // Determine the repository root for GitHub Pages vs local file://
-    // Works from /teacher/*.html, /classrecord/*.html, or root pages.
     var path = window.location.pathname;
+    var parts = path.split('/');
+    
+    // Kung ang huling bahagi ay may .html, ibig sabihin file ito.
+    // Tatanggalin natin para makuha ang directory.
+    if (parts[parts.length - 1].includes('.html')) {
+      parts.pop();
+    }
 
-    // If served from a subpath (GitHub Pages project site)
-    // e.g. /general-science-app/teacher/tos-generator.html
-    // we need to walk up to /general-science-app/
-    var knownSubdirs = ['/teacher/', '/classrecord/', '/student/', '/assets/', '/data/'];
-    for (var i = 0; i < knownSubdirs.length; i++) {
-      var idx = path.indexOf(knownSubdirs[i]);
-      if (idx > 0) {
-        return path.substring(0, idx) + '/';
+    // Hahanapin natin kung nasa loob ba tayo ng subdirectory
+    var knownSubdirs = ['teacher', 'classrecord', 'student', 'assets', 'data'];
+    
+    // Kung ang unang directory ay isa sa mga ito, nasa ROOT tayo (Vercel, custom domain)
+    if (parts.length > 0 && knownSubdirs.includes(parts[0])) {
+      return '/';
+    }
+
+    // Kung hindi, malamang nasa GitHub Pages subpath tayo (e.g. /general-science-app/teacher/)
+    // Ibabalik natin hanggang sa root ng project
+    for (var i = 0; i < parts.length; i++) {
+      if (knownSubdirs.includes(parts[i])) {
+        return parts.slice(0, i).join('/') + '/';
       }
     }
 
-    // Already at repo root or unknown
-    if (path.endsWith('/')) return path;
-    return path.substring(0, path.lastIndexOf('/') + 1);
+    // Fallback kung wala sa mga known subdirs (root parin)
+    return '/';
   }
 
   function getAssetUrl(relativePath) {
     var base = getRepoBase();
-    // relativePath like 'data/competencies.json' or 'student/term1/assessments/quiz1.json'
-    return base + relativePath + '?v=' + CACHE_VERSION;
+    // Tinitiyak na walang dobleng slash (//) sa URL
+    var safeBase = base.endsWith('/') ? base : base + '/';
+    return safeBase + relativePath + '?v=' + CACHE_VERSION;
   }
 
   /* ============================================================
@@ -262,14 +265,8 @@ const TOSEngine = (() => {
   }
 
   /* ============================================================
-     MANUAL BLOOM'S OVERRIDES (Phase 4 — editable per competency)
+     MANUAL BLOOM'S OVERRIDES
      ============================================================ */
-  /**
-   * Apply per-competency manual Bloom's distribution.
-   * overrides = { "GENSCI-11-T1-W1-C1": { Remembering: 2, Understanding: 3, ... }, ... }
-   * Validates that sum of overridden cells === row.items. If not, throws.
-   * Validates that every non-zero cell is in the competency's bloomLevels array.
-   */
   function applyManualBlooms(rows, overrides) {
     if (!overrides) return rows;
 
@@ -364,7 +361,7 @@ const TOSEngine = (() => {
   }
 
   /* ============================================================
-     ANSWER KEY GENERATION (with competency cross-check)
+     ANSWER KEY GENERATION
      ============================================================ */
   function buildAnswerKey(rows, questionBank) {
     var key = [];
@@ -432,7 +429,7 @@ const TOSEngine = (() => {
   }
 
   /* ============================================================
-     MPS COMPUTATION
+     MPS COMPUTATION (Cloud-First Ready)
      ============================================================ */
   function rankByMPS(competencyMPS) {
     return competencyMPS.slice().sort(function (a, b) { return a.mps - b.mps; });
@@ -440,14 +437,9 @@ const TOSEngine = (() => {
 
   /**
    * Compute per-competency MPS from a single assessment.
-   * Returns: { "CODE": { correct, total, mps } }
-   *
-   * Handles both Store.getScores() shapes:
-   *   A) scores[term].st.st1  / .st.st2   (ST attempts)
-   *   B) scores[term].te                  (TE attempt)
-   *   C) scores[term][type][assessment.id] (legacy)
+   * Updated to support async Store methods (Cloud-First).
    */
-  function computeCompetencyMPS(students, term, type, assessment) {
+  async function computeCompetencyMPS(students, term, type, assessment) {
     var result = {};
     var questions = assessment.questions || [];
 
@@ -462,12 +454,22 @@ const TOSEngine = (() => {
       result[code] = { correct: 0, total: 0, mps: 0 };
     });
 
-    students.forEach(function (s) {
-      if (typeof Store === 'undefined' || !Store.getScores) return;
-      var scores = Store.getScores(s.lrn);
-      if (!scores) return;
+    for (var i = 0; i < students.length; i++) {
+      var s = students[i];
+      if (typeof Store === 'undefined' || !Store.getScores) continue;
+
+      // Check kung async ang getScores (Cloud-First store)
+      var scores;
+      try {
+        scores = await Store.getScores(s.lrn);
+      } catch (e) {
+        console.warn('Error fetching scores for', s.lrn, e);
+        continue;
+      }
+
+      if (!scores) continue;
       var termScores = scores[term];
-      if (!termScores) return;
+      if (!termScores) continue;
 
       var record = null;
       // Shape A — ST
@@ -486,7 +488,7 @@ const TOSEngine = (() => {
         record = termScores[type][assessment.id];
       }
 
-      if (!record || !record.itemResults) return;
+      if (!record || !record.itemResults) continue;
 
       record.itemResults.forEach(function (r) {
         var idx = (typeof r.index === 'number') ? r.index : r.originalIndex;
@@ -496,7 +498,7 @@ const TOSEngine = (() => {
         result[code].total++;
         if (r.correct) result[code].correct++;
       });
-    });
+    }
 
     Object.keys(result).forEach(function (code) {
       var v = result[code];
@@ -506,10 +508,6 @@ const TOSEngine = (() => {
     return result;
   }
 
-  /**
-   * Compute MPS across BOTH ST1 and ST2 for a term.
-   * Returns: [ { code, correct, total, mps } ]
-   */
   async function computeAllCompetencyMPS(students, term) {
     var st1Bank, st2Bank;
     try {
@@ -523,8 +521,8 @@ const TOSEngine = (() => {
     st1Bank.id = 'st1';
     st2Bank.id = 'st2';
 
-    var mps1 = computeCompetencyMPS(students, term, 'st1', st1Bank);
-    var mps2 = computeCompetencyMPS(students, term, 'st2', st2Bank);
+    var mps1 = await computeCompetencyMPS(students, term, 'st1', st1Bank);
+    var mps2 = await computeCompetencyMPS(students, term, 'st2', st2Bank);
 
     var merged = {};
     Object.keys(mps1).forEach(function (code) {
@@ -546,7 +544,7 @@ const TOSEngine = (() => {
   }
 
   /* ============================================================
-     SIGNATORIES — backend sync + localStorage fallback
+     SIGNATORIES
      ============================================================ */
   function loadLocalSignatories() {
     try {
@@ -567,11 +565,6 @@ const TOSEngine = (() => {
     try { localStorage.setItem(SIG_KEY, JSON.stringify(sigs)); } catch (e) {}
   }
 
-  /**
-   * Attempt backend sync via Sync module (if available).
-   * Falls back silently to localStorage if sync unavailable.
-   * Returns: { source: 'backend' | 'local', warning?: string }
-   */
   async function getSignatories() {
     if (typeof Sync !== 'undefined' && typeof Sync.getSignatories === 'function') {
       try {
@@ -592,10 +585,6 @@ const TOSEngine = (() => {
     return { sigs: loadLocalSignatories(), source: 'local' };
   }
 
-  /**
-   * Attempt backend save via Sync module; fall back to localStorage.
-   * Returns: { source: 'backend' | 'local', warning?: string }
-   */
   async function saveSignatories(sigs) {
     saveLocalSignatories(sigs);
 
@@ -671,42 +660,27 @@ const TOSEngine = (() => {
      PUBLIC API
      ============================================================ */
   return {
-    // Path utilities
     getRepoBase: getRepoBase,
     getAssetUrl: getAssetUrl,
-
-    // Data loading
     loadCompetencies: loadCompetencies,
     loadQuestionBank: loadQuestionBank,
-
-    // Competency selection
     getCompetenciesForST1: getCompetenciesForST1,
     getCompetenciesForST2: getCompetenciesForST2,
     getCompetenciesForTE: getCompetenciesForTE,
-
-    // Computation
     computeWeights: computeWeights,
     distributeBlooms: distributeBlooms,
     applyManualBlooms: applyManualBlooms,
     assignItemNumbers: assignItemNumbers,
     buildAnswerKey: buildAnswerKey,
     computeTotals: computeTotals,
-
-    // MPS
     rankByMPS: rankByMPS,
     computeCompetencyMPS: computeCompetencyMPS,
     computeAllCompetencyMPS: computeAllCompetencyMPS,
-
-    // Signatories
     getSignatories: getSignatories,
     saveSignatories: saveSignatories,
     loadLocalSignatories: loadLocalSignatories,
     saveLocalSignatories: saveLocalSignatories,
-
-    // Main
     generateTOS: generateTOS,
-
-    // Constants
     BLOOMS: BLOOMS,
     LOTS: LOTS,
     HOTS: HOTS
