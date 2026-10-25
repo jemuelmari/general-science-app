@@ -1,35 +1,34 @@
 /* ============================================================
-   classrecord.js — Gradebook logic (Cloud-First + Full Render)
-   Version: 2.1.0
+   classrecord.js — Gradebook logic (Cloud-First + Fixed)
+   Version: 2.2.0
    ============================================================ */
 
-(() => {
+(async function() {
   'use strict';
+
+  console.log('[ClassRecord] Script loaded');
 
   if (typeof TeacherAuth !== 'undefined') {
     TeacherAuth.init();
-    if (!TeacherAuth.require()) return;
+    if (!TeacherAuth.require()) { console.log('[ClassRecord] Auth failed'); return; }
   }
 
-  /* ============================================================
-     WEIGHTING CONSTANTS
-     ============================================================ */
   const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
   const EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
 
   let allStudents = [];
   let backendPTGrades = {};
 
-  /* ============================================================
-     FETCH DATA FROM BACKEND
-     ============================================================ */
+  // ── FETCH DATA FROM BACKEND ──
   async function fetchStudentsFromCloud() {
+    console.log('[ClassRecord] Fetching students from cloud...');
     const tbody = document.getElementById('summary-body');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Fetching students from cloud...</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Syncing data from backend...</td></tr>';
     
     try {
-      if (typeof TeacherCloud === 'undefined') throw new Error('TeacherCloud not loaded');
+      if (typeof TeacherCloud === 'undefined') throw new Error('TeacherCloud module not loaded.');
       allStudents = await TeacherCloud.fetchStudents();
+      console.log('[ClassRecord] Fetched students:', allStudents.length);
     } catch (err) {
       console.error('[ClassRecord] Fetch error:', err);
       if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
@@ -38,7 +37,11 @@
   }
 
   async function fetchPTGrades() {
-    if (typeof PTGrade === 'undefined' || typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) return;
+    console.log('[ClassRecord] Fetching PT Grades...');
+    if (typeof PTGrade === 'undefined' || typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
+      console.warn('[ClassRecord] PTGrade or CONFIG missing');
+      return;
+    }
     try {
       var res = await PTGrade.pullGrades({});
       if (res && res.ok && res.records) {
@@ -55,12 +58,16 @@
     }
   }
 
-  /* ============================================================
-     HELPERS
-     ============================================================ */
+  // ── HELPERS ──
   function getStudents(term, section) {
     let list = allStudents;
-    if (section) list = list.filter(s => (s.section || '').replace(/_/g, ' ').toUpperCase() === section.replace(/_/g, ' ').toUpperCase());
+    if (section) {
+      const cleanFilter = section.replace(/_/g, ' ').trim().toUpperCase();
+      list = list.filter(s => {
+        const sSec = (s.section || '').replace(/_/g, ' ').trim().toUpperCase();
+        return sSec === cleanFilter;
+      });
+    }
     return list.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
   }
 
@@ -128,9 +135,7 @@
     });
   }
 
-  /* ============================================================
-     RENDER — SUMMARY
-     ============================================================ */
+  // ── RENDER: SUMMARY TABLE ──
   function renderSummary(rows, term) {
     const tbody = document.getElementById('summary-body');
     if (!tbody) return;
@@ -144,7 +149,6 @@
     rows.forEach((r) => {
       const s = r.student;
       const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-      const avatarClass = (typeof UI !== 'undefined' && UI.getAvatarClass) ? UI.getAvatarClass(s.lrn) : '';
       const tr = document.createElement('tr');
 
       let finalCell;
@@ -157,7 +161,7 @@
       tr.innerHTML =
         '<td class="student-cell">' +
           '<div class="student-cell">' +
-            '<div class="student-avatar ' + avatarClass + '">' + initials + '</div>' +
+            '<div class="student-avatar" style="background:#0d47a1;">' + initials + '</div>' +
             '<div class="student-info">' +
               '<div class="name">' + (s.lastName || '') + ', ' + (s.firstName || '') + '</div>' +
               '<div class="meta">' + (s.section || '') + '</div>' +
@@ -184,9 +188,7 @@
     return '<td class="grade-cell" style="color:' + color + ';">' + rounded + '</td>';
   }
 
-  /* ============================================================
-     RENDER — STATS
-     ============================================================ */
+  // ── RENDER: STATS ──
   function renderStats(rows) {
     const stats = document.getElementById('cr-stats');
     if (!stats) return;
@@ -214,9 +216,7 @@
       '<div class="cr-stat-card ' + (completion >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📝</div><div class="cs-value">' + completion + '%</div><div class="cs-label">Submission Rate</div></div>';
   }
 
-  /* ============================================================
-     RENDER — DISTRIBUTION
-     ============================================================ */
+  // ── RENDER: DISTRIBUTION ──
   function renderDistribution(rows) {
     const grid = document.getElementById('distribution-grid');
     if (!grid) return;
@@ -261,9 +261,7 @@
     return '#c62828';
   }
 
-  /* ============================================================
-     RENDER — MLL
-     ============================================================ */
+  // ── RENDER: MLL ──
   function renderMLL(rows) {
     const grid = document.getElementById('mll-grid');
     if (!grid) return;
@@ -286,9 +284,7 @@
       '</ul></div>';
   }
 
-  /* ============================================================
-     RENDER — TRANSMUTATION
-     ============================================================ */
+  // ── RENDER: TRANSMUTATION ──
   function renderTransmutationTable() {
     const tbody = document.getElementById('transmutation-body');
     if (!tbody) return;
@@ -301,9 +297,7 @@
     tbody.innerHTML = rows.map(([l, r]) => '<tr><td class="raw">' + l.raw + '</td><td class="final">' + l.out + '</td>' + (r ? '<td class="raw">' + r.raw + '</td><td class="final">' + r.out + '</td>' : '<td></td><td></td>') + '</tr>').join('');
   }
 
-  /* ============================================================
-     TABS
-     ============================================================ */
+  // ── TABS ──
   function attachTabs() {
     const tabs = document.querySelectorAll('.cr-tab');
     const panels = { summary: document.getElementById('tab-summary'), distribution: document.getElementById('tab-distribution'), mll: document.getElementById('tab-mll'), transmutation: document.getElementById('tab-transmutation') };
@@ -317,46 +311,42 @@
     });
   }
 
-  /* ============================================================
-     MAIN RENDER
-     ============================================================ */
+  // ── MAIN RENDER ──
   async function render() {
-    const term = document.getElementById('filter-term').value;
-    const section = document.getElementById('filter-section').value;
+    try {
+      const term = document.getElementById('filter-term').value;
+      const section = document.getElementById('filter-section').value;
 
-    const tbody = document.getElementById('summary-body');
-    if (tbody && !allStudents.length) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">⏳ Syncing data from backend...</td></tr>';
+      if (!allStudents.length) await fetchStudentsFromCloud();
+      await fetchPTGrades();
+
+      const students = getStudents(term, section);
+      const rows = computeGrade(students, term);
+
+      renderStats(rows);
+      renderSummary(rows, term);
+      renderDistribution(rows);
+      renderMLL(rows);
+      renderTransmutationTable();
+    } catch (err) {
+      console.error('[ClassRecord] Render error:', err);
+      const tbody = document.getElementById('summary-body');
+      if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">❌ Error: ${err.message}</td></tr>`;
     }
-
-    if (!allStudents.length) await fetchStudentsFromCloud();
-    await fetchPTGrades();
-
-    const students = getStudents(term, section);
-    const rows = computeGrade(students, term);
-
-    renderStats(rows);
-    renderSummary(rows, term);
-    renderDistribution(rows);
-    renderMLL(rows);
-    renderTransmutationTable();
   }
 
-  /* ============================================================
-     EVENT LISTENERS & INIT
-     ============================================================ */
+  // ── EVENT LISTENERS & INIT ──
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('[ClassRecord] DOM ready');
     attachTabs();
     document.getElementById('filter-term').addEventListener('change', render);
     document.getElementById('filter-section').addEventListener('change', render);
     document.getElementById('btn-refresh').addEventListener('click', async () => {
-      allStudents = []; // force re-fetch
+      allStudents = [];
       await render();
-      if (typeof APP !== 'undefined' && APP.toast) APP.toast('Refreshed from cloud!', 'success', 1500);
     });
-    if (document.getElementById('btn-export')) document.getElementById('btn-export').addEventListener('click', exportCSV);
-    if (document.getElementById('btn-logout')) document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
-
+    document.getElementById('btn-logout').addEventListener('click', () => TeacherAuth.logout());
+    
     render();
   });
 
