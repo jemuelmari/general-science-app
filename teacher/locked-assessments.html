@@ -9,7 +9,6 @@
   <style>
     .la-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; align-items: end; }
     .la-filters button { width: 100%; padding: 10px 12px; background: #0d47a1; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-    
     .lock-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border-left: 5px solid #c62828; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: all 0.15s; }
     .lock-card.tampered { border-left-color: #6a1b9a; }
     .lock-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -18,10 +17,8 @@
     .lock-reason.failed { background: #fff3e0; border-left: 3px solid #ed6c02; color: #e65100; }
     .lock-reason.tampered { background: #f3e5f5; border-left: 3px solid #6a1b9a; color: #4a148c; }
     .lock-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    
     .la-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
     .la-empty.success { color: #2e7d32; }
-    
     @media (max-width: 600px) {
       .la-filters { grid-template-columns: 1fr; }
       .la-filters select, .la-filters button { font-size: 16px; }
