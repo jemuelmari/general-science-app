@@ -223,7 +223,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Student Login</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.9</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
@@ -259,7 +259,7 @@
                  maxlength="14" placeholder="1234-5678-9012" autocomplete="off" required />
           <div class="hint">Your Learner Reference Number</div>
         </div>
-        <button type="submit" class="login-btn">Log In →</button>
+        <button type="submit" class="login-btn" id="btn-login">Log In →</button>
         <div id="login-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
       </form>
     </div>
@@ -321,8 +321,9 @@
           <span>I agree that my progress may be saved locally on this device and shared with my teacher via sync code or backup file.</span>
         </label>
 
-        <button type="submit" class="login-btn">Create Profile →</button>
+        <button type="submit" class="login-btn" id="btn-register">Create Profile →</button>
         <div id="register-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+        <div id="register-success" class="alert alert-success hidden" style="margin-top:16px;"></div>
       </form>
     </div>
 
@@ -337,13 +338,234 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.0.9</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/backup.js"></script>
-  <script src="../assets/js/auth.js"></script>
+  <script src="../config.js?v=1.0.9"></script>
+  <script src="../assets/js/app.js?v=1.0.9"></script>
+  <script src="../assets/js/store.js?v=1.0.9"></script>
+  <script src="../assets/js/security.js?v=1.0.9"></script>
+  <script src="../assets/js/sync.js?v=1.0.9"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      /* ============================================================
+         TABS
+         ============================================================ */
+      const tabs = document.querySelectorAll('.login-tab');
+      const panels = {
+        login: document.getElementById('tab-login'),
+        register: document.getElementById('tab-register'),
+        saved: document.getElementById('tab-saved')
+      };
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          Object.values(panels).forEach(p => p.classList.add('hidden'));
+          panels[tab.dataset.tab].classList.remove('hidden');
+          if (tab.dataset.tab === 'saved') renderSavedUsers();
+        });
+      });
+
+      /* ============================================================
+         LRN FORMATTING
+         ============================================================ */
+      function formatLrn(input) {
+        input.addEventListener('input', function(e) {
+          let val = e.target.value.replace(/\D/g, '');
+          if (val.length > 12) val = val.slice(0, 12);
+          if (val.length > 8) val = val.slice(0, 4) + '-' + val.slice(4, 8) + '-' + val.slice(8);
+          else if (val.length > 4) val = val.slice(0, 4) + '-' + val.slice(4);
+          e.target.value = val;
+        });
+      }
+      formatLrn(document.getElementById('login-lrn'));
+      formatLrn(document.getElementById('reg-lrn'));
+
+      /* ============================================================
+         LOGIN FORM (Cloud-First)
+         ============================================================ */
+      document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const lrnInput = document.getElementById('login-lrn').value.replace(/-/g, '').trim();
+        const errEl = document.getElementById('login-error');
+        const btn = document.getElementById('btn-login');
+
+        errEl.classList.add('hidden');
+
+        if (lrnInput.length !== 12) {
+          errEl.textContent = 'Please enter a valid 12-digit LRN.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = '⏳ Checking...';
+
+        try {
+          if (typeof Store.loginStudent !== 'function') {
+            throw new Error('Store.loginStudent not found. Please clear cache and try again.');
+          }
+          
+          const res = await Store.loginStudent(lrnInput);
+          
+          if (res.isNew) {
+            // Student doesn't have a profile yet — redirect to register tab
+            document.querySelector('[data-tab="register"]').click();
+            document.getElementById('reg-lrn').value = document.getElementById('login-lrn').value;
+            errEl.textContent = 'No saved profile found. Please complete registration below.';
+            errEl.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = 'Log In →';
+            return;
+          }
+          
+          // Existing student — redirect to dashboard
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          console.error('[Login] Error:', err);
+          errEl.textContent = '❌ ' + err.message;
+          errEl.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = 'Log In →';
+        }
+      });
+
+      /* ============================================================
+         REGISTER FORM (Cloud-First)
+         ============================================================ */
+      document.getElementById('register-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const errEl = document.getElementById('register-error');
+        const okEl = document.getElementById('register-success');
+        const btn = document.getElementById('btn-register');
+        
+        errEl.classList.add('hidden');
+        okEl.classList.add('hidden');
+
+        const lastName = document.getElementById('reg-lastname').value.trim().toUpperCase();
+        const firstName = document.getElementById('reg-firstname').value.trim();
+        const middleName = document.getElementById('reg-middlename').value.trim();
+        const sex = document.getElementById('reg-sex').value;
+        const lrnInput = document.getElementById('reg-lrn').value.replace(/-/g, '').trim();
+        const section = document.getElementById('reg-section').value;
+
+        if (lrnInput.length !== 12) {
+          errEl.textContent = 'Please enter a valid 12-digit LRN.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = '⏳ Creating...';
+
+        try {
+          if (typeof Sync === 'undefined' || typeof CONFIG === 'undefined') {
+            throw new Error('Backend not configured.');
+          }
+          
+          // Get device ID from Store
+          const deviceId = localStorage.getItem('gsa_v1_device_id') || 'DEV-unknown';
+          
+          // Build progressJSON (empty for new student)
+          const progressJSON = { scores: {}, progress: {}, badges: {}, locks: {}, unlocks: {} };
+          const jsonString = JSON.stringify(progressJSON);
+          
+          // Hash for integrity
+          let hash = 2166136261;
+          for (let i = 0; i < jsonString.length; i++) {
+            hash ^= jsonString.charCodeAt(i);
+            hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+          }
+          const integrityHash = (hash >>> 0).toString(16);
+
+          // Send to backend
+          const res = await Sync.backendPost({
+            action: 'syncStudentProgress',
+            lrn: lrnInput,
+            progressJSON: progressJSON,
+            integrityHash: integrityHash,
+            deviceId: deviceId,
+            studentInfo: {
+              lastName: lastName,
+              firstName: firstName,
+              middleName: middleName,
+              sex: sex,
+              section: section
+            }
+          });
+
+          if (!res || !res.ok) {
+            throw new Error(res.error || 'Registration failed');
+          }
+
+          // Save user locally
+          const user = {
+            lrn: lrnInput,
+            lastName: lastName,
+            firstName: firstName,
+            middleName: middleName,
+            sex: sex,
+            section: section,
+            gradeLevel: 11
+          };
+          Store.set('session', user);
+          Store.set('scores_' + lrnInput, {});
+          Store.set('progress_' + lrnInput, {});
+          Store.set('badges_' + lrnInput, {});
+
+          okEl.textContent = '✅ Profile created! Redirecting to dashboard...';
+          okEl.classList.remove('hidden');
+
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1500);
+        } catch (err) {
+          console.error('[Register] Error:', err);
+          errEl.textContent = '❌ ' + err.message;
+          errEl.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = 'Create Profile →';
+        }
+      });
+
+      /* ============================================================
+         SAVED USERS TAB
+         ============================================================ */
+      function renderSavedUsers() {
+        const container = document.getElementById('saved-users-list');
+        const users = Store.getAllUsers();
+        
+        if (!users.length) {
+          container.innerHTML = '<p class="text-muted text-small" style="text-align:center;padding:20px;">No saved users on this device yet.</p>';
+          return;
+        }
+
+        container.innerHTML = users.map(u => `
+          <div class="saved-user-card" onclick="window.__loginSavedUser('${u.lrn}')">
+            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#0d47a1,#00acc1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;">
+              ${(u.firstName || '?')[0]}${(u.lastName || '?')[0]}
+            </div>
+            <div style="flex:1;">
+              <div style="font-weight:700;font-size:0.9rem;">${u.lastName}, ${u.firstName}</div>
+              <div style="font-size:0.75rem;color:#78909c;">${u.section} · LRN ${u.lrn}</div>
+            </div>
+            <span style="color:#0d47a1;font-weight:700;">→</span>
+          </div>
+        `).join('');
+      }
+
+      window.__loginSavedUser = function(lrn) {
+        const users = Store.getAllUsers();
+        const user = users.find(u => u.lrn === lrn);
+        if (!user) return;
+        Store.set('session', user);
+        window.location.href = 'dashboard.html';
+      };
+    })();
+  </script>
 </body>
 </html>
