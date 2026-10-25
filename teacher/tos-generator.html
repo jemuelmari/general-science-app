@@ -98,7 +98,7 @@
     <div class="container flex-between">
       <div>
         <h1>📐 TOS Generator</h1>
-        <span class="version">v1.2.0</span>
+        <span class="version">v1.2.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -198,16 +198,19 @@
   <footer class="app-footer">
     <p>General Science Online Modular Application · <span class="version">v1.0.2</span></p>
   </footer>
-  <script src="../config.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
+  
+  <!-- Binago ang cache-busting version para sa tos-engine.js -->
+  <script src="../config.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../assets/js/app.js?v=1.3.0-f7b3fe7"></script>
   <script src="../assets/js/version-sync.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7?v=1.3.0-f7b3fe7"></script>
+  <script src="../assets/js/store.js?v=1.3.0-f7b3fe7"></script>
   <script src="../assets/js/ui-helpers.js?v=1.3.0-f7b3fe7"></script>
   <script src="../assets/js/mastery-scales.js?v=1.3.0-f7b3fe7"></script>
   <script src="../assets/js/sync.js?v=1.3.0-f7b3fe7"></script>
-  <script src="../assets/js/tos-engine.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../assets/js/tos-engine.js?v=2.0.1"></script> <!-- Updated version -->
   <script src="../assets/js/teacher-auth.js?v=1.3.0-f7b3fe7"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-f7b3fe7"></script>
+  
   <script>
     (function() {
       'use strict';
@@ -266,9 +269,9 @@
       });
 
       /* ============================================================
-         TE AVAILABILITY CHECK  (schema-aligned with Store.getScores)
+         TE AVAILABILITY CHECK
          ============================================================ */
-      function checkTEAvailability() {
+      async function checkTEAvailability() {
         var assessment = document.getElementById('filter-assessment').value;
         var term = document.getElementById('filter-term').value;
         var banner = document.getElementById('te-banner');
@@ -277,13 +280,18 @@
 
         var students = Store.getAllUsers ? Store.getAllUsers() : [];
         var st1Count = 0, st2Count = 0;
-        students.forEach(function(s) {
-          var scores = Store.getScores(s.lrn);
-          if (!scores || !scores[term]) return;
-          var st = scores[term].st || {};
-          if (st.st1) st1Count++;
-          if (st.st2) st2Count++;
-        });
+        
+        // Kunin ang data asynchronously kung async ang store
+        for (var i = 0; i < students.length; i++) {
+            var s = students[i];
+            var scores = (Store.getScores.constructor.name === 'AsyncFunction') 
+                ? await Store.getScores(s.lrn) 
+                : Store.getScores(s.lrn);
+            if (!scores || !scores[term]) continue;
+            var st = scores[term].st || {};
+            if (st.st1) st1Count++;
+            if (st.st2) st2Count++;
+        }
 
         var total = students.length;
         if (total === 0) {
@@ -338,16 +346,14 @@
 
           // Compute MLL once per (term, section) and cache
           try {
-            mllCache = await TOSEngine.computeAllCompetencyMPS(
-              (function(){
-                var s = Store.getAllUsers ? Store.getAllUsers() : [];
-                var sf = document.getElementById('filter-section').value;
-                if (sf) s = s.filter(function(u){ return u.section === sf; });
-                return s;
-              })(),
-              term
-            );
-          } catch (e) { mllCache = []; }
+            var students = Store.getAllUsers ? Store.getAllUsers() : [];
+            var sf = document.getElementById('filter-section').value;
+            if (sf) students = students.filter(function(u){ return u.section === sf; });
+            
+            mllCache = await TOSEngine.computeAllCompetencyMPS(students, term);
+          } catch (e) { 
+            mllCache = []; 
+          }
 
           renderAnswerKey(result);
           renderMostLeastLearned(result);
@@ -371,7 +377,7 @@
       }
 
       /* ============================================================
-         RENDER — TOS DOC  (with editable Bloom's cells)
+         RENDER — TOS DOC
          ============================================================ */
       function renderTOSDoc(tos) {
         var termLabel = { term1: 'Physics & Chemistry', term2: 'Chemistry & Life Science', term3: 'Earth Science' }[tos.term];
@@ -721,7 +727,7 @@
       }
 
       /* ============================================================
-         RENDER — MOST & LEAST LEARNED  (real MPS)
+         RENDER — MOST & LEAST LEARNED
          ============================================================ */
       function renderMostLeastLearned(tos) {
         var container = document.getElementById('mll-container');
