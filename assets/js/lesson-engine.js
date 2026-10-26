@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.9
+   Version: 1.0.10 (Fixed NaN Timer & Registration)
    ============================================================ */
 
 const Lesson = (() => {
@@ -61,6 +61,7 @@ const Lesson = (() => {
     setTimeout(function () { waitForGateAndInit(config, waited + 50, maxWait); }, 50);
   }
 
+  // FIX: Ibinalik ang time limit calculation para sa bawat activity type
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
     if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
@@ -90,7 +91,10 @@ const Lesson = (() => {
   function startActivity(stateKey) {
     const containerId = stateKey === 'activity1' ? 'activity-1' : stateKey === 'activity2' ? 'activity-2' : 'formative';
     const pending = pendingActivities[containerId];
-    if (!pending) return;
+    if (!pending) {
+      console.warn('[Lesson] No pending activity for', containerId);
+      return;
+    }
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
     if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
     else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
@@ -167,7 +171,7 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     MATCH GAME — 100% FIXED
+     MATCH GAME
      ============================================================ */
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
@@ -175,7 +179,6 @@ const Lesson = (() => {
     const pairs = config.pairs;
     const timeLimit = config.timeLimit;
 
-    // I-tag natin bawat item base sa ID para hindi magkamali kahit i-shuffle
     let leftItems = pairs.map((p, i) => ({ ...p, id: i })).sort(() => Math.random() - 0.5);
     let rightItems = pairs.map((p, i) => ({ ...p, id: i })).sort(() => Math.random() - 0.5);
 
@@ -226,7 +229,6 @@ const Lesson = (() => {
         if (finished || !selectedLeft || el.classList.contains('correct')) return;
         
         if (selectedLeft.dataset.id === el.dataset.id) {
-          // TAMA
           selectedLeft.classList.remove('selected');
           selectedLeft.classList.add('correct');
           el.classList.add('correct');
@@ -243,7 +245,6 @@ const Lesson = (() => {
             APP.toast('🎉 Perfect Match! You passed!', 'success', 4000);
           }
         } else {
-          // MALI
           el.classList.add('wrong');
           selectedLeft.classList.add('wrong');
           setTimeout(() => {
@@ -271,13 +272,15 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     SCENARIO GAME
+     SCENARIO GAME (FIXED TIMER)
      ============================================================ */
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const scenarios = config.scenarios;
-    const timeLimit = config.timeLimit;
+    // Siguraduhing may timeLimit, kung wala, default sa 300 seconds (5 mins)
+    const timeLimit = config.timeLimit || 300; 
+    
     let index = 0, correct = 0, finished = false;
     let totalTimeLeft = timeLimit, overallTimer = null;
 
@@ -337,14 +340,15 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     ESCAPE ROOM
+     ESCAPE ROOM (FIXED TIMER)
      ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const questions = config.questions;
     const lives = config.lives !== undefined ? config.lives : 3;
-    const timeLimit = config.timeLimit;
+    const timeLimit = config.timeLimit || 300;
+    
     let currentLives = lives, earnedKeys = 0, index = 0, locked = false, finished = false;
     let timeLeft = timeLimit, timerInterval = null;
 
@@ -398,7 +402,7 @@ const Lesson = (() => {
   return {
     init,
     renderMatchGame: registerMatchGame,
-    renderScenarioGame: renderScenarioGameNow,
+    renderScenarioGame: registerScenarioGame,
     renderEscapeRoom: registerEscapeRoom
   };
 })();
