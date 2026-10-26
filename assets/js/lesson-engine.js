@@ -1,40 +1,87 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.15 (Final Sync Fix)
+   Version: 1.0.16 (Sync + progress fix)
    ============================================================ */
 
 const Lesson = (() => {
   'use strict';
 
+  const PASS_PERCENT = 75;
+  const ACTIVITY_IDS = ['activity-1', 'activity-2', 'formative'];
+
   let ctx = null;
   let pendingActivities = {};
   let currentAttempts = {};
+  let activeGames = {};          // containerId -> { finished, stop() }
   let readyFlag = false;
   let timeoutHandle = null;
-  let hasActivities = false;
+  let dayMarked = false;
+  let initialized = false;
+  let liveTimerHandle = null;
+
+  /* ---------- helpers ---------- */
+
+  function logError(where, err) {
+    try { console.error('[Lesson] ' + where + ':', err); } catch (e) { }
+  }
+
+  function toast(msg, type, ms) {
+    try { if (typeof APP !== 'undefined' && APP.toast) APP.toast(msg, type, ms); } catch (e) { }
+  }
+
+  function fmt(s) {
+    try { return APP.formatTime(s); } catch (e) {
+      const m = Math.floor(s / 60), r = s % 60;
+      return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+    }
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
 
   function getGate() {
     try { if (typeof ActivityGate !== 'undefined') return ActivityGate; } catch (e) { }
     return null;
   }
 
+  function hasActivities() {
+    if (Object.keys(pendingActivities).length > 0) return true;
+    return ACTIVITY_IDS.some(id => !!document.getElementById(id));
+  }
+
+  /* ---------- init ---------- */
+
   function init(config) {
+    if (initialized) return;
     const user = Store.getCurrentUser();
     if (!user) { window.location.href = '../../../student/login.html'; return; }
+    initialized = true;
 
-    ctx = { lrn: user.lrn, term: config.term, week: config.week, day: config.day, points: 0, maxPoints: config.maxPoints || 300, badges: [], startTime: Date.now() };
-    hasActivities = false;
+    ctx = {
+      lrn: user.lrn, term: config.term, week: config.week, day: config.day,
+      points: 0, maxPoints: config.maxPoints || 300, badges: [], startTime: Date.now()
+    };
+    dayMarked = false;
+
     renderScoreBar(config.title);
     startLiveTimer();
     showLoadingOverlay();
 
     timeoutHandle = setTimeout(() => { if (!readyFlag) showTimeoutError(); }, 15000);
+
     document.addEventListener('activity:start', (e) => startActivity(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
       if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
     });
 
     waitForGateAndInit(config, 0, 2000);
+
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
@@ -44,26 +91,25 @@ const Lesson = (() => {
   }
 
   function autoCompleteIfLessonOnly() {
-    if (hasActivities) return;
-    try {
-      Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
-      APP.toast('✅ Day completed!', 'success', 3000);
-      setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-    } catch (err) { }
+    if (hasActivities()) return;
+    completeDayAndLeave();
   }
 
   function waitForGateAndInit(config, waited, maxWait) {
-    var gate = getGate();
+    const gate = getGate();
     if (gate && typeof gate.init === 'function') {
-      try { gate.init(config); } catch (err) { }
+      try { gate.init(config); } catch (err) { logError('gate.init', err); }
       return;
     }
     if (waited >= maxWait) {
-      document.querySelectorAll('.gate-overlay').forEach(function (el) { el.remove(); });
+      document.querySelectorAll('.gate-overlay').forEach(el => el.remove());
+      if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
       return;
     }
-    setTimeout(function () { waitForGateAndInit(config, waited + 50, maxWait); }, 50);
+    setTimeout(() => waitForGateAndInit(config, waited + 50, maxWait), 50);
   }
+
+  /* ---------- time limits ---------- */
 
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
@@ -73,50 +119,86 @@ const Lesson = (() => {
     return MIN_SECONDS;
   }
 
+  /* ---------- registration ---------- */
+
   function registerMatchGame(containerId, config) {
-    hasActivities = true;
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
-    pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit: timeLimit }) };
+    pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit }) };
   }
 
   function registerScenarioGame(containerId, config) {
-    hasActivities = true;
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
-    pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit: timeLimit }) };
+    pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit }) };
   }
 
   function registerEscapeRoom(containerId, config) {
-    hasActivities = true;
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
-    pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit: timeLimit }) };
+    pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit }) };
   }
 
+  /* ---------- start ---------- */
+
   function startActivity(stateKey) {
-    const containerId = stateKey === 'activity1' ? 'activity-1' : stateKey === 'activity2' ? 'activity-2' : 'formative';
+    const containerId = stateKey === 'activity1' ? 'activity-1'
+                      : stateKey === 'activity2' ? 'activity-2'
+                      : 'formative';
     const pending = pendingActivities[containerId];
     if (!pending) return;
+
+    // Ignore duplicate start events while a game is still running
+    const active = activeGames[containerId];
+    if (active && !active.finished) return;
+
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
+
     if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
     else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
     else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
   }
 
+  /* ---------- scoring / progress ---------- */
+
   function reportScore(containerId, scorePercent) {
-    var gate = getGate();
+    const gate = getGate();
     if (gate && typeof gate.completeWithScore === 'function') {
-      try { gate.completeWithScore(containerId, scorePercent); } catch (err) { }
+      try { gate.completeWithScore(containerId, scorePercent); } catch (err) { logError('reportScore', err); }
     }
   }
 
-  function markDayIfPassed(scorePercent) {
-    if (scorePercent >= 75) {
-      try { 
-        Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day); 
-        APP.toast('✅ Day completed!', 'success', 3000);
-        setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-      } catch (err) { }
+  // Marks the day in Store (once) — returns true on success
+  function markDayComplete() {
+    if (!ctx) return false;
+    if (dayMarked) return true;
+    try {
+      if (typeof Store === 'undefined' || typeof Store.markDayComplete !== 'function') {
+        throw new Error('Store.markDayComplete is not available');
+      }
+      Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+      dayMarked = true;
+      return true;
+    } catch (err) {
+      logError('markDayComplete', err);
+      toast('⚠️ Hindi na-save ang progress. Pakisubukan ulit.', 'error', 5000);
+      return false;
     }
   }
+
+  function completeDayAndLeave() {
+    if (!markDayComplete()) return;
+    toast('✅ Day completed!', 'success', 3000);
+    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+  }
+
+  // Single exit point for every activity
+  function finishActivity(containerId, scorePercent, config) {
+    reportScore(containerId, scorePercent);
+    if (scorePercent >= PASS_PERCENT) {
+      if (config && config.badgeId) awardBadge(config.badgeId, config.badgeName || 'Badge', config.badgeIcon || '🏅');
+      completeDayAndLeave();
+    }
+  }
+
+  /* ---------- score bar ---------- */
 
   function renderScoreBar(title) {
     const bar = document.getElementById('daily-score-bar');
@@ -134,32 +216,45 @@ const Lesson = (() => {
   function startLiveTimer() {
     const el = document.getElementById('sb-timer');
     if (!el) return;
-    setInterval(() => { const s = Math.floor((Date.now() - ctx.startTime) / 1000); el.textContent = APP.formatTime(s); }, 1000);
+    clearInterval(liveTimerHandle);
+    liveTimerHandle = setInterval(() => {
+      const s = Math.floor((Date.now() - ctx.startTime) / 1000);
+      el.textContent = fmt(s);
+    }, 1000);
   }
 
   function addPts(n) {
-    ctx.points += n;
+    if (!ctx || !n) return;
+    ctx.points = Math.max(0, ctx.points + n);
     const el = document.getElementById('sb-points');
-    if (el) { el.textContent = ctx.points; el.style.transform = 'scale(1.3)'; setTimeout(() => (el.style.transform = 'scale(1)'), 200); }
-    Store.addDailyPoints(ctx.lrn, ctx.term, ctx.week, ctx.day, n);
+    if (el) {
+      el.textContent = ctx.points;
+      el.style.transform = 'scale(1.3)';
+      setTimeout(() => (el.style.transform = 'scale(1)'), 200);
+    }
+    try { Store.addDailyPoints(ctx.lrn, ctx.term, ctx.week, ctx.day, n); } catch (err) { logError('addDailyPoints', err); }
   }
 
   function awardBadge(id, name, icon) {
-    if (ctx.badges.includes(id)) return;
-    if (Store.awardBadge(ctx.lrn, ctx.term, id)) {
-      ctx.badges.push(id);
-      const el = document.getElementById('sb-badges');
-      if (el) el.textContent = ctx.badges.length;
-      APP.toast(`🏆 Badge earned: ${icon} ${name}`, 'success', 4000);
-    }
+    if (!ctx || ctx.badges.includes(id)) return;
+    try {
+      if (Store.awardBadge(ctx.lrn, ctx.term, id)) {
+        ctx.badges.push(id);
+        const el = document.getElementById('sb-badges');
+        if (el) el.textContent = ctx.badges.length;
+        toast(`🏆 Badge earned: ${icon} ${name}`, 'success', 4000);
+      }
+    } catch (err) { logError('awardBadge', err); }
   }
+
+  /* ---------- loading overlay ---------- */
 
   function showLoadingOverlay() {
     if (document.getElementById('lesson-loading-overlay')) return;
     const overlay = document.createElement('div');
     overlay.id = 'lesson-loading-overlay';
-    overlay.style.cssText = `position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;`;
-    overlay.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#0d47a1;margin-top:12px;">Loading activities...</div></div>`;
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
+    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#0d47a1;margin-top:12px;">Loading activities...</div></div>';
     document.body.appendChild(overlay);
   }
 
@@ -171,31 +266,39 @@ const Lesson = (() => {
   function showTimeoutError() {
     const overlay = document.getElementById('lesson-loading-overlay');
     if (!overlay) return;
-    overlay.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div></div>`;
+    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div></div>';
   }
 
+  /* ============================================================
+     MATCH GAME
+     ============================================================ */
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
+
     const pairs = config.pairs;
     const timeLimit = config.timeLimit;
     const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
     const pointsWrong = config.pointsWrong !== undefined ? config.pointsWrong : -3;
     const bonusFast = config.bonusFast !== undefined ? config.bonusFast : 15;
-    const badgeId = config.badgeId;
-    const badgeName = config.badgeName;
-    const badgeIcon = config.badgeIcon;
 
-    let leftItems = pairs.map((p, i) => ({ ...p, id: i })).sort(() => Math.random() - 0.5);
-    let rightItems = pairs.map((p, i) => ({ ...p, id: i })).sort(() => Math.random() - 0.5);
+    const leftItems = shuffle(pairs.map((p, i) => ({ left: p.left, right: p.right, id: i })));
+    const rightItems = shuffle(pairs.map((p, i) => ({ left: p.left, right: p.right, id: i })));
 
     let selectedLeft = null;
-    let matches = 0, wrongCount = 0, timeLeft = timeLimit, timerInterval = null, finished = false;
+    let matches = 0, timeLeft = timeLimit, timerInterval = null;
+    let finished = false, busy = false;
+
+    const handle = {
+      finished: false,
+      stop() { finished = true; handle.finished = true; clearInterval(timerInterval); }
+    };
+    activeGames[containerId] = handle;
 
     container.innerHTML = `
       <div class="activity-header">
         <span class="activity-title">🔗 Match the pairs</span>
-        <span class="activity-timer" id="match-timer">${APP.formatTime(timeLeft)}</span>
+        <span class="activity-timer" id="match-timer">${fmt(timeLeft)}</span>
       </div>
       <div class="match-grid">
         <div class="match-column"><h4>LEFT</h4><div id="match-left"></div></div>
@@ -209,6 +312,7 @@ const Lesson = (() => {
     const leftEl = container.querySelector('#match-left');
     const rightEl = container.querySelector('#match-right');
     const scoreEl = container.querySelector('#match-score');
+    const timerEl = container.querySelector('#match-timer');
 
     leftItems.forEach((item) => {
       const el = document.createElement('div');
@@ -216,7 +320,7 @@ const Lesson = (() => {
       el.textContent = item.left;
       el.dataset.id = item.id;
       el.addEventListener('click', () => {
-        if (finished || el.classList.contains('correct')) return;
+        if (finished || busy || el.classList.contains('correct')) return;
         leftEl.querySelectorAll('.match-item').forEach(n => n.classList.remove('selected'));
         el.classList.add('selected');
         selectedLeft = el;
@@ -230,22 +334,28 @@ const Lesson = (() => {
       el.textContent = item.right;
       el.dataset.id = item.id;
       el.addEventListener('click', () => {
-        if (finished || !selectedLeft || el.classList.contains('correct')) return;
-        if (selectedLeft.dataset.id === el.dataset.id) {
-          selectedLeft.classList.remove('selected');
-          selectedLeft.classList.add('correct');
+        if (finished || busy || !selectedLeft || el.classList.contains('correct')) return;
+
+        const leftRef = selectedLeft;
+        if (leftRef.dataset.id === el.dataset.id) {
+          leftRef.classList.remove('selected');
+          leftRef.classList.add('correct');
           el.classList.add('correct');
           selectedLeft = null;
           matches++;
+          addPts(pointsCorrect);
           if (scoreEl) scoreEl.textContent = `Matches: ${matches} / ${pairs.length}`;
           if (matches === pairs.length) endGame('complete');
         } else {
+          busy = true;
+          selectedLeft = null;
+          addPts(pointsWrong);
           el.classList.add('wrong');
-          selectedLeft.classList.add('wrong');
+          leftRef.classList.add('wrong');
           setTimeout(() => {
             el.classList.remove('wrong');
-            if (selectedLeft) selectedLeft.classList.remove('wrong', 'selected');
-            selectedLeft = null;
+            leftRef.classList.remove('wrong', 'selected');
+            busy = false;
           }, 500);
         }
       });
@@ -254,67 +364,84 @@ const Lesson = (() => {
 
     function endGame(reason) {
       if (finished) return;
-      finished = true;
-      clearInterval(timerInterval);
+      const timeRemaining = timeLeft;
+      handle.stop();
+      if (reason === 'complete' && timeRemaining > timeLimit / 2) addPts(bonusFast);
       const scorePercent = Math.round((matches / pairs.length) * 100);
-      reportScore(containerId, scorePercent);
-      markDayIfPassed(scorePercent);
-      if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
+      if (scorePercent >= PASS_PERCENT) toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else toast(`📖 Score: ${scorePercent}% — need ${PASS_PERCENT}% to pass.`, 'warning', 4000);
+      finishActivity(containerId, scorePercent, config);
     }
 
     timerInterval = setInterval(() => {
+      if (finished) return;
       timeLeft--;
-      const el = container.querySelector('#match-timer');
-      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+      if (timerEl) timerEl.textContent = fmt(Math.max(0, timeLeft));
       if (timeLeft <= 0) endGame('timeout');
     }, 1000);
   }
 
+  /* ============================================================
+     SCENARIO GAME
+     ============================================================ */
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
+
     const scenarios = config.scenarios;
-    const timeLimit = config.timeLimit || 300; 
+    const timeLimit = config.timeLimit || 300;
+    const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
     let index = 0, correct = 0, finished = false;
     let totalTimeLeft = timeLimit, overallTimer = null;
+
+    const handle = {
+      finished: false,
+      stop() { finished = true; handle.finished = true; clearInterval(overallTimer); }
+    };
+    activeGames[containerId] = handle;
 
     container.innerHTML = `
       <div class="activity-header">
         <span class="activity-title">🎯 Scenario Challenge</span>
-        <span class="activity-timer" id="scenario-overall-timer">${APP.formatTime(totalTimeLeft)}</span>
+        <span class="activity-timer" id="scenario-overall-timer">${fmt(totalTimeLeft)}</span>
       </div>
       <div id="scenario-body"></div>
     `;
-    renderCard();
+
     overallTimer = setInterval(() => {
+      if (finished) return;
       totalTimeLeft--;
       const el = container.querySelector('#scenario-overall-timer');
-      if (el) el.textContent = APP.formatTime(Math.max(0, totalTimeLeft));
+      if (el) el.textContent = fmt(Math.max(0, totalTimeLeft));
       if (totalTimeLeft <= 0) endGame('timeout');
     }, 1000);
+
+    renderCard();
 
     function renderCard() {
       if (finished) return;
       if (index >= scenarios.length) return endGame('complete');
       const sc = scenarios[index];
       const body = container.querySelector('#scenario-body');
+      if (!body) return;
       body.innerHTML = `
         <div class="scenario-card">
           <p class="scenario-text">${sc.text}</p>
           <div class="choice-row" id="choice-row"></div>
         </div>
-        <div class="text-center mt-md"><span class="badge badge-info">Question ${index + 1} / ${scenarios.length}</span></div>
+        <div class="text-center mt-md"><span class="badge badge-info">Question ${index + 1} / ${scenarios.length} · Correct: ${correct}</span></div>
       `;
       const row = body.querySelector('#choice-row');
+      let answered = false;
       sc.choices.forEach((choice) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
         btn.textContent = choice.label;
         btn.addEventListener('click', () => {
-          if (finished) return;
+          if (finished || answered) return;
+          answered = true;
           container.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
-          if (choice.correct) { btn.classList.add('correct'); correct++; }
+          if (choice.correct) { btn.classList.add('correct'); correct++; addPts(pointsCorrect); }
           else { btn.classList.add('wrong'); }
           setTimeout(() => { index++; renderCard(); }, 1000);
         });
@@ -324,38 +451,44 @@ const Lesson = (() => {
 
     function endGame(reason) {
       if (finished) return;
-      finished = true;
-      clearInterval(overallTimer);
+      handle.stop();
       const scorePercent = Math.round((correct / scenarios.length) * 100);
-      reportScore(containerId, scorePercent);
-      markDayIfPassed(scorePercent);
+      if (scorePercent >= PASS_PERCENT) toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else toast(`📖 Score: ${scorePercent}% — need ${PASS_PERCENT}% to pass.`, 'warning', 4000);
+      finishActivity(containerId, scorePercent, config);
     }
   }
 
+  /* ============================================================
+     ESCAPE ROOM
+     ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
+
     const questions = config.questions;
     const lives = config.lives !== undefined ? config.lives : 3;
     const timeLimit = config.timeLimit || 300;
+    const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
     let currentLives = lives, earnedKeys = 0, index = 0, locked = false, finished = false;
     let timeLeft = timeLimit, timerInterval = null;
 
+    const handle = {
+      finished: false,
+      stop() { finished = true; handle.finished = true; clearInterval(timerInterval); }
+    };
+    activeGames[containerId] = handle;
+
     function renderQuestion() {
       if (finished) return;
-      if (index >= questions.length) {
-        finished = true;
-        const scorePercent = Math.round((earnedKeys / questions.length) * 100);
-        reportScore(containerId, scorePercent);
-        markDayIfPassed(scorePercent);
-        return;
-      }
+      if (index >= questions.length) return endGame('complete');
+
       const q = questions[index];
       container.innerHTML = `
         <div class="escape-container">
           <div class="escape-header">
-            <div><div class="score-bar-label">Q ${index + 1} / ${questions.length}</div></div>
-            <div class="activity-timer" id="escape-timer">${APP.formatTime(Math.max(0, timeLeft))}</div>
+            <div><div class="score-bar-label">Q ${index + 1} / ${questions.length} · 🔑 ${earnedKeys} · ❤️ ${currentLives}</div></div>
+            <div class="activity-timer" id="escape-timer">${fmt(Math.max(0, timeLeft))}</div>
           </div>
           <div class="escape-question">
             <h4>${q.text}</h4>
@@ -369,21 +502,39 @@ const Lesson = (() => {
         btn.className = 'escape-option';
         btn.textContent = `${String.fromCharCode(65 + i)}. ${c.label}`;
         btn.addEventListener('click', () => {
-          if (locked) return;
+          if (locked || finished) return;
           locked = true;
           container.querySelectorAll('.escape-option').forEach(b => b.disabled = true);
-          if (c.correct) { btn.classList.add('correct'); earnedKeys++; }
+          if (c.correct) { btn.classList.add('correct'); earnedKeys++; addPts(pointsCorrect); }
           else { btn.classList.add('wrong'); currentLives--; }
-          setTimeout(() => { index++; locked = false; renderQuestion(); }, 1000);
+          setTimeout(() => {
+            locked = false;
+            if (finished) return;
+            if (currentLives <= 0) return endGame('no-lives');
+            index++;
+            renderQuestion();
+          }, 1000);
         });
         opts.appendChild(btn);
       });
     }
+
+    function endGame(reason) {
+      if (finished) return;
+      handle.stop();
+      const scorePercent = Math.round((earnedKeys / questions.length) * 100);
+      if (scorePercent >= PASS_PERCENT) toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else toast(`📖 Score: ${scorePercent}% — need ${PASS_PERCENT}% to pass.`, 'warning', 4000);
+      finishActivity(containerId, scorePercent, config);
+    }
+
     renderQuestion();
     timerInterval = setInterval(() => {
+      if (finished) return;
       timeLeft--;
-      const el = document.getElementById('escape-timer');
-      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+      const el = container.querySelector('#escape-timer');
+      if (el) el.textContent = fmt(Math.max(0, timeLeft));
+      if (timeLeft <= 0) endGame('timeout');
     }, 1000);
   }
 
