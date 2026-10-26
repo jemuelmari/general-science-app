@@ -256,7 +256,7 @@ const Lesson = (() => {
     } catch (err) {
       logError('markDayComplete', err);
       const detail = (err && err.message) ? err.message : String(err);
-      toast('⚠️ Progress could not be saved: ' + detail, 'error', 12000);
+      toast('⚠️ Progress could not be saved: ' + detail, 'danger', 12000);
       return false;
     }
   }
