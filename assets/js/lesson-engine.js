@@ -1,7 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.13 (Fixed Progress Saving & Timer)
-   App: General Science
+   Version: 1.0.15 (Final Sync Fix)
    ============================================================ */
 
 const Lesson = (() => {
@@ -14,94 +13,49 @@ const Lesson = (() => {
   let timeoutHandle = null;
   let hasActivities = false;
 
-  const PASS_THRESHOLD = 0.75;
-
   function getGate() {
-    try {
-      if (typeof ActivityGate !== 'undefined') return ActivityGate;
-    } catch (e) { /* ignore */ }
+    try { if (typeof ActivityGate !== 'undefined') return ActivityGate; } catch (e) { }
     return null;
   }
 
-  /* ---------- Init ---------- */
   function init(config) {
     const user = Store.getCurrentUser();
-    if (!user) {
-      window.location.href = '../../../student/login.html';
-      return;
-    }
+    if (!user) { window.location.href = '../../../student/login.html'; return; }
 
-    ctx = {
-      lrn: user.lrn,
-      term: config.term,
-      week: config.week,
-      day: config.day,
-      points: 0,
-      maxPoints: config.maxPoints || 300,
-      badges: [],
-      startTime: Date.now()
-    };
-
+    ctx = { lrn: user.lrn, term: config.term, week: config.week, day: config.day, points: 0, maxPoints: config.maxPoints || 300, badges: [], startTime: Date.now() };
     hasActivities = false;
-
     renderScoreBar(config.title);
     startLiveTimer();
     showLoadingOverlay();
 
-    timeoutHandle = setTimeout(() => {
-      if (!readyFlag) showTimeoutError();
-    }, 15000);
-
-    document.addEventListener('activity:start', (e) => {
-      startActivity(e.detail.activity);
-    });
-
+    timeoutHandle = setTimeout(() => { if (!readyFlag) showTimeoutError(); }, 15000);
+    document.addEventListener('activity:start', (e) => startActivity(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
-      if (!readyFlag) {
-        hideLoadingOverlay();
-        readyFlag = true;
-        clearTimeout(timeoutHandle);
-      }
+      if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
     });
 
     waitForGateAndInit(config, 0, 2000);
-
     requestAnimationFrame(() => {
       setTimeout(() => {
-        if (!readyFlag) {
-          hideLoadingOverlay();
-          readyFlag = true;
-          clearTimeout(timeoutHandle);
-        }
-        // Auto-complete kung lecture lang (walang activity)
+        if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
         setTimeout(autoCompleteIfLessonOnly, 1000);
       }, 500);
     });
   }
 
-  /* ---------- Auto-complete lesson-only days ---------- */
   function autoCompleteIfLessonOnly() {
-    if (hasActivities) return; 
-    
-    console.log('[Lesson] Walang activity, minamarkahan ang Day', ctx.day);
+    if (hasActivities) return;
     try {
       Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
-      
-      // Mag-pakita ng alert at i-reload pabalik sa index
       APP.toast('✅ Day completed!', 'success', 3000);
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1500);
-      
-    } catch (err) {
-      console.warn('[Lesson] markDayComplete failed:', err);
-    }
+      setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+    } catch (err) { }
   }
 
   function waitForGateAndInit(config, waited, maxWait) {
     var gate = getGate();
     if (gate && typeof gate.init === 'function') {
-      try { gate.init(config); } catch (err) { console.warn(err); }
+      try { gate.init(config); } catch (err) { }
       return;
     }
     if (waited >= maxWait) {
@@ -111,7 +65,6 @@ const Lesson = (() => {
     setTimeout(function () { waitForGateAndInit(config, waited + 50, maxWait); }, 50);
   }
 
-  /* ---------- Difficulty-Based Timer ---------- */
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
     if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
@@ -120,40 +73,29 @@ const Lesson = (() => {
     return MIN_SECONDS;
   }
 
-  /* ---------- Register activities ---------- */
   function registerMatchGame(containerId, config) {
     hasActivities = true;
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
     pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit: timeLimit }) };
-    const container = document.getElementById(containerId);
-    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerScenarioGame(containerId, config) {
     hasActivities = true;
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
     pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit: timeLimit }) };
-    const container = document.getElementById(containerId);
-    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerEscapeRoom(containerId, config) {
     hasActivities = true;
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
     pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit: timeLimit }) };
-    const container = document.getElementById(containerId);
-    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
-  /* ---------- Start activity ---------- */
   function startActivity(stateKey) {
-    const containerId = stateKey === 'activity1' ? 'activity-1'
-                      : stateKey === 'activity2' ? 'activity-2'
-                      : 'formative';
+    const containerId = stateKey === 'activity1' ? 'activity-1' : stateKey === 'activity2' ? 'activity-2' : 'formative';
     const pending = pendingActivities[containerId];
     if (!pending) return;
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
-
     if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
     else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
     else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
@@ -168,24 +110,19 @@ const Lesson = (() => {
 
   function markDayIfPassed(scorePercent) {
     if (scorePercent >= 75) {
-      try {
-        Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+      try { 
+        Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day); 
         APP.toast('✅ Day completed!', 'success', 3000);
-        // I-reload pabalik sa index para makita ang update sa progress bar
         setTimeout(() => { window.location.href = 'index.html'; }, 2000);
       } catch (err) { }
     }
   }
 
-  /* ---------- Score Bar ---------- */
   function renderScoreBar(title) {
     const bar = document.getElementById('daily-score-bar');
     if (!bar) return;
     bar.innerHTML = `
-      <div class="score-bar-left">
-        <span class="score-bar-label">Week ${ctx.week} · Day ${ctx.day}</span>
-        <span class="score-bar-title">${title}</span>
-      </div>
+      <div class="score-bar-left"><span class="score-bar-label">Week ${ctx.week} · Day ${ctx.day}</span><span class="score-bar-title">${title}</span></div>
       <div class="score-bar-right">
         <div class="score-bar-stat"><span class="value" id="sb-points">0</span><span class="label">Points</span></div>
         <div class="score-bar-stat"><span class="value" id="sb-badges">0</span><span class="label">Badges</span></div>
@@ -197,20 +134,13 @@ const Lesson = (() => {
   function startLiveTimer() {
     const el = document.getElementById('sb-timer');
     if (!el) return;
-    setInterval(() => {
-      const s = Math.floor((Date.now() - ctx.startTime) / 1000);
-      el.textContent = APP.formatTime(s);
-    }, 1000);
+    setInterval(() => { const s = Math.floor((Date.now() - ctx.startTime) / 1000); el.textContent = APP.formatTime(s); }, 1000);
   }
 
   function addPts(n) {
     ctx.points += n;
     const el = document.getElementById('sb-points');
-    if (el) {
-      el.textContent = ctx.points;
-      el.style.transform = 'scale(1.3)';
-      setTimeout(() => (el.style.transform = 'scale(1)'), 200);
-    }
+    if (el) { el.textContent = ctx.points; el.style.transform = 'scale(1.3)'; setTimeout(() => (el.style.transform = 'scale(1)'), 200); }
     Store.addDailyPoints(ctx.lrn, ctx.term, ctx.week, ctx.day, n);
   }
 
@@ -224,33 +154,18 @@ const Lesson = (() => {
     }
   }
 
-  /* ---------- Loading overlay ---------- */
   function showLoadingOverlay() {
     if (document.getElementById('lesson-loading-overlay')) return;
     const overlay = document.createElement('div');
     overlay.id = 'lesson-loading-overlay';
-    overlay.style.cssText = `
-      position:fixed;inset:0;z-index:9998;
-      background:rgba(255,255,255,0.92);
-      display:flex;align-items:center;justify-content:center;
-      font-family:system-ui,sans-serif;
-      transition:opacity 0.3s ease;
-    `;
-    overlay.innerHTML = `
-      <div style="text-align:center;max-width:320px;padding:24px;">
-        <div style="font-size:2.5rem;">⏳</div>
-        <div style="font-size:1.1rem;font-weight:600;color:#0d47a1;margin-top:12px;">Loading activities...</div>
-      </div>
-    `;
+    overlay.style.cssText = `position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;`;
+    overlay.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#0d47a1;margin-top:12px;">Loading activities...</div></div>`;
     document.body.appendChild(overlay);
   }
 
   function hideLoadingOverlay() {
     const overlay = document.getElementById('lesson-loading-overlay');
-    if (overlay) {
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 300);
-    }
+    if (overlay) overlay.remove();
   }
 
   function showTimeoutError() {
@@ -259,9 +174,6 @@ const Lesson = (() => {
     overlay.innerHTML = `<div style="text-align:center;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div></div>`;
   }
 
-  /* ============================================================
-     MATCH GAME
-     ============================================================ */
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -286,8 +198,8 @@ const Lesson = (() => {
         <span class="activity-timer" id="match-timer">${APP.formatTime(timeLeft)}</span>
       </div>
       <div class="match-grid">
-        <div class="match-column"><h4>Left</h4><div id="match-left"></div></div>
-        <div class="match-column"><h4>Right</h4><div id="match-right"></div></div>
+        <div class="match-column"><h4>LEFT</h4><div id="match-left"></div></div>
+        <div class="match-column"><h4>RIGHT</h4><div id="match-right"></div></div>
       </div>
       <div class="text-center mt-md">
         <span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span>
@@ -299,10 +211,13 @@ const Lesson = (() => {
     const scoreEl = container.querySelector('#match-score');
 
     leftItems.forEach((item) => {
-      const el = APP.el('div', { class: 'match-item', 'data-id': item.id, text: item.left });
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.textContent = item.left;
+      el.dataset.id = item.id;
       el.addEventListener('click', () => {
         if (finished || el.classList.contains('correct')) return;
-        leftEl.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected'));
+        leftEl.querySelectorAll('.match-item').forEach(n => n.classList.remove('selected'));
         el.classList.add('selected');
         selectedLeft = el;
       });
@@ -310,26 +225,29 @@ const Lesson = (() => {
     });
 
     rightItems.forEach((item) => {
-      const el = APP.el('div', { class: 'match-item', 'data-id': item.id, text: item.right });
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.textContent = item.right;
+      el.dataset.id = item.id;
       el.addEventListener('click', () => {
         if (finished || !selectedLeft || el.classList.contains('correct')) return;
         if (selectedLeft.dataset.id === el.dataset.id) {
           selectedLeft.classList.remove('selected');
           selectedLeft.classList.add('correct');
           el.classList.add('correct');
-          addPts(pointsCorrect);
+          selectedLeft = null;
           matches++;
           if (scoreEl) scoreEl.textContent = `Matches: ${matches} / ${pairs.length}`;
           if (matches === pairs.length) endGame('complete');
         } else {
           el.classList.add('wrong');
           selectedLeft.classList.add('wrong');
-          addPts(pointsWrong);
-          wrongCount++;
-          const l = selectedLeft;
-          setTimeout(() => { l.classList.remove('wrong', 'selected'); el.classList.remove('wrong'); }, 500);
+          setTimeout(() => {
+            el.classList.remove('wrong');
+            if (selectedLeft) selectedLeft.classList.remove('wrong', 'selected');
+            selectedLeft = null;
+          }, 500);
         }
-        selectedLeft = null;
       });
       rightEl.appendChild(el);
     });
@@ -339,15 +257,9 @@ const Lesson = (() => {
       finished = true;
       clearInterval(timerInterval);
       const scorePercent = Math.round((matches / pairs.length) * 100);
-      if (scorePercent >= 75) {
-        if (wrongCount === 0) { awardBadge(badgeId + '-flawless', 'Flawless', '🎯'); addPts(bonusFast); }
-        if ((timeLimit - timeLeft) < timeLimit * 0.5) awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
-        awardBadge(badgeId, badgeName, badgeIcon);
-      }
       reportScore(containerId, scorePercent);
       markDayIfPassed(scorePercent);
-      if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
       else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
 
@@ -359,21 +271,12 @@ const Lesson = (() => {
     }, 1000);
   }
 
-  /* ============================================================
-     SCENARIO GAME
-     ============================================================ */
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const scenarios = config.scenarios;
-    const timeLimit = config.timeLimit;
-    const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 8;
-    const bonusFast = config.bonusFast !== undefined ? config.bonusFast : 3;
-    const badgeId = config.badgeId;
-    const badgeName = config.badgeName;
-    const badgeIcon = config.badgeIcon;
-
-    let index = 0, correct = 0, fastAnswers = 0, cardStart = Date.now(), finished = false;
+    const timeLimit = config.timeLimit || 300; 
+    let index = 0, correct = 0, finished = false;
     let totalTimeLeft = timeLimit, overallTimer = null;
 
     container.innerHTML = `
@@ -383,9 +286,7 @@ const Lesson = (() => {
       </div>
       <div id="scenario-body"></div>
     `;
-
     renderCard();
-
     overallTimer = setInterval(() => {
       totalTimeLeft--;
       const el = container.querySelector('#scenario-overall-timer');
@@ -397,36 +298,25 @@ const Lesson = (() => {
       if (finished) return;
       if (index >= scenarios.length) return endGame('complete');
       const sc = scenarios[index];
-      cardStart = Date.now();
       const body = container.querySelector('#scenario-body');
       body.innerHTML = `
         <div class="scenario-card">
           <p class="scenario-text">${sc.text}</p>
           <div class="choice-row" id="choice-row"></div>
         </div>
-        <div class="text-center mt-md">
-          <span class="badge badge-info">Question ${index + 1} / ${scenarios.length}</span>
-        </div>
+        <div class="text-center mt-md"><span class="badge badge-info">Question ${index + 1} / ${scenarios.length}</span></div>
       `;
       const row = body.querySelector('#choice-row');
       sc.choices.forEach((choice) => {
-        const btn = APP.el('button', { class: 'choice-btn', text: choice.label });
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = choice.label;
         btn.addEventListener('click', () => {
           if (finished) return;
-          const elapsed = (Date.now() - cardStart) / 1000;
-          container.querySelectorAll('.choice-btn').forEach((b) => (b.disabled = true));
-          if (choice.correct) {
-            btn.classList.add('correct');
-            addPts(pointsCorrect);
-            correct++;
-            if (elapsed <= 5) { addPts(bonusFast); fastAnswers++; }
-          } else {
-            btn.classList.add('wrong');
-            sc.choices.forEach((c, i) => {
-              if (c.correct) container.querySelectorAll('.choice-btn')[i].classList.add('correct');
-            });
-          }
-          setTimeout(() => { index++; renderCard(); }, 1200);
+          container.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+          if (choice.correct) { btn.classList.add('correct'); correct++; }
+          else { btn.classList.add('wrong'); }
+          setTimeout(() => { index++; renderCard(); }, 1000);
         });
         row.appendChild(btn);
       });
@@ -437,86 +327,35 @@ const Lesson = (() => {
       finished = true;
       clearInterval(overallTimer);
       const scorePercent = Math.round((correct / scenarios.length) * 100);
-      if (scorePercent >= 75) {
-        if (correct === scenarios.length) awardBadge(badgeId, badgeName, badgeIcon);
-        if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
-      }
       reportScore(containerId, scorePercent);
       markDayIfPassed(scorePercent);
-      if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
   }
 
-  /* ============================================================
-     ESCAPE ROOM
-     ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const questions = config.questions;
-    const badgeId = config.badgeId;
-    const badgeName = config.badgeName;
-    const badgeIcon = config.badgeIcon;
     const lives = config.lives !== undefined ? config.lives : 3;
-    const timeLimit = config.timeLimit;
-
-    let currentLives = lives, earnedKeys = [], index = 0, locked = false, finished = false;
+    const timeLimit = config.timeLimit || 300;
+    let currentLives = lives, earnedKeys = 0, index = 0, locked = false, finished = false;
     let timeLeft = timeLimit, timerInterval = null;
-
-    renderIntro();
-
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      const el = document.getElementById('escape-timer');
-      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
-      if (timeLeft <= 0) endGame('timeout');
-    }, 1000);
-
-    function renderIntro() {
-      container.innerHTML = `
-        <div class="escape-container">
-          <div class="escape-header">
-            <div>
-              <div class="score-bar-label">Formative Check</div>
-              <div style="font-size:1.2rem;font-weight:600;">🔐 Escape the Lab</div>
-            </div>
-            <div style="text-align:right;">
-              <div class="escape-lives" id="escape-lives">❤️❤️❤️</div>
-              <div class="activity-timer" id="escape-timer" style="margin-top:4px;font-size:0.9rem;">${APP.formatTime(timeLeft)}</div>
-            </div>
-          </div>
-          <div class="escape-result">
-            <div class="result-emoji">🗝️</div>
-            <div class="result-title">Unlock ${questions.length} keys to escape!</div>
-            <p class="result-message">Answer all questions. Wrong answers cost 1 life. You need 75% to pass.</p>
-            <button id="escape-begin" class="btn btn-accent" style="margin-top:16px;">Begin Challenge →</button>
-          </div>
-        </div>
-      `;
-      container.querySelector('#escape-begin').addEventListener('click', renderQuestion);
-    }
 
     function renderQuestion() {
       if (finished) return;
-      if (index >= questions.length) return endGame('complete');
+      if (index >= questions.length) {
+        finished = true;
+        const scorePercent = Math.round((earnedKeys / questions.length) * 100);
+        reportScore(containerId, scorePercent);
+        markDayIfPassed(scorePercent);
+        return;
+      }
       const q = questions[index];
-
       container.innerHTML = `
         <div class="escape-container">
           <div class="escape-header">
-            <div>
-              <div class="score-bar-label">Question ${index + 1} / ${questions.length}</div>
-              <div style="font-size:1rem;">🔐 Escape the Lab</div>
-            </div>
-            <div style="text-align:right;">
-              <div class="escape-lives" id="escape-lives">${'❤️'.repeat(currentLives)}${'🖤'.repeat(lives - currentLives)}</div>
-              <div class="activity-timer" id="escape-timer" style="margin-top:4px;font-size:0.9rem;">${APP.formatTime(Math.max(0, timeLeft))}</div>
-            </div>
-          </div>
-          <div class="escape-keys" style="justify-content:center;margin-bottom:12px;">
-            ${questions.map((_, i) => `<span class="key-icon ${earnedKeys.includes(i) ? 'earned' : ''}">🗝️</span>`).join('')}
+            <div><div class="score-bar-label">Q ${index + 1} / ${questions.length}</div></div>
+            <div class="activity-timer" id="escape-timer">${APP.formatTime(Math.max(0, timeLeft))}</div>
           </div>
           <div class="escape-question">
             <h4>${q.text}</h4>
@@ -524,62 +363,34 @@ const Lesson = (() => {
           </div>
         </div>
       `;
-
       const opts = container.querySelector('#escape-options');
       q.choices.forEach((c, i) => {
-        const btn = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + i)}. ${c.label}` });
-        btn.addEventListener('click', () => onAnswer(btn, c));
+        const btn = document.createElement('button');
+        btn.className = 'escape-option';
+        btn.textContent = `${String.fromCharCode(65 + i)}. ${c.label}`;
+        btn.addEventListener('click', () => {
+          if (locked) return;
+          locked = true;
+          container.querySelectorAll('.escape-option').forEach(b => b.disabled = true);
+          if (c.correct) { btn.classList.add('correct'); earnedKeys++; }
+          else { btn.classList.add('wrong'); currentLives--; }
+          setTimeout(() => { index++; locked = false; renderQuestion(); }, 1000);
+        });
         opts.appendChild(btn);
       });
     }
-
-    function onAnswer(btn, choice) {
-      if (locked || finished) return;
-      locked = true;
-
-      const all = container.querySelectorAll('.escape-option');
-      all.forEach((b) => (b.disabled = true));
-
-      if (choice.correct) {
-        btn.classList.add('correct');
-        earnedKeys.push(index);
-        APP.toast('🔑 Key earned!', 'success', 1500);
-        setTimeout(() => { index++; locked = false; renderQuestion(); }, 900);
-      } else {
-        btn.classList.add('wrong');
-        currentLives--;
-        const correctIdx = questions[index].choices.findIndex((c) => c.correct);
-        all[correctIdx].classList.add('correct');
-        if (currentLives <= 0) setTimeout(() => endGame('outoflives'), 1200);
-        else setTimeout(() => { locked = false; index++; renderQuestion(); }, 1400);
-      }
-    }
-
-    function endGame(reason) {
-      if (finished) return;
-      finished = true;
-      clearInterval(timerInterval);
-      const scorePercent = Math.round((earnedKeys.length / questions.length) * 100);
-      if (scorePercent >= 75) {
-        if (currentLives === lives) awardBadge(badgeId, badgeName, badgeIcon);
-      }
-      reportScore(containerId, scorePercent);
-      markDayIfPassed(scorePercent);
-      if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      else if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      else if (reason === 'outoflives') APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
-      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
-    }
+    renderQuestion();
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      const el = document.getElementById('escape-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+    }, 1000);
   }
 
-  /* ---------- Public API ---------- */
   return {
     init,
-    addPoints: addPts,
-    awardBadge,
     renderMatchGame: registerMatchGame,
     renderScenarioGame: registerScenarioGame,
-    renderEscapeRoom: registerEscapeRoom,
-    markDayComplete: markDayIfPassed
+    renderEscapeRoom: registerEscapeRoom
   };
 })();
