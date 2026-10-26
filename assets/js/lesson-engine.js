@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.19 (Store adapter: completed[] / scores / badges)
+   Version: 1.0.20 (Wait for cloud sync before redirect)
    ============================================================ */
 
 const Lesson = (() => {
@@ -54,8 +54,8 @@ const Lesson = (() => {
     return Object.keys(pendingActivities).length > 0;
   }
 
-  // Kung "passed" na ang gate (hal. galing sa sessionStorage) pero hindi pa nase-save sa Store,
-  // i-save ngayon. Hindi nagre-redirect.
+  // If the gate is already "passed" (e.g. restored from sessionStorage) but the Store has not
+  // recorded it yet, save it now. Does not redirect.
   function reconcilePassedState() {
     const gate = getGate();
     if (!gate || typeof gate.getState !== 'function') return;
@@ -176,9 +176,9 @@ const Lesson = (() => {
     }
   }
 
-  /* ---------- Store adapter (gumagamit lang ng tunay na Store API) ---------- */
+  /* ---------- Store adapter (uses only the real Store API) ---------- */
 
-  // term -> "term1", week/day -> numbers; dayId -> "term1-w1-d2" (format na binabasa ng index.html)
+  // term -> "term1", week/day -> numbers; dayId -> "term1-w1-d2" (the format index.html reads)
   function keys() {
     let term = String(ctx.term).trim();
     if (/^\d+$/.test(term)) term = 'term' + term;
@@ -221,7 +221,7 @@ const Lesson = (() => {
     } catch (err) { logError('saveActivityScore', err); }
   }
 
-  // true kung bagong badge
+  // true if the badge is new
   function saveBadge(badgeId) {
     const k = keys();
     const all = Store.getBadges(ctx.lrn) || {};
@@ -248,7 +248,7 @@ const Lesson = (() => {
         console.info('[Lesson] saving completed day', k.dayId);
         Store.saveProgress(ctx.lrn, k.term, { completed: completed });
       }
-      // I-verify na talagang naisulat
+      // Verify the write actually persisted
       const check = ((Store.getProgress(ctx.lrn) || {})[k.term] || {}).completed || [];
       if (!check.includes(k.dayId)) throw new Error('Progress did not persist (' + k.dayId + ')');
       dayMarked = true;
@@ -256,7 +256,7 @@ const Lesson = (() => {
     } catch (err) {
       logError('markDayComplete', err);
       const detail = (err && err.message) ? err.message : String(err);
-      toast('⚠️ Hindi na-save ang progress: ' + detail, 'error', 12000);
+      toast('⚠️ Progress could not be saved: ' + detail, 'error', 12000);
       return false;
     }
   }
@@ -264,7 +264,18 @@ const Lesson = (() => {
   function completeDayAndLeave() {
     if (!markDayComplete()) return;
     toast('✅ Day completed!', 'success', 3000);
-    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+
+    // Wait for the cloud sync (max 5s) before leaving the page.
+    // If offline or failed, progress stays saved on the device and syncs later.
+    const flush = (typeof Store !== 'undefined' && typeof Store.flushSync === 'function')
+      ? Store.flushSync(5000).catch(() => false)
+      : Promise.resolve(true);
+    const minDelay = new Promise(resolve => setTimeout(resolve, 1500));
+
+    Promise.all([flush, minDelay]).then(([synced]) => {
+      if (!synced) toast('📴 Saved on this device. It will sync when you are back online.', 'warning', 3500);
+      setTimeout(() => { window.location.href = 'index.html'; }, synced ? 0 : 1500);
+    });
   }
 
   // Single exit point for every activity
