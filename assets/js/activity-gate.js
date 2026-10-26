@@ -8,7 +8,7 @@ const ActivityGate = (() => {
 
   const KEY_PREFIX = 'gsa_gate_v2_';
   const PASS_THRESHOLD = 0.75;
-  const RESULT_DELAY_MS = 1500; // hayaan munang makita ang final result bago itago ang laro
+  const RESULT_DELAY_MS = 1500; // let the final result show before hiding the game
   let session = null;
 
   function stateKeyFor(containerId) {
@@ -52,7 +52,7 @@ const ActivityGate = (() => {
     }, 50);
   }
 
-  /* Pinapabayaan ang display:none na ang gate mismo ang naglagay (data-gate-hidden) */
+  /* Ignores display:none that the gate itself applied (data-gate-hidden) */
   function isHidden(el) {
     let node = el;
     while (node && node !== document.body) {
@@ -76,7 +76,7 @@ const ActivityGate = (() => {
       { containerId: 'formative',  label: 'Formative Check — Escape the Lab' }
     ];
 
-    // Kapag may napili na, huwag nang lumipat sa ibang container
+    // Once a container is chosen, do not switch to another one
     if (session && session.containerId) {
       const current = candidates.find(c => c.containerId === session.containerId);
       const el = document.getElementById(session.containerId);
@@ -112,14 +112,14 @@ const ActivityGate = (() => {
 
   function completeWithScore(activityId, scorePercent) {
     if (!session) return;
-    if (session.status === 'passed') return; // huwag nang baguhin ang naipasa na
+    if (session.status === 'passed') return; // never overwrite a passed result
 
     session.attempts = (session.attempts || 0) + 1;
     session.score = Math.round(scorePercent);
     session.status = scorePercent >= PASS_THRESHOLD * 100 ? 'passed' : 'failed';
     save();
 
-    // Hayaan munang makita ang final na bilang ng matches/score bago ipakita ang overlay
+    // Let the final match count/score show before displaying the overlay
     setTimeout(render, RESULT_DELAY_MS);
   }
 
@@ -164,7 +164,7 @@ const ActivityGate = (() => {
       if (container.innerHTML.trim() === '') {
         const stateKey = stateKeyFor(session.containerId);
         setTimeout(() => {
-          // Dispatch lang kung wala pa ring laman at running pa rin
+          // Dispatch only if still empty and still running
           if (session && session.status === 'running' && container.innerHTML.trim() === '') {
             document.dispatchEvent(new CustomEvent('activity:start', { detail: { activity: stateKey } }));
           }
@@ -228,9 +228,9 @@ const ActivityGate = (() => {
   function startActivity() {
     if (!session || !session.containerId) return;
     const container = document.getElementById(session.containerId);
-    if (container) container.innerHTML = ''; // linisin ang lumang laro bago mag-retake
+    if (container) container.innerHTML = ''; // clear the previous game before a retake
     markRunning();
-    // Isang dispatch lang; ang render() ay nagche-check muna kung may laman na bago mag-dispatch
+    // Single dispatch; render() checks the container is empty before dispatching
     document.dispatchEvent(new CustomEvent('activity:start', {
       detail: { activity: stateKeyFor(session.containerId) }
     }));
