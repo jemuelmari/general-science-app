@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.17 (Reconcile passed state on load)
+   Version: 1.0.19 (Store adapter: completed[] / scores / badges)
    ============================================================ */
 
 const Lesson = (() => {
@@ -176,21 +176,87 @@ const Lesson = (() => {
     }
   }
 
-  // Marks the day in Store (once) — returns true on success
+  /* ---------- Store adapter (gumagamit lang ng tunay na Store API) ---------- */
+
+  // term -> "term1", week/day -> numbers; dayId -> "term1-w1-d2" (format na binabasa ng index.html)
+  function keys() {
+    let term = String(ctx.term).trim();
+    if (/^\d+$/.test(term)) term = 'term' + term;
+    const week = parseInt(String(ctx.week).replace(/\D/g, ''), 10);
+    const day = parseInt(String(ctx.day).replace(/\D/g, ''), 10);
+    if (!term || isNaN(week) || isNaN(day)) {
+      throw new Error('Invalid term/week/day: ' + [ctx.term, ctx.week, ctx.day].join('/'));
+    }
+    return { term, week, day, dayId: `${term}-w${week}-d${day}`, shortId: `w${week}-d${day}` };
+  }
+
+  function persistPoints() {
+    if (!ctx) return;
+    try {
+      const k = keys();
+      const termScores = Store.getScores(ctx.lrn)[k.term] || {};
+      const existing = (termScores.daily || {})[k.shortId] || {};
+      Store.saveScore(ctx.lrn, k.term, 'daily', k.shortId, {
+        points: Math.max(existing.points || 0, ctx.points),
+        week: k.week, day: k.day, updatedAt: new Date().toISOString()
+      });
+    } catch (err) { logError('persistPoints', err); }
+  }
+
+  function saveActivityScore(containerId, scorePercent) {
+    if (!ctx) return;
+    try {
+      const k = keys();
+      const termScores = Store.getScores(ctx.lrn)[k.term] || {};
+      const existing = (termScores.activity || {})[k.shortId] || {};
+      const pct = Math.round(scorePercent);
+      Store.saveScore(ctx.lrn, k.term, 'activity', k.shortId, {
+        activity: containerId,
+        bestScore: Math.max(existing.bestScore || 0, pct),
+        lastScore: pct,
+        passed: !!existing.passed || pct >= PASS_PERCENT,
+        attempts: (existing.attempts || 0) + 1,
+        updatedAt: new Date().toISOString()
+      });
+    } catch (err) { logError('saveActivityScore', err); }
+  }
+
+  // true kung bagong badge
+  function saveBadge(badgeId) {
+    const k = keys();
+    const all = Store.getBadges(ctx.lrn) || {};
+    const current = Array.isArray(all[k.term]) ? all[k.term].slice() : [];
+    if (current.includes(badgeId)) return false;
+    current.push(badgeId);
+    Store.saveBadges(ctx.lrn, k.term, current);
+    return true;
+  }
+
+  // Marks the day in Store (once per page load) — returns true on success
   function markDayComplete() {
     if (!ctx) return false;
     if (dayMarked) return true;
     try {
-      if (typeof Store === 'undefined' || typeof Store.markDayComplete !== 'function') {
-        throw new Error('Store.markDayComplete is not available');
+      if (typeof Store === 'undefined' || typeof Store.getProgress !== 'function' || typeof Store.saveProgress !== 'function') {
+        throw new Error('Store.getProgress/saveProgress is not available');
       }
-      console.info('[Lesson] markDayComplete', { lrn: ctx.lrn, term: ctx.term, week: ctx.week, day: ctx.day });
-      Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+      const k = keys();
+      const progress = Store.getProgress(ctx.lrn) || {};
+      const completed = Array.isArray((progress[k.term] || {}).completed) ? progress[k.term].completed.slice() : [];
+      if (!completed.includes(k.dayId)) {
+        completed.push(k.dayId);
+        console.info('[Lesson] saving completed day', k.dayId);
+        Store.saveProgress(ctx.lrn, k.term, { completed: completed });
+      }
+      // I-verify na talagang naisulat
+      const check = ((Store.getProgress(ctx.lrn) || {})[k.term] || {}).completed || [];
+      if (!check.includes(k.dayId)) throw new Error('Progress did not persist (' + k.dayId + ')');
       dayMarked = true;
       return true;
     } catch (err) {
       logError('markDayComplete', err);
-      toast('⚠️ Hindi na-save ang progress. Pakisubukan ulit.', 'error', 5000);
+      const detail = (err && err.message) ? err.message : String(err);
+      toast('⚠️ Hindi na-save ang progress: ' + detail, 'error', 12000);
       return false;
     }
   }
@@ -203,6 +269,7 @@ const Lesson = (() => {
 
   // Single exit point for every activity
   function finishActivity(containerId, scorePercent, config) {
+    saveActivityScore(containerId, scorePercent);
     reportScore(containerId, scorePercent);
     if (scorePercent >= PASS_PERCENT) {
       if (config && config.badgeId) awardBadge(config.badgeId, config.badgeName || 'Badge', config.badgeIcon || '🏅');
@@ -244,13 +311,13 @@ const Lesson = (() => {
       el.style.transform = 'scale(1.3)';
       setTimeout(() => (el.style.transform = 'scale(1)'), 200);
     }
-    try { Store.addDailyPoints(ctx.lrn, ctx.term, ctx.week, ctx.day, n); } catch (err) { logError('addDailyPoints', err); }
+    persistPoints();
   }
 
   function awardBadge(id, name, icon) {
     if (!ctx || ctx.badges.includes(id)) return;
     try {
-      if (Store.awardBadge(ctx.lrn, ctx.term, id)) {
+      if (saveBadge(id)) {
         ctx.badges.push(id);
         const el = document.getElementById('sb-badges');
         if (el) el.textContent = ctx.badges.length;
