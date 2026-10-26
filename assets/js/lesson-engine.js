@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.10 (Fixed NaN Timer & Registration)
+   Version: 1.0.11 (Fixed Auto-Complete & Progress Saving)
    ============================================================ */
 
 const Lesson = (() => {
@@ -24,28 +24,49 @@ const Lesson = (() => {
 
     ctx = { lrn: user.lrn, term: config.term, week: config.week, day: config.day, points: 0, maxPoints: config.maxPoints || 300, badges: [], startTime: Date.now() };
     hasActivities = false;
+    
     renderScoreBar(config.title);
     startLiveTimer();
     showLoadingOverlay();
 
     timeoutHandle = setTimeout(() => { if (!readyFlag) showTimeoutError(); }, 15000);
+    
     document.addEventListener('activity:start', (e) => startActivity(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
       if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
     });
 
     waitForGateAndInit(config, 0, 2000);
+    
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
-        setTimeout(autoCompleteIfLessonOnly, 1000);
+        // BUHAYIN NATIN ITO: Para mag-auto complete ang Day 1 (walang activities)
+        setTimeout(autoCompleteIfLessonOnly, 1500);
       }, 500);
     });
   }
 
+  /* ============================================================
+     AUTO-COMPLETE PARA SA MGA ARAW NA WALANG ACTIVITY
+     ============================================================ */
   function autoCompleteIfLessonOnly() {
-    if (hasActivities) return;
-    try { Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day); } catch (err) { }
+    if (hasActivities) return; // May activity, hintayin matapos
+    console.log('[Lesson] Walang activity, ini-mark as complete ang Day', ctx.day);
+    try {
+      Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
+      
+      // Magpakita ng toast at i-refresh ang page para mag-update ang index.html
+      APP.toast('✅ Day completed!', 'success', 3000);
+      
+      // Optional: I-reload pabalik sa index pagkatapos ng 2 segundo
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+      
+    } catch (err) {
+      console.warn('[Lesson] markDayComplete failed:', err);
+    }
   }
 
   function waitForGateAndInit(config, waited, maxWait) {
@@ -61,7 +82,6 @@ const Lesson = (() => {
     setTimeout(function () { waitForGateAndInit(config, waited + 50, maxWait); }, 50);
   }
 
-  // FIX: Ibinalik ang time limit calculation para sa bawat activity type
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
     if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
@@ -91,10 +111,7 @@ const Lesson = (() => {
   function startActivity(stateKey) {
     const containerId = stateKey === 'activity1' ? 'activity-1' : stateKey === 'activity2' ? 'activity-2' : 'formative';
     const pending = pendingActivities[containerId];
-    if (!pending) {
-      console.warn('[Lesson] No pending activity for', containerId);
-      return;
-    }
+    if (!pending) return;
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
     if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
     else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
@@ -110,7 +127,10 @@ const Lesson = (() => {
 
   function markDayIfPassed(scorePercent) {
     if (scorePercent >= 75) {
-      try { Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day); } catch (err) { }
+      try { 
+        Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day); 
+        APP.toast('✅ Day completed!', 'success', 3000);
+      } catch (err) { }
     }
   }
 
@@ -272,13 +292,12 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     SCENARIO GAME (FIXED TIMER)
+     SCENARIO GAME
      ============================================================ */
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const scenarios = config.scenarios;
-    // Siguraduhing may timeLimit, kung wala, default sa 300 seconds (5 mins)
     const timeLimit = config.timeLimit || 300; 
     
     let index = 0, correct = 0, finished = false;
@@ -340,7 +359,7 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     ESCAPE ROOM (FIXED TIMER)
+     ESCAPE ROOM
      ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
