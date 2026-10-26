@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.16 (Sync + progress fix)
+   Version: 1.0.17 (Reconcile passed state on load)
    ============================================================ */
 
 const Lesson = (() => {
@@ -51,8 +51,18 @@ const Lesson = (() => {
   }
 
   function hasActivities() {
-    if (Object.keys(pendingActivities).length > 0) return true;
-    return ACTIVITY_IDS.some(id => !!document.getElementById(id));
+    return Object.keys(pendingActivities).length > 0;
+  }
+
+  // Kung "passed" na ang gate (hal. galing sa sessionStorage) pero hindi pa nase-save sa Store,
+  // i-save ngayon. Hindi nagre-redirect.
+  function reconcilePassedState() {
+    const gate = getGate();
+    if (!gate || typeof gate.getState !== 'function') return;
+    const st = gate.getState();
+    if (st && st.status === 'passed') {
+      if (markDayComplete()) toast('✅ Progress saved', 'success', 2500);
+    }
   }
 
   /* ---------- init ---------- */
@@ -78,6 +88,7 @@ const Lesson = (() => {
     document.addEventListener('activity:start', (e) => startActivity(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
       if (!readyFlag) { hideLoadingOverlay(); readyFlag = true; clearTimeout(timeoutHandle); }
+      reconcilePassedState();
     });
 
     waitForGateAndInit(config, 0, 2000);
@@ -173,6 +184,7 @@ const Lesson = (() => {
       if (typeof Store === 'undefined' || typeof Store.markDayComplete !== 'function') {
         throw new Error('Store.markDayComplete is not available');
       }
+      console.info('[Lesson] markDayComplete', { lrn: ctx.lrn, term: ctx.term, week: ctx.week, day: ctx.day });
       Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
       dayMarked = true;
       return true;
