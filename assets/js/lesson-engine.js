@@ -1,10 +1,7 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.6
+   Version: 1.0.7 (Fixed Match Score Bug)
    App: General Science
-   ------------------------------------------------------------
-   Changelog v1.0.6: Auto-mark Day 1 (lesson-only) as complete
-   on init — since lesson days have no activity to pass.
    ============================================================ */
 
 const Lesson = (() => {
@@ -16,8 +13,6 @@ const Lesson = (() => {
   let readyFlag = false;
   let timeoutHandle = null;
   let hasActivities = false;
-
-  const PASS_THRESHOLD = 0.75;
 
   function getGate() {
     try {
@@ -76,8 +71,6 @@ const Lesson = (() => {
           readyFlag = true;
           clearTimeout(timeoutHandle);
         }
-        // If no activities were registered within 1 second,
-        // this is a lesson-only day → auto-complete it
         setTimeout(autoCompleteIfLessonOnly, 1000);
       }, 500);
     });
@@ -85,8 +78,7 @@ const Lesson = (() => {
 
   /* ---------- Auto-complete lesson-only days ---------- */
   function autoCompleteIfLessonOnly() {
-    if (hasActivities) return; // there ARE activities, wait for them to pass
-    // Lesson-only day → mark complete
+    if (hasActivities) return; 
     try {
       Store.markDayComplete(ctx.lrn, ctx.term, ctx.week, ctx.day);
       console.log('[Lesson] Day marked complete (lesson-only):', ctx.term, 'w' + ctx.week, 'd' + ctx.day);
@@ -282,7 +274,7 @@ const Lesson = (() => {
   }
 
   /* ============================================================
-     MATCH GAME
+     MATCH GAME (FIXED SCORE UPDATE)
      ============================================================ */
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
@@ -317,6 +309,8 @@ const Lesson = (() => {
 
     const leftEl = container.querySelector('#match-left');
     const rightEl = container.querySelector('#match-right');
+    // FIX: I-target nang tama ang score element at i-store sa variable
+    const scoreEl = container.querySelector('#match-score');
 
     leftItems.forEach((item) => {
       const el = APP.el('div', { class: 'match-item', 'data-key': item.key, text: item.left });
@@ -340,13 +334,17 @@ const Lesson = (() => {
     function onRightClick(el) {
       if (finished || !selectedLeft || el.classList.contains('correct')) return;
       const lk = selectedLeft.dataset.key, rk = el.dataset.key;
+      
       if (lk === rk) {
         selectedLeft.classList.remove('selected');
         selectedLeft.classList.add('correct');
         el.classList.add('correct');
         addPts(pointsCorrect);
         matches++;
-        updateScore();
+        
+        // FIX: Siguraduhing tama ang update
+        if (scoreEl) scoreEl.textContent = `Matches: ${matches} / ${pairs.length}`;
+        
         if (matches === pairs.length) endGame('complete');
       } else {
         el.classList.add('wrong');
@@ -357,11 +355,6 @@ const Lesson = (() => {
         setTimeout(() => { l.classList.remove('wrong', 'selected'); el.classList.remove('wrong'); }, 500);
       }
       selectedLeft = null;
-    }
-
-    function updateScore() {
-      const el2 = container.querySelector('#match-score');
-      if (el2) el2.textContent = `Matches: ${matches} / ${pairs.length}`;
     }
 
     function endGame(reason) {
