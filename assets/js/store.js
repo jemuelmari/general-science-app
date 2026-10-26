@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — Local Storage + Cloud Sync Manager
-   Version: 2.2.1 (Visible sync errors + diagnose())
+   Version: 2.2.2 (Built-in backend POST fallback + danger toasts)
    ============================================================ */
 
 const Store = (() => {
@@ -42,7 +42,7 @@ const Store = (() => {
 
   function friendlyReason(reason) {
     if (reason === 'offline') return 'No internet connection';
-    if (reason === 'no-backend') return 'Sync service is not loaded on this page';
+    if (reason === 'no-backend') return 'Backend is not configured on this page';
     if (reason === 'no-user') return 'Please log in again';
     if (reason === 'timeout') return 'The server took too long to respond';
     return String(reason || 'Unknown error');
@@ -54,6 +54,39 @@ const Store = (() => {
 
   function isOnline() {
     return typeof navigator === 'undefined' ? true : navigator.onLine !== false;
+  }
+
+  /* ---------- Backend POST (uses Sync.backendPost if present, else posts directly) ---------- */
+  async function backendPost(payload) {
+    if (typeof Sync !== 'undefined' && Sync && typeof Sync.backendPost === 'function') {
+      return Sync.backendPost(payload);
+    }
+    if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
+      throw new Error('Backend not configured');
+    }
+    const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
+    try {
+      // text/plain avoids a CORS preflight, which Google Apps Script does not support
+      const resp = await fetch(CONFIG.BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+        signal: controller ? controller.signal : undefined
+      });
+      const text = await resp.text();
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        throw new Error('Backend returned a non-JSON response (HTTP ' + resp.status + ')');
+      }
+    } catch (e) {
+      if (e && e.name === 'AbortError') throw new Error('The server took too long to respond');
+      throw e;
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
   }
 
   /* ---------- Dirty flag (stored on the device; survives logout/refresh) ---------- */
@@ -131,10 +164,10 @@ const Store = (() => {
   async function doSyncOnce() {
     if (!isOnline()) return { ok: false, reason: 'offline' };
 
-    if (typeof Sync === 'undefined' || typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
+    if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
       if (!warnedNoBackend) {
         warnedNoBackend = true;
-        console.warn('☁️ Sync skipped: Sync / CONFIG.BACKEND_URL is not available on this page (check script tags).');
+        console.warn('☁️ Sync skipped: CONFIG.BACKEND_URL is not available on this page (check that config.js is loaded).');
       }
       return { ok: false, reason: 'no-backend' };
     }
@@ -156,7 +189,7 @@ const Store = (() => {
       };
       const hash = computeHash(JSON.stringify(progressData));
 
-      const res = await Sync.backendPost({
+      const res = await backendPost({
         action: 'syncStudentProgress',
         lrn: lrn,
         progressJSON: progressData,
@@ -260,7 +293,7 @@ const Store = (() => {
       b.style.cssText = 'border:0;border-radius:6px;padding:6px 10px;font-weight:700;cursor:pointer;background:#fff;color:#0d47a1;';
       b.addEventListener('click', () => {
         syncToBackend().then(r => {
-          if (r && !r.ok) notify('⚠️ Sync failed: ' + friendlyReason(r.reason), 'error', 8000);
+          if (r && !r.ok) notify('⚠️ Sync failed: ' + friendlyReason(r.reason), 'danger', 8000);
         });
       });
       el.appendChild(b);
@@ -361,13 +394,13 @@ const Store = (() => {
      USER MANAGEMENT (Cloud-First + Legacy)
      ============================================================ */
   async function loginStudent(lrn) {
-    if (typeof Sync === 'undefined' || typeof CONFIG === 'undefined') {
+    if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
       throw new Error('Backend not configured');
     }
 
     const cleanLrn = String(lrn).replace(/-/g, '').trim();
 
-    const res = await Sync.backendPost({
+    const res = await backendPost({
       action: 'loginStudent',
       lrn: cleanLrn,
       deviceId: deviceId
@@ -529,6 +562,7 @@ const Store = (() => {
     return {
       online: isOnline(),
       hasSync: typeof Sync !== 'undefined',
+      syncHasBackendPost: typeof Sync !== 'undefined' && !!Sync && typeof Sync.backendPost === 'function',
       hasConfig: typeof CONFIG !== 'undefined',
       backendUrlSet: typeof CONFIG !== 'undefined' && !!CONFIG.BACKEND_URL,
       backendHost: host,
