@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — Local Storage + Cloud Sync Manager
-   Version: 2.2.0 (Durable sync queue + offline + merge-on-login)
+   Version: 2.2.1 (Visible sync errors + diagnose())
    ============================================================ */
 
 const Store = (() => {
@@ -20,6 +20,7 @@ const Store = (() => {
   let dirtySeq = 0;
   let warnedNoBackend = false;
   let pillTimer = null;
+  let lastSyncError = null;   // reason of the last failed sync (null if ok)
 
   let deviceId = localStorage.getItem(NS + 'device_id');
   if (!deviceId) {
@@ -37,6 +38,14 @@ const Store = (() => {
       hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
     }
     return (hash >>> 0).toString(16);
+  }
+
+  function friendlyReason(reason) {
+    if (reason === 'offline') return 'No internet connection';
+    if (reason === 'no-backend') return 'Sync service is not loaded on this page';
+    if (reason === 'no-user') return 'Please log in again';
+    if (reason === 'timeout') return 'The server took too long to respond';
+    return String(reason || 'Unknown error');
   }
 
   function notify(msg, type, ms) {
@@ -196,7 +205,10 @@ const Store = (() => {
         result = await doSyncOnce();
       } while (needResync && result.ok);
       return result;
-    })().finally(() => {
+    })().then(r => {
+      lastSyncError = r && r.ok ? null : (r && r.reason) || 'Unknown error';
+      return r;
+    }).finally(() => {
       currentSync = null;
       const u = getCurrentUser();
       refreshStatus(!!(u && !isDirty(u.lrn)));
@@ -246,7 +258,11 @@ const Store = (() => {
       const b = document.createElement('button');
       b.textContent = 'Sync now';
       b.style.cssText = 'border:0;border-radius:6px;padding:6px 10px;font-weight:700;cursor:pointer;background:#fff;color:#0d47a1;';
-      b.addEventListener('click', () => { syncToBackend(); });
+      b.addEventListener('click', () => {
+        syncToBackend().then(r => {
+          if (r && !r.ok) notify('⚠️ Sync failed: ' + friendlyReason(r.reason), 'error', 8000);
+        });
+      });
       el.appendChild(b);
     }
     el.style.display = 'flex';
@@ -264,7 +280,8 @@ const Store = (() => {
     } else if (currentSync) {
       showPill('🔄 Syncing your progress...', false);
     } else if (dirty) {
-      showPill('⚠️ Some progress has not been synced yet.', true);
+      showPill('⚠️ Some progress has not been synced yet.' +
+        (lastSyncError && lastSyncError !== 'offline' ? ' (' + friendlyReason(lastSyncError) + ')' : ''), true);
     } else if (flashSynced) {
       showPill('☁️ Progress synced.', false);
       pillTimer = setTimeout(hidePill, 2500);
@@ -504,7 +521,27 @@ const Store = (() => {
     keys.forEach(k => localStorage.removeItem(k));
   }
 
+  // Run Store.diagnose() in the browser console to see why syncing may not work
+  function diagnose() {
+    const u = getCurrentUser();
+    let host = null;
+    try { host = new URL(CONFIG.BACKEND_URL).host; } catch (e) { }
+    return {
+      online: isOnline(),
+      hasSync: typeof Sync !== 'undefined',
+      hasConfig: typeof CONFIG !== 'undefined',
+      backendUrlSet: typeof CONFIG !== 'undefined' && !!CONFIG.BACKEND_URL,
+      backendHost: host,
+      user: u ? u.lrn : null,
+      unsynced: u ? isDirty(u.lrn) : null,
+      syncing: !!currentSync,
+      lastSyncTime: localStorage.getItem(NS + 'last_sync_time'),
+      lastSyncError: lastSyncError
+    };
+  }
+
   return {
+    diagnose,
     get, set, remove,
     loginStudent,
     getCurrentUser,
