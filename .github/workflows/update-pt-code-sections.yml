@@ -1,0 +1,70 @@
+name: Update PT Code Sections
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-pt-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update pt-code-section in all PT files
+        run: |
+          echo "Searching for PT files..."
+          
+          FILES=$(find student -type f -name "pt*.html" 2>/dev/null)
+          
+          if [ -z "$FILES" ]; then
+            echo "No PT files found."
+            exit 0
+          fi
+          
+          echo "Found files:"
+          echo "$FILES"
+          
+          UPDATED=0
+          SKIPPED=0
+          
+          for file in $FILES; do
+            if grep -q 'id="pt-code-section" style="display:none' "$file"; then
+              sed -i 's|id="pt-code-section" style="display:none|id="pt-code-section" style="display:block|g' "$file"
+              echo "✅ Updated: $file"
+              UPDATED=$((UPDATED + 1))
+            else
+              if grep -q 'id="pt-code-section" style="display:block' "$file"; then
+                echo "ℹ️  Already updated: $file"
+              else
+                echo "⚠️  No pt-code-section found: $file"
+              fi
+              SKIPPED=$((SKIPPED + 1))
+            fi
+          done
+          
+          echo ""
+          echo "=============================="
+          echo "Updated: $UPDATED file(s)"
+          echo "Skipped: $SKIPPED file(s)"
+          echo "=============================="
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          
+          git add student/
+          git commit -m "chore: show PT code input box by default in all PT files"
+          git push
+
+      - name: Summary
+        run: |
+          echo "### PT Code Section Update Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All PT files have been scanned. Files with \`display:none\` were changed to \`display:block\` so the code input box appears immediately when the PT is graded." >> $GITHUB_STEP_SUMMARY
