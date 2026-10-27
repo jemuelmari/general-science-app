@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — Local Storage + Cloud Sync Manager
-   Version: 2.2.2 (Built-in backend POST fallback + danger toasts)
+   Version: 2.2.3 (Null-safe get)
    ============================================================ */
 
 const Store = (() => {
@@ -67,7 +67,6 @@ const Store = (() => {
     const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
     const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
     try {
-      // text/plain avoids a CORS preflight, which Google Apps Script does not support
       const resp = await fetch(CONFIG.BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -101,12 +100,15 @@ const Store = (() => {
   }
 
   /* ============================================================
-     CORE: Get & Set
+     CORE: Get & Set (NULL-SAFE)
      ============================================================ */
   function get(key, defaultValue = null) {
     try {
       const val = localStorage.getItem(NS + key);
-      return val ? JSON.parse(val) : defaultValue;
+      if (!val || val === 'null' || val === 'undefined') return defaultValue;
+      const parsed = JSON.parse(val);
+      if (parsed === null || parsed === undefined) return defaultValue;
+      return parsed;
     } catch (e) {
       console.warn('[Store] Failed to parse:', key, e);
       return defaultValue;
@@ -208,7 +210,6 @@ const Store = (() => {
         console.log('☁️ Cloud Sync Success:', res.syncedAt);
         localStorage.setItem(NS + 'last_sync_time', new Date().toISOString());
         retryCount = 0;
-        // Clear the dirty flag ONLY if nothing new was saved during the sync
         if (localStorage.getItem(dirtyKey(lrn)) === stampAtStart) {
           localStorage.removeItem(dirtyKey(lrn));
         } else {
@@ -227,7 +228,6 @@ const Store = (() => {
     }
   }
 
-  // Safe to call repeatedly; always resolves to { ok, reason }
   function syncToBackend() {
     if (currentSync) { needResync = true; return currentSync; }
 
@@ -251,7 +251,6 @@ const Store = (() => {
     return currentSync;
   }
 
-  // Wait for the sync (with timeout). true = safe (synced or nothing pending)
   async function flushSync(timeoutMs) {
     const u = getCurrentUser();
     if (!u || !u.lrn) return true;
@@ -349,13 +348,11 @@ const Store = (() => {
     });
   } catch (e) { }
 
-  // Watchdog: retry if anything is left unsynced
   setInterval(() => {
     const u = getCurrentUser();
     if (u && u.lrn && isDirty(u.lrn) && isOnline() && !currentSync) syncToBackend();
   }, WATCHDOG_MS);
 
-  // On load of any page: sync anything left unsynced
   setTimeout(() => {
     const u = getCurrentUser();
     if (u && u.lrn && isDirty(u.lrn)) syncToBackend();
@@ -427,7 +424,6 @@ const Store = (() => {
     let progress = sp.progress || {};
     let badges = sp.badges || {};
 
-    // Unsynced local data? Merge it instead of overwriting.
     const hadUnsynced = isDirty(cleanLrn);
     if (hadUnsynced) {
       console.warn('[Store] Unsynced local data found — merging with backend data.');
@@ -475,7 +471,6 @@ const Store = (() => {
     hidePill();
   }
 
-  // Use this on the Log Out button: syncs progress first, then clears the session
   async function logout() {
     try { await flushSync(4000); } catch (e) { }
     clearSession();
@@ -554,7 +549,6 @@ const Store = (() => {
     keys.forEach(k => localStorage.removeItem(k));
   }
 
-  // Run Store.diagnose() in the browser console to see why syncing may not work
   function diagnose() {
     const u = getCurrentUser();
     let host = null;
