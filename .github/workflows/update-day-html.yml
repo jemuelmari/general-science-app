@@ -1,0 +1,35 @@
+name: Update Day HTML (Auto-Complete Fix)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-day-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run update-day-html script
+        run: |
+          python .github/scripts/update-day-html.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          
+          git add student/
+          git commit -m "fix: add Mark as Complete button and flag to all day.html files"
+          git push
