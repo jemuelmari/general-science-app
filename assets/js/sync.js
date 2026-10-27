@@ -1,9 +1,8 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.1.0
-   Changelog v2.1.0: Added retake request wrappers:
-     requestRetake, getStudentRequests, getUnlockRequests,
-     approveRetake, cancelRequest, redeemUnlockCode.
+   Version: 2.1.1 (Fixed backendPost error handling)
+   Changelog v2.1.1: Added error handling in backendPost to prevent
+     "Cannot convert undefined or null to object" crash.
    ============================================================ */
 
 const Sync = (() => {
@@ -74,13 +73,34 @@ const Sync = (() => {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
 
+  /* ===== FIXED: Error handling in backendPost ===== */
   async function backendPost(body) {
-    var res = await fetch(CONFIG.BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(body)
-    });
-    return res.json();
+    try {
+      var res = await fetch(CONFIG.BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(body)
+      });
+      
+      if (!res) {
+        throw new Error('No response from backend');
+      }
+      
+      var text = await res.text();
+      
+      if (!text || text.trim() === '') {
+        throw new Error('Empty response from backend');
+      }
+      
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        throw new Error('Invalid JSON from backend: ' + text.substring(0, 100));
+      }
+    } catch (e) {
+      console.error('[Sync] backendPost failed:', e.message);
+      throw e;
+    }
   }
 
   async function backendGet(params) {
@@ -326,10 +346,6 @@ const Sync = (() => {
     } catch (err) { return { ok: false, error: err.message }; }
   }
 
-  /* ============================================================
-     LOCK ACTIONS
-     ============================================================ */
-
   async function pushLock(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     opts = opts || {};
@@ -359,10 +375,6 @@ const Sync = (() => {
     try { return await backendPost({ action: 'deleteLock', lockId: lockId }); }
     catch (err) { return { ok: false, error: err.message }; }
   }
-
-  /* ============================================================
-     UNLOCK ACTIONS
-     ============================================================ */
 
   async function pushUnlock(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
@@ -407,10 +419,6 @@ const Sync = (() => {
     try { return await backendPost({ action: 'getUnlockStatus', token: getTeacherToken() }); }
     catch (err) { return { ok: false, error: err.message }; }
   }
-
-  /* ============================================================
-     REQUEST ACTIONS (NEW v2.1.0)
-     ============================================================ */
 
   async function requestRetake(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
@@ -501,6 +509,7 @@ const Sync = (() => {
     signCanonical: signCanonical,
     verifyCanonical: verifyCanonical,
     backendEnabled: backendEnabled,
+    backendPost: backendPost,
     pingBackend: pingBackend,
     getTeacherToken: getTeacherToken,
     buildPayload: buildPayload,
