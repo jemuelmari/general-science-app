@@ -9,7 +9,7 @@
   <style>
     .pt-hero {
       position: relative;
-      background: linear-gradient(135deg, #00695c 0%, #00897b 60%, #00acc1 100%);
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #00acc1 100%);
       color: #fff; border-radius: 18px; padding: 28px 24px;
       margin-bottom: 24px; overflow: hidden;
       box-shadow: 0 8px 24px rgba(13, 71, 161, 0.25);
@@ -21,29 +21,29 @@
     .pt-hero p { opacity: 0.92; margin: 0; font-size: 0.9rem; }
 
     .pt-section { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
-    .pt-section h3 { font-size: 1rem; color: #00695c; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
-    .pt-section h3::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #00695c, #00acc1); border-radius: 2px; }
+    .pt-section h3 { font-size: 1rem; color: #0d47a1; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+    .pt-section h3::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #0d47a1, #00acc1); border-radius: 2px; }
 
     .pt-textarea { width: 100%; min-height: 140px; padding: 12px 14px; font-family: inherit; font-size: 0.95rem; border: 1.5px solid #cfd8dc; border-radius: 10px; resize: vertical; line-height: 1.5; color: #1a1a1a; }
-    .pt-textarea:focus { outline: none; border-color: #00695c; box-shadow: 0 0 0 4px rgba(0,105,92,0.1); }
+    .pt-textarea:focus { outline: none; border-color: #0d47a1; box-shadow: 0 0 0 4px rgba(13,71,161,0.1); }
 
     .pt-file-input-wrap { display: block; padding: 20px; border: 2px dashed #cfd8dc; border-radius: 10px; text-align: center; cursor: pointer; background: #fafafa; }
-    .pt-file-input-wrap:hover { border-color: #00695c; background: #f5f9ff; }
+    .pt-file-input-wrap:hover { border-color: #0d47a1; background: #f5f9ff; }
     .pt-file-input-wrap.has-file { border-color: #2e7d32; background: #f1f8f4; border-style: solid; }
     .pt-file-input-wrap input[type="file"] { display: none; }
 
     .pt-option-list { display: flex; flex-direction: column; gap: 10px; }
     .pt-option { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid #dadce0; border-radius: 10px; cursor: pointer; background: #fff; }
-    .pt-option.selected { border-color: #00695c; background: #e0f2f1; font-weight: 600; }
-    .pt-option input[type="radio"] { accent-color: #00695c; width: 18px; height: 18px; cursor: pointer; }
+    .pt-option.selected { border-color: #0d47a1; background: #e3f2fd; font-weight: 600; }
+    .pt-option input[type="radio"] { accent-color: #0d47a1; width: 18px; height: 18px; cursor: pointer; }
 
     .pt-checklist { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
     .pt-checklist li { padding: 8px 0 8px 28px; border-bottom: 1px solid #f5f5f5; position: relative; color: #37474f; line-height: 1.5; }
     .pt-checklist li:last-child { border-bottom: none; }
-    .pt-checklist li::before { content: '☐'; position: absolute; left: 0; top: 8px; color: #00695c; font-size: 1.1rem; font-weight: 700; }
+    .pt-checklist li::before { content: '☐'; position: absolute; left: 0; top: 8px; color: #0d47a1; font-size: 1.1rem; font-weight: 700; }
 
-    .pt-submit-btn { width: 100%; padding: 16px 20px; background: linear-gradient(135deg, #00695c, #00897b); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,105,92,0.25); }
-    .pt-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,105,92,0.35); }
+    .pt-submit-btn { width: 100%; padding: 16px 20px; background: linear-gradient(135deg, #0d47a1, #1565c0); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(13,71,161,0.25); }
+    .pt-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,71,161,0.35); }
     .pt-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     .pt-status-banner { padding: 14px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
@@ -55,7 +55,7 @@
     .pt-rubric { background: #f5f7fa; border-radius: 10px; padding: 16px; font-size: 0.85rem; }
     .pt-rubric-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0; color: #37474f; }
     .pt-rubric-row:last-child { border-bottom: none; }
-    .pt-rubric-row strong { color: #00695c; }
+    .pt-rubric-row strong { color: #0d47a1; }
     .pt-rubric-row.graded { background: #e8f5e9; padding-left: 8px; padding-right: 8px; border-radius: 4px; }
     .pt-rubric-score { font-weight: 700; color: #2e7d32; }
 
@@ -71,9 +71,9 @@
     <div class="container flex-between">
       <div>
         <h1 id="header-title">📋 Performance Task</h1>
-        <span class="version">v1.0.10</span>
+        <span class="version">v1.1.0</span>
       </div>
-      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 2</a>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Term 1</a>
     </div>
   </header>
 
@@ -87,20 +87,20 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Science Online Modular Application · <span class="version">v1.0.10</span></p>
+    <p>General Science Online Modular Application · <span class="version">v1.1.0</span></p>
   </footer>
 
-  <script src="../../../config.js?v=1.3.0-158faf5"></script>
-  <script src="../../../assets/js/app.js?v=1.3.0-158faf5"></script>
-  <script src="../../../assets/js/store.js?v=1.3.0-158faf5"></script>
-  <script src="../../../assets/js/sync.js?v=1.3.0-158faf5"></script>
-  <script src="../../../assets/js/pt-upload.js?v=1.3.0-158faf5"></script>
+  <script src="../../../config.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../../../assets/js/app.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../../../assets/js/store.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../../../assets/js/sync.js?v=1.3.0-f7b3fe7"></script>
+  <script src="../../../assets/js/pt-upload.js?v=1.3.0-f7b3fe7"></script>
   <script>
     (function() {
       'use strict';
 
       const filename = window.location.pathname.split('/').pop().replace('.html', '');
-      const TERM = 'term2';  // ← CHANGE per file
+      const TERM = 'term1';  // ← CHANGE per file
 
       const PT_META = {
         pt1: { id: 'pt1', file: 'pt1.json' },
@@ -124,34 +124,22 @@
 
       let currentGrade = null;
       let selectedFile = null;
-      let existingRequest = null; // <-- IDINAGDAG: para sa approved/pending request
 
       /* ============================================================
-         LOAD PT + GRADES IN PARALLEL (with request check)
+         LOAD PT + GRADES IN PARALLEL
          ============================================================ */
       Promise.all([
         fetch(meta.file).then(function(r) {
           if (!r.ok) throw new Error('Failed to load ' + meta.file);
           return r.json();
         }),
-        PTUpload.pullMyGrades(user.lrn).catch(function() { return { ok: false, records: [] }; }),
-        PTUpload.getStudentRequests(user.lrn).catch(function() { return { ok: false, records: [] }; })
+        PTUpload.pullMyGrades(user.lrn).catch(function() { return { ok: false, records: [] }; })
       ]).then(function(results) {
         const data = results[0];
         const gradesResult = results[1];
-        const requestsResult = results[2];
-
         if (gradesResult && gradesResult.ok && gradesResult.records) {
           currentGrade = PTUpload.findGradeFor(gradesResult.records, TERM, meta.id);
         }
-
-        // <-- IDINAGDAG: hanapin ang existing request (approved/pending)
-        if (requestsResult && requestsResult.ok && requestsResult.records) {
-          existingRequest = requestsResult.records.find(function(r) {
-            return r.term === TERM && r.ptId === meta.id && (r.status === 'approved' || r.status === 'pending');
-          }) || null;
-        }
-
         document.title = data.title + ' — General Science';
         document.getElementById('header-title').textContent = '📋 ' + (data.shortTitle || data.title);
         renderPT(data);
@@ -176,9 +164,9 @@
         // Status banner
         let statusHTML = '';
         const submitted = existing && existing.submittedAt;
-        
+        // FIX: Safe unlock check
         var isUnlocked = false;
-        if (user && user.lrn) {
+        if (typeof user !== 'undefined' && user && user.lrn) {
           var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
           isUnlocked = localStorage.getItem(unlockKey) === 'true';
         }
@@ -253,6 +241,7 @@
         let reuploadSectionHTML = '';
 
         if (!isGraded) {
+          // Free to submit or re-upload
           fileSectionHTML =
             '<div class="pt-section"><h3>📎 Submit your work</h3>' +
             '<label class="pt-file-input-wrap ' + (existing && existing.fileName ? 'has-file' : '') + '" id="pt-file-wrap">' +
@@ -265,7 +254,7 @@
             '<div style="font-size:0.78rem;color:#90a4ae;margin-top:6px;">Max 25 MB · PDF, DOCX, JPG, PNG, MP4, MP3</div>' +
             '</label>' +
             (existing && existing.driveUrl
-              ? '<div style="margin-top:10px;font-size:0.85rem;"><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#00695c;">🔗 View your submitted file in Drive</a></div>'
+              ? '<div style="margin-top:10px;font-size:0.85rem;"><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#0d47a1;">🔗 View your submitted file in Drive</a></div>'
               : '') +
             '</div>';
 
@@ -281,13 +270,14 @@
             (submitted ? '🔄 Re-upload & Resubmit' : '📤 Submit Performance Task') +
             '</button>';
         } else {
+          // Post-grade: show file link + re-upload request
           fileSectionHTML =
             '<div class="pt-section"><h3>📎 Your Submission</h3>' +
             '<div style="font-size:0.9rem;color:#37474f;line-height:1.8;">' +
             '<div><strong>File:</strong> ' + escapeHtml(existing && existing.fileName || 'N/A') + '</div>' +
             '<div><strong>Size:</strong> ' + (existing && existing.fileSize ? PTUpload.formatFileSize(existing.fileSize) : 'N/A') + '</div>' +
             (existing && existing.driveUrl
-              ? '<div><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#00695c;">🔗 Open in Drive</a></div>'
+              ? '<div><a href="' + escapeAttr(existing.driveUrl) + '" target="_blank" rel="noopener" style="color:#0d47a1;">🔗 Open in Drive</a></div>'
               : '') +
             '</div></div>';
 
@@ -297,18 +287,12 @@
             escapeHtml(existing && existing.reflection || '(no reflection)') +
             '</p></div>';
 
-          // <-- IDINAGDAG: default hidden, pero kung may existingRequest, awtomatikong ilalabas
-          var codeSectionDisplay = existingRequest ? 'block' : 'none';
-          var codeSectionStyle = existingRequest ? '' : 'display:none;';
-          var reqBtnText = existingRequest ? '✅ Request Sent — Awaiting Code' : '📩 Request Re-upload';
-          var reqBtnDisabled = existingRequest ? 'disabled' : '';
-
           reuploadSectionHTML =
             '<div class="pt-section" style="background:#fff8e1;border:1.5px solid #ffb300;">' +
             '<h3 style="color:#e65100;">🔄 Want to Improve Your Score?</h3>' +
-            '<p style="font-size:0.88rem;color:#5f6368;margin:0 0 12px;">Since this PT has already been graded, you need teacher approval to re-upload.</p>' +
-            '<button id="pt-request-reupload" ' + reqBtnDisabled + ' style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#ed6c02,#f57c00);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;opacity:' + (existingRequest ? '0.7' : '1') + ';">' + reqBtnText + '</button>' +
-            '<div id="pt-code-section" style="display:' + codeSectionDisplay + ';margin-top:16px;padding:14px;background:#fff;border-radius:10px;border:1.5px solid #cfd8dc;">' +
+            '<p style="font-size:0.88rem;color:#5f6368;margin:0 0 12px;">Since this PT has already been graded, you need teacher approval to re-upload. Click below to request.</p>' +
+            '<button id="pt-request-reupload" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#ed6c02,#f57c00);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;">📩 Request Re-upload</button>' +
+            '<div id="pt-code-section" style="display:none;margin-top:16px;padding:14px;background:#fff;border-radius:10px;border:1.5px solid #cfd8dc;">' +
             '<div style="font-size:0.85rem;color:#5f6368;margin-bottom:10px;">Enter the code your teacher gave you:</div>' +
             '<div style="display:flex;gap:8px;">' +
             '<input type="text" id="pt-code-input" placeholder="PTRK-XXXX-XXXX" style="flex:1;padding:10px 12px;border:1.5px solid #cfd8dc;border-radius:8px;font-family:monospace;text-transform:uppercase;font-size:0.95rem;" />' +
@@ -323,7 +307,7 @@
 
         root.innerHTML =
           '<div class="pt-hero"><div class="pt-hero-content">' +
-          '<div class="pt-hero-label">Term 2 · ' + (pt.coverage || '') + '</div>' +
+          '<div class="pt-hero-label">Term 1 · ' + (pt.coverage || '') + '</div>' +
           '<h2>📋 ' + escapeHtml(pt.title) + '</h2>' +
           '<p>' + (pt.summary || '') + '</p>' +
           '</div></div>' +
@@ -456,8 +440,7 @@
         const codeSection = document.getElementById('pt-code-section');
         const redeemBtn = document.getElementById('pt-redeem-btn');
 
-        // FIX: Kung may existingRequest na, huwag na i-wire ang reqBtn (naka-disabled na ito)
-        if (reqBtn && !existingRequest) {
+        if (reqBtn) {
           reqBtn.addEventListener('click', async function() {
             reqBtn.disabled = true;
             reqBtn.textContent = '⏳ Sending request…';
@@ -487,11 +470,13 @@
               if (res.ok) {
                 msg.textContent = '✅ Code accepted! Reloading to unlock re-upload…';
                 msg.style.color = '#2e7d32';
-                if (user && user.lrn) {
+                // Clear grade state so re-upload is allowed — reload will re-fetch
+                  // FIX: Save unlock to localStorage
+                  if (typeof user !== 'undefined' && user && user.lrn) {
                   var unlockKey = 'gsa_v1_pt_unlocked_' + user.lrn + '_' + TERM + '_' + meta.id;
                   localStorage.setItem(unlockKey, 'true');
                 }
-                setTimeout(function() { location.reload(); }, 1500);
+                  setTimeout(function() { location.reload(); }, 1500);
               } else {
                 msg.textContent = '❌ ' + (res.error || 'Invalid code');
                 msg.style.color = '#c62828';
