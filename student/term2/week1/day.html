@@ -47,6 +47,13 @@
       </div>
     </div>
 
+    <!-- NEW: Mark as Complete button (shown only for lesson-only days) -->
+    <div id="lesson-complete-wrap" style="display:none;margin-top:24px;text-align:center;">
+      <button id="btn-mark-complete" class="btn btn-primary" style="padding:14px 32px;font-size:1rem;font-weight:700;">
+        ✅ Mark as Complete
+      </button>
+    </div>
+
     <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
       <a id="nav-prev" href="index.html" class="btn btn-outline" style="flex:1;">← Back to Week</a>
       <a id="nav-next" href="index.html" class="btn btn-primary" style="flex:1;">Next Day →</a>
@@ -98,21 +105,52 @@
       function renderLesson(day, weekData) {
         document.getElementById('lesson-content').innerHTML = day.content || '<p>No content available.</p>';
 
+        const hasMatch = !!(day.activities && day.activities.match);
+        const hasScenario = !!(day.activities && day.activities.scenario);
+        const hasEscape = !!(day.activities && day.activities.escape);
+        const hasAnyActivity = hasMatch || hasScenario || hasEscape;
+
+        window.__lessonHasActivities = hasAnyActivity;
+
         Lesson.init({ term: TERM, week: WEEK, day: DAY, title: day.title || `Day ${DAY}`, maxPoints: 300 });
 
         const badge = day.badge || { id: 'scholar', name: 'Scholar', icon: '🏅' };
 
-        if (day.activities?.match) {
+        if (hasMatch) {
           Lesson.renderMatchGame('activity-1', { pairs: day.activities.match, pointsCorrect: 10, pointsWrong: -3, bonusFast: 15, badgeId: badge.id, badgeName: badge.name, badgeIcon: badge.icon });
         } else { document.getElementById('activity-1-card').style.display = 'none'; }
 
-        if (day.activities?.scenario) {
+        if (hasScenario) {
           Lesson.renderScenarioGame('activity-2', { scenarios: day.activities.scenario, pointsCorrect: 8, bonusFast: 3, badgeId: badge.id + '-scenario', badgeName: 'Scenario Solver', badgeIcon: '🎯' });
         } else { document.getElementById('activity-2-card').style.display = 'none'; }
 
-        if (day.activities?.escape) {
+        if (hasEscape) {
           Lesson.renderEscapeRoom('formative', { questions: day.activities.escape, lives: 3, badgeId: badge.id + '-escape', badgeName: 'Escape Master', badgeIcon: '🔐' });
         } else { document.getElementById('formative-card').style.display = 'none'; }
+
+        if (!hasAnyActivity) {
+          document.getElementById('lesson-complete-wrap').style.display = 'block';
+          document.getElementById('btn-mark-complete').addEventListener('click', function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = '⏳ Saving…';
+            try {
+              Store.markDayComplete(user.lrn, TERM, WEEK, DAY);
+              APP.toast('✅ Day completed!', 'success', 3000);
+              if (typeof Store.flushSync === 'function') {
+                Store.flushSync(3000).catch(() => {});
+              }
+              setTimeout(() => {
+                window.location.href = 'index.html';
+              }, 1500);
+            } catch (err) {
+              console.error('[Day] markDayComplete failed:', err);
+              APP.toast('Failed to save: ' + err.message, 'danger', 5000);
+              btn.disabled = false;
+              btn.textContent = '✅ Mark as Complete';
+            }
+          });
+        }
 
         const prevBtn = document.getElementById('nav-prev');
         const nextBtn = document.getElementById('nav-next');
