@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.20 (Wait for cloud sync before redirect)
+   Version: 1.0.21 (Fixed auto-complete override for review mode)
    ============================================================ */
 
 const Lesson = (() => {
@@ -61,6 +61,10 @@ const Lesson = (() => {
     if (!gate || typeof gate.getState !== 'function') return;
     const st = gate.getState();
     if (st && st.status === 'passed') {
+      // FIX: Review mode check. Huwag mag-redirect kapag lecture-only.
+      if (typeof window !== 'undefined' && window.__lessonHasActivities === false) {
+        return;
+      }
       if (markDayComplete()) toast('✅ Progress saved', 'success', 2500);
     }
   }
@@ -102,6 +106,10 @@ const Lesson = (() => {
   }
 
   function autoCompleteIfLessonOnly() {
+    // FIX: Huwag auto-complete kung lecture-only (review mode)
+    if (typeof window !== 'undefined' && window.__lessonHasActivities === false) {
+      return;
+    }
     if (hasActivities()) return;
     completeDayAndLeave();
   }
