@@ -1,8 +1,6 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.1.1 (Fixed backendPost error handling)
-   Changelog v2.1.1: Added error handling in backendPost to prevent
-     "Cannot convert undefined or null to object" crash.
+   Version: 2.1.2 (Fixed Cloud-First User Retrieval)
    ============================================================ */
 
 const Sync = (() => {
@@ -73,7 +71,6 @@ const Sync = (() => {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
 
-  /* ===== FIXED: Error handling in backendPost ===== */
   async function backendPost(body) {
     try {
       var res = await fetch(CONFIG.BACKEND_URL, {
@@ -124,8 +121,8 @@ const Sync = (() => {
   }
 
   async function buildPayload(lrn, term) {
-    var user = Store.getUser(lrn);
-    if (!user) throw new Error('User not found');
+    var user = Store.getCurrentUser(); // FIX: Use session user
+    if (!user) throw new Error('Not logged in');
     var progress = Store.getProgress(lrn);
     var scores = Store.getScores(lrn);
     var badges = Store.getBadges(lrn);
@@ -271,8 +268,8 @@ const Sync = (() => {
   }
 
   function buildAttemptPayload(lrn, term, assessment, attempt) {
-    var user = Store.getUser(lrn);
-    if (!user) throw new Error('User not found');
+    var user = Store.getCurrentUser(); // FIX: Use session user
+    if (!user) throw new Error('Not logged in');
     return {
       version: '2.0.0',
       student: { lrn: user.lrn, lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
@@ -423,8 +420,8 @@ const Sync = (() => {
   async function requestRetake(lrn, term, assessment, opts) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     opts = opts || {};
-    var user = Store.getUser(lrn);
-    if (!user) return { ok: false, error: 'User not found' };
+    var user = Store.getCurrentUser(); // FIX: Use session user
+    if (!user) return { ok: false, error: 'Not logged in' };
     try {
       return await backendPost({
         action: 'requestRetake',
