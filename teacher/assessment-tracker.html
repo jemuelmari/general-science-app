@@ -35,7 +35,7 @@
 <body>
   <header class="app-header teacher-header">
     <div class="container flex-between">
-      <div><h1>📈 Assessment Tracker</h1><span class="version">v1.0.10</span></div>
+      <div><h1>📈 Assessment Tracker</h1><span class="version">v1.0.11</span></div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
@@ -84,7 +84,7 @@
     </div>
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.11</span></p></footer>
 
   <script src="../config.js?v=1.3.0-1a995f2"></script>
   <script src="../assets/js/app.js?v=1.3.0-1a995f2"></script>
@@ -165,14 +165,20 @@
             ASSESSMENTS.forEach(a => {
               const scores = s.progress?.scores?.[term] || {};
               let record = null;
+              
+              // FIX: Explicit type checks for each assessment type
               if (a.type === 'te') record = scores.te;
-              else record = scores[a.type]?.[a.id];
+              else if (a.type === 'st') record = scores.st?.[a.id];
+              else if (a.type === 'quizzes') record = scores.quizzes?.[a.id];
+              else if (a.type === 'pt') record = scores.pt?.[a.id];
 
               let display = '—', title = `${a.label}: Not yet taken`, cls = 'not-taken';
               
-              if (record) {
+              // FIX: Null-safe check for score & total
+              if (record && record.score != null && record.total != null) {
                 totalSubs++;
                 const pct = record.percent || (record.total ? Math.round((record.score / record.total) * 100) : null);
+                
                 if (a.type === 'pt') {
                   display = record.score != null ? String(record.score) : '✓';
                   title = `PT: ${display}/100`;
