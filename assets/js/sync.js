@@ -241,10 +241,9 @@ const Sync = (() => {
     return { payload: record.payload, signature: record.signature, valid: valid, source: record.source };
   }
 
-    async function pullAllPending(filters) {
+  async function pullAllPending(filters) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured' };
     try {
-      // PALITAN: 'pullAllPending' -> 'pullAttempts' (base sa Code.gs doPost)
       var body = { action: 'pullAttempts', includeUsed: false };
       Object.keys(filters || {}).forEach(function (k) { body[k] = filters[k]; });
       var res = await backendPost(body);
@@ -259,13 +258,11 @@ const Sync = (() => {
     catch (err) { return { ok: false, error: err.message }; }
   }
 
-    async function pingBackend() {
+  async function pingBackend() {
     if (!backendEnabled()) return { ok: false, error: 'No backend URL configured' };
     try {
       var start = Date.now();
-      // PALITAN: 'ping' -> 'health' (base sa Code.gs doPost)
-      var body = { action: 'health' };
-      var res = await backendPost(body);
+      var res = await backendPost({ action: 'health' });
       return Object.assign({}, res, { ms: Date.now() - start });
     } catch (err) { return { ok: false, error: err.message }; }
   }
