@@ -103,6 +103,7 @@
       };
 
       var allRequests = [];
+      var isProcessing = false; // <-- BAGO: Anti-double-click guard
 
       TeacherAuthBoot.ready(function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
@@ -120,7 +121,17 @@
 
       async function fetchAndRender() {
         var listEl = document.getElementById('list');
+        var refreshBtn = document.getElementById('btn-refresh');
+        
+        // Prevent multiple simultaneous fetches
+        if (isProcessing) return;
+        isProcessing = true;
+        
         listEl.innerHTML = '<div class="card la-empty">⏳ Loading requests…</div>';
+        if (refreshBtn) {
+          refreshBtn.disabled = true;
+          refreshBtn.textContent = '⏳ Loading...';
+        }
 
         var filters = {
           term: document.getElementById('filter-term').value,
@@ -138,6 +149,12 @@
         } catch (err) {
           listEl.innerHTML = '<div class="card la-empty" style="color:#c62828;">❌ ' + err.message + '</div>';
           allRequests = [];
+        } finally {
+          isProcessing = false;
+          if (refreshBtn) {
+            refreshBtn.disabled = false;
+            refreshBtn.textContent = '📥 Load Requests';
+          }
         }
         renderStats();
         render();
@@ -184,10 +201,10 @@
         listEl.innerHTML = filtered.map(renderCard).join('');
 
         listEl.querySelectorAll('[data-approve]').forEach(function(btn) {
-          btn.addEventListener('click', function() { approveRequest(btn.dataset.approve); });
+          btn.addEventListener('click', function() { approveRequest(btn.dataset.approve, btn); });
         });
         listEl.querySelectorAll('[data-cancel]').forEach(function(btn) {
-          btn.addEventListener('click', function() { cancelRequest(btn.dataset.cancel); });
+          btn.addEventListener('click', function() { cancelRequest(btn.dataset.cancel, btn); });
         });
         listEl.querySelectorAll('[data-copy]').forEach(function(btn) {
           btn.addEventListener('click', function() { copyCode(btn.dataset.copy); });
@@ -240,25 +257,62 @@
         '</div>';
       }
 
-      async function approveRequest(requestId) {
+      async function approveRequest(requestId, btnEl) {
         if (!confirm('Generate a retake code for this student?')) return;
-        var res = await Sync.approveRetake(requestId);
-        if (res.ok) {
-          APP.toast('🔑 Code generated: ' + res.unlockCode, 'success', 6000);
-          await fetchAndRender();
-        } else {
-          APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+        
+        // Prevent double-click
+        if (btnEl) {
+          btnEl.disabled = true;
+          btnEl.innerHTML = '⏳ Generating...';
+        }
+
+        try {
+          var res = await Sync.approveRetake(requestId);
+          if (res.ok) {
+            APP.toast('🔑 Code generated: ' + res.unlockCode, 'success', 6000);
+            await fetchAndRender();
+          } else {
+            APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+            if (btnEl) {
+              btnEl.disabled = false;
+              btnEl.innerHTML = '🔑 Generate Code';
+            }
+          }
+        } catch (err) {
+          APP.toast('❌ Network error: ' + err.message, 'danger');
+          if (btnEl) {
+            btnEl.disabled = false;
+            btnEl.innerHTML = '🔑 Generate Code';
+          }
         }
       }
 
-      async function cancelRequest(requestId) {
+      async function cancelRequest(requestId, btnEl) {
         if (!confirm('Cancel this request?')) return;
-        var res = await Sync.cancelRequest(requestId);
-        if (res.ok) {
-          APP.toast('✅ Cancelled', 'success');
-          await fetchAndRender();
-        } else {
-          APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+
+        if (btnEl) {
+          btnEl.disabled = true;
+          btnEl.innerHTML = '⏳ Cancelling...';
+        }
+
+        try {
+          var res = await Sync.cancelRequest(requestId);
+          if (res.ok) {
+            APP.toast('✅ Cancelled', 'success');
+            await fetchAndRender();
+          } else {
+            APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+            if (btnEl) {
+              btnEl.disabled = false;
+              btnEl.innerHTML = '❌ Cancel';
+            }
+          }
+        } catch (err) {
+          APP.toast('❌ Network error: ' + err.message, 'danger');
+          if (btnEl) {
+            btnEl.disabled = false;
+            btnEl.innerHTML = '❌ Cancel';
+          }
         }
       }
 
