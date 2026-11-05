@@ -341,57 +341,62 @@
 
       /* ===== UPDATED: Pull All Pending with Amnesty Support ===== */
       function pullAllPending() {
-        var result = document.getElementById('sheets-result');
-        if (!Sync.backendEnabled()) {
-          result.innerHTML = renderResult('warning', 'Backend not configured', 'Set CONFIG.BACKEND_URL first.');
+  var result = document.getElementById('sheets-result');
+  if (!Sync.backendEnabled()) {
+    result.innerHTML = renderResult('warning', 'Backend not configured', 'Set CONFIG.BACKEND_URL first.');
+    return;
+  }
+  result.innerHTML = '<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Pulling...</div>';
+
+  // Gumamit ng pullAttempts (existing sa Code.gs) imbes na pullAllPending
+  Sync.pullAttempts({ includeUsed: false }).then(function(res) {
+    if (!res.ok) throw new Error(res.error || 'Unknown error');
+
+    var applied = 0;
+    var failed = 0;
+    var amnestied = 0;
+    var chain = Promise.resolve();
+
+    (res.records || []).forEach(function(record) {
+      chain = chain.then(function() {
+        // Kung may legacyAmnesty, tanggapin na agad
+        if (record.legacyAmnesty) {
+          amnestied++;
+          try { applyImport(record.payload); } catch (e) {}
           return;
         }
-        result.innerHTML = '<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Pulling…</div>';
-        
-        Sync.pullAttempts({ includeUsed: true }).then(function(res) {
-          if (!res.ok) throw new Error(res.error || 'Unknown error');
-          
-          var applied = 0;
-          var failed = 0;
-          var amnestied = 0;
-          var chain = Promise.resolve();
 
-          (res.records || []).forEach(function(record) {
-            chain = chain.then(function() {
-              // Kung may legacyAmnesty, tanggapin na agad
-              if (record.legacyAmnesty) {
-                amnestied++;
-                try {
-                  applyImport(record.payload);
-                } catch (e) {}
-                return;
-              }
-              
-              // Kung wala, i-verify
-              return Security.verify(record.payload, record.signature).then(function(valid) {
-                if (!valid) { failed++; return; }
-                applyImport(record.payload);
-                applied++;
-              });
-            });
-          });
-
-          return chain.then(function() {
-            var summary = 'Pulled ' + (applied + amnestied) + ' record(s)';
-            var detail = '<div style="margin-top:6px;">Applied: ' + applied + ' · Amnesty: ' + amnestied;
-            if (failed > 0) {
-              detail += ' · <span style="color:#c62828;">Failed: ' + failed + '</span>';
-            }
-            detail += '</div>';
-
-            result.innerHTML = renderResult(failed > 0 ? 'warning' : 'success', summary, detail);
-            APP.toast('Imported ' + (applied + amnestied) + ' record(s)', 'success');
-          });
+        // Kung wala, i-verify gamit ang Security module
+        return Security.verify(record.payload, record.signature).then(function(valid) {
+          if (!valid) { 
+            failed++; 
+            console.warn('[Sync] Failed verification for:', record.pushId);
+            return; 
+          }
+          applyImport(record.payload);
+          applied++;
         }).catch(function(err) {
-          result.innerHTML = renderResult('error', 'Pull failed', err.message);
+          failed++;
+          console.warn('[Sync] Verification error:', err.message);
         });
-      }
+      });
+    });
 
+    return chain.then(function() {
+      var summary = 'Pulled ' + (applied + amnestied) + ' record(s)';
+      var detail = '<div style="margin-top:6px;">Applied: ' + applied + ' · Amnesty: ' + amnestied;
+      if (failed > 0) {
+        detail += ' · <span style="color:#c62828;">Failed: ' + failed + '</span>';
+      }
+      detail += '</div>';
+
+      result.innerHTML = renderResult(failed > 0 ? 'warning' : 'success', summary, detail);
+      APP.toast('Imported ' + (applied + amnestied) + ' record(s)', 'success');
+    });
+  }).catch(function(err) {
+    result.innerHTML = renderResult('error', 'Pull failed', err.message);
+  });
+}
       /* ===== Existing: Pending ===== */
       function renderPending() {
         var list = document.getElementById('pending-list');
