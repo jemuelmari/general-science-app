@@ -40,12 +40,21 @@ const Security = (() => {
     return expected === signature;
   }
 
-  async function sign(payload) {
+    async function sign(payload) {
     const key = await _getKey();
     const enc = new TextEncoder();
-    const data = enc.encode(JSON.stringify(payload));
+    // GAMITIN ANG CANONICALIZE IMBES NA JSON.stringify
+    const canonical = (typeof Sync !== 'undefined' && Sync.canonicalize) 
+      ? Sync.canonicalize(payload) 
+      : JSON.stringify(payload);
+    const data = enc.encode(canonical);
     const sig = await crypto.subtle.sign('HMAC', key, data);
     return _bufToHex(sig);
+  }
+
+  async function verify(payload, signature) {
+    const expected = await sign(payload);
+    return expected === signature;
   }
 
   async function verify(payload, signature) {
