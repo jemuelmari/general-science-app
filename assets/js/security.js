@@ -1,6 +1,6 @@
 /* ============================================================
    security.js — HMAC-SHA256 signing + anti-cheat hooks
-   Version: 1.0.2
+   Version: 1.0.3 (Canonical signing fix)
    App: General Science
    ============================================================ */
 
@@ -40,13 +40,60 @@ const Security = (() => {
     return expected === signature;
   }
 
-    async function sign(payload) {
+  // ============================================================
+  // CANONICALIZE — dapat parehas sa sync.js at Code.gs
+  // ============================================================
+  function escapeNonAscii(str) {
+    var out = '';
+    for (var i = 0; i < str.length; i++) {
+      var code = str.charCodeAt(i);
+      if (code < 128) out += str.charAt(i);
+      else out += '\\u' + code.toString(16).padStart(4, '0');
+    }
+    return out;
+  }
+
+  function canonicalize(obj) {
+    if (obj === null || obj === undefined) return 'null';
+    if (typeof obj === 'number') {
+      if (isNaN(obj) || !isFinite(obj)) return 'null';
+      return String(obj);
+    }
+    if (typeof obj === 'boolean') return obj ? 'true' : 'false';
+    if (typeof obj === 'string') {
+      var jsonStr = JSON.stringify(obj);
+      var inner = jsonStr.substring(1, jsonStr.length - 1);
+      return '"' + escapeNonAscii(inner) + '"';
+    }
+    if (Array.isArray(obj)) return '[' + obj.map(canonicalize).join(',') + ']';
+    if (typeof obj === 'object') {
+      var keys = Object.keys(obj).filter(function (k) {
+        if (k === 'signature') return false;
+        return obj[k] !== undefined && typeof obj[k] !== 'function';
+      });
+      keys.sort();
+      return '{' + keys.map(function (k) {
+        return '"' + escapeNonAscii(k) + '":' + canonicalize(obj[k]);
+      }).join(',') + '}';
+    }
+    return 'null';
+  }
+
+  function roundTrip(payload) {
+    try { return JSON.parse(JSON.stringify(payload)); }
+    catch (e) { return payload; }
+  }
+
+  // ============================================================
+  // SIGN & VERIFY — gamit ang canonicalize (tugma sa Code.gs)
+  // ============================================================
+  async function sign(payload) {
     const key = await _getKey();
     const enc = new TextEncoder();
     // GAMITIN ANG CANONICALIZE IMBES NA JSON.stringify
-    const canonical = (typeof Sync !== 'undefined' && Sync.canonicalize) 
-      ? Sync.canonicalize(payload) 
-      : JSON.stringify(payload);
+    const canonical = (typeof Sync !== 'undefined' && Sync.canonicalize)
+      ? Sync.canonicalize(payload)
+      : canonicalize(payload);
     const data = enc.encode(canonical);
     const sig = await crypto.subtle.sign('HMAC', key, data);
     return _bufToHex(sig);
@@ -54,12 +101,14 @@ const Security = (() => {
 
   async function verify(payload, signature) {
     const expected = await sign(payload);
-    return expected === signature;
-  }
-
-  async function verify(payload, signature) {
-    const expected = await sign(payload);
-    return expected === signature;
+    // Constant-time comparison
+    if (typeof expected !== 'string' || typeof signature !== 'string') return false;
+    if (expected.length !== signature.length) return false;
+    var diff = 0;
+    for (var i = 0; i < expected.length; i++) {
+      diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+    }
+    return diff === 0;
   }
 
   function startTabMonitor(onViolation, threshold = 3) {
@@ -157,6 +206,8 @@ const Security = (() => {
     verifyString,
     sign,
     verify,
+    canonicalize,
+    roundTrip,
     startTabMonitor,
     disableCopyPaste,
     disableDevShortcuts,
