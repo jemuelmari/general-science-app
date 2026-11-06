@@ -138,9 +138,15 @@
 
         let bySection = {};
         students.forEach(s => {
-          const sec = s.section || 'Unknown';
+          const hasName = s.lastName || s.firstName;
+          let sec;
+          if (!hasName) {
+            sec = '⚠️ Missing Student Records';
+          } else {
+            sec = (s.section && s.section.trim()) || 'Unassigned Section';
+          }
           if (!bySection[sec]) bySection[sec] = [];
-          bySection[sec].push(s);
+            bySection[sec].push(s);
         });
 
         let totalSubs = 0;
@@ -151,16 +157,26 @@
           rowsHtml += `<tr><td colspan="${ASSESSMENTS.length + 1}" class="section-group-header">${section} (${secStudents.length})</td></tr>`;
           
           secStudents.forEach(s => {
-            const initials = ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase();
-            rowsHtml += `<tr><td>
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div class="student-avatar" style="width:32px;height:32px;font-size:0.7rem;background:#0d47a1;">${initials}</div>
-                <div>
-                  <div style="font-weight:600;color:#1a1a1a;font-size:0.85rem;">${s.lastName}, ${s.firstName}</div>
-                  <div style="font-size:0.7rem;color:#90a4ae;">LRN: ${s.lrn}</div>
-                </div>
-              </div>
-            </td>`;
+            const hasName = s.lastName || s.firstName;
+const initials = hasName
+  ? ((s.firstName || '?').charAt(0) + (s.lastName || '?').charAt(0)).toUpperCase()
+  : '??';
+
+const nameDisplay = hasName
+  ? `${(s.lastName || '').toUpperCase()}, ${s.firstName || ''}`
+  : `<span style="color:#d32f2f;">⚠️ Missing Name</span>`;
+
+const avatarBg = hasName ? '#0d47a1' : '#d32f2f';
+
+rowsHtml += `<tr${!hasName ? ' style="background:#fff3e0;"' : ''}><td>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="student-avatar" style="width:32px;height:32px;font-size:0.7rem;background:${avatarBg};">${initials}</div>
+    <div>
+      <div style="font-weight:600;color:#1a1a1a;font-size:0.85rem;">${nameDisplay}</div>
+      <div style="font-size:0.7rem;color:#90a4ae;">LRN: ${s.lrn}</div>
+    </div>
+  </div>
+</td>`;
 
             ASSESSMENTS.forEach(a => {
               const scores = s.progress?.scores?.[term] || {};
