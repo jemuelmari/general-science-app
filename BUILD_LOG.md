@@ -14,6 +14,7 @@
 - Pick Term (1–3) and assessment (Quiz 1–3, ST 1–2, Term Exam); questions are read live from `student/term{N}/assessments/*.json`
 - Versions: Set A, Set B (same seeded order students get online via `Randomize.generateSet`), both, or master copy (original order)
 - Output: student copy, student copy + answer key (own page), or answer key only
+- **Randomize choices** (default on): the banks store the correct answer as option A for all 540 items, so printed copies place it at a seeded, evenly spread position (A–D, no 3-in-a-row); the printed key always matches
 - Paper: short bond / A4 / long bond; font 10–12 pt; 1 or 2 columns; optional answer blank before number; editable directions
 - **Print** uses the browser print dialog (print-only CSS hides the dashboard UI)
 - **Save as Word (.docx)** via `docx@8.5.0` (CDN, same as Exam Evidence); falls back to a Word-compatible `.doc` if the library cannot load
