@@ -89,7 +89,7 @@
             <option value="A">Set A (ACADEMIC A)</option>
             <option value="B">Set B (ACADEMIC B)</option>
             <option value="AB">Both — Set A then Set B</option>
-            <option value="MASTER">Master copy (original order)</option>
+            <option value="MASTER">Master copy (original question order)</option>
           </select>
         </div>
         <div>
@@ -123,6 +123,7 @@
             <option value="2">2 columns (saves paper)</option>
           </select>
         </div>
+        <label class="pe-check"><input type="checkbox" id="pe-shuffle" checked /> Randomize choices (correct answers spread evenly A–D)</label>
         <label class="pe-check"><input type="checkbox" id="pe-blank" checked /> Answer blank before each number</label>
         <label class="pe-check"><input type="checkbox" id="pe-minutes" checked /> Show time limit</label>
         <div class="pe-wide">
@@ -185,6 +186,7 @@
           cols: parseInt($('pe-cols').value, 10) === 2 ? 2 : 1,
           answerLine: $('pe-blank').checked,
           showMinutes: $('pe-minutes').checked,
+          shuffleChoices: $('pe-shuffle').checked,
           directions: $('pe-directions').value.trim()
         };
       }
@@ -219,7 +221,10 @@
           current = model;
 
           var n = model.versions[0].items.length;
-          setStatus(n + ' items · ' + model.versions.map(function (v) { return v.label; }).join(' + '));
+          var dist = { A: 0, B: 0, C: 0, D: 0 };
+          model.versions[0].items.forEach(function (it) { if (it.correctIndex >= 0) dist['ABCD'[it.correctIndex]]++; });
+          setStatus(n + ' items · ' + model.versions.map(function (v) { return v.label; }).join(' + ') +
+            ' · Key spread (' + model.versions[0].label + '): A ' + dist.A + ' · B ' + dist.B + ' · C ' + dist.C + ' · D ' + dist.D);
         } catch (err) {
           if (token !== renderToken) return;
           current = null;
@@ -234,7 +239,7 @@
 
         syncDirections();
 
-        ['pe-term', 'pe-assessment', 'pe-version', 'pe-output', 'pe-paper', 'pe-font', 'pe-cols', 'pe-minutes']
+        ['pe-term', 'pe-assessment', 'pe-version', 'pe-output', 'pe-paper', 'pe-font', 'pe-cols', 'pe-minutes', 'pe-shuffle']
           .forEach(function (id) { $(id).addEventListener('change', render); });
         $('pe-blank').addEventListener('change', function () { syncDirections(); render(); });
         $('pe-directions').addEventListener('input', function () {

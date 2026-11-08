@@ -74,8 +74,71 @@ window.PrintExam = (function () {
     return { text: q.text, options: opts, correctIndex: opts.indexOf(q.correct) };
   }
 
+  /* ---------- choice shuffling (printed copies only) ----------
+     The question banks store the correct answer as the FIRST option
+     for every item, so unshuffled paper copies would be "all A".
+     This places the correct answer at a seeded, evenly-spread
+     position (A–D) and shuffles the distractors. Deterministic:
+     same term/assessment/set => same paper every time, so the
+     printed key always matches the printed questions. */
+  function mulberry32(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function seedFromString(str) {
+    var h = 2166136261 >>> 0;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return h >>> 0;
+  }
+  function shuffled(arr, rng) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function hasRun(positions, len) {
+    var run = 1;
+    for (var i = 1; i < positions.length; i++) {
+      run = positions[i] === positions[i - 1] ? run + 1 : 1;
+      if (run >= len) return true;
+    }
+    return false;
+  }
+  function isLocked(it) {
+    // keep original order for "All of the above"-type items, or malformed items
+    if (it.options.length < 2 || it.correctIndex < 0) return true;
+    return (typeof Randomize !== 'undefined' && Randomize.hasUnshuffleableOption)
+      ? Randomize.hasUnshuffleableOption(it.options) : false;
+  }
+  function shuffleChoices(items, seedStr) {
+    var rng = mulberry32(seedFromString(seedStr));
+    var n = items.length;
+    // balanced target positions: as equal a count of A/B/C/D as possible
+    var base = [];
+    for (var i = 0; i < n; i++) base.push(i % 4);
+    var positions = shuffled(base, rng);
+    for (var tries = 0; tries < 200 && hasRun(positions, 3); tries++) positions = shuffled(base, rng);
+
+    return items.map(function (it, i) {
+      if (isLocked(it)) return it;
+      var correct = it.options[it.correctIndex];
+      var others = shuffled(it.options.filter(function (_, k) { return k !== it.correctIndex; }), rng);
+      var target = Math.min(positions[i], it.options.length - 1);
+      var opts = others.slice();
+      opts.splice(target, 0, correct);
+      return { text: it.text, options: opts, correctIndex: target };
+    });
+  }
+
   /** which: 'A' | 'B' | 'MASTER' */
-  function buildVersion(bank, term, id, which) {
+  function buildVersion(bank, term, id, which, shuffleOpts) {
     var items;
     if (which === 'A' || which === 'B') {
       if (typeof Randomize === 'undefined' || !Randomize.generateSet) {
@@ -86,6 +149,7 @@ window.PrintExam = (function () {
     } else {
       items = bank.questions.map(toItem);
     }
+    if (shuffleOpts) items = shuffleChoices(items, term + '-' + id + '#choices-' + which);
     return { key: which, label: which === 'MASTER' ? 'Master Copy' : 'Set ' + which, items: items };
   }
 
@@ -427,7 +491,7 @@ window.PrintExam = (function () {
       assessmentId: assessmentId,
       assessmentLabel: meta.label,
       minutes: meta.minutes,
-      versions: versionKeys(versionChoice).map(function (k) { return buildVersion(bank, term, assessmentId, k); }),
+      versions: versionKeys(versionChoice).map(function (k) { return buildVersion(bank, term, assessmentId, k, !!opts.shuffleChoices); }),
       opts: opts
     };
   }
