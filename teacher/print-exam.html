@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Print Exam Copies — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-25c05df" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-25c05df" />
+  <style>
+    .pe-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+    .pe-form label { display: block; font-size: 0.78rem; font-weight: 700; color: #455a64; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .pe-form select, .pe-form textarea { width: 100%; padding: 9px 10px; border: 1.5px solid #cfd8dc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; }
+    .pe-wide { grid-column: 1 / -1; }
+    .pe-check { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; padding-top: 22px; }
+    .pe-check input { width: 18px; height: 18px; }
+    .pe-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+    .pe-btn { padding: 12px 22px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; color: #fff; }
+    .pe-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .pe-btn-print { background: #0d47a1; }
+    .pe-btn-word { background: #2e7d32; }
+    #pe-status { font-size: 0.85rem; color: #455a64; }
+    #pe-status.err { color: #c62828; }
+    .pe-note { background: #fff8e1; border-left: 4px solid #ffb300; border-radius: 6px; padding: 10px 14px; font-size: 0.82rem; color: #5d4037; margin-top: 14px; }
+
+    /* ---- preview "paper" ---- */
+    #pe-preview-wrap { overflow-x: auto; background: #cfd8dc; border-radius: 12px; padding: 18px; }
+    .pe-page { background: #fff; margin: 0 auto 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.25); box-sizing: border-box; padding: 0.6in; }
+    .pe-empty { text-align: center; color: #607d8b; padding: 40px 10px; }
+
+    /* ---- print: only the paper ---- */
+    @media print {
+      .app-header, .app-footer, .no-print, #pe-controls { display: none !important; }
+      body, main, .container { background: #fff !important; margin: 0 !important; padding: 0 !important; max-width: none !important; }
+      #pe-preview-wrap { background: none !important; padding: 0 !important; overflow: visible !important; border-radius: 0 !important; }
+      .pe-page { box-shadow: none !important; margin: 0 !important; padding: 0 !important; width: auto !important; min-height: 0 !important; page-break-after: always; break-after: page; }
+      .pe-page:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+  <style id="pe-dyn-css"></style>
+  <style id="pe-page-css"></style>
+</head>
+<body>
+  <header class="app-header teacher-header no-print">
+    <div class="container flex-between">
+      <div>
+        <h1>🖨️ Print Exam Copies</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="print-exam.html" style="color:#ffd54f;border-color:#ffd54f;">🖨️ Print Exam</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div class="card no-print" id="pe-controls" style="padding:24px;margin-bottom:20px;">
+      <h2 style="margin:0 0 6px;color:#0d47a1;">Printable Exam Copies</h2>
+      <p style="color:#546e7a;margin:0 0 20px;font-size:0.9rem;">
+        Print the actual questions of any Quiz, Summative Test or Term Exam — for students who can't access the internet.
+        Use <b>Save as Word</b> if you want to edit the paper first.
+      </p>
+
+      <div class="pe-form">
+        <div>
+          <label for="pe-term">Term</label>
+          <select id="pe-term">
+            <option value="1">Term 1</option>
+            <option value="2">Term 2</option>
+            <option value="3">Term 3</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-assessment">Assessment</label>
+          <select id="pe-assessment">
+            <option value="quiz1">Quiz 1</option>
+            <option value="quiz2">Quiz 2</option>
+            <option value="quiz3">Quiz 3</option>
+            <option value="st1">Summative Test 1</option>
+            <option value="st2">Summative Test 2</option>
+            <option value="te">Term Exam</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-version">Version</label>
+          <select id="pe-version">
+            <option value="A">Set A (ACADEMIC A)</option>
+            <option value="B">Set B (ACADEMIC B)</option>
+            <option value="AB">Both — Set A then Set B</option>
+            <option value="MASTER">Master copy (original order)</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-output">What to print</label>
+          <select id="pe-output">
+            <option value="student">Student copy (no answers)</option>
+            <option value="both">Student copy + Answer key (last page)</option>
+            <option value="key">Answer key only</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-paper">Paper size</label>
+          <select id="pe-paper">
+            <option value="letter">Short bond (Letter 8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="long">Long bond (8.5 × 13 in)</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-font">Font size</label>
+          <select id="pe-font">
+            <option value="10">10 pt (saves paper)</option>
+            <option value="11" selected>11 pt</option>
+            <option value="12">12 pt (easier to read)</option>
+          </select>
+        </div>
+        <div>
+          <label for="pe-cols">Columns</label>
+          <select id="pe-cols">
+            <option value="1">1 column</option>
+            <option value="2">2 columns (saves paper)</option>
+          </select>
+        </div>
+        <label class="pe-check"><input type="checkbox" id="pe-blank" checked /> Answer blank before each number</label>
+        <label class="pe-check"><input type="checkbox" id="pe-minutes" checked /> Show time limit</label>
+        <div class="pe-wide">
+          <label for="pe-directions">Directions (editable)</label>
+          <textarea id="pe-directions" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="pe-actions">
+        <button class="pe-btn pe-btn-print" id="pe-print">🖨️ Print</button>
+        <button class="pe-btn pe-btn-word" id="pe-word">💾 Save as Word (.docx)</button>
+        <span id="pe-status"></span>
+      </div>
+
+      <div class="pe-note">
+        <b>Tips:</b> Set A / Set B use the same question order students get online (ACADEMIC A → Set A, ACADEMIC B → Set B),
+        so the paper and online results can be checked with the same key. In the print dialog, turn <b>off</b> “Headers and footers”
+        for a clean page. Performance Tasks are not included — they have no test questions.
+      </div>
+    </div>
+
+    <div id="pe-preview-wrap">
+      <div class="pe-doc" id="pe-doc"><div class="pe-empty">Loading…</div></div>
+    </div>
+  </main>
+
+  <footer class="app-footer no-print"><p>General Science Online Modular Application · <span class="version">v1.0.0</span></p></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="../config.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/app.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/store.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/security.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/randomize.js?v=1.4.0"></script>
+  <script src="print-exam.js?v=1.0.0"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var bankCache = {};
+      var current = null;      // last successfully built model
+      var renderToken = 0;
+      var directionsTouched = false;
+
+      function setStatus(msg, isErr) {
+        var el = $('pe-status');
+        el.textContent = msg || '';
+        el.className = isErr ? 'err' : '';
+      }
+
+      function readOpts() {
+        return {
+          output: $('pe-output').value,
+          paper: $('pe-paper').value,
+          fontPt: parseInt($('pe-font').value, 10) || 11,
+          cols: parseInt($('pe-cols').value, 10) === 2 ? 2 : 1,
+          answerLine: $('pe-blank').checked,
+          showMinutes: $('pe-minutes').checked,
+          directions: $('pe-directions').value.trim()
+        };
+      }
+
+      function syncDirections() {
+        if (directionsTouched) return;
+        $('pe-directions').value = $('pe-blank').checked ? PrintExam.DIR_WITH_BLANK : PrintExam.DIR_NO_BLANK;
+      }
+
+      async function getBank(term, id) {
+        var key = term + '/' + id;
+        if (!bankCache[key]) bankCache[key] = await PrintExam.loadBank('term' + term, id);
+        return bankCache[key];
+      }
+
+      async function render() {
+        var token = ++renderToken;
+        var termNo = parseInt($('pe-term').value, 10);
+        var id = $('pe-assessment').value;
+        var doc = $('pe-doc');
+        setStatus('');
+        try {
+          var bank = await getBank(termNo, id);
+          if (token !== renderToken) return;
+          var opts = readOpts();
+          var model = PrintExam.buildModel(bank, termNo, id, $('pe-version').value, opts);
+          var paper = PrintExam.PAPERS[opts.paper];
+
+          $('pe-dyn-css').textContent = PrintExam.buildCss(opts) + '.pe-page{width:' + paper.wCss + ';min-height:' + paper.hCss + ';}';
+          $('pe-page-css').textContent = '@page{size:' + paper.css + ';margin:0.6in;}';
+          doc.innerHTML = PrintExam.renderHtml(model);
+          current = model;
+
+          var n = model.versions[0].items.length;
+          setStatus(n + ' items · ' + model.versions.map(function (v) { return v.label; }).join(' + '));
+        } catch (err) {
+          if (token !== renderToken) return;
+          current = null;
+          doc.innerHTML = '<div class="pe-empty">⚠️ ' + String(err.message).replace(/</g, '&lt;') + '</div>';
+          setStatus(err.message, true);
+        }
+      }
+
+      TeacherAuthBoot.ready(function (auth) {
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+        $('btn-logout').addEventListener('click', function () { auth.logout(); });
+
+        syncDirections();
+
+        ['pe-term', 'pe-assessment', 'pe-version', 'pe-output', 'pe-paper', 'pe-font', 'pe-cols', 'pe-minutes']
+          .forEach(function (id) { $(id).addEventListener('change', render); });
+        $('pe-blank').addEventListener('change', function () { syncDirections(); render(); });
+        $('pe-directions').addEventListener('input', function () {
+          directionsTouched = true;
+          clearTimeout(render._t); render._t = setTimeout(render, 250);
+        });
+
+        $('pe-print').addEventListener('click', function () {
+          if (!current) { setStatus('Nothing to print yet.', true); return; }
+          window.print();
+        });
+
+        $('pe-word').addEventListener('click', async function () {
+          if (!current) { setStatus('Nothing to save yet.', true); return; }
+          var btn = this;
+          btn.disabled = true;
+          setStatus('⏳ Building Word file…');
+          try {
+            var kind = await PrintExam.saveWord(current);
+            setStatus(kind === 'docx'
+              ? '✅ Saved .docx — open it in Word, edit, then print.'
+              : '✅ Saved .doc (Word library could not load, used basic format) — open it in Word and edit.');
+          } catch (err) {
+            console.error(err);
+            setStatus('❌ ' + err.message, true);
+          } finally {
+            btn.disabled = false;
+          }
+        });
+
+        render();
+      }, function () {
+        $('pe-doc').innerHTML = '<div class="pe-empty">⚠️ Teacher auth failed to load. Please refresh.</div>';
+      });
+    })();
+  </script>
+</body>
+</html>
