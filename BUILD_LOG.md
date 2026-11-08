@@ -7,6 +7,18 @@
 
 ---
 
+## Unreleased — Print Exam Copies
+
+### New: `teacher/print-exam.html` + `teacher/print-exam.js`
+- Teacher Dashboard → **Print Exam Copies** card (`instructor.html`)
+- Pick Term (1–3) and assessment (Quiz 1–3, ST 1–2, Term Exam); questions are read live from `student/term{N}/assessments/*.json`
+- Versions: Set A, Set B (same seeded order students get online via `Randomize.generateSet`), both, or master copy (original order)
+- Output: student copy, student copy + answer key (own page), or answer key only
+- Paper: short bond / A4 / long bond; font 10–12 pt; 1 or 2 columns; optional answer blank before number; editable directions
+- **Print** uses the browser print dialog (print-only CSS hides the dashboard UI)
+- **Save as Word (.docx)** via `docx@8.5.0` (CDN, same as Exam Evidence); falls back to a Word-compatible `.doc` if the library cannot load
+- Performance Tasks (PT1–3) are intentionally excluded (no test questions)
+
 ## v1.0.4 — Content Revision + Release (2026-09-22)
 
 ### Phase 6 — Assessment Content Revision (17 files)

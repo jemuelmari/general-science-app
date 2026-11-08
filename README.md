@@ -30,6 +30,7 @@ A modular, offline-first learning platform for Grade 11 General Science, coverin
 - **Term Control** — lock/unlock terms per section
 - **Activity Tracker** — monitor student completion
 - **Assessment Tracker** — track locked assessments, unlock for retakes
+- **Print Exam Copies** — print the actual quiz / ST / Term Exam questions (Set A, Set B, or master copy) for students without internet; optional answer key; save as editable Word (.docx) before printing
 
 ---
 
@@ -124,6 +125,7 @@ A modular, offline-first learning platform for Grade 11 General Science, coverin
 │ ├── item-analysis.html
 │ ├── locked-assessments.html
 │ ├── normalize-names.html
+│ ├── print-exam.html / print-exam.js   # Printable exam copies (print + .docx)
 │ ├── sync-center.html
 │ ├── term-control.html
 │ └── tos-generator.html
