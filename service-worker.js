@@ -3,7 +3,7 @@
    Version: 1.0.0
    ============================================================ */
 
-const CACHE_NAME = 'gensci-v1.0.10';
+const CACHE_NAME = 'gensci-v1.0.11';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

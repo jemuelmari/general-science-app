@@ -1,15 +1,17 @@
 /* ============================================================
    config.js — Global configuration
-   Version: 1.0.8
+   Version: 1.0.9
    App: General Science
    Changelog:
+     v1.0.9 — Full progress sync (student auto-pull), teacher "new data - refresh" banner,
+              backend Code.gs v1.10.0. (Changing this file also triggers bump-cache.yml.)
      v1.0.8 — Bump version for PT sync and re-upload fixes
      v1.0.7 — Fixed SCHOOL_INFO placement (was inside CONFIG object)
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Science',
-  VERSION: '1.0.8',
+  VERSION: '1.0.9',
   GRADE_LEVEL: 11,
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],
