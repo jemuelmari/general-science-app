@@ -83,7 +83,7 @@
     
     const scores = student.progress?.scores?.[term] || {};
     let record = null;
-    if (type === 'te') record = scores.te;
+    if (type === 'te') record = (scores.te && scores.te.te) || scores.te;
     else record = scores[type]?.[id];
     
     if (!record) return null;

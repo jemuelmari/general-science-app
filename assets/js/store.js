@@ -198,13 +198,20 @@ const Store = (() => {
         integrityHash: hash,
         deviceId: deviceId,
         studentInfo: {
-          lastName: user.lastName,
-          firstName: user.firstName,
+          lastName: user.lastName || '',
+          firstName: user.firstName || '',
           middleName: user.middleName || '',
           sex: user.sex || '',
           section: user.section || ''
         }
       });
+
+      // Server says this LRN was never registered: retrying will never help
+      if (res && res.notRegistered) {
+        console.warn('☁️ Sync stopped:', res.error);
+        localStorage.removeItem(dirtyKey(lrn));
+        return { ok: false, reason: res.error || 'not-registered' };
+      }
 
       if (res && res.ok) {
         console.log('☁️ Cloud Sync Success:', res.syncedAt);
@@ -403,20 +410,26 @@ const Store = (() => {
       deviceId: deviceId
     });
 
+    return applyLoginResult(res);
+  }
+
+  // Used by login.html too: applies a loginStudent response WITHOUT wiping unsynced local data
+  function applyLoginResult(res) {
     if (!res || !res.ok) {
       throw new Error((res && res.error) || 'Login failed');
     }
-
     const studentData = res.student;
-    const sp = studentData.progress || {};
+    const cleanLrn = studentData.lrn;
+    if (res.isNew) return { isNew: true, user: null };
 
+    const sp = studentData.progress || {};
     const user = {
-      lrn: studentData.lrn,
-      lastName: studentData.lastName || 'New',
-      firstName: studentData.firstName || 'Student',
+      lrn: cleanLrn,
+      lastName: studentData.lastName || '',
+      firstName: studentData.firstName || '',
       middleName: studentData.middleName || '',
       sex: studentData.sex || '',
-      section: studentData.section || 'ACADEMIC A',
+      section: studentData.section || '',
       gradeLevel: 11
     };
 
@@ -424,26 +437,34 @@ const Store = (() => {
     let progress = sp.progress || {};
     let badges = sp.badges || {};
 
-    const hadUnsynced = isDirty(cleanLrn);
-    if (hadUnsynced) {
-      console.warn('[Store] Unsynced local data found — merging with backend data.');
-      scores = mergeData(scores, get('scores_' + cleanLrn, {}));
-      progress = mergeData(progress, get('progress_' + cleanLrn, {}));
-      badges = mergeData(badges, get('badges_' + cleanLrn, {}));
+    // Always merge with whatever is on this device (isDirty alone is not reliable
+    // after a cleared flag / crashed tab), local newer data must never be lost.
+    const localScores = get('scores_' + cleanLrn, {});
+    const localProgress = get('progress_' + cleanLrn, {});
+    const localBadges = get('badges_' + cleanLrn, {});
+    const hadUnsynced = isDirty(cleanLrn) ||
+      JSON.stringify(localScores) !== JSON.stringify(scores) ||
+      JSON.stringify(localProgress) !== JSON.stringify(progress);
+
+    if (isDirty(cleanLrn)) {
+      scores = mergeData(scores, localScores);
+      progress = mergeData(progress, localProgress);
+      badges = mergeData(badges, localBadges);
     }
+
+    // server locks/unlocks restore (so a new device cannot bypass a lock)
+    if (sp.locks && typeof sp.locks === 'object') setRaw('locks_' + cleanLrn, sp.locks);
+    if (sp.unlocks && typeof sp.unlocks === 'object') setRaw('unlocks_' + cleanLrn, sp.unlocks);
 
     setRaw('session', user);
     setRaw('scores_' + cleanLrn, scores);
     setRaw('progress_' + cleanLrn, progress);
     setRaw('badges_' + cleanLrn, badges);
 
-    if (hadUnsynced) {
-      markDirty(cleanLrn);
-      scheduleSync(500);
-    }
+    if (isDirty(cleanLrn)) scheduleSync(500);
     refreshStatus();
 
-    return { isNew: res.isNew, user: user };
+    return { isNew: false, user: user };
   }
 
   function getCurrentUser() {
@@ -572,6 +593,7 @@ const Store = (() => {
     diagnose,
     get, set, remove,
     loginStudent,
+    applyLoginResult,
     getCurrentUser,
     getUser,
     getAllUsers,
