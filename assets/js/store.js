@@ -1,6 +1,16 @@
 /* ============================================================
    store.js — Local Storage + Cloud Sync Manager
-   Version: 2.2.3 (Null-safe get)
+   Version: 2.3.0 (Auto-pull + safe merge)
+   Changelog v2.3.0:
+     - ADDED: pullNow() + auto-pull (on load, every 2 min on listing pages, when the tab becomes visible
+       again, when back online). Progress made on another device now shows up without
+       logging in again. Listing pages (dashboard / term / week) refresh themselves
+       when the pulled data changed.
+     - FIX: login/pull merge used to concatenate itemResults arrays and mix fields of two
+       different score records. Now one whole record wins (same rules as Code.gs).
+     - FIX: locks were last-write-wins per device -> a stale device could erase a lock.
+       Locks are unioned; unlockAssessment() leaves a tombstone (unlocks[key].unlockedAt)
+       that beats any older lock, so unlocks reach every device.
    ============================================================ */
 
 const Store = (() => {
@@ -11,6 +21,8 @@ const Store = (() => {
   const RETRY_DELAYS = [10000, 30000, 60000, 120000];
   const WATCHDOG_MS = 60000;                        // check for leftover unsynced data
   const DIRTY_KEY_RE = /^(scores|progress|badges|locks|unlocks)_(.+)$/;
+  const PULL_INTERVAL = 120 * 1000;                 // auto-pull on listing pages while the tab is visible
+  const MIN_PULL_GAP = 20 * 1000;
 
   let syncTimeout = null;
   let retryTimeout = null;
@@ -21,6 +33,8 @@ const Store = (() => {
   let warnedNoBackend = false;
   let pillTimer = null;
   let lastSyncError = null;   // reason of the last failed sync (null if ok)
+  let currentPull = null;     // Promise while a pull is running
+  let lastPullAt = 0;
 
   let deviceId = localStorage.getItem(NS + 'device_id');
   if (!deviceId) {
@@ -393,6 +407,193 @@ const Store = (() => {
     return local !== undefined ? local : server;
   }
 
+  /* ---------- Safe merge (mirror of mergeProgressData in Code.gs) ---------- */
+  const TS_KEYS = ['timestamp', 'updatedAt', 'submittedAt', 'gradedAt', 'lockedAt', 'unlockedAt', 'at'];
+  const HEAVY_KEYS = { itemResults: 1, breakdown: 1, items: 1, answers: 1 };
+
+  function clone(o) { return o === undefined ? undefined : JSON.parse(JSON.stringify(o)); }
+
+  function tsOf(o) {
+    if (typeof o === 'string') { const d = Date.parse(o); return isNaN(d) ? 0 : d; }
+    if (!isPlainObject(o)) return 0;
+    let best = 0;
+    TS_KEYS.forEach(k => {
+      if (!o[k]) return;
+      const t = Date.parse(o[k]);
+      if (!isNaN(t) && t > best) best = t;
+    });
+    return best;
+  }
+
+  function isGraded(o) {
+    return isPlainObject(o) &&
+      ((o.percent !== undefined && o.percent !== null) ||
+       (o.score !== undefined && o.score !== null && Number(o.total) > 0));
+  }
+
+  function pctOf(o) {
+    if (o.percent !== undefined && o.percent !== null) return Number(o.percent) || 0;
+    return Number(o.total) ? Number(o.score) / Number(o.total) * 100 : 0;
+  }
+
+  function hasItems(o) { return !!(o && Array.isArray(o.itemResults) && o.itemResults.length); }
+
+  // ONE whole record wins (never a hybrid of two attempts).
+  function mergeScoreEntry(ex, inc) {
+    if (!isPlainObject(ex)) return inc;
+    if (!isPlainObject(inc)) return ex;
+
+    if (isGraded(ex) && isGraded(inc)) {
+      const ep = pctOf(ex), ip = pctOf(inc);
+      let out = ip > ep ? inc : ip < ep ? ex : (tsOf(inc) > tsOf(ex) ? inc : ex);
+      const other = out === ex ? inc : ex;
+      if (!hasItems(out) && hasItems(other) && ip === ep) {
+        out = clone(out);
+        out.itemResults = other.itemResults;
+      }
+      return out;
+    }
+
+    const newer = tsOf(inc) > tsOf(ex) ? inc : ex;
+    const older = newer === inc ? ex : inc;
+    const res = clone(newer);
+    ['bestScore', 'attempts', 'points'].forEach(k => {
+      if (typeof ex[k] === 'number' || typeof inc[k] === 'number') res[k] = Math.max(Number(ex[k]) || 0, Number(inc[k]) || 0);
+    });
+    if (ex.passed !== undefined || inc.passed !== undefined) res.passed = !!(ex.passed || inc.passed);
+    if (res.score === undefined && older.score !== undefined) res.score = older.score;
+    return res;
+  }
+
+  function mergeScoreMaps(base, inc) {
+    const out = clone(isPlainObject(base) ? base : {});
+    if (!isPlainObject(inc)) return out;
+    Object.keys(inc).forEach(term => {
+      if (!isPlainObject(inc[term])) return;
+      if (!isPlainObject(out[term])) out[term] = {};
+      Object.keys(inc[term]).forEach(type => {
+        const items = inc[term][type];
+        if (!isPlainObject(items)) return;
+        if (!isPlainObject(out[term][type])) out[term][type] = {};
+        Object.keys(items).forEach(id => {
+          if (!isPlainObject(items[id])) return;
+          out[term][type][id] = mergeScoreEntry(out[term][type][id], clone(items[id]));
+        });
+      });
+    });
+    return out;
+  }
+
+  function mergeProgressMaps(base, inc) {
+    const out = clone(isPlainObject(base) ? base : {});
+    if (!isPlainObject(inc)) return out;
+    Object.keys(inc).forEach(term => {
+      const t = inc[term];
+      if (!isPlainObject(t)) return;
+      if (!isPlainObject(out[term])) out[term] = { completed: [], weeks: {} };
+      const o = out[term];
+      Object.keys(t).forEach(k => { if (k !== 'completed' && k !== 'weeks') o[k] = clone(t[k]); });
+      if (!Array.isArray(o.completed)) o.completed = [];
+      (Array.isArray(t.completed) ? t.completed : []).forEach(d => { if (o.completed.indexOf(d) === -1) o.completed.push(d); });
+      if (isPlainObject(t.weeks)) {
+        if (!isPlainObject(o.weeks)) o.weeks = {};
+        Object.assign(o.weeks, clone(t.weeks));
+      }
+    });
+    return out;
+  }
+
+  function mergeBadgeMaps(base, inc) {
+    const out = clone(isPlainObject(base) ? base : {});
+    if (!isPlainObject(inc)) return out;
+    Object.keys(inc).forEach(term => {
+      if (!Array.isArray(out[term])) out[term] = [];
+      (Array.isArray(inc[term]) ? inc[term] : []).forEach(b => { if (out[term].indexOf(b) === -1) out[term].push(b); });
+    });
+    return out;
+  }
+
+  function stampObj(v) { return typeof v === 'string' ? { unlockedAt: v } : v; }
+
+  // Locks are unioned; an unlock tombstone beats a lock that is not newer than it.
+  function mergeLocksUnlocks(lockSrcs, unlockSrcs) {
+    const locks = {}, unlocks = {};
+    lockSrcs.forEach(src => {
+      if (!isPlainObject(src)) return;
+      Object.keys(src).forEach(k => {
+        const v = src[k];
+        if (!v) return;
+        if (!locks[k] || tsOf(v) >= tsOf(locks[k])) locks[k] = clone(v);
+      });
+    });
+    unlockSrcs.forEach(src => {
+      if (!isPlainObject(src)) return;
+      Object.keys(src).forEach(k => {
+        const v = stampObj(src[k]);
+        if (!isPlainObject(v)) return;
+        if (!unlocks[k] || tsOf(v) >= tsOf(unlocks[k])) unlocks[k] = clone(v);
+      });
+    });
+    Object.keys(locks).forEach(k => { if (unlocks[k] && tsOf(unlocks[k]) >= tsOf(locks[k])) delete locks[k]; });
+    return { locks, unlocks };
+  }
+
+  // server = what the cloud has, local = this device. Result is the same on every device.
+  function mergeBundle(server, local) {
+    server = server || {}; local = local || {};
+    const lu = mergeLocksUnlocks([server.locks, local.locks], [server.unlocks, local.unlocks]);
+    return {
+      scores: mergeScoreMaps(mergeScoreMaps({}, server.scores), local.scores),
+      progress: mergeProgressMaps(mergeProgressMaps({}, server.progress), local.progress),
+      badges: mergeBadgeMaps(mergeBadgeMaps({}, server.badges), local.badges),
+      locks: lu.locks,
+      unlocks: lu.unlocks
+    };
+  }
+
+  function stripHeavy(v) {
+    if (Array.isArray(v)) return v.map(stripHeavy);
+    if (isPlainObject(v)) {
+      const o = {};
+      Object.keys(v).forEach(k => { if (!HEAVY_KEYS[k]) o[k] = stripHeavy(v[k]); });
+      return o;
+    }
+    return v;
+  }
+
+  function stable(v) {
+    if (Array.isArray(v)) return '[' + v.map(stable).join(',') + ']';
+    if (isPlainObject(v)) return '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}';
+    return JSON.stringify(v === undefined ? null : v);
+  }
+
+  function readBundle(lrn) {
+    return {
+      scores: get('scores_' + lrn, {}),
+      progress: get('progress_' + lrn, {}),
+      badges: get('badges_' + lrn, {}),
+      locks: get('locks_' + lrn, {}),
+      unlocks: get('unlocks_' + lrn, {})
+    };
+  }
+
+  // Writes only what changed (no needless storage writes). Returns true when anything changed.
+  function writeBundle(lrn, b) {
+    const cur = readBundle(lrn);
+    let changed = false;
+    ['scores', 'progress', 'badges', 'locks', 'unlocks'].forEach(k => {
+      if (stable(cur[k]) !== stable(b[k])) { setRaw(k + '_' + lrn, b[k]); changed = true; }
+    });
+    return changed;
+  }
+
+  // Is there something in `merged` that the cloud copy does not have yet?
+  // (itemResults are ignored: the cloud strips them when a row is too large)
+  function cloudIsBehind(serverProgress, merged) {
+    const srv = mergeBundle(serverProgress, {});
+    return stable(stripHeavy(srv)) !== stable(stripHeavy(merged));
+  }
+
   /* ============================================================
      USER MANAGEMENT (Cloud-First + Legacy)
      ============================================================ */
@@ -432,33 +633,12 @@ const Store = (() => {
       gradeLevel: 11
     };
 
-    let scores = sp.scores || {};
-    let progress = sp.progress || {};
-    let badges = sp.badges || {};
-
-    // Always merge with whatever is on this device (isDirty alone is not reliable
-    // after a cleared flag / crashed tab), local newer data must never be lost.
-    const localScores = get('scores_' + cleanLrn, {});
-    const localProgress = get('progress_' + cleanLrn, {});
-    const localBadges = get('badges_' + cleanLrn, {});
-    const hadUnsynced = isDirty(cleanLrn) ||
-      JSON.stringify(localScores) !== JSON.stringify(scores) ||
-      JSON.stringify(localProgress) !== JSON.stringify(progress);
-
-    if (isDirty(cleanLrn)) {
-      scores = mergeData(scores, localScores);
-      progress = mergeData(progress, localProgress);
-      badges = mergeData(badges, localBadges);
-    }
-
-    // server locks/unlocks restore (so a new device cannot bypass a lock)
-    if (sp.locks && typeof sp.locks === 'object') setRaw('locks_' + cleanLrn, sp.locks);
-    if (sp.unlocks && typeof sp.unlocks === 'object') setRaw('unlocks_' + cleanLrn, sp.unlocks);
-
+    // Merge cloud + this device (never lose either side, never mix two score records)
+    const merged = mergeBundle(sp, readBundle(cleanLrn));
     setRaw('session', user);
-    setRaw('scores_' + cleanLrn, scores);
-    setRaw('progress_' + cleanLrn, progress);
-    setRaw('badges_' + cleanLrn, badges);
+    writeBundle(cleanLrn, merged);
+    if (cloudIsBehind(sp, merged)) markDirty(cleanLrn);
+    if (res.student && res.student.lastSyncedAt) setRaw('pull_stamp_' + cleanLrn, res.student.lastSyncedAt);
 
     if (isDirty(cleanLrn)) scheduleSync(500);
     refreshStatus();
@@ -495,6 +675,90 @@ const Store = (() => {
     try { await flushSync(4000); } catch (e) { }
     clearSession();
   }
+
+  /* ============================================================
+     PULL (cloud -> this device) + AUTO-PULL
+     ============================================================ */
+  function isListingPage() {
+    const p = location.pathname;
+    return /\/student\/(dashboard|profile)\.html$/.test(p) ||
+           /\/student\/term\d+\/(week\d+\/)?index\.html$/.test(p) ||
+           /\/student\/term\d+\/assessments\/index\.html$/.test(p);
+  }
+
+  // Only pages that merely LIST progress reload themselves (never a quiz / lesson in progress).
+  function maybeRefreshView() {
+    try {
+      if (!isListingPage()) return;
+      const ae = document.activeElement;
+      if (ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
+      const last = Number(sessionStorage.getItem('gsa_pull_reload_at') || 0);
+      if (Date.now() - last < 30000) return;
+      sessionStorage.setItem('gsa_pull_reload_at', String(Date.now()));
+      location.reload();
+    } catch (e) { /* ignore */ }
+  }
+
+  // opts.force: ignore the "nothing changed" shortcut.  opts.refresh: reload listing pages if data changed.
+  async function pullNow(opts) {
+    opts = opts || {};
+    if (currentPull) return currentPull;
+    if (!isOnline()) return { ok: false, reason: 'offline' };
+    if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) return { ok: false, reason: 'no-backend' };
+    const user = getCurrentUser();
+    if (!user || !user.lrn) return { ok: false, reason: 'no-user' };
+    const lrn = user.lrn;
+
+    currentPull = (async () => {
+      try {
+        // our own unsynced work goes up first, so the pull cannot race it
+        if (isDirty(lrn)) { try { await syncToBackend(); } catch (e) { /* keep going */ } }
+
+        const since = opts.force ? '' : String(get('pull_stamp_' + lrn, '') || '');
+        const res = await backendPost({ action: 'pullStudentProgress', lrn: lrn, since: since, deviceId: deviceId });
+        if (!res || !res.ok) return { ok: false, reason: (res && res.error) || 'unknown' };
+        lastPullAt = Date.now();
+        if (res.unchanged) return { ok: true, changed: false, unchanged: true };
+        if (res.isNew || !res.student) return { ok: true, changed: false, isNew: true };
+
+        // Read the device state only NOW (after the await) so nothing saved meanwhile is lost
+        const sp = res.student.progress || {};
+        const local = readBundle(lrn);
+        const merged = mergeBundle(sp, local);
+        const changed = writeBundle(lrn, merged);
+        if (cloudIsBehind(sp, merged)) { markDirty(lrn); scheduleSync(500); }
+        if (res.student.lastSyncedAt) setRaw('pull_stamp_' + lrn, res.student.lastSyncedAt);
+        setRaw('last_pull_time', new Date().toISOString());
+
+        try { window.dispatchEvent(new CustomEvent('gsa:data-pulled', { detail: { changed: changed } })); } catch (e) { /* ignore */ }
+        if (changed && opts.refresh) maybeRefreshView();
+        refreshStatus();
+        return { ok: true, changed: changed };
+      } catch (e) {
+        return { ok: false, reason: (e && e.message) || 'error' };
+      }
+    })().finally(() => { currentPull = null; });
+    return currentPull;
+  }
+
+  function autoPull(reason, force) {
+    const u = getCurrentUser();
+    if (!u || !u.lrn) return;
+    if (document.hidden) return;
+    if (document.body && document.body.classList.contains('quiz-active')) return;   // never disturb a running quiz
+    if (!force && Date.now() - lastPullAt < PULL_INTERVAL - 2000) return;
+    if (Date.now() - lastPullAt < MIN_PULL_GAP) return;
+    pullNow({ refresh: true });
+  }
+
+  try {
+    setTimeout(() => autoPull('load', true), 1500);
+    // the timer only runs on pages that LIST progress (one backend call per student per 2 min
+    // is plenty and keeps the Apps Script daily quota safe); other pages pull on load / return
+    setInterval(() => { if (isListingPage()) autoPull('interval', false); }, PULL_INTERVAL);
+    window.addEventListener('online', () => setTimeout(() => autoPull('online', true), 800));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(() => autoPull('visible', true), 400); });
+  } catch (e) { /* auto-pull must never break a page */ }
 
   /* ============================================================
      SCORES & PROGRESS
@@ -542,9 +806,13 @@ const Store = (() => {
     set('locks_' + lrn, locks);
   }
 
+  // Leaves a tombstone so the unlock beats any older copy of the lock on other devices / the cloud.
   function unlockAssessment(lrn, lockKey) {
     const locks = get('locks_' + lrn, {});
     delete locks[lockKey];
+    const unlocks = get('unlocks_' + lrn, {});
+    unlocks[lockKey] = { unlockedAt: new Date().toISOString() };
+    set('unlocks_' + lrn, unlocks);
     set('locks_' + lrn, locks);
   }
 
@@ -613,6 +881,9 @@ const Store = (() => {
     clearAllData,
     syncToBackend,
     flushSync,
+    pullNow,
+    mergeBundle,
+    mergeScoreEntry,
     hasUnsynced: (lrn) => isDirty(lrn)
   };
 })();

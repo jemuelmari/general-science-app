@@ -1,8 +1,11 @@
 /* ============================================================
    teacher-auth.js — Teacher password authentication
-   Version: 1.6.0
+   Version: 1.7.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.7.0:
+     - Loads teacher-watch.js on every authenticated teacher page (the
+       "New student data is available - Refresh" banner).
    Changelog v1.6.0:
      - Stores raw password as gsa_teacher_token on login so
        teacher-authenticated backend actions (pushUnlock etc.)
@@ -13,6 +16,30 @@
 
 const TeacherAuth = (() => {
   'use strict';
+
+  // Remember where this script came from (only available while it is executing)
+  const SELF_SRC = (document.currentScript && document.currentScript.src) || '';
+  let watchLoaded = false;
+
+  // teacher-watch.js sits next to this file and shares its ?v= cache-bust
+  function loadWatcher() {
+    if (watchLoaded || window.__GSA_TWATCH_LOADED) return;
+    watchLoaded = true;
+    try {
+      let src;
+      if (SELF_SRC && /teacher-auth\.js/.test(SELF_SRC)) {
+        src = SELF_SRC.replace(/teacher-auth\.js/, 'teacher-watch.js');
+      } else {
+        const p = window.location.pathname;
+        src = ((p.includes('/teacher/') || p.includes('/classrecord/')) ? '../' : '') + 'assets/js/teacher-watch.js';
+      }
+      const el = document.createElement('script');
+      el.src = src;
+      el.async = true;
+      el.onerror = () => console.warn('[TeacherAuth] teacher-watch.js could not be loaded');
+      document.head.appendChild(el);
+    } catch (e) { console.warn('[TeacherAuth] watcher load failed:', e && e.message); }
+  }
 
   const SESSION_KEY = 'gsa_teacher_session';
   const ATTEMPTS_KEY = 'gsa_teacher_attempts';
@@ -39,6 +66,7 @@ const TeacherAuth = (() => {
     if (isAuthenticated()) {
       startHeartbeat();
       trackActivity();
+      loadWatcher();
     }
     window.addEventListener('storage', (e) => {
       if (e.key === SESSION_KEY && !e.newValue) {
@@ -230,6 +258,10 @@ const TeacherAuth = (() => {
   function clearLockout() {
     localStorage.removeItem(LOCKOUT_KEY);
   }
+
+  // Safety net: pages that never call init() still get the banner
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { if (isAuthenticated()) loadWatcher(); });
+  else setTimeout(() => { if (isAuthenticated()) loadWatcher(); }, 0);
 
   return {
     init: init,

@@ -1,6 +1,6 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + backend bridge
-   Version: 2.1.2 (Fixed Cloud-First User Retrieval)
+   Version: 2.1.3 (Fixed Cloud-First User Retrieval; backendPost timeout)
    ============================================================ */
 
 const Sync = (() => {
@@ -72,31 +72,39 @@ const Sync = (() => {
   }
 
   async function backendPost(body) {
+    // 25s timeout: without it ONE stalled request (phone lost signal mid-request) hangs
+    // forever and everything waiting on it (SyncAuto queue flush) is stuck until page reload.
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 25000) : null;
     try {
       var res = await fetch(CONFIG.BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        signal: ctrl ? ctrl.signal : undefined
       });
-      
+
       if (!res) {
         throw new Error('No response from backend');
       }
-      
+
       var text = await res.text();
-      
+
       if (!text || text.trim() === '') {
         throw new Error('Empty response from backend');
       }
-      
+
       try {
         return JSON.parse(text);
       } catch (e) {
         throw new Error('Invalid JSON from backend: ' + text.substring(0, 100));
       }
     } catch (e) {
+      if (e && e.name === 'AbortError') e = new Error('The server took too long to respond');
       console.error('[Sync] backendPost failed:', e.message);
       throw e;
+    } finally {
+      if (timer) clearTimeout(timer);
     }
   }
 

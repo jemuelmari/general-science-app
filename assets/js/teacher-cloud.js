@@ -1,6 +1,9 @@
 /* ============================================================
    teacher-cloud.js — Cloud-First Dashboard Logic
-   Version: 1.3.0
+   Version: 1.4.0
+   v1.4.0: fetchStudents() hands the dataVersion that came with the data to
+           TeacherWatch (teacher-watch.js) -> the "New student data is available.
+           Refresh the page" banner knows exactly which version is on screen.
    Fetches student data from StudentsMaster via backend.
    v1.1.0: + hydrateStore(): copies cloud students into the local
            Store cache so pages that still call Store.getAllUsers()/
@@ -41,6 +44,10 @@ const TeacherCloud = (() => {
     try { data = JSON.parse(text); }
     catch (e) { throw new Error('Backend returned a non-JSON response (HTTP ' + res.status + ')'); }
     if (!data || !data.ok) throw new Error((data && data.error) || 'Failed to fetch students.');
+    if (data.dataVersion) {
+      window.__gsaDataVersion = String(data.dataVersion);
+      if (window.TeacherWatch && typeof window.TeacherWatch.setBaseline === 'function') window.TeacherWatch.setBaseline(data.dataVersion);
+    }
     let list = data.students || [];
     if (!opts.includeNameless) {
       // Skip ghost rows (no name / UNIDENTIFIED placeholder)

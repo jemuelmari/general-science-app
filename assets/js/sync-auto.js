@@ -1,7 +1,13 @@
 /* ============================================================
    sync-auto.js — Offline-first auto-push + unlock poller
-   Version: 1.2.0
+   Version: 1.3.0
    App: General Science
+   Changelog v1.3.0: flushNow() always releases its lock (try/finally) - a thrown error
+                     used to leave _isFlushing=true and the queue never flushed again.
+                     Remote unlocks are applied even if THIS device holds no lock: the
+                     unlock record is marked 'applied' by the first device that polls,
+                     so a device without the lock used to consume it and the device
+                     that really had the lock stayed locked forever.
    Changelog v1.2.0: 15-second unlock polling while on quiz pages.
                      Auto-reload after applying a remote unlock.
                      Kept 5-min polling for other pages.
@@ -79,44 +85,50 @@ const SyncAuto = (() => {
     }
 
     _isFlushing = true;
-    var queue = _loadQueue();
-    if (!queue.length) { _isFlushing = false; _emitStatus(); return { ok: true, pushed: 0, failed: 0, remaining: 0 }; }
+    try {
+      var queue = _loadQueue();
+      if (!queue.length) { _emitStatus(); return { ok: true, pushed: 0, failed: 0, remaining: 0 }; }
 
-    var pushed = 0, failed = 0, remaining = [];
+      var pushed = 0, failed = 0, remaining = [];
 
-    for (var i = 0; i < queue.length; i++) {
-      var item = queue[i];
-      if (item.retries > 0 && item.nextAttemptAt && Date.now() < item.nextAttemptAt) {
-        remaining.push(item); continue;
-      }
-      var res;
-      try { res = await Sync.pushAttempt(item.lrn, item.term, item.assessment, item.attempt, item.student); }
-      catch (e) { res = { ok: false, error: e.message }; }
+      for (var i = 0; i < queue.length; i++) {
+        var item = queue[i];
+        if (item.retries > 0 && item.nextAttemptAt && Date.now() < item.nextAttemptAt) {
+          remaining.push(item); continue;
+        }
+        var res;
+        try { res = await Sync.pushAttempt(item.lrn, item.term, item.assessment, item.attempt, item.student); }
+        catch (e) { res = { ok: false, error: e.message }; }
 
-      if (res && res.ok) { pushed++; }
-      else {
-        failed++;
-        item.retries = (item.retries || 0) + 1;
-        item.lastError = (res && res.error) || 'Unknown error';
-        if (item.retries >= MAX_RETRIES) {
-          item.failedAt = new Date().toISOString();
-          remaining.push(item);
-        } else {
-          var delay = Math.min(BASE_RETRY_DELAY_MS * Math.pow(2, item.retries - 1), MAX_RETRY_DELAY_MS);
-          item.nextAttemptAt = Date.now() + delay;
-          remaining.push(item);
+        if (res && res.ok) { pushed++; }
+        else {
+          failed++;
+          item.retries = (item.retries || 0) + 1;
+          item.lastError = (res && res.error) || 'Unknown error';
+          if (item.retries >= MAX_RETRIES) {
+            item.failedAt = new Date().toISOString();
+            remaining.push(item);
+          } else {
+            var delay = Math.min(BASE_RETRY_DELAY_MS * Math.pow(2, item.retries - 1), MAX_RETRY_DELAY_MS);
+            item.nextAttemptAt = Date.now() + delay;
+            remaining.push(item);
+          }
         }
       }
-    }
 
-    _saveQueue(remaining);
-    var state = _loadState();
-    if (pushed > 0) state.lastSync = new Date().toISOString();
-    if (failed > 0) state.lastError = (remaining[0] && remaining[0].lastError) || 'Partial failure';
-    _saveState(state);
-    _isFlushing = false;
-    _emitStatus();
-    return { ok: true, pushed: pushed, failed: failed, remaining: remaining.length };
+      _saveQueue(remaining);
+      var state = _loadState();
+      if (pushed > 0) state.lastSync = new Date().toISOString();
+      if (failed > 0) state.lastError = (remaining[0] && remaining[0].lastError) || 'Partial failure';
+      _saveState(state);
+      _emitStatus();
+      return { ok: true, pushed: pushed, failed: failed, remaining: remaining.length };
+    } catch (e) {
+      console.warn('[SyncAuto] flush error:', e && e.message);
+      return { ok: false, reason: 'error', error: e && e.message };
+    } finally {
+      _isFlushing = false;
+    }
   }
 
   /* ============================================================
@@ -142,10 +154,9 @@ const SyncAuto = (() => {
       var applied = 0;
       res.records.forEach(function (u) {
         var lockKey = u.term + '_' + u.assessment;
-        if (Store.isAssessmentLocked(user.lrn, lockKey)) {
-          Store.unlockAssessment(user.lrn, lockKey);
-          console.log('[SyncAuto] 🔓 Remote unlock applied:', lockKey);
-        }
+        // always apply (tombstone), even if this device has no lock: see changelog v1.3.0
+        Store.unlockAssessment(user.lrn, lockKey);
+        console.log('[SyncAuto] 🔓 Remote unlock applied:', lockKey);
         if (typeof Sync.markUnlockApplied === 'function') {
           Sync.markUnlockApplied(u.unlockId).catch(function () {});
         }

@@ -56,6 +56,14 @@ const QuizEngine = (() => {
       allowRetake: config.allowRetake === true
     };
 
+    // Another device may already hold a score / lock for this assessment: pull first
+    // (max 4s, silent when offline), THEN apply any teacher unlock on top of it.
+    try {
+      if (typeof Store.pullNow === 'function') {
+        await Promise.race([Store.pullNow({ force: true }), new Promise(function (r) { setTimeout(r, 4000); })]);
+      }
+    } catch (e) { /* offline / server busy: continue with this device's data */ }
+
     await _checkBackendUnlocks(ctx.lrn);
 
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
@@ -89,10 +97,9 @@ const QuizEngine = (() => {
 
       res.records.forEach(function (u) {
         var lockKey = u.term + '_' + u.assessment;
-        if (Store.isAssessmentLocked(lrn, lockKey)) {
-          Store.unlockAssessment(lrn, lockKey);
-          console.log('[QuizEngine] 🔓 Remote unlock applied:', lockKey);
-        }
+        // always apply (tombstone), even if this device holds no lock (see sync-auto.js v1.3.0)
+        Store.unlockAssessment(lrn, lockKey);
+        console.log('[QuizEngine] 🔓 Remote unlock applied:', lockKey);
         if (typeof Sync.markUnlockApplied === 'function') {
           Sync.markUnlockApplied(u.unlockId).catch(function () {});
         }
