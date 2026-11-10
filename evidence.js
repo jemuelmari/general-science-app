@@ -1,49 +1,48 @@
 /* ============================================================
    evidence.js — Exam Evidence (General Science, Grade 11)
-   Version: 1.0.0
+   Version: 2.0.0
    ------------------------------------------------------------
-   Gumagawa ng printable "Examination Evidence Record" ng isang estudyante (o ng buong section)
-   para sa Quiz 1–3, Summative Test 1–2, at Term Exam — para ipapirma sa magulang/guardian.
+   Printable "Examination Evidence Record" ng isang estudyante (o ng buong section)
+   para sa Quiz 1–3, Summative Test 1–2, at Term Exam ng Term 1–3.
+   Output: Preview / Print / Save as PDF (browser) at Word (.docx via docx@8.5.0).
 
-   Laman ng bawat evidence:
-   - DepEd header + school info, pangalan, LRN, grade/section, subject, assessment
-   - Resulta: score, percent, remarks (passed/not yet), proficiency level, petsa/oras, tagal ng pagsagot,
-     tab-switch warnings, auto-submit
-   - Performance per competency
-   - ITEM-BY-ITEM: ang tanong, lahat ng choices, ang sagot ng estudyante, at ang tamang sagot
-   - Evidence ID (hash ng LRN + assessment + score + timestamp) para ma-trace sa record sa Google Sheet
-   - Signature blocks: Student, Parent/Guardian, Teacher
+   v2.0.0 — ALIGNMENT FIX (evidence ↔ actual exam ng estudyante)
+   ------------------------------------------------------------
+   DATING PROBLEMA: Ang tanong ay hinahanap sa KASALUKUYANG question bank (student/termN/assessments/*.json)
+   gamit ang questionId / originalIndex / index — walang beripikasyon. Kapag nabago ang bank pagkatapos
+   kunin ng estudyante ang exam (revised ang content, na-retag, na-revert/na-regenerate, nagbago ang
+   ayos o ID ng mga item), iba na ang tanong/choices na lumalabas, kaya lumilipat ang "mali" sa ibang item.
 
-   Output: Print / Save as PDF (browser) at Word (.docx via docx@8.5.0).
-
-   NOTA SA DATA:
-   - Ang quiz engine ay nagra-randomize ng ORDER ng tanong at ng CHOICES para sa bawat estudyante,
-     at ang naitatala lang ay ang tanong, ang susi ng sagot na pinili, at ang tamang susi. Kaya ang
-     evidence ay sumusunod sa ORDER NG TANONG na nakita ng estudyante, at ipinapakita ang mga sagot
-     sa pamamagitan ng TEXT ng choice (hindi letra), para hindi magkamali.
-   - Ang laman ng record ay ang PINAKAHULING attempt na naka-save para sa assessment na iyon.
+   AYOS: Ang naka-save na itemResults ng estudyante ang SOURCE OF TRUTH (given, expected, correct, order).
+   Bawat item ay ibinabalik sa tamang tanong sa bank LAMANG kung TUGMA (ang `expected` ay ang tamang sagot
+   ng tanong at ang `given` ay isa sa choices). Pagkakasunod ng pagsubok: questionId → originalIndex → index
+   → paghahanap sa buong bank (kung isa lang ang tugma). Kapag walang tugma, HINDI maglalagay ng maling
+   tanong; ipapakita ang naka-save na sagot ng estudyante at lalagyan ng paliwanag.
+   Ang numero at pagkakasunod ng item ay ang mismong ayos na nakita ng estudyante (set A/B shuffle).
    ============================================================ */
 window.Evidence = (function () {
   'use strict';
 
-  /* ===== APP-SPECIFIC SETTINGS (i-edit dito kung iba ang pangalan sa app mo) ===== */
-  var APP_NAME   = 'General Science Online Modular Application';   // lalabas sa footer ng evidence
-  var ID_PREFIX  = 'GS';                                            // Evidence ID: GS-XXXXXXXX
-  var TOKEN_KEY  = 'gsa_teacher_token';                             // sessionStorage key ng teacher password/token
-  var TOKEN_KEYS_FALLBACK = ['gba_teacher_token'];                  // iba pang posibleng key na babasahin din
-  var BANK_DIRS  = ['../data/', 'data/'];                           // saan hahanapin ang question bank JSON
-  // Pangalan ng question bank file: data/<subject>-<code>.json  (hal. data/gensci-quiz1.json)
-  function bankFile(subject, code) { return subject + '-' + code + '.json'; }
+  /* ===== APP-SPECIFIC SETTINGS ===== */
+  var APP_NAME  = 'General Science Online Modular Application';
+  var ID_PREFIX = 'GS';
+  var TOKEN_KEY = 'gsa_teacher_token';
+  var PASSING   = 75;                      // tugma sa passScore ng quiz-engine
+  var SUBJECT_NAME = 'General Science';
 
-  var SUBJECTS = { gensci: 'General Science' };
+  var TERMS = [
+    { code: 'term1', label: 'Term 1' },
+    { code: 'term2', label: 'Term 2' },
+    { code: 'term3', label: 'Term 3' }
+  ];
 
   var ASSESSMENTS = [
-    { code: 'quiz1', label: 'Quiz 1', bucket: 'quizzes' },
-    { code: 'quiz2', label: 'Quiz 2', bucket: 'quizzes' },
-    { code: 'quiz3', label: 'Quiz 3', bucket: 'quizzes' },
+    { code: 'quiz1', label: 'Quiz 1',           bucket: 'quizzes' },
+    { code: 'quiz2', label: 'Quiz 2',           bucket: 'quizzes' },
+    { code: 'quiz3', label: 'Quiz 3',           bucket: 'quizzes' },
     { code: 'st1',   label: 'Summative Test 1', bucket: 'st' },
     { code: 'st2',   label: 'Summative Test 2', bucket: 'st' },
-    { code: 'te',    label: 'Term Exam', bucket: 'te' }
+    { code: 'te',    label: 'Term Exam',        bucket: 'te' }
   ];
 
   var PAPERS = {
@@ -52,107 +51,81 @@ window.Evidence = (function () {
     long:   { label: 'Long bond (8.5 × 13 in)',         css: '8.5in 13in',  w: 12240, h: 18720 }
   };
 
-  // I-edit dito ang school year. Ang ibang info ay kinukuha sa CONFIG.DEVELOPER (config.js).
-  var DEFAULT_SCHOOL_YEAR = 'S.Y. 2026-2027';
-
-  /* ---------- school info ---------- */
+  /* ---------- school info (config.js → SCHOOL_INFO / CONFIG.DEVELOPER) ---------- */
   function schoolInfo() {
     var dev = (typeof CONFIG !== 'undefined' && CONFIG.DEVELOPER) || {};
     var o = window.SCHOOL_INFO || {};
-    var rawName = o.teacherName || dev.name || '';
     return {
       region: o.region || dev.region || '',
       division: o.division || dev.division || '',
-      district: o.district || dev.district || '',
-      schoolName: (o.schoolName || dev.school || '').toUpperCase(),
-      schoolYear: o.schoolYear || DEFAULT_SCHOOL_YEAR,
-      teacherName: rawName,
+      district: dev.district || '',
+      schoolName: String(o.schoolName || dev.school || '').toUpperCase(),
+      schoolAddress: o.schoolAddress || '',
+      schoolYear: o.schoolYear || '',
+      teacherName: o.teacherName || dev.name || '',
       teacherPosition: o.teacherPosition || dev.position || '',
       gradeLevel: o.gradeLevel || 'Grade 11'
     };
   }
 
   /* ---------- small helpers ---------- */
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function plain(s) {   // para sa docx: tanggalin ang HTML tags kung mayroon
-    return String(s == null ? '' : s).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-  }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function plain(s) { return String(s == null ? '' : s).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'); }
+  function norm(s) { return plain(s).replace(/\s+/g, ' ').trim(); }
   function fmtDate(d) { if (!d) return '—'; var dt = new Date(d); return isNaN(dt) ? '—' : dt.toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' }); }
   function fmtTime(d) { if (!d) return ''; var dt = new Date(d); return isNaN(dt) ? '' : dt.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', hour12: true }); }
-  function fmtDuration(sec) {
-    sec = Number(sec); if (!sec || sec < 0) return '—';
-    var m = Math.floor(sec / 60), s = sec % 60;
-    return m + ' min ' + (s < 10 ? '0' : '') + s + ' sec';
-  }
+  function fmtDuration(sec) { sec = Math.round(Number(sec)); if (!sec || sec < 0) return '—'; var m = Math.floor(sec / 60), s = sec % 60; return m + ' min ' + (s < 10 ? '0' : '') + s + ' sec'; }
   function fullName(st) {
     if (!st) return '(Unknown)';
     var ln = String(st.lastName || '').toUpperCase(), fn = st.firstName || '', mn = st.middleName || '';
-    if (!ln && !fn) return '(Unnamed)';
+    if (!ln && !fn) return st.name || '(Unnamed)';
     return ln + ', ' + fn + (mn ? ' ' + mn : '');
   }
-  function fmtLRN(l) { return String(l || ''); }
-  function hash8(str) {
-    var h = 0x811c9dc5;
-    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 0x01000193) >>> 0; }
-    return h.toString(16).toUpperCase().padStart(8, '0');
-  }
-  function isFlat(o) {
-    return !!o && typeof o === 'object' && ['score', 'percent', 'total', 'passed'].some(function (k) { return o[k] !== undefined && typeof o[k] !== 'object'; });
-  }
+  function hash8(str) { var h = 0x811c9dc5; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 0x01000193) >>> 0; } return h.toString(16).toUpperCase().padStart(8, '0'); }
+  function safeName(s) { return String(s || '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, ''); }
+  function findAssessment(code) { return ASSESSMENTS.filter(function (a) { return a.code === code; })[0] || null; }
+  function findTerm(code) { return TERMS.filter(function (t) { return t.code === code; })[0] || null; }
+  function isRecord(o) { return !!o && typeof o === 'object' && (o.score !== undefined || o.percent !== undefined || Array.isArray(o.itemResults)); }
 
   /* ---------- data: students ---------- */
-  function normalizeScores(scores) {
-    var out = {};
-    Object.keys(scores || {}).forEach(function (subj) {
-      var s = scores[subj]; if (!s || typeof s !== 'object') return;
-      out[subj] = {};
-      Object.keys(s).forEach(function (t) {
-        var v = s[t]; if (v === null || v === undefined || typeof v !== 'object') { out[subj][t] = {}; return; }
-        if (t === 'te' && isFlat(v)) { var e = {}; e[subj + '-te'] = v; v = e; }   // lumang flat na Term Exam
-        out[subj][t] = v;
-      });
-    });
-    return out;
+  function parseMaybe(v) { if (typeof v === 'string') { try { return JSON.parse(v); } catch (e) { return {}; } } return v || {}; }
+
+  function normStudent(s) {
+    var prog = parseMaybe(s.progress || s.progressJSON || s.progressData);
+    var scores = parseMaybe(s.scores || prog.scores);
+    return {
+      lrn: s.lrn || s.LRN, lastName: s.lastName, firstName: s.firstName, middleName: s.middleName,
+      name: s.name, gradeLevel: s.gradeLevel, section: s.section || s.Section || '', scores: scores
+    };
   }
 
   function fromLocal() {
     var users = (typeof Store !== 'undefined' && Store.getAllUsers) ? Store.getAllUsers() : [];
     return users.map(function (u) {
       return { lrn: u.lrn, lastName: u.lastName, firstName: u.firstName, middleName: u.middleName,
-               gradeLevel: u.gradeLevel, section: u.section, scores: normalizeScores(Store.getScores(u.lrn)) };
+               gradeLevel: u.gradeLevel, section: u.section, scores: Store.getScores(u.lrn) || {} };
     });
   }
 
-  /**
-   * Kinukuha ang pinakabagong data ng lahat ng estudyante.
-   * 1) Kung may TeacherSync (auto-sync): mag-sync sa Google Sheet, tapos basahin ang Store.
-   * 2) Kung wala: direktang kuha sa backend (getAllStudentsAggregated) gamit ang teacher token.
-   * 3) Kung pumalya: gamitin ang data na naka-save sa device na ito.
-   * @returns {{students:Array, source:'cloud'|'local', error?:string}}
-   */
+  /** @returns {{students:Array, source:'cloud'|'local', error?:string}} */
   async function loadStudents(opts) {
     opts = opts || {};
     var cloudOn = typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
-    if (cloudOn && window.TeacherSync && TeacherSync.syncNow) {
-      var r = await TeacherSync.syncNow({ ask: !!opts.ask });
-      if (r && r.ok) return { students: fromLocal(), source: 'cloud' };
-      return { students: fromLocal(), source: 'local', error: r && r.error };
-    }
     if (cloudOn) {
       var token = '';
-      try { token = sessionStorage.getItem(TOKEN_KEY) || ''; for (var k = 0; k < TOKEN_KEYS_FALLBACK.length && !token; k++) token = sessionStorage.getItem(TOKEN_KEYS_FALLBACK[k]) || ''; } catch (e) { /* ignore */ }
-      if (!token && opts.ask) { token = prompt('Enter teacher password to load students from the Google Sheet:') || ''; if (token) { try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ } } }
+      try { token = sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) { /* ignore */ }
+      if (!token && opts.ask) {
+        token = prompt('Enter teacher password to load students from the Google Sheet:') || '';
+        if (token) { try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ } }
+      }
+      if (!token && CONFIG.TEACHER_PASSWORD_HASH) token = CONFIG.TEACHER_PASSWORD_HASH;
       if (token) {
         try {
-          var res = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'getAllStudentsAggregated', token: token }) });
-          var text = await res.text();
-          var data = JSON.parse(text);
-          if (data.ok) {
-            return { source: 'cloud', students: (data.students || []).map(function (s) { s.scores = normalizeScores(s.scores); return s; }) };
-          }
-          return { students: fromLocal(), source: 'local', error: data.error || 'Backend error' };
+          var res = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'pullTeacherDashboard', token: token }) });
+          var data = JSON.parse(await res.text());
+          var list = data && data.ok ? (data.students || data.records || []) : null;
+          if (list && list.length) return { source: 'cloud', students: list.map(normStudent) };
+          return { students: fromLocal(), source: 'local', error: (data && data.error) || 'No students returned' };
         } catch (e) { return { students: fromLocal(), source: 'local', error: e.message }; }
       }
     }
@@ -161,91 +134,123 @@ window.Evidence = (function () {
 
   /* ---------- data: question bank ---------- */
   var _bankCache = {};
-  async function loadBank(subject, code) {
-    var key = subject + '-' + code;
+  async function loadBank(term, code) {
+    var key = term + '/' + code;
     if (_bankCache[key]) return _bankCache[key];
-    var paths = BANK_DIRS.map(function (d) { return d + bankFile(subject, code); });
+    var paths = ['../student/' + term + '/assessments/' + code + '.json', 'student/' + term + '/assessments/' + code + '.json'];
     for (var i = 0; i < paths.length; i++) {
       try {
-        var res = await fetch(paths[i] + '?v=' + Date.now());
+        var res = await fetch(paths[i] + '?v=' + Date.now(), { cache: 'no-store' });
         if (res.ok) { _bankCache[key] = await res.json(); return _bankCache[key]; }
       } catch (e) { /* subukan ang susunod */ }
     }
     throw new Error('Hindi ma-load ang question bank (' + key + '.json). I-check ang internet.');
   }
 
-  /* ---------- model ---------- */
-  function findAssessment(code) { return ASSESSMENTS.filter(function (a) { return a.code === code; })[0] || null; }
-
-  function getEntry(student, subject, code) {
+  /* ---------- record lookup ---------- */
+  function getEntry(student, term, code) {
     var a = findAssessment(code); if (!a) return null;
-    var s = ((student.scores || {})[subject]) || {};
-    var bucket = s[a.bucket];
-    if (!bucket) return null;
-    if (a.bucket === 'te' && isFlat(bucket)) return bucket;
-    var e = bucket[subject + '-' + code];
-    return (e && e.score !== null && e.score !== undefined) ? e : null;
+    var t = ((student.scores || {})[term]) || null;
+    if (!t) return null;
+    var e = null;
+    if (a.bucket === 'te') {
+      var te = t.te;
+      e = isRecord(te) ? te : (te && isRecord(te.te) ? te.te : null);   // flat o nested (scores.termN.te.te)
+    } else {
+      e = t[a.bucket] && t[a.bucket][code];
+    }
+    return isRecord(e) ? e : null;
   }
 
-  function buildModel(student, subject, code, bank, opts) {
-    opts = opts || {};
-    var a = findAssessment(code);
-    var entry = getEntry(student, subject, code);
+  /* ---------- ALIGNMENT: ibalik ang bawat naka-save na item sa tamang tanong ---------- */
+  function fits(q, r) {
+    if (!q || !Array.isArray(q.options)) return false;
+    var opts = q.options.map(norm);
+    if (r.expected != null && r.expected !== '') {
+      if (norm(q.correct) !== norm(r.expected)) return false;
+      if (opts.indexOf(norm(r.expected)) < 0) return false;
+    }
+    if (r.given != null && r.given !== '' && opts.indexOf(norm(r.given)) < 0) return false;
+    // Dagdag na pagkakakilanlan: kung naka-save ang competency/bloom ng item, dapat tugma rin sa tanong.
+    if (r.competency && q.competency && norm(r.competency) !== norm(q.competency)) return false;
+    if (r.bloomLevel && q.bloomLevel && norm(r.bloomLevel) !== norm(q.bloomLevel)) return false;
+    return true;
+  }
+
+  function resolveQuestion(r, bank, used) {
+    var qs = bank.questions || [];
+    var byId = {};
+    qs.forEach(function (q) { if (q && q.id != null) byId[String(q.id)] = q; });
+    var cands = [];
+    if (r.questionId != null && byId[String(r.questionId)]) cands.push(byId[String(r.questionId)]);
+    if (r.originalIndex != null && qs[r.originalIndex]) cands.push(qs[r.originalIndex]);
+    if (r.index != null && qs[r.index]) cands.push(qs[r.index]);
+    for (var i = 0; i < cands.length; i++) if (fits(cands[i], r)) return { q: cands[i], how: i === 0 ? 'id' : 'index' };
+    var found = qs.filter(function (q) { return !used[q.id] && fits(q, r); });
+    if (found.length === 1) return { q: found[0], how: 'search' };
+    return { q: null, how: 'none' };   // walang tugma o malabo — huwag manghula ng tanong
+  }
+
+  function buildModel(student, term, code, bank) {
+    var a = findAssessment(code), t = findTerm(term);
+    var entry = getEntry(student, term, code);
     if (!entry) return null;
 
-    var byId = {};
-    (bank.items || []).forEach(function (q) { if (q && q.id != null) byId[String(q.id)] = q; });
+    var raw = Array.isArray(entry.itemResults) ? entry.itemResults.slice() : [];
+    // Ayos ayon sa nakita ng estudyante (set index). Kung walang index, panatilihin ang naka-save na ayos.
+    if (raw.length && raw.every(function (r) { return typeof r.index === 'number'; })) raw.sort(function (x, y) { return x.index - y.index; });
 
-    var breakdown = Array.isArray(entry.breakdown) ? entry.breakdown : [];
-    var keyMismatch = 0;
-    var items = breakdown.map(function (b, i) {
-      var q = byId[String(b.id)] || null;
-      var opts2 = (q && q.options) || [];
-      function labelOf(k) { var o = opts2.filter(function (x) { return x.key === k; })[0]; return o ? o.label : null; }
-      var givenLabel = (b.given === undefined || b.given === null || b.given === '') ? null : (labelOf(b.given) || '(' + b.given + ')');
-      var correctLabel = labelOf(b.correct) || (b.correct ? '(' + b.correct + ')' : '(unknown)');
-      var bankCorrect = opts2.filter(function (x) { return x.correct; })[0];
-      if (bankCorrect && b.correct && bankCorrect.key !== b.correct) keyMismatch++;
+    var used = {}, stale = 0, relocated = 0;
+    var items = raw.map(function (r, i) {
+      var hit = resolveQuestion(r, bank, used);
+      var q = hit.q;
+      if (q) used[q.id] = true;
+      if (!q) stale++; else if (hit.how === 'search') relocated++;
+      var given = (r.given === undefined || r.given === null || r.given === '') ? null : plain(r.given);
+      var expected = r.expected != null && r.expected !== '' ? plain(r.expected) : (q ? plain(q.correct) : '(unknown)');
+      var isCorrect = typeof r.correct === 'boolean' ? r.correct : (given !== null && norm(given) === norm(expected));
       return {
         no: i + 1,
-        text: q ? q.text : '(Question text not found in the current question bank)',
-        competency: b.competency || (q && q.competency) || 'General',
-        options: opts2.map(function (o) { return { label: o.label, isCorrect: o.key === b.correct, isGiven: b.given !== undefined && o.key === b.given }; }),
-        givenLabel: givenLabel,
-        correctLabel: correctLabel,
-        isCorrect: !!b.isCorrect
+        found: !!q,
+        text: q ? q.text : null,
+        competency: r.competency || (q && q.competency) || 'General',
+        options: q ? q.options.map(function (o) { return { label: o, isCorrect: norm(o) === norm(expected), isGiven: given !== null && norm(o) === norm(given) }; }) : [],
+        givenLabel: given,
+        correctLabel: expected,
+        isCorrect: isCorrect
       };
     });
 
-    var total = entry.total != null ? entry.total : (items.length || (bank.items || []).length);
+    var total = entry.total != null ? entry.total : (items.length || (bank.questions || []).length);
     var correct = entry.score != null ? entry.score : items.filter(function (x) { return x.isCorrect; }).length;
     var percent = entry.percent != null ? entry.percent : (total ? Math.round(correct / total * 100) : 0);
-    var passing = bank.passingScore || 80;
 
-    var comp = {};
+    var comp = {}, order = [];
     items.forEach(function (it) {
-      var c = comp[it.competency] || (comp[it.competency] = { code: it.competency, total: 0, correct: 0 });
+      var c = comp[it.competency];
+      if (!c) { c = comp[it.competency] = { code: it.competency, total: 0, correct: 0 }; order.push(it.competency); }
       c.total++; if (it.isCorrect) c.correct++;
     });
 
-    var ts = entry.timestamp || (entry.override && entry.override.at) || '';
+    var itemCorrect = items.filter(function (x) { return x.isCorrect; }).length;
+    var ts = entry.timestamp || '';
     var level = (typeof Transmutation !== 'undefined' && Transmutation.proficiencyLevel) ? Transmutation.proficiencyLevel(percent).level : '';
 
     return {
-      student: student, subject: subject, subjectName: SUBJECTS[subject] || subject,
-      code: code, label: a.label, title: bank.title || a.label,
+      student: student, term: term, termLabel: t ? t.label : term, code: code, label: a.label,
+      title: (t ? t.label + ' — ' : '') + (bank.title || a.label),
       entry: entry, items: items, hasItems: items.length > 0,
       correct: correct, total: total, wrong: Math.max(0, total - correct), percent: percent,
-      passing: passing, passed: percent >= passing, level: level,
-      competencies: Object.keys(comp).map(function (k) { return comp[k]; }),
-      takenAt: ts, durationSec: entry.durationSec || 0,
-      tabViolations: entry.tabViolations || 0, autoSubmitted: !!entry.autoSubmitted,
-      override: entry.override || null, keyMismatch: keyMismatch,
-      evidenceId: ID_PREFIX + '-' + hash8([student.lrn, subject + '-' + code, ts, correct, total].join('|'))
+      passing: PASSING, passed: percent >= PASSING, level: level,
+      competencies: order.map(function (k) { return comp[k]; }),
+      takenAt: ts, durationSec: entry.timeUsed || 0, setLetter: entry.set || '',
+      stale: stale, relocated: relocated,
+      countMismatch: items.length > 0 && itemCorrect !== correct,
+      evidenceId: ID_PREFIX + '-' + hash8([student.lrn, term + '-' + code, ts, correct, total].join('|'))
     };
   }
 
-  /* ---------- HTML (preview + print) ---------- */
+  /* ---------- HTML (preview + print) — layout ng sample ---------- */
   var CSS = [
     '.ev-page{background:#fff;color:#000;font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.35;box-sizing:border-box;}',
     '.ev-c{text-align:center;margin:0;}',
@@ -275,21 +280,39 @@ window.Evidence = (function () {
     '.ev-foot{font-size:8.5pt;color:#555;margin-top:12px;text-align:center;}'
   ].join('\n');
 
+  var STALE_TEXT = '(Ang teksto ng tanong na ito ay nabago na sa question bank matapos ang exam, kaya ang naka-save na sagot lang ng estudyante ang ipinapakita.)';
+
+  function infoRows(m, s) {
+    var st = m.student;
+    return [
+      ['Student Name', fullName(st)], ['LRN', String(st.lrn || '')],
+      ['Grade & Section', (st.gradeLevel ? 'Grade ' + String(st.gradeLevel).replace(/^grade\s*/i, '') : s.gradeLevel) + ' - ' + (st.section || '—')],
+      ['Subject', SUBJECT_NAME], ['Assessment', m.label + ' — ' + m.title],
+      ['Date & Time Taken', fmtDate(m.takenAt) + (fmtTime(m.takenAt) ? ', ' + fmtTime(m.takenAt) : '')]
+    ].concat(m.setLetter ? [['Question Set', 'Set ' + m.setLetter]] : []);
+  }
+
+  function notesFor(m) {
+    var n = [];
+    if (m.stale) n.push(m.stale + ' item(s): nabago na ang tanong sa question bank matapos ang exam — ang naka-save na sagot ng estudyante ang ipinapakita (walang tanong/choices).');
+    if (m.relocated) n.push(m.relocated + ' item(s) ay itinugma sa tanong sa bank gamit ang naka-save na sagot (nagbago ang ID/posisyon sa bank).');
+    if (m.countMismatch) n.push('Paalala: ang bilang ng tamang item sa listahan ay hindi tugma sa naka-save na score (' + m.correct + '). Ang naka-save na score ang opisyal.');
+    return n;
+  }
+
   function pageHtml(m, o) {
-    var s = schoolInfo(), st = m.student;
+    var s = schoolInfo();
+    var st = m.student;
     var html = [];
     html.push('<div class="ev-page">');
     html.push('<p class="ev-c"><b>REPUBLIC OF THE PHILIPPINES</b></p><p class="ev-c"><b>DEPARTMENT OF EDUCATION</b></p>');
     html.push('<p class="ev-c" style="font-size:10pt">' + esc(s.region) + ' — ' + esc(s.division) + (s.district ? ' — ' + esc(s.district) : '') + '</p>');
-    html.push('<p class="ev-c" style="font-size:13pt"><b>' + esc(s.schoolName) + '</b></p><p class="ev-c" style="font-size:10pt">' + esc(s.schoolYear) + '</p>');
+    html.push('<p class="ev-c" style="font-size:13pt"><b>' + esc(s.schoolName) + '</b></p>');
+    if (s.schoolAddress) html.push('<p class="ev-c" style="font-size:10pt">' + esc(s.schoolAddress) + '</p>');
+    html.push('<p class="ev-c" style="font-size:10pt">' + esc(s.schoolYear) + '</p>');
     html.push('<div class="ev-title">EXAMINATION EVIDENCE RECORD</div>');
 
-    html.push('<table class="ev-info">' + [
-      ['Student Name', fullName(st)], ['LRN', fmtLRN(st.lrn)],
-      ['Grade & Section', (st.gradeLevel ? 'Grade ' + String(st.gradeLevel).replace(/^grade\s*/i, '') : s.gradeLevel) + ' - ' + (st.section || '—')],
-      ['Subject', m.subjectName], ['Assessment', m.label + ' — ' + m.title],
-      ['Date & Time Taken', m.override ? fmtDate(m.override.takenOn || m.takenAt) + ' (recorded by teacher)' : fmtDate(m.takenAt) + (fmtTime(m.takenAt) ? ', ' + fmtTime(m.takenAt) : '')]
-    ].map(function (r) { return '<tr><td class="k">' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>');
+    html.push('<table class="ev-info">' + infoRows(m, s).map(function (r) { return '<tr><td class="k">' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>');
 
     html.push('<div class="ev-h">RESULT</div><div class="ev-result">' +
       '<div class="ev-box"><b>' + m.correct + ' / ' + m.total + '</b><span>Score</span></div>' +
@@ -297,12 +320,8 @@ window.Evidence = (function () {
       '<div class="ev-box"><b class="' + (m.passed ? 'ev-pass' : 'ev-fail') + '">' + (m.passed ? 'PASSED' : 'NOT YET PASSED') + '</b><span>Passing: ' + m.passing + '%</span></div>' +
       (m.level ? '<div class="ev-box"><b style="font-size:9.5pt;line-height:1.5">' + esc(m.level) + '</b><span>Proficiency</span></div>' : '') + '</div>');
 
-    var facts = [];
-    if (m.durationSec) facts.push('Time used: ' + fmtDuration(m.durationSec));
-    if (m.hasItems) facts.push('Tab-switch warnings: ' + m.tabViolations);
-    if (m.autoSubmitted) facts.push('Auto-submitted (time up / too many tab switches)');
-    if (facts.length) html.push('<p class="ev-note">' + esc(facts.join('  •  ')) + '</p>');
-    if (m.override) html.push('<p class="ev-note"><b>Note:</b> This score was entered/verified by the teacher' + (m.override.reason ? ' (' + esc(m.override.reason) + ')' : '') + '. Item-level answers are not available for paper-based or manually entered scores.</p>');
+    if (m.durationSec) html.push('<p class="ev-note">Time used: ' + esc(fmtDuration(m.durationSec)) + '</p>');
+    notesFor(m).forEach(function (n) { html.push('<p class="ev-note"><b>Note:</b> ' + esc(n) + '</p>'); });
 
     if (o.competencies !== false && m.competencies.length) {
       html.push('<div class="ev-h">PERFORMANCE PER COMPETENCY</div><table class="ev-tbl"><tr><th>Competency code</th><th style="width:70px">Correct</th><th style="width:70px">Items</th><th style="width:70px">%</th></tr>' +
@@ -312,14 +331,14 @@ window.Evidence = (function () {
     if (o.items !== false) {
       html.push('<div class="ev-h">ITEM-BY-ITEM ANSWERS</div>');
       if (!m.hasItems) {
-        html.push('<p class="ev-note">Walang item-level record para sa assessment na ito (paper-based o manually entered ang score). Ang resulta sa itaas ang opisyal na record.</p>');
+        html.push('<p class="ev-note">Walang item-level record para sa assessment na ito. Ang resulta sa itaas ang opisyal na record.</p>');
       } else {
-        html.push('<p class="ev-note">Ang bawat estudyante ay may kani-kaniyang pagkakasunod-sunod ng tanong at ng mga choices, kaya ang mga sagot ay nakasulat sa buong text at hindi sa letra. ✓ = tamang sagot · ✗ = sagot ng estudyante (mali).</p>');
+        html.push('<p class="ev-note">Ang numero at pagkakasunod ng mga tanong ay ang <b>mismong ayos na nakita ng estudyante</b> sa exam (Set ' + esc(m.setLetter || '—') + '). ☒ = sagot ng estudyante · ✓ = tamang sagot.</p>');
         m.items.forEach(function (it) {
-          html.push('<div class="ev-item"><p class="ev-q">' + it.no + '. ' + esc(it.text) + '</p>');
+          html.push('<div class="ev-item"><p class="ev-q">' + it.no + '. ' + (it.found ? esc(plain(it.text)) : esc(STALE_TEXT)) + '</p>');
           it.options.forEach(function (op) {
             var mark = op.isCorrect ? ' ✓' : (op.isGiven ? ' ✗' : '');
-            html.push('<p class="ev-o' + (op.isCorrect ? ' c' : '') + '">' + (op.isGiven ? '☒' : '☐') + ' ' + esc(op.label) + mark + '</p>');
+            html.push('<p class="ev-o' + (op.isCorrect ? ' c' : '') + '">' + (op.isGiven ? '☒' : '☐') + ' ' + esc(plain(op.label)) + mark + '</p>');
           });
           html.push('<p class="ev-ans ' + (it.isCorrect ? 'ev-ok' : 'ev-no') + '">Student’s answer: <b>' + esc(it.givenLabel == null ? '(no answer)' : it.givenLabel) + '</b> — ' + (it.isCorrect ? 'CORRECT' : 'WRONG') +
             (it.isCorrect ? '' : '<br/>Correct answer: <b>' + esc(it.correctLabel) + '</b>') + '</p></div>');
@@ -335,13 +354,11 @@ window.Evidence = (function () {
       '<div><div class="ev-line">&nbsp;</div>Parent / Guardian<br/>(signature over printed name)<br/><br/>Date: ______________</div>' +
       '<div><div class="ev-line">' + esc(s.teacherName) + '</div>' + esc(s.teacherPosition) + '</div></div>');
 
-    html.push('<p class="ev-foot">Evidence ID: <b>' + m.evidenceId + '</b> · Generated ' + esc(new Date().toLocaleString('en-PH')) + ' · ' + esc(APP_NAME) +
-      (m.keyMismatch ? '<br/>Note: the answer key of ' + m.keyMismatch + ' item(s) was revised after this exam was taken; the stored result is shown.' : '') + '</p>');
+    html.push('<p class="ev-foot">Evidence ID: <b>' + m.evidenceId + '</b> · Generated ' + esc(new Date().toLocaleString('en-PH')) + ' · ' + esc(APP_NAME) + '</p>');
     html.push('</div>');
     return html.join('');
   }
 
-  /** HTML ng lahat ng pages (isa bawat estudyante, may page-break). */
   function renderHtml(models, o) {
     return models.map(function (m, i) {
       return '<div class="ev-sheet" style="' + (i < models.length - 1 ? 'break-after:page;page-break-after:always;' : '') + '">' + pageHtml(m, o || {}) + '</div>';
@@ -366,41 +383,38 @@ window.Evidence = (function () {
     function run(text, x) { x = x || {}; return new D.TextRun({ text: text == null ? '' : String(text), bold: !!x.bold, italics: !!x.italics, size: x.size || 21, color: x.color, font: 'Calibri' }); }
     function para(text, x) {
       x = x || {};
-      return new D.Paragraph({ alignment: x.align || AL.LEFT, spacing: x.spacing || { after: 50 }, indent: x.indent, keepNext: !!x.keepNext, keepLines: true, pageBreakBefore: !!x.pageBreakBefore,
-        children: Array.isArray(text) ? text : [run(text, x)] });
+      return new D.Paragraph({ alignment: x.align || AL.LEFT, spacing: x.spacing || { after: 50 }, indent: x.indent, keepNext: !!x.keepNext, keepLines: true, pageBreakBefore: !!x.pageBreakBefore, children: [run(text, x)] });
     }
     function cell(text, x) {
       x = x || {};
       return new D.TableCell({ width: x.w ? { size: x.w, type: WT.PERCENTAGE } : undefined, borders: borders, shading: x.fill ? { fill: x.fill } : undefined,
         children: [new D.Paragraph({ alignment: x.align || AL.LEFT, children: [run(text, { bold: x.bold, size: x.size || 20, color: x.color })] })] });
     }
+    function kvTable(rows, colorRemarks, m) {
+      return new D.Table({ width: { size: 100, type: WT.PERCENTAGE }, rows: rows.map(function (r) {
+        var rem = colorRemarks && r[0] === 'Remarks';
+        return new D.TableRow({ children: [cell(r[0], { bold: true, fill: 'F1F1F1', w: 28 }), cell(r[1], { w: 72, bold: rem, color: rem ? (m.passed ? '1B5E20' : 'B71C1C') : undefined })] });
+      }) });
+    }
 
     var children = [];
     models.forEach(function (m, idx) {
-      var st = m.student;
-      var first = idx === 0;
+      var st = m.student, first = idx === 0;
       children.push(para('REPUBLIC OF THE PHILIPPINES', { bold: true, align: AL.CENTER, pageBreakBefore: !first, spacing: { after: 0 } }));
       children.push(para('DEPARTMENT OF EDUCATION', { bold: true, align: AL.CENTER, spacing: { after: 0 } }));
       children.push(para(s.region + ' — ' + s.division + (s.district ? ' — ' + s.district : ''), { align: AL.CENTER, size: 19, spacing: { after: 0 } }));
       children.push(para(s.schoolName, { bold: true, align: AL.CENTER, size: 26, spacing: { after: 0 } }));
+      if (s.schoolAddress) children.push(para(s.schoolAddress, { align: AL.CENTER, size: 19, spacing: { after: 0 } }));
       children.push(para(s.schoolYear, { align: AL.CENTER, size: 19, spacing: { after: 100 } }));
       children.push(para('EXAMINATION EVIDENCE RECORD', { bold: true, align: AL.CENTER, size: 28, spacing: { before: 100, after: 120 } }));
-
-      var info = [
-        ['Student Name', fullName(st)], ['LRN', fmtLRN(st.lrn)],
-        ['Grade & Section', (st.gradeLevel ? 'Grade ' + String(st.gradeLevel).replace(/^grade\s*/i, '') : s.gradeLevel) + ' - ' + (st.section || '—')],
-        ['Subject', m.subjectName], ['Assessment', m.label + ' — ' + m.title],
-        ['Date & Time Taken', m.override ? fmtDate(m.override.takenOn || m.takenAt) + ' (recorded by teacher)' : fmtDate(m.takenAt) + (fmtTime(m.takenAt) ? ', ' + fmtTime(m.takenAt) : '')]
-      ];
-      children.push(new D.Table({ width: { size: 100, type: WT.PERCENTAGE }, rows: info.map(function (r) { return new D.TableRow({ children: [cell(r[0], { bold: true, fill: 'F1F1F1', w: 28 }), cell(r[1], { w: 72 })] }); }) }));
+      children.push(kvTable(infoRows(m, s)));
 
       children.push(para('RESULT', { bold: true, size: 24, spacing: { before: 200, after: 80 }, keepNext: true }));
       var res = [['Score', m.correct + ' / ' + m.total], ['Percentage', m.percent + '%'], ['Remarks', (m.passed ? 'PASSED' : 'NOT YET PASSED') + ' (passing: ' + m.passing + '%)']];
       if (m.level) res.push(['Proficiency', m.level]);
       if (m.durationSec) res.push(['Time used', fmtDuration(m.durationSec)]);
-      if (m.hasItems) res.push(['Tab-switch warnings', String(m.tabViolations) + (m.autoSubmitted ? ' (auto-submitted)' : '')]);
-      children.push(new D.Table({ width: { size: 100, type: WT.PERCENTAGE }, rows: res.map(function (r) { return new D.TableRow({ children: [cell(r[0], { bold: true, fill: 'F1F1F1', w: 28 }), cell(r[1], { w: 72, bold: r[0] === 'Remarks', color: r[0] === 'Remarks' ? (m.passed ? '1B5E20' : 'B71C1C') : undefined })] }); }) }));
-      if (m.override) children.push(para('Note: This score was entered/verified by the teacher' + (m.override.reason ? ' (' + m.override.reason + ')' : '') + '. Item-level answers are not available for paper-based or manually entered scores.', { italics: true, size: 18, spacing: { before: 60 } }));
+      children.push(kvTable(res, true, m));
+      notesFor(m).forEach(function (n) { children.push(para('Note: ' + n, { italics: true, size: 18, spacing: { before: 60 } })); });
 
       if (o.competencies !== false && m.competencies.length) {
         children.push(para('PERFORMANCE PER COMPETENCY', { bold: true, size: 24, spacing: { before: 200, after: 80 }, keepNext: true }));
@@ -412,16 +426,16 @@ window.Evidence = (function () {
       if (o.items !== false) {
         children.push(para('ITEM-BY-ITEM ANSWERS', { bold: true, size: 24, spacing: { before: 240, after: 80 }, keepNext: true }));
         if (!m.hasItems) {
-          children.push(para('Walang item-level record para sa assessment na ito (paper-based o manually entered ang score). Ang resulta sa itaas ang opisyal na record.', { italics: true, size: 19 }));
+          children.push(para('Walang item-level record para sa assessment na ito. Ang resulta sa itaas ang opisyal na record.', { italics: true, size: 19 }));
         } else {
-          children.push(para('Ang bawat estudyante ay may kani-kaniyang pagkakasunod-sunod ng tanong at ng mga choices, kaya ang mga sagot ay nakasulat sa buong text at hindi sa letra. ✓ = tamang sagot · ✗ = sagot ng estudyante (mali).', { italics: true, size: 17, spacing: { after: 100 } }));
+          children.push(para('Ang numero at pagkakasunod ng mga tanong ay ang mismong ayos na nakita ng estudyante sa exam (Set ' + (m.setLetter || '—') + '). ☒ = sagot ng estudyante · ✓ = tamang sagot.', { italics: true, size: 17, spacing: { after: 100 } }));
           m.items.forEach(function (it) {
-            children.push(para(it.no + '. ' + plain(it.text), { bold: true, size: 21, spacing: { before: 100, after: 20 }, keepNext: true }));
+            children.push(para(it.no + '. ' + (it.found ? plain(it.text) : STALE_TEXT), { bold: true, size: 21, spacing: { before: 100, after: 20 }, keepNext: true }));
             it.options.forEach(function (op) {
               children.push(para((op.isGiven ? '☒ ' : '☐ ') + plain(op.label) + (op.isCorrect ? '  ✓' : (op.isGiven ? '  ✗' : '')), { bold: op.isCorrect, size: 20, spacing: { after: 10 }, indent: { left: 400 }, keepNext: true }));
             });
-            children.push(para('Student’s answer: ' + plain(it.givenLabel == null ? '(no answer)' : it.givenLabel) + ' — ' + (it.isCorrect ? 'CORRECT' : 'WRONG'), { bold: true, size: 20, color: it.isCorrect ? '1B5E20' : 'B71C1C', spacing: { before: 20, after: it.isCorrect ? 60 : 0 }, indent: { left: 400 }, keepNext: !it.isCorrect }));
-            if (!it.isCorrect) children.push(para('Correct answer: ' + plain(it.correctLabel), { size: 20, color: '1B5E20', spacing: { after: 60 }, indent: { left: 400 } }));
+            children.push(para('Student’s answer: ' + (it.givenLabel == null ? '(no answer)' : it.givenLabel) + ' — ' + (it.isCorrect ? 'CORRECT' : 'WRONG'), { bold: true, size: 20, color: it.isCorrect ? '1B5E20' : 'B71C1C', spacing: { before: 20, after: it.isCorrect ? 60 : 0 }, indent: { left: 400 }, keepNext: !it.isCorrect }));
+            if (!it.isCorrect) children.push(para('Correct answer: ' + it.correctLabel, { size: 20, color: '1B5E20', spacing: { after: 60 }, indent: { left: 400 } }));
           });
         }
       }
@@ -430,20 +444,21 @@ window.Evidence = (function () {
       children.push(para('Correct: ' + m.correct + ' | Wrong/Unanswered: ' + m.wrong + ' | Score: ' + m.percent + '% | Remarks: ' + (m.passed ? 'PASSED' : 'NOT YET PASSED'), { bold: true, color: m.passed ? '1B5E20' : 'B71C1C', keepNext: true }));
       children.push(para('Parent/Guardian’s comment (optional): ______________________________________________', { size: 19, spacing: { before: 80, after: 200 }, keepNext: true }));
 
-      var sigCells = [];
-      var noB = { top: { style: BS.NONE, size: 0, color: 'FFFFFF' }, bottom: { style: BS.NONE, size: 0, color: 'FFFFFF' }, left: { style: BS.NONE, size: 0, color: 'FFFFFF' }, right: { style: BS.NONE, size: 0, color: 'FFFFFF' } };
+      var none = { style: BS.NONE, size: 0, color: 'FFFFFF' };
+      var noB = { top: none, bottom: none, left: none, right: none };
       function sig(name, role) {
         return new D.TableCell({ borders: noB, width: { size: 33, type: WT.PERCENTAGE }, children: [
           new D.Paragraph({ spacing: { before: 520 }, alignment: AL.CENTER, border: { top: { style: BS.SINGLE, size: 6, color: '000000', space: 2 } }, children: [run(name, { bold: true, size: 20 })] }),
           new D.Paragraph({ alignment: AL.CENTER, children: [run(role, { size: 18 })] })
         ] });
       }
+      var sigCells = [];
       if (o.studentSign !== false) sigCells.push(sig(fullName(st), 'Student (signature over printed name)'));
       sigCells.push(sig(' ', 'Parent / Guardian (signature over printed name)'));
       sigCells.push(sig(s.teacherName, s.teacherPosition));
-      children.push(new D.Table({ width: { size: 100, type: WT.PERCENTAGE }, borders: { top: { style: BS.NONE }, bottom: { style: BS.NONE }, left: { style: BS.NONE }, right: { style: BS.NONE }, insideHorizontal: { style: BS.NONE }, insideVertical: { style: BS.NONE } }, rows: [new D.TableRow({ cantSplit: true, children: sigCells })] }));
+      children.push(new D.Table({ width: { size: 100, type: WT.PERCENTAGE }, borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none }, rows: [new D.TableRow({ cantSplit: true, children: sigCells })] }));
       children.push(para('Parent/Guardian Date: ______________', { size: 19, spacing: { before: 120 } }));
-      children.push(para('Evidence ID: ' + m.evidenceId + ' · Generated ' + new Date().toLocaleString('en-PH') + ' · ' + APP_NAME + (m.keyMismatch ? ' · Note: the answer key of ' + m.keyMismatch + ' item(s) was revised after this exam was taken; the stored result is shown.' : ''), { size: 16, color: '555555', align: AL.CENTER, spacing: { before: 120 } }));
+      children.push(para('Evidence ID: ' + m.evidenceId + ' · Generated ' + new Date().toLocaleString('en-PH') + ' · ' + APP_NAME, { size: 16, color: '555555', align: AL.CENTER, spacing: { before: 120 } }));
     });
 
     var doc = new D.Document({
@@ -461,12 +476,10 @@ window.Evidence = (function () {
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   }
 
-  function safeName(s) { return String(s || '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, ''); }
-
   return {
-    SUBJECTS: SUBJECTS, ASSESSMENTS: ASSESSMENTS, PAPERS: PAPERS,
+    TERMS: TERMS, ASSESSMENTS: ASSESSMENTS, PAPERS: PAPERS,
     loadStudents: loadStudents, loadBank: loadBank, getEntry: getEntry, buildModel: buildModel,
     renderHtml: renderHtml, paperCss: paperCss, toDocx: toDocx, download: download,
-    fullName: fullName, safeName: safeName, findAssessment: findAssessment
+    fullName: fullName, safeName: safeName, findAssessment: findAssessment, findTerm: findTerm
   };
 })();

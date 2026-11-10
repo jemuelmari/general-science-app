@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exam Evidence — Teacher</title>
+  <title>Exam Evidence — General Science</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
   <style>
@@ -43,11 +43,13 @@
     <div class="container flex-between">
       <div>
         <h1>📄 Exam Evidence</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.0.0</span>
       </div>
       <nav class="teacher-nav">
-        <a href="../instructor.html">← Teacher Home</a>
-        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="evidence.html" style="color:#ffd54f;border-color:#ffd54f;">📄 Exam Evidence</a>
+        <button id="btn-logout">🚪 Log Out</button>
       </nav>
     </div>
   </header>
@@ -63,10 +65,8 @@
 
       <div class="ev-form">
         <div>
-          <label for="ev-subject">Subject</label>
-          <select id="ev-subject">
-            <option value="gensci">General Science</option>
-          </select>
+          <label for="ev-term">Term</label>
+          <select id="ev-term"></select>
         </div>
         <div>
           <label for="ev-assess">Assessment</label>
@@ -104,14 +104,14 @@
       <div class="ev-tipbox">
         💡 <strong>Tip:</strong> Piliin ang <em>“— All students in the selected section —”</em> para sa buong klase (isang pahina/seksyon bawat estudyante).
         Sa Print dialog, piliin ang <em>Save as PDF</em> kung gusto mo ng PDF. Ang evidence ay para sa <strong>pinakahuling attempt</strong> na naka-save
-        sa Google Sheet; kung retake, ang retake ang makikita.
+        sa Google Sheet; kung retake, ang retake ang makikita. Ang numero at ayos ng mga tanong ay <strong>kapareho ng nakita ng estudyante</strong> sa exam (Set A/B).
       </div>
     </div>
 
     <div id="ev-wrap"><div class="ev-empty">Pumili ng estudyante at assessment, tapos i-click ang <b>Preview</b>.</div></div>
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.0</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v2.0.0</span></p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="../config.js"></script>
@@ -119,9 +119,13 @@
   <script src="../assets/js/store.js"></script>
   <script src="../assets/js/transmutation.js"></script>
   <script src="../assets/js/teacher-auth.js"></script>
-  <script src="evidence.js"></script>
+  <script src="../assets/js/teacher-auth-boot.js"></script>
+  <script src="evidence.js?v=2.0.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+     TeacherAuthBoot.ready(function (auth) {
+      if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+      document.getElementById('btn-logout').addEventListener('click', function () { auth.logout(); });
       var $ = function (id) { return document.getElementById(id); };
       var students = [];
       var statusEl = $('ev-status');
@@ -130,6 +134,7 @@
       function opt(v, t) { var o = document.createElement('option'); o.value = v; o.textContent = t; return o; }
 
       // static selects
+      Evidence.TERMS.forEach(function (t) { $('ev-term').appendChild(opt(t.code, t.label)); });
       Evidence.ASSESSMENTS.forEach(function (a) { $('ev-assess').appendChild(opt(a.code, a.label)); });
       Object.keys(Evidence.PAPERS).forEach(function (k) { $('ev-paper').appendChild(opt(k, Evidence.PAPERS[k].label)); });
 
@@ -180,17 +185,17 @@
 
       // Buuin ang models para sa napiling estudyante/section
       async function buildModels() {
-        var subject = $('ev-subject').value, code = $('ev-assess').value, who = $('ev-student').value;
+        var term = $('ev-term').value, code = $('ev-assess').value, who = $('ev-student').value;
         if (!who) throw new Error('Pumili ng estudyante.');
         var list = who === '__ALL__' ? sortedStudents().filter(inSection) : students.filter(function (s) { return String(s.lrn) === String(who); });
         if (!list.length) throw new Error('Walang estudyante sa napiling section.');
-        var bank = await Evidence.loadBank(subject, code);
+        var bank = await Evidence.loadBank(term, code);
         var models = [], missing = [];
         list.forEach(function (s) {
-          var m = Evidence.buildModel(s, subject, code, bank);
+          var m = Evidence.buildModel(s, term, code, bank);
           if (m) models.push(m); else missing.push(Evidence.fullName(s));
         });
-        $('ev-missing').textContent = missing.length ? 'Walang record para sa ' + Evidence.findAssessment(code).label + ' (' + missing.length + '):\n' + missing.join('\n') : '';
+        $('ev-missing').textContent = missing.length ? 'Walang record para sa ' + Evidence.findTerm(term).label + ' ' + Evidence.findAssessment(code).label + ' (' + missing.length + '):\n' + missing.join('\n') : '';
         if (!models.length) throw new Error('Walang estudyanteng may naitalang score para sa ' + Evidence.findAssessment(code).label + '.');
         return models;
       }
@@ -225,13 +230,14 @@
         setStatus('⏳ Creating Word file…');
         var blob = await Evidence.toDocx(models, opts(), $('ev-paper').value);
         var who = models.length === 1 ? Evidence.safeName(models[0].student.lastName + '_' + models[0].student.firstName) : (Evidence.safeName($('ev-section').value) || 'ALL');
-        Evidence.download(blob, 'Evidence_' + $('ev-subject').value + '_' + $('ev-assess').value + '_' + who + '.docx');
+        Evidence.download(blob, 'Evidence_' + $('ev-term').value + '_' + $('ev-assess').value + '_' + who + '.docx');
         setStatus('✅ Saved ' + models.length + ' evidence record(s) as .docx.');
       }));
 
       load(false).then(function () {
         if (new URLSearchParams(location.search).get('lrn')) $('ev-preview').click();
       });
+     });
     });
   </script>
 </body>
