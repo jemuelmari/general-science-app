@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exam Evidence — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-25c05df" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-25c05df" />
   <style>
     .ev-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 24px; margin-bottom: 20px; }
     .ev-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
@@ -24,6 +24,17 @@
     .ev-src { font-size: 0.8rem; margin-top: 10px; }
     #ev-missing { font-size: 0.82rem; color: #b71c1c; margin-top: 10px; white-space: pre-wrap; }
 
+    /* alignment check panel */
+    #ev-check { margin-top: 16px; display: none; }
+    .ev-ck-head { font-size: 0.85rem; font-weight: 700; color: #263238; margin-bottom: 6px; }
+    .ev-ck-row { border-left: 4px solid #2e7d32; background: #f1f8e9; border-radius: 6px; padding: 7px 12px; margin-bottom: 6px; font-size: 0.82rem; color: #1b5e20; }
+    .ev-ck-row.info { border-color: #0277bd; background: #e1f5fe; color: #01579b; }
+    .ev-ck-row.warn { border-color: #ef6c00; background: #fff3e0; color: #e65100; }
+    .ev-ck-row.err  { border-color: #c62828; background: #ffebee; color: #b71c1c; }
+    .ev-ck-row b { color: #263238; }
+    .ev-ck-row ul { margin: 4px 0 0 18px; padding: 0; }
+    .ev-ck-src { color: #546e7a; font-size: 0.75rem; }
+
     #ev-wrap { overflow-x: auto; background: #cfd8dc; border-radius: 12px; padding: 18px; }
     .ev-sheet { background: #fff; margin: 0 auto 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.25); box-sizing: border-box; padding: 0.6in; }
     .ev-empty { text-align: center; color: #607d8b; padding: 40px 10px; background: #fff; border-radius: 8px; }
@@ -39,7 +50,7 @@
 </head>
 <body>
 
-  <header class="app-header teacher-header">
+  <header class="app-header teacher-header no-print">
     <div class="container flex-between">
       <div>
         <h1>📄 Exam Evidence</h1>
@@ -49,7 +60,7 @@
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
         <a href="evidence.html" style="color:#ffd54f;border-color:#ffd54f;">📄 Exam Evidence</a>
-        <button id="btn-logout">🚪 Log Out</button>
+        <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
   </header>
@@ -57,9 +68,9 @@
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
     <div class="ev-card no-print" id="ev-controls">
-      <h2 style="margin:0 0 6px;color:var(--color-primary-dark);">📄 Printable Exam Evidence for Parents</h2>
+      <h2 style="margin:0 0 6px;color:#0d47a1;">📄 Printable Exam Evidence for Parents</h2>
       <p class="text-muted" style="margin:0 0 18px;font-size:0.9rem;">
-        Ipinapakita ang <strong>actual na resulta ng exam</strong> ng estudyante — bawat tanong, ang sagot niya, ang tamang sagot, ang score, at ang
+        Ipinapakita ang <strong>actual na resulta ng exam</strong> ng estudyante — bawat tanong sa pagkakasunod na nakita niya, ang sagot niya, ang tamang sagot, ang score, at ang
         signature blocks para sa magulang/guardian. Pumili ng isang estudyante o i-print ang buong section.
       </p>
 
@@ -100,145 +111,170 @@
       </div>
       <div class="ev-src" id="ev-src"></div>
       <div id="ev-missing"></div>
+      <div id="ev-check"></div>
 
       <div class="ev-tipbox">
         💡 <strong>Tip:</strong> Piliin ang <em>“— All students in the selected section —”</em> para sa buong klase (isang pahina/seksyon bawat estudyante).
-        Sa Print dialog, piliin ang <em>Save as PDF</em> kung gusto mo ng PDF. Ang evidence ay para sa <strong>pinakahuling attempt</strong> na naka-save
-        sa Google Sheet; kung retake, ang retake ang makikita. Ang numero at ayos ng mga tanong ay <strong>kapareho ng nakita ng estudyante</strong> sa exam (Set A/B).
+        Sa Print dialog, piliin ang <em>Save as PDF</em> kung gusto mo ng PDF. Ang evidence ay para sa <strong>pinakahuling attempt</strong> ng estudyante;
+        kung retake, ang retake ang makikita. Tingnan ang <strong>Alignment check</strong> pagkatapos ng Preview — kung may pula, huwag munang i-print.
       </div>
     </div>
 
-    <div id="ev-wrap"><div class="ev-empty">Pumili ng estudyante at assessment, tapos i-click ang <b>Preview</b>.</div></div>
+    <div id="ev-wrap"><div class="ev-empty">Pumili ng term, assessment, at estudyante, tapos i-click ang <b>Preview</b>.</div></div>
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v2.0.0</span></p></footer>
+  <footer class="app-footer no-print"><p>General Science Online Modular Application · <span class="version">v2.0.0</span></p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=1.3.0-e184422"></script>
-  <script src="../assets/js/app.js?v=1.3.0-e184422"></script>
-  <script src="../assets/js/store.js?v=1.3.0-e184422"></script>
-  <script src="../assets/js/transmutation.js?v=1.3.0-e184422"></script>
-  <script src="../assets/js/teacher-auth.js"></script>
-  <script src="../assets/js/teacher-auth-boot.js"></script>
-  <script src="evidence.js?v=1.3.0-e184422"></script>
+  <script src="../config.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/app.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/store.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/security.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/transmutation.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-25c05df"></script>
+  <script src="evidence.js?v=2.0.0"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-     TeacherAuthBoot.ready(function (auth) {
-      if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-      document.getElementById('btn-logout').addEventListener('click', function () { auth.logout(); });
+    (function () {
+      'use strict';
       var $ = function (id) { return document.getElementById(id); };
-      var students = [];
-      var statusEl = $('ev-status');
 
-      function setStatus(msg, err) { statusEl.textContent = msg || ''; statusEl.className = err ? 'err' : ''; }
-      function opt(v, t) { var o = document.createElement('option'); o.value = v; o.textContent = t; return o; }
+      TeacherAuthBoot.ready(function (auth) {
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+        $('btn-logout').addEventListener('click', function () { auth.logout(); });
 
-      // static selects
-      Evidence.TERMS.forEach(function (t) { $('ev-term').appendChild(opt(t.code, t.label)); });
-      Evidence.ASSESSMENTS.forEach(function (a) { $('ev-assess').appendChild(opt(a.code, a.label)); });
-      Object.keys(Evidence.PAPERS).forEach(function (k) { $('ev-paper').appendChild(opt(k, Evidence.PAPERS[k].label)); });
+        var students = [], attempts = {}, lastModels = [];
+        var statusEl = $('ev-status');
 
-      function sortedStudents() {
-        return students.slice().sort(function (a, b) { return String(a.lastName || '').localeCompare(String(b.lastName || '')) || String(a.firstName || '').localeCompare(String(b.firstName || '')); });
-      }
+        function setStatus(msg, err) { statusEl.textContent = msg || ''; statusEl.className = err ? 'err' : ''; }
+        function opt(v, t) { var o = document.createElement('option'); o.value = v; o.textContent = t; return o; }
 
-      function fillSections() {
-        var cur = $('ev-section').value;
-        var secs = {};
-        students.forEach(function (s) { if (s.section) secs[s.section] = true; });
-        $('ev-section').innerHTML = '<option value="">All sections</option>';
-        Object.keys(secs).sort().forEach(function (s) { $('ev-section').appendChild(opt(s, s)); });
-        $('ev-section').value = secs[cur] ? cur : '';
-      }
+        Evidence.TERMS.forEach(function (t) { $('ev-term').appendChild(opt(t.no, t.label)); });
+        Evidence.ASSESSMENTS.forEach(function (a) { $('ev-assess').appendChild(opt(a.code, a.label)); });
+        Object.keys(Evidence.PAPERS).forEach(function (k) { $('ev-paper').appendChild(opt(k, Evidence.PAPERS[k].label)); });
 
-      function inSection(s) { var sec = $('ev-section').value; return !sec || s.section === sec; }
-
-      function fillStudents(keepLrn) {
-        var cur = keepLrn || $('ev-student').value;
-        var sel = $('ev-student');
-        sel.innerHTML = '';
-        var list = sortedStudents().filter(inSection);
-        sel.appendChild(opt('__ALL__', '— All students in the selected section (' + list.length + ') —'));
-        list.forEach(function (s) { sel.appendChild(opt(s.lrn, Evidence.fullName(s) + (s.section ? '  (' + s.section + ')' : ''))); });
-        sel.value = list.some(function (s) { return String(s.lrn) === String(cur); }) || cur === '__ALL__' ? cur : '__ALL__';
-      }
-
-      async function load(ask) {
-        setStatus('⏳ Loading students…');
-        var r = await Evidence.loadStudents({ ask: !!ask });
-        students = (r.students || []).filter(function (s) { return s && s.lrn; });
-        fillSections();
-        var qLrn = new URLSearchParams(location.search).get('lrn');
-        fillStudents(qLrn || '');
-        var src = $('ev-src');
-        if (r.source === 'cloud') { src.innerHTML = '☁️ <span style="color:#2e7d32;font-weight:600;">Data from the Google Sheet (' + students.length + ' students).</span>'; setStatus(''); }
-        else {
-          var why = r.error === 'NO_TOKEN' ? 'walang teacher token — i-click ang “Reload from cloud”' : (r.error || 'cloud unavailable');
-          src.innerHTML = '💻 <span style="color:#e65100;font-weight:600;">Showing data saved on this device (' + students.length + ' students) — ' + why + '.</span>';
-          setStatus('');
+        function sortedStudents() {
+          return students.slice().sort(function (a, b) { return String(a.lastName || '').localeCompare(String(b.lastName || '')) || String(a.firstName || '').localeCompare(String(b.firstName || '')); });
         }
-        if (!students.length) setStatus('Walang estudyante. I-click ang “Reload from cloud”.', true);
-      }
+        function fillSections() {
+          var cur = $('ev-section').value, secs = {};
+          students.forEach(function (s) { if (s.section) secs[s.section] = true; });
+          $('ev-section').innerHTML = '<option value="">All sections</option>';
+          Object.keys(secs).sort().forEach(function (s) { $('ev-section').appendChild(opt(s, s)); });
+          $('ev-section').value = secs[cur] ? cur : '';
+        }
+        function inSection(s) { var sec = $('ev-section').value; return !sec || s.section === sec; }
+        function fillStudents(keepLrn) {
+          var cur = keepLrn || $('ev-student').value, sel = $('ev-student');
+          sel.innerHTML = '';
+          var list = sortedStudents().filter(inSection);
+          sel.appendChild(opt('__ALL__', '— All students in the selected section (' + list.length + ') —'));
+          list.forEach(function (s) { sel.appendChild(opt(s.lrn, Evidence.fullName(s) + (s.section ? '  (' + s.section + ')' : ''))); });
+          sel.value = list.some(function (s) { return String(s.lrn) === String(cur); }) || cur === '__ALL__' ? cur : '__ALL__';
+        }
 
-      $('ev-section').addEventListener('change', function () { fillStudents(); });
-      $('ev-sync').addEventListener('click', function () { load(true); });
+        async function load() {
+          setStatus('⏳ Loading students from the cloud…');
+          var r = await Evidence.loadStudents();
+          students = r.students || [];
+          attempts = r.attempts || {};
+          fillSections();
+          fillStudents(new URLSearchParams(location.search).get('lrn') || '');
+          var src = $('ev-src');
+          if (r.source === 'cloud') src.innerHTML = '☁️ <span style="color:#2e7d32;font-weight:600;">Data from the cloud (' + students.length + ' students).</span>';
+          else if (r.source === 'attempts') src.innerHTML = '☁️ <span style="color:#e65100;font-weight:600;">Dashboard data unavailable — built from the Attempts sheet (' + students.length + ' students).</span>';
+          else src.innerHTML = '⚠️ <span style="color:#c62828;font-weight:600;">' + (r.error || 'Cloud unavailable') + '</span>';
+          setStatus(students.length ? '' : 'Walang estudyante. I-click ang “Reload from cloud”.', !students.length);
+        }
 
-      // Buuin ang models para sa napiling estudyante/section
-      async function buildModels() {
-        var term = $('ev-term').value, code = $('ev-assess').value, who = $('ev-student').value;
-        if (!who) throw new Error('Pumili ng estudyante.');
-        var list = who === '__ALL__' ? sortedStudents().filter(inSection) : students.filter(function (s) { return String(s.lrn) === String(who); });
-        if (!list.length) throw new Error('Walang estudyante sa napiling section.');
-        var bank = await Evidence.loadBank(term, code);
-        var models = [], missing = [];
-        list.forEach(function (s) {
-          var m = Evidence.buildModel(s, term, code, bank);
-          if (m) models.push(m); else missing.push(Evidence.fullName(s));
-        });
-        $('ev-missing').textContent = missing.length ? 'Walang record para sa ' + Evidence.findTerm(term).label + ' ' + Evidence.findAssessment(code).label + ' (' + missing.length + '):\n' + missing.join('\n') : '';
-        if (!models.length) throw new Error('Walang estudyanteng may naitalang score para sa ' + Evidence.findAssessment(code).label + '.');
-        return models;
-      }
+        $('ev-section').addEventListener('change', function () { fillStudents(); });
+        $('ev-sync').addEventListener('click', function () { load().catch(function (e) { setStatus('❌ ' + e.message, true); }); });
 
-      function opts() { return { items: $('ev-items').checked, competencies: $('ev-comp').checked, studentSign: $('ev-ssign').checked }; }
+        async function buildModels() {
+          var termNo = $('ev-term').value, code = $('ev-assess').value, who = $('ev-student').value;
+          if (!who) throw new Error('Pumili ng estudyante.');
+          var list = who === '__ALL__' ? sortedStudents().filter(inSection) : students.filter(function (s) { return String(s.lrn) === String(who); });
+          if (!list.length) throw new Error('Walang estudyante sa napiling section.');
+          var bank = await Evidence.loadBank(termNo, code);
+          var comp = await Evidence.loadCompetencies();
+          var models = [], missing = [];
+          list.forEach(function (s) {
+            var m = Evidence.buildModel(s, termNo, code, bank, { attempts: attempts });
+            if (m) models.push(m); else missing.push(Evidence.fullName(s));
+          });
+          var label = Evidence.findTerm(termNo).label + ' ' + Evidence.findAssessment(code).label;
+          $('ev-missing').textContent = missing.length ? 'Walang record para sa ' + label + ' (' + missing.length + '):\n' + missing.join('\n') : '';
+          if (!models.length) throw new Error('Walang estudyanteng may naitalang score para sa ' + label + '.');
+          return { models: models, comp: comp };
+        }
 
-      async function preview() {
-        setStatus('⏳ Building…');
-        var models = await buildModels();
-        var paper = $('ev-paper').value;
-        $('ev-dyn-css').textContent = Evidence.paperCss(paper);
-        var wrap = $('ev-wrap');
-        wrap.innerHTML = Evidence.renderHtml(models, opts());
-        var w = ({ letter: '8.5in', a4: '210mm', long: '8.5in' })[paper];
-        Array.prototype.forEach.call(wrap.querySelectorAll('.ev-sheet'), function (el) { el.style.width = w; });
-        setStatus('✅ ' + models.length + ' evidence record(s) ready.');
-        return models;
-      }
+        function renderChecks(models) {
+          var box = $('ev-check');
+          var counts = { ok: 0, info: 0, warn: 0, err: 0 };
+          models.forEach(function (m) { counts[Evidence.worstSeverity(m)]++; });
+          var html = '<div class="ev-ck-head">🔍 Alignment check — ' + models.length + ' record(s): ✅ ' + counts.ok + ' aligned' +
+            (counts.info ? ' · ℹ️ ' + counts.info + ' note' : '') + (counts.warn ? ' · ⚠️ ' + counts.warn + ' warning' : '') + (counts.err ? ' · ❌ ' + counts.err + ' error' : '') + '</div>';
+          models.forEach(function (m) {
+            var sev = Evidence.worstSeverity(m);
+            if (sev === 'ok' && models.length > 1) return;
+            html += '<div class="ev-ck-row ' + (sev === 'ok' ? '' : sev) + '"><b>' + Evidence.fullName(m.student).replace(/</g, '&lt;') + '</b> — ' + m.correct + '/' + m.total +
+              (m.setLetter ? ' · Set ' + m.setLetter : '') + ' <span class="ev-ck-src">· source: ' + m.source + '</span>' +
+              (m.issues.length ? '<ul>' + m.issues.map(function (i) { return '<li>' + ({ err: '❌ ', warn: '⚠️ ', info: 'ℹ️ ' }[i.sev] || '') + i.msg.replace(/</g, '&lt;') + '</li>'; }).join('') + '</ul>' : ' · ✅ items match the saved score and the question bank.') + '</div>';
+          });
+          box.innerHTML = html; box.style.display = 'block';
+        }
 
-      function guard(fn) {
-        return async function () {
-          var btns = document.querySelectorAll('.ev-btn'); btns.forEach(function (b) { b.disabled = true; });
-          try { await fn(); } catch (e) { setStatus('❌ ' + e.message, true); console.error(e); }
-          finally { btns.forEach(function (b) { b.disabled = false; }); }
-        };
-      }
+        function opts() { return { items: $('ev-items').checked, competencies: $('ev-comp').checked, studentSign: $('ev-ssign').checked }; }
 
-      $('ev-preview').addEventListener('click', guard(preview));
-      $('ev-print').addEventListener('click', guard(async function () { await preview(); setTimeout(function () { window.print(); }, 250); }));
-      $('ev-word').addEventListener('click', guard(async function () {
-        var models = await buildModels();
-        setStatus('⏳ Creating Word file…');
-        var blob = await Evidence.toDocx(models, opts(), $('ev-paper').value);
-        var who = models.length === 1 ? Evidence.safeName(models[0].student.lastName + '_' + models[0].student.firstName) : (Evidence.safeName($('ev-section').value) || 'ALL');
-        Evidence.download(blob, 'Evidence_' + $('ev-term').value + '_' + $('ev-assess').value + '_' + who + '.docx');
-        setStatus('✅ Saved ' + models.length + ' evidence record(s) as .docx.');
-      }));
+        async function preview() {
+          setStatus('⏳ Building…');
+          var r = await buildModels();
+          var paper = $('ev-paper').value;
+          $('ev-dyn-css').textContent = Evidence.paperCss(paper);
+          var wrap = $('ev-wrap');
+          wrap.innerHTML = Evidence.renderHtml(r.models, opts(), r.comp);
+          var w = ({ letter: '8.5in', a4: '210mm', long: '8.5in' })[paper];
+          Array.prototype.forEach.call(wrap.querySelectorAll('.ev-sheet'), function (el) { el.style.width = w; });
+          lastModels = r.models;
+          renderChecks(r.models);
+          setStatus('✅ ' + r.models.length + ' evidence record(s) ready.');
+          return r;
+        }
 
-      load(false).then(function () {
-        if (new URLSearchParams(location.search).get('lrn')) $('ev-preview').click();
+        function guard(fn) {
+          return async function () {
+            var btns = document.querySelectorAll('.ev-btn'); btns.forEach(function (b) { b.disabled = true; });
+            try { await fn(); } catch (e) { setStatus('❌ ' + e.message, true); console.error(e); }
+            finally { btns.forEach(function (b) { b.disabled = false; }); }
+          };
+        }
+        function hasErrors(models) { return models.some(function (m) { return Evidence.worstSeverity(m) === 'err'; }); }
+
+        $('ev-preview').addEventListener('click', guard(preview));
+        $('ev-print').addEventListener('click', guard(async function () {
+          var r = await preview();
+          if (hasErrors(r.models) && !confirm('May ALIGNMENT ERROR ang ilang record (tingnan ang pula sa Alignment check). Ituloy pa rin ang print?')) return;
+          setTimeout(function () { window.print(); }, 250);
+        }));
+        $('ev-word').addEventListener('click', guard(async function () {
+          var r = await buildModels();
+          renderChecks(r.models);
+          if (hasErrors(r.models) && !confirm('May ALIGNMENT ERROR ang ilang record (tingnan ang pula sa Alignment check). Ituloy pa rin ang Word file?')) return;
+          setStatus('⏳ Creating Word file…');
+          var blob = await Evidence.toDocx(r.models, opts(), $('ev-paper').value, r.comp);
+          var one = r.models.length === 1;
+          var who = one ? Evidence.safeName(r.models[0].student.lastName + '_' + r.models[0].student.firstName) : (Evidence.safeName($('ev-section').value) || 'ALL');
+          Evidence.download(blob, 'Evidence_term' + $('ev-term').value + '_' + $('ev-assess').value + '_' + who + '.docx');
+          setStatus('✅ Saved ' + r.models.length + ' evidence record(s) as .docx.');
+        }));
+
+        load().then(function () {
+          if (new URLSearchParams(location.search).get('lrn')) $('ev-preview').click();
+        }).catch(function (e) { setStatus('❌ ' + e.message, true); });
+      }, function () {
+        $('ev-wrap').innerHTML = '<div class="ev-empty">Hindi na-load ang teacher authentication. I-refresh ang page.</div>';
       });
-     });
-    });
+    })();
   </script>
 </body>
 </html>
