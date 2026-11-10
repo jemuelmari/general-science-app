@@ -1,8 +1,19 @@
 /* ============================================================
    randomize.js — Set A / Set B shuffle engine
-   Version: 1.4.0
+   Version: 1.5.0
    App: General Science
    ------------------------------------------------------------
+   Changelog v1.5.0 (Exam <-> Evidence <-> Print alignment):
+     - Choices are placed by the SAME seeded, evenly-spread algorithm
+       that teacher/print-exam.js used for paper copies (correct
+       answer is option #1 in all 540 bank items, so un-shuffled
+       online exams were "always pick A"). Seed per set:
+       <assessmentId>#choices-<setLetter>  => online == paper.
+     - Each set question carries optionOrder (displayed position ->
+       original option index). scoreAttempt() now records it as `oo`
+       plus a content hash `qh`, so Exam Evidence can rebuild the
+       EXACT screen the student saw and detect later bank edits.
+     - Exposes shuffleChoices(), itemHash(), CHOICES_SEEDED.
    Changelog v1.4.0:
      - DISABLED option shuffling. Options stay in original JSON
        order. Question order is still shuffled (anti-cheat).
@@ -29,7 +40,7 @@ const Randomize = (() => {
   'use strict';
 
   const STORAGE_KEY = 'gsa_v1_shuffled_sets';
-  const CACHE_BUST = '?v=1.4.0';
+  const CACHE_BUST = '?v=1.5.0';
 
   let _repoBase = null;
 
@@ -110,27 +121,84 @@ const Randomize = (() => {
   }
 
   /* ============================================================
+     SEEDED CHOICE PLACEMENT (identical to print-exam.js v1.0.0)
+     ------------------------------------------------------------
+     Correct answer gets a balanced target position (A-D evenly
+     spread, no 3-in-a-row); distractors are shuffled around it.
+     Works on index arrays, consuming the RNG exactly like the
+     text-based version in print-exam.js, so layouts are identical.
+     ============================================================ */
+  const CHOICES_SEEDED = true;
+
+  function _hasRun(positions, len) {
+    let run = 1;
+    for (let i = 1; i < positions.length; i++) {
+      run = positions[i] === positions[i - 1] ? run + 1 : 1;
+      if (run >= len) return true;
+    }
+    return false;
+  }
+
+  /** items: [{options:[...], correct:'text'}]  ->  [[origIdx...], ...] (displayed pos -> original option idx) */
+  function shuffleChoices(items, seedStr) {
+    const rng = mulberry32(seedFromString(seedStr));
+    const n = items.length;
+    const base = [];
+    for (let i = 0; i < n; i++) base.push(i % 4);
+    let positions = seededShuffle(base, rng);
+    for (let tries = 0; tries < 200 && _hasRun(positions, 3); tries++) positions = seededShuffle(base, rng);
+
+    return items.map(function(it, i) {
+      const opts = it.options || [];
+      const idx = opts.map(function(_, k) { return k; });
+      const correctIdx = opts.indexOf(it.correct);
+      const locked = opts.length < 2 || correctIdx < 0 || hasUnshuffleableOption(opts);
+      if (locked) return idx;
+      const others = seededShuffle(idx.filter(function(k) { return k !== correctIdx; }), rng);
+      const target = Math.min(positions[i], opts.length - 1);
+      const order = others.slice();
+      order.splice(target, 0, correctIdx);
+      return order;
+    });
+  }
+
+  /** 8-char fingerprint of a bank item (text + options + correct). Same function lives in teacher/evidence.js */
+  function itemHash(q) {
+    const str = [q.text, (q.options || []).join('\u241F'), q.correct].join('\u241E');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h.toString(16).toUpperCase().padStart(8, '0');
+  }
+
+  /* ============================================================
      GENERATE SET
      ------------------------------------------------------------
      v1.4.0: Options are NOT shuffled. Only questions are shuffled.
      ============================================================ */
-  function generateSet(questionBank, assessmentId, setLetter) {
+  function generateSet(questionBank, assessmentId, setLetter, genOpts) {
     const questions = questionBank.questions || [];
     const rng = mulberry32(hashSeed(assessmentId, setLetter));
     const order = seededShuffle(questions.map(function(_, i) { return i; }), rng);
+    const placeChoices = !(genOpts && genOpts.shuffleChoices === false);
+
+    const picked = order.map(function(originalIndex) { return questions[originalIndex]; });
+    const optionOrders = placeChoices
+      ? shuffleChoices(picked, assessmentId + '#choices-' + setLetter)
+      : picked.map(function(q) { return (q.options || []).map(function(_, k) { return k; }); });
 
     const setQuestions = order.map(function(originalIndex, newIndex) {
       const q = questions[originalIndex];
-
-      // v1.4.0: Options stay in original order (no shuffle)
-      const optionOrder = q.options.slice();
+      const oo = optionOrders[newIndex];
+      const optionList = oo.map(function(k) { return q.options[k]; });
 
       return {
         setIndex: newIndex,
         originalIndex: originalIndex,
         id: q.id,
         text: q.text,
-        options: optionOrder,
+        options: optionList,
+        optionOrder: oo,
+        hash: itemHash(q),
         correct: q.correct,
         competency: q.competency || null,
         bloomLevel: q.bloomLevel || null
@@ -295,7 +363,9 @@ const Randomize = (() => {
         given: given,
         expected: q.correct,
         competency: q.competency || null,
-        bloomLevel: q.bloomLevel || null
+        bloomLevel: q.bloomLevel || null,
+        oo: q.optionOrder || null,
+        qh: q.hash || null
       });
     });
 
@@ -398,6 +468,9 @@ const Randomize = (() => {
     getRepoBase,
     generateSet,
     generateSets,
+    shuffleChoices,
+    itemHash,
+    CHOICES_SEEDED,
     validateSets,
     persistSets,
     getStoredSets,

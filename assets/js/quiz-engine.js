@@ -1,6 +1,16 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 2.1.1
+   Version: 2.2.0
+   Changelog v2.2.0 (Exam <-> Evidence <-> Print alignment):
+     - FIX: assessment pages never loaded randomize.js, so every attempt
+       silently used the legacy Math.random() shuffle (different question
+       AND option order per student/attempt, not Set A/B, not equal to
+       the printed copies). The engine now loads randomize.js itself.
+     - FIX: legacy fallback wrote originalIndex = shown position (wrong).
+       It now stores the real bank index.
+     - FIX: "Review Your Answers" looked questions up by originalIndex,
+       which showed the wrong question beside each result. It now
+       resolves by questionId and shows choices in the order the student saw.
    Changelog v2.1.1: Pushes failed locks to backend via
                      Sync.pushLock so teacher's Locked Assessments
                      page sees them.
@@ -92,6 +102,44 @@ const QuizEngine = (() => {
     }
   }
 
+  /* ---------- v2.2.0 helpers ---------- */
+  function _ensureRandomize() {
+    if (typeof Randomize !== 'undefined' && Randomize.generateSet) return Promise.resolve(true);
+    return new Promise(function (resolve) {
+      try {
+        var me = document.querySelector('script[src*="quiz-engine.js"]');
+        if (!me) { resolve(false); return; }
+        var el = document.createElement('script');
+        el.src = me.src.replace(/quiz-engine\.js(\?.*)?$/, 'randomize.js?v=1.5.0');
+        el.onload = function () { resolve(typeof Randomize !== 'undefined'); };
+        el.onerror = function () { resolve(false); };
+        document.head.appendChild(el);
+      } catch (e) { resolve(false); }
+    });
+  }
+
+  function _resolveQuestion(r) {
+    var qs = (ctx && ctx.questions) || [];
+    if (r.questionId != null) {
+      var byId = qs.filter(function (q) { return String(q.id) === String(r.questionId); })[0];
+      if (byId) return byId;
+    }
+    if (r.expected != null) {
+      var byKey = qs.filter(function (q) { return q.correct === r.expected; });
+      if (byKey.length === 1) return byKey[0];
+    }
+    return null;
+  }
+
+  function _displayOptions(q, r) {
+    var oo = r && r.oo;
+    if (Array.isArray(oo) && oo.length === q.options.length) {
+      var ok = oo.every(function (k) { return k >= 0 && k < q.options.length; });
+      if (ok) return oo.map(function (k) { return q.options[k]; });
+    }
+    return q.options;
+  }
+
   function _getSetLetter(section) {
     if (typeof CONFIG !== 'undefined' && CONFIG.SET_ASSIGNMENT && CONFIG.SET_ASSIGNMENT[section]) {
       return CONFIG.SET_ASSIGNMENT[section];
@@ -102,7 +150,7 @@ const QuizEngine = (() => {
   function _getPrevScore(scores, term, type, id) {
     if (!scores || !scores[term]) return null;
     const t = scores[term];
-    if (type === 'te') return (t.te && t.te.te) || (t.te && t.te.score !== undefined ? t.te : null);
+    if (type === 'te') return t.te || null;
     if ((type === 'st' || type === 'st1' || type === 'st2') && t.st) return t.st[id] || null;
     if (type === 'quizzes' && t.quizzes) return t.quizzes[id] || null;
     if (t[type] && t[type][id]) return t[type][id];
@@ -158,8 +206,7 @@ const QuizEngine = (() => {
     let itemAnalysisHTML = '';
     if (itemResults.length) {
       itemAnalysisHTML = itemResults.map((r, i) => {
-        const qIdx = (r.originalIndex != null) ? r.originalIndex : (r.index != null ? r.index : i);
-        const q = ctx.questions[qIdx];
+        const q = _resolveQuestion(r);
         if (!q) return '';
         const isCorrect = r.correct;
         const given = r.given;
@@ -174,7 +221,7 @@ const QuizEngine = (() => {
             </div>
             <div style="font-size:0.9rem;color:#1a1a1a;line-height:1.5;margin-bottom:10px;">${q.text}</div>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:0.82rem;">
-              ${q.options.map((opt) => {
+              ${_displayOptions(q, r).map((opt) => {
                 const isExpected = opt === expected;
                 const isGiven = opt === given;
                 let bg = '#f9fafb';
@@ -251,6 +298,7 @@ const QuizEngine = (() => {
   }
 
   async function startQuiz() {
+    await _ensureRandomize();
     try {
       if (typeof Randomize !== 'undefined' && Randomize.generateSet) {
         const assessmentId = ctx.term + '-' + ctx.id;
@@ -267,7 +315,9 @@ const QuizEngine = (() => {
         assessmentId: ctx.term + '-' + ctx.id,
         setLetter: ctx.setLetter,
         questions: legacy.map((q, i) => ({
-          setIndex: i, originalIndex: i, id: q.id, text: q.text, options: q.options, correct: q.correct,
+          setIndex: i,
+          originalIndex: Math.max(0, ctx.questions.findIndex((x) => x.id === q.id)),
+          id: q.id, text: q.text, options: q.options, correct: q.correct,
           competency: q.competency || null, bloomLevel: q.bloomLevel || null
         }))
       };
