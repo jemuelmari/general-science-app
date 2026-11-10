@@ -13,7 +13,7 @@
    - Set A / Set B use Randomize.generateSet() with the same seed
      (term-id + set letter) the students get online, so the paper
      copy has the SAME question order as the online version.
-   - Options are never shuffled (matches randomize.js v1.4.0)
+   - Choices for Set A/B come from randomize.js v1.5.0 (same as online); MASTER uses the local seeded placement
    - Answer key is optional and always on its own page
    - docx via docx@8.5.0 (CDN, same as Exam Evidence); if the
      library can't load, falls back to a Word-compatible .doc file
@@ -149,7 +149,10 @@ window.PrintExam = (function () {
     } else {
       items = bank.questions.map(toItem);
     }
-    if (shuffleOpts) items = shuffleChoices(items, term + '-' + id + '#choices-' + which);
+    // randomize.js v1.5.0 already places the choices for Set A/B with this same seed
+    // (so online == paper). Only the MASTER copy (or an older randomize.js) needs it here.
+    var seededByEngine = (which === 'A' || which === 'B') && typeof Randomize !== 'undefined' && Randomize.CHOICES_SEEDED;
+    if (shuffleOpts && !seededByEngine) items = shuffleChoices(items, term + '-' + id + '#choices-' + which);
     return { key: which, label: which === 'MASTER' ? 'Master Copy' : 'Set ' + which, items: items };
   }
 
