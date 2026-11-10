@@ -78,7 +78,7 @@ const ItemAnalysisEngine = (() => {
     if (!scores || !scores[term]) return null;
     var t = scores[term];
 
-    if (assessment === 'te') return t.te || null;
+    if (assessment === 'te') return (t.te && t.te.te) || (t.te && t.te.score !== undefined ? t.te : null);
 
     if (assessment === 'st1' || assessment === 'st2') {
       if (t.st && t.st[assessment]) return t.st[assessment];

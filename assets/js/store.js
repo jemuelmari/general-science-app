@@ -58,9 +58,8 @@ const Store = (() => {
 
   /* ---------- Backend POST (uses Sync.backendPost if present, else posts directly) ---------- */
   async function backendPost(payload) {
-    if (typeof Sync !== 'undefined' && Sync && typeof Sync.backendPost === 'function') {
-      return Sync.backendPost(payload);
-    }
+    // NOTE: always use the local implementation (has a 20s timeout). Sync.backendPost
+    // has none, so one stalled request used to freeze every later sync ("Syncing..." forever).
     if (typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
       throw new Error('Backend not configured');
     }

@@ -267,9 +267,12 @@ const Sync = (() => {
     } catch (err) { return { ok: false, error: err.message }; }
   }
 
-  function buildAttemptPayload(lrn, term, assessment, attempt) {
-    var user = Store.getCurrentUser(); // FIX: Use session user
+  function buildAttemptPayload(lrn, term, assessment, attempt, studentSnapshot) {
+    // Use the snapshot taken when the quiz was submitted. Using only the CURRENT session
+    // signed a queued attempt with whoever logged in next on a shared device.
+    var user = studentSnapshot || Store.getCurrentUser();
     if (!user) throw new Error('Not logged in');
+    if (!studentSnapshot && String(user.lrn) !== String(lrn)) throw new Error('Session user does not match attempt owner');
     return {
       version: '2.0.0',
       student: { lrn: user.lrn, lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
@@ -282,9 +285,9 @@ const Sync = (() => {
     return lrn + '-' + term + '-' + assessment + '-' + ts;
   }
 
-  async function pushAttempt(lrn, term, assessment, attempt) {
+  async function pushAttempt(lrn, term, assessment, attempt, studentSnapshot) {
     if (!backendEnabled()) return { ok: false, error: 'Backend not configured', offline: true };
-    var payload = buildAttemptPayload(lrn, term, assessment, attempt);
+    var payload = buildAttemptPayload(lrn, term, assessment, attempt, studentSnapshot);
     var signature = await signCanonical(payload);
     var pushId = makePushId(lrn, term, assessment, attempt.timestamp);
 

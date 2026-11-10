@@ -481,7 +481,7 @@ const TOSEngine = (() => {
       }
       // Shape B — TE
       if (!record && type === 'te') {
-        record = termScores.te;
+        record = (termScores.te && termScores.te.te) || (termScores.te && termScores.te.score !== undefined ? termScores.te : null);
       }
       // Shape C — legacy
       if (!record && termScores[type] && termScores[type][assessment.id]) {

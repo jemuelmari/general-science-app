@@ -102,7 +102,7 @@ const QuizEngine = (() => {
   function _getPrevScore(scores, term, type, id) {
     if (!scores || !scores[term]) return null;
     const t = scores[term];
-    if (type === 'te') return t.te || null;
+    if (type === 'te') return (t.te && t.te.te) || (t.te && t.te.score !== undefined ? t.te : null);
     if ((type === 'st' || type === 'st1' || type === 'st2') && t.st) return t.st[id] || null;
     if (type === 'quizzes' && t.quizzes) return t.quizzes[id] || null;
     if (t[type] && t[type][id]) return t[type][id];

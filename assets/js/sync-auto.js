@@ -55,8 +55,14 @@ const SyncAuto = (() => {
       if (queue[i].pushId === pushId) { _emitStatus(); return { ok: true, pushId: pushId, alreadyQueued: true }; }
     }
 
+    var cu = (typeof Store !== 'undefined' && Store.getCurrentUser) ? Store.getCurrentUser() : null;
+    var student = (cu && String(cu.lrn) === String(lrn)) ? {
+      lrn: cu.lrn, lastName: cu.lastName, firstName: cu.firstName, middleName: cu.middleName || '',
+      gradeLevel: cu.gradeLevel, section: cu.section
+    } : null;
+
     queue.push({
-      pushId: pushId, lrn: lrn, term: term, assessment: assessment, attempt: attempt,
+      pushId: pushId, lrn: lrn, term: term, assessment: assessment, attempt: attempt, student: student,
       queuedAt: new Date().toISOString(), retries: 0, lastError: null
     });
     _saveQueue(queue);
@@ -84,7 +90,7 @@ const SyncAuto = (() => {
         remaining.push(item); continue;
       }
       var res;
-      try { res = await Sync.pushAttempt(item.lrn, item.term, item.assessment, item.attempt); }
+      try { res = await Sync.pushAttempt(item.lrn, item.term, item.assessment, item.attempt, item.student); }
       catch (e) { res = { ok: false, error: e.message }; }
 
       if (res && res.ok) { pushed++; }
