@@ -183,7 +183,7 @@ rowsHtml += `<tr${!hasName ? ' style="background:#fff3e0;"' : ''}><td>
               let record = null;
               
               // FIX: Explicit type checks for each assessment type
-              if (a.type === 'te') record = scores.te;
+              if (a.type === 'te') record = (scores.te && scores.te.te) || scores.te;
               else if (a.type === 'st') record = scores.st?.[a.id];
               else if (a.type === 'quizzes') record = scores.quizzes?.[a.id];
               else if (a.type === 'pt') record = scores.pt?.[a.id];
