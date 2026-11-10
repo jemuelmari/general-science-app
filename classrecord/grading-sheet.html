@@ -116,6 +116,7 @@
   <script src="../assets/js/transmutation.js?v=1.3.0-25c05df?v=1.3.0-25c05df?v=1.3.0-25c05df?v=1.3.0-25c05df"></script>
   <script src="../assets/js/ui-helpers.js?v=1.3.0-25c05df"></script>
   <script src="../assets/js/teacher-auth.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-cloud.js"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-25c05df"></script>
   <script>
     (function() {
@@ -137,15 +138,23 @@
           render();
         });
         document.getElementById('btn-refresh').addEventListener('click', function() {
-          refreshStudentDropdown();
-          render();
-          APP.toast('Refreshed', 'success', 1500);
+          TeacherCloud.hydrateStore().catch(function(e) {
+            APP.toast('Cloud load failed: ' + e.message, 'danger', 6000);
+          }).then(function() {
+            refreshStudentDropdown();
+            render();
+            APP.toast('Refreshed from cloud', 'success', 1500);
+          });
         });
         document.getElementById('btn-export').addEventListener('click', exportSheet);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
 
-        refreshStudentDropdown();
-        render();
+        TeacherCloud.hydrateStore().catch(function(e) {
+          APP.toast('Cloud load failed: ' + e.message, 'danger', 6000);
+        }).then(function() {
+          refreshStudentDropdown();
+          render();
+        });
       }, function() {
         document.getElementById('results-area').innerHTML =
           '<div class="card gs-empty">⚠️ <strong>Auth module failed to load</strong></div>';
@@ -173,7 +182,7 @@
         var scores = Store.getScores(lrn);
         var t = scores[term] || {};
         var record = null;
-        if (type === 'te') record = t.te;
+        if (type === 'te') record = (t.te && t.te.te) || t.te;
         else if (t[type] && t[type][id]) record = t[type][id];
         return record || null;
       }
@@ -398,7 +407,7 @@
         addRow('PT3', t.pt && t.pt.pt3, 100);
         addRow('ST1', t.st && t.st.st1, 30);
         addRow('ST2', t.st && t.st.st2, 30);
-        addRow('Term Exam', t.te, 60);
+        addRow('Term Exam', (t.te && t.te.te) || t.te, 60);
 
         var csv = rows.map(function(row) {
           return row.map(function(c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
