@@ -423,7 +423,8 @@
         try {
           const res = await backendPost({
             action: 'loginStudent',
-            lrn: lrnInput
+            lrn: lrnInput,
+            deviceId: localStorage.getItem('gsa_v1_device_id') || ''
           });
 
           if (!res || !res.ok) {
@@ -440,16 +441,8 @@
             return;
           }
 
-          // Save user session
-          Store.set('session', res.student);
-          
-          // 🔥 Merge data from backend
-          const lrn = res.student.lrn;
-          if (res.student.progress) {
-            if (res.student.progress.scores) Store.set('scores_' + lrn, res.student.progress.scores);
-            if (res.student.progress.progress) Store.set('progress_' + lrn, res.student.progress.progress);
-            if (res.student.progress.badges) Store.set('badges_' + lrn, res.student.progress.badges);
-          }
+          // Merge cloud data with this device (never overwrite unsynced local work)
+          Store.applyLoginResult(res);
 
           window.location.href = 'dashboard.html';
         } catch (err) {
