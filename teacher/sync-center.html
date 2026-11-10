@@ -452,7 +452,10 @@
         Store.saveUser(student);
         if (payload.progress) {
           var existing = Store.getProgress(payload.student.lrn);
-          Store.saveProgress(payload.student.lrn, mergeProgress(existing, payload.progress));
+          var mergedProgress = mergeProgress(existing, payload.progress);
+          ['term1', 'term2', 'term3'].forEach(function(t) {
+            Store.saveProgress(payload.student.lrn, t, mergedProgress[t]);
+          });
         }
         if (payload.scores) {
           var existingScores = Store.getScores(payload.student.lrn);
@@ -477,10 +480,28 @@
         return merged;
       }
 
+      function _pct(r) {
+        if (!r) return -1;
+        if (r.percent != null) return Number(r.percent);
+        return r.total ? (r.score / r.total) * 100 : -1;
+      }
+
+      // Deep merge per assessment id (the old shallow Object.assign replaced a whole
+      // group, e.g. importing quiz2 wiped the existing quiz1). Higher percent wins.
       function mergeScores(existing, incoming) {
         var merged = { term1: {}, term2: {}, term3: {} };
         ['term1', 'term2', 'term3'].forEach(function(t) {
-          merged[t] = Object.assign({}, existing[t] || {}, incoming[t] || {});
+          var ex = existing[t] || {}, inc = incoming[t] || {};
+          var out = JSON.parse(JSON.stringify(ex));
+          Object.keys(inc).forEach(function(type) {
+            if (!out[type]) { out[type] = inc[type]; return; }
+            var incGroup = inc[type] || {};
+            Object.keys(incGroup).forEach(function(id) {
+              var cur = out[type][id];
+              if (!cur || _pct(incGroup[id]) > _pct(cur)) out[type][id] = incGroup[id];
+            });
+          });
+          merged[t] = out;
         });
         return merged;
       }

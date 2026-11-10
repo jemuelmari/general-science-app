@@ -209,6 +209,7 @@
   <script src="../assets/js/sync.js?v=1.3.0-25c05df"></script>
   <script src="../assets/js/tos-engine.js?v=1.3.0-25c05df"></script> <!-- Updated version -->
   <script src="../assets/js/teacher-auth.js?v=1.3.0-25c05df"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-25c05df"></script>
   <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-25c05df"></script>
   
   <script>
@@ -225,6 +226,15 @@
          ============================================================ */
       TeacherAuthBoot.ready(async function(auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+
+        // Load class data from the cloud into the local Store cache (with itemResults)
+        try {
+          await TeacherCloud.hydrateStore({ withItems: true });
+        } catch (e) {
+          console.error('[TOS] Cloud load failed:', e);
+          var tb = document.getElementById('te-banner');
+          if (tb) tb.innerHTML = '<div class="tos-alert warn"><span style="font-size:1.2rem;">⚠️</span><div><strong>Could not load student data from the cloud.</strong><div style="margin-top:4px;">' + (e.message || e) + '</div></div></div>';
+        }
 
         // Load signatories (backend + fallback)
         try {
