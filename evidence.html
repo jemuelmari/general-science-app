@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Evidence — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .ev-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 24px; margin-bottom: 20px; }
+    .ev-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+    .ev-form label { display: block; font-size: 0.78rem; font-weight: 700; color: #455a64; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .ev-form select { width: 100%; padding: 9px 10px; border: 1.5px solid #cfd8dc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; background: #fff; }
+    .ev-form label.ev-check { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; text-transform: none; letter-spacing: 0; font-weight: 600; margin: 0; }
+    .ev-check input { width: 18px; height: 18px; flex-shrink: 0; }
+    .ev-wide { grid-column: 1 / -1; }
+    .ev-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+    .ev-btn { padding: 12px 22px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; color: #fff; font-family: inherit; }
+    .ev-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .ev-btn-prev { background: #455a64; } .ev-btn-print { background: #0d47a1; } .ev-btn-word { background: #2e7d32; } .ev-btn-sync { background: #ed6c02; }
+    #ev-status { font-size: 0.85rem; color: #455a64; }
+    #ev-status.err { color: #c62828; }
+    .ev-tipbox { background: #fff8e1; border-left: 4px solid #ffb300; border-radius: 6px; padding: 10px 14px; font-size: 0.82rem; color: #5d4037; margin-top: 14px; }
+    .ev-src { font-size: 0.8rem; margin-top: 10px; }
+    #ev-missing { font-size: 0.82rem; color: #b71c1c; margin-top: 10px; white-space: pre-wrap; }
+
+    #ev-wrap { overflow-x: auto; background: #cfd8dc; border-radius: 12px; padding: 18px; }
+    .ev-sheet { background: #fff; margin: 0 auto 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.25); box-sizing: border-box; padding: 0.6in; }
+    .ev-empty { text-align: center; color: #607d8b; padding: 40px 10px; background: #fff; border-radius: 8px; }
+
+    @media print {
+      .app-header, .app-footer, .no-print, #ev-controls { display: none !important; }
+      body, main, .container { background: #fff !important; margin: 0 !important; padding: 0 !important; max-width: none !important; }
+      #ev-wrap { background: none !important; padding: 0 !important; overflow: visible !important; border-radius: 0 !important; }
+      .ev-sheet { box-shadow: none !important; margin: 0 !important; padding: 0 !important; width: auto !important; }
+    }
+  </style>
+  <style id="ev-dyn-css"></style>
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📄 Exam Evidence</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="ev-card no-print" id="ev-controls">
+      <h2 style="margin:0 0 6px;color:var(--color-primary-dark);">📄 Printable Exam Evidence for Parents</h2>
+      <p class="text-muted" style="margin:0 0 18px;font-size:0.9rem;">
+        Ipinapakita ang <strong>actual na resulta ng exam</strong> ng estudyante — bawat tanong, ang sagot niya, ang tamang sagot, ang score, at ang
+        signature blocks para sa magulang/guardian. Pumili ng isang estudyante o i-print ang buong section.
+      </p>
+
+      <div class="ev-form">
+        <div>
+          <label for="ev-subject">Subject</label>
+          <select id="ev-subject">
+            <option value="gensci">General Science</option>
+          </select>
+        </div>
+        <div>
+          <label for="ev-assess">Assessment</label>
+          <select id="ev-assess"></select>
+        </div>
+        <div>
+          <label for="ev-section">Section</label>
+          <select id="ev-section"><option value="">All sections</option></select>
+        </div>
+        <div>
+          <label for="ev-student">Student</label>
+          <select id="ev-student"><option value="">Loading…</option></select>
+        </div>
+        <div>
+          <label for="ev-paper">Paper size</label>
+          <select id="ev-paper"></select>
+        </div>
+        <div class="ev-wide" style="display:flex;gap:22px;flex-wrap:wrap;">
+          <label class="ev-check"><input type="checkbox" id="ev-items" checked /> Item-by-item answers</label>
+          <label class="ev-check"><input type="checkbox" id="ev-comp" checked /> Performance per competency</label>
+          <label class="ev-check"><input type="checkbox" id="ev-ssign" checked /> Student signature line</label>
+        </div>
+      </div>
+
+      <div class="ev-actions">
+        <button class="ev-btn ev-btn-prev" id="ev-preview">👁️ Preview</button>
+        <button class="ev-btn ev-btn-print" id="ev-print">🖨️ Print / Save as PDF</button>
+        <button class="ev-btn ev-btn-word" id="ev-word">💾 Save as Word (.docx)</button>
+        <button class="ev-btn ev-btn-sync" id="ev-sync">🔄 Reload from cloud</button>
+        <span id="ev-status"></span>
+      </div>
+      <div class="ev-src" id="ev-src"></div>
+      <div id="ev-missing"></div>
+
+      <div class="ev-tipbox">
+        💡 <strong>Tip:</strong> Piliin ang <em>“— All students in the selected section —”</em> para sa buong klase (isang pahina/seksyon bawat estudyante).
+        Sa Print dialog, piliin ang <em>Save as PDF</em> kung gusto mo ng PDF. Ang evidence ay para sa <strong>pinakahuling attempt</strong> na naka-save
+        sa Google Sheet; kung retake, ang retake ang makikita.
+      </div>
+    </div>
+
+    <div id="ev-wrap"><div class="ev-empty">Pumili ng estudyante at assessment, tapos i-click ang <b>Preview</b>.</div></div>
+  </main>
+
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.0</span></p></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script src="evidence.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var $ = function (id) { return document.getElementById(id); };
+      var students = [];
+      var statusEl = $('ev-status');
+
+      function setStatus(msg, err) { statusEl.textContent = msg || ''; statusEl.className = err ? 'err' : ''; }
+      function opt(v, t) { var o = document.createElement('option'); o.value = v; o.textContent = t; return o; }
+
+      // static selects
+      Evidence.ASSESSMENTS.forEach(function (a) { $('ev-assess').appendChild(opt(a.code, a.label)); });
+      Object.keys(Evidence.PAPERS).forEach(function (k) { $('ev-paper').appendChild(opt(k, Evidence.PAPERS[k].label)); });
+
+      function sortedStudents() {
+        return students.slice().sort(function (a, b) { return String(a.lastName || '').localeCompare(String(b.lastName || '')) || String(a.firstName || '').localeCompare(String(b.firstName || '')); });
+      }
+
+      function fillSections() {
+        var cur = $('ev-section').value;
+        var secs = {};
+        students.forEach(function (s) { if (s.section) secs[s.section] = true; });
+        $('ev-section').innerHTML = '<option value="">All sections</option>';
+        Object.keys(secs).sort().forEach(function (s) { $('ev-section').appendChild(opt(s, s)); });
+        $('ev-section').value = secs[cur] ? cur : '';
+      }
+
+      function inSection(s) { var sec = $('ev-section').value; return !sec || s.section === sec; }
+
+      function fillStudents(keepLrn) {
+        var cur = keepLrn || $('ev-student').value;
+        var sel = $('ev-student');
+        sel.innerHTML = '';
+        var list = sortedStudents().filter(inSection);
+        sel.appendChild(opt('__ALL__', '— All students in the selected section (' + list.length + ') —'));
+        list.forEach(function (s) { sel.appendChild(opt(s.lrn, Evidence.fullName(s) + (s.section ? '  (' + s.section + ')' : ''))); });
+        sel.value = list.some(function (s) { return String(s.lrn) === String(cur); }) || cur === '__ALL__' ? cur : '__ALL__';
+      }
+
+      async function load(ask) {
+        setStatus('⏳ Loading students…');
+        var r = await Evidence.loadStudents({ ask: !!ask });
+        students = (r.students || []).filter(function (s) { return s && s.lrn; });
+        fillSections();
+        var qLrn = new URLSearchParams(location.search).get('lrn');
+        fillStudents(qLrn || '');
+        var src = $('ev-src');
+        if (r.source === 'cloud') { src.innerHTML = '☁️ <span style="color:#2e7d32;font-weight:600;">Data from the Google Sheet (' + students.length + ' students).</span>'; setStatus(''); }
+        else {
+          var why = r.error === 'NO_TOKEN' ? 'walang teacher token — i-click ang “Reload from cloud”' : (r.error || 'cloud unavailable');
+          src.innerHTML = '💻 <span style="color:#e65100;font-weight:600;">Showing data saved on this device (' + students.length + ' students) — ' + why + '.</span>';
+          setStatus('');
+        }
+        if (!students.length) setStatus('Walang estudyante. I-click ang “Reload from cloud”.', true);
+      }
+
+      $('ev-section').addEventListener('change', function () { fillStudents(); });
+      $('ev-sync').addEventListener('click', function () { load(true); });
+
+      // Buuin ang models para sa napiling estudyante/section
+      async function buildModels() {
+        var subject = $('ev-subject').value, code = $('ev-assess').value, who = $('ev-student').value;
+        if (!who) throw new Error('Pumili ng estudyante.');
+        var list = who === '__ALL__' ? sortedStudents().filter(inSection) : students.filter(function (s) { return String(s.lrn) === String(who); });
+        if (!list.length) throw new Error('Walang estudyante sa napiling section.');
+        var bank = await Evidence.loadBank(subject, code);
+        var models = [], missing = [];
+        list.forEach(function (s) {
+          var m = Evidence.buildModel(s, subject, code, bank);
+          if (m) models.push(m); else missing.push(Evidence.fullName(s));
+        });
+        $('ev-missing').textContent = missing.length ? 'Walang record para sa ' + Evidence.findAssessment(code).label + ' (' + missing.length + '):\n' + missing.join('\n') : '';
+        if (!models.length) throw new Error('Walang estudyanteng may naitalang score para sa ' + Evidence.findAssessment(code).label + '.');
+        return models;
+      }
+
+      function opts() { return { items: $('ev-items').checked, competencies: $('ev-comp').checked, studentSign: $('ev-ssign').checked }; }
+
+      async function preview() {
+        setStatus('⏳ Building…');
+        var models = await buildModels();
+        var paper = $('ev-paper').value;
+        $('ev-dyn-css').textContent = Evidence.paperCss(paper);
+        var wrap = $('ev-wrap');
+        wrap.innerHTML = Evidence.renderHtml(models, opts());
+        var w = ({ letter: '8.5in', a4: '210mm', long: '8.5in' })[paper];
+        Array.prototype.forEach.call(wrap.querySelectorAll('.ev-sheet'), function (el) { el.style.width = w; });
+        setStatus('✅ ' + models.length + ' evidence record(s) ready.');
+        return models;
+      }
+
+      function guard(fn) {
+        return async function () {
+          var btns = document.querySelectorAll('.ev-btn'); btns.forEach(function (b) { b.disabled = true; });
+          try { await fn(); } catch (e) { setStatus('❌ ' + e.message, true); console.error(e); }
+          finally { btns.forEach(function (b) { b.disabled = false; }); }
+        };
+      }
+
+      $('ev-preview').addEventListener('click', guard(preview));
+      $('ev-print').addEventListener('click', guard(async function () { await preview(); setTimeout(function () { window.print(); }, 250); }));
+      $('ev-word').addEventListener('click', guard(async function () {
+        var models = await buildModels();
+        setStatus('⏳ Creating Word file…');
+        var blob = await Evidence.toDocx(models, opts(), $('ev-paper').value);
+        var who = models.length === 1 ? Evidence.safeName(models[0].student.lastName + '_' + models[0].student.firstName) : (Evidence.safeName($('ev-section').value) || 'ALL');
+        Evidence.download(blob, 'Evidence_' + $('ev-subject').value + '_' + $('ev-assess').value + '_' + who + '.docx');
+        setStatus('✅ Saved ' + models.length + ' evidence record(s) as .docx.');
+      }));
+
+      load(false).then(function () {
+        if (new URLSearchParams(location.search).get('lrn')) $('ev-preview').click();
+      });
+    });
+  </script>
+</body>
+</html>
