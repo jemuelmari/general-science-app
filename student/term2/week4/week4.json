@@ -30,7 +30,7 @@
       "type": "activity1",
       "title": "Match Game — Safety Symbols",
       "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each GHS hazard symbol, safety practice, or wastewater type to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each GHS hazard symbol, safety practice, or wastewater type to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
       "activities": {
         "match": [
           { "key": "k1", "left": "💀 Skull & crossbones", "right": "Acute toxicity — can cause death or serious harm" },
@@ -49,7 +49,7 @@
       "type": "activity2",
       "title": "Scenario Challenge — Wastewater in the Community",
       "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
       "activities": {
         "scenario": [
           {
@@ -105,7 +105,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Safety Lab",
       "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🔐 Formative Check — Escape the Safety Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "content": "<h3>🔐 Formative Check — Escape the Safety Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {

@@ -95,7 +95,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Equation Lab",
       "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
-      "content": "<h3>🔐 Formative Check — Escape the Equation Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 75% (5 of 6) to pass.</p>",
+      "content": "<h3>🔐 Formative Check — Escape the Equation Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 70% (5 of 6) to pass.</p>",
       "activities": {
         "escape": [
           {

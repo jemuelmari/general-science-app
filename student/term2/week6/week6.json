@@ -26,7 +26,7 @@
       "type": "activity1",
       "title": "Match Game — Cell Organelles",
       "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each cell part or process to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each cell part or process to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
       "activities": {
         "match": [
           { "key": "k1", "left": "Cell membrane", "right": "Controls what enters and exits the cell" },
@@ -45,7 +45,7 @@
       "type": "activity2",
       "title": "Scenario Challenge — Cell Energy",
       "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
       "activities": {
         "scenario": [
           {
@@ -101,7 +101,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Cell Lab",
       "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🔐 Formative Check — Escape the Cell Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "content": "<h3>🔐 Formative Check — Escape the Cell Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {
