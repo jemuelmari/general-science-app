@@ -30,7 +30,7 @@
       "type": "activity1",
       "title": "Match Game — Machine Types",
       "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each simple machine or machine concept to the correct example or definition. There are <strong>8 pairs</strong> and unlimited retakes to reach 75%.</p><p><strong>Tip:</strong> Think about the <em>type of motion</em> each machine produces — pushing, pulling, lifting, turning, or splitting.</p>",
+      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each simple machine or machine concept to the correct example or definition. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p><p><strong>Tip:</strong> Think about the <em>type of motion</em> each machine produces — pushing, pulling, lifting, turning, or splitting.</p>",
       "activities": {
         "match": [
           { "key": "k1", "left": "Lever", "right": "Crowbar prying a nail" },
@@ -49,7 +49,7 @@
       "type": "activity2",
       "title": "Scenario Challenge — Torque & Efficiency",
       "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 75%.</p>",
+      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
       "activities": {
         "scenario": [
           {
@@ -105,7 +105,7 @@
       "type": "formative",
       "title": "Formative Check — Escape the Machine Shop",
       "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🔐 Formative Check — Escape the Machine Shop</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>75%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "content": "<h3>🔐 Formative Check — Escape the Machine Shop</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
       "activities": {
         "escape": [
           {

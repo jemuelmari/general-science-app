@@ -2,192 +2,271 @@
   "title": "Quiz 1 — Physics in Real Life & Motion",
   "coverage": "Weeks 1–2",
   "items": 20,
-  "competencies": ["GENSCI-11-T1-W1-C1", "GENSCI-11-T1-W2-C1"],
+  "competencies": [
+    "GENSCI-11-T1-W1-C1",
+    "GENSCI-11-T1-W2-C1"
+  ],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
     {
       "id": "q1",
-      "text": "Which area of daily life is MOST improved by understanding motion and forces?",
-      "options": ["Transportation and sports", "Cooking rice", "Reading books", "Painting walls"],
-      "correct": "Transportation and sports",
+      "text": "A rice cooker switches from COOK to WARM by itself once the water is used up. Which area of daily life does this physics application MOST directly improve?",
+      "options": [
+        "Household tasks",
+        "Health and safety",
+        "Work productivity",
+        "Leisure and recreation"
+      ],
+      "correct": "Household tasks",
       "competency": "GENSCI-11-T1-W1-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "matches 'physics in real life' + life-area framing" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q2",
-      "text": "Which of the following BEST describes translational motion?",
-      "options": ["An object moves from one point to another without rotating", "An object spins around a fixed axis", "An object vibrates in place", "An object stays at rest"],
-      "correct": "An object moves from one point to another without rotating",
+      "text": "Which statement BEST describes translational motion?",
+      "options": [
+        "Every part of the object moves the same distance in the same direction",
+        "The object turns around an axis that stays in one place",
+        "Points far from the center move faster than points near it",
+        "The object moves back and forth around one resting position"
+      ],
+      "correct": "Every part of the object moves the same distance in the same direction",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "matches 'translational motion'" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q3",
       "text": "Which of the following is an example of PURELY rotational motion?",
-      "options": ["A spinning top on a table", "A car driving forward", "A person walking uphill", "An elevator moving up"],
-      "correct": "A spinning top on a table",
+      "options": [
+        "A ceiling fan blade spinning in place",
+        "A ball rolling across the classroom floor",
+        "A jeepney moving along a straight road",
+        "A child sliding down a straight slide"
+      ],
+      "correct": "A ceiling fan blade spinning in place",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "matches 'rotational motion'" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q4",
-      "text": "Which quantity is measured in rad/s?",
-      "options": ["Angular velocity", "Linear velocity", "Linear acceleration", "Angular displacement"],
+      "text": "Which quantity is measured in radians per second (rad/s)?",
+      "options": [
+        "Angular velocity",
+        "Linear velocity",
+        "Angular displacement",
+        "Angular acceleration"
+      ],
       "correct": "Angular velocity",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular vs linear quantities" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q5",
-      "text": "In the equation v = r × ω, what does 'r' represent?",
-      "options": ["The radius (distance from the axis of rotation)", "The rotational speed in rpm", "The total mass of the object", "The friction coefficient"],
-      "correct": "The radius (distance from the axis of rotation)",
+      "text": "In the equation v = r × ω, what does r stand for?",
+      "options": [
+        "Distance of the point from the axis",
+        "Number of turns made per minute",
+        "Time needed for one full turn",
+        "Angle swept by the object in radians"
+      ],
+      "correct": "Distance of the point from the axis",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω is core W2-C1 formula" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q6",
-      "text": "A wheel of radius 0.5 m rotates with angular velocity 4 rad/s. What is the linear velocity of a point on the rim?",
-      "options": ["2 m/s", "0.125 m/s", "4.5 m/s", "8 m/s"],
-      "correct": "2 m/s",
+      "text": "A wheel of radius 0.5 m turns at an angular velocity of 4 rad/s. What is the linear speed of a point on its rim?",
+      "options": [
+        "2.0 m/s",
+        "0.125 m/s",
+        "4.5 m/s",
+        "8.0 m/s"
+      ],
+      "correct": "2.0 m/s",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Applying",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "numeric application of v = r × ω" }
+      "bloomLevel": "Applying"
     },
     {
       "id": "q7",
-      "text": "Why does the tip of a windmill blade move faster than the base?",
-      "options": ["Because points farther from the axis have greater linear velocity (v = r × ω)", "Because the tip is lighter", "Because the tip has less friction", "Because the tip is colder"],
-      "correct": "Because points farther from the axis have greater linear velocity (v = r × ω)",
+      "text": "Ana sits near the edge of a turning merry-go-round while Ben sits near the center. Which statement about the two of them is TRUE?",
+      "options": [
+        "Same angular velocity, but Ana has the greater linear speed",
+        "Same linear speed, but Ben has the greater angular velocity",
+        "Ana has both the greater angular velocity and linear speed",
+        "Ben has the greater linear speed because he is near the axis"
+      ],
+      "correct": "Same angular velocity, but Ana has the greater linear speed",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "conceptual application of v = r × ω" }
+      "bloomLevel": "Analyzing"
     },
     {
       "id": "q8",
-      "text": "Which physical quantity determines the pitch of a sound?",
-      "options": ["Frequency", "Amplitude", "Wavelength", "Speed"],
-      "correct": "Frequency",
-      "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 5, "confidence": "FALLBACK", "rationale": "sound is W6; outside declared W1-W2 scope of quiz1" }
+      "text": "Which branch of science studies matter, energy, motion and force, and how they interact?",
+      "options": [
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "Geology"
+      ],
+      "correct": "Physics",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q9",
-      "text": "A ball rolling down a ramp without slipping demonstrates which combination of motion types?",
-      "options": ["Both translational and rotational", "Only translational", "Only rotational", "No motion"],
-      "correct": "Both translational and rotational",
+      "text": "A bowling ball rolls down the lane without slipping. Which description of its motion is MOST accurate?",
+      "options": [
+        "It translates and rotates at the same time",
+        "It only translates, since its center moves forward",
+        "It only rotates, since each point circles the center",
+        "It slides forward while it does not spin at all"
+      ],
+      "correct": "It translates and rotates at the same time",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "translational + rotational combined" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q10",
-      "text": "Which of the following is NOT a way physics improves daily life?",
-      "options": ["Increasing gravitational pull", "Making transportation safer", "Improving medical imaging", "Increasing work productivity"],
-      "correct": "Increasing gravitational pull",
+      "text": "Which statement does NOT describe physics improving daily life?",
+      "options": [
+        "Adding heavy weight to a bicycle makes braking easier",
+        "Seatbelts stop the body more gradually during a crash",
+        "Eyeglass lenses bend light so images focus clearly",
+        "Water pumps use pressure to lift water to upper floors"
+      ],
+      "correct": "Adding heavy weight to a bicycle makes braking easier",
       "competency": "GENSCI-11-T1-W1-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics improving daily life = W1-C1" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q11",
-      "text": "Which of the following best represents a lever in action?",
-      "options": ["A crowbar prying a nail", "A ramp loading boxes onto a truck", "A flag being raised on a flagpole", "A doorknob turning"],
-      "correct": "A crowbar prying a nail",
-      "competency": "GENSCI-11-T1-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 5, "confidence": "FALLBACK", "rationale": "simple machines = W3-C1; outside W1-W2 scope" }
+      "text": "A store owner must load heavy sacks of rice onto a truck. Which choice uses physics to make the job need LESS force?",
+      "options": [
+        "Push the sacks up a long, gently sloped ramp",
+        "Lift each sack straight up as fast as possible",
+        "Carry two sacks at a time to finish sooner",
+        "Drag the sacks across the rough cement floor"
+      ],
+      "correct": "Push the sacks up a long, gently sloped ramp",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Applying"
     },
     {
       "id": "q12",
-      "text": "What type of quantity is angular displacement measured in?",
-      "options": ["Radians", "Meters", "Meters per second", "Newtons"],
+      "text": "Angular displacement is usually measured in which unit?",
+      "options": [
+        "Radians",
+        "Meters",
+        "Meters per second",
+        "Newtons"
+      ],
       "correct": "Radians",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular displacement unit" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q13",
-      "text": "In one complete rotation, the angular displacement of the object is:",
-      "options": ["2π radians", "π radians", "1 radian", "Zero"],
+      "text": "What is the angular displacement of an object after ONE complete rotation?",
+      "options": [
+        "2π radians",
+        "π radians",
+        "π/2 radians",
+        "4π radians"
+      ],
       "correct": "2π radians",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular displacement concept" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q14",
-      "text": "Which of the following correctly pairs a linear and its angular counterpart?",
-      "options": ["Velocity (m/s) ↔ Angular velocity (rad/s)", "Displacement (m) ↔ Angular velocity (rad/s)", "Acceleration (m/s²) ↔ Angular displacement (rad)", "Velocity (m/s) ↔ Angular displacement (rad)"],
-      "correct": "Velocity (m/s) ↔ Angular velocity (rad/s)",
+      "text": "Which pair correctly matches a linear quantity with its angular counterpart?",
+      "options": [
+        "Velocity (m/s) ↔ angular velocity (rad/s)",
+        "Displacement (m) ↔ angular velocity (rad/s)",
+        "Acceleration (m/s²) ↔ angular displacement (rad)",
+        "Velocity (m/s) ↔ angular acceleration (rad/s²)"
+      ],
+      "correct": "Velocity (m/s) ↔ angular velocity (rad/s)",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "relate linear to angular quantities" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q15",
-      "text": "A wheel of radius 0.4 m rotates with angular velocity 5 rad/s. What is the linear velocity at the rim?",
-      "options": ["2 m/s", "0.08 m/s", "5.4 m/s", "12.5 m/s"],
-      "correct": "2 m/s",
+      "text": "A bicycle wheel of radius 0.3 m spins at 6 rad/s. What is the linear speed of the tire's edge?",
+      "options": [
+        "1.8 m/s",
+        "0.05 m/s",
+        "6.3 m/s",
+        "20 m/s"
+      ],
+      "correct": "1.8 m/s",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Applying",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "numeric v = r × ω" }
+      "bloomLevel": "Applying"
     },
     {
       "id": "q16",
-      "text": "Which observation BEST shows physics improving safety in daily life?",
+      "text": "A barangay wants fewer injuries among tricycle passengers when the driver brakes suddenly. Which measure is MOST effective, based on physics?",
       "options": [
-        "A car's airbag reducing impact force during a crash",
-        "A television's screen brightening a room",
-        "A refrigerator's coolant absorbing heat",
-        "A fan's blades rotating to move air"
+        "Install seatbelts that hold passengers in their seats",
+        "Paint the tricycle in brighter, easy-to-see colors",
+        "Use a louder horn so other drivers hear it sooner",
+        "Put softer foam on the floor of the passenger sidecar"
       ],
-      "correct": "A car's airbag reducing impact force during a crash",
+      "correct": "Install seatbelts that hold passengers in their seats",
       "competency": "GENSCI-11-T1-W1-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics improving safety = W1-C1; distractors balanced (Phase 6)" }
+      "bloomLevel": "Evaluating"
     },
     {
       "id": "q17",
       "text": "What does the equation d = r × θ relate?",
-      "options": ["Linear displacement to angular displacement", "Speed to velocity", "Mass to force", "Pressure to area"],
-      "correct": "Linear displacement to angular displacement",
+      "options": [
+        "Arc length to the angle turned (in radians)",
+        "Speed to the time of one full rotation",
+        "Force to the length of the lever arm",
+        "Mass to the radius of the turning body"
+      ],
+      "correct": "Arc length to the angle turned (in radians)",
       "competency": "GENSCI-11-T1-W2-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular displacement formula" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q18",
-      "text": "Which of the following is the BEST example of physics in navigation?",
-      "options": ["GPS satellites using radio waves to find locations", "A cook using a recipe", "A teacher checking attendance", "A student reading a book"],
-      "correct": "GPS satellites using radio waves to find locations",
+      "text": "A phone's GPS finds your location by timing signals sent from satellites. What carries these signals?",
+      "options": [
+        "Radio waves",
+        "Sound waves",
+        "Ultrasound pulses",
+        "Infrared heat"
+      ],
+      "correct": "Radio waves",
       "competency": "GENSCI-11-T1-W1-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics in navigation = W1-C1 life-area" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q19",
-      "text": "You feel pushed forward when a jeepney suddenly brakes. Which physics principle explains this?",
-      "options": ["Newton's First Law of Motion (inertia)", "Newton's Third Law", "Law of Refraction", "Law of Conservation of Energy"],
-      "correct": "Newton's First Law of Motion (inertia)",
+      "text": "Passengers lurch forward when a jeepney suddenly brakes. Which explanation is correct?",
+      "options": [
+        "Their bodies keep moving forward because of inertia",
+        "The brakes push the passengers forward with a force",
+        "Air rushes in from behind and pushes them forward",
+        "Gravity pulls them toward the front of the jeepney"
+      ],
+      "correct": "Their bodies keep moving forward because of inertia",
       "competency": "GENSCI-11-T1-W1-C1",
-      "bloomLevel": "Applying",
-      "_tag": { "layer": 3, "confidence": "MEDIUM", "rationale": "daily-life physics principle = W1-C1" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q20",
-      "text": "Why does a longer wrench loosen a tight bolt more easily than a shorter one?",
-      "options": ["It increases torque by increasing the lever arm distance", "It is heavier", "It absorbs more friction", "It uses less electricity"],
-      "correct": "It increases torque by increasing the lever arm distance",
-      "competency": "GENSCI-11-T1-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "torque + lever arm = W3-C1 machine efficiency" }
+      "text": "A bike shop says: \"At the same wheel angular velocity, a bike with bigger wheels moves faster.\" Which judgment is BEST supported by v = r × ω?",
+      "options": [
+        "True: a larger radius gives a greater linear speed",
+        "False: wheel size never affects a bicycle's speed",
+        "False: bigger wheels always have smaller angular velocity",
+        "True: bigger wheels are heavier, so they gain momentum"
+      ],
+      "correct": "True: a larger radius gives a greater linear speed",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Evaluating"
     }
   ]
 }

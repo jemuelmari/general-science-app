@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Introduction to Physics in Daily Life",
-      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain how physics concepts improve the quality of life in four key areas: <strong>household, health &amp; safety, work productivity, and leisure</strong>.</p><h3>🔍 What Is Physics?</h3><p><strong>Physics</strong> is the branch of science that studies matter, energy, motion, force, light, sound, heat, and electricity. It explains <em>why</em> things work the way they do — from why a ball rolls downhill to how your phone's screen displays images.</p><p>Physics is not just formulas in a textbook. It is everywhere in your daily life:</p><table><thead><tr><th>Area</th><th>Physics in Action</th><th>Example in Your Life</th></tr></thead><tbody><tr><td><strong>🏠 Household</strong></td><td>Heat, electricity, pressure</td><td>Rice cooker, electric fan, water pump, refrigerator</td></tr><tr><td><strong>🏥 Health &amp; Safety</strong></td><td>Optics, radiation, forces</td><td>X-ray machines, eyeglasses, seatbelts, helmets</td></tr><tr><td><strong>💼 Work Productivity</strong></td><td>Machines, electricity, torque</td><td>Wheelbarrow, sewing machine, welding equipment, computers</td></tr><tr><td><strong>🎮 Leisure</strong></td><td>Waves, optics, motion</td><td>Televisions, speakers, sports, video games, cameras</td></tr></tbody></table><h3>⚙️ The Four Core Physics Concepts You'll Meet</h3><ol><li><strong>Motion &amp; Forces</strong> — how and why objects move (Newton's Laws).</li><li><strong>Energy &amp; Work</strong> — how energy changes from one form to another (Law of Conservation of Energy).</li><li><strong>Waves &amp; Light</strong> — how energy travels through space (sound, light, radio).</li><li><strong>Electricity &amp; Magnetism</strong> — how charged particles create current and fields.</li></ol><h3>💡 Key Idea</h3><p>Every time you use a tool, ride a vehicle, turn on a light, or hear a sound — <strong>physics is making it possible</strong>. Understanding physics helps you use technology safely, make informed choices, and even invent new solutions to everyday problems.</p><h3>📌 Quick Check</h3><ul><li>Name one household appliance that uses electricity.</li><li>Name one sports activity that depends on motion and forces.</li><li>Why is a helmet important? What physics principle protects your head?</li></ul>"
+      "title": "What Physics Is and Where It Helps",
+      "badge": {
+        "id": "physicist",
+        "name": "Physicist",
+        "icon": "⚛️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>By the end of this week you can <strong>explain how physics improves the quality of life</strong> in four areas: household, health &amp; safety, work productivity, and leisure.</p>\n<h3>🔍 What Is Physics?</h3>\n<p><strong>Physics</strong> is the science of matter, energy, motion and force — and how they interact. It answers <em>why</em> things behave the way they do: why a jeepney passenger lurches forward when the driver brakes, why a rice cooker stops boiling at the right time, or why a phone can receive a call from another province.</p>\n<p>Engineers, nurses, farmers and athletes use physics every day, even if they never write a formula. When we understand the physics behind a device, we can use it <strong>safely</strong>, <strong>choose better</strong> between options, and even <strong>improve</strong> it.</p>\n<h3>🧭 Four Areas Where Physics Improves Life</h3>\n<table><thead><tr><th>Area</th><th>Physics behind it</th><th>Example</th></tr></thead><tbody>\n<tr><td>🏠 Household</td><td>Heat, electricity, pressure</td><td>Rice cooker, refrigerator, water tank</td></tr>\n<tr><td>🏥 Health &amp; safety</td><td>Forces, light, radiation</td><td>Seatbelts, eyeglasses, X-ray machines</td></tr>\n<tr><td>💼 Work productivity</td><td>Machines, torque, motors</td><td>Wheelbarrow, wrench, sewing machine</td></tr>\n<tr><td>🎮 Leisure</td><td>Sound, light, waves</td><td>Speakers, cameras, TV and radio</td></tr>\n</tbody></table>\n<h3>💡 Key Idea</h3>\n<p>The same concept can serve several areas. <strong>Friction</strong> keeps you from slipping in the bathroom (safety), lets a bicycle brake (transport) and lets a basketball player stop quickly (leisure). This week we look at each area more closely — one area pair per day.</p>\n<h3>✅ Quick Check</h3>\n<p>Answer the 3 questions below. After each answer you will see <strong>why</strong> it is right or wrong.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "A hospital uses an X-ray machine to check whether a patient's arm is broken. Which area of daily life does this MOST directly improve?",
+            "choices": [
+              {
+                "label": "Health and safety",
+                "correct": true
+              },
+              {
+                "label": "Household tasks",
+                "correct": false
+              },
+              {
+                "label": "Work productivity",
+                "correct": false
+              },
+              {
+                "label": "Leisure and recreation",
+                "correct": false
+              }
+            ],
+            "explanation": "X-rays help doctors see inside the body without surgery, so injuries are found and treated quickly — that is health and safety."
+          },
+          {
+            "text": "A delivery rider uses a phone map that shows his exact location. Which physics concept makes the phone's GPS work?",
+            "choices": [
+              {
+                "label": "Electromagnetic (radio) waves",
+                "correct": true
+              },
+              {
+                "label": "Friction between tires and road",
+                "correct": false
+              },
+              {
+                "label": "Air pressure in the tires",
+                "correct": false
+              },
+              {
+                "label": "Sound waves from the horn",
+                "correct": false
+              }
+            ],
+            "explanation": "GPS satellites send radio signals (electromagnetic waves). The phone times these signals to work out its position. Friction, air pressure and sound have nothing to do with locating the phone."
+          },
+          {
+            "text": "Which example shows physics improving LEISURE?",
+            "choices": [
+              {
+                "label": "A speaker turning electric signals into sound",
+                "correct": true
+              },
+              {
+                "label": "A seatbelt holding a passenger in place",
+                "correct": false
+              },
+              {
+                "label": "A welding machine joining two metal bars",
+                "correct": false
+              },
+              {
+                "label": "A refrigerator keeping fish cold and fresh",
+                "correct": false
+              }
+            ],
+            "explanation": "Music and entertainment are leisure. The speaker uses vibrations (sound waves). The seatbelt is safety, welding is work productivity, and the refrigerator is household."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Physics Applications",
-      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>In this activity, match each physics concept to the correct everyday application. There are 8 pairs. You have <strong>unlimited retakes</strong> to reach 75%.</p><p><strong>Tip:</strong> Read both columns carefully. Think about <em>what physics is doing</em> in each situation.</p>",
+      "title": "Physics at Home and in Health & Safety",
+      "badge": {
+        "id": "physicist",
+        "name": "Physicist",
+        "icon": "⚛️"
+      },
+      "content": "<h3>🏠 Physics at Home</h3>\n<ul>\n<li><strong>Rice cooker:</strong> while there is water in the pot, the temperature stays near 100 °C. When the water is gone, the temperature rises quickly; a <strong>temperature sensor (thermostat)</strong> detects this and switches the cooker to WARM.</li>\n<li><strong>Refrigerator:</strong> a liquid called the <strong>refrigerant</strong> absorbs heat from inside as it evaporates, then releases that heat through the coils at the back.</li>\n<li><strong>Electric fan:</strong> a fan does <em>not</em> make air colder. Moving air speeds up the <strong>evaporation of sweat</strong> and carries heat away from your skin, so <em>you</em> feel cooler.</li>\n<li><strong>Elevated water tank:</strong> water pressure <strong>increases with depth</strong>, so a tank on the roof gives strong flow to the faucets far below it.</li>\n</ul>\n<h3>🏥 Physics in Health &amp; Safety</h3>\n<ul>\n<li><strong>Seatbelts, airbags and helmets</strong> make your body or head <strong>stop more slowly</strong>. The longer the stopping time, the smaller the force on you.</li>\n<li><strong>Eyeglasses</strong> use lenses that <strong>refract (bend) light</strong> so that the image falls exactly on the retina.</li>\n<li><strong>X-rays</strong> pass through soft tissue but are absorbed more by bone, so bones show up clearly on the image.</li>\n<li><strong>Rubber mats</strong> increase <strong>friction</strong> so feet do not slip on wet tiles.</li>\n</ul>\n<div class=\"callout\"><strong>🤔 Think about it:</strong> Why is it more dangerous to jump onto a cement floor than onto a thick mattress from the same height? (Hint: compare the stopping times.)</div>\n<h3>🔗 Activity 1 — Match the Pairs</h3>\n<p>Match each physics idea to the household or safety use it explains. When you get a pair right, read the short reason that appears. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Friction", "right": "Brakes stopping a bicycle" },
-          { "key": "k2", "left": "Gravity", "right": "Water falling from a faucet" },
-          { "key": "k3", "left": "Reflection of light", "right": "Seeing yourself in a mirror" },
-          { "key": "k4", "left": "Refraction of light", "right": "A straw appearing bent in water" },
-          { "key": "k5", "left": "Sound waves", "right": "Hearing a person speak on the phone" },
-          { "key": "k6", "left": "Electrical energy", "right": "Rice cooker heating food" },
-          { "key": "k7", "left": "Air pressure", "right": "Drinking through a straw" },
-          { "key": "k8", "left": "Torque", "right": "Using a long wrench to loosen a bolt" }
+          {
+            "key": "k1",
+            "left": "Temperature sensor (thermostat)",
+            "right": "Rice cooker switching to WARM",
+            "why": "When the water is used up the pot gets hotter than 100 °C; the sensor detects it and stops the heating."
+          },
+          {
+            "key": "k2",
+            "left": "Refrigerant absorbing heat",
+            "right": "Refrigerator keeping food cold",
+            "why": "The refrigerant takes heat from inside as it evaporates and gives it off through the coils at the back."
+          },
+          {
+            "key": "k3",
+            "left": "Faster evaporation of sweat",
+            "right": "Electric fan making you feel cool",
+            "why": "Moving air helps sweat evaporate, which takes heat from your skin. The air itself does not get colder."
+          },
+          {
+            "key": "k4",
+            "left": "Pressure increases with depth",
+            "right": "Elevated water tank on the roof",
+            "why": "The deeper a faucet is below the tank, the greater the water pressure, so lower faucets flow strongly."
+          },
+          {
+            "key": "k5",
+            "left": "Longer stopping time, smaller force",
+            "right": "Airbag cushioning a driver",
+            "why": "The airbag makes the head stop over a longer time, so the force on it is much smaller."
+          },
+          {
+            "key": "k6",
+            "left": "Refraction of light by a lens",
+            "right": "Eyeglasses for blurry vision",
+            "why": "The lens bends light so the image falls exactly on the retina."
+          },
+          {
+            "key": "k7",
+            "left": "X-rays absorbed more by bone",
+            "right": "Image showing a broken bone",
+            "why": "Soft tissue lets X-rays through but bone absorbs more, so bones appear clearly."
+          },
+          {
+            "key": "k8",
+            "left": "Friction",
+            "right": "Rubber mat on a wet bathroom floor",
+            "why": "The rough rubber increases friction between feet and floor, preventing slips."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Life Areas",
-      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the <strong>best physics-based reasoning</strong> for the situation. There are 5 scenarios. You have unlimited retakes to reach 75%.</p>",
+      "title": "Physics at Work and in Leisure",
+      "badge": {
+        "id": "physicist",
+        "name": "Physicist",
+        "icon": "⚛️"
+      },
+      "content": "<h3>💼 Physics for Work Productivity</h3>\n<p>Machines let one person do work that would otherwise need many people. Most hand tools use <strong>torque</strong> — the turning effect of a force:</p>\n<p style=\"text-align:center;\"><strong>torque = force × lever arm</strong></p>\n<p><em>Example:</em> pushing a wrench with 20 N at 0.10 m from the bolt gives 2 N·m of torque. Pushing with the <strong>same</strong> 20 N at 0.30 m gives <strong>6 N·m</strong> — three times the turning effect. That is why a longer crowbar or wrench works better.</p>\n<ul>\n<li><strong>Wheelbarrow:</strong> a lever — the load sits between the wheel and your hands, so a small lifting force supports a heavy load.</li>\n<li><strong>Ramp (inclined plane):</strong> you push with less force over a longer distance instead of lifting straight up.</li>\n<li><strong>Electric motors</strong> in sewing machines and drills change electrical energy into motion.</li>\n</ul>\n<h3>🎮 Physics in Leisure</h3>\n<ul>\n<li><strong>Sound</strong> is a <em>mechanical</em> wave: it needs air (or another material) to travel. Speakers vibrate to make these waves.</li>\n<li><strong>Radio and TV signals</strong> are <em>electromagnetic</em> waves: they travel through air and even empty space, so no cable is needed.</li>\n<li><strong>Cameras</strong> use lenses that refract light to form a sharp image.</li>\n<li>In <strong>sports</strong>, friction between shoes and the court lets players start and stop quickly.</li>\n</ul>\n<h3>🎯 Activity 2 — Scenario Challenge</h3>\n<p>Each scenario asks you to <strong>apply or judge</strong> a physics idea in a real situation. Read all choices — they are similar on purpose. After each answer, read the explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🏠 Your mother complains that the electric fan is not cooling the room enough on a hot day. Which physics concept best explains why an electric fan does NOT actually cool the air?",
+            "text": "Tita Liza says, \"Leave the electric fan on in the empty bedroom so the room will be cooler when we come back.\" Is she right?",
             "choices": [
-              { "label": "A) The fan creates cold air from electricity.", "correct": false },
-              { "label": "B) The fan moves air, which increases evaporation from the skin, making you feel cooler — but the air temperature stays the same.", "correct": true },
-              { "label": "C) The fan absorbs heat from the room.", "correct": false },
-              { "label": "D) The fan uses gravity to push hot air outside.", "correct": false }
-            ]
+              {
+                "label": "No — it cools skin by evaporation; the air does not get colder",
+                "correct": true
+              },
+              {
+                "label": "Yes — the spinning blades change electric energy into cold air",
+                "correct": false
+              },
+              {
+                "label": "Yes — the moving air carries the heat out through the walls",
+                "correct": false
+              },
+              {
+                "label": "No — a fan works only if the room is already air-conditioned",
+                "correct": false
+              }
+            ],
+            "explanation": "A fan cools PEOPLE: moving air speeds up the evaporation of sweat and carries heat from the skin. Its motor even adds a little heat. With nobody in the room, the fan only wastes electricity."
           },
           {
-            "text": "🏥 A nurse checks your blood pressure using a cuff and a pressure gauge. What physics principle does this device rely on?",
+            "text": "Mang Ben cannot pull out a rusty nail with a short claw hammer. Which change will MOST likely help him?",
             "choices": [
-              { "label": "A) Refraction of light", "correct": false },
-              { "label": "B) Fluid pressure and force transmission", "correct": true },
-              { "label": "C) Magnetic induction", "correct": false },
-              { "label": "D) Sound wave resonance", "correct": false }
-            ]
+              {
+                "label": "Use a longer bar and push at the far end of the handle",
+                "correct": true
+              },
+              {
+                "label": "Use a heavier hammer and push near the hammer's head",
+                "correct": false
+              },
+              {
+                "label": "Pull faster but grip the handle closer to the nail",
+                "correct": false
+              },
+              {
+                "label": "Wet the nail with water so that it slides out easily",
+                "correct": false
+              }
+            ],
+            "explanation": "Torque = force × lever arm. A longer bar pushed at its far end gives a bigger lever arm, so the same effort produces more turning effect. Gripping near the head or the nail SHORTENS the lever arm."
           },
           {
-            "text": "💼 A carpenter uses a long crowbar to pull out a stubborn nail. Why does a longer crowbar work better than a shorter one?",
+            "text": "Helmet X has a thick foam lining; Helmet Y has a thin, hard plastic lining. Which better protects the head in a fall, and why?",
             "choices": [
-              { "label": "A) It is heavier.", "correct": false },
-              { "label": "B) It increases the torque by increasing the lever arm distance.", "correct": true },
-              { "label": "C) It absorbs more friction.", "correct": false },
-              { "label": "D) It uses less electricity.", "correct": false }
-            ]
+              {
+                "label": "X, because the foam makes the head stop more slowly",
+                "correct": true
+              },
+              {
+                "label": "Y, because hard plastic does not bend when it is hit",
+                "correct": false
+              },
+              {
+                "label": "Y, because a thinner lining makes the helmet lighter",
+                "correct": false
+              },
+              {
+                "label": "X, because the foam makes the head bounce off quickly",
+                "correct": false
+              }
+            ],
+            "explanation": "The foam crushes during impact, so the head stops over a LONGER time. A longer stopping time means a smaller force on the skull. A hard lining stops the head almost instantly — a larger force."
           },
           {
-            "text": "🎮 You are watching a live basketball game on TV. Which type of wave carries the video signal to your television?",
+            "text": "During a typhoon the town's cable TV line is cut, but a battery-powered radio still gets news from Manila. What allows the radio to receive the broadcast?",
             "choices": [
-              { "label": "A) Sound waves", "correct": false },
-              { "label": "B) Water waves", "correct": false },
-              { "label": "C) Electromagnetic waves (radio waves)", "correct": true },
-              { "label": "D) Seismic waves", "correct": false }
-            ]
+              {
+                "label": "Radio waves that travel through air and empty space",
+                "correct": true
+              },
+              {
+                "label": "Sound waves from the station that travel all the way",
+                "correct": false
+              },
+              {
+                "label": "Electric current that flows through the wet ground",
+                "correct": false
+              },
+              {
+                "label": "Light from the station that reflects off the clouds",
+                "correct": false
+              }
+            ],
+            "explanation": "Broadcasts are carried by electromagnetic (radio) waves, which need no cable and can travel very far. Sound waves fade quickly and could never travel from Manila to the town."
           },
           {
-            "text": "🚗 You are riding a jeepney and the driver suddenly brakes. You feel pushed forward. Which physics principle explains this?",
+            "text": "A water tank sits on the roof of a 3-storey house. Which faucet will have the STRONGEST flow?",
             "choices": [
-              { "label": "A) Newton's First Law of Motion (inertia)", "correct": true },
-              { "label": "B) Newton's Third Law of Motion", "correct": false },
-              { "label": "C) Law of Refraction", "correct": false },
-              { "label": "D) Law of Conservation of Energy", "correct": false }
-            ]
+              {
+                "label": "The ground-floor faucet, farthest below the tank",
+                "correct": true
+              },
+              {
+                "label": "The third-floor faucet, closest to the tank",
+                "correct": false
+              },
+              {
+                "label": "All faucets flow equally, since they share one tank",
+                "correct": false
+              },
+              {
+                "label": "The faucet with the widest pipe, on any floor",
+                "correct": false
+              }
+            ],
+            "explanation": "Water pressure increases with depth — with the height of water above the faucet. The ground-floor faucet has the tallest column of water above it, so it has the highest pressure and strongest flow."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Lab",
-      "badge": { "id": "physicist", "name": "Physicist", "icon": "⚛️" },
-      "content": "<h3>🔐 Formative Check — Escape the Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. Answer each question correctly to earn a key. Wrong answers cost one life. You need <strong>75%</strong> (5 of 6) to escape and complete this week.</p><p><strong>Think carefully!</strong> Once you lose all 3 lives, you must retake.</p>",
+      "title": "Thinking Like a Physicist",
+      "badge": {
+        "id": "physicist",
+        "name": "Physicist",
+        "icon": "⚛️"
+      },
+      "content": "<h3>🧠 Thinking Like a Physicist</h3>\n<p>Knowing the names of concepts is not enough. A physicist uses them to <strong>explain</strong> and to <strong>decide</strong>. Use these four steps whenever you meet a claim or a problem:</p>\n<ol>\n<li><strong>Observe</strong> — What exactly happens? (Who, what, how fast, how strong?)</li>\n<li><strong>Identify</strong> the concept — friction? pressure? torque? stopping time? waves?</li>\n<li><strong>Explain</strong> with the concept — connect cause and effect in one or two sentences.</li>\n<li><strong>Evaluate</strong> — Is the claim correct? Which option is safer, cheaper or more effective?</li>\n</ol>\n<h3>📝 Worked Example</h3>\n<p><em>Claim:</em> \"Leave the electric fan on in the empty bedroom so the room will be cool when we come back.\"</p>\n<ul>\n<li><strong>Observe:</strong> nobody is in the room; the fan only moves air.</li>\n<li><strong>Identify:</strong> a fan cools people by speeding up evaporation of sweat; its motor actually gives off a little heat.</li>\n<li><strong>Explain:</strong> with no one inside, there is no sweat to evaporate, so the air does not get colder.</li>\n<li><strong>Evaluate:</strong> the claim is <strong>wrong</strong>; turning the fan off saves electricity.</li>\n</ul>\n<p>Notice that the best answer is not the one with the most \"science words\" — it is the one where the <strong>concept truly explains</strong> what happens.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3>\n<p>You have <strong>3 lives</strong> and <strong>6 keys</strong>. Each correct answer earns a key; each wrong answer costs a life. You need <strong>70%</strong> (5 of 6) to complete the week. Read the explanation after every question.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which area of daily life is MOST directly improved by understanding friction?",
+            "text": "A tailor replaces her foot-pedal sewing machine with one that has an electric motor. Which area of daily life is MOST improved?",
             "choices": [
-              { "label": "A) Cooking rice", "correct": false },
-              { "label": "B) Walking on a wet floor without slipping", "correct": true },
-              { "label": "C) Watching TV", "correct": false },
-              { "label": "D) Charging a phone", "correct": false }
-            ]
+              {
+                "label": "Work productivity",
+                "correct": true
+              },
+              {
+                "label": "Health and safety",
+                "correct": false
+              },
+              {
+                "label": "Leisure and recreation",
+                "correct": false
+              },
+              {
+                "label": "Food preservation",
+                "correct": false
+              }
+            ],
+            "explanation": "The motor lets her sew faster with less effort — more output in less time. That is work productivity."
           },
           {
-            "text": "Which physics concept explains why X-ray images can pass through your skin but not your bones?",
+            "text": "A wheelbarrow lets one worker move a heavy load of sand. What does it mainly do?",
             "choices": [
-              { "label": "A) Sound reflection", "correct": false },
-              { "label": "B) Electromagnetic wave penetration", "correct": true },
-              { "label": "C) Fluid pressure", "correct": false },
-              { "label": "D) Torque", "correct": false }
-            ]
+              {
+                "label": "It works as a lever, so less effort is needed",
+                "correct": true
+              },
+              {
+                "label": "It removes most of the weight of the sand load",
+                "correct": false
+              },
+              {
+                "label": "It changes the sand into a lighter material",
+                "correct": false
+              },
+              {
+                "label": "It makes gravity pull less hard near the wheel",
+                "correct": false
+              }
+            ],
+            "explanation": "The wheelbarrow is a lever: the load sits between the wheel (fulcrum) and your hands, so a small effort supports a large load. The sand's weight and gravity do not change."
           },
           {
-            "text": "A construction worker wears a safety helmet. Which physics principle is the helmet designed to address?",
+            "text": "A softball player pulls her glove backward while catching a fast ball. Why does this hurt less?",
             "choices": [
-              { "label": "A) Reducing impact force by extending collision time", "correct": true },
-              { "label": "B) Increasing gravitational pull", "correct": false },
-              { "label": "C) Reflecting sound waves", "correct": false },
-              { "label": "D) Increasing air pressure", "correct": false }
-            ]
+              {
+                "label": "The ball stops over a longer time",
+                "correct": true
+              },
+              {
+                "label": "The ball stops over a shorter time",
+                "correct": false
+              },
+              {
+                "label": "The ball loses some of its mass",
+                "correct": false
+              },
+              {
+                "label": "Gravity pulls the ball to one side",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving the glove back makes the ball stop over a longer time, so the force on her hand is smaller — the same idea as seatbelts and airbags."
           },
           {
-            "text": "You use a wheelbarrow to carry soil. Which simple machine does this represent, and what is its main advantage?",
+            "text": "Which of these is NOT an example of physics improving health and safety?",
             "choices": [
-              { "label": "A) Pulley — changes direction of force", "correct": false },
-              { "label": "B) Lever — multiplies force to lift heavy loads with less effort", "correct": true },
-              { "label": "C) Inclined plane — reduces effort by spreading distance", "correct": false },
-              { "label": "D) Wedge — splits materials", "correct": false }
-            ]
+              {
+                "label": "A television showing a cartoon",
+                "correct": true
+              },
+              {
+                "label": "A helmet lining that crushes on impact",
+                "correct": false
+              },
+              {
+                "label": "A thermometer reading body temperature",
+                "correct": false
+              },
+              {
+                "label": "Eyeglasses that focus light correctly",
+                "correct": false
+              }
+            ],
+            "explanation": "A TV show is leisure. Helmets (stopping time), thermometers (heat and temperature) and eyeglasses (refraction) all protect health or safety."
           },
           {
-            "text": "Which of the following is NOT an example of physics improving work productivity?",
+            "text": "A friend says, \"Seatbelts are useless — you can just hold on to the seat in a crash.\" Which reply is BEST supported by physics?",
             "choices": [
-              { "label": "A) A sewing machine speeding up garment production", "correct": false },
-              { "label": "B) A welding machine joining metal parts", "correct": false },
-              { "label": "C) A worker taking a nap during break time", "correct": true },
-              { "label": "D) A computer processing documents instantly", "correct": false }
-            ]
+              {
+                "label": "Your arms cannot supply the huge force needed in a sudden stop",
+                "correct": true
+              },
+              {
+                "label": "Seatbelts only work when the vehicle is moving very slowly",
+                "correct": false
+              },
+              {
+                "label": "Holding on is better, because seatbelts add to your body weight",
+                "correct": false
+              },
+              {
+                "label": "Seatbelts protect only the driver, not the other passengers",
+                "correct": false
+              }
+            ],
+            "explanation": "In a sudden stop your body keeps moving because of inertia. Stopping it quickly needs a force far larger than your arms can give. The belt holds you and spreads the force across your body."
           },
           {
-            "text": "You are watching a friend play a guitar. Which type of wave produces the sound you hear?",
+            "text": "Your video call freezes whenever you go into a room with thick concrete walls. Which explanation fits physics BEST?",
             "choices": [
-              { "label": "A) Electromagnetic wave", "correct": false },
-              { "label": "B) Mechanical (sound) wave through air", "correct": true },
-              { "label": "C) Light wave", "correct": false },
-              { "label": "D) Radio wave", "correct": false }
-            ]
+              {
+                "label": "The thick walls absorb and block part of the radio signal",
+                "correct": true
+              },
+              {
+                "label": "The concrete walls slow down the sound of your own voice",
+                "correct": false
+              },
+              {
+                "label": "The phone's screen reflects too much of the indoor light",
+                "correct": false
+              },
+              {
+                "label": "The still air inside the room is unable to carry the signal",
+                "correct": false
+              }
+            ],
+            "explanation": "Phones send and receive radio (electromagnetic) waves. Thick concrete absorbs part of these waves, so the signal gets weak. Radio waves do not need moving air, and screen light is unrelated."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explanations, balanced choices"
 }
