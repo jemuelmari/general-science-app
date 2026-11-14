@@ -3,89 +3,286 @@
   "week": 9,
   "title": "Philippine Ecosystems & Climate Change",
   "competencies": [
-    { "code": "GENSCI-11-T2-W9-C1", "text": "Describe climate change. Explain biological responses to climate change." },
-    { "code": "GENSCI-11-T2-W9-C2", "text": "Explain climate change impacts on Philippine ecosystems." }
+    {
+      "code": "GENSCI-11-T2-W9-C1",
+      "text": "Describe climate change. Explain biological responses to climate change."
+    },
+    {
+      "code": "GENSCI-11-T2-W9-C2",
+      "text": "Explain climate change impacts on Philippine ecosystems."
+    }
   ],
-  "badge": { "id": "climate-advocate", "name": "Climate Advocate", "icon": "🌏" },
+  "badge": {
+    "id": "climate-advocate",
+    "name": "Climate Advocate",
+    "icon": "🌏"
+  },
   "days": [
     {
       "day": 1,
       "type": "lesson",
-      "title": "Climate Change & Life",
-      "badge": { "id": "climate-advocate", "name": "Climate Advocate", "icon": "🌏" },
-      "content": "<h3>Learning Target</h3><p>By the end of today's lesson, you will be able to describe climate change, explain how organisms respond biologically to changing climate, and describe the impacts of climate change on Philippine ecosystems.</p><h3>What Is Climate Change?</h3><p><strong>Climate change</strong> refers to long-term shifts in global or regional temperature, precipitation, wind patterns, and other climate indicators over decades or centuries.</p><p><strong>Weather</strong> is short-term (today, this week). <strong>Climate</strong> is long-term (decades, centuries).</p><table><thead><tr><th>Aspect</th><th>Weather</th><th>Climate</th></tr></thead><tbody><tr><td>Time scale</td><td>Hours to days</td><td>Decades to centuries</td></tr><tr><td>Example</td><td>It is raining today</td><td>The Philippines has a tropical climate</td></tr></tbody></table><h3>Causes of Climate Change</h3><p>While natural factors affect climate, human activities since the Industrial Revolution are the dominant cause of recent warming:</p><ul><li>Burning fossil fuels (coal, oil, natural gas) for electricity and transportation releases CO2.</li><li>Deforestation (especially in tropical forests) removes carbon sinks.</li><li>Agriculture releases methane (CH4) from livestock and rice paddies.</li><li>Industrial processes release CO2 and other greenhouse gases.</li></ul><p>These gases trap heat in the atmosphere — the <strong>enhanced greenhouse effect</strong>.</p><h3>Observed Changes in the Philippines</h3><ul><li>Rising temperatures, especially in urban areas.</li><li>More intense typhoons — stronger, wetter, less predictable.</li><li>Sea-level rise threatening coastal communities.</li><li>More frequent droughts and floods (El Nino, La Nina).</li><li>Coral bleaching as water temperature rises.</li></ul><h3>Biological Responses to Climate Change</h3><table><thead><tr><th>Response</th><th>What Happens</th><th>Example</th></tr></thead><tbody><tr><td>Range shifts</td><td>Species move toward cooler areas</td><td>Fish moving to deeper, cooler waters</td></tr><tr><td>Phenology shifts</td><td>Timing of life events changes</td><td>Birds nesting earlier; plants flowering sooner</td></tr><tr><td>Adaptation</td><td>Species evolve or adjust</td><td>Heat-tolerant coral species survive</td></tr><tr><td>Extinction</td><td>Species unable to adapt die out</td><td>Amphibians sensitive to temperature changes</td></tr><tr><td>Migration changes</td><td>Routes and timing shift</td><td>Whales follow shifting food sources</td></tr></tbody></table><h3>Climate Change Impacts on Philippine Ecosystems</h3><table><thead><tr><th>Ecosystem</th><th>Impact</th></tr></thead><tbody><tr><td>Coral reefs</td><td>Bleaching events kill corals; fish populations decline; affects 60% of Filipinos who depend on fisheries</td></tr><tr><td>Mangroves</td><td>Rising sea levels and stronger storms damage mangrove forests</td></tr><tr><td>Rice paddies</td><td>Erratic rainfall, typhoons, saltwater intrusion reduce yields</td></tr><tr><td>Forests</td><td>Changes in rainfall shift forest boundaries; more fires during droughts</td></tr><tr><td>Freshwater lakes</td><td>Warmer water reduces oxygen; fish kills; algal blooms</td></tr><tr><td>Coastal communities</td><td>Sea-level rise forces relocation</td></tr></tbody></table><h3>Case Study: Coral Bleaching</h3><p>Corals are animals that live with microscopic algae (zooxanthellae). When water gets too warm:</p><ol><li>Corals expel the algae.</li><li>They lose their color (bleached).</li><li>Without algae, they slowly starve.</li><li>If temperatures stay high, they die.</li></ol><p>The Tubbataha Reefs (UNESCO World Heritage Site) and the Coral Triangle are hotspots for marine biodiversity.</p><h3>Case Study: Rice & Food Security</h3><p>The Philippines is one of the world's largest rice importers. Climate change affects rice through:</p><ul><li>Typhoons destroying crops before harvest.</li><li>Droughts reducing irrigation water.</li><li>Saltwater intrusion making farmland unusable.</li><li>Pests expanding ranges in warmer temperatures.</li></ul><h3>Why This Matters</h3><p>The Philippines is one of the most climate-vulnerable countries. Our geography — an archipelago in the typhoon belt — makes us highly exposed. Understanding climate change is not just science — it is survival.</p><h3>Quick Check</h3><ul><li>What is the difference between weather and climate? (Answer: weather is short-term; climate is long-term)</li><li>What causes coral bleaching? (Answer: warmer water makes corals expel their algae)</li><li>Name one biological response to climate change. (Answer: range shifts, phenology shifts, adaptation, extinction, migration changes)</li></ul>"
+      "title": "What Is Climate Change?",
+      "badge": {
+        "id": "climate-advocate",
+        "name": "Climate Advocate",
+        "icon": "🌏"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe climate change</strong>, <strong>explain biological responses</strong> of organisms to it, and <strong>explain its impacts on Philippine ecosystems</strong>.</p>\n<h3>🌦️ Weather vs Climate</h3>\n<p><strong>Weather</strong> is the condition of the atmosphere over hours or days (\"It's raining in Iloilo today\"). <strong>Climate</strong> is the average pattern over <strong>decades</strong> (\"The Philippines has a tropical climate with wet and dry seasons\"). <strong>Climate change</strong> is a long-term shift in these averages — temperature, rainfall, storms and sea level.</p>\n<h3>🌍 The Greenhouse Effect</h3>\n<p>Sunlight warms Earth's surface, which gives off heat (infrared). <strong>Greenhouse gases</strong> — carbon dioxide (CO₂), methane (CH₄), nitrous oxide and water vapor — absorb some of this heat and keep Earth warm enough for life. This natural effect is good.</p>\n<p>The problem is the <strong>enhanced greenhouse effect</strong>: since the 1800s, humans have added large amounts of these gases by:</p>\n<ul>\n<li>Burning <strong>coal, oil and gas</strong> for electricity and transport (CO₂)</li>\n<li><strong>Deforestation</strong>, which removes trees that absorb CO₂</li>\n<li>Livestock, flooded rice fields and landfills (methane)</li>\n</ul>\n<p>More heat is trapped, so average temperatures rise — global warming — which then changes rainfall, storms and oceans.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which statement describes CLIMATE rather than weather?",
+            "choices": [
+              {
+                "label": "Mindanao gets rain spread through most of the year",
+                "correct": true
+              },
+              {
+                "label": "It is very cloudy in Baguio this afternoon",
+                "correct": false
+              },
+              {
+                "label": "A typhoon will hit Samar tomorrow evening",
+                "correct": false
+              },
+              {
+                "label": "It rained hard in Manila for about two hours today",
+                "correct": false
+              }
+            ],
+            "explanation": "Climate is the long-term pattern of an area. The others describe short-term weather events."
+          },
+          {
+            "text": "What is the MAIN cause of the recent rise in global temperature?",
+            "choices": [
+              {
+                "label": "Greenhouse gases from human activities",
+                "correct": true
+              },
+              {
+                "label": "The Sun moving closer to the Earth",
+                "correct": false
+              },
+              {
+                "label": "Volcanoes erupting more often each year",
+                "correct": false
+              },
+              {
+                "label": "The natural greenhouse effect alone",
+                "correct": false
+              }
+            ],
+            "explanation": "Scientific evidence shows that greenhouse gases from burning fossil fuels and deforestation are the main driver of recent warming."
+          },
+          {
+            "text": "Why is the natural greenhouse effect actually helpful?",
+            "choices": [
+              {
+                "label": "It keeps Earth warm enough for life",
+                "correct": true
+              },
+              {
+                "label": "It blocks all sunlight from reaching Earth",
+                "correct": false
+              },
+              {
+                "label": "It removes carbon dioxide from the air",
+                "correct": false
+              },
+              {
+                "label": "It makes typhoons weaker every year",
+                "correct": false
+              }
+            ],
+            "explanation": "Without any greenhouse gases, Earth's average temperature would be far below freezing."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Climate Concepts",
-      "badge": { "id": "climate-advocate", "name": "Climate Advocate", "icon": "🌏" },
-      "content": "<h3>Activity 1 — Match the Pairs</h3><p>Match each climate concept or impact to its correct description. There are 8 pairs.</p>",
+      "title": "How Organisms Respond",
+      "badge": {
+        "id": "climate-advocate",
+        "name": "Climate Advocate",
+        "icon": "🌏"
+      },
+      "content": "<h3>🐦 Biological Responses</h3>\n<p>Living things respond to a warming, changing climate in several ways:</p>\n<table><thead><tr><th>Response</th><th>Meaning</th><th>Example</th></tr></thead><tbody>\n<tr><td><strong>Range shift</strong></td><td>Moving to cooler places</td><td>Mountain species moving to higher elevations; fish moving to deeper, cooler water</td></tr>\n<tr><td><strong>Phenology shift</strong></td><td>Changes in the timing of life events</td><td>Earlier flowering; birds nesting or migrating at different times</td></tr>\n<tr><td><strong>Behavioral change</strong></td><td>Changing activity patterns</td><td>Animals more active at night to avoid heat</td></tr>\n<tr><td><strong>Coral bleaching</strong></td><td>Stress response to warm water</td><td>Corals expel their algae and turn white</td></tr>\n<tr><td><strong>Population decline</strong></td><td>When species cannot move or adapt fast enough</td><td>Mountain-top species with nowhere higher to go</td></tr>\n</tbody></table>\n<h3>⏳ Why Speed Matters</h3>\n<p>Evolution usually takes many generations. Today's climate is changing in decades, which is too fast for many species — especially those with small ranges, like many of the Philippines' <strong>endemic</strong> species found nowhere else on Earth.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Climate change", "right": "Long-term shifts in temperature, precipitation, and weather patterns" },
-          { "key": "k2", "left": "Greenhouse gases", "right": "CO2, methane (CH4), water vapor — trap heat in the atmosphere" },
-          { "key": "k3", "left": "Coral bleaching", "right": "Corals expel their algae when water is too warm, losing color and starving" },
-          { "key": "k4", "left": "Sea-level rise", "right": "Threatens coastal Philippine communities and freshwater supplies" },
-          { "key": "k5", "left": "Range shift", "right": "Species move to cooler areas — higher elevation or deeper water" },
-          { "key": "k6", "left": "Phenology shift", "right": "Timing of life events changes — birds nesting earlier" },
-          { "key": "k7", "left": "Saltwater intrusion", "right": "Seawater seeps into farmland and aquifers, making them unusable" },
-          { "key": "k8", "left": "Enhanced greenhouse effect", "right": "Human activities increase GHGs and trap more heat than normal" }
+          {
+            "key": "k1",
+            "left": "Climate change",
+            "right": "Long-term shift in temperature and weather patterns",
+            "why": "It is measured over decades."
+          },
+          {
+            "key": "k2",
+            "left": "Greenhouse gases",
+            "right": "CO₂, methane and others that trap heat",
+            "why": "They absorb infrared radiation."
+          },
+          {
+            "key": "k3",
+            "left": "Enhanced greenhouse effect",
+            "right": "Extra warming from human-added gases",
+            "why": "It goes beyond the natural effect."
+          },
+          {
+            "key": "k4",
+            "left": "Range shift",
+            "right": "Species moving to cooler areas",
+            "why": "Uphill or into deeper water."
+          },
+          {
+            "key": "k5",
+            "left": "Phenology shift",
+            "right": "Change in the timing of life events",
+            "why": "Earlier flowering or nesting."
+          },
+          {
+            "key": "k6",
+            "left": "Coral bleaching",
+            "right": "Corals expel algae in warm water",
+            "why": "They lose color and may starve."
+          },
+          {
+            "key": "k7",
+            "left": "Endemic species",
+            "right": "Found naturally in only one place",
+            "why": "Many Philippine species are endemic."
+          },
+          {
+            "key": "k8",
+            "left": "Sea-level rise",
+            "right": "Oceans expand and ice melts",
+            "why": "It threatens low coastal areas."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Philippine Ecosystems",
-      "badge": { "id": "climate-advocate", "name": "Climate Advocate", "icon": "🌏" },
-      "content": "<h3>Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
+      "title": "Impacts on Philippine Ecosystems",
+      "badge": {
+        "id": "climate-advocate",
+        "name": "Climate Advocate",
+        "icon": "🌏"
+      },
+      "content": "<h3>🇵🇭 Why the Philippines Is Highly Vulnerable</h3>\n<p>The country is an archipelago with long coastlines, many low-lying cities, about 20 tropical cyclones a year, and communities that depend on fishing and farming. It is also a <strong>biodiversity hotspot</strong>.</p>\n<table><thead><tr><th>Ecosystem</th><th>Impact</th></tr></thead><tbody>\n<tr><td>Coral reefs (Tubbataha, Apo Reef)</td><td>Warm water causes bleaching; ocean acidification (CO₂ dissolving in seawater) weakens coral skeletons; fish catches drop</td></tr>\n<tr><td>Mangroves and coasts</td><td>Sea-level rise and storm surges erode coasts; saltwater intrusion affects wells and farms</td></tr>\n<tr><td>Forests and mountains</td><td>Species shift uphill; mountain-top species lose habitat</td></tr>\n<tr><td>Farmlands</td><td>Droughts during El Niño and floods during strong typhoons reduce rice and corn harvests</td></tr>\n<tr><td>Cities</td><td>Heat waves; flooding from intense rainfall</td></tr>\n</tbody></table>\n<h3>🌊 Linked Effects</h3>\n<p>Impacts chain together: bleached reefs give less shelter to fish, so fishers catch less; weaker reefs also break waves less, so coasts erode faster during storms.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Analyze real impacts and responses. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "A marine biologist diving in Tubbataha Reef notices that corals have lost their bright colors and appear pale white. What is happening?",
+            "text": "A diver in Tubbataha Reef finds large areas of white corals after an unusually hot summer. What happened?",
             "choices": [
-              { "label": "A) The corals are dying from too much sunlight", "correct": false },
-              { "label": "B) Coral bleaching — warmer water made the corals expel their symbiotic algae", "correct": true },
-              { "label": "C) The corals are reproducing", "correct": false },
-              { "label": "D) The corals have been painted white", "correct": false }
-            ]
+              {
+                "label": "Warm water made corals expel their algae",
+                "correct": true
+              },
+              {
+                "label": "Fishermen painted the corals white for tourists",
+                "correct": false
+              },
+              {
+                "label": "Cold currents froze the top layer of the corals",
+                "correct": false
+              },
+              {
+                "label": "Sunlight bleached the corals like dry clothes",
+                "correct": false
+              }
+            ],
+            "explanation": "High water temperature stresses corals; they expel the algae that give them color and food, causing bleaching."
           },
           {
-            "text": "A rice farmer in Nueva Ecija notices that his crop yields have been decreasing over the past 5 years. Typhoons arrive earlier, and dry spells last longer. What is the BEST explanation?",
+            "text": "A bird that used to nest in lowland forests is now found nesting only at higher elevations. Which response is this?",
             "choices": [
-              { "label": "A) Climate change is causing more unpredictable and extreme weather patterns", "correct": true },
-              { "label": "B) He is not using enough fertilizer", "correct": false },
-              { "label": "C) His farm is too small", "correct": false },
-              { "label": "D) Rice is no longer profitable", "correct": false }
-            ]
+              {
+                "label": "Range shift to cooler areas",
+                "correct": true
+              },
+              {
+                "label": "Phenology shift in nesting time",
+                "correct": false
+              },
+              {
+                "label": "Coral bleaching on the mountain",
+                "correct": false
+              },
+              {
+                "label": "Migration to another country",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving uphill to find cooler conditions is a range shift."
           },
           {
-            "text": "A species of bird that used to nest in lowland forests is now nesting at higher elevations. What is the likely cause?",
+            "text": "A rice farmer in Nueva Ecija harvests less during strong El Niño years. What is the MOST direct cause?",
             "choices": [
-              { "label": "A) Rising temperatures have shifted the bird's preferred habitat to cooler higher altitudes — a range shift", "correct": true },
-              { "label": "B) The birds prefer the view from the mountains", "correct": false },
-              { "label": "C) The lowland forests are gone", "correct": false },
-              { "label": "D) The birds are migrating for winter", "correct": false }
-            ]
+              {
+                "label": "Drought reduces water for the rice fields",
+                "correct": true
+              },
+              {
+                "label": "Higher CO₂ makes rice plants poisonous",
+                "correct": false
+              },
+              {
+                "label": "Typhoons always become much weaker in El Niño",
+                "correct": false
+              },
+              {
+                "label": "Rice grows too fast when the air is warm",
+                "correct": false
+              }
+            ],
+            "explanation": "El Niño often brings below-normal rainfall in the Philippines, and rice needs a lot of water."
           },
           {
-            "text": "Coastal barangays in La Union are noticing that seawater is reaching further inland during high tides, and wells are becoming salty. What is the PRIMARY cause?",
+            "text": "Seawater reaches farther inland in a La Union barangay each year during high tide. Which TWO climate factors combine here?",
             "choices": [
-              { "label": "A) Sea-level rise due to climate change and over-pumping of groundwater", "correct": true },
-              { "label": "B) The barangay dug the wells too deep", "correct": false },
-              { "label": "C) Fishermen are dumping seawater", "correct": false },
-              { "label": "D) There is no cause — this is normal", "correct": false }
-            ]
+              {
+                "label": "Sea-level rise and stronger storm surges",
+                "correct": true
+              },
+              {
+                "label": "Colder winters and more frequent snow",
+                "correct": false
+              },
+              {
+                "label": "Lower sea levels and weaker typhoons",
+                "correct": false
+              },
+              {
+                "label": "More earthquakes and more volcanic eruptions",
+                "correct": false
+              }
+            ],
+            "explanation": "Higher seas and stronger storm surges push saltwater farther onto land."
           },
           {
-            "text": "A farmer plants mangroves along the coastline. How does this help the community?",
+            "text": "Why are mountain-top species, like some endemic frogs on Mt. Apo, at special risk?",
             "choices": [
-              { "label": "A) Mangroves absorb CO2, protect coastlines from storms and erosion, and provide habitat for fish — a natural climate solution", "correct": true },
-              { "label": "B) Mangroves attract tourists only", "correct": false },
-              { "label": "C) Mangroves block rainwater", "correct": false },
-              { "label": "D) Mangroves provide no benefit", "correct": false }
-            ]
+              {
+                "label": "As it warms, they have no higher place to move",
+                "correct": true
+              },
+              {
+                "label": "They can fly away easily to much cooler countries",
+                "correct": false
+              },
+              {
+                "label": "Warmer weather gives them more food to eat",
+                "correct": false
+              },
+              {
+                "label": "Mountains block all greenhouse gases",
+                "correct": false
+              }
+            ],
+            "explanation": "Species already at the summit cannot shift upward any farther, so their suitable habitat shrinks."
           }
         ]
       }
@@ -93,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Climate Lab",
-      "badge": { "id": "climate-advocate", "name": "Climate Advocate", "icon": "🌏" },
-      "content": "<h3>Formative Check — Escape the Climate Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 70% (5 of 6) to pass.</p>",
+      "title": "Reading the Evidence",
+      "badge": {
+        "id": "climate-advocate",
+        "name": "Climate Advocate",
+        "icon": "🌏"
+      },
+      "content": "<h3>📈 Evidence of Climate Change</h3>\n<ul>\n<li><strong>Temperature records</strong>: global average temperature has risen about 1.1–1.2 °C since the late 1800s; PAGASA records show warming in the Philippines too.</li>\n<li><strong>Atmospheric CO₂</strong>: measured continuously since 1958 and now far higher than in the past 800,000 years (from ice cores).</li>\n<li><strong>Sea level</strong>: rising as seawater warms and expands and as glaciers and ice sheets melt.</li>\n<li><strong>Biological signs</strong>: more frequent coral bleaching, earlier flowering, species shifting ranges.</li>\n</ul>\n<h3>🧠 Thinking Critically About Sources</h3>\n<p>Use reliable sources — PAGASA, DENR, the Climate Change Commission, scientific bodies like the IPCC. Check if a claim is supported by data collected over many years, not one hot day or one cold week. A single weather event is not proof for or against climate change; long-term trends are.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What is the difference between weather and climate?",
             "choices": [
-              { "label": "A) Weather is short-term; climate is long-term", "correct": true },
-              { "label": "B) Weather is long-term; climate is short-term", "correct": false },
-              { "label": "C) They are the same thing", "correct": false },
-              { "label": "D) Weather is about temperature only", "correct": false }
-            ]
+              {
+                "label": "Weather is short-term; climate is the long-term pattern",
+                "correct": true
+              },
+              {
+                "label": "Weather is long-term; climate is the short-term pattern",
+                "correct": false
+              },
+              {
+                "label": "They mean exactly the same thing in science today",
+                "correct": false
+              },
+              {
+                "label": "Weather only refers to rain; climate refers to wind",
+                "correct": false
+              }
+            ],
+            "explanation": "Weather describes hours to days; climate describes averages over decades."
           },
           {
-            "text": "What is the MAIN cause of recent climate change?",
+            "text": "Which human activity adds the MOST carbon dioxide to the atmosphere?",
             "choices": [
-              { "label": "A) Human activities releasing greenhouse gases like CO2 and methane", "correct": true },
-              { "label": "B) Volcanic eruptions only", "correct": false },
-              { "label": "C) Solar cycles only", "correct": false },
-              { "label": "D) Ocean tides", "correct": false }
-            ]
+              {
+                "label": "Burning fossil fuels",
+                "correct": true
+              },
+              {
+                "label": "Planting mangroves",
+                "correct": false
+              },
+              {
+                "label": "Using solar panels",
+                "correct": false
+              },
+              {
+                "label": "Recycling plastic bottles",
+                "correct": false
+              }
+            ],
+            "explanation": "Coal, oil and natural gas release large amounts of CO₂ when burned for energy and transport."
           },
           {
-            "text": "What happens to corals when water temperature rises too much?",
+            "text": "Which is a BIOLOGICAL response to climate change?",
             "choices": [
-              { "label": "A) They expel their symbiotic algae and bleach, slowly starving", "correct": true },
-              { "label": "B) They grow faster", "correct": false },
-              { "label": "C) They change color to red", "correct": false },
-              { "label": "D) Nothing happens — corals are immune", "correct": false }
-            ]
+              {
+                "label": "Fish moving to deeper, cooler waters",
+                "correct": true
+              },
+              {
+                "label": "Ice sheets melting in Antarctica",
+                "correct": false
+              },
+              {
+                "label": "Sea levels rising along coastlines",
+                "correct": false
+              },
+              {
+                "label": "Rainfall patterns shifting in northern Luzon",
+                "correct": false
+              }
+            ],
+            "explanation": "A biological response involves living things. The others are physical changes in the climate system."
           },
           {
-            "text": "Which of the following is a BIOLOGICAL response to climate change?",
+            "text": "Why does ocean acidification harm coral reefs?",
             "choices": [
-              { "label": "A) Species shifting to cooler areas (range shift)", "correct": true },
-              { "label": "B) Building more factories", "correct": false },
-              { "label": "C) Rising electricity prices", "correct": false },
-              { "label": "D) Decreasing internet speed", "correct": false }
-            ]
+              {
+                "label": "Dissolved CO₂ weakens their calcium carbonate skeletons",
+                "correct": true
+              },
+              {
+                "label": "Acid makes the corals grow far too quickly, so they break",
+                "correct": false
+              },
+              {
+                "label": "Acid water is too cold for the corals to survive",
+                "correct": false
+              },
+              {
+                "label": "Acid feeds algae that eat the corals at night",
+                "correct": false
+              }
+            ],
+            "explanation": "CO₂ dissolving in seawater forms carbonic acid, making it harder for corals to build their skeletons."
           },
           {
-            "text": "Why is the Philippines considered highly vulnerable to climate change?",
+            "text": "A classmate says, \"It was cold last night, so climate change isn't real.\" What is the BEST reply?",
             "choices": [
-              { "label": "A) It is an archipelago in the typhoon belt with thousands of coastal communities", "correct": true },
-              { "label": "B) It has no coastline", "correct": false },
-              { "label": "C) It has no forests", "correct": false },
-              { "label": "D) It is located far from the ocean", "correct": false }
-            ]
+              {
+                "label": "One night is weather; climate is a long-term trend",
+                "correct": true
+              },
+              {
+                "label": "Correct — any cold night disproves warming",
+                "correct": false
+              },
+              {
+                "label": "Correct — climate change only happens in the summer months",
+                "correct": false
+              },
+              {
+                "label": "Wrong — it is always hot during climate change",
+                "correct": false
+              }
+            ],
+            "explanation": "Climate change is measured by long-term averages. A single cold night is normal weather variation."
           },
           {
-            "text": "Which practice BEST helps mitigate climate change in the Philippines?",
+            "text": "Which Philippine agency provides official weather and climate data?",
             "choices": [
-              { "label": "A) Planting mangroves and trees to absorb CO2, plus using renewable energy", "correct": true },
-              { "label": "B) Cutting down forests for more farmland", "correct": false },
-              { "label": "C) Using more coal power plants", "correct": false },
-              { "label": "D) Increasing fossil fuel imports", "correct": false }
-            ]
+              {
+                "label": "PAGASA",
+                "correct": true
+              },
+              {
+                "label": "PHIVOLCS",
+                "correct": false
+              },
+              {
+                "label": "DPWH",
+                "correct": false
+              },
+              {
+                "label": "DILG",
+                "correct": false
+              }
+            ],
+            "explanation": "PAGASA monitors weather and climate; PHIVOLCS handles volcanoes and earthquakes."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

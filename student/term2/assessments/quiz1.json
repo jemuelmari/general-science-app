@@ -1,54 +1,272 @@
 {
   "title": "Quiz 1 — Chemical Reactions in Everyday Lives",
   "coverage": "Weeks 1–2",
+  "competencies": [
+    "GENSCI-11-T2-W1-C1",
+    "GENSCI-11-T2-W2-C1"
+  ],
   "items": 20,
-  "competencies": ["GENSCI-11-T2-W1-C1", "GENSCI-11-T2-W2-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "What is a chemical reaction?", "options": ["A process where reactants change into new products with different properties", "A physical change like melting ice", "A change in shape only", "A change in temperature only"], "correct": "A process where reactants change into new products with different properties", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "definition of chemical reaction" } },
-    { "id": "q2", "text": "In a chemical equation, what does the arrow (→) mean?", "options": ["Reacts to produce / yields", "Equals", "Divide", "Absorbs"], "correct": "Reacts to produce / yields", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical equation notation" } },
-    { "id": "q3", "text": "Which of the following is NOT a sign of a chemical reaction?", "options": ["Change in shape without any other change", "Gas bubbles forming", "Color change", "Release of light or heat"], "correct": "Change in shape without any other change", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "signs of chemical reaction" } },
-    { "id": "q4", "text": "What type of reaction occurs when hydrogen peroxide (H₂O₂) breaks down into water and oxygen?", "options": ["Decomposition", "Combustion", "Acid on carbonate", "Acid on metal"], "correct": "Decomposition", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "decomposition reaction type" } },
-    { "id": "q5", "text": "Vinegar reacting with baking soda to produce fizzing is an example of:", "options": ["Acid on carbonate", "Decomposition", "Combustion", "Photosynthesis"], "correct": "Acid on carbonate", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid on carbonate" } },
-    { "id": "q6", "text": "What gas is released when an acid reacts with a metal?", "options": ["Hydrogen (H₂)", "Oxygen (O₂)", "Carbon dioxide (CO₂)", "Nitrogen (N₂)"], "correct": "Hydrogen (H₂)", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid + metal reaction" } },
-    { "id": "q7", "text": "What gas is released when an acid reacts with a carbonate (like baking soda)?", "options": ["Carbon dioxide (CO₂)", "Hydrogen (H₂)", "Oxygen (O₂)", "Methane (CH₄)"], "correct": "Carbon dioxide (CO₂)", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid on carbonate product" } },
-    { "id": "q8", "text": "Burning LPG in a stove is an example of what type of reaction?", "options": ["Combustion", "Decomposition", "Acid on metal", "Photosynthesis"], "correct": "Combustion", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion" } },
-    { "id": "q9", "text": "What are the products of complete combustion of a hydrocarbon fuel?", "options": ["Carbon dioxide and water", "Hydrogen and oxygen", "Salt and water", "Glucose and oxygen"], "correct": "Carbon dioxide and water", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion products" } },
-    { "id": "q10", "text": "Why should you NEVER mix bleach with ammonia cleaner?", "options": ["It releases toxic chloramine gas that can damage lungs", "It becomes solid", "It loses all cleaning power", "It smells better"], "correct": "It releases toxic chloramine gas that can damage lungs", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe handling = W4-C1" } },
-    { "id": "q11", "text": "Which equation correctly represents photosynthesis?", "options": ["6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"], "correct": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "photosynthesis equation" } },
-    { "id": "q12", "text": "Which equation correctly represents cellular respiration?", "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CH₄ + 2O₂ → CO₂ + 2H₂O"], "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration equation" } },
+    {
+      "id": "q1",
+      "text": "Which reaction type breaks ONE compound into two or more simpler substances?",
+      "options": [
+        "Decomposition",
+        "Combustion",
+        "Acid + metal",
+        "Acid + carbonate"
+      ],
+      "correct": "Decomposition",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q2",
+      "text": "What gas forms when an acid reacts with a metal such as zinc?",
+      "options": [
+        "Hydrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Chlorine"
+      ],
+      "correct": "Hydrogen",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q3",
+      "text": "Which of these is a CHEMICAL change?",
+      "options": [
+        "Rice cooking and turning soft and sticky",
+        "Ice cubes melting in a tall glass of juice",
+        "Sugar dissolving in a cup of hot tea",
+        "A plastic bottle being crushed flat"
+      ],
+      "correct": "Rice cooking and turning soft and sticky",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "Why does baking soda fizz when vinegar is poured on it?",
+      "options": [
+        "The acid and carbonate react to release CO₂",
+        "The vinegar boils as soon as it touches the soda",
+        "Air trapped in the powder is pushed out",
+        "The soda melts into water and then foams"
+      ],
+      "correct": "The acid and carbonate react to release CO₂",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "A candle burns with a steady flame. Which reaction type is this?",
+      "options": [
+        "Combustion",
+        "Decomposition",
+        "Acid + metal",
+        "Neutralization only"
+      ],
+      "correct": "Combustion",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q6",
+      "text": "Why is a yellow, sooty LPG flame a warning sign?",
+      "options": [
+        "It shows incomplete combustion, which can make CO",
+        "It shows the tank is too full of fresh fuel to burn well",
+        "It shows the flame is hotter and much safer",
+        "It shows the gas is turning into pure water"
+      ],
+      "correct": "It shows incomplete combustion, which can make CO",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q7",
+      "text": "Hydrogen peroxide fizzing on a wound gives off which gas?",
+      "options": [
+        "Oxygen",
+        "Hydrogen",
+        "Chlorine",
+        "Nitrogen"
+      ],
+      "correct": "Oxygen",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q8",
+      "text": "A student adds dilute hydrochloric acid to crushed eggshells and holds a burning splint at the mouth of the tube. What will happen?",
+      "options": [
+        "The flame goes out, because CO₂ formed",
+        "The gas pops loudly, because hydrogen formed",
+        "The flame glows brighter, because oxygen formed",
+        "Nothing happens, since eggshells cannot react"
+      ],
+      "correct": "The flame goes out, because CO₂ formed",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q9",
+      "text": "Which product would you use to remove white scale (calcium carbonate) from a kettle, and why?",
+      "options": [
+        "Vinegar, because acid reacts with carbonate",
+        "Salt water, because salt dissolves all minerals",
+        "Cooking oil, because oil softens the scale layer",
+        "Bleach, because it reacts with metal to clean it"
+      ],
+      "correct": "Vinegar, because acid reacts with carbonate",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q10",
+      "text": "A family uses a charcoal stove inside a closed room during a storm. What is the GREATEST danger, and why?",
+      "options": [
+        "Carbon monoxide, from incomplete combustion",
+        "Hydrogen gas, from charcoal reacting with rain",
+        "Oxygen gas, from the charcoal breaking down",
+        "Chlorine gas, from salt in the cooking food"
+      ],
+      "correct": "Carbon monoxide, from incomplete combustion",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q11",
+      "text": "Why must you change only the coefficients, not the subscripts, when balancing an equation?",
+      "options": [
+        "Changing subscripts makes a different substance",
+        "Subscripts are too small to be changed easily by hand",
+        "Coefficients always have to be odd numbers",
+        "Subscripts show the speed of the reaction"
+      ],
+      "correct": "Changing subscripts makes a different substance",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q12",
+      "text": "What are the REACTANTS of photosynthesis?",
+      "options": [
+        "Carbon dioxide and water",
+        "Glucose and oxygen gas",
+        "Oxygen and water vapor",
+        "Glucose and carbon dioxide"
+      ],
+      "correct": "Carbon dioxide and water",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q13",
-      "text": "Why must a chemical equation be balanced?",
+      "text": "In which organelle does most cellular respiration happen?",
       "options": [
-        "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed",
-        "To make the reaction appear balanced and neat",
-        "Because gravity pulls atoms down during reactions",
-        "To reduce the temperature of the reacting mixture"
+        "Mitochondria",
+        "Chloroplasts",
+        "Ribosomes",
+        "Nucleus"
       ],
-      "correct": "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed",
+      "correct": "Mitochondria",
       "competency": "GENSCI-11-T2-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "balancing rationale; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q14", "text": "What is a coefficient in a chemical equation?", "options": ["A whole number placed in front of a chemical formula to balance the equation", "A subscript showing the number of atoms", "The product of a reaction", "The speed of the reaction"], "correct": "A whole number placed in front of a chemical formula to balance the equation", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "coefficient definition" } },
-    { "id": "q15", "text": "Where in the cell does cellular respiration mainly occur?", "options": ["Mitochondria", "Nucleus", "Chloroplast", "Ribosome"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration location" } },
+    {
+      "id": "q14",
+      "text": "Why are photosynthesis and respiration called opposite processes?",
+      "options": [
+        "The products of one are the reactants of the other",
+        "Both need sunlight and happen only during the daytime",
+        "Both produce glucose and release carbon dioxide",
+        "One happens in plants and the other only in rocks"
+      ],
+      "correct": "The products of one are the reactants of the other",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q15",
+      "text": "What is ATP?",
+      "options": [
+        "The energy currency of the cell",
+        "A sugar made in the chloroplast",
+        "A gas released during breathing",
+        "A mineral absorbed by the roots"
+      ],
+      "correct": "The energy currency of the cell",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q16",
-      "text": "What is ATP and why is it important?",
+      "text": "Muscles burn during a hard sprint because cells make which substance when oxygen runs short?",
       "options": [
-        "It is the energy currency of the cell — used for cellular work",
-        "It is a type of sugar molecule stored in the cell",
-        "It is a protein responsible for cell growth",
-        "It is a genetic material carrying cell instructions"
+        "Lactic acid",
+        "Glucose",
+        "Ethanol",
+        "Oxygen gas (O₂)"
       ],
-      "correct": "It is the energy currency of the cell — used for cellular work",
+      "correct": "Lactic acid",
       "competency": "GENSCI-11-T2-W2-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP function; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q17", "text": "Why are photosynthesis and respiration considered 'opposite reactions'?", "options": ["Their reactants and products are reversed", "They happen in the same organelle", "Both produce oxygen", "Neither requires energy"], "correct": "Their reactants and products are reversed", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compare photosynthesis and respiration" } },
-    { "id": "q18", "text": "Balance this equation: __ H₂ + O₂ → __ H₂O. What are the correct coefficients?", "options": ["2 and 2", "1 and 1", "3 and 3", "4 and 1"], "correct": "2 and 2", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "balancing equation numerically" } },
-    { "id": "q19", "text": "After eating rice, your body breaks down the starch into glucose. This is an example of:", "options": ["Catabolism — breaking down larger molecules to release energy", "Anabolism — building larger molecules", "Photosynthesis", "Combustion"], "correct": "Catabolism — breaking down larger molecules to release energy", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "metabolic reaction application" } },
-    { "id": "q20", "text": "Rusting of iron is best described as:", "options": ["Slow oxidation — iron reacts with oxygen and water to form iron oxide", "Combustion with flames", "Photosynthesis", "Decomposition of water"], "correct": "Slow oxidation — iron reacts with oxygen and water to form iron oxide", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "oxidation reaction" } }
+    {
+      "id": "q17",
+      "text": "Which is an example of CATABOLISM?",
+      "options": [
+        "Breaking down starch into glucose",
+        "Building proteins from amino acids",
+        "Making new cells during growth",
+        "Storing extra glucose as glycogen"
+      ],
+      "correct": "Breaking down starch into glucose",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "Which coefficients balance __CH₄ + __O₂ → __CO₂ + __H₂O?",
+      "options": [
+        "1, 2, 1, 2",
+        "1, 1, 1, 1",
+        "2, 1, 2, 1",
+        "1, 3, 1, 3"
+      ],
+      "correct": "1, 2, 1, 2",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q19",
+      "text": "A sealed jar has a plant and a mouse. In bright light both stay healthy for a while; in darkness the mouse weakens sooner. What BEST explains this?",
+      "options": [
+        "In darkness the plant stops making oxygen but still uses it",
+        "In darkness the plant makes more oxygen for the mouse",
+        "In darkness the mouse stops respiring and saves all its oxygen",
+        "In darkness carbon dioxide turns back into oxygen"
+      ],
+      "correct": "In darkness the plant stops making oxygen but still uses it",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q20",
+      "text": "Yeast is added to two cups of sugar water. Cup A is warm; Cup B is ice-cold. Cup A foams much more. What is the BEST conclusion?",
+      "options": [
+        "Warmth speeds up yeast fermentation, making more CO₂",
+        "Cold water dissolves more CO₂, so it makes more foam",
+        "Sugar only dissolves in warm water, not in cold water",
+        "Yeast performs photosynthesis faster in warm water"
+      ],
+      "correct": "Warmth speeds up yeast fermentation, making more CO₂",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Analyzing"
+    }
   ]
 }

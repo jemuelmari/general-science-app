@@ -1,94 +1,800 @@
 {
   "title": "Term Exam — General Science Term 2",
   "coverage": "Weeks 1–10 (full term)",
+  "competencies": [
+    "GENSCI-11-T2-W1-C1",
+    "GENSCI-11-T2-W2-C1",
+    "GENSCI-11-T2-W3-C1",
+    "GENSCI-11-T2-W4-C1",
+    "GENSCI-11-T2-W5-C1",
+    "GENSCI-11-T2-W6-C1",
+    "GENSCI-11-T2-W7-C1",
+    "GENSCI-11-T2-W8-C1",
+    "GENSCI-11-T2-W9-C1",
+    "GENSCI-11-T2-W10-C1"
+  ],
   "items": 60,
-  "competencies": ["GENSCI-11-T2-W1-C1", "GENSCI-11-T2-W2-C1", "GENSCI-11-T2-W3-C1", "GENSCI-11-T2-W4-C1", "GENSCI-11-T2-W5-C1", "GENSCI-11-T2-W6-C1", "GENSCI-11-T2-W7-C1", "GENSCI-11-T2-W8-C1", "GENSCI-11-T2-W9-C1", "GENSCI-11-T2-W10-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "What is a chemical reaction?", "options": ["A process where reactants change into new products with different properties", "A physical change like melting ice", "A change in shape only", "A change in temperature only"], "correct": "A process where reactants change into new products with different properties", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "reaction definition" } },
-    { "id": "q2", "text": "Which of the following is NOT a sign that a chemical reaction has occurred?", "options": ["Change in shape only, without any other change", "Formation of gas bubbles", "Color change", "Release of light or heat"], "correct": "Change in shape only, without any other change", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "reaction signs" } },
-    { "id": "q3", "text": "Hydrogen peroxide (H₂O₂) breaking into water and oxygen is an example of:", "options": ["Decomposition", "Combustion", "Acid on carbonate", "Photosynthesis"], "correct": "Decomposition", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "decomposition" } },
-    { "id": "q4", "text": "Vinegar + baking soda producing fizzing is an example of:", "options": ["Acid on carbonate", "Decomposition", "Combustion", "Acid on metal"], "correct": "Acid on carbonate", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid on carbonate" } },
-    { "id": "q5", "text": "What gas is released when an acid reacts with a metal?", "options": ["Hydrogen (H₂)", "Oxygen (O₂)", "Carbon dioxide (CO₂)", "Nitrogen (N₂)"], "correct": "Hydrogen (H₂)", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid + metal" } },
-    { "id": "q6", "text": "Burning LPG in a stove is an example of:", "options": ["Combustion", "Decomposition", "Photosynthesis", "Acid on metal"], "correct": "Combustion", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion" } },
-    { "id": "q7", "text": "What are the products of complete combustion of a hydrocarbon fuel?", "options": ["Carbon dioxide and water", "Hydrogen and oxygen", "Salt and water", "Glucose and oxygen"], "correct": "Carbon dioxide and water", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion products" } },
-    { "id": "q8", "text": "Why should you NEVER mix bleach with ammonia cleaner?", "options": ["It releases toxic chloramine gas that can damage lungs", "It becomes solid", "It loses cleaning power", "It smells better"], "correct": "It releases toxic chloramine gas that can damage lungs", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe handling" } },
-    { "id": "q9", "text": "Which equation correctly represents photosynthesis?", "options": ["6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"], "correct": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "photosynthesis equation" } },
-    { "id": "q10", "text": "Which equation correctly represents cellular respiration?", "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CH₄ + 2O₂ → CO₂ + 2H₂O"], "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration equation" } },
-    { "id": "q11", "text": "Why must a chemical equation be balanced?", "options": ["Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "To make it look nicer", "Because of gravity", "To reduce temperature"], "correct": "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "balancing rationale" } },
-    { "id": "q12", "text": "Where in the cell does cellular respiration mainly occur?", "options": ["Mitochondria", "Nucleus", "Chloroplast", "Ribosome"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration organelle" } },
-    { "id": "q13", "text": "What is ATP?", "options": ["The energy currency of the cell — used for cellular work", "A type of sugar", "A protein for growth", "A genetic material"], "correct": "The energy currency of the cell — used for cellular work", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP" } },
-    { "id": "q14", "text": "Why are photosynthesis and respiration considered 'opposite reactions'?", "options": ["Their reactants and products are reversed", "They happen in the same organelle", "Both produce oxygen", "Neither requires energy"], "correct": "Their reactants and products are reversed", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compare photosynthesis vs respiration" } },
-    { "id": "q15", "text": "Balance this equation: __ H₂ + O₂ → __ H₂O. What are the correct coefficients?", "options": ["2 and 2", "1 and 1", "3 and 3", "4 and 1"], "correct": "2 and 2", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "equation balancing" } },
-    { "id": "q16", "text": "What is a solution?", "options": ["A homogeneous mixture of two or more substances", "A heterogeneous mixture where particles settle at the bottom", "A pure chemical substance", "A type of solid only"], "correct": "A homogeneous mixture of two or more substances", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution definition" } },
-    { "id": "q17", "text": "In saltwater, which is the solvent?", "options": ["Water", "Salt", "Both", "Neither"], "correct": "Water", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solvent identification" } },
-    { "id": "q18", "text": "Why is water called the 'universal solvent'?", "options": ["It dissolves more substances than any other liquid", "It is found everywhere", "It has no charge", "It is denser than other liquids"], "correct": "It dissolves more substances than any other liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "universal solvent" } },
-    { "id": "q19", "text": "Soda is what type of solution?", "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"], "correct": "Gas-in-liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" } },
-    { "id": "q20", "text": "Air is best described as which type of solution?", "options": ["Gas-in-gas", "Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid"], "correct": "Gas-in-gas", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" } },
-    { "id": "q21", "text": "What is saturation?", "options": ["The point where no more solute can dissolve in a solvent at a given temperature", "When a solution is diluted with water", "When a solute evaporates", "When a solvent freezes"], "correct": "The point where no more solute can dissolve in a solvent at a given temperature", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saturation" } },
-    { "id": "q22", "text": "What happens to a plant in soil with very high salt concentration?", "options": ["Water moves out of the plant roots due to osmotic stress, causing wilting", "It grows faster because salt is a nutrient", "It becomes saltwater-tolerant automatically", "Nothing changes"], "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "salt effect on plants" } },
-    { "id": "q23", "text": "What is saltwater intrusion?", "options": ["Seawater seeping into freshwater aquifers, making them salty and unusable", "Adding salt to freshwater for drinking", "Removing salt from seawater", "A type of water filtration"], "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saltwater intrusion" } },
-    { "id": "q24", "text": "What does the GHS skull-and-crossbones symbol mean?", "options": ["Acute toxicity — can cause death or serious harm", "Flammable liquid", "Corrosive to metals", "Harmless"], "correct": "Acute toxicity — can cause death or serious harm", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" } },
-    { "id": "q25", "text": "Which GHS symbol warns that a chemical can corrode skin or metals?", "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"], "correct": "Corrosion (test tube dripping on surface)", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion" } },
-    { "id": "q26", "text": "Why must acids and bases be stored separately?", "options": ["They can react violently if they touch", "They have different colors", "They smell different", "They weigh differently"], "correct": "They can react violently if they touch", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage" } },
+    {
+      "id": "q1",
+      "text": "Which reaction type needs a fuel and oxygen and gives off heat and light?",
+      "options": [
+        "Combustion",
+        "Decomposition of a compound",
+        "Acid reacting with a metal",
+        "Acid reacting with a carbonate"
+      ],
+      "correct": "Combustion",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q2",
+      "text": "Which gas puts out a burning splint?",
+      "options": [
+        "Carbon dioxide",
+        "Hydrogen gas (H₂)",
+        "Oxygen gas (O₂)",
+        "Methane gas (CH₄)"
+      ],
+      "correct": "Carbon dioxide",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q3",
+      "text": "Why does vinegar remove limescale from a faucet?",
+      "options": [
+        "Its acid reacts with the carbonate in the scale",
+        "Its water melts the scale into a liquid form slowly",
+        "Its smell drives the minerals away from the metal",
+        "It cools the faucet so the scale cracks and falls"
+      ],
+      "correct": "Its acid reacts with the carbonate in the scale",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "Which daily activity involves an acid reacting with a carbonate?",
+      "options": [
+        "Baking powder making a cake rise",
+        "An LPG stove heating a pot of rice on the burner",
+        "Hydrogen peroxide fizzing on a fresh wound",
+        "A rusty nail forming in a wet backyard"
+      ],
+      "correct": "Baking powder making a cake rise",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "What makes incomplete combustion dangerous indoors?",
+      "options": [
+        "It produces carbon monoxide",
+        "It produces extra pure oxygen in the room",
+        "It produces only harmless water vapor",
+        "It makes the flame burn completely blue"
+      ],
+      "correct": "It produces carbon monoxide",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q6",
+      "text": "A metal spoon is dropped into muriatic acid and bubbles form. What should you expect if a flame is brought near the bubbles?",
+      "options": [
+        "A squeaky pop, since hydrogen formed",
+        "The flame goes out, since carbon dioxide formed",
+        "A bright glow, since pure oxygen formed",
+        "Nothing at all, since no gas can form here"
+      ],
+      "correct": "A squeaky pop, since hydrogen formed",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q7",
+      "text": "Which equation is balanced?",
+      "options": [
+        "N₂ + 3H₂ → 2NH₃",
+        "N₂ + H₂ → NH₃",
+        "N₂ + 3H₂ → NH₃",
+        "2N₂ + H₂ → 2NH₃"
+      ],
+      "correct": "N₂ + 3H₂ → 2NH₃",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q8",
+      "text": "What is the energy source for photosynthesis?",
+      "options": [
+        "Light energy",
+        "Heat from the soil",
+        "Chemical energy in glucose",
+        "Sound energy from wind"
+      ],
+      "correct": "Light energy",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q9",
+      "text": "What does yeast produce during fermentation?",
+      "options": [
+        "Alcohol and carbon dioxide",
+        "Lactic acid and pure oxygen gas",
+        "Glucose and pure oxygen gas",
+        "Water and a lot of ATP"
+      ],
+      "correct": "Alcohol and carbon dioxide",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q10",
+      "text": "Which organisms carry out cellular respiration?",
+      "options": [
+        "Almost all living things, including plants",
+        "Only animals, since plants make their own food",
+        "Only plants, since animals eat their food",
+        "Only bacteria that live in the soil"
+      ],
+      "correct": "Almost all living things, including plants",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q11",
+      "text": "How many oxygen atoms are on the LEFT side of C₆H₁₂O₆ + 6O₂?",
+      "options": [
+        "18",
+        "12",
+        "6",
+        "8"
+      ],
+      "correct": "18",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q12",
+      "text": "In a sealed jar, a plant is kept in the dark for two days. What happens to the CO₂ level, and why?",
+      "options": [
+        "It rises, because the plant respires but cannot photosynthesize",
+        "It falls, because the plant photosynthesizes even more in the dark",
+        "It stays the same, because plants stop all reactions at night",
+        "It falls to zero, because darkness destroys carbon dioxide"
+      ],
+      "correct": "It rises, because the plant respires but cannot photosynthesize",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q13",
+      "text": "Which pair is a solute and solvent in that order?",
+      "options": [
+        "Sugar and water in coffee",
+        "Water and sugar in coffee",
+        "Air and nitrogen in the sky",
+        "Steel and iron in a nail"
+      ],
+      "correct": "Sugar and water in coffee",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q14",
+      "text": "Which can separate salt from seawater?",
+      "options": [
+        "Evaporation",
+        "Filtering with paper",
+        "Shaking the bottle",
+        "Letting it settle"
+      ],
+      "correct": "Evaporation",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q15",
+      "text": "Why does stirring help sugar dissolve faster?",
+      "options": [
+        "It brings fresh solvent into contact with the solute",
+        "It makes the sugar crystals much bigger and heavier than before",
+        "It removes the water from around the sugar",
+        "It cools the solution so more can dissolve"
+      ],
+      "correct": "It brings fresh solvent into contact with the solute",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q16",
+      "text": "Which is a LIQUID-in-LIQUID solution?",
+      "options": [
+        "Vinegar",
+        "Brass (alloy)",
+        "Soda",
+        "Air"
+      ],
+      "correct": "Vinegar",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q17",
+      "text": "A farmer's field was flooded by seawater during a storm surge. Based on solution science, what will most likely happen to his rice?",
+      "options": [
+        "It wilts, since salty soil pulls water from the roots",
+        "It grows taller, since salt is an important plant nutrient",
+        "It is unharmed, since rice can filter the salt",
+        "It turns sweet, since salt changes into sugar"
+      ],
+      "correct": "It wilts, since salty soil pulls water from the roots",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q18",
+      "text": "Fish in a pond gasp at the surface on hot afternoons but not in the early morning. What BEST explains this?",
+      "options": [
+        "Warm water holds less dissolved oxygen",
+        "Cold water holds less dissolved oxygen",
+        "Fish need less oxygen when it is hot",
+        "Sunlight removes all salt from the pond"
+      ],
+      "correct": "Warm water holds less dissolved oxygen",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q19",
+      "text": "What does the exclamation-mark GHS pictogram indicate?",
+      "options": [
+        "An irritant or harmful substance",
+        "A chemical that explodes on impact",
+        "A gas under high pressure inside",
+        "A substance that is very radioactive"
+      ],
+      "correct": "An irritant or harmful substance",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q20",
+      "text": "Why should chemicals be kept in their original containers?",
+      "options": [
+        "The label shows contents, hazards and first aid",
+        "Original containers make chemicals much stronger",
+        "Other containers make the chemicals evaporate",
+        "Only original containers are allowed in stores"
+      ],
+      "correct": "The label shows contents, hazards and first aid",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q21",
+      "text": "How does mercury reach people who live far from a mine?",
+      "options": [
+        "It accumulates in fish that people eat",
+        "It travels through the electric power lines",
+        "It is added to rice during harvest time",
+        "It falls with the rain as tiny pure crystals"
+      ],
+      "correct": "It accumulates in fish that people eat",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q22",
+      "text": "Which is the safest way to dispose of leftover paint thinner?",
+      "options": [
+        "Bring it to a hazardous-waste collection point",
+        "Pour it into the canal behind the house slowly",
+        "Burn it in the backyard in an open steel drum",
+        "Mix it with soil and use it as garden fertilizer"
+      ],
+      "correct": "Bring it to a hazardous-waste collection point",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q23",
+      "text": "A school stores muriatic acid beside bleach on one open shelf. Which risk is GREATEST?",
+      "options": [
+        "A leak could mix them and release toxic gas",
+        "The bleach will make the acid more expensive",
+        "The acid will cause the bleach to evaporate",
+        "The shelf will make both chemicals expire"
+      ],
+      "correct": "A leak could mix them and release toxic gas",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q24",
+      "text": "Two barangays reduce creek pollution: X fines dumping and offers used-oil collection; Y posts one sign. Which approach is MORE effective?",
+      "options": [
+        "X — it changes behavior and gives a safe option",
+        "Y — a single sign is enough to stop all dumping",
+        "Y — fines always make dumping happen more often",
+        "X — because fines make creeks naturally cleaner"
+      ],
+      "correct": "X — it changes behavior and gives a safe option",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q25",
+      "text": "Which level of organization is the heart?",
+      "options": [
+        "Organ",
+        "Tissue",
+        "Organ system",
+        "Cell"
+      ],
+      "correct": "Organ",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q26",
+      "text": "Which feature of root hairs matches their function?",
+      "options": [
+        "Long and thin, giving more area to absorb water",
+        "Thick and hard, protecting the plant from insects",
+        "Green and flat, capturing sunlight for food",
+        "Hollow and dead, carrying sugar to the flowers"
+      ],
+      "correct": "Long and thin, giving more area to absorb water",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q27",
-      "text": "What is the BEST way to dispose of leftover household chemicals?",
+      "text": "Which is an example of homeostasis?",
       "options": [
-        "Take them to a designated hazardous waste collection point following DENR guidelines",
-        "Pour them slowly into the nearest storm drain with running water",
-        "Throw them in the regular household trash for weekly pickup",
-        "Bury them in the backyard, away from any vegetable gardens"
+        "Shivering to warm up when cold",
+        "Growing taller during adolescence",
+        "Passing eye color to a child",
+        "Bees carrying pollen to flowers"
       ],
-      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal; distractors balanced (Phase 6)" }
+      "correct": "Shivering to warm up when cold",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
     },
-    { "id": "q28", "text": "What is eutrophication?", "options": ["Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "A cleaning process for detergents", "A form of distillation", "A method of water purification"], "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "eutrophication" } },
-    { "id": "q29", "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?", "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"], "correct": "RA 6969", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation" } },
-    { "id": "q30", "text": "Why is proper chemical disposal important?", "options": ["To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe", "Because the government requires it", "To save money", "To increase the volume of the ocean"], "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "disposal impact" } },
-    { "id": "q31", "text": "What is the basic structural and functional unit of all living things?", "options": ["The cell", "The atom", "The tissue", "The organ"], "correct": "The cell", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "cell = basic unit" } },
-    { "id": "q32", "text": "Which theme of life science explains why you sweat when it's hot?", "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"], "correct": "Homeostasis", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unifying theme" } },
-    { "id": "q33", "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?", "options": ["Cell → Tissue → Organ → Organ System → Organism", "Organism → Cell → Tissue → Organ", "Organ → Cell → Tissue → Organism", "Tissue → Cell → Organ → Organism"], "correct": "Cell → Tissue → Organ → Organ System → Organism", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "levels of organization" } },
-    { "id": "q34", "text": "Which statement BEST describes the structure-function relationship?", "options": ["The shape of a biological part determines what job it can perform", "All structures look the same", "Function is random and unrelated to structure", "Only animals have structure-function relationships"], "correct": "The shape of a biological part determines what job it can perform", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function" } },
-    { "id": "q35", "text": "Why are alveoli in the lungs so tiny and numerous?", "options": ["To create a huge surface area for gas exchange", "To make them easier to see", "To reduce oxygen intake", "To store water"], "correct": "To create a huge surface area for gas exchange", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function example" } },
-    { "id": "q36", "text": "Which organelle is known as the 'powerhouse of the cell'?", "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitochondria" } },
-    { "id": "q37", "text": "Which process moves molecules from LOW to HIGH concentration, using energy (ATP)?", "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"], "correct": "Active transport", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "active transport" } },
-    { "id": "q38", "text": "A potato slice placed in salty water becomes soft and shriveled. Why?", "options": ["Water left the potato cells by osmosis because the salt solution had lower water concentration", "Salt destroyed the potato cells chemically", "The potato absorbed the salt", "The potato froze"], "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "osmosis analysis" } },
-    { "id": "q39", "text": "Which organelle performs photosynthesis in plant cells?", "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"], "correct": "Chloroplast", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chloroplast" } },
-    { "id": "q40", "text": "Which plant organ is primarily responsible for absorbing water and minerals?", "options": ["Roots", "Leaves", "Flowers", "Fruit"], "correct": "Roots", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "root function" } },
-    { "id": "q41", "text": "Which vascular tissue transports water upward from roots to leaves?", "options": ["Xylem", "Phloem", "Cambium", "Epidermis"], "correct": "Xylem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "xylem" } },
-    { "id": "q42", "text": "Which vascular tissue transports sugar (food) throughout the plant?", "options": ["Phloem", "Xylem", "Stomata", "Cuticle"], "correct": "Phloem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "phloem" } },
-    { "id": "q43", "text": "What is transpiration?", "options": ["Loss of water vapor from leaves through stomata", "Movement of food through phloem", "Absorption of minerals by the roots", "Production of glucose in leaves"], "correct": "Loss of water vapor from leaves through stomata", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transpiration" } },
-    { "id": "q44", "text": "Why does removing a complete ring of bark kill a tree?", "options": ["It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "It removes the tree's protective armor", "It prevents photosynthesis", "It stops transpiration"], "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transport analysis" } },
-    { "id": "q45", "text": "Which brain region coordinates body temperature?", "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"], "correct": "Hypothalamus", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "temperature regulation" } },
-    { "id": "q46", "text": "What is the 1st line of defense against pathogens?", "options": ["Physical barriers like skin and mucous membranes", "Antibodies", "Memory cells", "Vaccines"], "correct": "Physical barriers like skin and mucous membranes", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune barriers" } },
-    { "id": "q47", "text": "How do vaccines protect you from future infections?", "options": ["They create memory B and T cells that respond quickly if the real pathogen appears", "They kill all pathogens in your body permanently", "They replace your immune system", "They cause the disease in a mild form only"], "correct": "They create memory B and T cells that respond quickly if the real pathogen appears", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccine mechanism" } },
-    { "id": "q48", "text": "Which BEST describes the difference between nervous and endocrine responses?", "options": ["Nervous is fast and short-term; endocrine is slower but longer-lasting", "Nervous is slow; endocrine is fast", "They are identical", "Only nervous responses involve hormones"], "correct": "Nervous is fast and short-term; endocrine is slower but longer-lasting", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "nervous vs endocrine" } },
-    { "id": "q49", "text": "A torn ACL affects which body part?", "options": ["The knee joint", "The heart", "The lungs", "The brain"], "correct": "The knee joint", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "body part damage" } },
-    { "id": "q50", "text": "Which of the following is a symptom of an asthma attack?", "options": ["Difficulty breathing and wheezing due to narrowed bronchioles", "Broken bones", "Rapid hair growth", "Loss of vision"], "correct": "Difficulty breathing and wheezing due to narrowed bronchioles", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "damaged system effect" } },
-    { "id": "q51", "text": "What is the difference between weather and climate?", "options": ["Weather is short-term; climate is long-term", "Weather is long-term; climate is short-term", "They are the same thing", "Weather is about temperature only"], "correct": "Weather is short-term; climate is long-term", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate change = W9-C1" } },
-    { "id": "q52", "text": "What is the MAIN cause of recent climate change?", "options": ["Human activities releasing greenhouse gases like CO₂ and methane", "Volcanic eruptions only", "Solar cycles only", "Ocean tides"], "correct": "Human activities releasing greenhouse gases like CO₂ and methane", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate change causes" } },
-    { "id": "q53", "text": "What happens to corals when water temperature rises too much?", "options": ["They expel their symbiotic algae and bleach, slowly starving", "They grow faster", "They change color to red", "Nothing happens — corals are immune"], "correct": "They expel their symbiotic algae and bleach, slowly starving", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate change impact on ecosystems" } },
-    { "id": "q54", "text": "Which of the following is a BIOLOGICAL response to climate change?", "options": ["Species shifting to cooler areas (range shift)", "Building more factories", "Rising electricity prices", "Decreasing internet speed"], "correct": "Species shifting to cooler areas (range shift)", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "biological response = W9-C1" } },
-    { "id": "q55", "text": "Why is the Philippines highly vulnerable to climate change?", "options": ["It's an archipelago in the typhoon belt with thousands of coastal communities", "It has no coastline", "It has no forests", "It's located far from the ocean"], "correct": "It's an archipelago in the typhoon belt with thousands of coastal communities", "competency": "GENSCI-11-T2-W9-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine ecosystem vulnerability" } },
+    {
+      "id": "q28",
+      "text": "What makes something alive rather than non-living?",
+      "options": [
+        "It has cells and carries out life processes",
+        "It moves quickly and makes a loud sound",
+        "It grows larger when it is heated up",
+        "It changes its color whenever bright sunlight hits it"
+      ],
+      "correct": "It has cells and carries out life processes",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q29",
+      "text": "Emphysema reduces the number of alveoli. Why does this make the heart work harder?",
+      "options": [
+        "Blood carries less oxygen, so the heart pumps faster to compensate",
+        "The heart must pump air directly into the lungs to replace the alveoli",
+        "The alveoli move into the heart and block its chambers",
+        "Less carbon dioxide reaches the heart, so it beats slowly"
+      ],
+      "correct": "Blood carries less oxygen, so the heart pumps faster to compensate",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q30",
+      "text": "Which diagram BEST shows structure–function in the digestive system?",
+      "options": [
+        "Villi drawn with an arrow to 'more area for absorption'",
+        "Stomach drawn with an arrow to 'pumps blood to the body'",
+        "Teeth drawn with an arrow to 'exchange oxygen and CO₂'",
+        "Liver drawn with an arrow to 'captures sunlight for food'"
+      ],
+      "correct": "Villi drawn with an arrow to 'more area for absorption'",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Creating"
+    },
+    {
+      "id": "q31",
+      "text": "Which organelle carries out photosynthesis?",
+      "options": [
+        "Chloroplast",
+        "Mitochondrion",
+        "Ribosome",
+        "Nucleus"
+      ],
+      "correct": "Chloroplast",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q32",
+      "text": "What is the 'energy currency' of the cell?",
+      "options": [
+        "ATP",
+        "DNA",
+        "Glucose",
+        "Oxygen"
+      ],
+      "correct": "ATP",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q33",
+      "text": "Which process uses ATP to move substances against the concentration gradient?",
+      "options": [
+        "Active transport",
+        "Simple diffusion",
+        "Osmosis of water",
+        "Facilitated diffusion"
+      ],
+      "correct": "Active transport",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q34",
+      "text": "Why do plant cells keep their shape better than animal cells when they gain water?",
+      "options": [
+        "They have a rigid cell wall",
+        "They have no cell membrane",
+        "They contain no water inside",
+        "They have more mitochondria"
+      ],
+      "correct": "They have a rigid cell wall",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q35",
+      "text": "Why does aerobic respiration release far more ATP than anaerobic respiration?",
+      "options": [
+        "Oxygen lets glucose be broken down completely",
+        "Anaerobic respiration uses more glucose at once",
+        "Oxygen adds extra glucose to every cell",
+        "Aerobic respiration happens in the cytoplasm"
+      ],
+      "correct": "Oxygen lets glucose be broken down completely",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q36",
+      "text": "A slice of raw papaya is put in plain water and another in sugar syrup. Which slice becomes softer and smaller?",
+      "options": [
+        "The one in sugar syrup",
+        "The one in plain water",
+        "Both shrink equally",
+        "Neither one changes"
+      ],
+      "correct": "The one in sugar syrup",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q37",
+      "text": "In which direction does phloem carry sugar?",
+      "options": [
+        "From sources to sinks, up or down",
+        "Only upward from roots to leaves",
+        "Only downward from flowers to roots",
+        "Only sideways between two leaves"
+      ],
+      "correct": "From sources to sinks, up or down",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q38",
+      "text": "What is transpiration?",
+      "options": [
+        "Water vapor escaping from leaves",
+        "Sugar moving from leaves to roots",
+        "Roots absorbing minerals from soil",
+        "Leaves making glucose from light"
+      ],
+      "correct": "Water vapor escaping from leaves",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q39",
+      "text": "Which property lets water rise as one column in xylem?",
+      "options": [
+        "Water molecules sticking together",
+        "Water molecules pushing each other apart",
+        "Sugar in the xylem pulling water downward",
+        "Gravity pushing water up from the roots"
+      ],
+      "correct": "Water molecules sticking together",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q40",
+      "text": "Which organ anchors a plant and stores food in kamote?",
+      "options": [
+        "Root",
+        "Stem",
+        "Leaf",
+        "Flower"
+      ],
+      "correct": "Root",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q41",
+      "text": "A plant is moved from a humid greenhouse to a hot, windy rooftop. What should the gardener expect, and what should he do?",
+      "options": [
+        "Faster water loss — water more often and give shade",
+        "Slower water loss — water much less often in the strong heat",
+        "No change — plants do not respond to wind or heat",
+        "Faster growth — remove the shade to speed it up"
+      ],
+      "correct": "Faster water loss — water more often and give shade",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q42",
+      "text": "Bark-stripping goats girdled several young mango trees. Why might the trees survive if the bark ring is quickly bridged with grafted bark?",
+      "options": [
+        "The graft reconnects the phloem so sugar reaches the roots",
+        "The graft adds new xylem that carries sugar up to the leaves fast",
+        "The graft blocks water so the roots stop drowning",
+        "The graft makes the leaves stop photosynthesis"
+      ],
+      "correct": "The graft reconnects the phloem so sugar reaches the roots",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q43",
+      "text": "Which response helps the body LOSE heat?",
+      "options": [
+        "Vasodilation of skin blood vessels",
+        "Vasoconstriction of skin vessels",
+        "Shivering of the large skeletal muscles",
+        "Goosebumps raising the body hair"
+      ],
+      "correct": "Vasodilation of skin blood vessels",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q44",
+      "text": "What do antibodies do?",
+      "options": [
+        "Tag specific germs for destruction",
+        "Carry oxygen to all the body's tissues",
+        "Send nerve signals to the brain",
+        "Produce sweat on the skin surface"
+      ],
+      "correct": "Tag specific germs for destruction",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q45",
+      "text": "What is the role of the lymphatic system in immunity?",
+      "options": [
+        "Filters fluid and helps immune cells meet germs",
+        "Pumps blood through all the arteries and the veins",
+        "Breaks down food into nutrients for cells",
+        "Releases hormones that control body growth"
+      ],
+      "correct": "Filters fluid and helps immune cells meet germs",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q46",
+      "text": "During an asthma attack, which structures narrow?",
+      "options": [
+        "Bronchioles",
+        "Alveoli",
+        "Arteries of the arm",
+        "Kidneys"
+      ],
+      "correct": "Bronchioles",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q47",
+      "text": "After a torn ACL, an athlete rests for months and gains weight. Which BEST explains the weight gain?",
+      "options": [
+        "Less activity means less energy used by muscles",
+        "The torn ligament stores extra fat in the knee",
+        "The knee produces hormones that add body weight",
+        "Rest makes the stomach digest food faster"
+      ],
+      "correct": "Less activity means less energy used by muscles",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q48",
+      "text": "A community has low vaccination rates and a measles outbreak. Which action is MOST effective?",
+      "options": [
+        "A catch-up vaccination drive for children",
+        "Closing windows to keep the virus outside",
+        "Giving antibiotics to every child daily",
+        "Waiting for children to build immunity naturally"
+      ],
+      "correct": "A catch-up vaccination drive for children",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q49",
+      "text": "Which gases trap heat in the atmosphere?",
+      "options": [
+        "Carbon dioxide and methane",
+        "Nitrogen and argon gases",
+        "Oxygen and hydrogen gases only",
+        "Helium and neon gases"
+      ],
+      "correct": "Carbon dioxide and methane",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q50",
+      "text": "Why does deforestation add to climate change?",
+      "options": [
+        "Fewer trees absorb CO₂, and burning releases more",
+        "Trees produce most of the methane in the air",
+        "Forests block sunlight from reaching the nearby oceans",
+        "Cutting trees makes the soil absorb more CO₂"
+      ],
+      "correct": "Fewer trees absorb CO₂, and burning releases more",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q51",
+      "text": "What is coral bleaching?",
+      "options": [
+        "Corals expelling their algae in warm water",
+        "Corals being painted white by divers",
+        "Corals growing faster in cold water",
+        "Corals turning into white sand during strong storms"
+      ],
+      "correct": "Corals expelling their algae in warm water",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q52",
+      "text": "Why is the Philippines highly vulnerable to climate change?",
+      "options": [
+        "Long coasts, many typhoons, farm- and fishing-based jobs",
+        "It has no coastlines at all and is very far from any ocean",
+        "It has a cold climate with heavy snowfall",
+        "Its people do not depend on farming or fishing"
+      ],
+      "correct": "Long coasts, many typhoons, farm- and fishing-based jobs",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q53",
+      "text": "Over 30 years, a lowland frog species has disappeared from low forests but appears in higher ones. Which conclusion is BEST supported?",
+      "options": [
+        "It shifted its range upward as lowlands warmed",
+        "It evolved into a new species in one season",
+        "It was carried uphill by strong typhoon winds over time",
+        "It moved because higher forests are noisier"
+      ],
+      "correct": "It shifted its range upward as lowlands warmed",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q54",
+      "text": "A post says one very cold week proves global warming is fake. Which evaluation is BEST?",
+      "options": [
+        "Invalid — climate is judged by long-term trends, not one week",
+        "Valid — any cold week disproves warming everywhere",
+        "Valid — climate scientists only ever study one week of data at a time",
+        "Invalid — because cold weeks never happen anymore"
+      ],
+      "correct": "Invalid — climate is judged by long-term trends, not one week",
+      "competency": "GENSCI-11-T2-W9-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q55",
+      "text": "Which law is the Philippine Climate Change Act?",
+      "options": [
+        "RA 9729",
+        "RA 9147",
+        "RA 6969",
+        "RA 9003"
+      ],
+      "correct": "RA 9729",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Remembering"
+    },
     {
       "id": "q56",
-      "text": "What is the difference between adaptation and mitigation?",
+      "text": "Which is an ADAPTATION strategy?",
       "options": [
-        "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change",
-        "Adaptation reduces greenhouse gas emissions while mitigation adjusts to impacts",
-        "They are exactly the same concept with no meaningful difference",
-        "Both terms only apply to farming and agricultural practices"
+        "Planting flood-tolerant rice varieties",
+        "Switching from coal to solar power plants",
+        "Reducing car use by walking or biking",
+        "Cutting food waste to lower methane"
       ],
-      "correct": "Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change",
+      "correct": "Planting flood-tolerant rice varieties",
       "competency": "GENSCI-11-T2-W10-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "adaptation vs mitigation; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q57", "text": "Which of the following is an example of MITIGATION?", "options": ["Switching to solar energy to reduce fossil fuel use", "Building a sea wall", "Planting drought-resistant crops", "Elevating homes above flood level"], "correct": "Switching to solar energy to reduce fossil fuel use", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitigation strategy" } },
-    { "id": "q58", "text": "Which Philippine law created the Climate Change Commission?", "options": ["RA 9729", "RA 9147", "RA 6969", "RA 9003"], "correct": "RA 9729", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "climate law" } },
-    { "id": "q59", "text": "How does overpopulation affect the environment?", "options": ["It increases resource demand, deforestation, waste, and greenhouse gas emissions", "It reduces pollution", "It has no environmental impact", "It only affects cities, not farms"], "correct": "It increases resource demand, deforestation, waste, and greenhouse gas emissions", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "overpopulation effects = W10-C1" } },
-    { "id": "q60", "text": "Which of the following BEST summarizes the main idea of Term 2?", "options": ["Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense", "Only chemistry matters in daily life", "Only biology matters in daily life", "Neither chemistry nor biology is important"], "correct": "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "term synthesis = W10-C1" } }
+    {
+      "id": "q57",
+      "text": "How do Marine Protected Areas help fishers?",
+      "options": [
+        "Fish grow and spill over into nearby fishing areas",
+        "Fishers may catch any amount inside the area",
+        "Fish are moved to other countries for safekeeping each year",
+        "Nets are made larger so fewer fish escape"
+      ],
+      "correct": "Fish grow and spill over into nearby fishing areas",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q58",
+      "text": "Which is a MITIGATION strategy?",
+      "options": [
+        "Using renewable energy",
+        "Building tall seawalls",
+        "Elevating houses on stilts",
+        "Storing rainwater"
+      ],
+      "correct": "Using renewable energy",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q59",
+      "text": "A city's population doubles, and its river becomes heavily polluted. Which factor MOST directly links the two?",
+      "options": [
+        "More untreated sewage and waste entering the river",
+        "More people drinking water from bottled sources",
+        "More rain falling because of the larger population",
+        "More fish living in the river because of food scraps"
+      ],
+      "correct": "More untreated sewage and waste entering the river",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q60",
+      "text": "Your barangay floods often and has many unemployed fishers. Which plan BEST combines adaptation, mitigation and livelihood?",
+      "options": [
+        "Mangrove replanting plus community-run fish sanctuaries",
+        "Concrete seawall built along the entire coast and nothing else",
+        "Coal plant built to give fishers factory jobs",
+        "Draining the wetlands to build a shopping center"
+      ],
+      "correct": "Mangrove replanting plus community-run fish sanctuaries",
+      "competency": "GENSCI-11-T2-W10-C1",
+      "bloomLevel": "Creating"
+    }
   ]
 }

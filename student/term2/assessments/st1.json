@@ -1,116 +1,404 @@
 {
   "title": "Summative Test 1 — Chemical Reactions & Safety",
   "coverage": "Weeks 1–4",
+  "competencies": [
+    "GENSCI-11-T2-W1-C1",
+    "GENSCI-11-T2-W2-C1",
+    "GENSCI-11-T2-W3-C1",
+    "GENSCI-11-T2-W4-C1"
+  ],
   "items": 30,
-  "competencies": ["GENSCI-11-T2-W1-C1", "GENSCI-11-T2-W2-C1", "GENSCI-11-T2-W3-C1", "GENSCI-11-T2-W4-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "What is a chemical reaction?", "options": ["A process where reactants change into new products with different properties", "A physical change like melting ice", "A change in shape only", "A change in temperature only"], "correct": "A process where reactants change into new products with different properties", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical reaction definition" } },
-    { "id": "q2", "text": "Which of the following is a sign that a chemical reaction has occurred?", "options": ["Formation of gas bubbles, color change, or release of heat", "Change in shape only", "Change in size only", "Change in position only"], "correct": "Formation of gas bubbles, color change, or release of heat", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "reaction signs" } },
-    { "id": "q3", "text": "What type of reaction occurs when hydrogen peroxide (H₂O₂) breaks down into water and oxygen?", "options": ["Decomposition", "Combustion", "Acid on carbonate", "Acid on metal"], "correct": "Decomposition", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "decomposition" } },
-    { "id": "q4", "text": "Vinegar (acid) reacting with baking soda (carbonate) produces:", "options": ["CO₂ gas, water, and a salt", "Hydrogen gas and a salt", "Only water", "Oxygen gas and a salt"], "correct": "CO₂ gas, water, and a salt", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid on carbonate products" } },
-    { "id": "q5", "text": "What gas is released when an acid reacts with a metal?", "options": ["Hydrogen (H₂)", "Oxygen (O₂)", "Carbon dioxide (CO₂)", "Nitrogen (N₂)"], "correct": "Hydrogen (H₂)", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "acid + metal" } },
-    { "id": "q6", "text": "Burning LPG in a stove is an example of what reaction type?", "options": ["Combustion", "Decomposition", "Acid on metal", "Photosynthesis"], "correct": "Combustion", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion" } },
-    { "id": "q7", "text": "What are the products of complete combustion of a hydrocarbon fuel like LPG?", "options": ["Carbon dioxide and water", "Hydrogen and oxygen", "Salt and water", "Glucose and oxygen"], "correct": "Carbon dioxide and water", "competency": "GENSCI-11-T2-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "combustion products" } },
+    {
+      "id": "q1",
+      "text": "Substances present at the START of a chemical reaction are called…",
+      "options": [
+        "Reactants",
+        "Products",
+        "Catalysts",
+        "Precipitates"
+      ],
+      "correct": "Reactants",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q2",
+      "text": "What are the products when an acid reacts with a carbonate?",
+      "options": [
+        "A salt, water and carbon dioxide",
+        "A salt and hydrogen gas only",
+        "Oxygen and water vapor only",
+        "Carbon monoxide and black soot only"
+      ],
+      "correct": "A salt, water and carbon dioxide",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q3",
+      "text": "Which observation is the STRONGEST evidence of a chemical change?",
+      "options": [
+        "A new gas forms when two substances mix",
+        "A solid melts when it is heated slowly",
+        "A liquid takes the shape of its new container",
+        "A sugar cube breaks into smaller grains"
+      ],
+      "correct": "A new gas forms when two substances mix",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "Why does iron rust faster near the sea?",
+      "options": [
+        "Salt and moisture speed up its reaction with oxygen",
+        "Sea breezes are cold and freeze the iron's outer surface",
+        "Sunlight at the beach melts the protective paint",
+        "Sea air has no oxygen, so iron reacts with salt"
+      ],
+      "correct": "Salt and moisture speed up its reaction with oxygen",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "Which is an example of DECOMPOSITION?",
+      "options": [
+        "Hydrogen peroxide breaking into water and oxygen",
+        "LPG burning with oxygen in a kitchen stove",
+        "Vinegar reacting with baking soda in a cup",
+        "Zinc reacting with an acid to release hydrogen gas"
+      ],
+      "correct": "Hydrogen peroxide breaking into water and oxygen",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q6",
+      "text": "Why is carbon monoxide called a silent killer?",
+      "options": [
+        "It has no color or smell but blocks oxygen in blood",
+        "It makes a loud noise that damages the ear",
+        "It smells sweet, so people breathe in more",
+        "It only affects people who are already asleep in bed at night"
+      ],
+      "correct": "It has no color or smell but blocks oxygen in blood",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q7",
+      "text": "Puto made with old, damp baking powder comes out flat. Which explanation applies reaction knowledge correctly?",
+      "options": [
+        "The acid and bicarbonate already reacted, so little CO₂ was left",
+        "The damp powder turned into heavy salt that pressed the batter flat",
+        "Moisture made the powder release too much hydrogen gas",
+        "Old baking powder only reacts in very cold water"
+      ],
+      "correct": "The acid and bicarbonate already reacted, so little CO₂ was left",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
+    },
     {
       "id": "q8",
-      "text": "Why should you NEVER mix bleach with ammonia cleaner?",
+      "text": "A student needs to identify a gas from a reaction. A lit splint makes a squeaky pop. Which reaction most likely produced it?",
       "options": [
-        "It releases toxic chloramine gas that can damage lungs",
-        "It becomes a solid precipitate in the cleaning bucket",
-        "It loses all of its original cleaning and disinfecting power",
-        "It produces a fresher and more pleasant ammonia smell"
+        "Acid reacting with a metal",
+        "Acid reacting with a carbonate",
+        "Complete combustion of LPG",
+        "Decomposition of limestone"
       ],
-      "correct": "It releases toxic chloramine gas that can damage lungs",
-      "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe handling; distractors balanced (Phase 6)" }
+      "correct": "Acid reacting with a metal",
+      "competency": "GENSCI-11-T2-W1-C1",
+      "bloomLevel": "Applying"
     },
-    { "id": "q9", "text": "Why must a chemical equation be balanced?", "options": ["Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "To make it look nicer", "Because of gravity", "To reduce temperature"], "correct": "Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "balancing rationale" } },
-    { "id": "q10", "text": "Which equation correctly represents photosynthesis?", "options": ["6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"], "correct": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "photosynthesis equation" } },
-    { "id": "q11", "text": "Which equation correctly represents cellular respiration?", "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CH₄ + 2O₂ → CO₂ + 2H₂O"], "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration equation" } },
-    { "id": "q12", "text": "Where in the cell does cellular respiration mainly occur?", "options": ["Mitochondria", "Nucleus", "Chloroplast", "Ribosome"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration organelle" } },
-    { "id": "q13", "text": "What is ATP and why is it important?", "options": ["It is the energy currency of the cell — used for cellular work", "It is a type of sugar", "It is a protein for growth", "It is a genetic material"], "correct": "It is the energy currency of the cell — used for cellular work", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP function" } },
+    {
+      "id": "q9",
+      "text": "What does the law of conservation of mass state?",
+      "options": [
+        "Atoms are rearranged, not created or destroyed",
+        "Products always weigh more than the reactants",
+        "Mass disappears whenever a gas is produced",
+        "Only solids keep their mass in reactions"
+      ],
+      "correct": "Atoms are rearranged, not created or destroyed",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q10",
+      "text": "How many hydrogen atoms are in 3H₂O?",
+      "options": [
+        "6",
+        "3",
+        "2",
+        "5"
+      ],
+      "correct": "6",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q11",
+      "text": "Which equation represents cellular respiration?",
+      "options": [
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
+        "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+        "2H₂ + O₂ → 2H₂O + light energy",
+        "CH₄ + 2O₂ → CO₂ + 2H₂O + heat energy"
+      ],
+      "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q12",
+      "text": "Where does photosynthesis take place?",
+      "options": [
+        "Chloroplasts",
+        "Mitochondria",
+        "Ribosomes",
+        "Vacuoles"
+      ],
+      "correct": "Chloroplasts",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q13",
+      "text": "Which is ANABOLISM?",
+      "options": [
+        "Joining amino acids to build muscle proteins",
+        "Breaking down glucose to release usable energy",
+        "Digesting rice starch into simple sugars",
+        "Breaking fat into smaller fatty acids"
+      ],
+      "correct": "Joining amino acids to build muscle proteins",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q14",
-      "text": "Why are photosynthesis and respiration considered 'opposite reactions'?",
+      "text": "Why do enzymes matter in body cells?",
       "options": [
-        "Their reactants and products are reversed",
-        "They both happen inside the same plant organelle",
-        "Both processes release oxygen as a product",
-        "Neither process requires any energy to occur"
+        "They speed up reactions at body temperature",
+        "They provide all the energy for every reaction",
+        "They are used up after each reaction",
+        "They slow reactions so cells stay safe"
       ],
-      "correct": "Their reactants and products are reversed",
+      "correct": "They speed up reactions at body temperature",
       "competency": "GENSCI-11-T2-W2-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compare photosynthesis vs respiration; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q15", "text": "Balance this equation: __ H₂ + O₂ → __ H₂O. What are the correct coefficients?", "options": ["2 and 2", "1 and 1", "3 and 3", "4 and 1"], "correct": "2 and 2", "competency": "GENSCI-11-T2-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "equation balancing" } },
-    { "id": "q16", "text": "What is a solution?", "options": ["A homogeneous mixture of two or more substances", "A heterogeneous mixture where particles settle at the bottom", "A pure chemical substance", "A type of solid only"], "correct": "A homogeneous mixture of two or more substances", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution definition" } },
-    { "id": "q17", "text": "In a saltwater solution, which is the solute?", "options": ["Salt", "Water", "Both", "Neither"], "correct": "Salt", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solute identification" } },
-    { "id": "q18", "text": "Why is water called the 'universal solvent'?", "options": ["It dissolves more substances than any other liquid", "It is found everywhere", "It has no charge", "It is denser than other liquids"], "correct": "It dissolves more substances than any other liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "water as solvent" } },
-    { "id": "q19", "text": "Soda (softdrink) is an example of what type of solution?", "options": ["Gas-in-liquid", "Solid-in-liquid", "Liquid-in-liquid", "Gas-in-gas"], "correct": "Gas-in-liquid", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "solution types" } },
-    { "id": "q20", "text": "What is saturation?", "options": ["The point where no more solute can dissolve in a solvent at a given temperature", "When a solution is diluted with water", "When a solute evaporates", "When a solvent freezes"], "correct": "The point where no more solute can dissolve in a solvent at a given temperature", "competency": "GENSCI-11-T2-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "saturation" } },
+    {
+      "id": "q15",
+      "text": "Which coefficients balance __Fe + __O₂ → __Fe₂O₃?",
+      "options": [
+        "4, 3, 2",
+        "2, 3, 1",
+        "1, 1, 1",
+        "3, 2, 2"
+      ],
+      "correct": "4, 3, 2",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q16",
+      "text": "A runner breathes faster and deeper during a race. Which reasoning BEST uses the respiration equation?",
+      "options": [
+        "More glucose is broken down, needing more O₂ and releasing more CO₂",
+        "More glucose is made, so the lungs release extra oxygen into the air",
+        "Less ATP is needed, so the lungs work harder to cool the body",
+        "Photosynthesis in the muscles needs more carbon dioxide to work"
+      ],
+      "correct": "More glucose is broken down, needing more O₂ and releasing more CO₂",
+      "competency": "GENSCI-11-T2-W2-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q17",
+      "text": "Which property shows that seawater is a solution, not a suspension?",
+      "options": [
+        "Its particles do not settle or filter out",
+        "It is blue when seen from far away",
+        "It has many fish and seaweed living in it",
+        "It moves in waves along the shoreline"
+      ],
+      "correct": "Its particles do not settle or filter out",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "Air is a solution. Which is its solvent?",
+      "options": [
+        "Nitrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Water vapor"
+      ],
+      "correct": "Nitrogen",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q19",
+      "text": "What happens to the solubility of most solids as water gets hotter?",
+      "options": [
+        "It increases",
+        "It decreases",
+        "It stays the same",
+        "It drops to zero"
+      ],
+      "correct": "It increases",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q20",
+      "text": "Which is a DILUTE solution?",
+      "options": [
+        "A spoon of sugar in a large pitcher of water",
+        "A cup of sugar in a small glass of water",
+        "Thick brine used to preserve dried fish (tuyo)",
+        "Syrup made by boiling sugar until thick"
+      ],
+      "correct": "A spoon of sugar in a large pitcher of water",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q21",
-      "text": "What happens to a plant when grown in soil with very high salt concentration?",
+      "text": "What causes saltwater intrusion in coastal wells?",
       "options": [
-        "Water moves out of the plant roots due to osmotic stress, causing wilting",
-        "It grows faster because the salt acts as an extra nutrient",
-        "It becomes saltwater-tolerant automatically over time",
-        "Nothing changes because soil salt is not absorbed"
+        "Over-pumping lets seawater seep into fresh groundwater",
+        "Rainwater carries dissolved salt down from the rain clouds",
+        "Fish release extra salt into the underground water",
+        "Sunlight turns the fresh water into salty water"
       ],
-      "correct": "Water moves out of the plant roots due to osmotic stress, causing wilting",
+      "correct": "Over-pumping lets seawater seep into fresh groundwater",
       "competency": "GENSCI-11-T2-W3-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "salt effect investigation; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q22", "text": "What is saltwater intrusion?", "options": ["Seawater seeping into freshwater aquifers, making them salty and unusable", "Adding salt to freshwater for drinking", "Removing salt from seawater", "A type of water filtration"], "correct": "Seawater seeping into freshwater aquifers, making them salty and unusable", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "environmental impact" } },
-    { "id": "q23", "text": "What does the GHS skull-and-crossbones symbol mean?", "options": ["Acute toxicity — can cause death or serious harm", "Flammable liquid", "Corrosive to metals", "Harmless"], "correct": "Acute toxicity — can cause death or serious harm", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS symbol" } },
-    { "id": "q24", "text": "Which GHS symbol warns that a chemical can corrode skin or metals?", "options": ["Corrosion (test tube dripping on surface)", "Flame", "Skull and crossbones", "Exclamation mark"], "correct": "Corrosion (test tube dripping on surface)", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "GHS corrosion" } },
-    { "id": "q25", "text": "Why must acids and bases be stored separately?", "options": ["They can react violently if they touch", "They have different colors", "They smell different", "They weigh differently"], "correct": "They can react violently if they touch", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "safe storage" } },
+    {
+      "id": "q22",
+      "text": "A 2-liter (2,000 mL) bottle of juice drink contains 10% real juice. How much real juice is in it?",
+      "options": [
+        "200 mL",
+        "20 mL",
+        "100 mL",
+        "1,800 mL"
+      ],
+      "correct": "200 mL",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q23",
+      "text": "In a salt-and-plant experiment, the 0% salt seedlings grew 10 cm, the 1% grew 6 cm and the 3% grew 1 cm. What is the BEST conclusion?",
+      "options": [
+        "More salt reduced plant growth",
+        "Salt had no effect on plant growth",
+        "More salt helped the plants grow taller",
+        "The 0% group had the most salt stress"
+      ],
+      "correct": "More salt reduced plant growth",
+      "competency": "GENSCI-11-T2-W3-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q24",
+      "text": "What does the GHS corrosion pictogram warn about?",
+      "options": [
+        "Burns to skin and eyes; damages metal",
+        "Fire risk near heat and open flames",
+        "Harm to fish and other aquatic life",
+        "Gas stored in tanks under very high pressure"
+      ],
+      "correct": "Burns to skin and eyes; damages metal",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q25",
+      "text": "Why must bleach and ammonia cleaners never be mixed?",
+      "options": [
+        "They react and release toxic chloramine gas",
+        "They cancel out and stop cleaning entirely",
+        "They form a solid that clogs the drain pipes",
+        "They turn into water and lose all their smell"
+      ],
+      "correct": "They react and release toxic chloramine gas",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q26",
-      "text": "What is the BEST practice when handling chemicals at home?",
+      "text": "What is the safest way to smell a chemical in the lab?",
       "options": [
-        "Wear gloves, work in a well-ventilated area, and read the label",
-        "Work in a closed room to avoid drafts disturbing the chemicals",
-        "Mix all household cleaners together to save time and effort",
-        "Store the chemicals in food containers for easy kitchen access"
+        "Waft the vapor gently toward your nose",
+        "Put your nose right over the opening",
+        "Pour some on your hand and sniff it closely",
+        "Taste a small drop with your tongue"
       ],
-      "correct": "Wear gloves, work in a well-ventilated area, and read the label",
+      "correct": "Waft the vapor gently toward your nose",
       "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best handling practice; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q27",
-      "text": "What is the BEST way to dispose of leftover household chemicals?",
+      "text": "Why do phosphate detergents cause fish kills in creeks?",
       "options": [
-        "Take them to a designated hazardous waste collection point following DENR guidelines",
-        "Pour them slowly into the nearest storm drain with running water",
-        "Throw them in the regular household trash for weekly pickup",
-        "Bury them in the backyard, away from any vegetable gardens"
+        "They feed algae; decay then uses up oxygen",
+        "They poison fish directly within minutes",
+        "They make the creek water too hot for fish",
+        "They block sunlight with a layer of soap"
       ],
-      "correct": "Take them to a designated hazardous waste collection point following DENR guidelines",
+      "correct": "They feed algae; decay then uses up oxygen",
       "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "best disposal; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q28", "text": "What is eutrophication?", "options": ["Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "A cleaning process for detergents", "A form of distillation", "A method of water purification"], "correct": "Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "eutrophication" } },
-    { "id": "q29", "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?", "options": ["RA 6969", "RA 9003", "RA 6713", "RA 10533"], "correct": "RA 6969", "competency": "GENSCI-11-T2-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemical regulation" } },
+    {
+      "id": "q28",
+      "text": "A cleaner splashes into your eye. What should you do FIRST?",
+      "options": [
+        "Rinse with clean running water for 15–20 minutes",
+        "Rub the eye gently to remove the cleaner quickly",
+        "Wait to see if the stinging stops after an hour",
+        "Put a few drops of vinegar in the eye to neutralize"
+      ],
+      "correct": "Rinse with clean running water for 15–20 minutes",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q29",
+      "text": "Two plans aim to protect a coastal rice area from salty wells. Plan A limits pumping and plants mangroves; Plan B digs deeper wells. Which is BETTER?",
+      "options": [
+        "Plan A — it reduces the cause of intrusion",
+        "Plan B — deeper wells always reach fresh water",
+        "Plan B — it is faster and has no side effects",
+        "Plan A — because mangroves make the soil salty"
+      ],
+      "correct": "Plan A — it reduces the cause of intrusion",
+      "competency": "GENSCI-11-T2-W4-C1",
+      "bloomLevel": "Evaluating"
+    },
     {
       "id": "q30",
-      "text": "Why is proper chemical disposal important?",
+      "text": "Your class must create a table on wastewater effects for your barangay. Which set of columns is MOST useful?",
       "options": [
-        "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
-        "Because the government strictly requires it by law",
-        "To save money on water treatment and disposal fees",
-        "To increase the total volume of the ocean over time"
+        "Source, effect on ecosystem, way to minimize it",
+        "Color, smell, price and brand of each product",
+        "Name of owner, address and phone number",
+        "Date, weather and the number of students present"
       ],
-      "correct": "To protect aquatic ecosystems, prevent water contamination, and keep drinking water safe",
+      "correct": "Source, effect on ecosystem, way to minimize it",
       "competency": "GENSCI-11-T2-W4-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "disposal impact; distractors balanced (Phase 6)" }
+      "bloomLevel": "Creating"
     }
   ]
 }

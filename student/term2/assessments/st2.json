@@ -1,116 +1,404 @@
 {
   "title": "Summative Test 2 — Life Science & Organ Systems",
   "coverage": "Weeks 5–8",
+  "competencies": [
+    "GENSCI-11-T2-W5-C1",
+    "GENSCI-11-T2-W6-C1",
+    "GENSCI-11-T2-W7-C1",
+    "GENSCI-11-T2-W8-C1"
+  ],
   "items": 30,
-  "competencies": ["GENSCI-11-T2-W5-C1", "GENSCI-11-T2-W6-C1", "GENSCI-11-T2-W7-C1", "GENSCI-11-T2-W8-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "What is the basic structural and functional unit of all living things?", "options": ["The cell", "The atom", "The tissue", "The organ"], "correct": "The cell", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "cell definition" } },
-    { "id": "q2", "text": "Which theme of life science explains why you sweat when it's hot?", "options": ["Homeostasis", "Evolution", "Reproduction", "Cell theory"], "correct": "Homeostasis", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unifying theme" } },
-    { "id": "q3", "text": "Which of the following correctly orders levels of biological organization from SIMPLEST to MOST COMPLEX?", "options": ["Cell → Tissue → Organ → Organ System → Organism", "Organism → Cell → Tissue → Organ", "Organ → Cell → Tissue → Organism", "Tissue → Cell → Organ → Organism"], "correct": "Cell → Tissue → Organ → Organ System → Organism", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "biological organization" } },
+    {
+      "id": "q1",
+      "text": "What does cell theory state?",
+      "options": [
+        "All living things are made of cells",
+        "All cells are made of living organs",
+        "Only animals are made of many cells",
+        "Cells form from non-living matter"
+      ],
+      "correct": "All living things are made of cells",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q2",
+      "text": "A group of similar cells working together forms a…",
+      "options": [
+        "Tissue",
+        "Organ",
+        "Organism",
+        "Organ system"
+      ],
+      "correct": "Tissue",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q3",
+      "text": "Why are red blood cells shaped like flattened discs with a dent?",
+      "options": [
+        "More surface and room for carrying oxygen",
+        "To store DNA in a much larger nucleus",
+        "To make blood thicker and flow slowly",
+        "To produce hormones for body heat control"
+      ],
+      "correct": "More surface and room for carrying oxygen",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q4",
-      "text": "Which statement BEST describes the structure-function relationship?",
+      "text": "Why do villi line the small intestine?",
       "options": [
-        "The shape of a biological part determines what job it can perform",
-        "All biological structures look and behave the same way",
-        "A biological function is random and unrelated to its structure",
-        "Only animal cells have structure-function relationships"
+        "They increase the area for absorbing food",
+        "They push food back up into the stomach",
+        "They produce bile to break down the fats",
+        "They store air for the lungs to use later"
       ],
-      "correct": "The shape of a biological part determines what job it can perform",
+      "correct": "They increase the area for absorbing food",
       "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q5", "text": "Why are alveoli in the lungs so tiny and numerous?", "options": ["To create a huge surface area for gas exchange", "To make them easier to see", "To reduce oxygen intake", "To store water"], "correct": "To create a huge surface area for gas exchange", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function example" } },
+    {
+      "id": "q5",
+      "text": "Bees pollinate flowers while flowers give bees nectar. Which theme of life is this?",
+      "options": [
+        "Interdependence",
+        "Homeostasis",
+        "Heredity",
+        "Cell theory of life"
+      ],
+      "correct": "Interdependence",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q6",
-      "text": "Why is a red blood cell's shape (biconcave disc) important?",
+      "text": "A plant's roots are damaged by a flood, and its leaves wilt within days. Which idea BEST explains this?",
       "options": [
-        "It holds more hemoglobin and can squeeze through narrow capillaries",
-        "It makes the red blood cell heavier and easier to see",
-        "It helps the cell produce antibodies against infections",
-        "The shape is purely random and has no specific function"
+        "Parts of a system depend on each other",
+        "Leaves and roots work completely alone",
+        "Flood water poisons only the leaves",
+        "Roots make food that leaves need"
       ],
-      "correct": "It holds more hemoglobin and can squeeze through narrow capillaries",
+      "correct": "Parts of a system depend on each other",
       "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function analysis; distractors balanced (Phase 6)" }
+      "bloomLevel": "Applying"
     },
-    { "id": "q7", "text": "Which organelle is known as the 'powerhouse of the cell'?", "options": ["Mitochondria", "Nucleus", "Ribosome", "Golgi apparatus"], "correct": "Mitochondria", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mitochondria" } },
-    { "id": "q8", "text": "What is the energy currency of the cell?", "options": ["ATP", "DNA", "Glucose", "Oxygen"], "correct": "ATP", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ATP" } },
-    { "id": "q9", "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy (ATP)?", "options": ["Active transport", "Diffusion", "Osmosis", "Passive transport"], "correct": "Active transport", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "active transport" } },
+    {
+      "id": "q7",
+      "text": "Which comparison BEST shows that an organ can do what single cells cannot?",
+      "options": [
+        "The heart pumps blood; one heart cell cannot",
+        "One muscle cell can lift a whole sack of rice",
+        "A tissue is always larger than a full organ",
+        "Cells and organs have exactly the same jobs"
+      ],
+      "correct": "The heart pumps blood; one heart cell cannot",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q8",
+      "text": "You must diagram structure and function in a leaf. Which pair of labels is MOST accurate?",
+      "options": [
+        "Flat, wide blade → captures more light",
+        "Thick bark layer → absorbs water from soil",
+        "Root hairs on the leaf → store sugar",
+        "Hard shell → protects seeds from rain"
+      ],
+      "correct": "Flat, wide blade → captures more light",
+      "competency": "GENSCI-11-T2-W5-C1",
+      "bloomLevel": "Creating"
+    },
+    {
+      "id": "q9",
+      "text": "Which structure controls what enters and leaves the cell?",
+      "options": [
+        "Cell membrane",
+        "Cell wall (plants)",
+        "Nucleus",
+        "Vacuole"
+      ],
+      "correct": "Cell membrane",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Remembering"
+    },
     {
       "id": "q10",
-      "text": "A potato slice placed in salty water becomes soft and shriveled. Why?",
+      "text": "Which organelle contains the cell's DNA in plants and animals?",
       "options": [
-        "Water left the potato cells by osmosis because the salt solution had lower water concentration",
-        "Salt destroyed the potato cells chemically by breaking the cell walls",
-        "The potato absorbed the salt from the water into its cells",
-        "The potato froze because the salt lowered the water temperature"
+        "Nucleus",
+        "Ribosome",
+        "Vacuole",
+        "Mitochondrion"
       ],
-      "correct": "Water left the potato cells by osmosis because the salt solution had lower water concentration",
+      "correct": "Nucleus",
       "competency": "GENSCI-11-T2-W6-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "osmosis analysis; distractors balanced (Phase 6)" }
+      "bloomLevel": "Remembering"
     },
-    { "id": "q11", "text": "Which equation correctly represents cellular respiration?", "options": ["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "2H₂ + O₂ → 2H₂O", "CO₂ + H₂O → CH₄ + O₂"], "correct": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "competency": "GENSCI-11-T2-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "respiration equation" } },
-    { "id": "q12", "text": "Which organelle performs photosynthesis in plant cells?", "options": ["Chloroplast", "Mitochondria", "Ribosome", "Nucleus"], "correct": "Chloroplast", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chloroplast" } },
-    { "id": "q13", "text": "Which plant organ is primarily responsible for absorbing water and minerals?", "options": ["Roots", "Leaves", "Flowers", "Fruit"], "correct": "Roots", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "root function" } },
-    { "id": "q14", "text": "Which vascular tissue transports water upward from the roots to the leaves?", "options": ["Xylem", "Phloem", "Cambium", "Epidermis"], "correct": "Xylem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "xylem" } },
-    { "id": "q15", "text": "Which vascular tissue transports sugar (food) throughout the plant?", "options": ["Phloem", "Xylem", "Stomata", "Cuticle"], "correct": "Phloem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "phloem" } },
-    { "id": "q16", "text": "What is transpiration?", "options": ["Loss of water vapor from leaves through stomata", "Movement of food through phloem", "Absorption of minerals by the roots", "Production of glucose in leaves"], "correct": "Loss of water vapor from leaves through stomata", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transpiration" } },
-    { "id": "q17", "text": "Why does removing a complete ring of bark kill a tree?", "options": ["It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "It removes the tree's protective armor", "It prevents photosynthesis", "It stops transpiration"], "correct": "It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "transport analysis" } },
-    { "id": "q18", "text": "Which of these plant tissues is responsible for support and transport between roots and leaves?", "options": ["Vascular tissue (xylem + phloem) in the stem", "Only the roots", "Only the flowers", "Only the fruit"], "correct": "Vascular tissue (xylem + phloem) in the stem", "competency": "GENSCI-11-T2-W7-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vascular tissue function" } },
-    { "id": "q19", "text": "Which brain region coordinates body temperature?", "options": ["Hypothalamus", "Cerebellum", "Brain stem", "Frontal lobe"], "correct": "Hypothalamus", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "temperature regulation" } },
-    { "id": "q20", "text": "What is the 1st line of defense against pathogens?", "options": ["Physical barriers like skin and mucous membranes", "Antibodies", "Memory cells", "Vaccines"], "correct": "Physical barriers like skin and mucous membranes", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune barriers" } },
-    { "id": "q21", "text": "How do vaccines protect you from future infections?", "options": ["They create memory B and T cells that respond quickly if the real pathogen appears", "They kill all pathogens in your body permanently", "They replace your immune system", "They cause the disease in a mild form only"], "correct": "They create memory B and T cells that respond quickly if the real pathogen appears", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccine mechanism" } },
+    {
+      "id": "q11",
+      "text": "How does oxygen enter a cell from the blood?",
+      "options": [
+        "By diffusion from high to low concentration",
+        "By active transport using a lot of ATP",
+        "By osmosis together with water molecules",
+        "By endocytosis inside large membrane pockets"
+      ],
+      "correct": "By diffusion from high to low concentration",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q12",
+      "text": "How do white blood cells take in whole bacteria?",
+      "options": [
+        "Endocytosis — the membrane wraps around them",
+        "Osmosis — water carries them through pores",
+        "Diffusion — they slip through tiny gaps",
+        "Photosynthesis — they turn them into simple sugar"
+      ],
+      "correct": "Endocytosis — the membrane wraps around them",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q13",
+      "text": "Which stage of respiration happens in the cytoplasm and needs no oxygen?",
+      "options": [
+        "Glycolysis",
+        "Krebs cycle",
+        "Electron transport",
+        "Photosynthesis"
+      ],
+      "correct": "Glycolysis",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q14",
+      "text": "What are the products of anaerobic respiration in human muscles?",
+      "options": [
+        "Lactic acid and a little ATP",
+        "Alcohol and carbon dioxide gas",
+        "Glucose and oxygen gas",
+        "Water and a lot of ATP"
+      ],
+      "correct": "Lactic acid and a little ATP",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q15",
+      "text": "Cucumber slices are soaked in salty vinegar for atchara and become limp. What happened?",
+      "options": [
+        "Water left the cucumber cells by osmosis",
+        "Salt entered and made the cells swell",
+        "Vinegar added more water into the cucumber",
+        "Heat in the jar cooked the cucumber"
+      ],
+      "correct": "Water left the cucumber cells by osmosis",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q16",
+      "text": "A person with anemia has too little hemoglobin. Which effect on their cells is MOST likely?",
+      "options": [
+        "Less oxygen arrives, so less ATP is made",
+        "More glucose enters every cell at once",
+        "Cells switch to doing photosynthesis",
+        "Mitochondria start making their own hemoglobin"
+      ],
+      "correct": "Less oxygen arrives, so less ATP is made",
+      "competency": "GENSCI-11-T2-W6-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q17",
+      "text": "Which tissue carries water and minerals from roots to leaves?",
+      "options": [
+        "Xylem",
+        "Phloem",
+        "Epidermis",
+        "Cuticle"
+      ],
+      "correct": "Xylem",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "What are stomata?",
+      "options": [
+        "Pores on leaves for gas exchange",
+        "Tubes that carry sugar downward",
+        "Hairs on roots that take in water",
+        "Cells that store starch in roots"
+      ],
+      "correct": "Pores on leaves for gas exchange",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q19",
+      "text": "In plant transport, which part is usually a SOURCE of sugar?",
+      "options": [
+        "Mature leaves",
+        "Growing fruits",
+        "Storage roots",
+        "New flower buds"
+      ],
+      "correct": "Mature leaves",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q20",
+      "text": "Which condition speeds up transpiration the MOST?",
+      "options": [
+        "Hot, dry and windy weather",
+        "Cool, humid and still air",
+        "Night time with no sunlight",
+        "Rainy days with full clouds"
+      ],
+      "correct": "Hot, dry and windy weather",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q21",
+      "text": "Why does wood make up most of a tree trunk?",
+      "options": [
+        "Old xylem builds up and supports the tree",
+        "Phloem hardens into wood every season",
+        "Leaves fall and are stored inside the trunk",
+        "Roots grow upward and fill the trunk"
+      ],
+      "correct": "Old xylem builds up and supports the tree",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q22",
-      "text": "Which BEST describes the difference between nervous and endocrine responses?",
+      "text": "Celery is placed in red-colored water. After a day, red lines appear in its stalk. What do these lines show?",
       "options": [
-        "Nervous is fast and short-term; endocrine is slower but longer-lasting",
-        "Nervous responses are slow while endocrine responses are fast",
-        "They are completely identical in speed and duration",
-        "Only nervous responses involve hormones in the body"
+        "The xylem carried water up the stalk",
+        "The phloem carried sugar to the roots",
+        "The stomata absorbed the colored water",
+        "The leaves made the red color by themselves"
       ],
-      "correct": "Nervous is fast and short-term; endocrine is slower but longer-lasting",
-      "competency": "GENSCI-11-T2-W8-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "nervous vs endocrine; distractors balanced (Phase 6)" }
+      "correct": "The xylem carried water up the stalk",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Applying"
     },
-    { "id": "q23", "text": "A torn ACL is a common sports injury affecting which body part?", "options": ["The knee joint", "The heart", "The lungs", "The brain"], "correct": "The knee joint", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "damaged body part" } },
-    { "id": "q24", "text": "Which of the following is a symptom of an asthma attack?", "options": ["Difficulty breathing and wheezing due to narrowed bronchioles", "Broken bones", "Rapid hair growth", "Loss of vision"], "correct": "Difficulty breathing and wheezing due to narrowed bronchioles", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "damaged system effect" } },
+    {
+      "id": "q23",
+      "text": "A kamote plant's leaves are all eaten by pests, and its storage roots stop growing. Which explanation BEST links the organs?",
+      "options": [
+        "Without leaves, no sugar is made and sent to the roots",
+        "Without leaves, the roots absorb too much water",
+        "Without leaves, the xylem carries sugar upward",
+        "Without leaves, the roots start photosynthesizing underground"
+      ],
+      "correct": "Without leaves, no sugar is made and sent to the roots",
+      "competency": "GENSCI-11-T2-W7-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q24",
+      "text": "When body temperature rises, what does the hypothalamus trigger?",
+      "options": [
+        "Sweating and widening of skin blood vessels",
+        "Shivering and narrowing of blood vessels",
+        "More thyroid hormone to raise metabolism",
+        "Goosebumps to trap warm air near the skin surface"
+      ],
+      "correct": "Sweating and widening of skin blood vessels",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q25",
-      "text": "When you get a small cut and it becomes red, warm, and swollen, what is happening?",
+      "text": "Which is part of the FIRST line of defense?",
       "options": [
-        "Inflammation — 2nd line of immune defense sending white blood cells",
-        "A severe allergic reaction triggered by the wound",
-        "The cut is infected and cannot be treated medically",
-        "Your entire immune system is failing permanently"
+        "Skin and mucus",
+        "Antibodies",
+        "Memory B cells",
+        "Fever"
       ],
-      "correct": "Inflammation — 2nd line of immune defense sending white blood cells",
+      "correct": "Skin and mucus",
       "competency": "GENSCI-11-T2-W8-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune defense analysis; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q26", "text": "Which of the following correctly lists the THREE lines of immune defense?", "options": ["Barriers, innate, adaptive", "Skin, bone, blood", "Heart, lungs, kidneys", "B cells, T cells, RBCs"], "correct": "Barriers, innate, adaptive", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune defense lines" } },
-    { "id": "q27", "text": "Which organ system houses white blood cells that fight infection?", "options": ["Immune and lymphatic system", "Skeletal system", "Digestive system", "Reproductive system"], "correct": "Immune and lymphatic system", "competency": "GENSCI-11-T2-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "immune system" } },
+    {
+      "id": "q26",
+      "text": "What do memory cells do?",
+      "options": [
+        "Respond quickly if the same germ returns",
+        "Store food energy for the whole immune system",
+        "Carry oxygen to the lymph nodes",
+        "Make the skin thicker against germs"
+      ],
+      "correct": "Respond quickly if the same germ returns",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q27",
+      "text": "Which describes a torn ACL?",
+      "options": [
+        "A damaged knee ligament that makes the knee unstable",
+        "A broken arm bone that heals by itself within a few days",
+        "A lung infection that causes heavy coughing",
+        "A burst blood vessel in the brain during sleep"
+      ],
+      "correct": "A damaged knee ligament that makes the knee unstable",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q28",
-      "text": "Which of the following BEST explains why a red blood cell has no nucleus?",
+      "text": "Why does the body use BOTH nerves and hormones to control temperature?",
       "options": [
-        "To free up space for more hemoglobin, allowing it to carry more oxygen",
-        "Because the red blood cell is already dying and degenerating",
-        "To make the red blood cell lighter and easier to circulate",
-        "Because the red blood cell does not need DNA or RNA"
+        "Nerves act fast; hormones give longer-lasting control",
+        "Hormones act fast; nerves give longer-lasting control",
+        "Each system works only during one time of day",
+        "Both systems do exactly the same thing at once"
       ],
-      "correct": "To free up space for more hemoglobin, allowing it to carry more oxygen",
-      "competency": "GENSCI-11-T2-W5-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "structure-function relationship; distractors balanced (Phase 6)" }
+      "correct": "Nerves act fast; hormones give longer-lasting control",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Understanding"
     },
-    { "id": "q29", "text": "Which of the following is an example of the interdependence theme in life science?", "options": ["Bees pollinating flowers while collecting nectar", "Sweating to cool down", "Reproducing by mitosis", "Homeostasis"], "correct": "Bees pollinating flowers while collecting nectar", "competency": "GENSCI-11-T2-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "interdependence theme" } },
-    { "id": "q30", "text": "Which of the following BEST summarizes the main idea of Term 2?", "options": ["Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense", "Only chemistry matters in daily life", "Only biology matters in daily life", "Neither chemistry nor biology is important"], "correct": "Chemistry and life science principles interact — chemical reactions shape environments, and biological systems maintain life through coordination and defense", "competency": "GENSCI-11-T2-W10-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 5, "confidence": "FALLBACK", "rationale": "Term 2 synthesis question" } }
+    {
+      "id": "q29",
+      "text": "After a measles outbreak, unvaccinated children got sick far more than vaccinated ones. What is the BEST conclusion?",
+      "options": [
+        "The vaccine helped build protective immunity",
+        "Measles only infects children who do not eat",
+        "Vaccinated children were never exposed at all",
+        "The vaccine itself caused the measles outbreak"
+      ],
+      "correct": "The vaccine helped build protective immunity",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q30",
+      "text": "A parent says, \"My child is healthy, so vaccines are unnecessary.\" Which response is MOST scientifically sound?",
+      "options": [
+        "Healthy kids can still catch serious diseases; vaccines prevent this",
+        "Healthy children never catch diseases, so the parent is correct",
+        "Vaccines are only useful after a child is already very sick in bed",
+        "Vaccines work only for adults, so the parent is correct"
+      ],
+      "correct": "Healthy kids can still catch serious diseases; vaccines prevent this",
+      "competency": "GENSCI-11-T2-W8-C1",
+      "bloomLevel": "Evaluating"
+    }
   ]
 }

@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Chemical Reactions Around Us",
-      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify and describe four common types of chemical reactions that occur in your daily life: <strong>decomposition</strong>, <strong>acid on carbonates</strong>, <strong>acids on metals</strong>, and <strong>combustion</strong>.</p><h3>🔬 What Is a Chemical Reaction?</h3><p>A <strong>chemical reaction</strong> is a process where one or more substances (called <strong>reactants</strong>) change into new substances (called <strong>products</strong>). The atoms are rearranged — not created or destroyed — during the reaction.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Reactants → Products</strong></p><h3>🧪 Signs a Chemical Reaction Has Occurred</h3><ul><li><strong>Gas bubbles</strong> — fizzing when you open soda</li><li><strong>Color change</strong> — rust forming on iron</li><li><strong>Temperature change</strong> — cooking releases heat</li><li><strong>Precipitate forms</strong> — solid appears in a clear liquid</li><li><strong>Light emitted</strong> — burning wood or fireworks</li><li><strong>New odor</strong> — milk spoiling</li></ul><h3>⚗️ Four Common Reaction Types</h3><table><thead><tr><th>Reaction Type</th><th>What Happens</th><th>Everyday Example</th></tr></thead><tbody><tr><td><strong>Decomposition</strong></td><td>One compound breaks down into two or more simpler substances</td><td>Hydrogen peroxide (H₂O₂) breaking into water and oxygen when used as an antiseptic</td></tr><tr><td><strong>Acid on Carbonates</strong></td><td>An acid reacts with a carbonate → produces CO₂ gas, water, and a salt</td><td>Vinegar on baking soda producing fizz in cakes and volcano experiments</td></tr><tr><td><strong>Acids on Metals</strong></td><td>An acid reacts with a metal → produces hydrogen gas and a salt</td><td>Dilute hydrochloric acid cleaning a rusty nail; lemon juice on aluminum foil</td></tr><tr><td><strong>Combustion</strong></td><td>A substance reacts with oxygen → releases heat and light</td><td>Burning wood, LPG stove flame, jeepney engine, candles</td></tr></tbody></table><h3>🍰 Reaction Types in Daily Activities</h3><ul><li><strong>Baking:</strong> Baking soda + vinegar (or acid in buttermilk) → CO₂ makes the cake rise. <em>Acid on carbonate.</em></li><li><strong>Cleaning:</strong> Bleach (NaClO) decomposes over time releasing oxygen — that's why old bleach is weaker. <em>Decomposition.</em></li><li><strong>Burning:</strong> LPG (C₃H₈) + O₂ → CO₂ + H₂O + heat. <em>Combustion.</em></li><li><strong>Cooking in kalamansi juice:</strong> Citric acid + iron from fish → tenderizes. <em>Acid on metal.</em></li><li><strong>Rusting:</strong> Iron + oxygen + water → iron oxide (rust). <em>Oxidation (slow combustion).</em></li></ul><h3>💡 Why This Matters</h3><p>Understanding reaction types helps you:</p><ul><li><strong>Cook safely</strong> — know when to expect fizzing or heat.</li><li><strong>Clean efficiently</strong> — pick the right chemical for the right mess.</li><li><strong>Prevent accidents</strong> — never mix bleach with ammonia (acid-base reaction producing toxic gas).</li><li><strong>Understand nature</strong> — from photosynthesis to rust, reactions drive everything.</li></ul><h3>📌 Quick Check</h3><ul><li>What type of reaction produces CO₂ when vinegar meets baking soda? (Answer: acid on carbonate)</li><li>Why does old bleach become weaker over time? (Answer: decomposition of NaClO)</li><li>What are the products of combustion of LPG? (Answer: CO₂ and H₂O plus heat)</li></ul>"
+      "title": "What Is a Chemical Reaction?",
+      "badge": {
+        "id": "chemist",
+        "name": "Chemist",
+        "icon": "🧪"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain four common reaction types</strong> — decomposition, acid on carbonates, acids on metals and combustion — and <strong>identify them in daily activities</strong> like baking, cleaning and cooking.</p>\n<h3>🔬 Reactants and Products</h3>\n<p>A <strong>chemical reaction</strong> changes one or more substances (<strong>reactants</strong>) into new substances (<strong>products</strong>) with different properties. Atoms are <strong>rearranged</strong>, not created or destroyed, so the total mass stays the same.</p>\n<p style=\"text-align:center\"><strong>Reactants → Products</strong></p>\n<h3>🧪 Signs That a Reaction Happened</h3>\n<table><thead><tr><th>Sign</th><th>Everyday example</th></tr></thead><tbody>\n<tr><td>Gas bubbles (not from boiling)</td><td>Antacid tablet fizzing in water</td></tr>\n<tr><td>Color change</td><td>Iron gate turning reddish-brown (rust)</td></tr>\n<tr><td>Heat or light given off</td><td>LPG flame on a stove</td></tr>\n<tr><td>A solid (precipitate) forms in a liquid</td><td>Soap scum in hard water</td></tr>\n<tr><td>New smell</td><td>Milk turning sour</td></tr>\n</tbody></table>\n<h3>⚖️ Physical vs Chemical Change</h3>\n<p>Melting ice, dissolving sugar and cutting paper are <strong>physical changes</strong> — the substance stays the same. Burning paper, cooking an egg and rusting are <strong>chemical changes</strong> — a new substance forms and the change is hard to reverse. One sign alone is not proof: boiling water also makes bubbles, but it is still water.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which of these is a CHEMICAL change?",
+            "choices": [
+              {
+                "label": "Paper burning to ash and smoke",
+                "correct": true
+              },
+              {
+                "label": "Ice melting into liquid water in a glass",
+                "correct": false
+              },
+              {
+                "label": "Sugar dissolving in a glass of hot coffee",
+                "correct": false
+              },
+              {
+                "label": "A sheet of paper being cut into small pieces",
+                "correct": false
+              }
+            ],
+            "explanation": "Burning makes new substances (ash, carbon dioxide, water vapor). The others change form or size but the substance stays the same."
+          },
+          {
+            "text": "Water boils and forms bubbles in a kettle. Why is this NOT a chemical reaction?",
+            "choices": [
+              {
+                "label": "The bubbles are still water, just as a gas",
+                "correct": true
+              },
+              {
+                "label": "The bubbles form only because of the heat source",
+                "correct": false
+              },
+              {
+                "label": "No color change happened inside the kettle",
+                "correct": false
+              },
+              {
+                "label": "Kettles are made of metal, so nothing can react",
+                "correct": false
+              }
+            ],
+            "explanation": "Boiling changes water from liquid to gas — a physical change. No new substance forms, even though bubbles appear."
+          },
+          {
+            "text": "In the reaction \"wood + oxygen → ash + carbon dioxide + water,\" which are the REACTANTS?",
+            "choices": [
+              {
+                "label": "Wood and oxygen",
+                "correct": true
+              },
+              {
+                "label": "Ash and carbon dioxide",
+                "correct": false
+              },
+              {
+                "label": "Carbon dioxide and water",
+                "correct": false
+              },
+              {
+                "label": "Ash, carbon dioxide and water",
+                "correct": false
+              }
+            ],
+            "explanation": "Reactants are written on the left of the arrow; they are used up. Products are on the right; they are formed."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Reaction Types",
-      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each reaction type or everyday scenario to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Four Reaction Types",
+      "badge": {
+        "id": "chemist",
+        "name": "Chemist",
+        "icon": "🧪"
+      },
+      "content": "<h3>⚗️ The Four Types</h3>\n<table><thead><tr><th>Type</th><th>General pattern</th><th>Everyday example</th></tr></thead><tbody>\n<tr><td><strong>Decomposition</strong></td><td>One compound → two or more simpler substances</td><td>2H₂O₂ → 2H₂O + O₂ (peroxide fizzing on a wound)</td></tr>\n<tr><td><strong>Acid + carbonate</strong></td><td>acid + carbonate → salt + water + CO₂</td><td>Vinegar + baking soda fizzing</td></tr>\n<tr><td><strong>Acid + metal</strong></td><td>acid + metal → salt + hydrogen gas</td><td>Muriatic acid bubbling on zinc or iron</td></tr>\n<tr><td><strong>Combustion</strong></td><td>fuel + oxygen → CO₂ + H₂O + heat and light</td><td>LPG stove, candle, jeepney engine</td></tr>\n</tbody></table>\n<h3>🔎 How to Tell Them Apart</h3>\n<ul>\n<li><strong>One reactant only?</strong> It is decomposition — often needs heat, light or a catalyst (an enzyme in blood speeds up peroxide breakdown).</li>\n<li><strong>Acid fizzing?</strong> Check what it touched. With a <em>carbonate</em> (baking soda, limestone, eggshell) the gas is <strong>CO₂</strong>, which puts out a flame. With a <em>metal</em> the gas is <strong>hydrogen</strong>, which pops with a flame.</li>\n<li><strong>Fuel + oxygen with heat and light?</strong> It is combustion. If oxygen is limited, <strong>incomplete combustion</strong> makes soot and deadly <strong>carbon monoxide</strong>.</li>\n</ul>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each reaction or term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Decomposition", "right": "One compound breaks down into two or more simpler substances" },
-          { "key": "k2", "left": "Acid on carbonate", "right": "Produces CO₂ gas, water, and a salt — like vinegar on baking soda" },
-          { "key": "k3", "left": "Acids on metals", "right": "Produces hydrogen gas and a salt — like lemon juice on aluminum" },
-          { "key": "k4", "left": "Combustion", "right": "Reaction with oxygen releasing heat and light — like burning LPG" },
-          { "key": "k5", "left": "Photosynthesis", "right": "Plants use CO₂ + H₂O + sunlight to make glucose and O₂" },
-          { "key": "k6", "left": "Rusting of iron", "right": "Slow oxidation of iron in the presence of oxygen and water" },
-          { "key": "k7", "left": "Cellular respiration", "right": "Cells break down glucose with O₂ to release energy" },
-          { "key": "k8", "left": "Fizzing from baking powder", "right": "Acid + bicarbonate produces CO₂ to make cakes rise" }
+          {
+            "key": "k1",
+            "left": "Decomposition",
+            "right": "One compound breaks into simpler substances",
+            "why": "Example: hydrogen peroxide breaking into water and oxygen."
+          },
+          {
+            "key": "k2",
+            "left": "Acid + carbonate",
+            "right": "Makes a salt, water and carbon dioxide",
+            "why": "Vinegar and baking soda fizz because CO₂ is released."
+          },
+          {
+            "key": "k3",
+            "left": "Acid + metal",
+            "right": "Makes a salt and hydrogen gas",
+            "why": "Hydrogen gas makes a squeaky pop when lit."
+          },
+          {
+            "key": "k4",
+            "left": "Combustion",
+            "right": "Fuel reacts with oxygen, giving heat and light",
+            "why": "Burning LPG, wood and diesel are combustion."
+          },
+          {
+            "key": "k5",
+            "left": "Incomplete combustion",
+            "right": "Too little oxygen; forms soot and CO",
+            "why": "A yellow, smoky flame signals incomplete burning."
+          },
+          {
+            "key": "k6",
+            "left": "Carbon dioxide test",
+            "right": "Puts out a burning splint",
+            "why": "CO₂ does not support burning."
+          },
+          {
+            "key": "k7",
+            "left": "Hydrogen test",
+            "right": "Makes a squeaky pop with a flame",
+            "why": "Hydrogen burns quickly with oxygen."
+          },
+          {
+            "key": "k8",
+            "left": "Catalyst",
+            "right": "Speeds up a reaction without being used up",
+            "why": "An enzyme in blood speeds up peroxide decomposition."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Reactions at Home",
-      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Reactions at Home",
+      "badge": {
+        "id": "chemist",
+        "name": "Chemist",
+        "icon": "🧪"
+      },
+      "content": "<h3>🍰 In the Kitchen</h3>\n<ul>\n<li><strong>Baking:</strong> baking powder contains sodium bicarbonate and a dry acid. When wet and heated, they react (acid + carbonate) and release <strong>CO₂</strong>, which makes puto and cake rise.</li>\n<li><strong>Cooking with LPG:</strong> butane and propane burn in oxygen (combustion). A <strong>blue flame</strong> means complete combustion; a <strong>yellow, sooty flame</strong> means not enough air.</li>\n</ul>\n<h3>🧽 Cleaning</h3>\n<ul>\n<li><strong>Descaling a kettle:</strong> white scale is calcium carbonate. Vinegar (acetic acid) dissolves it with fizzing (acid + carbonate).</li>\n<li><strong>Muriatic acid on tiles:</strong> it removes stains but also attacks metal fixtures, releasing hydrogen (acid + metal). Use with gloves and ventilation.</li>\n</ul>\n<h3>🩹 First Aid and the Body</h3>\n<p>Hydrogen peroxide fizzes on a wound because an enzyme in blood (catalase) speeds up its <strong>decomposition</strong> into water and oxygen. Antacids neutralize excess stomach acid; some contain carbonates and release CO₂, which is why you may burp.</p>\n<h3>🔩 Rusting</h3>\n<p>Iron slowly reacts with <strong>oxygen and water</strong> to form rust (iron oxide). Salt water speeds it up, which is why coastal roofs and gates rust faster. Paint, oil and galvanizing (zinc coating) keep oxygen and water away.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Identify and reason about reactions in daily life. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🍰 Your mother bakes a cake and adds baking powder. When the cake is in the oven, it rises. What type of reaction is happening?",
+            "text": "Your LPG stove suddenly burns with a yellow, sooty flame instead of a blue one. What does this MOST likely mean?",
             "choices": [
-              { "label": "A) Combustion — the cake burns", "correct": false },
-              { "label": "B) Acid on carbonate — CO₂ gas is released, making the batter rise", "correct": true },
-              { "label": "C) Decomposition — water evaporates", "correct": false },
-              { "label": "D) No chemical reaction happens", "correct": false }
-            ]
+              {
+                "label": "Not enough oxygen is mixing with the gas",
+                "correct": true
+              },
+              {
+                "label": "The LPG tank is completely full of fuel",
+                "correct": false
+              },
+              {
+                "label": "The flame is hotter than normal and is safer",
+                "correct": false
+              },
+              {
+                "label": "The stove is changing LPG into hydrogen gas",
+                "correct": false
+              }
+            ],
+            "explanation": "A yellow, smoky flame shows incomplete combustion from too little air. It wastes fuel and can produce carbon monoxide, so the burner should be cleaned or adjusted."
           },
           {
-            "text": "🔦 Your grandmother uses hydrogen peroxide (H₂O₂) on a wound. She notices fizzing. What happened?",
+            "text": "White scale builds up inside a kettle. Soaking it in vinegar makes it fizz and disappear. What reaction is this?",
             "choices": [
-              { "label": "A) Combustion — the H₂O₂ burned", "correct": false },
-              { "label": "B) Decomposition — H₂O₂ breaks into water and oxygen gas, producing fizzing", "correct": true },
-              { "label": "C) Acid-metal reaction", "correct": false },
-              { "label": "D) The bottle was empty", "correct": false }
-            ]
+              {
+                "label": "Acid reacting with a carbonate",
+                "correct": true
+              },
+              {
+                "label": "Decomposition of the water itself",
+                "correct": false
+              },
+              {
+                "label": "Combustion of the white scale layer",
+                "correct": false
+              },
+              {
+                "label": "Acid reacting with the metal kettle body",
+                "correct": false
+              }
+            ],
+            "explanation": "The scale is calcium carbonate. Acetic acid reacts with it to make a soluble salt, water and CO₂ — the fizz."
           },
           {
-            "text": "🚗 A jeepney burns diesel fuel to move. What are the products of this combustion reaction?",
+            "text": "A student drops a zinc strip into dilute hydrochloric acid. Bubbles form, and a lit splint held at the tube makes a squeaky pop. Which gas formed?",
             "choices": [
-              { "label": "A) Carbon dioxide, water vapor, and heat", "correct": true },
-              { "label": "B) Only hydrogen gas", "correct": false },
-              { "label": "C) Table salt and water", "correct": false },
-              { "label": "D) Hydrogen peroxide", "correct": false }
-            ]
+              {
+                "label": "Hydrogen",
+                "correct": true
+              },
+              {
+                "label": "Carbon dioxide",
+                "correct": false
+              },
+              {
+                "label": "Oxygen",
+                "correct": false
+              },
+              {
+                "label": "Water vapor",
+                "correct": false
+              }
+            ],
+            "explanation": "Acid + metal produces a salt and hydrogen gas. Hydrogen burns with a squeaky pop; CO₂ would put the flame out."
           },
           {
-            "text": "🔩 You spray a rusty gate with a cleaner containing phosphoric acid. The rust disappears, and bubbles form. What reaction type is this?",
+            "text": "Iron gates in a coastal barangay rust much faster than those in an inland town. What is the BEST explanation?",
             "choices": [
-              { "label": "A) Combustion", "correct": false },
-              { "label": "B) Decomposition", "correct": false },
-              { "label": "C) Acid on metal — the acid reacts with iron oxide, producing a salt and hydrogen gas", "correct": true },
-              { "label": "D) Evaporation", "correct": false }
-            ]
+              {
+                "label": "Salty, moist air speeds up rusting",
+                "correct": true
+              },
+              {
+                "label": "Sea breezes are colder, causing rust",
+                "correct": false
+              },
+              {
+                "label": "Sunlight on the coast melts the paint",
+                "correct": false
+              },
+              {
+                "label": "Inland air has no oxygen to react with",
+                "correct": false
+              }
+            ],
+            "explanation": "Rusting needs oxygen and water; dissolved salt helps the reaction go faster. Coastal air is humid and salty."
           },
           {
-            "text": "⚠️ You are told never to mix bleach with ammonia cleaner. What dangerous reaction happens if you do?",
+            "text": "Which household plan would BEST slow the rusting of a new steel gate?",
             "choices": [
-              { "label": "A) Nothing — they are safe to mix", "correct": false },
-              { "label": "B) Toxic chloramine gas is released, which can damage lungs", "correct": true },
-              { "label": "C) It becomes a stronger bleach", "correct": false },
-              { "label": "D) It creates harmless bubbles", "correct": false }
-            ]
+              {
+                "label": "Paint it to keep out air and moisture",
+                "correct": true
+              },
+              {
+                "label": "Wash it with salt water once a week",
+                "correct": false
+              },
+              {
+                "label": "Keep it wet so dust cannot stick to it",
+                "correct": false
+              },
+              {
+                "label": "Leave it bare so the metal can breathe",
+                "correct": false
+              }
+            ],
+            "explanation": "Paint forms a barrier between the iron and the oxygen and water it needs to rust. Salt and moisture would speed rusting up."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Chem Lab",
-      "badge": { "id": "chemist", "name": "Chemist", "icon": "🧪" },
-      "content": "<h3>🔐 Formative Check — Escape the Chem Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Combustion and Chemical Safety",
+      "badge": {
+        "id": "chemist",
+        "name": "Chemist",
+        "icon": "🧪"
+      },
+      "content": "<h3>🔥 Complete vs Incomplete Combustion</h3>\n<table><thead><tr><th></th><th>Complete</th><th>Incomplete</th></tr></thead><tbody>\n<tr><td>Oxygen supply</td><td>Plenty</td><td>Limited</td></tr>\n<tr><td>Flame</td><td>Blue, clean</td><td>Yellow-orange, sooty</td></tr>\n<tr><td>Products</td><td>CO₂ + H₂O + much heat</td><td>CO, soot (C), less heat</td></tr>\n</tbody></table>\n<h3>☠️ Carbon Monoxide (CO)</h3>\n<p>CO has <strong>no color and no smell</strong>. It binds to hemoglobin in blood more strongly than oxygen, so the body is starved of oxygen. Never run a generator, charcoal stove or car engine inside a closed room or garage.</p>\n<h3>⚠️ Reactions to Avoid</h3>\n<ul>\n<li>Bleach + ammonia → toxic chloramine gas; bleach + acid (muriatic, vinegar) → chlorine gas.</li>\n<li>Muriatic acid is corrosive — use gloves, eye protection and good ventilation.</li>\n<li>LPG leaks: no switches or flames; open doors and windows; close the regulator.</li>\n</ul>\n<h3>🧠 Why This Matters</h3>\n<p>Knowing the reaction type helps you predict the products — and the dangers. Combustion can produce CO; acids on metals produce flammable hydrogen; mixing cleaners can release toxic gases.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which of the following BEST describes a chemical reaction?",
+            "text": "What are the main products of COMPLETE combustion of LPG?",
             "choices": [
-              { "label": "A) A physical change like melting ice", "correct": false },
-              { "label": "B) A process where reactants change into new products with different properties", "correct": true },
-              { "label": "C) A change in shape only", "correct": false },
-              { "label": "D) A change in temperature only", "correct": false }
-            ]
+              {
+                "label": "Carbon dioxide and water",
+                "correct": true
+              },
+              {
+                "label": "Carbon monoxide and soot",
+                "correct": false
+              },
+              {
+                "label": "Hydrogen and oxygen gas",
+                "correct": false
+              },
+              {
+                "label": "Salt and hydrogen gas",
+                "correct": false
+              }
+            ],
+            "explanation": "With enough oxygen, hydrocarbon fuels burn completely to CO₂ and H₂O, releasing heat and light."
           },
           {
-            "text": "What type of reaction occurs when vinegar is added to baking soda?",
+            "text": "Hydrogen peroxide breaking into water and oxygen is which reaction type?",
             "choices": [
-              { "label": "A) Combustion", "correct": false },
-              { "label": "B) Decomposition", "correct": false },
-              { "label": "C) Acid on carbonate", "correct": true },
-              { "label": "D) Photosynthesis", "correct": false }
-            ]
+              {
+                "label": "Decomposition",
+                "correct": true
+              },
+              {
+                "label": "Combustion",
+                "correct": false
+              },
+              {
+                "label": "Acid + metal",
+                "correct": false
+              },
+              {
+                "label": "Acid + carbonate",
+                "correct": false
+              }
+            ],
+            "explanation": "One compound breaks into simpler substances — that is decomposition."
           },
           {
-            "text": "Why do we see bubbles when hydrogen peroxide is poured on a wound?",
+            "text": "Why is carbon monoxide especially dangerous?",
             "choices": [
-              { "label": "A) The H₂O₂ is boiling", "correct": false },
-              { "label": "B) H₂O₂ decomposes into water and oxygen gas", "correct": true },
-              { "label": "C) It is reacting with metal in the skin", "correct": false },
-              { "label": "D) It is combusting", "correct": false }
-            ]
+              {
+                "label": "It is odorless and blocks oxygen in the blood",
+                "correct": true
+              },
+              {
+                "label": "It smells strongly and makes the eyes water a lot",
+                "correct": false
+              },
+              {
+                "label": "It makes the room much colder very quickly",
+                "correct": false
+              },
+              {
+                "label": "It turns into liquid that floods the lungs",
+                "correct": false
+              }
+            ],
+            "explanation": "CO cannot be seen or smelled, and it binds to hemoglobin, preventing the blood from carrying oxygen."
           },
           {
-            "text": "Which of the following is NOT a sign of a chemical reaction?",
+            "text": "Which gas is produced when vinegar reacts with baking soda?",
             "choices": [
-              { "label": "A) Color change", "correct": false },
-              { "label": "B) Gas bubbles forming", "correct": false },
-              { "label": "C) Change in shape without any other change", "correct": true },
-              { "label": "D) Release of light or heat", "correct": false }
-            ]
+              {
+                "label": "Carbon dioxide",
+                "correct": true
+              },
+              {
+                "label": "Hydrogen",
+                "correct": false
+              },
+              {
+                "label": "Oxygen",
+                "correct": false
+              },
+              {
+                "label": "Chlorine gas (Cl₂)",
+                "correct": false
+              }
+            ],
+            "explanation": "Acid + carbonate → salt + water + CO₂. That gas makes the fizz."
           },
           {
-            "text": "What are the products of complete combustion of a hydrocarbon fuel like LPG?",
+            "text": "A family runs a generator inside a closed garage during a brownout. What is the BEST advice?",
             "choices": [
-              { "label": "A) Carbon dioxide and water", "correct": true },
-              { "label": "B) Hydrogen gas only", "correct": false },
-              { "label": "C) Salt and water", "correct": false },
-              { "label": "D) Oxygen and glucose", "correct": false }
-            ]
+              {
+                "label": "Move it outdoors, away from doors and windows",
+                "correct": true
+              },
+              {
+                "label": "Keep the garage closed so the fumes stay out of the house",
+                "correct": false
+              },
+              {
+                "label": "Run it only at night when the air is cooler",
+                "correct": false
+              },
+              {
+                "label": "Put a fan beside it inside the garage to cool it",
+                "correct": false
+              }
+            ],
+            "explanation": "Generators produce carbon monoxide. It must run outdoors where the gas can disperse, far from openings into the house."
           },
           {
-            "text": "Why should you NEVER mix bleach with ammonia cleaner?",
+            "text": "Which observation BEST shows that a chemical reaction happened?",
             "choices": [
-              { "label": "A) It releases toxic chloramine gas that can damage your lungs", "correct": true },
-              { "label": "B) It becomes solid", "correct": false },
-              { "label": "C) It loses all cleaning power", "correct": false },
-              { "label": "D) It smells better", "correct": false }
-            ]
+              {
+                "label": "A new gas forms when two liquids are mixed",
+                "correct": true
+              },
+              {
+                "label": "Ice cubes melt into water on a warm wooden table",
+                "correct": false
+              },
+              {
+                "label": "Salt disappears when stirred into water",
+                "correct": false
+              },
+              {
+                "label": "A rubber band stretches and snaps back",
+                "correct": false
+              }
+            ],
+            "explanation": "A new substance (gas) forming from mixed liquids signals a chemical change. The others are physical changes."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

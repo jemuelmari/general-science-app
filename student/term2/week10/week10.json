@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Adaptation & Mitigation Strategies",
-      "badge": { "id": "term2-finisher", "name": "Term 2 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to distinguish between <strong>adaptation</strong> and <strong>mitigation</strong>, propose strategies for protecting local biodiversity, and evaluate how overpopulation affects ecosystems and climate.</p><h3>🔑 Adaptation vs. Mitigation</h3><table><thead><tr><th>Term</th><th>Meaning</th><th>Focus</th><th>Example</th></tr></thead><tbody><tr><td><strong>Adaptation</strong></td><td>Adjusting to the effects of climate change that are already happening</td><td>Managing impacts</td><td>Building seawalls; planting drought-resistant crops</td></tr><tr><td><strong>Mitigation</strong></td><td>Reducing the causes of climate change — mainly GHG emissions</td><td>Reducing emissions</td><td>Using solar power; planting trees; reducing waste</td></tr></tbody></table><p><strong>Both are needed.</strong> We must adapt to what's already happening AND reduce future impacts.</p><h3>🌱 Adaptation Strategies for the Philippines</h3><table><thead><tr><th>Strategy</th><th>How It Helps</th></tr></thead><tbody><tr><td><strong>Mangrove restoration</strong></td><td>Buffers coastal communities from storm surges and sea-level rise; provides fish habitat</td></tr><tr><td><strong>Climate-resilient crops</strong></td><td>Salt-tolerant rice (e.g., NSIC Rc480), drought-resistant corn varieties</td></tr><tr><td><strong>Rainwater harvesting</strong></td><td>Captures rain during wet season for use during dry spells</td></tr><tr><td><strong>Elevated homes and flood-proof infrastructure</strong></td><td>Reduces damage from floods and storm surges</td></tr><tr><td><strong>Early warning systems</strong></td><td>PAGASA typhoon warnings; PHIVOLCS volcano/earthquake alerts</td></tr><tr><td><strong>Diversified farming</strong></td><td>Reduces risk from crop failure — if one crop fails, others survive</td></tr><tr><td><strong>Coral reef restoration</strong></td><td>Coral gardening; marine protected areas</td></tr><tr><td><strong>Urban green spaces</strong></td><td>Reduces heat island effect; absorbs CO₂ and stormwater</td></tr></tbody></table><h3>🌍 Mitigation Strategies</h3><table><thead><tr><th>Strategy</th><th>How It Reduces Emissions</th></tr></thead><tbody><tr><td><strong>Renewable energy</strong></td><td>Solar, wind, hydro, geothermal replace fossil fuels</td></tr><tr><td><strong>Reforestation</strong></td><td>Trees absorb CO₂ from the atmosphere</td></tr><tr><td><strong>Reduce, reuse, recycle</strong></td><td>Less waste = less methane from landfills</td></tr><tr><td><strong>Public transportation &amp; cycling</strong></td><td>Fewer cars = less CO₂</td></tr><tr><td><strong>Energy-efficient appliances</strong></td><td>Less electricity demand; lower emissions</td></tr><tr><td><strong>Sustainable agriculture</strong></td><td>Less methane from livestock and rice paddies</td></tr><tr><td><strong>Protect forests and wetlands</strong></td><td>Preserves carbon sinks that store CO₂</td></tr></tbody></table><h3>🇵🇭 Philippine Climate Policies</h3><ul><li><strong>Climate Change Act of 2009 (RA 9729):</strong> Created the Climate Change Commission (CCC).</li><li><strong>Philippine Strategy for Sustainable Development:</strong> Aligns development with climate goals.</li><li><strong>Renewable Energy Act (RA 9513):</strong> Promotes renewable energy development.</li><li><strong>National Greening Program:</strong> Government reforestation initiative.</li><li><strong>Extended Producer Responsibility Act (RA 11898):</strong> Makes companies responsible for plastic waste.</li></ul><h3>👥 Overpopulation and the Environment</h3><p>The global population recently passed <strong>8 billion</strong>. The Philippines has over <strong>110 million people</strong> — one of the fastest-growing populations in Southeast Asia.</p><p><strong>Effects of overpopulation on the environment and climate:</strong></p><ul><li><strong>Increased resource demand:</strong> More food, water, energy needed → more pressure on ecosystems.</li><li><strong>Deforestation:</strong> Forests cleared for housing, farming, and infrastructure.</li><li><strong>More waste:</strong> More plastic, more methane from landfills.</li><li><strong>Higher GHG emissions:</strong> More vehicles, factories, and electricity use.</li><li><strong>Habitat loss:</strong> Coastal development destroys mangroves and reefs.</li><li><strong>Water scarcity:</strong> More people competing for limited freshwater.</li><li><strong>Food insecurity:</strong> More demand on fisheries and farmland.</li></ul><h3>🧠 What Can We Do?</h3><p>Solutions to overpopulation's environmental impact:</p><ul><li><strong>Education, especially for girls</strong> — reduces family size and improves outcomes.</li><li><strong>Access to family planning</strong> — empowers families to choose family size.</li><li><strong>Urban planning</strong> — dense cities use less land and energy per person than sprawl.</li><li><strong>Sustainable consumption</strong> — buying less, wasting less.</li><li><strong>Renewable energy transition</strong> — decouple growth from emissions.</li></ul><h3>🌱 Biodiversity Protection in the Philippines</h3><p>The Philippines is a <strong>megadiverse country</strong> — one of 17 countries that together contain 70% of the world's biodiversity. Threats include habitat loss, overfishing, pollution, and climate change.</p><p><strong>Protection strategies:</strong></p><ul><li><strong>Marine Protected Areas (MPAs):</strong> No-take zones let fish populations recover.</li><li><strong>Protected terrestrial areas:</strong> NIPAS Act (RA 7586) creates national parks and wildlife sanctuaries.</li><li><strong>Community-based conservation:</strong> Local communities manage resources — like the Tagbanwa in Palawan.</li><li><strong>Wildlife protection laws:</strong> RA 9147 — Wildlife Resources Conservation and Protection Act.</li></ul><h3>📌 Quick Check</h3><ul><li>What's the difference between adaptation and mitigation? (Answer: adaptation manages impacts; mitigation reduces causes)</li><li>Name one Philippine law related to climate. (Answer: RA 9729 Climate Change Act)</li><li>How does overpopulation affect the environment? (Answer: increases resource demand, deforestation, waste, and GHG emissions)</li></ul>"
+      "title": "Adaptation vs Mitigation",
+      "badge": {
+        "id": "term2-finisher",
+        "name": "Term 2 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>propose adaptation and mitigation strategies</strong> to protect local biodiversity and <strong>evaluate the effects of overpopulation</strong> using secondary sources.</p>\n<h3>🔑 Two Kinds of Climate Action</h3>\n<table><thead><tr><th></th><th>Mitigation</th><th>Adaptation</th></tr></thead><tbody>\n<tr><td>Goal</td><td>Reduce the <strong>causes</strong> — cut greenhouse gas emissions or remove CO₂</td><td>Reduce the <strong>harm</strong> from changes already happening</td></tr>\n<tr><td>Question it answers</td><td>\"How do we warm the planet less?\"</td><td>\"How do we live safely with the change?\"</td></tr>\n<tr><td>Examples</td><td>Solar and wind power, energy-efficient appliances, public transport, reforestation, less food waste</td><td>Seawalls, elevated houses, early-warning systems, drought- or flood-tolerant rice, rainwater harvesting</td></tr>\n</tbody></table>\n<h3>🌿 Some Actions Do Both</h3>\n<p><strong>Mangrove restoration</strong> absorbs and stores carbon (mitigation) <em>and</em> shields coasts from storm surges while sheltering young fish (adaptation). Strategies that do both are especially valuable.</p>\n<p>The Philippines' <strong>Climate Change Act of 2009 (RA 9729)</strong> created the Climate Change Commission, and LGUs prepare Local Climate Change Action Plans.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "A city replaces diesel buses with electric buses charged by solar power. This is mainly…",
+            "choices": [
+              {
+                "label": "Mitigation — it cuts greenhouse gas emissions",
+                "correct": true
+              },
+              {
+                "label": "Adaptation — it protects the city from floods",
+                "correct": false
+              },
+              {
+                "label": "Adaptation — it helps buses survive typhoons",
+                "correct": false
+              },
+              {
+                "label": "Neither — transport has no link to climate",
+                "correct": false
+              }
+            ],
+            "explanation": "Reducing emissions addresses the cause of climate change, so it is mitigation."
+          },
+          {
+            "text": "A coastal town builds houses on stilts because floods are getting worse. This is mainly…",
+            "choices": [
+              {
+                "label": "Adaptation",
+                "correct": true
+              },
+              {
+                "label": "Mitigation",
+                "correct": false
+              },
+              {
+                "label": "Deforestation",
+                "correct": false
+              },
+              {
+                "label": "Eutrophication",
+                "correct": false
+              }
+            ],
+            "explanation": "Elevated houses reduce harm from flooding that is already happening — adaptation."
+          },
+          {
+            "text": "Which strategy is BOTH mitigation and adaptation?",
+            "choices": [
+              {
+                "label": "Planting mangroves along the coast",
+                "correct": true
+              },
+              {
+                "label": "Building only a concrete seawall there",
+                "correct": false
+              },
+              {
+                "label": "Buying a larger air conditioner",
+                "correct": false
+              },
+              {
+                "label": "Burning more coal for electricity",
+                "correct": false
+              }
+            ],
+            "explanation": "Mangroves store carbon (mitigation) and buffer storm surges and protect fish nurseries (adaptation)."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Mitigation Actions",
-      "badge": { "id": "term2-finisher", "name": "Term 2 Finisher", "icon": "🏁" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each strategy, law, or concept to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Protecting Local Biodiversity",
+      "badge": {
+        "id": "term2-finisher",
+        "name": "Term 2 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🐠 Strategies That Work</h3>\n<table><thead><tr><th>Strategy</th><th>How it helps biodiversity</th></tr></thead><tbody>\n<tr><td>Marine Protected Areas (MPAs)</td><td>No-fishing zones let fish grow and spill over to nearby fishing grounds (e.g., Apo Island)</td></tr>\n<tr><td>Mangrove and forest restoration</td><td>Restores habitat, stores carbon, protects watersheds</td></tr>\n<tr><td>Wildlife corridors</td><td>Connect forest patches so species can shift ranges as climate changes</td></tr>\n<tr><td>Seed banks and gene banks</td><td>Save varieties (e.g., at PhilRice) for breeding climate-tolerant crops</td></tr>\n<tr><td>Reducing other stresses</td><td>Less pollution and overfishing make reefs better able to recover from bleaching</td></tr>\n</tbody></table>\n<h3>⚖️ Philippine Laws</h3>\n<ul>\n<li><strong>RA 9729</strong> — Climate Change Act (Climate Change Commission)</li>\n<li><strong>RA 9147</strong> — Wildlife Resources Conservation and Protection Act</li>\n<li><strong>RA 11038</strong> — Expanded National Integrated Protected Areas System (E-NIPAS)</li>\n<li><strong>RA 10121</strong> — Disaster Risk Reduction and Management Act</li>\n</ul>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each strategy or law to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Adaptation", "right": "Adjusting to the impacts of climate change — like building seawalls" },
-          { "key": "k2", "left": "Mitigation", "right": "Reducing the causes of climate change — like using solar power" },
-          { "key": "k3", "left": "Mangrove restoration", "right": "Buffers coastal communities from storm surges and provides fish habitat" },
-          { "key": "k4", "left": "Rainwater harvesting", "right": "Captures rain during the wet season for dry-season use" },
-          { "key": "k5", "left": "Renewable energy", "right": "Solar, wind, hydro, geothermal that replace fossil fuels" },
-          { "key": "k6", "left": "RA 9729", "right": "Philippine Climate Change Act of 2009 — created the CCC" },
-          { "key": "k7", "left": "RA 9147", "right": "Philippine Wildlife Resources Conservation and Protection Act" },
-          { "key": "k8", "left": "Marine Protected Area (MPA)", "right": "No-take zone where fish populations recover" }
+          {
+            "key": "k1",
+            "left": "Mitigation",
+            "right": "Reducing the causes of climate change",
+            "why": "Cutting emissions or absorbing CO₂."
+          },
+          {
+            "key": "k2",
+            "left": "Adaptation",
+            "right": "Reducing harm from climate impacts",
+            "why": "Adjusting to changes already happening."
+          },
+          {
+            "key": "k3",
+            "left": "Marine Protected Area",
+            "right": "No-take zone where fish populations recover",
+            "why": "Apo Island is a famous example."
+          },
+          {
+            "key": "k4",
+            "left": "Wildlife corridor",
+            "right": "Connects habitats so species can move",
+            "why": "Helps species shift ranges safely."
+          },
+          {
+            "key": "k5",
+            "left": "Rainwater harvesting",
+            "right": "Stores rain for the dry season",
+            "why": "An adaptation to droughts."
+          },
+          {
+            "key": "k6",
+            "left": "RA 9729",
+            "right": "Climate Change Act of 2009",
+            "why": "It created the Climate Change Commission."
+          },
+          {
+            "key": "k7",
+            "left": "RA 9147",
+            "right": "Wildlife conservation and protection law",
+            "why": "It protects wild species and habitats."
+          },
+          {
+            "key": "k8",
+            "left": "Seed bank",
+            "right": "Stores crop varieties for future breeding",
+            "why": "Helps develop climate-tolerant crops."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Community Resilience",
-      "badge": { "id": "term2-finisher", "name": "Term 2 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Overpopulation and the Environment",
+      "badge": {
+        "id": "term2-finisher",
+        "name": "Term 2 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>👥 Population Pressure</h3>\n<p>The Philippine population has grown past 110 million. More people need more food, water, housing, energy and transport. When demand grows faster than resources and planning, the environment suffers:</p>\n<ul>\n<li><strong>Habitat loss</strong> as forests and wetlands are cleared for farms and housing</li>\n<li><strong>More waste and pollution</strong> — garbage, sewage, air pollution in cities</li>\n<li><strong>Overfishing and overharvesting</strong> of reefs and forests</li>\n<li><strong>Higher emissions</strong> from energy use and traffic</li>\n<li><strong>Water stress</strong> and saltwater intrusion from over-pumping</li>\n</ul>\n<h3>📚 Evaluating Secondary Sources</h3>\n<p>A <strong>secondary source</strong> summarizes or interprets data collected by others — news articles, reports, textbooks. To evaluate one, ask:</p>\n<ol>\n<li><strong>Who</strong> wrote it? Is the author or agency reliable (PSA, DENR, a university)?</li>\n<li><strong>When</strong>? Is the data recent?</li>\n<li><strong>Evidence</strong>: does it cite data, or only opinions?</li>\n<li><strong>Bias</strong>: does it ignore other factors (consumption, technology, planning)?</li>\n</ol>\n<p>Impact depends not only on the <em>number</em> of people but also on <em>how much each person consumes</em> and the <em>technology</em> used.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Propose and evaluate strategies. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌊 A coastal barangay in Ilocos is being flooded every year by stronger storm surges. Which strategy is BEST for protecting the community?",
+            "text": "A coastal barangay in Ilocos floods yearly from stronger storm surges. Which adaptation is MOST suitable and lasting?",
             "choices": [
-              { "label": "A) Build a sea wall only", "correct": false },
-              { "label": "B) Restore mangroves and elevate homes — natural barriers plus resilient infrastructure", "correct": true },
-              { "label": "C) Move the entire barangay inland", "correct": false },
-              { "label": "D) Ignore it — it will get better on its own", "correct": false }
-            ]
+              {
+                "label": "Restore mangroves and set an early-warning plan",
+                "correct": true
+              },
+              {
+                "label": "Cut nearby trees to let floodwater drain faster",
+                "correct": false
+              },
+              {
+                "label": "Build more houses closer to the shoreline",
+                "correct": false
+              },
+              {
+                "label": "Ignore it, since storm surges are rare events",
+                "correct": false
+              }
+            ],
+            "explanation": "Mangroves reduce wave energy and early warnings save lives — both adapt the community to stronger surges."
           },
           {
-            "text": "🌾 A rice farmer in Nueva Ecija is worried about future droughts. What adaptation strategy should they adopt?",
+            "text": "A town's population doubles in 20 years with no new sewage system. Which effect is MOST likely?",
             "choices": [
-              { "label": "A) Plant drought-resistant rice varieties and harvest rainwater", "correct": true },
-              { "label": "B) Plant more water-demanding crops", "correct": false },
-              { "label": "C) Use more fertilizer", "correct": false },
-              { "label": "D) Farm only during the rainy season", "correct": false }
-            ]
+              {
+                "label": "More untreated wastewater polluting rivers",
+                "correct": true
+              },
+              {
+                "label": "Cleaner rivers because people use less water",
+                "correct": false
+              },
+              {
+                "label": "More forest cover because people move away",
+                "correct": false
+              },
+              {
+                "label": "Less garbage because the town is crowded",
+                "correct": false
+              }
+            ],
+            "explanation": "More people produce more sewage; without treatment, it ends up in rivers, causing pollution and disease."
           },
           {
-            "text": "🏙️ Metro Manila is experiencing extreme heat and flooding. Which combination of strategies BEST reduces both problems?",
+            "text": "A blog says, \"Overpopulation is the ONLY cause of environmental problems.\" How should you evaluate this claim?",
             "choices": [
-              { "label": "A) Plant urban trees and create green spaces — reduces heat and absorbs stormwater", "correct": true },
-              { "label": "B) Build more parking lots", "correct": false },
-              { "label": "C) Cut down all trees to improve visibility", "correct": false },
-              { "label": "D) Increase private car use", "correct": false }
-            ]
+              {
+                "label": "It is too simple — consumption and planning also matter",
+                "correct": true
+              },
+              {
+                "label": "It is fully correct, since more people always means harm",
+                "correct": false
+              },
+              {
+                "label": "It is reliable because blogs are always checked by experts",
+                "correct": false
+              },
+              {
+                "label": "It is wrong, since population has no effect on nature",
+                "correct": false
+              }
+            ],
+            "explanation": "Environmental impact depends on population, consumption and technology. A claim that ignores these is biased or incomplete."
           },
           {
-            "text": "👥 A growing city doubles in population in 20 years. What environmental effects are likely?",
+            "text": "Metro Manila suffers both extreme heat and flooding. Which combination addresses BOTH mitigation and adaptation?",
             "choices": [
-              { "label": "A) More waste, more emissions, more pressure on water and food supplies, and loss of surrounding forests", "correct": true },
-              { "label": "B) Cleaner air and water", "correct": false },
-              { "label": "C) Fewer vehicles and factories", "correct": false },
-              { "label": "D) No changes to the environment", "correct": false }
-            ]
+              {
+                "label": "More trees and parks plus better drainage and solar roofs",
+                "correct": true
+              },
+              {
+                "label": "More private cars plus colder air-conditioner settings all day",
+                "correct": false
+              },
+              {
+                "label": "Paving all open soil plus more coal power plants",
+                "correct": false
+              },
+              {
+                "label": "Closing all parks plus building more malls",
+                "correct": false
+              }
+            ],
+            "explanation": "Trees cool the city and absorb CO₂; drainage reduces flooding; solar roofs cut emissions — a balanced plan."
           },
           {
-            "text": "🐠 A coastal community wants to restore fish populations. Which strategy is BEST?",
+            "text": "A fishing community wants to restore declining fish catches. Which strategy is BEST supported by evidence?",
             "choices": [
-              { "label": "A) Establish a Marine Protected Area (no-take zone) and enforce fishing limits", "correct": true },
-              { "label": "B) Increase fishing intensity", "correct": false },
-              { "label": "C) Introduce invasive fish species", "correct": false },
-              { "label": "D) Build a resort over the reef", "correct": false }
-            ]
+              {
+                "label": "Set up a marine protected area with community rules",
+                "correct": true
+              },
+              {
+                "label": "Use finer nets so more small fish are caught",
+                "correct": false
+              },
+              {
+                "label": "Fish at night only, using dynamite to save much more time",
+                "correct": false
+              },
+              {
+                "label": "Move all fishing boats to one small reef area",
+                "correct": false
+              }
+            ],
+            "explanation": "MPAs let fish grow and reproduce; their numbers spill over into nearby waters, raising catches over time."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Resilience Lab",
-      "badge": { "id": "term2-finisher", "name": "Term 2 Finisher", "icon": "🏁" },
-      "content": "<h3>🔐 Formative Check — Escape the Resilience Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. This is your final formative check before the Term Exam.</p>",
+      "title": "Your Climate Action Plan",
+      "badge": {
+        "id": "term2-finisher",
+        "name": "Term 2 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>📝 Building a Local Plan</h3>\n<ol>\n<li><strong>Identify the problem</strong> using data (e.g., more flooding each year in your barangay).</li>\n<li><strong>Find the causes and who is affected</strong>, including plants and animals.</li>\n<li><strong>Propose actions</strong>: at least one mitigation and one adaptation.</li>\n<li><strong>Evaluate</strong> each action: Is it effective? Affordable? Fair to all? Does it harm other species?</li>\n<li><strong>Plan to monitor</strong> results — for example, count fish or measure flood depth over time.</li>\n</ol>\n<h3>🏫 Example: School and Barangay</h3>\n<table><thead><tr><th>Action</th><th>Type</th><th>Benefit</th></tr></thead><tbody>\n<tr><td>Segregate waste; compost food scraps</td><td>Mitigation</td><td>Less methane from dumpsites</td></tr>\n<tr><td>Rain barrels for school gardens</td><td>Adaptation</td><td>Water during dry spells</td></tr>\n<tr><td>Plant native trees</td><td>Both</td><td>Shade, habitat, carbon storage</td></tr>\n<tr><td>Disaster drills and evacuation maps</td><td>Adaptation</td><td>Saves lives during typhoons</td></tr>\n</tbody></table>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What is the difference between adaptation and mitigation?",
             "choices": [
-              { "label": "A) Adaptation adjusts to climate impacts; mitigation reduces the causes of climate change", "correct": true },
-              { "label": "B) Adaptation reduces emissions; mitigation adjusts to impacts", "correct": false },
-              { "label": "C) They are the same thing", "correct": false },
-              { "label": "D) Both only apply to farming", "correct": false }
-            ]
+              {
+                "label": "Adaptation reduces harm; mitigation reduces causes",
+                "correct": true
+              },
+              {
+                "label": "Adaptation reduces causes; mitigation reduces harm",
+                "correct": false
+              },
+              {
+                "label": "They both mean planting trees in the mountains",
+                "correct": false
+              },
+              {
+                "label": "Mitigation is only done by other countries abroad",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitigation cuts emissions (causes); adaptation adjusts to impacts (harm)."
           },
           {
-            "text": "Which strategy is an example of MITIGATION?",
+            "text": "Which is an example of MITIGATION?",
             "choices": [
-              { "label": "A) Switching to solar energy to reduce fossil fuel use", "correct": true },
-              { "label": "B) Building a sea wall", "correct": false },
-              { "label": "C) Planting drought-resistant crops", "correct": false },
-              { "label": "D) Elevating homes above flood level", "correct": false }
-            ]
+              {
+                "label": "Installing solar panels",
+                "correct": true
+              },
+              {
+                "label": "Building a seawall",
+                "correct": false
+              },
+              {
+                "label": "Elevating a house",
+                "correct": false
+              },
+              {
+                "label": "Typhoon early-warning sirens",
+                "correct": false
+              }
+            ],
+            "explanation": "Solar power replaces fossil fuels and reduces emissions. The others reduce harm from impacts."
           },
           {
-            "text": "Which strategy is an example of ADAPTATION?",
+            "text": "Which law created the Climate Change Commission?",
             "choices": [
-              { "label": "A) Restoring mangroves to buffer storm surges", "correct": true },
-              { "label": "B) Installing solar panels", "correct": false },
-              { "label": "C) Reducing plastic use", "correct": false },
-              { "label": "D) Riding a bicycle instead of driving", "correct": false }
-            ]
+              {
+                "label": "RA 9729",
+                "correct": true
+              },
+              {
+                "label": "RA 9147",
+                "correct": false
+              },
+              {
+                "label": "RA 9003",
+                "correct": false
+              },
+              {
+                "label": "RA 6969",
+                "correct": false
+              }
+            ],
+            "explanation": "RA 9729, the Climate Change Act of 2009, created the Climate Change Commission."
           },
           {
-            "text": "Which Philippine law created the Climate Change Commission?",
+            "text": "Why does composting food scraps help mitigate climate change?",
             "choices": [
-              { "label": "A) RA 9729 (Climate Change Act of 2009)", "correct": true },
-              { "label": "B) RA 9147", "correct": false },
-              { "label": "C) RA 6969", "correct": false },
-              { "label": "D) RA 9003", "correct": false }
-            ]
+              {
+                "label": "Less food rots in dumpsites making methane",
+                "correct": true
+              },
+              {
+                "label": "Compost releases extra oxygen into the air",
+                "correct": false
+              },
+              {
+                "label": "Compost cools the soil and blocks sunlight",
+                "correct": false
+              },
+              {
+                "label": "Compost turns carbon dioxide into plastic",
+                "correct": false
+              }
+            ],
+            "explanation": "Food waste in dumpsites decays without oxygen and releases methane, a strong greenhouse gas."
           },
           {
-            "text": "How does overpopulation affect the environment?",
+            "text": "When judging a secondary source about overpopulation, which question is MOST important?",
             "choices": [
-              { "label": "A) It increases resource demand, deforestation, waste, and greenhouse gas emissions", "correct": true },
-              { "label": "B) It reduces pollution", "correct": false },
-              { "label": "C) It has no environmental impact", "correct": false },
-              { "label": "D) It only affects cities, not farms", "correct": false }
-            ]
+              {
+                "label": "Does it give reliable, recent data?",
+                "correct": true
+              },
+              {
+                "label": "Does it use many colorful photos?",
+                "correct": false
+              },
+              {
+                "label": "Is it written in very long sentences?",
+                "correct": false
+              },
+              {
+                "label": "Was it shared by many people online?",
+                "correct": false
+              }
+            ],
+            "explanation": "Reliable evidence and recent data matter most. Popularity and design do not make a source accurate."
           },
           {
-            "text": "Which of the following BEST protects Philippine biodiversity?",
+            "text": "Which strategy BEST protects Philippine biodiversity as the climate warms?",
             "choices": [
-              { "label": "A) Establishing Marine Protected Areas and enforcing wildlife laws like RA 9147", "correct": true },
-              { "label": "B) Increasing fishing intensity", "correct": false },
-              { "label": "C) Converting forests to farmland", "correct": false },
-              { "label": "D) Importing more exotic species", "correct": false }
-            ]
+              {
+                "label": "Connecting forest patches with wildlife corridors",
+                "correct": true
+              },
+              {
+                "label": "Clearing forests to plant one crop over a wide area",
+                "correct": false
+              },
+              {
+                "label": "Bringing in foreign species to replace native ones",
+                "correct": false
+              },
+              {
+                "label": "Draining wetlands to build new subdivisions",
+                "correct": false
+              }
+            ],
+            "explanation": "Corridors let species move to suitable habitats as conditions change, reducing the risk of local extinction."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

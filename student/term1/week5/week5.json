@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Nature of Light Waves",
-      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the wave nature of light, explain reflection, refraction, and the electromagnetic spectrum, and identify how light is used in communication, navigation, medicine, and entertainment.</p><h3>💡 What Is Light?</h3><p><strong>Light</strong> is a form of <strong>electromagnetic radiation</strong> — energy that travels through space as a wave. Unlike sound, light can travel through a vacuum (that's how sunlight reaches Earth).</p><p>Light travels at <strong>300,000,000 m/s</strong> (3 × 10⁸ m/s) in a vacuum — the fastest speed possible in the universe.</p><h3>🌊 Wave Properties of Light</h3><table><thead><tr><th>Property</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Wavelength (λ)</strong></td><td>Distance between two peaks of a wave</td><td>Red light = ~700 nm; violet light = ~400 nm</td></tr><tr><td><strong>Frequency (f)</strong></td><td>Number of waves passing a point per second</td><td>Measured in Hertz (Hz)</td></tr><tr><td><strong>Speed (c)</strong></td><td>3 × 10⁸ m/s in a vacuum</td><td>Slower in water and glass</td></tr><tr><td><strong>Amplitude</strong></td><td>Height of the wave</td><td>Determines brightness</td></tr></tbody></table><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>c = f × λ</strong> (speed = frequency × wavelength)</p><h3>🪞 Reflection</h3><p>When light bounces off a surface, we call it <strong>reflection</strong>. The <strong>Law of Reflection</strong> says: <em>angle of incidence = angle of reflection</em>.</p><ul><li><strong>Regular reflection:</strong> Smooth surface (mirror) → clear image.</li><li><strong>Diffuse reflection:</strong> Rough surface (wall, paper) → scattered light, no image.</li></ul><p><strong>Real-life:</strong> Mirrors, periscopes, rear-view mirrors, reflectors on bicycles.</p><h3>🔍 Refraction</h3><p>When light passes from one medium to another (e.g., air to water), it <strong>bends</strong>. This is <strong>refraction</strong>. It happens because light travels at different speeds in different materials.</p><ul><li>A straw in a glass of water looks bent.</li><li>A pool looks shallower than it really is.</li><li>Eyeglasses and contact lenses correct vision using refraction.</li><li>Lenses in cameras, microscopes, and telescopes all use refraction.</li></ul><h3>🌈 The Electromagnetic Spectrum</h3><p>Light is only the <strong>visible</strong> part of a larger family of waves called the <strong>electromagnetic (EM) spectrum</strong>:</p><table><thead><tr><th>Type</th><th>Use</th></tr></thead><tbody><tr><td><strong>Radio waves</strong></td><td>AM/FM radio, TV, WiFi, cell signals</td></tr><tr><td><strong>Microwaves</strong></td><td>Cooking, radar, satellite communication</td></tr><tr><td><strong>Infrared (IR)</strong></td><td>TV remotes, thermal imaging, night vision</td></tr><tr><td><strong>Visible light</strong></td><td>What our eyes detect (ROYGBIV)</td></tr><tr><td><strong>Ultraviolet (UV)</strong></td><td>Vitamin D production, sterilization, sunburn</td></tr><tr><td><strong>X-rays</strong></td><td>Medical imaging, airport security</td></tr><tr><td><strong>Gamma rays</strong></td><td>Cancer treatment, nuclear reactions</td></tr></tbody></table><h3>🌍 Light in Everyday Life</h3><ul><li><strong>Communications:</strong> Fiber-optic cables carry internet and phone signals using light.</li><li><strong>Navigation:</strong> GPS uses radio waves; lighthouses use visible light.</li><li><strong>Medicine:</strong> X-rays, laser surgery, endoscopes.</li><li><strong>Entertainment:</strong> TVs, LED screens, laser light shows, projectors.</li></ul><h3>🔬 Modern Light Innovations</h3><ul><li><strong>LEDs:</strong> Energy-efficient bulbs (last 25× longer than incandescent).</li><li><strong>Lasers:</strong> Focused beams for surgery, cutting metal, reading barcodes.</li><li><strong>Holograms:</strong> 3D images created by interfering light beams.</li><li><strong>Fiber optics:</strong> Data transmission at the speed of light.</li></ul><h3>📌 Quick Check</h3><ul><li>Why does a straw look bent in water? (Answer: refraction)</li><li>Why can't we see UV light? (Answer: our eyes only detect 400–700 nm wavelengths)</li><li>What kind of wave is used in WiFi? (Answer: radio waves)</li></ul>"
+      "title": "What Light Is",
+      "badge": {
+        "id": "optics-explorer",
+        "name": "Optics Explorer",
+        "icon": "💡"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe the properties of light waves</strong> and how they are used in <strong>communication, navigation, medicine and entertainment</strong>, including innovations such as <strong>LEDs, lasers and fiber optics</strong>.</p>\n<h3>💡 Light Is an Electromagnetic Wave</h3>\n<p>Light is energy that travels as an <strong>electromagnetic (EM) wave</strong>. It needs no medium — that is how sunlight crosses empty space to reach Earth. In a vacuum it travels at <strong>c = 3 × 10⁸ m/s</strong>, the fastest speed possible. In water and glass it slows down.</p>\n<h3>🌊 Wave Properties</h3>\n<table><thead><tr><th>Property</th><th>Meaning</th><th>What it changes</th></tr></thead><tbody>\n<tr><td>Wavelength (λ)</td><td>Distance from one crest to the next</td><td>Color: red ≈ 700 nm, violet ≈ 400 nm</td></tr>\n<tr><td>Frequency (f)</td><td>Waves passing a point each second (Hz)</td><td>Energy: higher f, more energy</td></tr>\n<tr><td>Amplitude</td><td>Height of the wave</td><td>Brightness</td></tr>\n</tbody></table>\n<p style=\"text-align:center;\"><strong>c = f × λ</strong></p>\n<p>Because c is fixed, a <em>shorter</em> wavelength means a <em>higher</em> frequency. Violet light has a shorter wavelength and more energy per photon than red light.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Sunlight reaches Earth through empty space, but sound from the Sun never does. Why?",
+            "choices": [
+              {
+                "label": "Light needs no medium; sound does",
+                "correct": true
+              },
+              {
+                "label": "Light is louder than sound in space",
+                "correct": false
+              },
+              {
+                "label": "Sound travels faster than light",
+                "correct": false
+              },
+              {
+                "label": "Space absorbs all sound frequencies",
+                "correct": false
+              }
+            ],
+            "explanation": "Light is an electromagnetic wave and can cross a vacuum. Sound is a mechanical wave that needs particles to vibrate, so it cannot cross empty space."
+          },
+          {
+            "text": "Which property of visible light mainly decides its COLOR?",
+            "choices": [
+              {
+                "label": "Its wavelength",
+                "correct": true
+              },
+              {
+                "label": "Its amplitude",
+                "correct": false
+              },
+              {
+                "label": "Its brightness",
+                "correct": false
+              },
+              {
+                "label": "Its loudness",
+                "correct": false
+              }
+            ],
+            "explanation": "Different wavelengths are seen as different colors (about 700 nm is red, about 400 nm is violet). Amplitude affects brightness, not color."
+          },
+          {
+            "text": "Blue light has a shorter wavelength than red light. What does this tell you about blue light?",
+            "choices": [
+              {
+                "label": "It has a higher frequency",
+                "correct": true
+              },
+              {
+                "label": "It travels faster in a vacuum",
+                "correct": false
+              },
+              {
+                "label": "It has a lower frequency",
+                "correct": false
+              },
+              {
+                "label": "It has a larger amplitude",
+                "correct": false
+              }
+            ],
+            "explanation": "With c = f × λ and c fixed, a shorter wavelength means a higher frequency. All colors travel at the same speed in a vacuum."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Light Innovations",
-      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each light concept or technology to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Reflection and Refraction",
+      "badge": {
+        "id": "optics-explorer",
+        "name": "Optics Explorer",
+        "icon": "💡"
+      },
+      "content": "<h3>🪞 Reflection</h3>\n<p>When light bounces off a surface, the <strong>angle of incidence equals the angle of reflection</strong> (both measured from the normal, a line perpendicular to the surface).</p>\n<ul>\n<li><strong>Regular reflection</strong> — smooth surfaces like mirrors and calm water form clear images.</li>\n<li><strong>Diffuse reflection</strong> — rough surfaces like paper or walls scatter light; you see the surface, not an image.</li>\n</ul>\n<p>Uses: side mirrors, periscopes, road reflectors and the bright strips on school uniforms for night safety.</p>\n<h3>🔍 Refraction</h3>\n<p>Light <strong>bends</strong> when it passes from one material into another because its speed changes. A straw looks broken in water; a swimming pool looks shallower than it is.</p>\n<ul>\n<li><strong>Convex lenses</strong> bring light together — magnifying glasses, cameras, eyeglasses for farsightedness.</li>\n<li><strong>Concave lenses</strong> spread light out — eyeglasses for nearsightedness.</li>\n<li><strong>Prisms and raindrops</strong> refract each color by a different amount, separating white light into a spectrum (rainbow).</li>\n</ul>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each idea to its example. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Reflection", "right": "Light bouncing off a mirror" },
-          { "key": "k2", "left": "Refraction", "right": "A straw appearing bent in a glass of water" },
-          { "key": "k3", "left": "Visible light", "right": "Wavelengths from 400 nm to 700 nm that our eyes detect" },
-          { "key": "k4", "left": "Infrared (IR)", "right": "TV remote signals and thermal imaging" },
-          { "key": "k5", "left": "X-rays", "right": "Medical imaging of bones and airport security" },
-          { "key": "k6", "left": "LED", "right": "Energy-efficient light bulb lasting 25× longer than incandescent" },
-          { "key": "k7", "left": "Laser", "right": "Focused beam used for surgery and barcode scanning" },
-          { "key": "k8", "left": "Fiber optics", "right": "Data transmission using light through thin glass strands" }
+          {
+            "key": "k1",
+            "left": "Law of reflection",
+            "right": "Angle of incidence equals angle of reflection",
+            "why": "Both angles are measured from the normal to the surface."
+          },
+          {
+            "key": "k2",
+            "left": "Regular reflection",
+            "right": "Clear image in a bathroom mirror",
+            "why": "A smooth surface reflects light in one direction, so an image forms."
+          },
+          {
+            "key": "k3",
+            "left": "Diffuse reflection",
+            "right": "Light scattered by a white wall",
+            "why": "A rough surface reflects light in many directions, so no image forms."
+          },
+          {
+            "key": "k4",
+            "left": "Refraction",
+            "right": "Straw that looks broken in water",
+            "why": "Light changes speed and direction as it passes from water to air."
+          },
+          {
+            "key": "k5",
+            "left": "Convex lens",
+            "right": "Magnifying glass focusing sunlight",
+            "why": "It bends light rays together toward a focus."
+          },
+          {
+            "key": "k6",
+            "left": "Concave lens",
+            "right": "Eyeglasses for nearsighted students",
+            "why": "It spreads light out so the image falls on the retina."
+          },
+          {
+            "key": "k7",
+            "left": "Dispersion",
+            "right": "Rainbow after an afternoon shower",
+            "why": "Raindrops refract each color by a different amount."
+          },
+          {
+            "key": "k8",
+            "left": "Road reflector",
+            "right": "Car lights bounced back to the driver",
+            "why": "Reflectors send light back toward its source for night safety."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Light in Daily Life",
-      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "The Electromagnetic Spectrum at Work",
+      "badge": {
+        "id": "optics-explorer",
+        "name": "Optics Explorer",
+        "icon": "💡"
+      },
+      "content": "<h3>🌈 One Family of Waves</h3>\n<p>Visible light is a small part of the <strong>electromagnetic spectrum</strong>. All EM waves travel at c in a vacuum; they differ in wavelength and energy.</p>\n<table><thead><tr><th>Wave (long → short λ)</th><th>Uses</th></tr></thead><tbody>\n<tr><td>Radio waves</td><td>AM/FM radio, TV, cellular signals, GPS</td></tr>\n<tr><td>Microwaves</td><td>Microwave ovens, Wi-Fi, weather radar, satellites</td></tr>\n<tr><td>Infrared</td><td>TV remotes, thermal cameras, night vision</td></tr>\n<tr><td>Visible light</td><td>Sight, photography, fiber-optic internet</td></tr>\n<tr><td>Ultraviolet</td><td>Sterilizing water and tools; causes sunburn</td></tr>\n<tr><td>X-rays</td><td>Medical imaging, airport baggage scanners</td></tr>\n<tr><td>Gamma rays</td><td>Cancer radiotherapy, sterilizing medical supplies</td></tr>\n</tbody></table>\n<p>Higher-frequency waves (UV, X-rays, gamma) carry enough energy to <strong>damage living cells</strong>, so exposure must be limited and shielded. Lower-frequency waves (radio, microwaves, infrared) do not ionize cells.</p>\n<h3>🧭 Navigation and Communication</h3>\n<p>GPS satellites send radio signals; your phone times them to locate you. Weather radar sends microwaves and reads the echoes from raindrops to track typhoons.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Choose the best wave or explanation for each situation. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🪞 You look into a mirror and see yourself clearly. What type of reflection is happening?",
+            "text": "Your TV remote still works when you point it at the white wall behind you. Which explanation fits BEST?",
             "choices": [
-              { "label": "A) Diffuse reflection", "correct": false },
-              { "label": "B) Regular reflection", "correct": true },
-              { "label": "C) Refraction", "correct": false },
-              { "label": "D) Absorption", "correct": false }
-            ]
+              {
+                "label": "Its infrared signal reflects off the wall to the TV",
+                "correct": true
+              },
+              {
+                "label": "Its radio signal passes straight through the wall",
+                "correct": false
+              },
+              {
+                "label": "Its ultraviolet light is absorbed by the white wall",
+                "correct": false
+              },
+              {
+                "label": "Its sound waves echo off the wall and reach the TV",
+                "correct": false
+              }
+            ],
+            "explanation": "TV remotes send infrared light. A wall reflects infrared just as it reflects visible light, so the signal bounces to the TV's sensor."
           },
           {
-            "text": "🥤 A straw looks bent when placed in a glass of water. Which phenomenon explains this?",
+            "text": "PAGASA tracks a typhoon's rain bands hundreds of kilometers away, at night. Which wave does its weather radar use?",
             "choices": [
-              { "label": "A) Reflection", "correct": false },
-              { "label": "B) Diffraction", "correct": false },
-              { "label": "C) Refraction", "correct": true },
-              { "label": "D) Polarization", "correct": false }
-            ]
+              {
+                "label": "Microwaves reflected by raindrops",
+                "correct": true
+              },
+              {
+                "label": "Visible light from the clouds",
+                "correct": false
+              },
+              {
+                "label": "Sound waves sent through the air",
+                "correct": false
+              },
+              {
+                "label": "Gamma rays given off by the storm",
+                "correct": false
+              }
+            ],
+            "explanation": "Doppler weather radar sends microwaves and measures the echoes from raindrops. It works day or night, through clouds."
           },
           {
-            "text": "📱 Your TV remote control works even when pointing at the wall (which reflects signals back to the TV). Which type of EM wave does the remote use?",
+            "text": "A hospital must check a patient's fractured leg bone. Which wave is used, and why?",
             "choices": [
-              { "label": "A) Ultraviolet", "correct": false },
-              { "label": "B) Infrared", "correct": true },
-              { "label": "C) X-ray", "correct": false },
-              { "label": "D) Gamma ray", "correct": false }
-            ]
+              {
+                "label": "X-rays, because bone absorbs them more",
+                "correct": true
+              },
+              {
+                "label": "Radio waves, because they pass through bone",
+                "correct": false
+              },
+              {
+                "label": "Infrared, because bone gives off more heat",
+                "correct": false
+              },
+              {
+                "label": "Visible light, because skin is transparent",
+                "correct": false
+              }
+            ],
+            "explanation": "X-rays pass through soft tissue but are absorbed by dense bone, so bones appear clearly on the image."
           },
           {
-            "text": "🏥 A hospital uses a machine that produces images of bones without surgery. Which EM wave is used?",
+            "text": "A municipality wants to disinfect drinking water without adding chemicals. Which EM wave is suitable?",
             "choices": [
-              { "label": "A) Radio waves", "correct": false },
-              { "label": "B) Microwaves", "correct": false },
-              { "label": "C) X-rays", "correct": true },
-              { "label": "D) Infrared", "correct": false }
-            ]
+              {
+                "label": "Ultraviolet light shining through the water",
+                "correct": true
+              },
+              {
+                "label": "Infrared light warming the water a little",
+                "correct": false
+              },
+              {
+                "label": "Radio waves broadcast across the whole water tank",
+                "correct": false
+              },
+              {
+                "label": "Visible red light shining on the water",
+                "correct": false
+              }
+            ],
+            "explanation": "UV light carries enough energy to damage the DNA of bacteria and viruses, so UV lamps are used to disinfect water."
           },
           {
-            "text": "⚡ Your barangay is switching to more energy-efficient streetlights. Which lighting technology is BEST for this purpose?",
+            "text": "A barangay compares two streetlights that give the same brightness: a 20 W LED and a 100 W incandescent bulb. Which conclusion is BEST?",
             "choices": [
-              { "label": "A) Incandescent bulbs (traditional)", "correct": false },
-              { "label": "B) Halogen bulbs", "correct": false },
-              { "label": "C) LED lights", "correct": true },
-              { "label": "D) Neon tubes", "correct": false }
-            ]
+              {
+                "label": "The LED changes more of its energy into light",
+                "correct": true
+              },
+              {
+                "label": "The incandescent gives more light per watt",
+                "correct": false
+              },
+              {
+                "label": "Both bulbs use the same energy each night",
+                "correct": false
+              },
+              {
+                "label": "The LED must be five times dimmer than the other",
+                "correct": false
+              }
+            ],
+            "explanation": "Both give the same light, but the LED uses one-fifth of the power. Most of an incandescent bulb's energy becomes heat, not light."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Optics Lab",
-      "badge": { "id": "optics-explorer", "name": "Optics Explorer", "icon": "💡" },
-      "content": "<h3>🔐 Formative Check — Escape the Optics Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Light Innovations",
+      "badge": {
+        "id": "optics-explorer",
+        "name": "Optics Explorer",
+        "icon": "💡"
+      },
+      "content": "<h3>💡 LEDs</h3>\n<p>A <strong>light-emitting diode</strong> produces light when electrons move across a semiconductor. Very little energy becomes heat, so LEDs use about 80–90% less electricity than incandescent bulbs and last many times longer.</p>\n<h3>🔴 Lasers</h3>\n<p>A laser gives a <strong>narrow, intense beam of one color</strong> whose waves stay in step. Uses: barcode scanners at the grocery, eye surgery, cutting metal, laser pointers. <strong>Never point a laser at anyone's eyes</strong> — the focused beam can burn the retina.</p>\n<h3>🌐 Fiber Optics</h3>\n<p>Thin glass fibers carry light signals for internet and phone networks. Light stays inside the fiber by <strong>total internal reflection</strong>: when it hits the fiber wall at a shallow angle it reflects back in instead of escaping. Fiber carries far more data than copper wire and is not affected by electrical noise.</p>\n<h3>🖼️ Holograms</h3>\n<p>A hologram records how laser light reflects from an object from many angles, so the image looks three-dimensional. Holograms on ID cards and banknotes make them hard to fake.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What is the speed of light in a vacuum?",
             "choices": [
-              { "label": "A) 3,000 m/s", "correct": false },
-              { "label": "B) 300,000 m/s", "correct": false },
-              { "label": "C) 3 × 10⁸ m/s", "correct": true },
-              { "label": "D) 3 × 10¹⁰ m/s", "correct": false }
-            ]
-          },
-          {
-            "text": "Which property of light determines its color?",
-            "choices": [
-              { "label": "A) Amplitude", "correct": false },
-              { "label": "B) Wavelength (or frequency)", "correct": true },
-              { "label": "C) Speed", "correct": false },
-              { "label": "D) Intensity", "correct": false }
-            ]
+              {
+                "label": "3 × 10⁸ m/s",
+                "correct": true
+              },
+              {
+                "label": "3 × 10⁵ m/s",
+                "correct": false
+              },
+              {
+                "label": "343 m/s",
+                "correct": false
+              },
+              {
+                "label": "1,480 m/s",
+                "correct": false
+              }
+            ],
+            "explanation": "Light travels about 300,000,000 m/s in a vacuum. 343 m/s is sound in air and 1,480 m/s is sound in water."
           },
           {
             "text": "Which EM wave has the SHORTEST wavelength?",
             "choices": [
-              { "label": "A) Radio waves", "correct": false },
-              { "label": "B) Infrared", "correct": false },
-              { "label": "C) Visible light", "correct": false },
-              { "label": "D) Gamma rays", "correct": true }
-            ]
+              {
+                "label": "Gamma rays",
+                "correct": true
+              },
+              {
+                "label": "Radio waves",
+                "correct": false
+              },
+              {
+                "label": "Infrared",
+                "correct": false
+              },
+              {
+                "label": "Microwaves",
+                "correct": false
+              }
+            ],
+            "explanation": "Gamma rays are at the high-frequency, short-wavelength end of the spectrum. Radio waves have the longest wavelengths."
           },
           {
-            "text": "The Law of Reflection states that:",
+            "text": "Why does light stay inside an optical fiber even when the fiber bends?",
             "choices": [
-              { "label": "A) Angle of incidence = angle of reflection", "correct": true },
-              { "label": "B) Angle of incidence = 2 × angle of reflection", "correct": false },
-              { "label": "C) Angle of incidence = 0", "correct": false },
-              { "label": "D) Angle of incidence = angle of refraction", "correct": false }
-            ]
+              {
+                "label": "Total internal reflection at the fiber wall",
+                "correct": true
+              },
+              {
+                "label": "The glass absorbs light that tries to leave",
+                "correct": false
+              },
+              {
+                "label": "Gravity pulls the light along the fiber",
+                "correct": false
+              },
+              {
+                "label": "Light can only travel in a straight line",
+                "correct": false
+              }
+            ],
+            "explanation": "When light strikes the inside wall at a shallow angle, it is completely reflected back into the fiber, so it follows the bends."
           },
           {
-            "text": "Which technology uses light to transmit internet data at very high speeds?",
+            "text": "Which statement about lasers is TRUE?",
             "choices": [
-              { "label": "A) Copper phone lines", "correct": false },
-              { "label": "B) Fiber-optic cables", "correct": true },
-              { "label": "C) Satellite dishes", "correct": false },
-              { "label": "D) Bluetooth speakers", "correct": false }
-            ]
+              {
+                "label": "They give a narrow beam of a single color",
+                "correct": true
+              },
+              {
+                "label": "They spread light evenly in all directions",
+                "correct": false
+              },
+              {
+                "label": "They are made from ordinary sunlight",
+                "correct": false
+              },
+              {
+                "label": "They are safe to shine into someone's eyes",
+                "correct": false
+              }
+            ],
+            "explanation": "Laser light is one color (one wavelength) and stays in a narrow, intense beam — which is also why it can damage the eye."
           },
           {
-            "text": "Why are sunglasses with UV protection important?",
+            "text": "Why are holograms printed on ID cards and peso bills?",
             "choices": [
-              { "label": "A) They block visible light only.", "correct": false },
-              { "label": "B) They protect eyes from harmful ultraviolet radiation that can damage the cornea.", "correct": true },
-              { "label": "C) They make things look brighter.", "correct": false },
-              { "label": "D) They reduce the speed of light.", "correct": false }
-            ]
+              {
+                "label": "They are very hard to copy with a printer",
+                "correct": true
+              },
+              {
+                "label": "They make the card stronger and thicker",
+                "correct": false
+              },
+              {
+                "label": "They let the card work as a light source",
+                "correct": false
+              },
+              {
+                "label": "They block X-rays at airport scanners",
+                "correct": false
+              }
+            ],
+            "explanation": "A hologram needs laser recording to make, so an ordinary scanner or printer cannot reproduce it. That makes fakes easy to spot."
+          },
+          {
+            "text": "Why do sunglasses with UV protection matter on a bright beach day?",
+            "choices": [
+              {
+                "label": "UV rays carry enough energy to damage the eye",
+                "correct": true
+              },
+              {
+                "label": "UV rays make all colors look brighter",
+                "correct": false
+              },
+              {
+                "label": "UV rays are the light that we see as blue",
+                "correct": false
+              },
+              {
+                "label": "UV rays only matter during cloudy days",
+                "correct": false
+              }
+            ],
+            "explanation": "Ultraviolet light is invisible but energetic; long exposure can damage the cornea and lens. UV-blocking lenses filter it out."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

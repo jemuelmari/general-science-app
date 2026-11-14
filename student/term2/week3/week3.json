@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Solutions & Their Properties",
-      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to define a solution, identify its components, explain concentration and saturation, and describe how solutions appear in everyday life, industry, and the environment.</p><h3>💧 What Is a Solution?</h3><p>A <strong>solution</strong> is a homogeneous mixture of two or more substances where the particles are evenly distributed. You can't see the individual components — it looks like one substance.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Solution = Solute + Solvent</strong></p><table><thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><strong>Solute</strong></td><td>Substance that is dissolved (smaller amount)</td><td>Salt, sugar, CO₂</td></tr><tr><td><strong>Solvent</strong></td><td>Substance that does the dissolving (larger amount)</td><td>Water, alcohol, oil</td></tr><tr><td><strong>Solution</strong></td><td>Uniform mixture of solute + solvent</td><td>Saltwater, soda, coffee</td></tr></tbody></table><h3>🌊 Water — The Universal Solvent</h3><p>Water is called the <strong>universal solvent</strong> because it dissolves more substances than any other liquid. Its polar nature (positive and negative ends) allows it to pull apart many compounds.</p><p>This is why rivers, lakes, and oceans contain dissolved minerals, gases, and salts.</p><h3>📊 Properties of Solutions</h3><table><thead><tr><th>Property</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><strong>Homogeneous</strong></td><td>Uniform throughout — no visible particles</td><td>Saltwater, vinegar</td></tr><tr><td><strong>Transparent</strong></td><td>Light passes through</td><td>Sugar water</td></tr><tr><td><strong>Can't be separated by filtration</strong></td><td>Particles are too small</td><td>Seawater can't be filtered into salt and water</td></tr><tr><td><strong>Concentration</strong></td><td>Amount of solute per amount of solvent</td><td>Salty vs. slightly salty soup</td></tr><tr><td><strong>Saturation</strong></td><td>Point where no more solute can dissolve at a given temperature</td><td>Sugar stops dissolving in iced tea</td></tr></tbody></table><h3>🍯 Types of Solutions by State</h3><ul><li><strong>Solid in liquid:</strong> Salt water, sugar water</li><li><strong>Liquid in liquid:</strong> Vinegar (acetic acid + water), alcohol + water</li><li><strong>Gas in liquid:</strong> Soda (CO₂ in water), soft drinks</li><li><strong>Gas in gas:</strong> Air (O₂ + N₂ + CO₂)</li><li><strong>Solid in solid:</strong> Alloys (bronze = copper + tin)</li></ul><h3>🏠 Solutions in Everyday Life</h3><ul><li><strong>Household:</strong> Coffee, tea, softdrinks, vinegar, bleach solution, shampoo</li><li><strong>Industry:</strong> Pickling brine, metal plating solutions, pharmaceutical syrups</li><li><strong>Environment:</strong> Seawater (salt + water), acid rain (SO₂ + water), dissolved oxygen in lakes</li></ul><h3>🌾 Investigating Salt's Effect on Plant Growth</h3><p>When salt (NaCl) dissolves in soil water, it affects plants in several ways:</p><ul><li><strong>Osmotic stress:</strong> High salt outside the roots pulls water <em>out</em> of the plant instead of in — plants wilt.</li><li><strong>Nutrient imbalance:</strong> Excess Na⁺ and Cl⁻ ions block the uptake of essential nutrients like potassium (K⁺).</li><li><strong>Toxicity:</strong> High salt concentrations can damage cell membranes and enzymes.</li></ul><table><thead><tr><th>Salt Concentration</th><th>Effect on Plant</th></tr></thead><tbody><tr><td>0% (pure water)</td><td>Normal growth</td></tr><tr><td>0.5% (slightly salty)</td><td>Mild stress — growth slows</td></tr><tr><td>2% (moderately salty)</td><td>Wilting, yellowing leaves</td></tr><tr><td>5%+ (very salty)</td><td>Plant dies</td></tr></tbody></table><p>This is why seawater intrusion in coastal farms (from over-pumping groundwater or rising sea levels) is a serious agricultural problem in the Philippines.</p><h3>🌊 Saltwater Intrusion in the Philippines</h3><p>Many coastal barangays in La Union, Pangasinan, and other coastal provinces face saltwater intrusion — seawater seeps into freshwater aquifers, making them unusable for farming and drinking.</p><p><strong>Causes:</strong> Over-extraction of groundwater, rising sea levels due to climate change.</p><p><strong>Effects:</strong> Reduced rice harvests, sick livestock, salty well water.</p><h3>📌 Quick Check</h3><ul><li>What is the difference between a solute and a solvent? (Answer: solute is dissolved, solvent does the dissolving)</li><li>Why is water called the universal solvent? (Answer: it dissolves more substances than any other liquid)</li><li>What happens to a plant in very salty soil? (Answer: it wilts and may die because water leaves its roots)</li></ul>"
+      "title": "What Is a Solution?",
+      "badge": {
+        "id": "solution-scientist",
+        "name": "Solution Scientist",
+        "icon": "💧"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain the characteristics of solutions</strong> in household products, industry and the environment, and <strong>investigate how salt affects plant growth</strong>.</p>\n<h3>💧 Solute + Solvent = Solution</h3>\n<p>A <strong>solution</strong> is a <strong>homogeneous mixture</strong>: the particles are spread evenly, so it looks the same throughout. The <strong>solute</strong> is what dissolves (usually the smaller amount); the <strong>solvent</strong> does the dissolving (usually the larger amount).</p>\n<table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody>\n<tr><td>Solid in liquid</td><td>Salt in water, sugar in coffee</td></tr>\n<tr><td>Gas in liquid</td><td>CO₂ in softdrinks, O₂ in river water</td></tr>\n<tr><td>Liquid in liquid</td><td>Vinegar (acetic acid in water), rubbing alcohol</td></tr>\n<tr><td>Gas in gas</td><td>Air (oxygen, CO₂ and others in nitrogen)</td></tr>\n<tr><td>Solid in solid</td><td>Alloys such as brass and stainless steel</td></tr>\n</tbody></table>\n<h3>🔍 Properties</h3>\n<ul>\n<li>Particles are too small to see and <strong>do not settle</strong>.</li>\n<li>They <strong>pass through filter paper</strong> — you cannot filter salt out of seawater.</li>\n<li>They can be separated by <strong>evaporation or distillation</strong>.</li>\n</ul>\n<p>Water is called the <strong>universal solvent</strong> because its polar molecules can pull apart many substances.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "In a glass of sweetened iced tea, what is the solvent?",
+            "choices": [
+              {
+                "label": "Water",
+                "correct": true
+              },
+              {
+                "label": "Sugar",
+                "correct": false
+              },
+              {
+                "label": "Tea leaves",
+                "correct": false
+              },
+              {
+                "label": "Ice cubes only",
+                "correct": false
+              }
+            ],
+            "explanation": "Water is present in the largest amount and dissolves the sugar and tea flavor."
+          },
+          {
+            "text": "Muddy river water is cloudy and the mud settles to the bottom. Is it a solution?",
+            "choices": [
+              {
+                "label": "No — its particles settle out, so it is not uniform",
+                "correct": true
+              },
+              {
+                "label": "Yes — any mixture that contains water is a solution",
+                "correct": false
+              },
+              {
+                "label": "Yes — mud dissolves completely in river water",
+                "correct": false
+              },
+              {
+                "label": "No — solutions must always be colored liquids",
+                "correct": false
+              }
+            ],
+            "explanation": "Solutions are homogeneous and do not settle. Muddy water is a suspension; its particles separate over time."
+          },
+          {
+            "text": "Why can't you remove salt from seawater with filter paper?",
+            "choices": [
+              {
+                "label": "Dissolved particles pass through the filter",
+                "correct": true
+              },
+              {
+                "label": "Salt sticks to the filter paper and blocks it",
+                "correct": false
+              },
+              {
+                "label": "Filter paper adds more salt to the water",
+                "correct": false
+              },
+              {
+                "label": "Seawater is too cold to pass through paper",
+                "correct": false
+              }
+            ],
+            "explanation": "Dissolved salt is broken into tiny particles that go through filter pores. Evaporation or distillation is needed."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Solute & Solvent",
-      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each solution concept or example to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Concentration and Solubility",
+      "badge": {
+        "id": "solution-scientist",
+        "name": "Solution Scientist",
+        "icon": "💧"
+      },
+      "content": "<h3>📏 Concentration</h3>\n<p><strong>Concentration</strong> tells how much solute is in a given amount of solution. A <strong>dilute</strong> solution has little solute; a <strong>concentrated</strong> one has a lot. Labels often give concentration as a percentage — for example, <strong>70% isopropyl alcohol</strong> or <strong>5% acetic acid</strong> in vinegar.</p>\n<p style=\"text-align:center\"><strong>% by volume = (volume of solute ÷ volume of solution) × 100</strong></p>\n<p>Example: 30 mL of alcohol in 100 mL of solution is 30% alcohol.</p>\n<h3>🧂 Saturation</h3>\n<ul>\n<li><strong>Unsaturated</strong> — more solute can still dissolve.</li>\n<li><strong>Saturated</strong> — no more solute dissolves at that temperature; extra settles at the bottom.</li>\n<li><strong>Supersaturated</strong> — more solute than normal, made by cooling a hot saturated solution slowly; it crystallizes easily.</li>\n</ul>\n<h3>🌡️ What Affects Solubility?</h3>\n<p>Most <strong>solids</strong> dissolve better in <strong>hotter</strong> water — sugar dissolves faster and more in hot coffee. <strong>Gases</strong> are the opposite: they dissolve better in <strong>cold</strong> water and under <strong>pressure</strong>. That is why a warm softdrink goes flat quickly and why warm river water holds less oxygen for fish.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Solute", "right": "Substance that dissolves — usually smaller amount" },
-          { "key": "k2", "left": "Solvent", "right": "Substance that does the dissolving — usually larger amount" },
-          { "key": "k3", "left": "Water", "right": "Called the 'universal solvent' because it dissolves many substances" },
-          { "key": "k4", "left": "Saltwater", "right": "Example of a solid-in-liquid solution" },
-          { "key": "k5", "left": "Soda (softdrink)", "right": "Example of a gas-in-liquid solution (CO₂ in water)" },
-          { "key": "k6", "left": "Air", "right": "Example of a gas-in-gas solution (O₂ + N₂ + CO₂)" },
-          { "key": "k7", "left": "Saturation", "right": "Point where no more solute can dissolve at a given temperature" },
-          { "key": "k8", "left": "Osmotic stress", "right": "High salt outside roots pulls water out of the plant" }
+          {
+            "key": "k1",
+            "left": "Solute",
+            "right": "The substance that dissolves",
+            "why": "Usually present in the smaller amount."
+          },
+          {
+            "key": "k2",
+            "left": "Solvent",
+            "right": "The substance that does the dissolving",
+            "why": "Water is the most common solvent."
+          },
+          {
+            "key": "k3",
+            "left": "Dilute solution",
+            "right": "Has only a little solute",
+            "why": "Weak juice is a dilute solution."
+          },
+          {
+            "key": "k4",
+            "left": "Concentrated solution",
+            "right": "Has a large amount of solute",
+            "why": "Strong brine for tuyo is concentrated."
+          },
+          {
+            "key": "k5",
+            "left": "Saturated solution",
+            "right": "No more solute can dissolve",
+            "why": "Extra sugar settles at the bottom."
+          },
+          {
+            "key": "k6",
+            "left": "Soda (softdrink)",
+            "right": "Gas dissolved in a liquid",
+            "why": "CO₂ is kept dissolved by pressure."
+          },
+          {
+            "key": "k7",
+            "left": "Brass",
+            "right": "Solid dissolved in a solid",
+            "why": "An alloy of copper and zinc."
+          },
+          {
+            "key": "k8",
+            "left": "Warm water and gases",
+            "right": "Holds less dissolved gas",
+            "why": "Warm rivers hold less oxygen for fish."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Salt in the Environment",
-      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Solutions at Home, in Industry and in Nature",
+      "badge": {
+        "id": "solution-scientist",
+        "name": "Solution Scientist",
+        "icon": "💧"
+      },
+      "content": "<h3>🏠 Household Products</h3>\n<p>Vinegar, rubbing alcohol, bleach, mouthwash, oral rehydration salts (ORS) and softdrinks are all solutions. Following the label's <strong>dilution</strong> instructions matters: too strong can harm skin or surfaces; too weak may not work. ORS must be mixed with the exact amount of water so the body can absorb it properly.</p>\n<h3>🏭 Industry</h3>\n<ul>\n<li><strong>Electroplating</strong> uses metal-salt solutions to coat objects.</li>\n<li><strong>Fish sauce (patis) and bagoong</strong> use concentrated salt solutions to preserve fish.</li>\n<li>Factories use solvents to clean, extract and mix products — and must treat wastewater before release.</li>\n</ul>\n<h3>🌊 The Environment</h3>\n<p>Rivers and seas are natural solutions carrying dissolved oxygen, minerals and salts. Problems arise when the balance changes:</p>\n<ul>\n<li><strong>Thermal pollution</strong>: hot wastewater lowers dissolved oxygen, stressing fish.</li>\n<li><strong>Saltwater intrusion</strong>: over-pumping coastal wells lets seawater seep into freshwater aquifers, making wells salty.</li>\n<li><strong>Acid rain</strong>: gases from burning fuels dissolve in rainwater, forming weak acids.</li>\n</ul>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply solution concepts to real situations. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌾 A coastal farmer notices that his rice plants are turning yellow and wilting, even though he waters them regularly. The well water tastes salty. What is likely happening?",
+            "text": "A bottle of softdrink is left open in the sun and goes flat faster than one kept in the refrigerator. Why?",
             "choices": [
-              { "label": "A) The plants need more fertilizer", "correct": false },
-              { "label": "B) Saltwater intrusion is salting the soil — high salt pulls water out of plant roots (osmotic stress)", "correct": true },
-              { "label": "C) There is too much rainfall", "correct": false },
-              { "label": "D) The plants are getting too much sunlight", "correct": false }
-            ]
+              {
+                "label": "Gases dissolve less in warm liquids",
+                "correct": true
+              },
+              {
+                "label": "Sunlight turns CO₂ into sugar inside",
+                "correct": false
+              },
+              {
+                "label": "Cold drinks have more water than warm",
+                "correct": false
+              },
+              {
+                "label": "Warm liquids dissolve more of any gas",
+                "correct": false
+              }
+            ],
+            "explanation": "Gas solubility drops as temperature rises, so CO₂ escapes faster from the warm drink."
           },
           {
-            "text": "🥤 You open a cold bottle of soda and see bubbles forming. What type of solution is soda, and what happens when you open it?",
+            "text": "A factory releases hot (but clean) water into a river, and fish begin to die. What is the MOST likely cause?",
             "choices": [
-              { "label": "A) Solid-in-liquid; nothing happens", "correct": false },
-              { "label": "B) Gas-in-liquid; the pressure drops and dissolved CO₂ escapes as bubbles", "correct": true },
-              { "label": "C) Liquid-in-liquid; the CO₂ reacts with sugar", "correct": false },
-              { "label": "D) It is not a solution", "correct": false }
-            ]
+              {
+                "label": "The hot water holds less dissolved oxygen",
+                "correct": true
+              },
+              {
+                "label": "The hot water contains dissolved poisons",
+                "correct": false
+              },
+              {
+                "label": "Fish cannot swim in river water that is moving",
+                "correct": false
+              },
+              {
+                "label": "Heat makes the river water much saltier",
+                "correct": false
+              }
+            ],
+            "explanation": "Warm water holds less oxygen. This thermal pollution can suffocate fish even without toxic chemicals."
           },
           {
-            "text": "🧂 You stir sugar into hot tea. After a while, adding more sugar no longer dissolves and settles at the bottom. What is this point called?",
+            "text": "A mother mixes an ORS sachet with half the water the label says. What is the problem?",
             "choices": [
-              { "label": "A) Unsaturation", "correct": false },
-              { "label": "B) Saturation — the solvent can no longer dissolve more solute at that temperature", "correct": true },
-              { "label": "C) Dilution", "correct": false },
-              { "label": "D) Precipitation", "correct": false }
-            ]
+              {
+                "label": "Too concentrated — it can worsen dehydration",
+                "correct": true
+              },
+              {
+                "label": "Too dilute — it will not taste salty enough",
+                "correct": false
+              },
+              {
+                "label": "No problem — stronger ORS works faster",
+                "correct": false
+              },
+              {
+                "label": "No problem — the amount of water never matters",
+                "correct": false
+              }
+            ],
+            "explanation": "Overly concentrated ORS can pull water into the gut instead of helping absorption. The label's dilution must be followed."
           },
           {
-            "text": "🏭 A factory releases hot water containing high salt concentration into a nearby river. What likely happens to the freshwater plants and fish?",
+            "text": "You keep stirring sugar into iced tea, but some sugar stays at the bottom no matter how long you stir. The tea is now…",
             "choices": [
-              { "label": "A) They thrive in saltwater", "correct": false },
-              { "label": "B) They suffer — high salt causes osmotic stress, damaging cells and reducing biodiversity", "correct": true },
-              { "label": "C) Nothing changes", "correct": false },
-              { "label": "D) Salt helps them grow faster", "correct": false }
-            ]
+              {
+                "label": "Saturated at that temperature",
+                "correct": true
+              },
+              {
+                "label": "Unsaturated and needs more sugar",
+                "correct": false
+              },
+              {
+                "label": "Diluted by the melting ice cubes",
+                "correct": false
+              },
+              {
+                "label": "Turned into a suspension of tea leaves",
+                "correct": false
+              }
+            ],
+            "explanation": "When no more solute dissolves at a given temperature, the solution is saturated; extra solute settles."
           },
           {
-            "text": "🌊 Why is saltwater intrusion becoming a bigger problem in Philippine coastal areas?",
+            "text": "A coastal town pumps its wells heavily, and the well water begins tasting salty. What is happening?",
             "choices": [
-              { "label": "A) Because groundwater is being over-pumped and sea levels are rising due to climate change", "correct": true },
-              { "label": "B) Because farmers are adding too much salt", "correct": false },
-              { "label": "C) Because rivers are drying up", "correct": false },
-              { "label": "D) It's not a problem in the Philippines", "correct": false }
-            ]
+              {
+                "label": "Seawater is seeping into the freshwater aquifer",
+                "correct": true
+              },
+              {
+                "label": "Rain is carrying salt from the air into the wells",
+                "correct": false
+              },
+              {
+                "label": "The pipes are dissolving into salty minerals",
+                "correct": false
+              },
+              {
+                "label": "Fish are adding salt to the groundwater supply",
+                "correct": false
+              }
+            ],
+            "explanation": "Over-pumping lowers fresh groundwater, letting denser seawater move inland underground — saltwater intrusion."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Solutions Lab",
-      "badge": { "id": "solution-scientist", "name": "Solution Scientist", "icon": "💧" },
-      "content": "<h3>🔐 Formative Check — Escape the Solutions Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Investigating Salt and Plant Growth",
+      "badge": {
+        "id": "solution-scientist",
+        "name": "Solution Scientist",
+        "icon": "💧"
+      },
+      "content": "<h3>🌱 Why Salt Harms Plants</h3>\n<p>Roots absorb water by <strong>osmosis</strong> — water moves across a membrane from where there is <strong>more water (less solute)</strong> to where there is <strong>less water (more solute)</strong>. When the soil water is very salty, water can move <em>out</em> of the roots instead of in. The plant wilts and its leaves turn yellow even if the soil looks wet. This is <strong>osmotic stress</strong>.</p>\n<h3>🧪 A Fair-Test Investigation</h3>\n<table><thead><tr><th>Part</th><th>In this experiment</th></tr></thead><tbody>\n<tr><td>Question</td><td>How does salt concentration affect mung bean (monggo) growth?</td></tr>\n<tr><td>Independent variable</td><td>Salt concentration: 0%, 1%, 2%, 4%</td></tr>\n<tr><td>Dependent variable</td><td>Seedling height after 7 days</td></tr>\n<tr><td>Controlled variables</td><td>Same seeds, soil, cup size, light, amount of water</td></tr>\n<tr><td>Control group</td><td>0% (plain water)</td></tr>\n</tbody></table>\n<p>Use several seeds per group and average the results. A typical finding: growth decreases as salt concentration increases. This explains why farms hit by storm surges or saltwater intrusion lose crops, and why researchers breed <strong>salt-tolerant rice</strong>.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What is a solution?",
             "choices": [
-              { "label": "A) A homogeneous mixture of two or more substances", "correct": true },
-              { "label": "B) A heterogeneous mixture where particles settle at the bottom", "correct": false },
-              { "label": "C) A pure chemical substance", "correct": false },
-              { "label": "D) A type of solid only", "correct": false }
-            ]
+              {
+                "label": "A uniform mixture of solute and solvent",
+                "correct": true
+              },
+              {
+                "label": "Any mixture whose parts settle out",
+                "correct": false
+              },
+              {
+                "label": "A single pure substance with no separate parts",
+                "correct": false
+              },
+              {
+                "label": "A mixture that can be filtered apart",
+                "correct": false
+              }
+            ],
+            "explanation": "A solution is homogeneous — evenly mixed, with particles that do not settle or filter out."
           },
           {
-            "text": "In a sugar-water solution, what is the solute?",
+            "text": "Which of these is a GAS-in-LIQUID solution?",
             "choices": [
-              { "label": "A) Water", "correct": false },
-              { "label": "B) Sugar", "correct": true },
-              { "label": "C) Both sugar and water", "correct": false },
-              { "label": "D) Neither — it is a pure substance", "correct": false }
-            ]
+              {
+                "label": "Carbonated softdrink",
+                "correct": true
+              },
+              {
+                "label": "Brass doorknob (an alloy)",
+                "correct": false
+              },
+              {
+                "label": "Salt water",
+                "correct": false
+              },
+              {
+                "label": "Rubbing alcohol",
+                "correct": false
+              }
+            ],
+            "explanation": "A softdrink has CO₂ gas dissolved in water. Brass is solid-in-solid; salt water is solid-in-liquid; alcohol is liquid-in-liquid."
           },
           {
-            "text": "Why is water called the 'universal solvent'?",
+            "text": "In the salt-and-monggo experiment, what is the INDEPENDENT variable?",
             "choices": [
-              { "label": "A) Because it dissolves more substances than any other liquid", "correct": true },
-              { "label": "B) Because it is found everywhere", "correct": false },
-              { "label": "C) Because it has no charge", "correct": false },
-              { "label": "D) Because it is denser than other liquids", "correct": false }
-            ]
+              {
+                "label": "Salt concentration of the water",
+                "correct": true
+              },
+              {
+                "label": "Height of the seedlings after a week",
+                "correct": false
+              },
+              {
+                "label": "Type of cup used for every group",
+                "correct": false
+              },
+              {
+                "label": "Amount of sunlight each cup receives",
+                "correct": false
+              }
+            ],
+            "explanation": "The independent variable is what the experimenter changes on purpose. Height is measured (dependent); cups and light are controlled."
           },
           {
-            "text": "What happens to a plant when it grows in soil with very high salt concentration?",
+            "text": "Why does very salty soil make a plant wilt?",
             "choices": [
-              { "label": "A) Water moves out of the plant roots due to osmotic stress, and the plant wilts", "correct": true },
-              { "label": "B) It grows faster because salt is a nutrient", "correct": false },
-              { "label": "C) It becomes saltwater-tolerant automatically", "correct": false },
-              { "label": "D) Nothing changes", "correct": false }
-            ]
+              {
+                "label": "Water moves out of the roots by osmosis",
+                "correct": true
+              },
+              {
+                "label": "Salt blocks sunlight from reaching leaves",
+                "correct": false
+              },
+              {
+                "label": "Salt makes the roots grow much too fast",
+                "correct": false
+              },
+              {
+                "label": "Salt adds too much oxygen to the soil",
+                "correct": false
+              }
+            ],
+            "explanation": "With more solute outside the roots, water moves out of root cells, so the plant cannot take in enough water."
           },
           {
-            "text": "Which of the following is a GAS-IN-LIQUID solution?",
+            "text": "A rubbing-alcohol bottle says 70% isopropyl alcohol. In 500 mL, how much is alcohol?",
             "choices": [
-              { "label": "A) Soda (softdrink)", "correct": true },
-              { "label": "B) Saltwater", "correct": false },
-              { "label": "C) Vinegar", "correct": false },
-              { "label": "D) Bronze", "correct": false }
-            ]
+              {
+                "label": "350 mL",
+                "correct": true
+              },
+              {
+                "label": "70 mL",
+                "correct": false
+              },
+              {
+                "label": "150 mL",
+                "correct": false
+              },
+              {
+                "label": "430 mL",
+                "correct": false
+              }
+            ],
+            "explanation": "70% of 500 mL = 0.70 × 500 = 350 mL of alcohol; the rest is mostly water."
           },
           {
-            "text": "What is saltwater intrusion?",
+            "text": "Why is the 0% salt group needed in the experiment?",
             "choices": [
-              { "label": "A) Seawater seeping into freshwater aquifers, making them salty and unusable", "correct": true },
-              { "label": "B) Adding salt to freshwater for drinking", "correct": false },
-              { "label": "C) Removing salt from seawater", "correct": false },
-              { "label": "D) A type of water filtration", "correct": false }
-            ]
+              {
+                "label": "It is the control for comparing results",
+                "correct": true
+              },
+              {
+                "label": "It makes the plants grow taller in all cups",
+                "correct": false
+              },
+              {
+                "label": "It reduces the total cost of the experiment",
+                "correct": false
+              },
+              {
+                "label": "It is the group expected to die the fastest",
+                "correct": false
+              }
+            ],
+            "explanation": "The control shows normal growth without salt, so you can tell whether salt caused any difference."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

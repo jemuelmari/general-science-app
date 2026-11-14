@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Safety First — Handling Chemicals",
-      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify GHS hazard symbols, describe safe handling, storage, and disposal practices for household and laboratory chemicals, and explain the effects of saltwater/wastewater on local ecosystems.</p><h3>🦺 Why Chemical Safety Matters</h3><p>Every year in the Philippines, thousands of household accidents happen due to improper chemical handling. Common causes include:</p><ul><li>Mixing incompatible chemicals (e.g., bleach + ammonia → toxic chloramine gas)</li><li>Storing chemicals in food containers (children mistake them for drinks)</li><li>Pouring chemicals down the drain (pollutes rivers and groundwater)</li><li>Ignoring warning labels</li></ul><h3>⚠️ GHS Hazard Symbols</h3><p>The <strong>Globally Harmonized System (GHS)</strong> uses standardized pictograms to warn users about chemical hazards:</p><table><thead><tr><th>Symbol</th><th>Meaning</th><th>Example Product</th></tr></thead><tbody><tr><td>💀 Skull &amp; crossbones</td><td>Acute toxicity — can cause death or serious harm</td><td>Pesticides, rat poison</td></tr><tr><td>🔥 Flame</td><td>Flammable — easily catches fire</td><td>Alcohol, LPG, paint thinner</td></tr><tr><td>💥 Exploding bomb</td><td>Explosive or self-reactive</td><td>Firecrackers, some fertilizers</td></tr><tr><td>🧪 Corrosion</td><td>Corrodes skin/metals</td><td>Bleach, drain cleaner, muriatic acid</td></tr><tr><td>⚠️ Exclamation mark</td><td>Irritant — skin, eye, or respiratory irritation</td><td>Detergent, shampoo, some cleaners</td></tr><tr><td>🌫️ Gas cylinder</td><td>Compressed gas under pressure</td><td>LPG tank, oxygen tank</td></tr><tr><td>🏥 Health hazard</td><td>Long-term health effects (cancer, organ damage)</td><td>Pesticides, some solvents</td></tr><tr><td>🌍 Environment</td><td>Hazardous to aquatic life</td><td>Detergent, motor oil, pesticides</td></tr></tbody></table><h3>🏠 Best Practices — Handling</h3><ul><li>Read the label before use — every time.</li><li>Wear gloves and, if needed, a mask.</li><li>Work in a well-ventilated area.</li><li>Never mix chemicals unless the label says it's safe.</li><li>Keep chemicals away from food and children.</li><li>Wash hands thoroughly after use.</li></ul><h3>📦 Best Practices — Storage</h3><ul><li>Store in original containers with labels intact.</li><li>Keep away from heat, sunlight, and open flames.</li><li>Store acids and bases separately (they react violently).</li><li>Store flammable liquids in a cool, dry, locked cabinet.</li><li>Keep out of reach of children and pets.</li></ul><h3>♻️ Best Practices — Disposal</h3><ul><li>Never pour chemicals down the sink, toilet, or storm drain.</li><li>Follow <strong>DENR</strong> guidelines and local barangay rules for hazardous waste.</li><li>Neutralize acids and bases before disposal when safe and instructed.</li><li>Take expired chemicals to designated hazardous waste collection points.</li><li>Recycle containers where possible.</li></ul><h3>🌊 Wastewater and Saltwater Effects on Ecosystems</h3><table><thead><tr><th>Type of Pollution</th><th>Source</th><th>Effect on Ecosystem</th></tr></thead><tbody><tr><td><strong>Saltwater intrusion</strong></td><td>Over-pumping of wells, sea-level rise</td><td>Soil becomes too salty; crops fail; freshwater fish die; drinking water becomes undrinkable</td></tr><tr><td><strong>Detergent wastewater</strong></td><td>Household laundry, car wash</td><td>Phosphates cause algal blooms → fish kills (eutrophication)</td></tr><tr><td><strong>Industrial wastewater</strong></td><td>Factories, mining</td><td>Heavy metals poison fish; destroy coral reefs; contaminate groundwater</td></tr><tr><td><strong>Agricultural runoff</strong></td><td>Fertilizers, pesticides</td><td>Nutrient overload; pesticide bioaccumulation in fish; destruction of mangroves</td></tr><tr><td><strong>Untreated sewage</strong></td><td>Households without septic systems</td><td>Bacterial contamination; disease outbreaks; oxygen depletion in rivers</td></tr></tbody></table><h3>💡 Minimization Strategies</h3><ul><li><strong>Reduce:</strong> Buy only the amount of chemical you need.</li><li><strong>Reuse:</strong> Refill containers at refilling stations (e.g., liquid soap).</li><li><strong>Replace:</strong> Choose eco-friendly products (phosphate-free detergent, natural cleaners like vinegar + baking soda).</li><li><strong>Recycle:</strong> Properly empty and recycle plastic containers.</li><li><strong>Dispose responsibly:</strong> Use barangay hazardous waste collection events.</li></ul><h3>🇵🇭 Philippine Laws &amp; Agencies</h3><ul><li><strong>RA 6969 — Toxic Substances and Hazardous and Nuclear Wastes Control Act:</strong> Regulates import, manufacture, and disposal of toxic substances.</li><li><strong>RA 9003 — Ecological Solid Waste Management Act:</strong> Mandates proper waste segregation and disposal.</li><li><strong>DENR:</strong> Enforces environmental regulations and provides guidance on chemical disposal.</li><li><strong>DOH:</strong> Monitors public health effects of chemical exposure.</li></ul><h3>📌 Quick Check</h3><ul><li>What does the skull-and-crossbones GHS symbol mean? (Answer: acute toxicity — can cause death or serious harm)</li><li>Why should you store acids and bases separately? (Answer: they can react violently if they touch)</li><li>What law regulates toxic substances in the Philippines? (Answer: RA 6969)</li></ul>"
+      "title": "Reading Hazard Symbols",
+      "badge": {
+        "id": "safety-officer",
+        "name": "Safety Officer",
+        "icon": "🦺"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>apply best practices for handling, storing and disposing of chemicals</strong>, and <strong>create a table of saltwater and wastewater effects</strong> on local ecosystems with ways to reduce them.</p>\n<h3>⚠️ GHS Pictograms</h3>\n<p>The <strong>Globally Harmonized System (GHS)</strong> uses red-bordered diamond symbols so anyone, in any country, can recognize a hazard.</p>\n<table><thead><tr><th>Pictogram</th><th>Hazard</th><th>Examples</th></tr></thead><tbody>\n<tr><td>💀 Skull and crossbones</td><td>Acute toxicity (can kill)</td><td>Rat poison, some pesticides</td></tr>\n<tr><td>🔥 Flame</td><td>Flammable</td><td>Alcohol, LPG, paint thinner</td></tr>\n<tr><td>🧪 Corrosion</td><td>Burns skin, eyes, metals</td><td>Muriatic acid, drain cleaner</td></tr>\n<tr><td>❗ Exclamation mark</td><td>Irritant, harmful</td><td>Detergents, some cleaners</td></tr>\n<tr><td>🫁 Health hazard</td><td>Long-term harm (organs, cancer)</td><td>Some solvents and pesticides</td></tr>\n<tr><td>🐟 Environment</td><td>Toxic to aquatic life</td><td>Motor oil, many pesticides</td></tr>\n</tbody></table>\n<h3>📣 Signal Words</h3>\n<p><strong>DANGER</strong> means a severe hazard; <strong>WARNING</strong> means a less severe one. Always read the precautionary statements and first-aid section before using a product.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "A muriatic acid bottle shows a pictogram of liquid eating into a hand and a metal bar. What does it warn?",
+            "choices": [
+              {
+                "label": "It is corrosive to skin and metal",
+                "correct": true
+              },
+              {
+                "label": "It is flammable and catches fire",
+                "correct": false
+              },
+              {
+                "label": "It is harmful only to fish in rivers",
+                "correct": false
+              },
+              {
+                "label": "It is a gas stored under pressure",
+                "correct": false
+              }
+            ],
+            "explanation": "The corrosion pictogram warns that the chemical can burn skin and eyes and damage metals."
+          },
+          {
+            "text": "Which signal word indicates the MORE severe hazard?",
+            "choices": [
+              {
+                "label": "DANGER",
+                "correct": true
+              },
+              {
+                "label": "WARNING",
+                "correct": false
+              },
+              {
+                "label": "CAUTION",
+                "correct": false
+              },
+              {
+                "label": "NOTICE",
+                "correct": false
+              }
+            ],
+            "explanation": "Under GHS, DANGER is used for the more severe hazards and WARNING for less severe ones."
+          },
+          {
+            "text": "A paint thinner can shows a flame pictogram. Where should it be used and kept?",
+            "choices": [
+              {
+                "label": "Away from open flames and heat sources",
+                "correct": true
+              },
+              {
+                "label": "Beside the kitchen stove for easy reach",
+                "correct": false
+              },
+              {
+                "label": "Inside a closed car under the hot sun",
+                "correct": false
+              },
+              {
+                "label": "Next to candles so it stays warm",
+                "correct": false
+              }
+            ],
+            "explanation": "The flame pictogram means flammable. Vapors can ignite, so keep it away from flames, sparks and heat."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Safety Symbols",
-      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each GHS hazard symbol, safety practice, or wastewater type to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Handling and Storage",
+      "badge": {
+        "id": "safety-officer",
+        "name": "Safety Officer",
+        "icon": "🦺"
+      },
+      "content": "<h3>🦺 Safe Handling</h3>\n<ul>\n<li>Read the label <strong>before</strong> opening. Wear gloves and eye protection when the label says so.</li>\n<li>Work in a <strong>well-ventilated</strong> area. Never smell chemicals directly — waft the air toward your nose if needed.</li>\n<li>When diluting acid, <strong>add acid to water</strong>, slowly — never water to acid, which can boil and splash.</li>\n<li>Never mix cleaners (bleach + ammonia or acid releases toxic gases).</li>\n</ul>\n<h3>📦 Safe Storage</h3>\n<table><thead><tr><th>Rule</th><th>Reason</th></tr></thead><tbody>\n<tr><td>Keep in original labeled containers</td><td>Label gives contents, hazards and first aid</td></tr>\n<tr><td>Never use food or drink bottles</td><td>Children may drink them by mistake</td></tr>\n<tr><td>Store acids apart from bases and bleach</td><td>Incompatible chemicals can react if they leak</td></tr>\n<tr><td>Keep flammables away from heat</td><td>Prevents fires</td></tr>\n<tr><td>Store high and locked, away from food</td><td>Protects children and food</td></tr>\n</tbody></table>\n<p><strong>RA 6969</strong> (Toxic Substances and Hazardous and Nuclear Wastes Control Act) regulates toxic chemicals and hazardous waste in the Philippines.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each practice or term to its reason or meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "💀 Skull & crossbones", "right": "Acute toxicity — can cause death or serious harm" },
-          { "key": "k2", "left": "🔥 Flame", "right": "Flammable — easily catches fire" },
-          { "key": "k3", "left": "🧪 Corrosion", "right": "Corrodes skin or metals — like bleach or muriatic acid" },
-          { "key": "k4", "left": "⚠️ Exclamation mark", "right": "Irritant to skin, eyes, or respiratory system" },
-          { "key": "k5", "left": "🌍 Environment hazard", "right": "Hazardous to aquatic life — like detergents and motor oil" },
-          { "key": "k6", "left": "Saltwater intrusion", "right": "Seawater seeping into freshwater aquifers; causes crops to fail" },
-          { "key": "k7", "left": "Eutrophication", "right": "Algal blooms caused by phosphate-rich wastewater; kills fish" },
-          { "key": "k8", "left": "RA 6969", "right": "Philippine law regulating toxic substances and hazardous waste" }
+          {
+            "key": "k1",
+            "left": "Add acid to water",
+            "right": "Prevents violent boiling and splashing",
+            "why": "The water absorbs the heat safely."
+          },
+          {
+            "key": "k2",
+            "left": "Original labeled container",
+            "right": "Keeps hazard and first-aid information",
+            "why": "Unlabeled chemicals cause accidents."
+          },
+          {
+            "key": "k3",
+            "left": "No soft-drink bottles",
+            "right": "Prevents accidental drinking",
+            "why": "Children may mistake chemicals for drinks."
+          },
+          {
+            "key": "k4",
+            "left": "Store acids apart from bases",
+            "right": "Prevents dangerous reactions from leaks",
+            "why": "Incompatible chemicals must be separated."
+          },
+          {
+            "key": "k5",
+            "left": "Ventilation",
+            "right": "Keeps fumes from building up",
+            "why": "Fresh air lowers the amount of vapor you breathe."
+          },
+          {
+            "key": "k6",
+            "left": "Gloves and goggles",
+            "right": "Protect skin and eyes from contact",
+            "why": "This is personal protective equipment (PPE)."
+          },
+          {
+            "key": "k7",
+            "left": "RA 6969",
+            "right": "Law on toxic substances and hazardous waste",
+            "why": "It is enforced by DENR's Environmental Management Bureau."
+          },
+          {
+            "key": "k8",
+            "left": "Wafting",
+            "right": "Safe way to detect a smell",
+            "why": "Never sniff directly from the container."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Wastewater in the Community",
-      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Disposal and Wastewater",
+      "badge": {
+        "id": "safety-officer",
+        "name": "Safety Officer",
+        "icon": "🦺"
+      },
+      "content": "<h3>🗑️ Proper Disposal</h3>\n<ul>\n<li>Use up products as directed, or give them to someone who can use them.</li>\n<li><strong>Never</strong> pour pesticides, motor oil, paint or solvents into drains, canals or soil.</li>\n<li>Bring used oil, batteries and hazardous waste to collection points or treatment facilities; follow barangay and LGU schedules.</li>\n<li>Keep empty pesticide containers out of reuse — never use them for water or food.</li>\n</ul>\n<h3>🌊 Saltwater and Wastewater Effects</h3>\n<table><thead><tr><th>Source</th><th>Effect on local ecosystems</th><th>Ways to minimize</th></tr></thead><tbody>\n<tr><td>Saltwater intrusion</td><td>Salty wells; rice fields fail</td><td>Limit pumping, rainwater harvesting, mangroves, salt-tolerant crops</td></tr>\n<tr><td>Detergent wastewater</td><td>Eutrophication; fish kills</td><td>Phosphate-free detergents, septic tanks, treatment</td></tr>\n<tr><td>Untreated factory waste</td><td>Toxic metals build up in fish</td><td>Treatment plants, DENR permits, monitoring</td></tr>\n<tr><td>Oil and grease</td><td>Coats gills and feathers; blocks oxygen</td><td>Grease traps, used-oil collection</td></tr>\n</tbody></table>\n<p>Some toxic metals like <strong>mercury</strong> and <strong>lead</strong> <em>bioaccumulate</em>: they build up in organisms and become more concentrated up the food chain — reaching people who eat contaminated fish.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Decide what to do in real situations. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🏠 A household has several expired bottles of muriatic acid, bleach, and pesticides. What is the BEST way to dispose of them?",
+            "text": "A family has expired pesticide and leftover motor oil. What is the BEST way to dispose of them?",
             "choices": [
-              { "label": "A) Pour them down the kitchen sink", "correct": false },
-              { "label": "B) Take them to a designated barangay or DENR hazardous waste collection event", "correct": true },
-              { "label": "C) Throw them in the regular trash bin", "correct": false },
-              { "label": "D) Bury them in the backyard", "correct": false }
-            ]
+              {
+                "label": "Bring them to a hazardous-waste collection point",
+                "correct": true
+              },
+              {
+                "label": "Pour them down the kitchen drain with hot water",
+                "correct": false
+              },
+              {
+                "label": "Bury them in the backyard garden beside the plants",
+                "correct": false
+              },
+              {
+                "label": "Mix them together and burn them in an open pit",
+                "correct": false
+              }
+            ],
+            "explanation": "Hazardous waste must go to proper collection or treatment. Drains, soil and open burning spread pollution."
           },
           {
-            "text": "🌊 A coastal barangay notices that their wells are becoming salty, and rice farms are failing. What is the LIKELY cause?",
+            "text": "A student wants to dilute concentrated acid for a cleaning task. What is the correct method?",
             "choices": [
-              { "label": "A) Saltwater intrusion from over-pumping groundwater and rising sea levels", "correct": true },
-              { "label": "B) Too much rainfall", "correct": false },
-              { "label": "C) Farmers adding too much fertilizer", "correct": false },
-              { "label": "D) Fish farming in the area", "correct": false }
-            ]
+              {
+                "label": "Slowly pour the acid into the water",
+                "correct": true
+              },
+              {
+                "label": "Quickly pour the water into the acid",
+                "correct": false
+              },
+              {
+                "label": "Mix equal amounts all at once quickly",
+                "correct": false
+              },
+              {
+                "label": "Heat the acid first, then add water",
+                "correct": false
+              }
+            ],
+            "explanation": "Adding acid to water lets the larger amount of water absorb the heat. Water added to acid can boil and splash."
           },
           {
-            "text": "🐟 A river near your barangay has turned green with algae and dead fish are washing ashore. Which cause is MOST likely?",
+            "text": "Fishers notice fish from a river near a mining area have high mercury levels, and people who eat them get sick. What explains this?",
             "choices": [
-              { "label": "A) Household detergent wastewater containing phosphates, causing eutrophication", "correct": true },
-              { "label": "B) Too much rain", "correct": false },
-              { "label": "C) The fish migrated elsewhere", "correct": false },
-              { "label": "D) Local fishing activities", "correct": false }
-            ]
+              {
+                "label": "Mercury builds up in organisms along the food chain",
+                "correct": true
+              },
+              {
+                "label": "Mercury evaporates from the fish when they are cooked",
+                "correct": false
+              },
+              {
+                "label": "Fish make their own mercury when the water is warm",
+                "correct": false
+              },
+              {
+                "label": "Mercury is only harmful when it is touched by hand",
+                "correct": false
+              }
+            ],
+            "explanation": "Mercury bioaccumulates: small organisms absorb it, fish eat many of them, and the concentration rises up to humans."
           },
           {
-            "text": "⚠️ Your helper wants to clean the bathroom with bleach and then with an ammonia-based glass cleaner in the same session. What should you tell her?",
+            "text": "A restaurant drains its cooking grease directly into the canal. What is the MOST likely effect?",
             "choices": [
-              { "label": "A) Never mix them — the combination releases toxic chloramine gas that can damage lungs", "correct": true },
-              { "label": "B) It's fine, they are both cleaners", "correct": false },
-              { "label": "C) Mix them to make a stronger cleaner", "correct": false },
-              { "label": "D) Use them together with warm water to activate the smell", "correct": false }
-            ]
+              {
+                "label": "Grease coats the water and blocks oxygen exchange",
+                "correct": true
+              },
+              {
+                "label": "Grease feeds the fish and makes them grow faster",
+                "correct": false
+              },
+              {
+                "label": "Grease cleans the canal by dissolving the garbage",
+                "correct": false
+              },
+              {
+                "label": "Grease turns into fresh water after a few days",
+                "correct": false
+              }
+            ],
+            "explanation": "Oil and grease form a film that reduces oxygen entering the water and can coat gills and feathers."
           },
           {
-            "text": "🏭 A factory discharges untreated chemical wastewater into the local river. Which Philippine law does this violate?",
+            "text": "A coastal barangay's rice fields have become too salty after years of over-pumping. Which plan BEST addresses BOTH cause and effect?",
             "choices": [
-              { "label": "A) RA 6969 (Toxic Substances and Hazardous Waste Control Act)", "correct": true },
-              { "label": "B) RA 9003 only", "correct": false },
-              { "label": "C) No law is violated", "correct": false },
-              { "label": "D) RA 6713", "correct": false }
-            ]
+              {
+                "label": "Limit pumping and plant salt-tolerant rice",
+                "correct": true
+              },
+              {
+                "label": "Pump more water to wash the salt away faster",
+                "correct": false
+              },
+              {
+                "label": "Add more fertilizer to make the rice grow taller",
+                "correct": false
+              },
+              {
+                "label": "Cover the rice fields with plastic sheets for a year",
+                "correct": false
+              }
+            ],
+            "explanation": "Limiting pumping reduces further intrusion (cause); salt-tolerant rice lets farming continue (effect)."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Safety Lab",
-      "badge": { "id": "safety-officer", "name": "Safety Officer", "icon": "🦺" },
-      "content": "<h3>🔐 Formative Check — Escape the Safety Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Making a Safer Community",
+      "badge": {
+        "id": "safety-officer",
+        "name": "Safety Officer",
+        "icon": "🦺"
+      },
+      "content": "<h3>🏘️ A Household Chemical Safety Plan</h3>\n<ol>\n<li><strong>Inventory</strong> — list every chemical at home with its pictograms.</li>\n<li><strong>Store</strong> — group by hazard (flammables, corrosives, pesticides), high and locked, in original containers.</li>\n<li><strong>Use</strong> — follow labels, wear PPE, ventilate, never mix cleaners.</li>\n<li><strong>Dispose</strong> — use collection programs; never drains, soil or burning.</li>\n<li><strong>Prepare</strong> — know first aid and keep emergency numbers near the phone.</li>\n</ol>\n<h3>🛟 First Aid Reminders</h3>\n<ul>\n<li><strong>Skin or eye contact:</strong> rinse with plenty of running water for 15–20 minutes; remove contaminated clothing.</li>\n<li><strong>Inhaled fumes:</strong> move to fresh air.</li>\n<li><strong>Swallowed:</strong> do not induce vomiting unless told by a health professional; bring the label to the clinic.</li>\n</ul>\n<h3>🧠 Thinking Like a Scientist</h3>\n<p>Good decisions weigh <strong>benefits and risks</strong>. A chemical that helps (pesticide protects crops) can also harm (poisons fish). Using the right amount, the right way, and disposing of it properly keeps the benefit while lowering the risk.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What does the GHS skull-and-crossbones symbol mean?",
+            "text": "What does the GHS skull-and-crossbones pictogram mean?",
             "choices": [
-              { "label": "A) Acute toxicity — can cause death or serious harm", "correct": true },
-              { "label": "B) Flammable liquid", "correct": false },
-              { "label": "C) Corrosive to metals", "correct": false },
-              { "label": "D) Harmless", "correct": false }
-            ]
+              {
+                "label": "Acute toxicity — can cause death",
+                "correct": true
+              },
+              {
+                "label": "Flammable — catches fire easily",
+                "correct": false
+              },
+              {
+                "label": "Corrosive — damages skin and metal",
+                "correct": false
+              },
+              {
+                "label": "Irritant — causes a mild skin rash",
+                "correct": false
+              }
+            ],
+            "explanation": "The skull and crossbones marks chemicals that can cause serious harm or death even in small amounts."
           },
           {
-            "text": "Why must acids and bases be stored separately?",
+            "text": "Why must acids and bases be stored apart?",
             "choices": [
-              { "label": "A) They can react violently if they touch", "correct": true },
-              { "label": "B) They have different colors", "correct": false },
-              { "label": "C) They smell different", "correct": false },
-              { "label": "D) They weigh differently", "correct": false }
-            ]
+              {
+                "label": "Leaks could react and release heat or gas",
+                "correct": true
+              },
+              {
+                "label": "They have the same color and get confused",
+                "correct": false
+              },
+              {
+                "label": "Acids make bases lose their strong smell",
+                "correct": false
+              },
+              {
+                "label": "Bases freeze when placed beside acids",
+                "correct": false
+              }
+            ],
+            "explanation": "Incompatible chemicals can react violently if containers leak or break, releasing heat or harmful gases."
           },
           {
-            "text": "What is the BEST practice when handling chemicals at home?",
+            "text": "Which Philippine law regulates toxic substances and hazardous waste?",
             "choices": [
-              { "label": "A) Wear gloves, work in a well-ventilated area, and read the label", "correct": true },
-              { "label": "B) Work in a closed room to avoid drafts", "correct": false },
-              { "label": "C) Mix all cleaners to save time", "correct": false },
-              { "label": "D) Store them in food containers for easy access", "correct": false }
-            ]
+              {
+                "label": "RA 6969",
+                "correct": true
+              },
+              {
+                "label": "RA 9003",
+                "correct": false
+              },
+              {
+                "label": "RA 9275",
+                "correct": false
+              },
+              {
+                "label": "RA 8749",
+                "correct": false
+              }
+            ],
+            "explanation": "RA 6969 covers toxic substances and hazardous and nuclear wastes. RA 9003 is solid waste, RA 9275 clean water, RA 8749 clean air."
           },
           {
-            "text": "What is eutrophication?",
+            "text": "Bleach splashes onto your arm. What should you do FIRST?",
             "choices": [
-              { "label": "A) Algal blooms caused by excess nutrients (phosphates) in water — kills fish", "correct": true },
-              { "label": "B) A cleaning process", "correct": false },
-              { "label": "C) A form of distillation", "correct": false },
-              { "label": "D) A method of water purification", "correct": false }
-            ]
+              {
+                "label": "Rinse with running water for 15–20 minutes",
+                "correct": true
+              },
+              {
+                "label": "Wipe it off with a dry cloth and keep working",
+                "correct": false
+              },
+              {
+                "label": "Apply vinegar to neutralize the bleach on skin",
+                "correct": false
+              },
+              {
+                "label": "Cover it with a bandage to keep air away",
+                "correct": false
+              }
+            ],
+            "explanation": "Plenty of running water removes and dilutes the chemical. Adding other chemicals can cause more harm."
           },
           {
-            "text": "Which Philippine law specifically regulates toxic substances and hazardous waste?",
+            "text": "Which practice BEST prevents children from swallowing household chemicals?",
             "choices": [
-              { "label": "A) RA 6969", "correct": true },
-              { "label": "B) RA 9003", "correct": false },
-              { "label": "C) RA 6713", "correct": false },
-              { "label": "D) RA 10533", "correct": false }
-            ]
+              {
+                "label": "Store them high, locked, in labeled original containers",
+                "correct": true
+              },
+              {
+                "label": "Store them in clear soft-drink bottles for easy viewing",
+                "correct": false
+              },
+              {
+                "label": "Keep them under the sink beside the dish soap",
+                "correct": false
+              },
+              {
+                "label": "Remove the labels so children are not curious",
+                "correct": false
+              }
+            ],
+            "explanation": "Locked, high storage in original labeled containers keeps chemicals out of reach and clearly identified."
           },
           {
-            "text": "What is the BEST way to dispose of leftover household chemicals?",
+            "text": "Which is the BEST way to reduce detergent pollution in a nearby creek?",
             "choices": [
-              { "label": "A) Take them to a designated hazardous waste collection point following DENR guidelines", "correct": true },
-              { "label": "B) Pour them into the storm drain", "correct": false },
-              { "label": "C) Throw them in the regular trash", "correct": false },
-              { "label": "D) Bury them in the backyard", "correct": false }
-            ]
+              {
+                "label": "Use phosphate-free detergent and proper drainage",
+                "correct": true
+              },
+              {
+                "label": "Use twice as much detergent so clothes get clean faster",
+                "correct": false
+              },
+              {
+                "label": "Wash clothes directly in the creek water",
+                "correct": false
+              },
+              {
+                "label": "Add salt to the wash water before draining",
+                "correct": false
+              }
+            ],
+            "explanation": "Phosphate-free detergents and proper drainage or septic systems reduce the nutrients that cause eutrophication."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

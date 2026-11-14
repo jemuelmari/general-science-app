@@ -25,81 +25,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Organ Systems Coordinating",
-      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe how the nervous and endocrine systems coordinate to regulate body temperature (homeostasis), explain how vaccines activate the immune and lymphatic systems, and describe how damage to specific organs affects the whole organism.</p><h3>🫀 The Human Body as a System of Systems</h3><p>The human body has <strong>11 major organ systems</strong>, all working together:</p><table><thead><tr><th>System</th><th>Main Function</th></tr></thead><tbody><tr><td>Circulatory</td><td>Transports blood, oxygen, nutrients, wastes</td></tr><tr><td>Respiratory</td><td>Gas exchange — O₂ in, CO₂ out</td></tr><tr><td>Digestive</td><td>Breaks down food, absorbs nutrients</td></tr><tr><td>Nervous</td><td>Detects stimuli, sends signals, coordinates responses</td></tr><tr><td>Endocrine</td><td>Releases hormones for long-term regulation</td></tr><tr><td>Immune &amp; Lymphatic</td><td>Defends against pathogens; returns fluid to blood</td></tr><tr><td>Muscular &amp; Skeletal</td><td>Movement, support, protection</td></tr><tr><td>Excretory</td><td>Removes waste (urine, sweat)</td></tr><tr><td>Integumentary</td><td>Skin — protection, temperature regulation</td></tr><tr><td>Reproductive</td><td>Produces offspring</td></tr><tr><td>Urinary</td><td>Filters blood, produces urine</td></tr></tbody></table><h3>🌡️ Coordinating Body Temperature (Homeostasis)</h3><p>Your body maintains ~37°C. When it changes, the <strong>hypothalamus</strong> (in the brain) detects the change and coordinates a response through BOTH the nervous and endocrine systems:</p><table><thead><tr><th>Stimulus</th><th>Nervous Response</th><th>Endocrine Response</th><th>Result</th></tr></thead><tbody><tr><td><strong>Too hot</strong></td><td>Sweat glands activated; blood vessels dilate (vasodilation)</td><td>Thyroid reduces metabolic rate</td><td>Body cools down</td></tr><tr><td><strong>Too cold</strong></td><td>Muscles shiver; blood vessels constrict (vasoconstriction); hair stands up</td><td>Adrenaline and thyroid hormones increase heat production</td><td>Body warms up</td></tr></tbody></table><p><strong>Key idea:</strong> The nervous system responds <em>fast</em> (milliseconds) — the endocrine system responds <em>slower but longer-lasting</em> (seconds to hours).</p><h3>🛡️ The Immune &amp; Lymphatic Systems</h3><p>Your body has three lines of defense against pathogens:</p><table><thead><tr><th>Line</th><th>Components</th><th>Example</th></tr></thead><tbody><tr><td><strong>1st line (barriers)</strong></td><td>Skin, mucous membranes, tears, stomach acid</td><td>Skin blocks bacteria; acid kills swallowed pathogens</td></tr><tr><td><strong>2nd line (innate)</strong></td><td>Phagocytes, inflammation, fever</td><td>White blood cells engulf bacteria at a wound</td></tr><tr><td><strong>3rd line (adaptive)</strong></td><td>B cells, T cells, antibodies, memory cells</td><td>Targeted attack after exposure to a specific pathogen</td></tr></tbody></table><p><strong>Lymphatic system:</strong> A network of vessels, lymph nodes, spleen, and thymus that:</p><ul><li>Returns excess fluid to the blood</li><li>Filters out pathogens and debris</li><li>Houses white blood cells that fight infection</li></ul><h3>💉 How Vaccines Work</h3><ol><li><strong>Exposure:</strong> Vaccine introduces a weakened, inactivated, or partial pathogen (antigen).</li><li><strong>Recognition:</strong> B cells and T cells recognize the antigen as foreign.</li><li><strong>Response:</strong> B cells produce antibodies; T cells coordinate the attack.</li><li><strong>Memory:</strong> Some B and T cells become <strong>memory cells</strong> that remain in the body.</li><li><strong>Future protection:</strong> If the real pathogen attacks later, memory cells launch a fast, strong response — often preventing illness entirely.</li></ol><p><strong>Vaccines don't give you the disease — they give your immune system a rehearsal.</strong></p><h3>🦴 When Parts Are Damaged — Case Studies</h3><table><thead><tr><th>Injury / Condition</th><th>What's Damaged</th><th>Effect on the Organism</th></tr></thead><tbody><tr><td><strong>Torn ACL</strong></td><td>Anterior cruciate ligament in the knee</td><td>Knee becomes unstable; walking, running, and pivoting become painful/difficult; may need surgery</td></tr><tr><td><strong>Asthma attack</strong></td><td>Bronchioles in the lungs constrict</td><td>Airways narrow; breathing becomes difficult; wheezing; requires inhaler (bronchodilator)</td></tr><tr><td><strong>Heart attack</strong></td><td>Heart muscle loses blood supply (blocked artery)</td><td>Heart muscle dies; pumping weakens; can be fatal if untreated</td></tr><tr><td><strong>Stroke</strong></td><td>Brain tissue loses blood supply</td><td>Paralysis, speech loss, memory problems — depends on affected brain area</td></tr></tbody></table><h3>🌍 Real-Life Applications</h3><ul><li><strong>DepEd immunization programs:</strong> Measles, polio, hepatitis B, and tetanus vaccines protect millions of Filipino children.</li><li><strong>Athlete injury management:</strong> ACL injuries require physical therapy and sometimes surgery.</li><li><strong>Asthma awareness:</strong> Inhalers and avoiding triggers (dust, smoke, pollen) are key.</li><li><strong>Fever:</strong> A sign that the immune system is fighting infection — not always a bad thing.</li></ul><h3>📌 Quick Check</h3><ul><li>Which organ coordinates body temperature? (Answer: hypothalamus)</li><li>What are the three lines of immune defense? (Answer: barriers, innate, adaptive)</li><li>How do vaccines protect us? (Answer: by creating memory cells via a safe rehearsal)</li></ul>"
+      "title": "Keeping Body Temperature Stable",
+      "badge": {
+        "id": "systems-pro",
+        "name": "Systems Pro",
+        "icon": "🫀"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain how the nervous and endocrine systems coordinate temperature regulation</strong>, <strong>explain how vaccines work</strong> through the immune and lymphatic systems, and <strong>describe how damaged parts affect the whole organism</strong>.</p>\n<h3>🌡️ Homeostasis at 37 °C</h3>\n<p>Enzymes work best near 37 °C, so the body keeps its temperature in a narrow range. The <strong>hypothalamus</strong> in the brain acts like a thermostat.</p>\n<table><thead><tr><th>Condition</th><th>Nervous system (fast)</th><th>Endocrine system (slower, longer)</th></tr></thead><tbody>\n<tr><td>Too hot</td><td>Sweating; blood vessels in skin widen (<strong>vasodilation</strong>) to lose heat</td><td>Less thyroid hormone → lower metabolism</td></tr>\n<tr><td>Too cold</td><td>Shivering; skin vessels narrow (<strong>vasoconstriction</strong>) to keep heat</td><td>More thyroid hormone and adrenaline → more heat from metabolism</td></tr>\n</tbody></table>\n<h3>🔁 Negative Feedback</h3>\n<p>The response <strong>reverses</strong> the change: when you get too hot, sweating cools you; once temperature is normal, sweating slows. Nerves act in <strong>seconds</strong> through electrical signals; hormones act over <strong>minutes to hours</strong> through the blood. Together they give quick and lasting control.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which part of the brain acts as the body's thermostat?",
+            "choices": [
+              {
+                "label": "Hypothalamus",
+                "correct": true
+              },
+              {
+                "label": "Cerebellum",
+                "correct": false
+              },
+              {
+                "label": "Brain stem",
+                "correct": false
+              },
+              {
+                "label": "Spinal cord nerves",
+                "correct": false
+              }
+            ],
+            "explanation": "The hypothalamus senses blood temperature and triggers nervous and hormonal responses."
+          },
+          {
+            "text": "Why does your skin look flushed after running under the sun?",
+            "choices": [
+              {
+                "label": "Skin blood vessels widen to release heat",
+                "correct": true
+              },
+              {
+                "label": "Blood is producing much more oxygen",
+                "correct": false
+              },
+              {
+                "label": "Sunlight colors the skin cells red",
+                "correct": false
+              },
+              {
+                "label": "Muscles push the blood out through the skin",
+                "correct": false
+              }
+            ],
+            "explanation": "Vasodilation sends more warm blood near the skin surface so heat can escape."
+          },
+          {
+            "text": "How do the nervous and endocrine responses differ?",
+            "choices": [
+              {
+                "label": "Nerves act in seconds; hormones act longer",
+                "correct": true
+              },
+              {
+                "label": "Hormones act in seconds; nerves act longer",
+                "correct": false
+              },
+              {
+                "label": "Both act only while a person is asleep",
+                "correct": false
+              },
+              {
+                "label": "Nerves use blood; hormones use electricity",
+                "correct": false
+              }
+            ],
+            "explanation": "Nerve signals are fast electrical impulses; hormones travel in the blood and have slower, longer-lasting effects."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Body Systems",
-      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each body system or concept to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Body Defenses and Vaccines",
+      "badge": {
+        "id": "systems-pro",
+        "name": "Systems Pro",
+        "icon": "🫀"
+      },
+      "content": "<h3>🛡️ Three Lines of Defense</h3>\n<table><thead><tr><th>Line</th><th>What it includes</th></tr></thead><tbody>\n<tr><td>1st — barriers</td><td>Skin, mucus, cilia, tears, stomach acid</td></tr>\n<tr><td>2nd — general response</td><td>Inflammation, fever, white blood cells that engulf germs</td></tr>\n<tr><td>3rd — specific immunity</td><td>B cells make <strong>antibodies</strong>; T cells kill infected cells; <strong>memory cells</strong> remember the germ</td></tr>\n</tbody></table>\n<h3>🧫 The Lymphatic System</h3>\n<p>Lymph vessels collect fluid from tissues and return it to the blood. <strong>Lymph nodes</strong> filter this fluid and are where many white blood cells meet germs. Swollen nodes in the neck during a sore throat show the immune system at work.</p>\n<h3>💉 How Vaccines Work</h3>\n<ol>\n<li>A vaccine contains a <strong>weakened or killed germ, or a harmless piece</strong> of it (an antigen).</li>\n<li>The immune system responds: B cells make antibodies and <strong>memory cells</strong> form.</li>\n<li>If the real germ enters later, memory cells recognize it and respond <strong>quickly and strongly</strong>, so the person does not get seriously ill.</li>\n</ol>\n<p>When most people are vaccinated, germs cannot spread easily, which also protects babies and the sick — <strong>herd immunity</strong>.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Hypothalamus", "right": "Brain region that coordinates body temperature" },
-          { "key": "k2", "left": "Vasodilation", "right": "Blood vessels widen to release heat when you're hot" },
-          { "key": "k3", "left": "Vasoconstriction", "right": "Blood vessels narrow to keep heat when you're cold" },
-          { "key": "k4", "left": "1st line of defense", "right": "Skin, mucous membranes, tears, stomach acid" },
-          { "key": "k5", "left": "Memory cells", "right": "B and T cells that remain after infection to fight future attacks" },
-          { "key": "k6", "left": "Vaccine", "right": "A weakened pathogen used to train the immune system safely" },
-          { "key": "k7", "left": "Torn ACL", "right": "Damaged knee ligament — causes instability during movement" },
-          { "key": "k8", "left": "Asthma attack", "right": "Bronchioles in the lungs constrict, making breathing difficult" }
+          {
+            "key": "k1",
+            "left": "Hypothalamus",
+            "right": "Brain region that controls body temperature",
+            "why": "It triggers sweating or shivering."
+          },
+          {
+            "key": "k2",
+            "left": "Vasodilation",
+            "right": "Skin blood vessels widen to lose heat",
+            "why": "It happens when the body is too hot."
+          },
+          {
+            "key": "k3",
+            "left": "Vasoconstriction",
+            "right": "Skin blood vessels narrow to keep heat",
+            "why": "It happens when the body is cold."
+          },
+          {
+            "key": "k4",
+            "left": "First line of defense",
+            "right": "Skin, mucus, tears and stomach acid",
+            "why": "Barriers keep germs from entering."
+          },
+          {
+            "key": "k5",
+            "left": "Antibodies",
+            "right": "Proteins that tag specific germs",
+            "why": "B cells produce them."
+          },
+          {
+            "key": "k6",
+            "left": "Memory cells",
+            "right": "Remember a germ for a faster future response",
+            "why": "Vaccines create them safely."
+          },
+          {
+            "key": "k7",
+            "left": "Lymph nodes",
+            "right": "Filter lymph and house white blood cells",
+            "why": "They swell during infections."
+          },
+          {
+            "key": "k8",
+            "left": "Herd immunity",
+            "right": "Many vaccinated people protect the unvaccinated",
+            "why": "Germs cannot spread easily."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Immunity & Injury",
-      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "When a Part Is Damaged",
+      "badge": {
+        "id": "systems-pro",
+        "name": "Systems Pro",
+        "icon": "🫀"
+      },
+      "content": "<h3>🦵 Torn ACL</h3>\n<p>The <strong>anterior cruciate ligament (ACL)</strong> connects the thigh bone to the shin bone and keeps the knee stable. It often tears in basketball or volleyball when a player lands or pivots suddenly. Effects: pain, swelling, a knee that \"gives way,\" and inability to play. Because movement drops, muscles weaken and the person may gain weight — one injured part affects the whole body. Treatment includes rest, physical therapy and sometimes surgery.</p>\n<h3>🌬️ Asthma Attack</h3>\n<p>In asthma, the <strong>bronchioles</strong> become inflamed, muscles around them tighten, and extra mucus forms. Airways narrow, causing wheezing and shortness of breath. Less oxygen reaches the blood, so the heart beats faster and the person feels weak or anxious. Triggers include smoke, dust, pollen and exercise. A reliever inhaler relaxes the airway muscles.</p>\n<h3>🔗 The System Lesson</h3>\n<table><thead><tr><th>Damaged part</th><th>Direct effect</th><th>Wider effect</th></tr></thead><tbody>\n<tr><td>ACL</td><td>Unstable knee</td><td>Less movement; muscle loss</td></tr>\n<tr><td>Bronchioles (asthma)</td><td>Narrow airways</td><td>Low oxygen; heart strain</td></tr>\n<tr><td>Kidneys</td><td>Poor blood filtering</td><td>Wastes and fluids build up</td></tr>\n</tbody></table>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply homeostasis, immunity and system thinking. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🥵 You run a race under the hot sun and start sweating heavily. Which two systems are coordinating to cool you down?",
+            "text": "A child got the measles vaccine. Weeks later she is exposed to measles but does not get sick. Why?",
             "choices": [
-              { "label": "A) Only the nervous system", "correct": false },
-              { "label": "B) The nervous system (sweat glands) and the endocrine system (hormones regulating metabolism)", "correct": true },
-              { "label": "C) Only the endocrine system", "correct": false },
-              { "label": "D) The digestive and respiratory systems", "correct": false }
-            ]
+              {
+                "label": "Memory cells quickly recognized and fought the virus",
+                "correct": true
+              },
+              {
+                "label": "The vaccine killed every virus in the whole barangay",
+                "correct": false
+              },
+              {
+                "label": "Measles viruses cannot infect children who eat well",
+                "correct": false
+              },
+              {
+                "label": "The vaccine made her skin too thick for viruses",
+                "correct": false
+              }
+            ],
+            "explanation": "The vaccine trained her immune system. Memory cells responded fast enough to stop the infection."
           },
           {
-            "text": "💉 A child receives the measles vaccine. A few weeks later, they are exposed to a real measles virus but do not get sick. Why?",
+            "text": "A volleyball player tears her ACL. Besides knee pain, what wider effect is MOST likely after weeks of little movement?",
             "choices": [
-              { "label": "A) The vaccine gave them the disease", "correct": false },
-              { "label": "B) Memory B and T cells recognized the virus and produced antibodies quickly, stopping the infection", "correct": true },
-              { "label": "C) The virus can't infect children", "correct": false },
-              { "label": "D) It was just luck", "correct": false }
-            ]
+              {
+                "label": "Leg muscles weaken from lack of use",
+                "correct": true
+              },
+              {
+                "label": "Her lungs stop exchanging oxygen",
+                "correct": false
+              },
+              {
+                "label": "Her knee grows a brand-new ligament",
+                "correct": false
+              },
+              {
+                "label": "Her blood type changes from A to O",
+                "correct": false
+              }
+            ],
+            "explanation": "Reduced activity causes muscle loss — a damaged part affects other systems."
           },
           {
-            "text": "🦵 A basketball player lands badly and tears their ACL. What is a likely consequence?",
+            "text": "During PE, a student with asthma wheezes and struggles to breathe. What is happening inside?",
             "choices": [
-              { "label": "A) The knee becomes unstable; running, jumping, and pivoting become painful or impossible", "correct": true },
-              { "label": "B) The player loses the ability to breathe", "correct": false },
-              { "label": "C) Their vision is affected", "correct": false },
-              { "label": "D) Nothing — the ACL is not important", "correct": false }
-            ]
+              {
+                "label": "Bronchioles narrow, so less air reaches alveoli",
+                "correct": true
+              },
+              {
+                "label": "Alveoli burst open and fill the lungs with water",
+                "correct": false
+              },
+              {
+                "label": "The heart stops pumping blood to the lungs",
+                "correct": false
+              },
+              {
+                "label": "The trachea grows larger to hold extra air",
+                "correct": false
+              }
+            ],
+            "explanation": "Inflammation, tight muscles and mucus narrow the bronchioles, reducing airflow and oxygen intake."
           },
           {
-            "text": "🌬️ A student has an asthma attack during PE class. What is happening in their body?",
+            "text": "You step from an air-conditioned room into a hot street. Which response happens FIRST?",
             "choices": [
-              { "label": "A) Their heart has stopped", "correct": false },
-              { "label": "B) The bronchioles in their lungs constricted, narrowing the airways and making breathing hard", "correct": true },
-              { "label": "C) They have a broken rib", "correct": false },
-              { "label": "D) They have a fever", "correct": false }
-            ]
+              {
+                "label": "Nerves trigger sweating and skin vessels widen",
+                "correct": true
+              },
+              {
+                "label": "Thyroid hormone drops over the next few days",
+                "correct": false
+              },
+              {
+                "label": "Your body grows extra sweat glands right away to cope",
+                "correct": false
+              },
+              {
+                "label": "Your blood type changes to handle the heat",
+                "correct": false
+              }
+            ],
+            "explanation": "The nervous system responds within seconds; hormonal adjustments are slower."
           },
           {
-            "text": "🩹 You get a small cut on your finger and it becomes red, warm, and slightly swollen. What is happening?",
+            "text": "A small cut on your finger turns red, warm and slightly swollen. What does this show?",
             "choices": [
-              { "label": "A) You are having an allergic reaction", "correct": false },
-              { "label": "B) Your 2nd line of defense — inflammation — is sending white blood cells to fight any pathogens that entered", "correct": true },
-              { "label": "C) The cut is infected and untreatable", "correct": false },
-              { "label": "D) Your immune system is failing", "correct": false }
-            ]
+              {
+                "label": "Inflammation — the second line of defense",
+                "correct": true
+              },
+              {
+                "label": "The first line of defense working perfectly",
+                "correct": false
+              },
+              {
+                "label": "An allergic reaction to air entering the cut",
+                "correct": false
+              },
+              {
+                "label": "Memory cells from a recent vaccine working",
+                "correct": false
+              }
+            ],
+            "explanation": "More blood flow brings white blood cells to the site, causing redness, warmth and swelling."
           }
         ]
       }
@@ -107,67 +294,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Anatomy Lab",
-      "badge": { "id": "systems-pro", "name": "Systems Pro", "icon": "🫀" },
-      "content": "<h3>🔐 Formative Check — Escape the Anatomy Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Protecting the Whole System",
+      "badge": {
+        "id": "systems-pro",
+        "name": "Systems Pro",
+        "icon": "🫀"
+      },
+      "content": "<h3>💉 Vaccines in the Philippines</h3>\n<p>The national immunization program gives free vaccines for diseases like measles, polio, tuberculosis (BCG), hepatitis B, diphtheria, tetanus and pertussis. Outbreaks of measles and polio return when vaccination rates drop — showing why herd immunity matters.</p>\n<h3>🏃 Supporting Homeostasis</h3>\n<ul>\n<li>Drink water during hot days — sweat removes water and salts.</li>\n<li>Rest in shade if dizzy or overheated; heat stroke happens when cooling fails.</li>\n<li>Warm-up and proper landing technique reduce ACL injuries.</li>\n<li>Avoid asthma triggers such as cigarette smoke; keep a reliever inhaler nearby.</li>\n</ul>\n<h3>🧠 Thinking in Systems</h3>\n<p>The body is a set of linked systems. The nervous and endocrine systems coordinate; the immune and lymphatic systems defend; the muscular, skeletal, respiratory and circulatory systems keep us moving and supplied. When one part fails, the others are strained — so protecting each part protects the whole organism.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which brain region coordinates body temperature?",
+            "text": "What happens to blood vessels in the skin when you are cold?",
             "choices": [
-              { "label": "A) Hypothalamus", "correct": true },
-              { "label": "B) Cerebellum", "correct": false },
-              { "label": "C) Brain stem", "correct": false },
-              { "label": "D) Frontal lobe", "correct": false }
-            ]
+              {
+                "label": "They narrow to keep heat inside",
+                "correct": true
+              },
+              {
+                "label": "They widen to let more heat out",
+                "correct": false
+              },
+              {
+                "label": "They burst to warm up the skin",
+                "correct": false
+              },
+              {
+                "label": "They fill with sweat to trap heat",
+                "correct": false
+              }
+            ],
+            "explanation": "Vasoconstriction reduces blood flow to the skin, so less heat is lost."
           },
           {
-            "text": "What is the 1st line of defense against pathogens?",
+            "text": "What does a vaccine contain?",
             "choices": [
-              { "label": "A) Physical barriers like skin and mucous membranes", "correct": true },
-              { "label": "B) Antibodies", "correct": false },
-              { "label": "C) Memory cells", "correct": false },
-              { "label": "D) Vaccines", "correct": false }
-            ]
+              {
+                "label": "A weakened, killed or partial germ",
+                "correct": true
+              },
+              {
+                "label": "A full dose of a strong live disease",
+                "correct": false
+              },
+              {
+                "label": "Antibiotics that destroy all bacteria",
+                "correct": false
+              },
+              {
+                "label": "Hormones that raise body temperature",
+                "correct": false
+              }
+            ],
+            "explanation": "Vaccines use a harmless form or part of a germ so the immune system can learn to recognize it."
           },
           {
-            "text": "How do vaccines protect you from future infections?",
+            "text": "Which cells make antibodies?",
             "choices": [
-              { "label": "A) They create memory B and T cells that respond quickly if the real pathogen appears", "correct": true },
-              { "label": "B) They kill all pathogens in your body permanently", "correct": false },
-              { "label": "C) They replace your immune system", "correct": false },
-              { "label": "D) They cause the disease in a mild form only", "correct": false }
-            ]
+              {
+                "label": "B cells",
+                "correct": true
+              },
+              {
+                "label": "Red blood cells",
+                "correct": false
+              },
+              {
+                "label": "Platelets",
+                "correct": false
+              },
+              {
+                "label": "Nerve cells",
+                "correct": false
+              }
+            ],
+            "explanation": "B lymphocytes produce antibodies that tag specific germs for destruction."
           },
           {
-            "text": "Which of the following BEST describes the difference between nervous and endocrine responses?",
+            "text": "What is the role of lymph nodes?",
             "choices": [
-              { "label": "A) Nervous is fast and short-term; endocrine is slower but longer-lasting", "correct": true },
-              { "label": "B) Nervous is slow; endocrine is fast", "correct": false },
-              { "label": "C) They are identical", "correct": false },
-              { "label": "D) Only nervous responses involve hormones", "correct": false }
-            ]
+              {
+                "label": "Filter lymph and help white cells meet germs",
+                "correct": true
+              },
+              {
+                "label": "Pump blood around the whole body more quickly",
+                "correct": false
+              },
+              {
+                "label": "Produce hormones that control body heat",
+                "correct": false
+              },
+              {
+                "label": "Store air for breathing during exercise",
+                "correct": false
+              }
+            ],
+            "explanation": "Lymph nodes filter fluid and are sites where immune cells detect and fight germs."
           },
           {
-            "text": "A torn ACL affects which body part?",
+            "text": "A torn ACL directly affects which body part?",
             "choices": [
-              { "label": "A) The knee joint", "correct": true },
-              { "label": "B) The heart", "correct": false },
-              { "label": "C) The lungs", "correct": false },
-              { "label": "D) The brain", "correct": false }
-            ]
+              {
+                "label": "Knee joint",
+                "correct": true
+              },
+              {
+                "label": "Lungs",
+                "correct": false
+              },
+              {
+                "label": "Elbow",
+                "correct": false
+              },
+              {
+                "label": "Ankle bone",
+                "correct": false
+              }
+            ],
+            "explanation": "The ACL is a ligament inside the knee that keeps it stable."
           },
           {
-            "text": "Which of the following is a symptom of an asthma attack?",
+            "text": "Why does vaccinating most of a community protect babies who are too young for some vaccines?",
             "choices": [
-              { "label": "A) Difficulty breathing and wheezing due to narrowed bronchioles", "correct": true },
-              { "label": "B) Broken bones", "correct": false },
-              { "label": "C) Rapid hair growth", "correct": false },
-              { "label": "D) Loss of vision", "correct": false }
-            ]
+              {
+                "label": "Germs cannot spread easily, so babies are less exposed",
+                "correct": true
+              },
+              {
+                "label": "Babies absorb antibodies from their vaccinated neighbors",
+                "correct": false
+              },
+              {
+                "label": "Vaccines given to adults travel through the air",
+                "correct": false
+              },
+              {
+                "label": "Babies cannot catch any diseases until they walk",
+                "correct": false
+              }
+            ],
+            "explanation": "Herd immunity: when most people are immune, the germ has few chances to spread, shielding those who are not immune."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Life as Interconnected Systems",
-      "badge": { "id": "life-scientist", "name": "Life Scientist", "icon": "🌱" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain the <strong>unifying themes of life science</strong>, describe how living things operate as systems of related parts, and relate structure to function in biological systems.</p><h3>🌱 What Is Life Science?</h3><p><strong>Life science</strong> (biology) is the study of living things — from microscopic bacteria to giant whales. Despite the enormous diversity of life, all living things share certain <strong>unifying themes</strong>.</p><h3>🔗 The Unifying Themes of Life</h3><table><thead><tr><th>Theme</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><strong>1. Cell theory</strong></td><td>All living things are made of cells — the basic unit of life</td><td>Bacteria (one cell) to humans (trillions of cells)</td></tr><tr><td><strong>2. Structure and function</strong></td><td>The shape of a part determines what it can do</td><td>Red blood cells are disc-shaped to carry oxygen</td></tr><tr><td><strong>3. Systems of related parts</strong></td><td>Parts work together in organized systems</td><td>Heart + blood vessels + lungs = circulatory system</td></tr><tr><td><strong>4. Homeostasis</strong></td><td>Living things maintain a stable internal environment</td><td>Sweating to cool down; shivering to warm up</td></tr><tr><td><strong>5. Energy flow</strong></td><td>All life needs energy — from the sun, food, or chemicals</td><td>Plants capture sunlight; animals eat plants</td></tr><tr><td><strong>6. Reproduction &amp; heredity</strong></td><td>Living things pass information to the next generation</td><td>DNA carries genetic code</td></tr><tr><td><strong>7. Evolution</strong></td><td>Populations change over generations</td><td>Antibiotic-resistant bacteria</td></tr><tr><td><strong>8. Interdependence</strong></td><td>Organisms depend on each other and their environment</td><td>Bees pollinate flowers; plants give bees nectar</td></tr></tbody></table><h3>⚙️ Levels of Biological Organization</h3><p>Life is organized in a hierarchy of levels — each level built from the one below:</p><p style='background:#e8f5e9;padding:14px;border-radius:8px;font-family:monospace;text-align:center;'>Atom → Molecule → Cell → Tissue → Organ → Organ System → Organism → Population → Community → Ecosystem → Biosphere</p><table><thead><tr><th>Level</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><strong>Cell</strong></td><td>Basic unit of life</td><td>Red blood cell, neuron</td></tr><tr><td><strong>Tissue</strong></td><td>Group of similar cells doing the same job</td><td>Muscle tissue, blood</td></tr><tr><td><strong>Organ</strong></td><td>Group of tissues working together</td><td>Heart, leaf, kidney</td></tr><tr><td><strong>Organ system</strong></td><td>Group of organs working together</td><td>Circulatory, digestive, respiratory systems</td></tr><tr><td><strong>Organism</strong></td><td>A complete living thing</td><td>A human, a tree, a fish</td></tr><tr><td><strong>Population</strong></td><td>Same species living in one area</td><td>Carabao in a field</td></tr><tr><td><strong>Community</strong></td><td>Different species interacting</td><td>Rice field ecosystem (rice, insects, frogs, birds)</td></tr><tr><td><strong>Ecosystem</strong></td><td>Community + non-living environment</td><td>Mangrove forest + water + soil</td></tr><tr><td><strong>Biosphere</strong></td><td>All life on Earth</td><td>The whole planet</td></tr></tbody></table><h3>🔬 Structure ↔ Function Relationship</h3><p>In biology, <strong>structure determines function</strong>. Every part of a living thing has a shape or design that helps it do a specific job:</p><table><thead><tr><th>Structure</th><th>Function (What It Does)</th><th>How Structure Helps</th></tr></thead><tbody><tr><td>🌿 Leaf (flat, thin, wide)</td><td>Capture sunlight for photosynthesis</td><td>Large surface area for absorbing light</td></tr><tr><td>🫁 Alveoli (tiny air sacs in lungs)</td><td>Exchange oxygen and CO₂ with blood</td><td>Millions of tiny sacs = huge surface area</td></tr><tr><td>🩸 Red blood cell (disc-shaped, no nucleus)</td><td>Carry oxygen</td><td>Biconcave shape holds more hemoglobin; no nucleus frees space</td></tr><tr><td>🌳 Tree roots (branching)</td><td>Absorb water and anchor the plant</td><td>Widespread network reaches more soil</td></tr><tr><td>🐟 Fish gills (thin filaments)</td><td>Extract oxygen from water</td><td>Thin, rich in blood vessels for gas exchange</td></tr><tr><td>🦴 Bones (hollow tubes)</td><td>Support body and protect organs</td><td>Hollow design = strong but light</td></tr></tbody></table><h3>🌏 Why This Matters</h3><p>Understanding these themes helps us:</p><ul><li>See connections between all life forms.</li><li>Predict how organisms respond to changes in their environment.</li><li>Understand medicine, agriculture, and conservation.</li><li>Appreciate why every part of an ecosystem matters.</li></ul><h3>📌 Quick Check</h3><ul><li>What is the basic unit of life? (Answer: the cell)</li><li>Why is a leaf flat and wide? (Answer: to maximize surface area for capturing sunlight)</li><li>What is homeostasis? (Answer: maintaining a stable internal environment)</li></ul>"
+      "title": "What All Living Things Share",
+      "badge": {
+        "id": "life-scientist",
+        "name": "Life Scientist",
+        "icon": "🌱"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain how living things operate as systems of related parts</strong> and <strong>create a diagram showing structure–function relationships</strong>.</p>\n<h3>🌱 Unifying Themes</h3>\n<p>Living things are amazingly diverse — from bacteria to narra trees to tamaraw — yet they share a few big ideas:</p>\n<table><thead><tr><th>Theme</th><th>Meaning</th><th>Example</th></tr></thead><tbody>\n<tr><td>Cells</td><td>All life is made of one or more cells</td><td>Bacteria (1 cell); humans (trillions)</td></tr>\n<tr><td>Structure and function</td><td>A part's shape fits its job</td><td>Thin, wide leaves catch light</td></tr>\n<tr><td>Systems</td><td>Parts interact to do more together</td><td>Heart, vessels and blood</td></tr>\n<tr><td>Homeostasis</td><td>Keeping internal conditions stable</td><td>Sweating to cool down</td></tr>\n<tr><td>Energy</td><td>Life needs a steady energy supply</td><td>Plants use light; animals eat food</td></tr>\n<tr><td>Heredity</td><td>DNA passes traits to offspring</td><td>Children resemble parents</td></tr>\n<tr><td>Interdependence</td><td>Organisms depend on each other</td><td>Bees and flowers</td></tr>\n</tbody></table>\n<h3>🔍 Is It Alive?</h3>\n<p>To decide, check several characteristics together: made of cells, uses energy, grows, responds to stimuli, reproduces, maintains homeostasis. Fire grows and uses oxygen, but it has no cells and no DNA — so it is not alive.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Fire can grow, spread and use oxygen. Why is it NOT considered a living thing?",
+            "choices": [
+              {
+                "label": "It has no cells and no DNA",
+                "correct": true
+              },
+              {
+                "label": "It cannot move from place to place",
+                "correct": false
+              },
+              {
+                "label": "It needs too much energy to stay alive",
+                "correct": false
+              },
+              {
+                "label": "It produces carbon dioxide instead of oxygen",
+                "correct": false
+              }
+            ],
+            "explanation": "Living things are made of cells and pass on DNA. Fire shows some life-like behavior but lacks these basic features."
+          },
+          {
+            "text": "You shiver when you are cold. Which theme of life does this show?",
+            "choices": [
+              {
+                "label": "Homeostasis",
+                "correct": true
+              },
+              {
+                "label": "Heredity and DNA",
+                "correct": false
+              },
+              {
+                "label": "Interdependence",
+                "correct": false
+              },
+              {
+                "label": "Evolution",
+                "correct": false
+              }
+            ],
+            "explanation": "Shivering produces heat to keep body temperature stable — maintaining a stable internal environment."
+          },
+          {
+            "text": "Which is the basic unit of structure and function in all living things?",
+            "choices": [
+              {
+                "label": "The cell",
+                "correct": true
+              },
+              {
+                "label": "The organ",
+                "correct": false
+              },
+              {
+                "label": "The tissue",
+                "correct": false
+              },
+              {
+                "label": "The organism",
+                "correct": false
+              }
+            ],
+            "explanation": "Cell theory states that all living things are made of cells, the smallest unit that can carry out life processes."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Structure & Function",
-      "badge": { "id": "life-scientist", "name": "Life Scientist", "icon": "🌱" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each structure to its function, or each theme to its correct meaning. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Levels of Organization and Structure–Function",
+      "badge": {
+        "id": "life-scientist",
+        "name": "Life Scientist",
+        "icon": "🌱"
+      },
+      "content": "<h3>🧱 Levels of Organization</h3>\n<p style=\"text-align:center\"><strong>Cell → Tissue → Organ → Organ system → Organism</strong></p>\n<ul>\n<li><strong>Cell</strong>: muscle cell</li>\n<li><strong>Tissue</strong>: many muscle cells working together (cardiac muscle)</li>\n<li><strong>Organ</strong>: different tissues forming one structure (the heart)</li>\n<li><strong>Organ system</strong>: organs working together (circulatory system)</li>\n<li><strong>Organism</strong>: all systems together (a person)</li>\n</ul>\n<p>Each level has abilities that the levels below cannot do alone — a single heart cell cannot pump blood around the body.</p>\n<h3>🔑 Structure Fits Function</h3>\n<table><thead><tr><th>Structure</th><th>Feature</th><th>Function it supports</th></tr></thead><tbody>\n<tr><td>Red blood cell</td><td>Biconcave disc, no nucleus</td><td>More room for hemoglobin; squeezes through capillaries</td></tr>\n<tr><td>Alveoli</td><td>Millions of tiny, thin sacs</td><td>Huge surface area for gas exchange</td></tr>\n<tr><td>Root hairs</td><td>Long, thin extensions</td><td>More surface to absorb water</td></tr>\n<tr><td>Nerve cell</td><td>Long branches</td><td>Carries signals over long distances</td></tr>\n<tr><td>Small intestine</td><td>Villi (finger-like folds)</td><td>More area to absorb nutrients</td></tr>\n</tbody></table>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each structure or idea to its function or meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Cell theory", "right": "All living things are made of cells" },
-          { "key": "k2", "left": "Homeostasis", "right": "Maintaining a stable internal environment — like sweating to cool down" },
-          { "key": "k3", "left": "Structure ↔ Function", "right": "The shape of a part determines what it can do" },
-          { "key": "k4", "left": "Leaf (flat & wide)", "right": "Large surface area for capturing sunlight" },
-          { "key": "k5", "left": "Red blood cell (disc-shaped)", "right": "Biconcave shape holds more oxygen-carrying hemoglobin" },
-          { "key": "k6", "left": "Alveoli (tiny air sacs)", "right": "Huge surface area for gas exchange in the lungs" },
-          { "key": "k7", "left": "Cell → Tissue → Organ", "right": "Increasing levels of biological organization" },
-          { "key": "k8", "left": "Interdependence", "right": "Organisms rely on each other — bees pollinate flowers" }
+          {
+            "key": "k1",
+            "left": "Red blood cell shape",
+            "right": "Holds more hemoglobin and fits through capillaries",
+            "why": "Its biconcave disc shape helps it carry oxygen."
+          },
+          {
+            "key": "k2",
+            "left": "Alveoli",
+            "right": "Huge surface area for gas exchange",
+            "why": "Millions of tiny sacs let oxygen enter blood quickly."
+          },
+          {
+            "key": "k3",
+            "left": "Root hairs",
+            "right": "More surface to absorb water and minerals",
+            "why": "Thin extensions reach into soil spaces."
+          },
+          {
+            "key": "k4",
+            "left": "Villi in the intestine",
+            "right": "More area to absorb digested food",
+            "why": "Finger-like folds increase surface area."
+          },
+          {
+            "key": "k5",
+            "left": "Nerve cell branches",
+            "right": "Carry signals over long distances",
+            "why": "Long extensions connect distant body parts."
+          },
+          {
+            "key": "k6",
+            "left": "Tissue",
+            "right": "Group of similar cells doing one job",
+            "why": "Example: muscle tissue."
+          },
+          {
+            "key": "k7",
+            "left": "Organ",
+            "right": "Different tissues forming one structure",
+            "why": "Example: the heart or the stomach."
+          },
+          {
+            "key": "k8",
+            "left": "Organ system",
+            "right": "Organs working together for a major task",
+            "why": "Example: the digestive system."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Systems Thinking",
-      "badge": { "id": "life-scientist", "name": "Life Scientist", "icon": "🌱" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Organisms as Systems",
+      "badge": {
+        "id": "life-scientist",
+        "name": "Life Scientist",
+        "icon": "🌱"
+      },
+      "content": "<h3>🔗 Systems Depend on Each Other</h3>\n<p>No organ system works alone. When you run:</p>\n<ul>\n<li>The <strong>muscular</strong> system needs more ATP.</li>\n<li>The <strong>respiratory</strong> system brings in more oxygen; the <strong>circulatory</strong> system pumps it faster.</li>\n<li>The <strong>digestive</strong> system supplied the glucose earlier.</li>\n<li>The <strong>nervous</strong> system coordinates everything; the <strong>excretory</strong> and skin remove wastes and heat.</li>\n</ul>\n<h3>⚠️ When One Part Fails</h3>\n<p>Because systems are linked, damage to one part affects others. In <strong>emphysema</strong>, alveoli are destroyed, reducing surface area — less oxygen reaches the blood, so the heart works harder and muscles tire quickly. In <strong>diabetes</strong>, cells cannot take in glucose properly, affecting energy, eyes, kidneys and nerves.</p>\n<h3>🌳 Plants Are Systems Too</h3>\n<p>Roots absorb water and minerals; stems transport them; leaves make food and send it back down. Damage the roots and the leaves wilt; remove the leaves and the roots starve.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Reason about systems and structure–function. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🫁 A person has emphysema — a disease that damages the alveoli in their lungs. Why does this make it hard to breathe?",
+            "text": "A long-time smoker develops emphysema, which destroys many alveoli. Why does he get tired easily?",
             "choices": [
-              { "label": "A) The lungs become too small", "correct": false },
-              { "label": "B) Damaged alveoli reduce the surface area for gas exchange, so less oxygen enters the blood", "correct": true },
-              { "label": "C) The heart stops working", "correct": false },
-              { "label": "D) The person produces too much oxygen", "correct": false }
-            ]
+              {
+                "label": "Less surface area means less oxygen enters the blood",
+                "correct": true
+              },
+              {
+                "label": "His heart starts pumping much less blood than normal",
+                "correct": false
+              },
+              {
+                "label": "His muscles stop needing oxygen for respiration",
+                "correct": false
+              },
+              {
+                "label": "His lungs make extra alveoli that block the airway",
+                "correct": false
+              }
+            ],
+            "explanation": "Fewer alveoli means less area for gas exchange, so less oxygen reaches cells for respiration — leaving him tired."
           },
           {
-            "text": "🌿 A plant is placed in a very dark room for a week. What happens and why?",
+            "text": "A plant's roots are damaged by flooding. A few days later its leaves wilt. What BEST explains this?",
             "choices": [
-              { "label": "A) It grows faster because it doesn't need light", "correct": false },
-              { "label": "B) It wilts and yellows because photosynthesis (which needs light) cannot proceed", "correct": true },
-              { "label": "C) It stops growing roots but keeps growing leaves", "correct": false },
-              { "label": "D) Nothing changes", "correct": false }
-            ]
+              {
+                "label": "Damaged roots cannot absorb enough water",
+                "correct": true
+              },
+              {
+                "label": "Flood water fills the leaves and bursts them",
+                "correct": false
+              },
+              {
+                "label": "Leaves stop photosynthesis to save the roots",
+                "correct": false
+              },
+              {
+                "label": "Water in the soil turns the leaves into roots",
+                "correct": false
+              }
+            ],
+            "explanation": "Roots and leaves are parts of one system. Without water uptake, leaves lose turgor and wilt."
           },
           {
-            "text": "🩸 Why is a red blood cell's shape (a biconcave disc) important?",
+            "text": "Which example shows the HIGHEST level of organization?",
             "choices": [
-              { "label": "A) The shape lets it hold more hemoglobin and squeeze through narrow capillaries", "correct": true },
-              { "label": "B) The shape makes it heavier so it stays in the blood", "correct": false },
-              { "label": "C) The shape helps it make antibodies", "correct": false },
-              { "label": "D) The shape is random — no function", "correct": false }
-            ]
+              {
+                "label": "A carabao grazing in a field",
+                "correct": true
+              },
+              {
+                "label": "Its heart pumping blood",
+                "correct": false
+              },
+              {
+                "label": "Its muscle tissue contracting",
+                "correct": false
+              },
+              {
+                "label": "One cell dividing in its skin",
+                "correct": false
+              }
+            ],
+            "explanation": "The whole organism is above organs, tissues and cells in the levels of organization."
           },
           {
-            "text": "🐝 Bees collect nectar from flowers and transfer pollen. This is an example of:",
+            "text": "Why do cells in the small intestine have villi but cells in the skin's outer layer do not?",
             "choices": [
-              { "label": "A) Interdependence — both species benefit from the relationship", "correct": true },
-              { "label": "B) Homeostasis", "correct": false },
-              { "label": "C) Evolution", "correct": false },
-              { "label": "D) Reproduction", "correct": false }
-            ]
+              {
+                "label": "Intestine cells absorb food; skin cells protect",
+                "correct": true
+              },
+              {
+                "label": "Skin cells absorb more food than intestine cells",
+                "correct": false
+              },
+              {
+                "label": "Villi help skin keep water out of the body",
+                "correct": false
+              },
+              {
+                "label": "Both cells have the same job in the body",
+                "correct": false
+              }
+            ],
+            "explanation": "Structure matches function: villi increase absorbing area in the intestine; skin's flat, tough cells protect."
           },
           {
-            "text": "🥵 You go for a run under the hot sun and start to sweat. This is your body:",
+            "text": "During a long run, which pair of systems works MOST closely to deliver oxygen to muscles?",
             "choices": [
-              { "label": "A) Losing water only", "correct": false },
-              { "label": "B) Maintaining homeostasis by cooling itself", "correct": true },
-              { "label": "C) Contracting an infection", "correct": false },
-              { "label": "D) Trying to lose weight", "correct": false }
-            ]
+              {
+                "label": "Respiratory and circulatory",
+                "correct": true
+              },
+              {
+                "label": "Digestive and excretory",
+                "correct": false
+              },
+              {
+                "label": "Skeletal and reproductive",
+                "correct": false
+              },
+              {
+                "label": "Endocrine and integumentary",
+                "correct": false
+              }
+            ],
+            "explanation": "The respiratory system brings oxygen into the blood, and the circulatory system carries it to the muscles."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Systems Lab",
-      "badge": { "id": "life-scientist", "name": "Life Scientist", "icon": "🌱" },
-      "content": "<h3>🔐 Formative Check — Escape the Systems Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Diagramming Structure and Function",
+      "badge": {
+        "id": "life-scientist",
+        "name": "Life Scientist",
+        "icon": "🌱"
+      },
+      "content": "<h3>🖊️ How to Make a Structure–Function Diagram</h3>\n<ol>\n<li><strong>Choose a system</strong> — e.g., the respiratory system or a leaf.</li>\n<li><strong>Draw and label the parts</strong> in order (nose → trachea → bronchi → bronchioles → alveoli).</li>\n<li><strong>Beside each part, note one structural feature</strong> (cilia, C-shaped cartilage rings, thin walls).</li>\n<li><strong>Link each feature to its function</strong> with an arrow (cartilage rings keep the trachea open).</li>\n<li><strong>Show connections to other systems</strong> (alveoli ↔ capillaries of the circulatory system).</li>\n</ol>\n<h3>🧠 Sample Entries</h3>\n<table><thead><tr><th>Part</th><th>Structure</th><th>Function</th></tr></thead><tbody>\n<tr><td>Trachea</td><td>C-shaped cartilage rings</td><td>Keeps the airway open</td></tr>\n<tr><td>Airway lining</td><td>Cilia and mucus</td><td>Traps and sweeps out dust and germs</td></tr>\n<tr><td>Alveoli walls</td><td>One cell thick, moist</td><td>Fast diffusion of O₂ and CO₂</td></tr>\n<tr><td>Leaf</td><td>Flat and wide; stomata underneath</td><td>Catches light; exchanges gases</td></tr>\n</tbody></table>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What is the basic unit of life?",
+            "text": "Which list shows levels of organization from SIMPLEST to most complex?",
             "choices": [
-              { "label": "A) Cell", "correct": true },
-              { "label": "B) Atom", "correct": false },
-              { "label": "C) Organ", "correct": false },
-              { "label": "D) Molecule", "correct": false }
-            ]
+              {
+                "label": "Cell → tissue → organ → organ system",
+                "correct": true
+              },
+              {
+                "label": "Organ → cell → tissue → organ system",
+                "correct": false
+              },
+              {
+                "label": "Tissue → cell → organ system → organ",
+                "correct": false
+              },
+              {
+                "label": "Organ system → organ → tissue → cell",
+                "correct": false
+              }
+            ],
+            "explanation": "Cells form tissues, tissues form organs, and organs form organ systems."
           },
           {
-            "text": "Which of the following levels of biological organization is the MOST complex?",
+            "text": "Why are alveoli walls only one cell thick?",
             "choices": [
-              { "label": "A) Ecosystem", "correct": true },
-              { "label": "B) Tissue", "correct": false },
-              { "label": "C) Organ", "correct": false },
-              { "label": "D) Cell", "correct": false }
-            ]
+              {
+                "label": "Gases can diffuse across them quickly",
+                "correct": true
+              },
+              {
+                "label": "They need to be strong to hold air",
+                "correct": false
+              },
+              {
+                "label": "They stop germs from entering blood",
+                "correct": false
+              },
+              {
+                "label": "They make the lungs heavier and stable",
+                "correct": false
+              }
+            ],
+            "explanation": "A very thin wall means a short distance for oxygen and carbon dioxide to diffuse between air and blood."
           },
           {
-            "text": "Which theme of life science explains why you sweat when it's hot?",
+            "text": "What is the function of cilia in the airway?",
             "choices": [
-              { "label": "A) Homeostasis", "correct": true },
-              { "label": "B) Evolution", "correct": false },
-              { "label": "C) Reproduction", "correct": false },
-              { "label": "D) Cell theory", "correct": false }
-            ]
+              {
+                "label": "Sweep mucus, dust and germs out",
+                "correct": true
+              },
+              {
+                "label": "Exchange oxygen with the blood",
+                "correct": false
+              },
+              {
+                "label": "Pump air into the lungs directly",
+                "correct": false
+              },
+              {
+                "label": "Produce hormones for breathing",
+                "correct": false
+              }
+            ],
+            "explanation": "Cilia beat together to move mucus — with trapped particles — up and out of the airway."
           },
           {
-            "text": "Why are alveoli in the lungs so tiny and numerous?",
+            "text": "A leaf is flat and wide. Which function does this structure support?",
             "choices": [
-              { "label": "A) To create a huge surface area for gas exchange", "correct": true },
-              { "label": "B) To make them easier to see", "correct": false },
-              { "label": "C) To reduce oxygen intake", "correct": false },
-              { "label": "D) To store water", "correct": false }
-            ]
+              {
+                "label": "Capturing as much sunlight as possible",
+                "correct": true
+              },
+              {
+                "label": "Storing water deep underground",
+                "correct": false
+              },
+              {
+                "label": "Anchoring the whole plant firmly in the soil",
+                "correct": false
+              },
+              {
+                "label": "Carrying sugar down to the roots",
+                "correct": false
+              }
+            ],
+            "explanation": "A large, flat surface exposes more chloroplasts to light for photosynthesis."
           },
           {
-            "text": "Which statement BEST describes the structure-function relationship?",
+            "text": "Bees pollinate flowers while collecting nectar. Which theme does this show?",
             "choices": [
-              { "label": "A) The shape of a biological part determines what job it can perform", "correct": true },
-              { "label": "B) All structures look the same", "correct": false },
-              { "label": "C) Function is random and unrelated to structure", "correct": false },
-              { "label": "D) Only animals have structure-function relationships", "correct": false }
-            ]
+              {
+                "label": "Interdependence",
+                "correct": true
+              },
+              {
+                "label": "Homeostasis",
+                "correct": false
+              },
+              {
+                "label": "Heredity and DNA",
+                "correct": false
+              },
+              {
+                "label": "Cell theory of life",
+                "correct": false
+              }
+            ],
+            "explanation": "Bees and flowers benefit each other — organisms depend on one another."
           },
           {
-            "text": "Bees pollinating flowers while collecting nectar is an example of:",
+            "text": "A student's diagram links \"alveoli\" to \"capillaries.\" Why is this link important?",
             "choices": [
-              { "label": "A) Interdependence between species", "correct": true },
-              { "label": "B) Homeostasis", "correct": false },
-              { "label": "C) Cell theory", "correct": false },
-              { "label": "D) Evolution only", "correct": false }
-            ]
+              {
+                "label": "It shows two systems working together for gas exchange",
+                "correct": true
+              },
+              {
+                "label": "It shows that alveoli are a part of the digestive system",
+                "correct": false
+              },
+              {
+                "label": "It shows that capillaries make all the oxygen we breathe",
+                "correct": false
+              },
+              {
+                "label": "It shows that lungs and heart are actually the same organ",
+                "correct": false
+              }
+            ],
+            "explanation": "Oxygen passes from alveoli (respiratory) into capillaries (circulatory) — systems interact to supply cells."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

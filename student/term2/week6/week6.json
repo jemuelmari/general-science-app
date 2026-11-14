@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Cells — The Unit of Life",
-      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the parts of a cell, explain how cells obtain nutrients through the cell membrane, and describe how they convert those nutrients into usable energy (ATP) through cellular respiration.</p><h3>🔬 What Is a Cell?</h3><p>The <strong>cell</strong> is the basic structural and functional unit of all living things. Every living organism — from bacteria to humans — is made of one or more cells.</p><table><thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Prokaryotic</strong></td><td>No true nucleus; DNA floats in cytoplasm</td><td>Bacteria</td></tr><tr><td><strong>Eukaryotic</strong></td><td>Has a true nucleus and membrane-bound organelles</td><td>Plant, animal, fungal cells</td></tr></tbody></table><h3>🧩 Parts of a Cell & Their Functions</h3><table><thead><tr><th>Organelle</th><th>Function</th><th>Analogy</th></tr></thead><tbody><tr><td><strong>Cell membrane</strong></td><td>Controls what enters and exits the cell</td><td>Door / gatekeeper</td></tr><tr><td><strong>Cytoplasm</strong></td><td>Jelly-like fluid where reactions occur</td><td>Factory floor</td></tr><tr><td><strong>Nucleus</strong></td><td>Contains DNA — the instructions for the cell</td><td>Manager's office</td></tr><tr><td><strong>Mitochondria</strong></td><td>Produces energy (ATP) through cellular respiration</td><td>Power plant</td></tr><tr><td><strong>Ribosomes</strong></td><td>Builds proteins</td><td>Assembly line</td></tr><tr><td><strong>Endoplasmic reticulum (ER)</strong></td><td>Transports materials inside the cell</td><td>Conveyor belt</td></tr><tr><td><strong>Golgi apparatus</strong></td><td>Packages and ships proteins</td><td>Post office</td></tr><tr><td><strong>Lysosomes</strong></td><td>Break down waste</td><td>Recycling center</td></tr><tr><td><strong>Vacuole</strong></td><td>Stores water, nutrients, waste (large in plants)</td><td>Storage room</td></tr><tr><td><strong>Chloroplast</strong> (plant only)</td><td>Performs photosynthesis to make glucose</td><td>Solar panel</td></tr><tr><td><strong>Cell wall</strong> (plant only)</td><td>Provides structure and support</td><td>Brick wall</td></tr></tbody></table><h3>🍔 How Cells Obtain Nutrients</h3><p>Cells get nutrients through a selectively permeable membrane — a barrier that lets some substances in and keeps others out.</p><table><thead><tr><th>Process</th><th>Description</th><th>Direction</th></tr></thead><tbody><tr><td><strong>Diffusion</strong></td><td>Molecules move from high to low concentration (no energy needed)</td><td>Into or out of cell</td></tr><tr><td><strong>Osmosis</strong></td><td>Water moves across the membrane from high to low water concentration</td><td>Into or out of cell</td></tr><tr><td><strong>Facilitated diffusion</strong></td><td>Molecules move through special channel proteins</td><td>High → low</td></tr><tr><td><strong>Active transport</strong></td><td>Molecules move from low to high concentration <em>using energy (ATP)</em></td><td>Low → high</td></tr><tr><td><strong>Endocytosis</strong></td><td>Cell engulfs large particles or liquids</td><td>Into cell</td></tr><tr><td><strong>Phagocytosis</strong></td><td>White blood cells engulf bacteria</td><td>Into cell</td></tr></tbody></table><h3>⚡ How Cells Convert Nutrients into Energy</h3><p>Once nutrients enter the cell, they are broken down to release energy stored in the form of <strong>ATP (adenosine triphosphate)</strong>.</p><p style='background:#e1f5fe;padding:14px;border-radius:8px;font-family:monospace;text-align:center;'><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~36 ATP</strong></p><h3>🔬 Three Stages of Cellular Respiration</h3><table><thead><tr><th>Stage</th><th>Where</th><th>What Happens</th><th>ATP Produced</th></tr></thead><tbody><tr><td><strong>1. Glycolysis</strong></td><td>Cytoplasm</td><td>Glucose is split into two pyruvate molecules</td><td>2 ATP</td></tr><tr><td><strong>2. Krebs cycle</strong> (Citric Acid Cycle)</td><td>Mitochondrial matrix</td><td>Pyruvate is broken down further; CO₂ released</td><td>2 ATP</td></tr><tr><td><strong>3. Electron Transport Chain (ETC)</strong></td><td>Inner mitochondrial membrane</td><td>Electrons power ATP production; O₂ is final electron acceptor</td><td>~32 ATP</td></tr></tbody></table><p><strong>Total:</strong> ~36 ATP per glucose molecule.</p><h3>🌿 Photosynthesis vs. Respiration — A Cycle</h3><ul><li><strong>Photosynthesis (plants):</strong> Uses sunlight + CO₂ + H₂O to make glucose and O₂.</li><li><strong>Respiration (all cells):</strong> Uses glucose + O₂ to release energy (ATP), CO₂, and H₂O.</li><li>Together, they form a balanced cycle that sustains life on Earth.</li></ul><h3>🩺 Real-Life Applications</h3><ul><li><strong>Medicine:</strong> Cancer cells divide uncontrollably — understanding cell division is key to treatment.</li><li><strong>Nutrition:</strong> Eating balanced meals gives cells the nutrients they need to produce ATP.</li><li><strong>Exercise:</strong> Muscles need more ATP — that's why you breathe faster when running.</li><li><strong>Plant growth:</strong> Fertilizers provide nutrients for photosynthesis and respiration.</li></ul><h3>📌 Quick Check</h3><ul><li>What is the powerhouse of the cell? (Answer: mitochondria)</li><li>What is the energy currency of the cell? (Answer: ATP)</li><li>Which process moves molecules from LOW to HIGH concentration? (Answer: active transport)</li></ul>"
+      "title": "Cell Parts and Their Jobs",
+      "badge": {
+        "id": "cell-explorer",
+        "name": "Cell Explorer",
+        "icon": "🔬"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe how cells obtain nutrients and convert them into energy</strong>.</p>\n<h3>🔬 Two Kinds of Cells</h3>\n<p><strong>Prokaryotic</strong> cells (bacteria) have no nucleus; their DNA floats in the cytoplasm. <strong>Eukaryotic</strong> cells (plants, animals, fungi) have a nucleus and membrane-bound organelles.</p>\n<h3>🧩 Organelles</h3>\n<table><thead><tr><th>Organelle</th><th>Job</th><th>Analogy</th></tr></thead><tbody>\n<tr><td>Cell membrane</td><td>Controls what enters and leaves</td><td>Security gate</td></tr>\n<tr><td>Nucleus</td><td>Holds DNA; directs cell activities</td><td>Principal's office</td></tr>\n<tr><td>Cytoplasm</td><td>Fluid where many reactions occur</td><td>Workshop floor</td></tr>\n<tr><td>Mitochondria</td><td>Release energy as ATP</td><td>Power plant</td></tr>\n<tr><td>Ribosomes</td><td>Build proteins</td><td>Assembly line</td></tr>\n<tr><td>Chloroplasts (plants)</td><td>Photosynthesis</td><td>Solar panels</td></tr>\n<tr><td>Cell wall (plants)</td><td>Support and shape</td><td>Building frame</td></tr>\n<tr><td>Vacuole</td><td>Stores water and materials</td><td>Water tank</td></tr>\n</tbody></table>\n<h3>🌿 Plant vs Animal Cells</h3>\n<p>Plant cells have a <strong>cell wall</strong>, <strong>chloroplasts</strong> and a <strong>large central vacuole</strong>. Animal cells lack these, but both have a membrane, nucleus, mitochondria and ribosomes. Note: plants have mitochondria too — they need ATP like every cell.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which organelle is called the powerhouse of the cell?",
+            "choices": [
+              {
+                "label": "Mitochondrion",
+                "correct": true
+              },
+              {
+                "label": "Ribosome (protein maker)",
+                "correct": false
+              },
+              {
+                "label": "Nucleus",
+                "correct": false
+              },
+              {
+                "label": "Vacuole",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitochondria carry out aerobic respiration and make most of the cell's ATP."
+          },
+          {
+            "text": "Which structures are found in plant cells but NOT in animal cells?",
+            "choices": [
+              {
+                "label": "Cell wall and chloroplasts",
+                "correct": true
+              },
+              {
+                "label": "Nucleus and cell membrane",
+                "correct": false
+              },
+              {
+                "label": "Ribosomes and mitochondria",
+                "correct": false
+              },
+              {
+                "label": "Cytoplasm and DNA molecules",
+                "correct": false
+              }
+            ],
+            "explanation": "Only plant cells have a rigid cell wall and chloroplasts for photosynthesis; both have the other parts."
+          },
+          {
+            "text": "Bacteria have no nucleus. Where is their DNA?",
+            "choices": [
+              {
+                "label": "Floating in the cytoplasm",
+                "correct": true
+              },
+              {
+                "label": "Inside the cell wall",
+                "correct": false
+              },
+              {
+                "label": "Inside chloroplasts",
+                "correct": false
+              },
+              {
+                "label": "Outside the cell membrane",
+                "correct": false
+              }
+            ],
+            "explanation": "Prokaryotic cells have DNA in a region of the cytoplasm, not enclosed in a nucleus."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Cell Organelles",
-      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each cell part or process to its correct function. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "How Nutrients Enter Cells",
+      "badge": {
+        "id": "cell-explorer",
+        "name": "Cell Explorer",
+        "icon": "🔬"
+      },
+      "content": "<h3>🚪 The Cell Membrane Is Selective</h3>\n<p>The membrane lets some substances pass and blocks others. Cells use several ways to move materials:</p>\n<table><thead><tr><th>Process</th><th>Direction</th><th>Energy needed?</th><th>Example</th></tr></thead><tbody>\n<tr><td><strong>Diffusion</strong></td><td>High → low concentration</td><td>No</td><td>Oxygen entering a cell</td></tr>\n<tr><td><strong>Osmosis</strong></td><td>Water moves to the side with more solute</td><td>No</td><td>Roots absorbing water</td></tr>\n<tr><td><strong>Facilitated diffusion</strong></td><td>High → low, through protein channels</td><td>No</td><td>Glucose entering red blood cells</td></tr>\n<tr><td><strong>Active transport</strong></td><td>Low → high concentration</td><td>Yes (ATP)</td><td>Root cells taking in minerals</td></tr>\n<tr><td><strong>Endocytosis</strong></td><td>Membrane wraps around large particles</td><td>Yes</td><td>White blood cell engulfing bacteria</td></tr>\n</tbody></table>\n<h3>🥒 Osmosis in Daily Life</h3>\n<p>Salting cucumbers for atchara pulls water out of their cells, making them limp. Putting wilted kangkong in plain water lets water move back in, making it crisp again. In both, water moves toward the side with <strong>more dissolved solute</strong>.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Cell membrane", "right": "Controls what enters and exits the cell" },
-          { "key": "k2", "left": "Nucleus", "right": "Contains DNA — the instructions for the cell" },
-          { "key": "k3", "left": "Mitochondria", "right": "Produces ATP (energy) through cellular respiration" },
-          { "key": "k4", "left": "Ribosomes", "right": "Build proteins for the cell" },
-          { "key": "k5", "left": "Chloroplast (plant only)", "right": "Performs photosynthesis to make glucose" },
-          { "key": "k6", "left": "Osmosis", "right": "Water moves across the membrane from high to low water concentration" },
-          { "key": "k7", "left": "Active transport", "right": "Moves molecules from low to high concentration using ATP" },
-          { "key": "k8", "left": "ATP", "right": "The energy currency of the cell — made by mitochondria" }
+          {
+            "key": "k1",
+            "left": "Diffusion",
+            "right": "Particles spread from high to low concentration",
+            "why": "It needs no energy from the cell."
+          },
+          {
+            "key": "k2",
+            "left": "Osmosis",
+            "right": "Water moves across a membrane toward more solute",
+            "why": "A special case of diffusion for water."
+          },
+          {
+            "key": "k3",
+            "left": "Active transport",
+            "right": "Moves substances from low to high using ATP",
+            "why": "It works against the concentration gradient."
+          },
+          {
+            "key": "k4",
+            "left": "Endocytosis",
+            "right": "Membrane engulfs large particles",
+            "why": "White blood cells use it to eat bacteria."
+          },
+          {
+            "key": "k5",
+            "left": "Cell membrane",
+            "right": "Selectively controls what enters and leaves",
+            "why": "It is partly permeable."
+          },
+          {
+            "key": "k6",
+            "left": "Salted cucumber",
+            "right": "Loses water and becomes limp",
+            "why": "Water moves out toward the salty side."
+          },
+          {
+            "key": "k7",
+            "left": "Wilted kangkong in water",
+            "right": "Gains water and becomes crisp",
+            "why": "Water moves into the cells."
+          },
+          {
+            "key": "k8",
+            "left": "Protein channel",
+            "right": "Helps glucose cross the membrane",
+            "why": "This is facilitated diffusion."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Cell Energy",
-      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Turning Nutrients into Energy",
+      "badge": {
+        "id": "cell-explorer",
+        "name": "Cell Explorer",
+        "icon": "🔬"
+      },
+      "content": "<h3>🔋 From Food to ATP</h3>\n<p>Digestion breaks food into small molecules — mainly <strong>glucose</strong>. Blood delivers glucose and oxygen to every cell. Inside, <strong>cellular respiration</strong> releases the energy:</p>\n<p style=\"text-align:center\"><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP</strong></p>\n<h3>🧭 Three Stages (simplified)</h3>\n<ol>\n<li><strong>Glycolysis</strong> (cytoplasm): glucose splits into two smaller molecules; a little ATP is made. No oxygen needed.</li>\n<li><strong>Krebs cycle</strong> (mitochondria): these molecules are broken down further, releasing CO₂.</li>\n<li><strong>Electron transport chain</strong> (mitochondria): uses oxygen to make most of the ATP; water forms.</li>\n</ol>\n<h3>⚡ Aerobic vs Anaerobic</h3>\n<table><thead><tr><th></th><th>Aerobic</th><th>Anaerobic</th></tr></thead><tbody>\n<tr><td>Oxygen</td><td>Needed</td><td>Not needed</td></tr>\n<tr><td>ATP per glucose</td><td>About 36–38</td><td>2</td></tr>\n<tr><td>Products</td><td>CO₂ and water</td><td>Lactic acid (muscles) or alcohol + CO₂ (yeast)</td></tr>\n</tbody></table>\n<p>Cells with high energy needs — muscle, heart and nerve cells — have <strong>many mitochondria</strong>.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Reason about cell transport and energy. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🏃 During a marathon, a runner's muscles need more energy than usual. What process increases inside their cells?",
+            "text": "During a marathon, a runner's muscle cells need much more energy. Which process speeds up MOST?",
             "choices": [
-              { "label": "A) Photosynthesis", "correct": false },
-              { "label": "B) Cellular respiration — glucose is broken down with more oxygen to produce more ATP", "correct": true },
-              { "label": "C) Osmosis only", "correct": false },
-              { "label": "D) Nothing changes", "correct": false }
-            ]
+              {
+                "label": "Cellular respiration in mitochondria",
+                "correct": true
+              },
+              {
+                "label": "Photosynthesis in the leg muscle tissue",
+                "correct": false
+              },
+              {
+                "label": "Protein building in the ribosomes",
+                "correct": false
+              },
+              {
+                "label": "DNA copying inside every nucleus",
+                "correct": false
+              }
+            ],
+            "explanation": "To supply more ATP, muscle cells increase cellular respiration, which happens mostly in the mitochondria."
           },
           {
-            "text": "🥔 A potato slice is placed in a very salty solution. After 30 minutes, the potato feels soft and shriveled. Why?",
+            "text": "A raw potato slice is placed in very salty water for 30 minutes. It becomes soft and limp. Why?",
             "choices": [
-              { "label": "A) Water left the potato cells by osmosis because the salt solution had lower water concentration", "correct": true },
-              { "label": "B) Salt destroyed the potato cells chemically", "correct": false },
-              { "label": "C) The potato absorbed the salt", "correct": false },
-              { "label": "D) The potato froze", "correct": false }
-            ]
+              {
+                "label": "Water left the potato cells by osmosis",
+                "correct": true
+              },
+              {
+                "label": "Salt entered and dissolved the cell walls",
+                "correct": false
+              },
+              {
+                "label": "The potato absorbed water and burst open",
+                "correct": false
+              },
+              {
+                "label": "Heat from the salt cooked the potato slice",
+                "correct": false
+              }
+            ],
+            "explanation": "The salty water had more solute, so water moved out of the potato cells, which lost firmness."
           },
           {
-            "text": "🦠 A white blood cell engulfs a bacterium to destroy it. What process is this?",
+            "text": "Root cells take in minerals even when the soil has fewer minerals than the roots do. Which process allows this?",
             "choices": [
-              { "label": "A) Diffusion", "correct": false },
-              { "label": "B) Phagocytosis — a form of endocytosis where the cell engulfs large particles", "correct": true },
-              { "label": "C) Photosynthesis", "correct": false },
-              { "label": "D) Osmosis", "correct": false }
-            ]
+              {
+                "label": "Active transport using ATP",
+                "correct": true
+              },
+              {
+                "label": "Simple diffusion through the membrane",
+                "correct": false
+              },
+              {
+                "label": "Osmosis of water toward the soil",
+                "correct": false
+              },
+              {
+                "label": "Photosynthesis in the root hairs",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving substances from low to high concentration requires energy — active transport."
           },
           {
-            "text": "🫀 A patient's cells are unable to produce enough ATP. Which organelle is most likely malfunctioning?",
+            "text": "Heart muscle cells have far more mitochondria than skin cells. What BEST explains this?",
             "choices": [
-              { "label": "A) Nucleus", "correct": false },
-              { "label": "B) Mitochondria — the site of ATP production", "correct": true },
-              { "label": "C) Ribosome", "correct": false },
-              { "label": "D) Vacuole", "correct": false }
-            ]
+              {
+                "label": "The heart works nonstop and needs lots of ATP",
+                "correct": true
+              },
+              {
+                "label": "Skin cells make their own sugar from sunlight",
+                "correct": false
+              },
+              {
+                "label": "Mitochondria make the heart cells much heavier",
+                "correct": false
+              },
+              {
+                "label": "Heart cells use mitochondria to store blood",
+                "correct": false
+              }
+            ],
+            "explanation": "Structure fits function: a constantly working organ needs many mitochondria to supply ATP."
           },
           {
-            "text": "🌿 A plant has plenty of sunlight, water, and CO₂. It grows well. Later, it's moved to complete darkness. Which process stops, and what happens to the plant?",
+            "text": "A patient's cells cannot use oxygen properly. Which result is MOST likely?",
             "choices": [
-              { "label": "A) Photosynthesis stops (no light), but respiration continues — the plant slowly loses energy reserves", "correct": true },
-              { "label": "B) Both photosynthesis and respiration stop", "correct": false },
-              { "label": "C) Respiration stops first", "correct": false },
-              { "label": "D) Nothing changes", "correct": false }
-            ]
+              {
+                "label": "Much less ATP, so the patient tires quickly",
+                "correct": true
+              },
+              {
+                "label": "More ATP, because glycolysis speeds up a lot",
+                "correct": false
+              },
+              {
+                "label": "No change, because cells never need oxygen",
+                "correct": false
+              },
+              {
+                "label": "More glucose is made by the mitochondria",
+                "correct": false
+              }
+            ],
+            "explanation": "Without oxygen, cells rely on anaerobic pathways that make only 2 ATP per glucose instead of about 36–38."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Cell Lab",
-      "badge": { "id": "cell-explorer", "name": "Cell Explorer", "icon": "🔬" },
-      "content": "<h3>🔐 Formative Check — Escape the Cell Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Why Cells Matter for Health",
+      "badge": {
+        "id": "cell-explorer",
+        "name": "Cell Explorer",
+        "icon": "🔬"
+      },
+      "content": "<h3>🍚 Nutrition at the Cell Level</h3>\n<ul>\n<li><strong>Carbohydrates</strong> (rice, kamote) → glucose, the main fuel for respiration.</li>\n<li><strong>Proteins</strong> (fish, monggo) → amino acids, used by ribosomes to build enzymes and tissues.</li>\n<li><strong>Fats</strong> → fatty acids, stored energy and part of cell membranes.</li>\n<li><strong>Iron</strong> → hemoglobin in red blood cells, which carry oxygen for respiration.</li>\n</ul>\n<h3>🩺 When Cell Processes Go Wrong</h3>\n<ul>\n<li><strong>Anemia</strong>: too little hemoglobin → less oxygen reaches cells → less ATP → tiredness.</li>\n<li><strong>Dehydration</strong>: water lost by sweating or diarrhea upsets osmosis; cells cannot work well. ORS restores water and salts.</li>\n<li><strong>Cyanide poisoning</strong>: blocks the electron transport chain, so cells cannot make enough ATP.</li>\n</ul>\n<h3>🧠 The Big Picture</h3>\n<p>Every activity — thinking, moving, healing — depends on cells taking in nutrients through the membrane and turning them into ATP. Eating a balanced diet, drinking clean water and breathing clean air keep this cell machinery running.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What is the basic structural and functional unit of all living things?",
-            "choices": [
-              { "label": "A) The cell", "correct": true },
-              { "label": "B) The atom", "correct": false },
-              { "label": "C) The tissue", "correct": false },
-              { "label": "D) The organ", "correct": false }
-            ]
-          },
-          {
-            "text": "Which organelle is known as the 'powerhouse of the cell'?",
-            "choices": [
-              { "label": "A) Mitochondria", "correct": true },
-              { "label": "B) Nucleus", "correct": false },
-              { "label": "C) Ribosome", "correct": false },
-              { "label": "D) Golgi apparatus", "correct": false }
-            ]
-          },
-          {
             "text": "What is the energy currency of the cell?",
             "choices": [
-              { "label": "A) ATP", "correct": true },
-              { "label": "B) DNA", "correct": false },
-              { "label": "C) Glucose", "correct": false },
-              { "label": "D) Oxygen", "correct": false }
-            ]
+              {
+                "label": "ATP",
+                "correct": true
+              },
+              {
+                "label": "DNA",
+                "correct": false
+              },
+              {
+                "label": "RNA",
+                "correct": false
+              },
+              {
+                "label": "CO₂",
+                "correct": false
+              }
+            ],
+            "explanation": "Adenosine triphosphate (ATP) stores energy that cells spend for work."
           },
           {
-            "text": "Which process moves molecules from a LOW concentration to a HIGH concentration, using energy?",
+            "text": "Which process moves molecules from LOW to HIGH concentration using energy?",
             "choices": [
-              { "label": "A) Active transport", "correct": true },
-              { "label": "B) Diffusion", "correct": false },
-              { "label": "C) Osmosis", "correct": false },
-              { "label": "D) Passive transport", "correct": false }
-            ]
+              {
+                "label": "Active transport",
+                "correct": true
+              },
+              {
+                "label": "Simple diffusion",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              },
+              {
+                "label": "Facilitated diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "Only active transport moves substances against their concentration gradient, using ATP."
           },
           {
-            "text": "Which equation correctly represents cellular respiration?",
+            "text": "Where in the cell does glycolysis take place?",
             "choices": [
-              { "label": "A) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "correct": true },
-              { "label": "B) 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "correct": false },
-              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
-              { "label": "D) CO₂ + H₂O → CH₄ + O₂", "correct": false }
-            ]
+              {
+                "label": "Cytoplasm",
+                "correct": true
+              },
+              {
+                "label": "Nucleus",
+                "correct": false
+              },
+              {
+                "label": "Ribosome (protein maker)",
+                "correct": false
+              },
+              {
+                "label": "Cell wall",
+                "correct": false
+              }
+            ],
+            "explanation": "Glycolysis, the first stage of respiration, happens in the cytoplasm and needs no oxygen."
           },
           {
-            "text": "Which organelle performs photosynthesis in plant cells?",
+            "text": "Why does a person with iron-deficiency anemia feel tired?",
             "choices": [
-              { "label": "A) Chloroplast", "correct": true },
-              { "label": "B) Mitochondria", "correct": false },
-              { "label": "C) Ribosome", "correct": false },
-              { "label": "D) Nucleus", "correct": false }
-            ]
+              {
+                "label": "Less oxygen reaches cells, so less ATP is made",
+                "correct": true
+              },
+              {
+                "label": "Their cells make too much ATP and overheat",
+                "correct": false
+              },
+              {
+                "label": "Iron blocks glucose from entering all their cells",
+                "correct": false
+              },
+              {
+                "label": "Their mitochondria turn into chloroplasts",
+                "correct": false
+              }
+            ],
+            "explanation": "Iron is needed for hemoglobin. Less hemoglobin means less oxygen delivered, reducing aerobic respiration."
+          },
+          {
+            "text": "Which molecule do ribosomes use to build proteins?",
+            "choices": [
+              {
+                "label": "Amino acids",
+                "correct": true
+              },
+              {
+                "label": "Glucose",
+                "correct": false
+              },
+              {
+                "label": "Fatty acids",
+                "correct": false
+              },
+              {
+                "label": "Oxygen gas",
+                "correct": false
+              }
+            ],
+            "explanation": "Proteins are chains of amino acids assembled by ribosomes."
+          },
+          {
+            "text": "A child with diarrhea is given ORS. Which cell process does ORS mainly help restore?",
+            "choices": [
+              {
+                "label": "Water and salt balance for osmosis",
+                "correct": true
+              },
+              {
+                "label": "Photosynthesis inside the gut cells",
+                "correct": false
+              },
+              {
+                "label": "DNA copying in the intestine cells",
+                "correct": false
+              },
+              {
+                "label": "Protein building in the muscles only",
+                "correct": false
+              }
+            ],
+            "explanation": "ORS replaces lost water and salts so cells can maintain proper osmotic balance and function."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

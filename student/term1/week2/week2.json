@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Translational vs Rotational Motion",
-      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to differentiate <strong>translational motion</strong> from <strong>rotational motion</strong> and describe how linear and angular quantities relate to each other.</p><h3>🔍 Two Ways Things Move</h3><p>In physics, motion can be classified into two broad categories:</p><table><thead><tr><th>Type</th><th>Description</th><th>Everyday Examples</th></tr></thead><tbody><tr><td><strong>Translational motion</strong></td><td>An object moves from one point to another without rotating. Every part moves the same distance in the same direction.</td><td>Walking in a straight line, a car driving forward, a ball rolling down a ramp, an elevator going up</td></tr><tr><td><strong>Rotational motion</strong></td><td>An object spins around a fixed axis. Different parts of the object move at different speeds depending on their distance from the axis.</td><td>Ceiling fan blades, bicycle wheels, spinning top, Earth's rotation, hands of a clock</td></tr></tbody></table><h3>🔗 Linear vs Angular Quantities</h3><p>Both types of motion share similar measurements, just in different units:</p><table><thead><tr><th>Linear (Translational)</th><th>Angular (Rotational)</th><th>Relationship</th></tr></thead><tbody><tr><td>Displacement (d) — meters (m)</td><td>Angular displacement (θ) — radians (rad)</td><td>d = r × θ</td></tr><tr><td>Velocity (v) — m/s</td><td>Angular velocity (ω) — rad/s</td><td>v = r × ω</td></tr><tr><td>Acceleration (a) — m/s²</td><td>Angular acceleration (α) — rad/s²</td><td>a = r × α</td></tr></tbody></table><p>Where <strong>r</strong> = radius (distance from the axis of rotation).</p><h3>⚙️ Key Insight</h3><p>For a rotating object, the farther a point is from the axis, the <strong>faster</strong> it moves — because it has to cover a bigger circle in the same amount of time. This is why:</p><ul><li>The outer edge of a fan blade moves faster than the center.</li><li>The tip of a windmill blade moves faster than the base.</li><li>On a Ferris wheel, riders at the rim feel faster than riders near the center.</li></ul><h3>💡 Real-Life Applications</h3><ul><li><strong>Sports:</strong> A golfer swings a club — the longer the club, the faster the clubhead moves.</li><li><strong>Vehicles:</strong> Wheels convert rotational motion into translational motion (the car moves).</li><li><strong>Machines:</strong> Gears, pulleys, and belts transfer and change rotational motion.</li><li><strong>Astronomy:</strong> Earth both revolves around the Sun (translational) and rotates on its axis (rotational).</li></ul><h3>📌 Quick Check</h3><ul><li>Is a rolling ball translational, rotational, or both?</li><li>Why does the tip of a long propeller blade move faster than the hub?</li><li>If a wheel of radius 0.5 m rotates with angular velocity 4 rad/s, what is its linear velocity? (Answer: v = r × ω = 2 m/s)</li></ul>"
+      "title": "Two Ways Things Move",
+      "badge": {
+        "id": "motion-master",
+        "name": "Motion Master",
+        "icon": "🔄"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>differentiate translational from rotational motion</strong> and <strong>relate linear quantities to angular quantities</strong>.</p>\n<h3>🚶 Translational Motion</h3>\n<p>In <strong>translational motion</strong>, every part of an object moves the <em>same distance in the same direction</em> at the same time. An elevator going up, a box sliding across the floor and a jeepney on a straight road are examples.</p>\n<h3>🌀 Rotational Motion</h3>\n<p>In <strong>rotational motion</strong>, an object turns around an <strong>axis</strong>. Every point moves in a circle around that axis. A ceiling fan, the hands of a clock and a spinning top rotate. Points <em>far</em> from the axis travel a bigger circle in the same time, so they move faster than points near it.</p>\n<h3>⚽ Both at Once: Rolling</h3>\n<p>Many objects do both. A ball <strong>rolling</strong> down a ramp moves forward (its center <em>translates</em>) while it spins around its center (it <em>rotates</em>). A bicycle wheel on the road does the same. Earth also does both: it <strong>revolves</strong> around the Sun and <strong>rotates</strong> on its axis.</p>\n<table><thead><tr><th>Motion</th><th>What every point does</th><th>Example</th></tr></thead><tbody>\n<tr><td>Translational</td><td>Moves the same distance, same direction</td><td>Elevator, sliding box</td></tr>\n<tr><td>Rotational</td><td>Moves in a circle around an axis</td><td>Fan blade, clock hand</td></tr>\n<tr><td>Rolling (both)</td><td>Center moves forward while the body spins</td><td>Rolling ball, moving tire</td></tr>\n</tbody></table>\n<h3>✅ Quick Check</h3><p>Answer 3 questions and read the explanation after each.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which of these shows PURELY translational motion?",
+            "choices": [
+              {
+                "label": "A box sliding across a smooth floor",
+                "correct": true
+              },
+              {
+                "label": "A ball rolling across the smooth floor",
+                "correct": false
+              },
+              {
+                "label": "A ceiling fan blade turning in place",
+                "correct": false
+              },
+              {
+                "label": "A door swinging open on its hinges",
+                "correct": false
+              }
+            ],
+            "explanation": "When a box slides without tipping, every part of it moves the same distance in the same direction. The ball rolls (translates and rotates), the fan blade rotates, and the door rotates about its hinges."
+          },
+          {
+            "text": "A tricycle tire rolls along a road without slipping. How does it move?",
+            "choices": [
+              {
+                "label": "It translates and rotates at the same time",
+                "correct": true
+              },
+              {
+                "label": "It only translates forward along the road",
+                "correct": false
+              },
+              {
+                "label": "It only rotates around its axle, in place",
+                "correct": false
+              },
+              {
+                "label": "It neither translates nor rotates at all",
+                "correct": false
+              }
+            ],
+            "explanation": "The tire's center moves forward (translation) while the tire spins around the axle (rotation). Rolling is always a combination of both."
+          },
+          {
+            "text": "On a turning merry-go-round, which rider travels the LONGEST path in one turn?",
+            "choices": [
+              {
+                "label": "The rider sitting at the outer edge",
+                "correct": true
+              },
+              {
+                "label": "The rider sitting near the center",
+                "correct": false
+              },
+              {
+                "label": "All riders travel exactly the same path",
+                "correct": false
+              },
+              {
+                "label": "The rider standing right on the axis",
+                "correct": false
+              }
+            ],
+            "explanation": "In one turn every rider sweeps the same angle, but a rider farther from the axis goes around a bigger circle, so the path (and the speed) is greater at the edge."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Linear & Angular Quantities",
-      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each linear quantity or concept to its angular counterpart or real-life example. You have <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Angular Quantities",
+      "badge": {
+        "id": "motion-master",
+        "name": "Motion Master",
+        "icon": "🔄"
+      },
+      "content": "<h3>📐 Measuring Rotation</h3>\n<p>To describe rotation we use <strong>angular quantities</strong>. They tell how much and how fast something turns — not how far a point travels.</p>\n<ul>\n<li><strong>Angular displacement (θ)</strong> — the angle turned, measured in <strong>radians (rad)</strong>. One full turn = <strong>2π rad</strong> (about 6.28 rad) = 360°.</li>\n<li><strong>Angular velocity (ω)</strong> — how fast the angle changes, in <strong>rad/s</strong>. A fan at 60 revolutions per minute (rpm) turns once per second, so ω = 2π rad/s ≈ 6.28 rad/s.</li>\n<li><strong>Angular acceleration (α)</strong> — how fast ω changes, in <strong>rad/s²</strong>. A fan speeding up after you switch it on has angular acceleration.</li>\n</ul>\n<h3>🔁 Linear Partners</h3>\n<table><thead><tr><th>Linear (straight-line)</th><th>Angular (turning)</th></tr></thead><tbody>\n<tr><td>Displacement d (m)</td><td>Angular displacement θ (rad)</td></tr>\n<tr><td>Velocity v (m/s)</td><td>Angular velocity ω (rad/s)</td></tr>\n<tr><td>Acceleration a (m/s²)</td><td>Angular acceleration α (rad/s²)</td></tr>\n</tbody></table>\n<div class=\"callout\"><strong>💡 Remember:</strong> every point of a rigid turning object has the <em>same</em> angular velocity, but <em>not</em> the same linear speed.</div>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each quantity or idea to its meaning or example. Read the reason that appears for each correct pair. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Displacement (m)", "right": "Angular displacement (rad)" },
-          { "key": "k2", "left": "Velocity (m/s)", "right": "Angular velocity (rad/s)" },
-          { "key": "k3", "left": "Acceleration (m/s²)", "right": "Angular acceleration (rad/s²)" },
-          { "key": "k4", "left": "Translational motion", "right": "Car driving forward on a straight road" },
-          { "key": "k5", "left": "Rotational motion", "right": "Ceiling fan blades spinning" },
-          { "key": "k6", "left": "Radius (r)", "right": "Distance from axis of rotation" },
-          { "key": "k7", "left": "v = r × ω", "right": "Relationship between linear and angular velocity" },
-          { "key": "k8", "left": "Both translational and rotational", "right": "A ball rolling down a ramp" }
+          {
+            "key": "k1",
+            "left": "Angular displacement",
+            "right": "Angle turned, in radians",
+            "why": "It describes how much an object has turned, not how far a point traveled."
+          },
+          {
+            "key": "k2",
+            "left": "Angular velocity",
+            "right": "Rate of turning, in rad/s",
+            "why": "It tells how fast the angle changes each second."
+          },
+          {
+            "key": "k3",
+            "left": "Angular acceleration",
+            "right": "Change in turning rate, in rad/s²",
+            "why": "A fan speeding up or slowing down has angular acceleration."
+          },
+          {
+            "key": "k4",
+            "left": "One full revolution",
+            "right": "2π radians (360°)",
+            "why": "The circumference is 2π times the radius, so one turn sweeps 2π rad."
+          },
+          {
+            "key": "k5",
+            "left": "60 revolutions per minute",
+            "right": "About 6.28 rad/s",
+            "why": "60 rpm is 1 turn per second, and 1 turn is 2π ≈ 6.28 rad."
+          },
+          {
+            "key": "k6",
+            "left": "Linear velocity",
+            "right": "Distance per second along a path",
+            "why": "It is measured in m/s and depends on how far the point is from the axis."
+          },
+          {
+            "key": "k7",
+            "left": "Axis of rotation",
+            "right": "Line that the body turns around",
+            "why": "Every point of a rotating body moves in a circle around this line."
+          },
+          {
+            "key": "k8",
+            "left": "Same angular velocity",
+            "right": "All points of a turning rigid wheel",
+            "why": "The whole wheel turns through the same angle in the same time."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Motion in Real Life",
-      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Linking Linear and Angular Motion",
+      "badge": {
+        "id": "motion-master",
+        "name": "Motion Master",
+        "icon": "🔄"
+      },
+      "content": "<h3>🔗 The Bridge: Radius</h3>\n<p>The distance <strong>r</strong> from the axis connects turning to straight-line motion:</p>\n<p style=\"text-align:center;\"><strong>d = r × θ &nbsp;&nbsp; v = r × ω &nbsp;&nbsp; a = r × α</strong></p>\n<p>Angles must be in <strong>radians</strong> for these to work.</p>\n<h3>📝 Worked Example 1</h3>\n<p>A bicycle wheel (r = 0.35 m) turns at ω = 10 rad/s. The speed of a point on the tire is v = r × ω = 0.35 × 10 = <strong>3.5 m/s</strong>. If the tire does not slip, the bicycle also moves at 3.5 m/s.</p>\n<h3>📝 Worked Example 2</h3>\n<p>A fan blade turns at ω = 20 rad/s. A point 0.10 m from the center moves at 2 m/s; the blade tip, 0.25 m from the center, moves at <strong>5 m/s</strong>. Same ω, bigger r → bigger v. That is why the blade tips are the most dangerous part.</p>\n<h3>⚠️ Common Mistakes</h3>\n<ul>\n<li>Dividing instead of multiplying (v = ω ÷ r is wrong).</li>\n<li>Using degrees or rpm without converting to radians or rad/s.</li>\n<li>Thinking points closer to the axis turn faster — they turn at the <em>same</em> ω but move <em>slower</em>.</li>\n</ul>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply the formulas and reason about real situations. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🚴 You notice that the outer edge of a bicycle wheel moves faster than the hub (center) even though they rotate together. Which best explains this?",
+            "text": "A windmill blade turns at 2 rad/s. Its tip is 8 m from the hub. How fast does the tip move?",
             "choices": [
-              { "label": "A) The outer edge is made of lighter material.", "correct": false },
-              { "label": "B) Points farther from the axis have greater linear velocity (v = r × ω).", "correct": true },
-              { "label": "C) The hub has more mass.", "correct": false },
-              { "label": "D) The wheel has less friction at the center.", "correct": false }
-            ]
+              {
+                "label": "16 m/s",
+                "correct": true
+              },
+              {
+                "label": "4 m/s",
+                "correct": false
+              },
+              {
+                "label": "10 m/s",
+                "correct": false
+              },
+              {
+                "label": "0.25 m/s",
+                "correct": false
+              }
+            ],
+            "explanation": "v = r × ω = 8 m × 2 rad/s = 16 m/s. 4 m/s comes from dividing (8 ÷ 2), 10 m/s from adding, and 0.25 m/s from dividing the wrong way."
           },
           {
-            "text": "⚽ A football rolls across the field without slipping. What type of motion does the ball exhibit?",
+            "text": "A jeepney tire (radius 0.4 m) rolls without slipping while turning at 25 rad/s. How fast is the jeepney moving?",
             "choices": [
-              { "label": "A) Only translational motion", "correct": false },
-              { "label": "B) Only rotational motion", "correct": false },
-              { "label": "C) Both translational and rotational motion", "correct": true },
-              { "label": "D) Neither — it is stationary", "correct": false }
-            ]
+              {
+                "label": "10 m/s",
+                "correct": true
+              },
+              {
+                "label": "62.5 m/s",
+                "correct": false
+              },
+              {
+                "label": "25.4 m/s",
+                "correct": false
+              },
+              {
+                "label": "0.016 m/s",
+                "correct": false
+              }
+            ],
+            "explanation": "For rolling without slipping the vehicle's speed equals the tire's rim speed: v = 0.4 × 25 = 10 m/s."
           },
           {
-            "text": "🌀 A washing machine drum spins at 1200 rpm. Which quantity best describes how fast the drum is spinning?",
+            "text": "Two marks are drawn on a turning electric-fan blade: P at 5 cm and Q at 20 cm from the center. Which statement is correct?",
             "choices": [
-              { "label": "A) Linear displacement", "correct": false },
-              { "label": "B) Angular velocity", "correct": true },
-              { "label": "C) Linear acceleration", "correct": false },
-              { "label": "D) Mass", "correct": false }
-            ]
+              {
+                "label": "Q moves 4 times as fast as P",
+                "correct": true
+              },
+              {
+                "label": "P moves 4 times as fast as Q",
+                "correct": false
+              },
+              {
+                "label": "Both move at the same linear speed",
+                "correct": false
+              },
+              {
+                "label": "Q turns with 4 times P's angular velocity",
+                "correct": false
+              }
+            ],
+            "explanation": "Both marks share the same ω. Since v = rω and Q is 4 times farther from the axis, Q's linear speed is 4 times P's."
           },
           {
-            "text": "🏀 A basketball player spins a ball on her finger. The ball rotates but its center stays in place. What kind of motion is the center experiencing?",
+            "text": "A golfer wants a faster club-head speed without swinging her arms any faster. Which change works?",
             "choices": [
-              { "label": "A) Translational motion", "correct": false },
-              { "label": "B) Rotational motion only", "correct": true },
-              { "label": "C) Both translational and rotational", "correct": false },
-              { "label": "D) No motion at all", "correct": false }
-            ]
+              {
+                "label": "Use a longer club at the same swing rate",
+                "correct": true
+              },
+              {
+                "label": "Use a shorter club at the same swing rate",
+                "correct": false
+              },
+              {
+                "label": "Hold the club closer to the club head",
+                "correct": false
+              },
+              {
+                "label": "Swing the club in a much smaller circle",
+                "correct": false
+              }
+            ],
+            "explanation": "The club head's speed is v = rω. Keeping ω the same but increasing r (a longer club) increases v. A shorter club or a smaller circle reduces r."
           },
           {
-            "text": "🌍 Earth moves around the Sun while also spinning on its own axis. Which statement is TRUE?",
+            "text": "A washing machine drum speeds up from rest to 120 rad/s in 10 s. What is its average angular acceleration?",
             "choices": [
-              { "label": "A) Earth's orbit around the Sun is translational; its spin on its axis is rotational.", "correct": true },
-              { "label": "B) Both motions are translational.", "correct": false },
-              { "label": "C) Both motions are rotational.", "correct": false },
-              { "label": "D) Earth does not move; the Sun orbits Earth.", "correct": false }
-            ]
+              {
+                "label": "12 rad/s²",
+                "correct": true
+              },
+              {
+                "label": "1,200 rad/s²",
+                "correct": false
+              },
+              {
+                "label": "0.083 rad/s²",
+                "correct": false
+              },
+              {
+                "label": "110 rad/s²",
+                "correct": false
+              }
+            ],
+            "explanation": "α = change in ω ÷ time = (120 − 0) ÷ 10 = 12 rad/s². Multiplying gives 1,200 and dividing the wrong way gives 0.083."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Motion Lab",
-      "badge": { "id": "motion-master", "name": "Motion Master", "icon": "🔄" },
-      "content": "<h3>🔐 Formative Check — Escape the Motion Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Rotation in Machines and Nature",
+      "badge": {
+        "id": "motion-master",
+        "name": "Motion Master",
+        "icon": "🔄"
+      },
+      "content": "<h3>⚙️ Gears and Chains</h3>\n<p>When two gears are linked by a chain, the chain moves at the same linear speed on both gears. A <strong>small gear must turn faster</strong> (larger ω) than a large gear to keep up, because v = rω. On a bicycle, a big front gear turning slowly can make a small rear gear — and the wheel — turn quickly.</p>\n<h3>🚲 Wheels Turn Rotation into Travel</h3>\n<p>Every turn of a rolling wheel moves the vehicle forward by one <strong>circumference</strong> (2πr). Bigger wheels cover more distance per turn.</p>\n<h3>🌍 Earth's Two Motions</h3>\n<p>Earth <strong>rotates</strong> once a day (day and night) and <strong>revolves</strong> around the Sun once a year (seasons and the yearly calendar). A person at the equator is carried around a much bigger circle than a person near the poles, so they move faster — even though both rotate with the same ω.</p>\n<h3>🧠 Reasoning Tip</h3>\n<p>Before choosing an answer, ask two questions: <em>\"Is the angular velocity the same for both points?\"</em> and <em>\"Which point is farther from the axis?\"</em> These two questions solve most rotation problems.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read the explanation after every question.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which of the following is an example of ONLY rotational motion?",
-            "choices": [
-              { "label": "A) A car moving on a straight highway", "correct": false },
-              { "label": "B) A spinning top on a table", "correct": true },
-              { "label": "C) A ball rolling down a hill", "correct": false },
-              { "label": "D) A person walking forward", "correct": false }
-            ]
-          },
-          {
             "text": "Which quantity is measured in rad/s?",
             "choices": [
-              { "label": "A) Linear velocity", "correct": false },
-              { "label": "B) Angular velocity", "correct": true },
-              { "label": "C) Linear acceleration", "correct": false },
-              { "label": "D) Angular displacement", "correct": false }
-            ]
+              {
+                "label": "Angular velocity",
+                "correct": true
+              },
+              {
+                "label": "Linear velocity",
+                "correct": false
+              },
+              {
+                "label": "Angular displacement",
+                "correct": false
+              },
+              {
+                "label": "Angular acceleration",
+                "correct": false
+              }
+            ],
+            "explanation": "Angular velocity is the angle turned per second, so its unit is radians per second (rad/s)."
           },
           {
-            "text": "A wheel of radius 0.4 m rotates with angular velocity 5 rad/s. What is the linear velocity of a point on the rim?",
+            "text": "A wheel of radius 0.3 m turns at 6 rad/s. What is the speed of a point on its rim?",
             "choices": [
-              { "label": "A) 0.08 m/s", "correct": false },
-              { "label": "B) 2.0 m/s", "correct": true },
-              { "label": "C) 5.4 m/s", "correct": false },
-              { "label": "D) 12.5 m/s", "correct": false }
-            ]
+              {
+                "label": "1.8 m/s",
+                "correct": true
+              },
+              {
+                "label": "0.05 m/s",
+                "correct": false
+              },
+              {
+                "label": "6.3 m/s",
+                "correct": false
+              },
+              {
+                "label": "20 m/s",
+                "correct": false
+              }
+            ],
+            "explanation": "v = r × ω = 0.3 × 6 = 1.8 m/s. The other answers come from dividing or adding the numbers."
           },
           {
-            "text": "Which of the following pairs correctly matches a linear quantity with its angular counterpart?",
+            "text": "A bicycle chain links a large front gear and a small rear gear. Which turns with the GREATER angular velocity?",
             "choices": [
-              { "label": "A) Velocity (m/s) ↔ Angular velocity (rad/s)", "correct": true },
-              { "label": "B) Displacement (m) ↔ Angular velocity (rad/s)", "correct": false },
-              { "label": "C) Acceleration (m/s²) ↔ Angular displacement (rad)", "correct": false },
-              { "label": "D) Velocity (m/s) ↔ Angular displacement (rad)", "correct": false }
-            ]
+              {
+                "label": "The small rear gear",
+                "correct": true
+              },
+              {
+                "label": "The large front gear",
+                "correct": false
+              },
+              {
+                "label": "Both gears turn equally",
+                "correct": false
+              },
+              {
+                "label": "Neither gear actually turns",
+                "correct": false
+              }
+            ],
+            "explanation": "The chain moves at the same linear speed on both gears. With v = rω, the gear with the smaller radius must have the larger ω."
           },
           {
-            "text": "In the equation v = r × ω, what does 'r' represent?",
+            "text": "Which pair correctly matches a linear quantity with its angular partner?",
             "choices": [
-              { "label": "A) The radius or distance from the axis of rotation", "correct": true },
-              { "label": "B) The rotational speed in rpm", "correct": false },
-              { "label": "C) The total mass of the object", "correct": false },
-              { "label": "D) The friction coefficient", "correct": false }
-            ]
+              {
+                "label": "Acceleration ↔ angular acceleration",
+                "correct": true
+              },
+              {
+                "label": "Velocity ↔ angular displacement",
+                "correct": false
+              },
+              {
+                "label": "Displacement ↔ angular velocity",
+                "correct": false
+              },
+              {
+                "label": "Acceleration ↔ angular velocity",
+                "correct": false
+              }
+            ],
+            "explanation": "Each linear quantity has an angular partner: displacement ↔ θ, velocity ↔ ω, acceleration ↔ α."
           },
           {
-            "text": "A windmill's blades rotate at 2 rad/s. The blade tip is 8 m from the center. How fast does the tip move?",
+            "text": "Ana stands at the equator and Ben stands near the North Pole. As Earth rotates, which statement is TRUE?",
             "choices": [
-              { "label": "A) 4 m/s", "correct": false },
-              { "label": "B) 10 m/s", "correct": false },
-              { "label": "C) 16 m/s", "correct": true },
-              { "label": "D) 0.25 m/s", "correct": false }
-            ]
+              {
+                "label": "Same angular velocity, but Ana moves faster",
+                "correct": true
+              },
+              {
+                "label": "Same linear speed, but Ben turns faster",
+                "correct": false
+              },
+              {
+                "label": "Ben moves faster because he is farther north",
+                "correct": false
+              },
+              {
+                "label": "Ana turns through a larger angle each day",
+                "correct": false
+              }
+            ],
+            "explanation": "Both turn once a day (same ω). Ana is much farther from Earth's axis, so her circle is bigger and her linear speed is greater."
+          },
+          {
+            "text": "A tire with radius 0.5 m rolls without slipping for 10 full turns. About how far does the vehicle travel?",
+            "choices": [
+              {
+                "label": "About 31 m",
+                "correct": true
+              },
+              {
+                "label": "About 5 m",
+                "correct": false
+              },
+              {
+                "label": "About 10 m",
+                "correct": false
+              },
+              {
+                "label": "About 63 m",
+                "correct": false
+              }
+            ],
+            "explanation": "Each turn moves the vehicle one circumference: 2πr = 2 × 3.14 × 0.5 ≈ 3.14 m. Ten turns ≈ 31 m. 63 m would need a radius of 1 m."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

@@ -3,89 +3,286 @@
   "week": 2,
   "title": "Reaction Types & Chemical Equations",
   "competencies": [
-    { "code": "GENSCI-11-T2-W2-C1", "text": "Use chemical equations for photosynthesis and respiration." },
-    { "code": "GENSCI-11-T2-W2-C2", "text": "Describe metabolic reactions in body cells and their significance." }
+    {
+      "code": "GENSCI-11-T2-W2-C1",
+      "text": "Use chemical equations for photosynthesis and respiration."
+    },
+    {
+      "code": "GENSCI-11-T2-W2-C2",
+      "text": "Describe metabolic reactions in body cells and their significance."
+    }
   ],
-  "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
+  "badge": {
+    "id": "reaction-master",
+    "name": "Reaction Master",
+    "icon": "⚗️"
+  },
   "days": [
     {
       "day": 1,
       "type": "lesson",
-      "title": "Balancing Chemical Equations",
-      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to read, write, and balance chemical equations, including the equations for photosynthesis and cellular respiration.</p><h3>🧪 What Is a Chemical Equation?</h3><p>A chemical equation is a symbolic representation of a chemical reaction using chemical formulas.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'><strong>Reactants → Products</strong></p><p>Example: 2H₂ + O₂ → 2H₂O</p><h3>⚖️ Law of Conservation of Mass</h3><p>Atoms are neither created nor destroyed in a chemical reaction, so the number of each type of atom must be the same on both sides.</p><h3>🌿 Photosynthesis</h3><p style='background:#e8f5e9;padding:14px;border-radius:8px;font-family:monospace;text-align:center;'><strong>6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂</strong></p><h3>💨 Cellular Respiration</h3><p style='background:#e1f5fe;padding:14px;border-radius:8px;font-family:monospace;text-align:center;'><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)</strong></p><h3>📌 Quick Check</h3><ul><li>Why must equations be balanced? (Answer: conservation of mass)</li><li>What are the products of photosynthesis? (Answer: glucose and oxygen)</li></ul>"
+      "title": "Reading and Balancing Equations",
+      "badge": {
+        "id": "reaction-master",
+        "name": "Reaction Master",
+        "icon": "⚗️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>use chemical equations for photosynthesis and respiration</strong> and <strong>describe metabolic reactions in body cells</strong>.</p>\n<h3>🧪 Parts of a Chemical Equation</h3>\n<p style=\"text-align:center\"><strong>2H₂ + O₂ → 2H₂O</strong></p>\n<ul>\n<li><strong>Formulas</strong> (H₂, O₂, H₂O) show which atoms are in each substance. The small <strong>subscript</strong> tells how many atoms are in one molecule.</li>\n<li><strong>Coefficients</strong> (the big 2s) tell how many molecules react.</li>\n<li>The <strong>arrow</strong> means \"react to form.\" Reactants are on the left, products on the right.</li>\n</ul>\n<h3>⚖️ Law of Conservation of Mass</h3>\n<p>Atoms are neither created nor destroyed, so each kind of atom must appear the <strong>same number of times on both sides</strong>. In 2H₂ + O₂ → 2H₂O: left has 4 H and 2 O; right has 4 H and 2 O. Balanced!</p>\n<h3>🛠️ How to Balance</h3>\n<ol><li>Count each atom on both sides.</li><li>Change <strong>coefficients only</strong> — never subscripts (changing H₂O to H₂O₂ makes a different substance).</li><li>Recount until every atom matches.</li></ol>\n<p>Example: CH₄ + 2O₂ → CO₂ + 2H₂O (methane burning). Left: 1 C, 4 H, 4 O. Right: 1 C, 4 H, 4 O.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Why must a chemical equation be balanced?",
+            "choices": [
+              {
+                "label": "Atoms are not created or destroyed",
+                "correct": true
+              },
+              {
+                "label": "Products must weigh more than reactants",
+                "correct": false
+              },
+              {
+                "label": "Every equation needs an even number",
+                "correct": false
+              },
+              {
+                "label": "Coefficients make the reaction go faster",
+                "correct": false
+              }
+            ],
+            "explanation": "Balancing shows the law of conservation of mass: the same atoms appear before and after, only rearranged."
+          },
+          {
+            "text": "In 3O₂, what does the 3 tell you?",
+            "choices": [
+              {
+                "label": "There are three oxygen molecules",
+                "correct": true
+              },
+              {
+                "label": "Each molecule has three oxygen atoms",
+                "correct": false
+              },
+              {
+                "label": "The reaction happens three times faster",
+                "correct": false
+              },
+              {
+                "label": "Oxygen has a charge of three in this case",
+                "correct": false
+              }
+            ],
+            "explanation": "The coefficient counts molecules. 3O₂ means three O₂ molecules — six oxygen atoms in all."
+          },
+          {
+            "text": "Which equation is correctly balanced?",
+            "choices": [
+              {
+                "label": "2H₂ + O₂ → 2H₂O",
+                "correct": true
+              },
+              {
+                "label": "H₂ + O₂ → H₂O",
+                "correct": false
+              },
+              {
+                "label": "H₂ + O₂ → 2H₂O",
+                "correct": false
+              },
+              {
+                "label": "2H₂ + 2O₂ → H₂O",
+                "correct": false
+              }
+            ],
+            "explanation": "Left: 4 H and 2 O. Right: 4 H and 2 O. Every atom is accounted for."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Equation Components",
-      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each equation term or reaction to its correct description. There are 8 pairs.</p>",
+      "title": "Photosynthesis and Cellular Respiration",
+      "badge": {
+        "id": "reaction-master",
+        "name": "Reaction Master",
+        "icon": "⚗️"
+      },
+      "content": "<h3>🌿 Photosynthesis (in chloroplasts)</h3>\n<p style=\"text-align:center\"><strong>6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂</strong></p>\n<p>Plants, algae and some bacteria use <strong>light energy</strong> captured by <strong>chlorophyll</strong> to turn carbon dioxide and water into <strong>glucose</strong> (stored chemical energy) and release <strong>oxygen</strong>.</p>\n<h3>🔥 Cellular Respiration (mostly in mitochondria)</h3>\n<p style=\"text-align:center\"><strong>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)</strong></p>\n<p>Nearly all living cells — plant and animal — break down glucose with oxygen to release energy stored as <strong>ATP</strong>, the cell's energy currency.</p>\n<h3>🔄 Opposite but Connected</h3>\n<table><thead><tr><th></th><th>Photosynthesis</th><th>Respiration</th></tr></thead><tbody>\n<tr><td>Energy</td><td>Stored (light → chemical)</td><td>Released (chemical → ATP)</td></tr>\n<tr><td>Takes in</td><td>CO₂ and H₂O</td><td>Glucose and O₂</td></tr>\n<tr><td>Gives off</td><td>Glucose and O₂</td><td>CO₂ and H₂O</td></tr>\n<tr><td>Who does it</td><td>Producers only</td><td>Almost all organisms, including plants</td></tr>\n</tbody></table>\n<p>The products of one are the reactants of the other — this cycle links plants and animals through the air.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Reactant", "right": "Substance that reacts on the left side of the arrow" },
-          { "key": "k2", "left": "Product", "right": "Substance formed on the right side of the arrow" },
-          { "key": "k3", "left": "Coefficient", "right": "Whole number placed in front of a formula to balance the equation" },
-          { "key": "k4", "left": "Law of Conservation of Mass", "right": "Atoms are neither created nor destroyed in a reaction" },
-          { "key": "k5", "left": "Photosynthesis equation", "right": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂" },
-          { "key": "k6", "left": "Cellular respiration equation", "right": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy" },
-          { "key": "k7", "left": "Mitochondria", "right": "Organelle where respiration occurs" },
-          { "key": "k8", "left": "ATP", "right": "Energy currency produced by respiration" }
+          {
+            "key": "k1",
+            "left": "Reactant",
+            "right": "Substance on the left side of the arrow",
+            "why": "Reactants are used up in the reaction."
+          },
+          {
+            "key": "k2",
+            "left": "Product",
+            "right": "Substance on the right side of the arrow",
+            "why": "Products are formed by the reaction."
+          },
+          {
+            "key": "k3",
+            "left": "Coefficient",
+            "right": "Number in front of a formula to balance it",
+            "why": "It counts molecules, not atoms in one molecule."
+          },
+          {
+            "key": "k4",
+            "left": "Photosynthesis",
+            "right": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+            "why": "Light energy is stored in glucose."
+          },
+          {
+            "key": "k5",
+            "left": "Cellular respiration",
+            "right": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
+            "why": "Energy in glucose is released as ATP."
+          },
+          {
+            "key": "k6",
+            "left": "Chloroplast",
+            "right": "Organelle where photosynthesis happens",
+            "why": "Its chlorophyll captures light energy."
+          },
+          {
+            "key": "k7",
+            "left": "Mitochondrion",
+            "right": "Organelle where most ATP is made",
+            "why": "It carries out aerobic respiration."
+          },
+          {
+            "key": "k8",
+            "left": "ATP",
+            "right": "Energy currency used by cells",
+            "why": "Cells spend ATP to move, build and transport."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Reactions in Cells",
-      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
+      "title": "Metabolism in Body Cells",
+      "badge": {
+        "id": "reaction-master",
+        "name": "Reaction Master",
+        "icon": "⚗️"
+      },
+      "content": "<h3>⚙️ What Is Metabolism?</h3>\n<p><strong>Metabolism</strong> is all the chemical reactions in a living body. It has two sides:</p>\n<ul>\n<li><strong>Catabolism</strong> — breaking big molecules into small ones, releasing energy (digesting starch into glucose; respiration).</li>\n<li><strong>Anabolism</strong> — building big molecules from small ones, using energy (making proteins from amino acids; building muscle).</li>\n</ul>\n<h3>🧬 Enzymes</h3>\n<p>Body reactions would be far too slow at 37 °C without <strong>enzymes</strong> — protein catalysts. Amylase in saliva starts breaking down rice starch in your mouth. Enzymes work best at body temperature and the right pH; a high fever can change their shape and slow them down.</p>\n<h3>🏃 When Oxygen Runs Short</h3>\n<p>During a hard sprint, muscles need ATP faster than oxygen arrives. Cells switch to <strong>anaerobic respiration</strong>: glucose → <strong>lactic acid</strong> + a little ATP. It is fast but makes much less energy, and lactic acid causes the burning feeling. Heavy breathing afterward brings in oxygen to recover. Yeast does a similar process — <strong>fermentation</strong> — making alcohol and CO₂, used in bread and tuba.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply the equations and metabolism ideas. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌿 A plant is placed in a sealed transparent container with a CO₂ sensor. After a sunny day, the CO₂ level drops. Why?",
+            "text": "A plant in a sealed glass box is left in sunlight all day. What happens to the CO₂ level inside?",
             "choices": [
-              { "label": "A) The plant is producing CO₂ at night", "correct": false },
-              { "label": "B) The plant is absorbing CO₂ for photosynthesis, using it to make glucose and releasing O₂", "correct": true },
-              { "label": "C) The container is leaking CO₂", "correct": false },
-              { "label": "D) CO₂ evaporates in the sun", "correct": false }
-            ]
+              {
+                "label": "It goes down as the plant uses it for photosynthesis",
+                "correct": true
+              },
+              {
+                "label": "It goes up as the plant breathes out much more CO₂",
+                "correct": false
+              },
+              {
+                "label": "It stays exactly the same because plants do not breathe",
+                "correct": false
+              },
+              {
+                "label": "It drops to zero in the first minute of sunlight",
+                "correct": false
+              }
+            ],
+            "explanation": "In light, photosynthesis uses CO₂ faster than respiration releases it, so CO₂ in the box decreases."
           },
           {
-            "text": "🏃 You sprint for 100 meters and start breathing heavily. Which reaction is happening faster in your muscles?",
+            "text": "After a 100 m sprint, your legs burn and you breathe hard. Which explanation is BEST?",
             "choices": [
-              { "label": "A) Photosynthesis", "correct": false },
-              { "label": "B) Cellular respiration — breaking down glucose with oxygen to release ATP", "correct": true },
-              { "label": "C) Combustion of glucose with flames", "correct": false },
-              { "label": "D) Decomposition of water", "correct": false }
-            ]
+              {
+                "label": "Muscles made lactic acid when oxygen ran short",
+                "correct": true
+              },
+              {
+                "label": "Muscles made extra glucose from carbon dioxide",
+                "correct": false
+              },
+              {
+                "label": "Your lungs stopped working during the sprint race",
+                "correct": false
+              },
+              {
+                "label": "Your cells did photosynthesis to make more energy",
+                "correct": false
+              }
+            ],
+            "explanation": "Muscles used anaerobic respiration, which makes lactic acid. Heavy breathing supplies oxygen to clear it and refill ATP."
           },
           {
-            "text": "⚖️ You balance the equation: __ H₂ + O₂ → __ H₂O. What coefficients make it balanced?",
+            "text": "Chewing rice for a long time makes it taste slightly sweet. Why?",
             "choices": [
-              { "label": "A) 1 and 1", "correct": false },
-              { "label": "B) 2 in front of H₂ and 2 in front of H₂O", "correct": true },
-              { "label": "C) 3 and 3", "correct": false },
-              { "label": "D) 4 and 1", "correct": false }
-            ]
+              {
+                "label": "Saliva's amylase breaks starch into sugars",
+                "correct": true
+              },
+              {
+                "label": "Teeth turn the rice into pure sugar crystals",
+                "correct": false
+              },
+              {
+                "label": "Rice absorbs sugar from the air in the mouth",
+                "correct": false
+              },
+              {
+                "label": "Chewing adds heat that melts the rice grains",
+                "correct": false
+              }
+            ],
+            "explanation": "Amylase is an enzyme that starts the catabolism of starch into simpler sugars right in the mouth."
           },
           {
-            "text": "🌍 Why are photosynthesis and respiration considered 'opposite reactions'?",
+            "text": "Which of these is ANABOLISM?",
             "choices": [
-              { "label": "A) Their reactants and products are reversed", "correct": true },
-              { "label": "B) They happen in the same organelle", "correct": false },
-              { "label": "C) Both produce oxygen", "correct": false },
-              { "label": "D) Neither requires energy", "correct": false }
-            ]
+              {
+                "label": "Building muscle proteins from amino acids",
+                "correct": true
+              },
+              {
+                "label": "Digesting rice starch into simple glucose",
+                "correct": false
+              },
+              {
+                "label": "Breaking down glucose to release ATP",
+                "correct": false
+              },
+              {
+                "label": "Breaking down fat during a long fasting",
+                "correct": false
+              }
+            ],
+            "explanation": "Anabolism builds larger molecules and uses energy. The other three break molecules down (catabolism)."
           },
           {
-            "text": "🍔 After eating rice, your body breaks down the starch into glucose. This is an example of:",
+            "text": "Bread dough with yeast rises when left in a warm place. What is happening?",
             "choices": [
-              { "label": "A) Photosynthesis", "correct": false },
-              { "label": "B) Catabolism — breaking down larger molecules to release energy", "correct": true },
-              { "label": "C) Anabolism — building larger molecules", "correct": false },
-              { "label": "D) Combustion", "correct": false }
-            ]
+              {
+                "label": "Yeast ferments sugar and releases CO₂",
+                "correct": true
+              },
+              {
+                "label": "Heat makes the flour swell with steam",
+                "correct": false
+              },
+              {
+                "label": "Yeast does photosynthesis inside the dough",
+                "correct": false
+              },
+              {
+                "label": "Air from the room is soaked into the dough",
+                "correct": false
+              }
+            ],
+            "explanation": "Yeast breaks down sugar without oxygen (fermentation), releasing CO₂ bubbles that make the dough rise."
           }
         ]
       }
@@ -93,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Equation Lab",
-      "badge": { "id": "reaction-master", "name": "Reaction Master", "icon": "⚗️" },
-      "content": "<h3>🔐 Formative Check — Escape the Equation Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 70% (5 of 6) to pass.</p>",
+      "title": "Why These Reactions Matter",
+      "badge": {
+        "id": "reaction-master",
+        "name": "Reaction Master",
+        "icon": "⚗️"
+      },
+      "content": "<h3>🌍 The Carbon–Oxygen Cycle</h3>\n<p>Photosynthesis removes CO₂ from the air and stores carbon in plants. Respiration, decay and burning return it. When we burn more fuel and cut more forests than plants can balance, CO₂ builds up in the atmosphere — a link to climate change you will study in Week 9.</p>\n<h3>🍚 Food, Energy and Health</h3>\n<ul>\n<li>The rice, bread and fruit we eat carry energy first captured by photosynthesis.</li>\n<li>Cells release it through respiration; extra glucose is stored as glycogen or fat (anabolism).</li>\n<li>Exercise increases respiration and oxygen demand; that is why heart rate and breathing rise.</li>\n<li>When respiration cannot get enough oxygen (in a crowded, poorly ventilated room or at high altitude), people feel tired and dizzy.</li>\n</ul>\n<h3>🧠 Reading Equations as Stories</h3>\n<p>An equation tells you <em>what goes in, what comes out, and in what amounts</em>. For example, respiration says one glucose needs six O₂ and gives six CO₂ — so a person exercising hard both breathes in more oxygen and breathes out more carbon dioxide.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What does the arrow (→) in a chemical equation mean?",
             "choices": [
-              { "label": "A) Equals", "correct": false },
-              { "label": "B) Reacts to produce / yields", "correct": true },
-              { "label": "C) Divide", "correct": false },
-              { "label": "D) Absorbs light", "correct": false }
-            ]
+              {
+                "label": "React to form",
+                "correct": true
+              },
+              {
+                "label": "Is equal in mass to",
+                "correct": false
+              },
+              {
+                "label": "Is heated with",
+                "correct": false
+              },
+              {
+                "label": "Is dissolved in",
+                "correct": false
+              }
+            ],
+            "explanation": "The arrow separates reactants from products and is read as \"react to form\" or \"yields.\""
           },
           {
-            "text": "Why must a chemical equation be balanced?",
+            "text": "Which are the PRODUCTS of photosynthesis?",
             "choices": [
-              { "label": "A) Because of the Law of Conservation of Mass — atoms are neither created nor destroyed", "correct": true },
-              { "label": "B) To make it look nicer", "correct": false },
-              { "label": "C) Because of gravity", "correct": false },
-              { "label": "D) To reduce temperature", "correct": false }
-            ]
+              {
+                "label": "Glucose and oxygen",
+                "correct": true
+              },
+              {
+                "label": "Carbon dioxide and water",
+                "correct": false
+              },
+              {
+                "label": "Glucose and carbon dioxide",
+                "correct": false
+              },
+              {
+                "label": "Oxygen and energy (ATP)",
+                "correct": false
+              }
+            ],
+            "explanation": "Photosynthesis turns CO₂ and water into glucose (C₆H₁₂O₆) and oxygen (O₂)."
           },
           {
-            "text": "Which equation correctly represents photosynthesis?",
+            "text": "Where does most cellular respiration take place?",
             "choices": [
-              { "label": "A) 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂", "correct": true },
-              { "label": "B) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy", "correct": false },
-              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
-              { "label": "D) CO₂ + H₂O → CH₄ + O₂", "correct": false }
-            ]
+              {
+                "label": "Mitochondria",
+                "correct": true
+              },
+              {
+                "label": "Chloroplasts",
+                "correct": false
+              },
+              {
+                "label": "Ribosomes",
+                "correct": false
+              },
+              {
+                "label": "Cell wall",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitochondria carry out aerobic respiration and produce most of the cell's ATP."
           },
           {
-            "text": "Which equation correctly represents cellular respiration?",
+            "text": "How many oxygen atoms are on the right side of 6CO₂ + 6H₂O?",
             "choices": [
-              { "label": "A) 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂", "correct": false },
-              { "label": "B) C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP)", "correct": true },
-              { "label": "C) 2H₂ + O₂ → 2H₂O", "correct": false },
-              { "label": "D) CH₄ + 2O₂ → CO₂ + 2H₂O", "correct": false }
-            ]
+              {
+                "label": "18",
+                "correct": true
+              },
+              {
+                "label": "12",
+                "correct": false
+              },
+              {
+                "label": "6",
+                "correct": false
+              },
+              {
+                "label": "24",
+                "correct": false
+              }
+            ],
+            "explanation": "6CO₂ has 12 O atoms and 6H₂O has 6 O atoms: 12 + 6 = 18."
           },
           {
-            "text": "Where in the cell does cellular respiration mainly occur?",
+            "text": "Why do plants also carry out cellular respiration?",
             "choices": [
-              { "label": "A) Nucleus", "correct": false },
-              { "label": "B) Mitochondria", "correct": true },
-              { "label": "C) Chloroplast", "correct": false },
-              { "label": "D) Ribosome", "correct": false }
-            ]
+              {
+                "label": "Their cells need ATP day and night",
+                "correct": true
+              },
+              {
+                "label": "They need to make extra glucose at night",
+                "correct": false
+              },
+              {
+                "label": "Respiration replaces photosynthesis in sunlight",
+                "correct": false
+              },
+              {
+                "label": "It lets plants absorb water from the soil air",
+                "correct": false
+              }
+            ],
+            "explanation": "Every living cell needs ATP. Plants make glucose by photosynthesis and release its energy by respiration, at all times."
           },
           {
-            "text": "What does ATP provide to a cell?",
+            "text": "When you exercise hard, why do you breathe out more CO₂?",
             "choices": [
-              { "label": "A) Energy for cellular work", "correct": true },
-              { "label": "B) Oxygen for breathing", "correct": false },
-              { "label": "C) Water for hydration", "correct": false },
-              { "label": "D) Protein for growth", "correct": false }
-            ]
+              {
+                "label": "Faster respiration produces more CO₂",
+                "correct": true
+              },
+              {
+                "label": "Your lungs make CO₂ from the air",
+                "correct": false
+              },
+              {
+                "label": "Muscles store CO₂ and release it later",
+                "correct": false
+              },
+              {
+                "label": "Sweat turns into carbon dioxide gas",
+                "correct": false
+              }
+            ],
+            "explanation": "Respiration's products include CO₂. More respiration for more ATP means more CO₂ to exhale."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

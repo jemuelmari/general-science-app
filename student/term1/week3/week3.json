@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Simple & Compound Machines",
-      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to identify the six simple machines, explain how they multiply force or change its direction, and describe how compound machines combine them for greater efficiency.</p><h3>🔧 What Is a Machine?</h3><p>A <strong>machine</strong> is any device that makes work easier by:</p><ul><li><strong>Multiplying force</strong> — you push with less effort to move a bigger load.</li><li><strong>Changing direction</strong> — you pull down to lift something up.</li><li><strong>Increasing speed or distance</strong> — you move a small distance to move a load a larger distance.</li></ul><p>Machines <em>do not create energy</em>. They simply redirect or multiply the force you apply. The total work is always the same (or slightly more due to friction) — this is called the <strong>Law of Conservation of Energy</strong>.</p><h3>⚙️ The Six Simple Machines</h3><table><thead><tr><th>Simple Machine</th><th>What It Does</th><th>Everyday Example</th></tr></thead><tbody><tr><td><strong>Lever</strong></td><td>Multiplies force using a fulcrum; a small effort moves a large load</td><td>Crowbar, seesaw, wheelbarrow, scissors</td></tr><tr><td><strong>Wheel &amp; Axle</strong></td><td>Reduces friction; a large wheel turns a small axle to multiply force</td><td>Doorknob, bicycle wheel, steering wheel</td></tr><tr><td><strong>Pulley</strong></td><td>Changes the direction of force; multiple pulleys reduce effort</td><td>Flagpole rope, crane, elevator</td></tr><tr><td><strong>Inclined Plane</strong></td><td>Reduces effort by spreading work over a longer distance</td><td>Ramp, slide, road up a hill</td></tr><tr><td><strong>Wedge</strong></td><td>Splits or separates objects by concentrating force on a small area</td><td>Knife, axe, nail, chisel</td></tr><tr><td><strong>Screw</strong></td><td>Converts rotational force into forward motion; holds things together</td><td>Bolt, jar lid, screw, drill bit</td></tr></tbody></table><h3>🔗 Compound Machines</h3><p>A <strong>compound machine</strong> combines two or more simple machines to work together. This makes it more powerful or more versatile.</p><ul><li><strong>Bicycle:</strong> Wheels &amp; axles + levers (brakes) + pulleys (chain drive) + screws (fasteners).</li><li><strong>Scissors:</strong> Two levers + a wedge (the blades).</li><li><strong>Wheelbarrow:</strong> A lever + a wheel &amp; axle.</li><li><strong>Can opener:</strong> Lever + wheel &amp; axle + wedge.</li></ul><h3>📐 Mechanical Advantage (MA)</h3><p>Machines are rated by how much they multiply your force — this is called <strong>Mechanical Advantage</strong>.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;'><strong>MA = Output Force ÷ Input Force</strong></p><p>An MA greater than 1 means the machine multiplies your force. A machine with MA = 4 lets you lift 4× the load you could otherwise.</p><h3>💡 Real-Life Application</h3><p>Filipino tricycle drivers use compound machines every day: levers (brake handles, gear shifter), wheels &amp; axles (the tricycle's wheels), pulleys (the chain drive on some models), and screws (every bolt on the vehicle). Understanding machines helps you use them safely and maintain them longer.</p><h3>📌 Quick Check</h3><ul><li>Which simple machine is a broom? (Answer: lever)</li><li>Which simple machine is a ramp? (Answer: inclined plane)</li><li>Why is a bicycle considered a compound machine? (Answer: it combines several simple machines)</li></ul>"
+      "title": "What Machines Do",
+      "badge": {
+        "id": "machine-master",
+        "name": "Machine Master",
+        "icon": "⚙️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>design, build and test a simple or compound machine</strong> and use <strong>torque, angular motion and radius</strong> to make it work better.</p>\n<h3>🔧 What a Machine Does</h3>\n<p>A machine makes a task easier in one of three ways: it <strong>multiplies force</strong> (less effort for a heavy load), <strong>changes the direction</strong> of a force (pull down to lift up), or <strong>increases speed or distance</strong>. A machine never gives you more <em>work</em> than you put in — if it reduces the force, you must push over a longer distance.</p>\n<h3>⚙️ The Six Simple Machines</h3>\n<table><thead><tr><th>Machine</th><th>How it helps</th><th>Example</th></tr></thead><tbody>\n<tr><td>Lever</td><td>Turns around a fulcrum; long effort arm multiplies force</td><td>Crowbar, seesaw, wheelbarrow</td></tr>\n<tr><td>Wheel and axle</td><td>Large wheel turns a small axle with more force</td><td>Doorknob, steering wheel</td></tr>\n<tr><td>Pulley</td><td>Changes direction; several pulleys reduce effort</td><td>Flagpole, well bucket</td></tr>\n<tr><td>Inclined plane</td><td>Less force over a longer distance</td><td>Ramp, mountain road</td></tr>\n<tr><td>Wedge</td><td>Concentrates force on a thin edge to split</td><td>Bolo, axe, nail tip</td></tr>\n<tr><td>Screw</td><td>An inclined plane wrapped around a rod</td><td>Bolt, jar lid, jack screw</td></tr>\n</tbody></table>\n<p>A <strong>compound machine</strong> combines two or more of these: scissors (two levers + wedges), a bicycle (wheels and axles, levers, a chain drive), a wheelbarrow (lever + wheel and axle).</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "A bolo is used to split a coconut husk. Which simple machine is the blade?",
+            "choices": [
+              {
+                "label": "Wedge",
+                "correct": true
+              },
+              {
+                "label": "Lever",
+                "correct": false
+              },
+              {
+                "label": "Pulley",
+                "correct": false
+              },
+              {
+                "label": "Screw",
+                "correct": false
+              }
+            ],
+            "explanation": "A blade is a wedge: its thin edge concentrates the force on a small area so it can split the material."
+          },
+          {
+            "text": "Which simple machine lets you pull DOWN on a rope to raise a flag UP?",
+            "choices": [
+              {
+                "label": "A single fixed pulley",
+                "correct": true
+              },
+              {
+                "label": "A short inclined plane",
+                "correct": false
+              },
+              {
+                "label": "A wedge-shaped wooden block",
+                "correct": false
+              },
+              {
+                "label": "A long screw with fine threads",
+                "correct": false
+              }
+            ],
+            "explanation": "A fixed pulley at the top of the pole changes the direction of your force. It does not reduce the force, but pulling down is easier."
+          },
+          {
+            "text": "Why is a pair of scissors called a compound machine?",
+            "choices": [
+              {
+                "label": "It combines two levers and two wedges",
+                "correct": true
+              },
+              {
+                "label": "It is made of metal and also plastic",
+                "correct": false
+              },
+              {
+                "label": "It can cut many kinds of material",
+                "correct": false
+              },
+              {
+                "label": "It has a screw that holds the blades",
+                "correct": false
+              }
+            ],
+            "explanation": "Each handle-and-blade is a lever turning about the pivot, and each blade edge is a wedge. Two or more simple machines working together make a compound machine."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Machine Types",
-      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each simple machine or machine concept to the correct example or definition. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p><p><strong>Tip:</strong> Think about the <em>type of motion</em> each machine produces — pushing, pulling, lifting, turning, or splitting.</p>",
+      "title": "Mechanical Advantage and Efficiency",
+      "badge": {
+        "id": "machine-master",
+        "name": "Machine Master",
+        "icon": "⚙️"
+      },
+      "content": "<h3>📐 Mechanical Advantage (MA)</h3>\n<p style=\"text-align:center;\"><strong>MA = output force ÷ input force</strong></p>\n<p>If you push with 50 N on a jack and it lifts with 400 N, the MA is 400 ÷ 50 = <strong>8</strong>. MA greater than 1 means the machine multiplies force. A single fixed pulley has MA = 1 — it only changes direction.</p>\n<h3>⚡ Efficiency</h3>\n<p>Friction wastes part of the input work as heat and sound, so useful output work is always less than input work.</p>\n<p style=\"text-align:center;\"><strong>efficiency = (output work ÷ input work) × 100%</strong></p>\n<p><em>Example:</em> you do 500 J of work on a pulley system and it lifts a load by doing 400 J of work. Efficiency = 400 ÷ 500 × 100% = <strong>80%</strong>. The missing 100 J became heat from friction.</p>\n<h3>🛠️ Raising Efficiency</h3>\n<ul>\n<li>Oil or grease moving parts (less friction).</li>\n<li>Use ball bearings in wheels and fans.</li>\n<li>Use lighter moving parts so less work goes into lifting the machine itself.</li>\n</ul>\n<div class=\"callout\"><strong>💡 No machine is 100% efficient</strong> — some friction is always present.</div>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning or example. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Lever", "right": "Crowbar prying a nail" },
-          { "key": "k2", "left": "Wheel & Axle", "right": "Doorknob turning to open a door" },
-          { "key": "k3", "left": "Pulley", "right": "Flag being raised on a flagpole" },
-          { "key": "k4", "left": "Inclined Plane", "right": "Ramp for loading goods into a truck" },
-          { "key": "k5", "left": "Wedge", "right": "Axe splitting firewood" },
-          { "key": "k6", "left": "Screw", "right": "Bolt holding metal plates together" },
-          { "key": "k7", "left": "Compound Machine", "right": "Bicycle combining wheels, levers, and pulleys" },
-          { "key": "k8", "left": "Mechanical Advantage", "right": "Output force ÷ input force" }
+          {
+            "key": "k1",
+            "left": "Mechanical advantage",
+            "right": "Output force ÷ input force",
+            "why": "It tells how many times the machine multiplies your force."
+          },
+          {
+            "key": "k2",
+            "left": "MA greater than 1",
+            "right": "Machine multiplies your force",
+            "why": "The load you move is bigger than the effort you apply."
+          },
+          {
+            "key": "k3",
+            "left": "Single fixed pulley",
+            "right": "MA of 1, changes direction",
+            "why": "It makes lifting easier by letting you pull down, not by reducing force."
+          },
+          {
+            "key": "k4",
+            "left": "Efficiency",
+            "right": "Useful work out ÷ work in × 100%",
+            "why": "It shows how much of your work becomes useful work."
+          },
+          {
+            "key": "k5",
+            "left": "Friction in a machine",
+            "right": "Turns part of the work into heat",
+            "why": "That is why output work is always less than input work."
+          },
+          {
+            "key": "k6",
+            "left": "Ball bearings",
+            "right": "Reduce friction in turning parts",
+            "why": "Rolling balls replace sliding contact, so less energy is wasted."
+          },
+          {
+            "key": "k7",
+            "left": "Compound machine",
+            "right": "Two or more simple machines together",
+            "why": "A bicycle uses wheels and axles, levers and a chain drive."
+          },
+          {
+            "key": "k8",
+            "left": "Screw",
+            "right": "Inclined plane wrapped around a rod",
+            "why": "Turning it moves it forward a short distance with a large force."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Torque & Efficiency",
-      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best physics-based reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Torque, Radius and Better Machines",
+      "badge": {
+        "id": "machine-master",
+        "name": "Machine Master",
+        "icon": "⚙️"
+      },
+      "content": "<h3>🔄 Torque</h3>\n<p>Machines that turn — wrenches, doorknobs, steering wheels, gears — depend on <strong>torque</strong>, the turning effect of a force:</p>\n<p style=\"text-align:center;\"><strong>torque (τ) = force × lever arm (r)</strong>, in newton-meters (N·m)</p>\n<p>The lever arm is the distance from the axis to where the force acts. Doubling the lever arm doubles the torque for the same effort.</p>\n<h3>🛞 Wheel and Axle</h3>\n<p>A steering wheel has a big radius; the shaft it turns has a small one. A small force at the rim makes a large torque, which turns the shaft with a large force. Tricycle and bus drivers rely on this.</p>\n<h3>⚙️ Gears</h3>\n<p>Linked gears trade speed for force. A small gear driving a big gear: the big gear turns <strong>slower</strong> but with <strong>more torque</strong> (good for climbing hills). A big gear driving a small gear: faster but weaker (good for speed on flat roads).</p>\n<p><em>Example:</em> a 40-tooth front gear drives a 20-tooth rear gear. Each pedal turn makes the rear gear turn <strong>2 times</strong> (40 ÷ 20).</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Use torque and radius to decide what works best. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🔧 A mechanic uses a longer wrench to loosen a very tight bolt. Why does the longer wrench work better than a shorter one?",
+            "text": "A mechanic pushes a wrench with 50 N at 0.30 m from the bolt. What torque does she apply?",
             "choices": [
-              { "label": "A) The longer wrench is heavier.", "correct": false },
-              { "label": "B) The longer wrench increases torque by increasing the lever arm distance from the pivot.", "correct": true },
-              { "label": "C) The longer wrench has more friction.", "correct": false },
-              { "label": "D) The longer wrench uses gravity better.", "correct": false }
-            ]
+              {
+                "label": "15 N·m",
+                "correct": true
+              },
+              {
+                "label": "0.006 N·m",
+                "correct": false
+              },
+              {
+                "label": "50.3 N·m",
+                "correct": false
+              },
+              {
+                "label": "167 N·m",
+                "correct": false
+              }
+            ],
+            "explanation": "τ = F × r = 50 N × 0.30 m = 15 N·m. The other answers come from dividing or adding the numbers."
           },
           {
-            "text": "🏗️ A construction worker uses a pulley system with 3 pulleys to lift heavy cement bags. What is the main advantage of using multiple pulleys?",
+            "text": "A bolt needs 60 N·m of torque to loosen. Lito can push with only 200 N. What is the SHORTEST wrench (lever arm) that will work?",
             "choices": [
-              { "label": "A) It makes the bag lighter.", "correct": false },
-              { "label": "B) It reduces the effort force needed by distributing the load across multiple rope segments.", "correct": true },
-              { "label": "C) It eliminates gravity.", "correct": false },
-              { "label": "D) It converts energy into mass.", "correct": false }
-            ]
+              {
+                "label": "0.30 m",
+                "correct": true
+              },
+              {
+                "label": "0.03 m",
+                "correct": false
+              },
+              {
+                "label": "3.3 m",
+                "correct": false
+              },
+              {
+                "label": "0.12 m",
+                "correct": false
+              }
+            ],
+            "explanation": "r = τ ÷ F = 60 ÷ 200 = 0.30 m. A shorter wrench gives too little torque; 3.3 m is from dividing the wrong way."
           },
           {
-            "text": "🚲 A bicycle's pedal gear has 40 teeth, and the rear gear has 20 teeth. When you pedal once, how many times does the rear wheel turn?",
+            "text": "A cyclist is about to climb a steep hill. Which gear setting makes pedaling EASIER?",
             "choices": [
-              { "label": "A) Half a turn", "correct": false },
-              { "label": "B) One turn", "correct": false },
-              { "label": "C) Two turns", "correct": true },
-              { "label": "D) Forty turns", "correct": false }
-            ]
+              {
+                "label": "Small front gear with a large rear gear",
+                "correct": true
+              },
+              {
+                "label": "Large front gear with a small rear gear",
+                "correct": false
+              },
+              {
+                "label": "Same-sized front and rear gears always",
+                "correct": false
+              },
+              {
+                "label": "Any setting, since gears do not change effort",
+                "correct": false
+              }
+            ],
+            "explanation": "A small gear driving a large gear makes the wheel turn slower but with more torque, so each pedal push needs less force — ideal for climbing."
           },
           {
-            "text": "🪓 Which simple machine is a knife blade, and how does it make cutting easier?",
+            "text": "A team tests two pulley systems lifting the same 300 N load. System A needs 150 N of effort; System B needs 100 N. Which conclusion is BEST?",
             "choices": [
-              { "label": "A) Lever — it multiplies force by using a pivot.", "correct": false },
-              { "label": "B) Wedge — it concentrates force on a small area to split material.", "correct": true },
-              { "label": "C) Screw — it converts rotational force into forward motion.", "correct": false },
-              { "label": "D) Inclined plane — it spreads work over distance.", "correct": false }
-            ]
+              {
+                "label": "B has the greater mechanical advantage",
+                "correct": true
+              },
+              {
+                "label": "A has the greater mechanical advantage",
+                "correct": false
+              },
+              {
+                "label": "Both systems have the same advantage",
+                "correct": false
+              },
+              {
+                "label": "B must be the more efficient system",
+                "correct": false
+              }
+            ],
+            "explanation": "MA = 300 ÷ 150 = 2 for A and 300 ÷ 100 = 3 for B. A larger MA does not by itself prove higher efficiency — that needs the work in and work out."
           },
           {
-            "text": "⚙️ In a wheelbarrow, where is the fulcrum located?",
+            "text": "A rusty doorknob is very hard to turn. Which change would help MOST?",
             "choices": [
-              { "label": "A) At the handles where you lift", "correct": false },
-              { "label": "B) At the wheel (the pivot point)", "correct": true },
-              { "label": "C) In the middle of the load", "correct": false },
-              { "label": "D) At the bucket's edge", "correct": false }
-            ]
+              {
+                "label": "Replace it with a long lever-type handle",
+                "correct": true
+              },
+              {
+                "label": "Replace it with a smaller round knob",
+                "correct": false
+              },
+              {
+                "label": "Paint the knob with a smooth new color",
+                "correct": false
+              },
+              {
+                "label": "Push on the door instead of turning it",
+                "correct": false
+              }
+            ],
+            "explanation": "A lever handle puts your hand farther from the axis, so the same force makes more torque. A smaller knob makes it even harder."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Machine Shop",
-      "badge": { "id": "machine-master", "name": "Machine Master", "icon": "⚙️" },
-      "content": "<h3>🔐 Formative Check — Escape the Machine Shop</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Design, Build, Test, Improve",
+      "badge": {
+        "id": "machine-master",
+        "name": "Machine Master",
+        "icon": "⚙️"
+      },
+      "content": "<h3>🧪 Designing a Machine Like an Engineer</h3>\n<ol>\n<li><strong>Define the problem</strong> — e.g., \"Lift a 5 kg bucket of water to the second floor with as little effort as possible.\"</li>\n<li><strong>Plan</strong> — choose a machine (pulley system, lever, ramp, wheel and axle) and sketch it with measurements.</li>\n<li><strong>Build</strong> — use safe, cheap materials: bamboo, empty spools, string, plywood.</li>\n<li><strong>Test</strong> — measure the input force (spring scale or bathroom scale) and the load. Compute MA and, if you can measure distances, efficiency.</li>\n<li><strong>Improve</strong> — change one thing at a time (longer lever arm, more pulleys, oiled axle) and test again.</li>\n</ol>\n<h3>📝 Example Test Record</h3>\n<table><thead><tr><th>Version</th><th>Effort</th><th>Load</th><th>MA</th></tr></thead><tbody>\n<tr><td>1 fixed pulley</td><td>50 N</td><td>50 N</td><td>1</td></tr>\n<tr><td>2-pulley block</td><td>27 N</td><td>50 N</td><td>1.9</td></tr>\n<tr><td>2-pulley, oiled</td><td>25 N</td><td>50 N</td><td>2.0</td></tr>\n</tbody></table>\n<p>Changing <strong>one variable at a time</strong> lets you tell which change caused the improvement — this is a <em>fair test</em>.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which of the following is NOT one of the six simple machines?",
+            "text": "A machine gives an output force of 600 N when you apply 150 N. What is its mechanical advantage?",
             "choices": [
-              { "label": "A) Lever", "correct": false },
-              { "label": "B) Pulley", "correct": false },
-              { "label": "C) Motor", "correct": true },
-              { "label": "D) Wedge", "correct": false }
-            ]
+              {
+                "label": "4",
+                "correct": true
+              },
+              {
+                "label": "0.25",
+                "correct": false
+              },
+              {
+                "label": "450",
+                "correct": false
+              },
+              {
+                "label": "750",
+                "correct": false
+              }
+            ],
+            "explanation": "MA = output ÷ input = 600 ÷ 150 = 4. 0.25 is the inverse, 450 is the difference, 750 is the sum."
           },
           {
-            "text": "A machine has an output force of 200 N and an input force of 50 N. What is its Mechanical Advantage?",
+            "text": "A pulley system needs 800 J of input work and does 600 J of useful work. What is its efficiency?",
             "choices": [
-              { "label": "A) 0.25", "correct": false },
-              { "label": "B) 4", "correct": true },
-              { "label": "C) 150", "correct": false },
-              { "label": "D) 250", "correct": false }
-            ]
+              {
+                "label": "75%",
+                "correct": true
+              },
+              {
+                "label": "133%",
+                "correct": false
+              },
+              {
+                "label": "25%",
+                "correct": false
+              },
+              {
+                "label": "1.3%",
+                "correct": false
+              }
+            ],
+            "explanation": "Efficiency = 600 ÷ 800 × 100% = 75%. Efficiency can never be more than 100%, so 133% is impossible."
           },
           {
-            "text": "Which simple machine changes the DIRECTION of the applied force?",
+            "text": "Which change will MOST likely increase the efficiency of a squeaky wheel-and-axle?",
             "choices": [
-              { "label": "A) Wedge", "correct": false },
-              { "label": "B) Inclined plane", "correct": false },
-              { "label": "C) Pulley", "correct": true },
-              { "label": "D) Screw", "correct": false }
-            ]
+              {
+                "label": "Oil the axle to reduce friction",
+                "correct": true
+              },
+              {
+                "label": "Paint the wheel a brighter color",
+                "correct": false
+              },
+              {
+                "label": "Use a thicker and heavier axle",
+                "correct": false
+              },
+              {
+                "label": "Turn the wheel more quickly",
+                "correct": false
+              }
+            ],
+            "explanation": "Efficiency drops when friction turns work into heat and sound. Oiling the axle reduces that friction."
           },
           {
-            "text": "Why is a pair of scissors considered a compound machine?",
+            "text": "Students test three lever designs but change the load AND the arm length at the same time. What is wrong with their test?",
             "choices": [
-              { "label": "A) Because it is made of metal.", "correct": false },
-              { "label": "B) Because it combines two levers and two wedges (blades).", "correct": true },
-              { "label": "C) Because it uses electricity.", "correct": false },
-              { "label": "D) Because it has moving gears.", "correct": false }
-            ]
+              {
+                "label": "They cannot tell which change caused the result",
+                "correct": true
+              },
+              {
+                "label": "Levers cannot be tested in a classroom",
+                "correct": false
+              },
+              {
+                "label": "They should have used a pulley instead",
+                "correct": false
+              },
+              {
+                "label": "Nothing — changing two things is faster",
+                "correct": false
+              }
+            ],
+            "explanation": "In a fair test you change one variable at a time. Changing two at once makes it impossible to know which one made the difference."
           },
           {
-            "text": "Which of the following correctly describes a screw?",
+            "text": "Why can't a machine have an efficiency of 100%?",
             "choices": [
-              { "label": "A) A lever that pivots on a fulcrum", "correct": false },
-              { "label": "B) An inclined plane wrapped around a cylinder", "correct": true },
-              { "label": "C) A wheel with a groove for a rope", "correct": false },
-              { "label": "D) A flat surface at an angle", "correct": false }
-            ]
+              {
+                "label": "Some energy is always lost to friction",
+                "correct": true
+              },
+              {
+                "label": "Machines always create extra energy",
+                "correct": false
+              },
+              {
+                "label": "The load always gets heavier with use",
+                "correct": false
+              },
+              {
+                "label": "Mechanical advantage is always below 1",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving parts always rub, turning some of the input energy into heat and sound. Machines never create energy."
           },
           {
-            "text": "A construction worker wants to reduce the effort needed to push a heavy box onto a truck. Which simple machine should they use?",
+            "text": "A steering wheel with a large radius turns a thin steering shaft. Why is this design helpful?",
             "choices": [
-              { "label": "A) A pulley", "correct": false },
-              { "label": "B) A wedge", "correct": false },
-              { "label": "C) An inclined plane (ramp)", "correct": true },
-              { "label": "D) A screw", "correct": false }
-            ]
+              {
+                "label": "A small force at the rim makes a large torque",
+                "correct": true
+              },
+              {
+                "label": "It makes the steering shaft spin much faster",
+                "correct": false
+              },
+              {
+                "label": "It reduces the weight of the whole vehicle",
+                "correct": false
+              },
+              {
+                "label": "It changes the direction of the vehicle's force",
+                "correct": false
+              }
+            ],
+            "explanation": "Torque = force × radius. The large radius lets a small hand force produce enough torque to turn the shaft and the wheels."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

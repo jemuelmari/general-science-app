@@ -1,68 +1,800 @@
 {
   "title": "Term Exam — General Science Term 1",
   "coverage": "Weeks 1–10 (full term)",
+  "competencies": [
+    "GENSCI-11-T1-W1-C1",
+    "GENSCI-11-T1-W2-C1",
+    "GENSCI-11-T1-W3-C1",
+    "GENSCI-11-T1-W4-C1",
+    "GENSCI-11-T1-W5-C1",
+    "GENSCI-11-T1-W6-C1",
+    "GENSCI-11-T1-W7-C1",
+    "GENSCI-11-T1-W8-C1",
+    "GENSCI-11-T1-W9-C1",
+    "GENSCI-11-T1-W10-C1"
+  ],
   "items": 60,
-  "competencies": ["GENSCI-11-T1-W1-C1", "GENSCI-11-T1-W2-C1", "GENSCI-11-T1-W3-C1", "GENSCI-11-T1-W4-C1", "GENSCI-11-T1-W5-C1", "GENSCI-11-T1-W6-C1", "GENSCI-11-T1-W7-C1", "GENSCI-11-T1-W8-C1", "GENSCI-11-T1-W9-C1", "GENSCI-11-T1-W10-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "Which branch of science studies matter, energy, motion, force, light, sound, heat, and electricity?", "options": ["Physics", "Chemistry", "Biology", "Geology"], "correct": "Physics", "competency": "GENSCI-11-T1-W1-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics definition" } },
-    { "id": "q2", "text": "Which of the following BEST represents physics improving health and safety?", "options": ["X-ray machines producing images of bones", "A rice cooker heating food", "A bicycle bell ringing", "A painter mixing colors"], "correct": "X-ray machines producing images of bones", "competency": "GENSCI-11-T1-W1-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "health & safety life area" } },
-    { "id": "q3", "text": "Which physics concept explains why water falls from a faucet?", "options": ["Gravity", "Refraction", "Torque", "Fermentation"], "correct": "Gravity", "competency": "GENSCI-11-T1-W1-C1", "bloomLevel": "Understanding", "_tag": { "layer": 3, "confidence": "MEDIUM", "rationale": "daily-life physics concept" } },
-    { "id": "q4", "text": "Translational motion is BEST described as:", "options": ["An object moving from one point to another without rotating", "An object spinning on its axis", "An object vibrating in place", "An object in free fall"], "correct": "An object moving from one point to another without rotating", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "translational motion" } },
-    { "id": "q5", "text": "Which of the following is an example of rotational motion ONLY?", "options": ["A spinning top on a table", "A car driving forward", "A person walking", "An elevator going up"], "correct": "A spinning top on a table", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rotational motion" } },
-    { "id": "q6", "text": "The formula v = r × ω relates:", "options": ["Linear velocity to angular velocity and radius", "Force to mass and acceleration", "Pressure to force and area", "Energy to mass and speed of light"], "correct": "Linear velocity to angular velocity and radius", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω" } },
-    { "id": "q7", "text": "A wheel with radius 0.8 m rotates at 5 rad/s. What is the linear velocity at the rim?", "options": ["4 m/s", "0.16 m/s", "5.8 m/s", "6.25 m/s"], "correct": "4 m/s", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω numeric" } },
-    { "id": "q8", "text": "Why does the outer edge of a bicycle wheel move faster than the hub?", "options": ["Points farther from the axis have greater linear velocity (v = r × ω)", "The outer edge has more mass", "The hub has more friction", "The outer edge is made of lighter material"], "correct": "Points farther from the axis have greater linear velocity (v = r × ω)", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω conceptual" } },
-    { "id": "q9", "text": "Which of the following is NOT a simple machine?", "options": ["Electric motor", "Lever", "Pulley", "Wedge"], "correct": "Electric motor", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine identification" } },
-    { "id": "q10", "text": "A doorknob is an example of which simple machine?", "options": ["Wheel & axle", "Lever", "Pulley", "Screw"], "correct": "Wheel & axle", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "simple machine" } },
-    { "id": "q11", "text": "A wedge makes cutting easier by:", "options": ["Concentrating force on a small area to split materials", "Changing direction of force", "Multiplying force via a fulcrum", "Reducing friction"], "correct": "Concentrating force on a small area to split materials", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "wedge function" } },
-    { "id": "q12", "text": "Mechanical advantage is calculated as:", "options": ["Output force ÷ input force", "Input force ÷ output force", "Force × distance", "Mass × acceleration"], "correct": "Output force ÷ input force", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "MA formula" } },
-    { "id": "q13", "text": "A machine has an output force of 600 N and an input force of 150 N. What is its mechanical advantage?", "options": ["4", "0.25", "450", "750"], "correct": "4", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "MA computation" } },
-    { "id": "q14", "text": "Why is a wheelbarrow considered a compound machine?", "options": ["It combines a lever and a wheel & axle", "It uses electricity", "It runs on fuel", "It has a motor"], "correct": "It combines a lever and a wheel & axle", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compound machine" } },
-    { "id": "q15", "text": "In a bicycle, the pedal gear has 40 teeth and the rear gear has 20 teeth. When you pedal once, how many times does the rear wheel turn?", "options": ["2", "1", "0.5", "40"], "correct": "2", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "gear ratio application" } },
-    { "id": "q16", "text": "What is pressure?", "options": ["Force divided by area", "Force times area", "Mass times acceleration", "Energy per unit time"], "correct": "Force divided by area", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pressure definition" } },
-    { "id": "q17", "text": "The SI unit of pressure is:", "options": ["Pascal (Pa)", "Newton (N)", "Joule (J)", "Watt (W)"], "correct": "Pascal (Pa)", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pressure unit" } },
-    { "id": "q18", "text": "Pascal's Principle states that:", "options": ["Pressure applied to an enclosed fluid is transmitted equally to every part of the fluid", "Pressure equals force times area", "Pressure decreases with depth", "Fluids cannot transmit force"], "correct": "Pressure applied to an enclosed fluid is transmitted equally to every part of the fluid", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pascal's principle" } },
-    { "id": "q19", "text": "A hydraulic jack has an input piston area of 0.02 m² and an output piston area of 0.4 m². If you apply 100 N on the input, what is the output force?", "options": ["2,000 N", "500 N", "100 N", "20 N"], "correct": "2,000 N", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hydraulic calc" } },
-    { "id": "q20", "text": "Which of the following BEST represents an application of Pascal's Principle?", "options": ["Car brakes and hydraulic jacks", "Laser cutting machines", "Solar panels", "Soundproofing"], "correct": "Car brakes and hydraulic jacks", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pascal application" } },
-    { "id": "q21", "text": "What is the speed of light in a vacuum?", "options": ["3 × 10⁸ m/s", "343 m/s", "1,500 m/s", "3 × 10⁶ m/s"], "correct": "3 × 10⁸ m/s", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "speed of light" } },
-    { "id": "q22", "text": "Which property of light determines its color?", "options": ["Wavelength or frequency", "Amplitude", "Speed", "Intensity"], "correct": "Wavelength or frequency", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light color property" } },
-    { "id": "q23", "text": "When light passes from air into water, it:", "options": ["Refracts (bends)", "Reflects at 90°", "Stops completely", "Speeds up dramatically"], "correct": "Refracts (bends)", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "refraction" } },
-    { "id": "q24", "text": "Which EM wave has the LONGEST wavelength?", "options": ["Radio waves", "X-rays", "Gamma rays", "Visible light"], "correct": "Radio waves", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM spectrum" } },
-    { "id": "q25", "text": "Which EM wave is used in TV remote controls?", "options": ["Infrared", "Ultraviolet", "X-ray", "Gamma ray"], "correct": "Infrared", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM application" } },
-    { "id": "q26", "text": "Which light technology has replaced most incandescent bulbs because it is more energy-efficient?", "options": ["LED", "Halogen", "Neon tube", "Mercury vapor"], "correct": "LED", "competency": "GENSCI-11-T1-W5-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "LED innovation" } },
-    { "id": "q27", "text": "What does the acronym SONAR stand for?", "options": ["Sound Navigation And Ranging", "Sonic Orientation Navigation And Radar", "Sound Observation Network And Receiver", "Submarine Orientation Navigation And Response"], "correct": "Sound Navigation And Ranging", "competency": "GENSCI-11-T1-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "SONAR" } },
-    { "id": "q28", "text": "Why can't sound travel through a vacuum?", "options": ["There are no particles to vibrate and transmit the wave", "Sound is too slow", "Sound is absorbed by light", "Sound is a type of light wave"], "correct": "There are no particles to vibrate and transmit the wave", "competency": "GENSCI-11-T1-W6-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound needs medium" } },
-    { "id": "q29", "text": "Sound travels FASTEST through which medium?", "options": ["Steel", "Air", "Water", "Vacuum"], "correct": "Steel", "competency": "GENSCI-11-T1-W6-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound speed" } },
-    { "id": "q30", "text": "Which property of a sound wave determines how loud or soft it sounds?", "options": ["Amplitude", "Frequency", "Wavelength", "Speed"], "correct": "Amplitude", "competency": "GENSCI-11-T1-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound amplitude" } },
-    { "id": "q31", "text": "Louis Pasteur is best known for:", "options": ["Developing germ theory and pasteurization", "Discovering DNA", "Inventing the microscope", "Discovering penicillin"], "correct": "Developing germ theory and pasteurization", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur" } },
-    { "id": "q32", "text": "Pasteur's swan-neck flask experiment disproved which theory?", "options": ["Spontaneous generation", "Germ theory", "Cell theory", "Theory of relativity"], "correct": "Spontaneous generation", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur experiment" } },
-    { "id": "q33", "text": "What is pasteurization?", "options": ["Heating liquids to kill harmful bacteria without ruining flavor", "Freezing liquids to preserve them", "Adding antibiotics to food", "Removing water from milk"], "correct": "Heating liquids to kill harmful bacteria without ruining flavor", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pasteurization" } },
-    { "id": "q34", "text": "Which vaccine did Pasteur develop first for a human disease?", "options": ["Rabies", "Polio", "Smallpox", "Measles"], "correct": "Rabies", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pasteur vaccine" } },
-    { "id": "q35", "text": "Modern vaccines work by:", "options": ["Training the immune system with weakened or inactive pathogens", "Killing all bacteria in the body", "Replacing white blood cells", "Removing viruses through pasteurization"], "correct": "Training the immune system with weakened or inactive pathogens", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "vaccine mechanism" } },
-    { "id": "q36", "text": "Which modern practice is a direct result of Pasteur's germ theory?", "options": ["Handwashing in hospitals", "Using telescopes to study stars", "Building taller bridges", "Using solar panels"], "correct": "Handwashing in hospitals", "competency": "GENSCI-11-T1-W7-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "germ theory application" } },
-    { "id": "q37", "text": "What is the active ingredient in household bleach?", "options": ["Sodium hypochlorite (NaClO)", "Sodium bicarbonate", "Sodium chloride", "Hydrogen peroxide"], "correct": "Sodium hypochlorite (NaClO)", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "bleach ingredient" } },
-    { "id": "q38", "text": "Why is it dangerous to mix bleach with ammonia-based cleaners?", "options": ["It releases toxic chloramine gas that can damage lungs", "It creates a stronger bleach", "It becomes solid", "It produces harmless foam"], "correct": "It releases toxic chloramine gas that can damage lungs", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product risk" } },
-    { "id": "q39", "text": "Which agency in the Philippines approves cosmetics and personal care products for sale?", "options": ["FDA Philippines", "DTI", "DENR", "DepEd"], "correct": "FDA Philippines", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "FDA reference" } },
-    { "id": "q40", "text": "Which agency is responsible for regulating chemical disposal to protect the environment?", "options": ["DENR", "DTI", "FDA", "DOH"], "correct": "DENR", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "DENR reference" } },
-    { "id": "q41", "text": "What is the primary function of baking powder in baked goods?", "options": ["Releases CO₂ to make them rise", "Adds sweetness", "Preserves them longer", "Adds color"], "correct": "Releases CO₂ to make them rise", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "baking powder" } },
-    { "id": "q42", "text": "What is eutrophication?", "options": ["Harmful algal blooms from excess nutrients like phosphates in water", "A cleaning process for detergents", "A type of bleaching reaction", "A method of pasteurization"], "correct": "Harmful algal blooms from excess nutrients like phosphates in water", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "eutrophication" } },
-    { "id": "q43", "text": "Which of the following is a BENEFIT of using household chemical products properly?", "options": ["They improve hygiene and prevent disease", "They cause water pollution", "They release toxic fumes", "They destroy fabric colors"], "correct": "They improve hygiene and prevent disease", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "product benefits" } },
-    { "id": "q44", "text": "Which practice is BEST for disposing of expired household chemicals?", "options": ["Follow DENR guidelines and check with local barangay for hazardous waste disposal", "Pour down the kitchen sink", "Throw in regular trash", "Bury in the backyard"], "correct": "Follow DENR guidelines and check with local barangay for hazardous waste disposal", "competency": "GENSCI-11-T1-W8-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "disposal best practice" } },
-    { "id": "q45", "text": "Why is a car engine an example of BOTH physics and chemistry working together?", "options": ["Combustion is a chemistry process, and torque/rotation is physics", "It uses only chemistry (combustion) but no physics at all", "It uses only physics (torque) but no chemistry at all", "It uses neither chemistry nor physics in any meaningful way" ], "correct": "Combustion is a chemistry process, and torque/rotation is physics", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry synthesis; distractors balanced (Phase 6)" } },
-    { "id": "q46", "text": "Inside a battery, what kind of chemical reaction produces electrical energy?", "options": ["Redox (oxidation-reduction) reaction", "Combustion", "Neutralization", "Decomposition"], "correct": "Redox (oxidation-reduction) reaction", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "chemistry in tech" } },
-    { "id": "q47", "text": "Why is a rice cooker both a physics and a chemistry system?", "options": [ "Electrical resistance heats the coil (physics) and water boils (chemistry)", "It uses magnets to heat the inner pot", "It works only on chemistry (water boiling)", "It works only on physics (resistance heating)" ], "correct": "Electrical resistance heats the coil (physics) and water boils (chemistry)", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Analyzing", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry integration; distractors balanced (Phase 6)" } },
-    { "id": "q48", "text": "An air conditioner cools a room primarily by:", "options": ["Refrigerant absorbing heat inside and releasing it outside", "Creating cold air from nothing", "Removing all humidity", "Using magnets"], "correct": "Refrigerant absorbing heat inside and releasing it outside", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry appliance" } },
-    { "id": "q49", "text": "What chemistry process turns bread brown and flavorful when toasted?", "options": ["Maillard reaction", "Photosynthesis", "Neutralization", "Fermentation"], "correct": "Maillard reaction", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Maillard reaction" } },
-    { "id": "q50", "text": "A solar panel generates electricity by:", "options": ["Converting photons to electricity via the photovoltaic effect", "Burning fuel", "Heating water", "Splitting atoms"], "correct": "Converting photons to electricity via the photovoltaic effect", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry in solar" } },
-    { "id": "q51", "text": "In the formula v = r × ω, if a wheel of radius 0.5 m spins at 4 rad/s, what is v?", "options": ["2 m/s", "0.125 m/s", "4.5 m/s", "8 m/s"], "correct": "2 m/s", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Applying", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "v = r × ω numeric" } },
-    { "id": "q52", "text": "Which of the following is a compound machine?", "options": ["Bicycle", "Single crowbar", "Ramp", "Single screw"], "correct": "Bicycle", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "compound machine" } },
-    { "id": "q53", "text": "The SI unit of angular velocity is:", "options": ["rad/s", "m/s", "rad", "m/s²"], "correct": "rad/s", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "angular velocity unit" } },
-    { "id": "q54", "text": "Which formula represents the relationship between linear and angular acceleration?", "options": ["a = r × α", "a = r + α", "a = α ÷ r", "a = r ÷ α"], "correct": "a = r × α", "competency": "GENSCI-11-T1-W2-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "linear vs angular acceleration" } },
-    { "id": "q55", "text": "What does a Mechanical Advantage greater than 1 indicate?", "options": ["The machine multiplies the input force", "The machine reduces force", "The machine uses no force", "The machine creates energy"], "correct": "The machine multiplies the input force", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "MA meaning" } },
-    { "id": "q56", "text": "Which of the following correctly explains why a longer wrench loosens a tight bolt more easily?", "options": ["It increases torque by increasing the lever arm distance from the pivot", "It is heavier", "It absorbs more friction", "It uses less electricity"], "correct": "It increases torque by increasing the lever arm distance from the pivot", "competency": "GENSCI-11-T1-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "torque + lever arm" } },
-    { "id": "q57", "text": "Pascal's Principle applies to:", "options": ["Fluids (liquids and gases) in enclosed systems", "Only solids", "Only vacuum", "Only plasmas"], "correct": "Fluids (liquids and gases) in enclosed systems", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Pascal principle scope" } },
-    { "id": "q58", "text": "Why can you drink water through a straw?", "options": ["Air pressure pushes water up the straw when you lower the pressure inside it", "Gravity pulls water up", "The straw creates water", "Friction pushes water up"], "correct": "Air pressure pushes water up the straw when you lower the pressure inside it", "competency": "GENSCI-11-T1-W4-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "pressure application" } },
-    { "id": "q59", "text": "Which of these is a valid example of physics + chemistry integration in daily life?", "options": ["Cooking rice in an electric rice cooker", "Reading a book under a lamp", "Walking on a smooth pavement", "Writing with a pencil"], "correct": "Cooking rice in an electric rice cooker", "competency": "GENSCI-11-T1-W9-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "physics+chemistry integration" } },
-    { "id": "q60", "text": "Which of the following BEST summarizes the main idea of Term 1?", "options": ["Physics and chemistry principles work together to explain and improve everyday life", "Only physics is important in daily life", "Only chemistry matters in daily life", "Neither physics nor chemistry is useful"], "correct": "Physics and chemistry principles work together to explain and improve everyday life", "competency": "GENSCI-11-T1-W10-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "term synthesis" } }
+    {
+      "id": "q1",
+      "text": "Which of these is NOT one of the four life areas improved by physics in this course?",
+      "options": [
+        "Astronomy research",
+        "Household",
+        "Health and safety",
+        "Work productivity at the job"
+      ],
+      "correct": "Astronomy research",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q2",
+      "text": "An electric fan makes a room feel cooler. Which area of life does this MAINLY improve?",
+      "options": [
+        "Household comfort",
+        "Work productivity in factories",
+        "Health and safety on roads",
+        "Leisure in sports competitions"
+      ],
+      "correct": "Household comfort",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q3",
+      "text": "Why do helmets reduce head injuries in motorcycle crashes?",
+      "options": [
+        "They spread the force and lengthen the impact time",
+        "They make the rider's head much lighter during a crash",
+        "They stop air from pushing on the rider's head",
+        "They increase the speed so the rider lands faster"
+      ],
+      "correct": "They spread the force and lengthen the impact time",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "A conveyor belt in a factory moves boxes faster than workers can carry them. Which area does physics improve here?",
+      "options": [
+        "Work productivity",
+        "Household chores",
+        "Health and safety",
+        "Leisure and sports events"
+      ],
+      "correct": "Work productivity",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "Which physics-based device lets a doctor listen to a patient's heartbeat?",
+      "options": [
+        "Stethoscope",
+        "Thermometer",
+        "Microscope",
+        "Barometer"
+      ],
+      "correct": "Stethoscope",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q6",
+      "text": "A family can buy only one: a smoke detector or a bigger television. Based on physics in daily life, which is the BEST choice and why?",
+      "options": [
+        "Smoke detector — it gives early warning that saves lives",
+        "Television — brighter screens improve eyesight at home",
+        "Television — it uses physics, while detectors use chemistry",
+        "Smoke detector — it makes the house cooler at night"
+      ],
+      "correct": "Smoke detector — it gives early warning that saves lives",
+      "competency": "GENSCI-11-T1-W1-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q7",
+      "text": "Angular velocity is measured in which unit?",
+      "options": [
+        "Radians per second",
+        "Meters per second",
+        "Newtons per square meter",
+        "Joules per second"
+      ],
+      "correct": "Radians per second",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q8",
+      "text": "Which object shows rotational motion only?",
+      "options": [
+        "A spinning top that stays in one spot",
+        "A ball thrown straight up into the air",
+        "A jeepney driving on a straight road",
+        "A ball rolling across the basketball court"
+      ],
+      "correct": "A spinning top that stays in one spot",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q9",
+      "text": "Why does a point on the rim of a wheel move faster than a point near the axle?",
+      "options": [
+        "It is farther from the axis, so v = rω is larger",
+        "It has a much greater angular velocity than the axle",
+        "It is heavier, so gravity pulls it faster around",
+        "It slips on the road while the axle stays still"
+      ],
+      "correct": "It is farther from the axis, so v = rω is larger",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q10",
+      "text": "One complete revolution equals how many degrees?",
+      "options": [
+        "360°",
+        "90°",
+        "180°",
+        "2π°"
+      ],
+      "correct": "360°",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q11",
+      "text": "A Ferris wheel of radius 20 m turns at 0.1 rad/s. How fast does a rider on the rim move?",
+      "options": [
+        "2 m/s",
+        "0.005 m/s",
+        "20.1 m/s",
+        "200 m/s"
+      ],
+      "correct": "2 m/s",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q12",
+      "text": "Two gears turn together. Gear A has a radius of 5 cm and Gear B 10 cm. Their rims move at the same linear speed. Which is TRUE?",
+      "options": [
+        "Gear A turns twice as fast as Gear B",
+        "Gear B turns twice as fast as Gear A",
+        "Both gears turn at the same rate",
+        "Gear A turns half as fast as Gear B"
+      ],
+      "correct": "Gear A turns twice as fast as Gear B",
+      "competency": "GENSCI-11-T1-W2-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q13",
+      "text": "Torque is calculated using which formula?",
+      "options": [
+        "τ = F × r",
+        "τ = F ÷ r",
+        "τ = m × a",
+        "τ = F + r"
+      ],
+      "correct": "τ = F × r",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q14",
+      "text": "Why is it easier to open a jar with a rubber grip around the lid?",
+      "options": [
+        "More friction lets your hand apply more torque",
+        "The rubber makes the lid much lighter",
+        "The grip reduces the radius of the lid so it turns easily",
+        "The rubber heats the lid so it expands"
+      ],
+      "correct": "More friction lets your hand apply more torque",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q15",
+      "text": "What does a mechanical advantage greater than 1 mean?",
+      "options": [
+        "The machine multiplies the input force",
+        "The machine creates extra energy",
+        "The machine works without any friction",
+        "The machine reduces the output force"
+      ],
+      "correct": "The machine multiplies the input force",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q16",
+      "text": "A screwdriver with a thick handle turns screws more easily than one with a thin handle. Why?",
+      "options": [
+        "A larger radius gives more torque for the same grip force",
+        "A thick handle makes the metal tip much harder",
+        "A thin handle has more friction against the hand",
+        "A thick handle makes the screw turn faster all by itself, with no force"
+      ],
+      "correct": "A larger radius gives more torque for the same grip force",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q17",
+      "text": "A machine uses 500 J of input work and produces 400 J of useful output. What is its efficiency?",
+      "options": [
+        "80%",
+        "20%",
+        "90%",
+        "125%"
+      ],
+      "correct": "80%",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q18",
+      "text": "Two student designs lift the same load. Design X has efficiency 60%; Design Y has 85% but needs a longer rope. Which judgment is BEST?",
+      "options": [
+        "Y — it wastes less energy, even with more rope",
+        "X — a lower efficiency means a stronger machine",
+        "X — shorter rope always means better design",
+        "Y — longer ropes create more energy"
+      ],
+      "correct": "Y — it wastes less energy, even with more rope",
+      "competency": "GENSCI-11-T1-W3-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q19",
+      "text": "Why do pressure in a liquid and the depth of a diver increase together?",
+      "options": [
+        "More water above pushes down with greater weight",
+        "Water becomes thinner and lighter as it goes deeper",
+        "Pressure in water is the same at every depth",
+        "Fish push the water downward toward the diver"
+      ],
+      "correct": "More water above pushes down with greater weight",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q20",
+      "text": "How do hydraulic brakes in a jeepney stop all four wheels at once?",
+      "options": [
+        "Pressure from the pedal is passed equally through the fluid",
+        "Each wheel has its own separate engine for braking",
+        "Air is squeezed in the brake lines until all the wheels lock and stop",
+        "The driver pulls a cable tied to each of the wheels"
+      ],
+      "correct": "Pressure from the pedal is passed equally through the fluid",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q21",
+      "text": "Which unit is used for pressure?",
+      "options": [
+        "Pascal (N/m²)",
+        "Newton (N)",
+        "Joule per second (J/s)",
+        "Watt (W)"
+      ],
+      "correct": "Pascal (N/m²)",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q22",
+      "text": "Why do wide tires on a tractor keep it from sinking in mud?",
+      "options": [
+        "Larger area spreads its weight, lowering pressure",
+        "Wider tires make the tractor much lighter",
+        "Mud has much more friction against the wide rubber tires",
+        "Wide tires raise the pressure on the mud"
+      ],
+      "correct": "Larger area spreads its weight, lowering pressure",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q23",
+      "text": "A 900 N person stands on two feet with a total area of 0.03 m². What pressure does he exert on the floor?",
+      "options": [
+        "30,000 Pa",
+        "27 Pa",
+        "300 Pa",
+        "2,700 Pa (N/m²)"
+      ],
+      "correct": "30,000 Pa",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q24",
+      "text": "In a hydraulic jack, a 100 N effort lifts a 2,000 N load. If the small piston's area is 0.002 m², what is the large piston's area?",
+      "options": [
+        "0.04 m²",
+        "0.0001 m²",
+        "0.4 m²",
+        "0.02 m²"
+      ],
+      "correct": "0.04 m²",
+      "competency": "GENSCI-11-T1-W4-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q25",
+      "text": "What is the speed of light in a vacuum?",
+      "options": [
+        "3 × 10⁸ m/s",
+        "343 m/s",
+        "3 × 10⁶ m/s",
+        "1,500 m/s"
+      ],
+      "correct": "3 × 10⁸ m/s",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q26",
+      "text": "Why does a diamond sparkle more than glass?",
+      "options": [
+        "It bends and reflects light strongly inside",
+        "It makes its own light from heat",
+        "It absorbs all colors of light except pure white light",
+        "It stops light from passing through it"
+      ],
+      "correct": "It bends and reflects light strongly inside",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q27",
+      "text": "Which part of the electromagnetic spectrum can our eyes detect?",
+      "options": [
+        "Visible light",
+        "Radio waves",
+        "Ultraviolet rays",
+        "X-rays"
+      ],
+      "correct": "Visible light",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q28",
+      "text": "How does a GPS receiver in a phone find its position?",
+      "options": [
+        "It times radio signals from several satellites",
+        "It listens for sound echoes from the ground",
+        "It measures how much sunlight hits the phone's screen",
+        "It reads magnetic lines from the North Pole"
+      ],
+      "correct": "It times radio signals from several satellites",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q29",
+      "text": "A barcode scanner uses a red laser and not a regular flashlight. What is the MAIN reason?",
+      "options": [
+        "Its narrow beam reads thin lines clearly",
+        "Its beam is hotter and burns the code",
+        "It is louder, so the cashier can hear it clearly",
+        "It works without any electrical power"
+      ],
+      "correct": "Its narrow beam reads thin lines clearly",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q30",
+      "text": "A family wants to cut its electric bill. Which lighting choice is BEST supported by science?",
+      "options": [
+        "Switch to LEDs, which waste less energy as heat",
+        "Use incandescent bulbs, which give more light per watt",
+        "Keep lights on all day, since switching wastes power",
+        "Use colored bulbs, since red light uses no electricity"
+      ],
+      "correct": "Switch to LEDs, which waste less energy as heat",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q31",
+      "text": "Sound waves are classified as which kind of wave?",
+      "options": [
+        "Longitudinal mechanical waves",
+        "Transverse electromagnetic waves",
+        "Longitudinal electromagnetic waves",
+        "Transverse light-like waves"
+      ],
+      "correct": "Longitudinal mechanical waves",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q32",
+      "text": "Why can't sound travel through outer space?",
+      "options": [
+        "There are no particles to carry the vibration",
+        "Space is too cold for any vibration to happen",
+        "Starlight cancels out all sound waves",
+        "Gravity pulls sound waves back to planets"
+      ],
+      "correct": "There are no particles to carry the vibration",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q33",
+      "text": "Sound with a frequency above 20,000 Hz is called what?",
+      "options": [
+        "Ultrasound",
+        "Infrasound",
+        "Microwave",
+        "Radio wave"
+      ],
+      "correct": "Ultrasound",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q34",
+      "text": "Why does a voice sound louder through a microphone and speaker system?",
+      "options": [
+        "The amplifier increases the wave's amplitude",
+        "The speaker increases the speed of sound",
+        "The microphone raises the pitch of the speaker's voice",
+        "The amplifier changes sound into light"
+      ],
+      "correct": "The amplifier increases the wave's amplitude",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q35",
+      "text": "A sound wave in air has a frequency of 686 Hz. Sound travels 343 m/s. What is its wavelength?",
+      "options": [
+        "0.5 m",
+        "2 m",
+        "235,298 m",
+        "1,029 m"
+      ],
+      "correct": "0.5 m",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q36",
+      "text": "A dolphin and a submarine both use sound to find objects underwater. What do they have in common?",
+      "options": [
+        "Both time echoes to judge distance",
+        "Both use light pulses to see in water",
+        "Both make sounds only below 20 Hz",
+        "Both need air to send out their signals"
+      ],
+      "correct": "Both time echoes to judge distance",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q37",
+      "text": "Pasteur's experiment used a flask with what special shape?",
+      "options": [
+        "An S-shaped swan neck",
+        "A wide, open mouth",
+        "A tightly sealed lid",
+        "A flat, square bottom"
+      ],
+      "correct": "An S-shaped swan neck",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q38",
+      "text": "What does germ theory state?",
+      "options": [
+        "Microorganisms cause many diseases",
+        "Diseases come from bad-smelling air",
+        "Germs are created from spoiled food",
+        "Illness is caused by cold weather"
+      ],
+      "correct": "Microorganisms cause many diseases",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q39",
+      "text": "Why is UHT milk safe to store unopened for months?",
+      "options": [
+        "Very high heat killed nearly all microbes before sealing",
+        "It contains strong chemicals that poison every germ",
+        "It was frozen solid before it was put in the box and sealed",
+        "Its box lets air in to keep microbes from growing"
+      ],
+      "correct": "Very high heat killed nearly all microbes before sealing",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q40",
+      "text": "Pasteurization is named after which scientist?",
+      "options": [
+        "Louis Pasteur",
+        "Robert Koch",
+        "Sir Isaac Newton",
+        "Marie Curie"
+      ],
+      "correct": "Louis Pasteur",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q41",
+      "text": "Why did Pasteur's swan-neck design make a FAIR test against spontaneous generation?",
+      "options": [
+        "Air reached the broth, but microbes were kept out",
+        "The broth was sealed tightly so no air could enter it",
+        "Two different broths were used in each flask",
+        "The flask was kept in the dark the whole time"
+      ],
+      "correct": "Air reached the broth, but microbes were kept out",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q42",
+      "text": "Which statement BEST shows the lasting value of Pasteur's work today?",
+      "options": [
+        "Vaccines and pasteurized food still prevent disease",
+        "His flasks are still used today in every hospital ward",
+        "He proved that diseases come from the stars",
+        "His ideas replaced the need for clean water"
+      ],
+      "correct": "Vaccines and pasteurized food still prevent disease",
+      "competency": "GENSCI-11-T1-W7-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q43",
+      "text": "What is the function of the surfactant in shampoo?",
+      "options": [
+        "Removes oil and dirt from hair",
+        "Adds color to the hair strands",
+        "Kills lice living on the scalp",
+        "Makes the hair grow much faster"
+      ],
+      "correct": "Removes oil and dirt from hair",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q44",
+      "text": "Why should household chemicals be kept in their original containers?",
+      "options": [
+        "The label gives ingredients, warnings and first aid",
+        "Original bottles keep the chemicals much stronger for years",
+        "Other bottles make the chemicals turn into gas",
+        "The FDA collects all of the original bottles"
+      ],
+      "correct": "The label gives ingredients, warnings and first aid",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q45",
+      "text": "Which agency issues advisories against unregistered cosmetics?",
+      "options": [
+        "FDA",
+        "DENR",
+        "DTI",
+        "DOTr"
+      ],
+      "correct": "FDA",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q46",
+      "text": "Why does baking soda (sodium bicarbonate) help fluffy pancakes rise?",
+      "options": [
+        "It reacts with acid to release CO₂ bubbles",
+        "It adds air when the batter is stirred",
+        "It melts and spreads the batter apart",
+        "It absorbs water and then swells up into a thick foam"
+      ],
+      "correct": "It reacts with acid to release CO₂ bubbles",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q47",
+      "text": "Fish die in a lake after algae spread across its surface. Which cause-and-effect chain is correct?",
+      "options": [
+        "Excess phosphates → algae bloom → decay uses up oxygen",
+        "Algae bloom → more oxygen → fish grow too fast and die",
+        "Soap foam → blocks heat → water freezes the fish",
+        "Detergent → makes water salty → fish lose their scales"
+      ],
+      "correct": "Excess phosphates → algae bloom → decay uses up oxygen",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q48",
+      "text": "A store sells a whitening cream with no FDA notification number at a very low price. What is the BEST decision?",
+      "options": [
+        "Do not buy it — its safety has not been checked",
+        "Buy it — low prices mean fewer chemicals inside",
+        "Buy it — whitening creams are always safe",
+        "Do not buy it — only because it is too cheap"
+      ],
+      "correct": "Do not buy it — its safety has not been checked",
+      "competency": "GENSCI-11-T1-W8-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q49",
+      "text": "In a battery, the process in which an atom LOSES electrons is called what?",
+      "options": [
+        "Oxidation",
+        "Reduction",
+        "Condensation",
+        "Combustion"
+      ],
+      "correct": "Oxidation",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q50",
+      "text": "Why does an aircon's outdoor unit blow warm air?",
+      "options": [
+        "The refrigerant gives off room heat as it condenses",
+        "The compressor burns gasoline to run the fan",
+        "Warm air is made on purpose to balance the indoor cold air",
+        "The fan rubs the air until it becomes hot"
+      ],
+      "correct": "The refrigerant gives off room heat as it condenses",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q51",
+      "text": "Which step in cooking an egg is mainly CHEMISTRY?",
+      "options": [
+        "The egg proteins denature and turn solid",
+        "Heat flows from the flame into the pan",
+        "The pan conducts heat to the eggshell and egg white",
+        "Boiling water circulates by convection"
+      ],
+      "correct": "The egg proteins denature and turn solid",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q52",
+      "text": "A solar panel changes light energy into which form of energy?",
+      "options": [
+        "Electrical energy",
+        "Stored chemical energy",
+        "Sound energy",
+        "Nuclear energy"
+      ],
+      "correct": "Electrical energy",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q53",
+      "text": "A phone battery heats up while fast-charging. Which explanation correctly combines physics and chemistry?",
+      "options": [
+        "Current drives the reaction, and some energy becomes heat",
+        "The battery burns oxygen inside, making a small flame",
+        "The charger sends heat through the cable wire into the phone",
+        "The phone screen absorbs light and warms the battery"
+      ],
+      "correct": "Current drives the reaction, and some energy becomes heat",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q54",
+      "text": "Design a low-cost way for a coastal family to get safe drinking water during floods. Which plan BEST uses both sciences?",
+      "options": [
+        "Let water settle, filter it through cloth, then boil it",
+        "Drink floodwater after it cools in a covered drum",
+        "Add salt to the floodwater, then store it under the hot sun",
+        "Freeze the floodwater and eat the ice right away"
+      ],
+      "correct": "Let water settle, filter it through cloth, then boil it",
+      "competency": "GENSCI-11-T1-W9-C1",
+      "bloomLevel": "Creating"
+    },
+    {
+      "id": "q55",
+      "text": "Which formula gives the output force of a hydraulic system?",
+      "options": [
+        "F₂ = F₁ × (A₂ ÷ A₁)",
+        "F₂ = F₁ × (A₁ ÷ A₂)",
+        "F₂ = F₁ + A₂ − A₁",
+        "F₂ = F₁ ÷ (A₁ × A₂)"
+      ],
+      "correct": "F₂ = F₁ × (A₂ ÷ A₁)",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q56",
+      "text": "What do a lever, a pulley and a hydraulic jack all have in common?",
+      "options": [
+        "They trade distance for force",
+        "They create energy from nothing",
+        "They work only with liquids",
+        "They need electricity to work"
+      ],
+      "correct": "They trade distance for force",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q57",
+      "text": "Which pair correctly matches a wave to its use in medicine?",
+      "options": [
+        "Ultrasound — imaging a baby in the womb",
+        "X-ray — measuring hearing ability",
+        "Radio wave — cleaning teeth by vibration",
+        "Sound wave — killing germs in milk"
+      ],
+      "correct": "Ultrasound — imaging a baby in the womb",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q58",
+      "text": "Which idea links pasteurization and cooking an egg?",
+      "options": [
+        "Heat changes the shape of proteins",
+        "Light breaks proteins into simple sugars",
+        "Cold makes proteins grow faster",
+        "Sound waves dissolve the proteins"
+      ],
+      "correct": "Heat changes the shape of proteins",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q59",
+      "text": "Electrical energy used by appliances is billed in which unit?",
+      "options": [
+        "Kilowatt-hour (kWh)",
+        "Kilogram (kg)",
+        "Kilopascal per hour (kPa/h)",
+        "Kilohertz (kHz)"
+      ],
+      "correct": "Kilowatt-hour (kWh)",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q60",
+      "text": "A 1.5 kW aircon runs 8 hours a day. How much energy does it use in one day?",
+      "options": [
+        "12 kWh",
+        "5.3 kWh",
+        "9.5 kWh",
+        "120 kWh"
+      ],
+      "correct": "12 kWh",
+      "competency": "GENSCI-11-T1-W10-C1",
+      "bloomLevel": "Applying"
+    }
   ]
 }

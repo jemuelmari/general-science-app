@@ -3,88 +3,282 @@
   "week": 7,
   "title": "Plant Organ Systems",
   "competencies": [
-    { "code": "GENSCI-11-T2-W7-C1", "text": "Explain plant organ interaction for material transport." }
+    {
+      "code": "GENSCI-11-T2-W7-C1",
+      "text": "Explain plant organ interaction for material transport."
+    }
   ],
-  "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
+  "badge": {
+    "id": "botanist",
+    "name": "Botanist",
+    "icon": "🌿"
+  },
   "days": [
     {
       "day": 1,
       "type": "lesson",
-      "title": "Plant Organs Working Together",
-      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the main plant organs and explain how they work together to transport water, minerals, and food.</p><h3>🌿 The Plant as a System</h3><p>Plants are made of organ systems that work together: roots, stems, leaves, flowers, and fruits.</p><table><thead><tr><th>Organ</th><th>Function</th></tr></thead><tbody><tr><td>Roots</td><td>Absorb water and minerals; anchor the plant</td></tr><tr><td>Stem</td><td>Support and transport between roots and leaves</td></tr><tr><td>Leaves</td><td>Photosynthesis — make food using sunlight</td></tr><tr><td>Flowers</td><td>Reproduction — produce seeds</td></tr><tr><td>Fruits</td><td>Protect seeds and aid dispersal</td></tr></tbody></table><h3>💧 The Vascular System</h3><table><thead><tr><th>Tissue</th><th>Transports</th><th>Direction</th></tr></thead><tbody><tr><td>Xylem</td><td>Water + minerals</td><td>Upward (roots to leaves)</td></tr><tr><td>Phloem</td><td>Sugars (food)</td><td>Both directions (source to sink)</td></tr></tbody></table><h3>📌 Quick Check</h3><ul><li>Which tissue transports water? (Answer: xylem)</li><li>Which tissue transports food? (Answer: phloem)</li></ul>"
+      "title": "The Plant as a System",
+      "badge": {
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain how plant organs interact to transport materials</strong> — water, minerals and food.</p>\n<h3>🌿 Two Main Systems</h3>\n<p>A plant has a <strong>root system</strong> (below ground) and a <strong>shoot system</strong> (stems, leaves, flowers, fruits). They depend on each other: roots need sugar made by leaves; leaves need water and minerals absorbed by roots.</p>\n<table><thead><tr><th>Organ</th><th>Main functions</th></tr></thead><tbody>\n<tr><td>Roots</td><td>Absorb water and minerals; anchor the plant; may store food (kamote, carrots)</td></tr>\n<tr><td>Stem</td><td>Supports leaves toward light; transports materials; may store food (sugarcane)</td></tr>\n<tr><td>Leaves</td><td>Photosynthesis; gas exchange through stomata; transpiration</td></tr>\n<tr><td>Flowers</td><td>Reproduction — pollination and seed formation</td></tr>\n<tr><td>Fruits</td><td>Protect seeds and help spread them</td></tr>\n</tbody></table>\n<h3>🔗 Why \"System\"?</h3>\n<p>If one organ is damaged, the others suffer. A plant with cut roots wilts even in wet soil; a plant stripped of leaves cannot make food, so its roots slowly starve. Healthy growth depends on all organs working together.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which plant organ mainly absorbs water and minerals?",
+            "choices": [
+              {
+                "label": "Roots",
+                "correct": true
+              },
+              {
+                "label": "Leaves",
+                "correct": false
+              },
+              {
+                "label": "Flowers",
+                "correct": false
+              },
+              {
+                "label": "Fruits",
+                "correct": false
+              }
+            ],
+            "explanation": "Root hairs give roots a large surface for absorbing water and dissolved minerals."
+          },
+          {
+            "text": "Kamote and cassava store food in which organ?",
+            "choices": [
+              {
+                "label": "Roots",
+                "correct": true
+              },
+              {
+                "label": "Stems",
+                "correct": false
+              },
+              {
+                "label": "Leaves",
+                "correct": false
+              },
+              {
+                "label": "Flowers",
+                "correct": false
+              }
+            ],
+            "explanation": "Kamote and cassava are swollen storage roots that hold starch made in the leaves."
+          },
+          {
+            "text": "All the leaves of a young tree are eaten by caterpillars. Why may its roots eventually die?",
+            "choices": [
+              {
+                "label": "Roots stop receiving sugar made in the leaves",
+                "correct": true
+              },
+              {
+                "label": "Roots begin making too much food by themselves",
+                "correct": false
+              },
+              {
+                "label": "Caterpillars move down and eat the roots next",
+                "correct": false
+              },
+              {
+                "label": "Leaves were the only organ that absorbed water",
+                "correct": false
+              }
+            ],
+            "explanation": "Roots cannot photosynthesize. They depend on sugar sent down from the leaves."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Plant Tissues",
-      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each plant organ or tissue to its correct function. There are 8 pairs.</p>",
+      "title": "Xylem and Phloem",
+      "badge": {
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
+      },
+      "content": "<h3>💧 Vascular Tissues</h3>\n<table><thead><tr><th></th><th>Xylem</th><th>Phloem</th></tr></thead><tbody>\n<tr><td>Carries</td><td>Water and dissolved minerals</td><td>Sugars (food) made in leaves</td></tr>\n<tr><td>Direction</td><td>Upward only: roots → leaves</td><td>Both ways: from <em>source</em> to <em>sink</em></td></tr>\n<tr><td>Cells</td><td>Dead, hollow tubes with thick walls</td><td>Living sieve-tube cells</td></tr>\n<tr><td>Also does</td><td>Supports the plant (wood is xylem)</td><td>Carries some hormones</td></tr>\n</tbody></table>\n<h3>🍬 Source and Sink</h3>\n<p>A <strong>source</strong> makes or releases sugar (mature leaves). A <strong>sink</strong> uses or stores it (roots, fruits, new shoots). In a mango tree during fruiting, sugar moves from leaves to the growing fruits.</p>\n<h3>🌳 Girdling</h3>\n<p>The phloem lies just under the <strong>bark</strong>; xylem is deeper (the wood). If a full ring of bark is removed (<strong>girdling</strong>), phloem is cut: water still goes up, but sugar can no longer reach the roots. The roots starve and the tree eventually dies.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Roots", "right": "Absorb water and minerals; anchor the plant" },
-          { "key": "k2", "left": "Stem", "right": "Supports the plant and transports materials between roots and leaves" },
-          { "key": "k3", "left": "Leaves", "right": "Perform photosynthesis to make food" },
-          { "key": "k4", "left": "Xylem", "right": "Transports water and minerals upward from roots to leaves" },
-          { "key": "k5", "left": "Phloem", "right": "Transports sugars from leaves to the rest of the plant" },
-          { "key": "k6", "left": "Transpiration", "right": "Loss of water vapor through stomata — pulls water up the plant" },
-          { "key": "k7", "left": "Stomata", "right": "Tiny openings on the underside of leaves for gas exchange" },
-          { "key": "k8", "left": "Flowers", "right": "Reproductive organs — produce seeds" }
+          {
+            "key": "k1",
+            "left": "Xylem",
+            "right": "Carries water and minerals upward",
+            "why": "It runs from roots to leaves."
+          },
+          {
+            "key": "k2",
+            "left": "Phloem",
+            "right": "Carries sugars from source to sink",
+            "why": "It can move food up or down."
+          },
+          {
+            "key": "k3",
+            "left": "Source",
+            "right": "Part that makes or releases sugar",
+            "why": "Usually mature leaves."
+          },
+          {
+            "key": "k4",
+            "left": "Sink",
+            "right": "Part that uses or stores sugar",
+            "why": "Roots, fruits and growing shoots."
+          },
+          {
+            "key": "k5",
+            "left": "Stomata",
+            "right": "Pores for gas exchange and water loss",
+            "why": "Guard cells open and close them."
+          },
+          {
+            "key": "k6",
+            "left": "Root hairs",
+            "right": "Increase surface area for absorption",
+            "why": "Tiny extensions of root cells."
+          },
+          {
+            "key": "k7",
+            "left": "Girdling",
+            "right": "Removing a ring of bark, cutting the phloem",
+            "why": "Roots starve without sugar."
+          },
+          {
+            "key": "k8",
+            "left": "Wood",
+            "right": "Mostly old xylem tissue",
+            "why": "It also supports the plant."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Transport in Plants",
-      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
+      "title": "How Water Climbs a Tree",
+      "badge": {
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
+      },
+      "content": "<h3>⬆️ The Transpiration Stream</h3>\n<ol>\n<li><strong>Roots absorb water</strong> by osmosis; minerals enter by active transport.</li>\n<li>Water moves into <strong>xylem</strong> and up the stem.</li>\n<li>In leaves, water <strong>evaporates</strong> from cells and escapes as vapor through <strong>stomata</strong> — this is <strong>transpiration</strong>.</li>\n<li>Evaporation creates a <strong>pull</strong>. Water molecules stick to each other (<strong>cohesion</strong>) and to xylem walls (<strong>adhesion</strong>), so a continuous column is pulled up — like sipping through a straw.</li>\n</ol>\n<h3>🌡️ What Changes the Rate?</h3>\n<table><thead><tr><th>Condition</th><th>Transpiration</th><th>Why</th></tr></thead><tbody>\n<tr><td>Hot, sunny</td><td>Faster</td><td>More evaporation</td></tr>\n<tr><td>Windy</td><td>Faster</td><td>Moist air around leaves is blown away</td></tr>\n<tr><td>Humid</td><td>Slower</td><td>Air already full of water vapor</td></tr>\n<tr><td>Dry soil</td><td>Slower</td><td>Stomata close to save water</td></tr>\n</tbody></table>\n<p>If water is lost faster than roots absorb it, cells lose <strong>turgor</strong> (water pressure) and the plant <strong>wilts</strong>. Closing stomata saves water but also limits CO₂ intake, slowing photosynthesis.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Explain plant transport in real situations. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌿 A farmer removes a complete ring of bark from around a tree trunk. A few months later, the tree dies. Why?",
+            "text": "A farmer removes a complete ring of bark from a tree trunk. Months later the tree dies. Why?",
             "choices": [
-              { "label": "A) The bark ring cut the phloem, so sugars from the leaves could no longer reach the roots — the roots starved", "correct": true },
-              { "label": "B) The tree lost its support", "correct": false },
-              { "label": "C) The tree became too cold", "correct": false },
-              { "label": "D) The bark was protecting against insects only", "correct": false }
-            ]
+              {
+                "label": "Phloem was cut, so sugar could not reach the roots",
+                "correct": true
+              },
+              {
+                "label": "Xylem was cut, so water could not reach the leaves",
+                "correct": false
+              },
+              {
+                "label": "Insects entered the wound and ate all of the leaves",
+                "correct": false
+              },
+              {
+                "label": "The bark was the part that made the tree's food",
+                "correct": false
+              }
+            ],
+            "explanation": "Phloem lies just beneath the bark. Cutting it stops sugar transport, so roots starve; xylem deeper inside still carries water for a while."
           },
           {
-            "text": "🥀 A potted plant is left in the sun without water for two days. Its leaves droop and become soft. What has happened?",
+            "text": "On a hot, windy afternoon, a potted plant wilts even though it was watered in the morning. What BEST explains this?",
             "choices": [
-              { "label": "A) Transpiration exceeded water uptake, so cells lost water and lost turgor pressure", "correct": true },
-              { "label": "B) The plant stopped making chlorophyll", "correct": false },
-              { "label": "C) The roots grew too long", "correct": false },
-              { "label": "D) The plant froze", "correct": false }
-            ]
+              {
+                "label": "Transpiration was faster than water absorption",
+                "correct": true
+              },
+              {
+                "label": "The plant stopped making any glucose",
+                "correct": false
+              },
+              {
+                "label": "Wind pushed water back down into the soil",
+                "correct": false
+              },
+              {
+                "label": "Sunlight turned the water in its leaves to sugar",
+                "correct": false
+              }
+            ],
+            "explanation": "Heat and wind speed up transpiration. When leaves lose water faster than roots supply it, cells lose turgor and the plant wilts."
           },
           {
-            "text": "🌳 A gardener plants a small tree in soil with plenty of water but no minerals. It grows slowly and leaves yellow. Why?",
+            "text": "White carnations are placed in water with blue food coloring. After a day the petals turn bluish. Which tissue carried the dye?",
             "choices": [
-              { "label": "A) Plants need minerals (like nitrogen and magnesium) absorbed by roots to make chlorophyll and proteins", "correct": true },
-              { "label": "B) The plant has too much water", "correct": false },
-              { "label": "C) The tree is too young", "correct": false },
-              { "label": "D) Water alone is all plants need", "correct": false }
-            ]
+              {
+                "label": "Xylem",
+                "correct": true
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Stomata",
+                "correct": false
+              },
+              {
+                "label": "Root hairs",
+                "correct": false
+              }
+            ],
+            "explanation": "Colored water moved up the stem through the xylem along with the transpiration stream."
           },
           {
-            "text": "☀️ On a hot, windy day, a plant's transpiration rate is very high. What is likely to happen?",
+            "text": "During fruiting, a mango tree sends most of its sugar to the fruits. In this case, the fruits are…",
             "choices": [
-              { "label": "A) The plant pulls up water faster from the roots to replace what's lost", "correct": true },
-              { "label": "B) The plant stops photosynthesis entirely", "correct": false },
-              { "label": "C) The plant starts to grow faster", "correct": false },
-              { "label": "D) Nothing changes — plants don't respond to weather", "correct": false }
-            ]
+              {
+                "label": "Sinks receiving sugar through phloem",
+                "correct": true
+              },
+              {
+                "label": "Sources sending sugar to the leaves",
+                "correct": false
+              },
+              {
+                "label": "Sinks receiving water through phloem",
+                "correct": false
+              },
+              {
+                "label": "Sources taking minerals from the roots",
+                "correct": false
+              }
+            ],
+            "explanation": "Fruits use and store sugar, so they are sinks. Phloem carries sugar from the leaves (sources) to them."
           },
           {
-            "text": "🍯 Which plant tissue transports glucose from the leaves to the roots for storage?",
+            "text": "A plant in very dry soil closes its stomata at midday. What is the trade-off?",
             "choices": [
-              { "label": "A) Xylem", "correct": false },
-              { "label": "B) Phloem", "correct": true },
-              { "label": "C) Cambium", "correct": false },
-              { "label": "D) Epidermis", "correct": false }
-            ]
+              {
+                "label": "It saves water but takes in less CO₂ for photosynthesis",
+                "correct": true
+              },
+              {
+                "label": "It gains more water but loses all its stored sugar at once",
+                "correct": false
+              },
+              {
+                "label": "It saves water and doubles its rate of photosynthesis",
+                "correct": false
+              },
+              {
+                "label": "It loses water but takes in much more oxygen instead",
+                "correct": false
+              }
+            ],
+            "explanation": "Closed stomata reduce water loss, but CO₂ also enters through stomata, so photosynthesis slows."
           }
         ]
       }
@@ -92,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Botany Lab",
-      "badge": { "id": "botanist", "name": "Botanist", "icon": "🌿" },
-      "content": "<h3>🔐 Formative Check — Escape the Botany Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 70% (5 of 6) to pass.</p>",
+      "title": "Organs Working Together",
+      "badge": {
+        "id": "botanist",
+        "name": "Botanist",
+        "icon": "🌿"
+      },
+      "content": "<h3>🔄 The Full Cycle</h3>\n<ol>\n<li>Roots absorb water and minerals → xylem carries them up.</li>\n<li>Leaves use light, CO₂ and water to make sugar (photosynthesis).</li>\n<li>Phloem carries sugar to roots, fruits and growing tips.</li>\n<li>Roots use that sugar for respiration and growth — so they can keep absorbing water.</li>\n</ol>\n<p>Each organ supports the others. Break any link, and the whole plant suffers.</p>\n<h3>🌾 Applications in Philippine Farming</h3>\n<ul>\n<li><strong>Transplanting rice</strong>: farmers keep soil around roots to avoid damaging root hairs, which reduces transplant shock.</li>\n<li><strong>Watering in the early morning or late afternoon</strong>: less water is lost to evaporation and transpiration.</li>\n<li><strong>Mulching</strong>: keeps soil moist so roots can keep up with transpiration.</li>\n<li><strong>Fertilizer with N, P and K</strong>: supplies minerals carried by the xylem for leaf growth and fruiting.</li>\n</ul>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which plant organ is primarily responsible for absorbing water and minerals?",
+            "text": "Which vascular tissue carries water upward from the roots?",
             "choices": [
-              { "label": "A) Roots", "correct": true },
-              { "label": "B) Leaves", "correct": false },
-              { "label": "C) Flowers", "correct": false },
-              { "label": "D) Fruit", "correct": false }
-            ]
-          },
-          {
-            "text": "Which vascular tissue transports water upward from the roots?",
-            "choices": [
-              { "label": "A) Xylem", "correct": true },
-              { "label": "B) Phloem", "correct": false },
-              { "label": "C) Cambium", "correct": false },
-              { "label": "D) Epidermis", "correct": false }
-            ]
-          },
-          {
-            "text": "Which vascular tissue transports sugar (food) throughout the plant?",
-            "choices": [
-              { "label": "A) Phloem", "correct": true },
-              { "label": "B) Xylem", "correct": false },
-              { "label": "C) Stomata", "correct": false },
-              { "label": "D) Cuticle", "correct": false }
-            ]
+              {
+                "label": "Xylem",
+                "correct": true
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Cuticle",
+                "correct": false
+              },
+              {
+                "label": "Stomata",
+                "correct": false
+              }
+            ],
+            "explanation": "Xylem vessels carry water and dissolved minerals from roots to leaves."
           },
           {
             "text": "What is transpiration?",
             "choices": [
-              { "label": "A) Loss of water vapor from leaves through stomata", "correct": true },
-              { "label": "B) Movement of food through phloem", "correct": false },
-              { "label": "C) Absorption of minerals by the roots", "correct": false },
-              { "label": "D) Production of glucose in leaves", "correct": false }
-            ]
+              {
+                "label": "Loss of water vapor through the stomata",
+                "correct": true
+              },
+              {
+                "label": "Movement of sugar from leaves to roots",
+                "correct": false
+              },
+              {
+                "label": "Absorption of minerals by the root hairs",
+                "correct": false
+              },
+              {
+                "label": "Making glucose from light and carbon dioxide",
+                "correct": false
+              }
+            ],
+            "explanation": "Transpiration is evaporation of water from leaves, mainly through stomata; it pulls water up the xylem."
           },
           {
-            "text": "Why does removing a complete ring of bark kill a tree?",
+            "text": "Which property lets water form a continuous column in the xylem?",
             "choices": [
-              { "label": "A) It cuts the phloem, so sugars cannot reach the roots, which then starve and die", "correct": true },
-              { "label": "B) It removes the tree's protective armor", "correct": false },
-              { "label": "C) It prevents photosynthesis", "correct": false },
-              { "label": "D) It stops transpiration", "correct": false }
-            ]
+              {
+                "label": "Cohesion between water molecules",
+                "correct": true
+              },
+              {
+                "label": "Water molecules repelling each other",
+                "correct": false
+              },
+              {
+                "label": "Gravity pulling water up the stem",
+                "correct": false
+              },
+              {
+                "label": "Sugar dragging water down to roots",
+                "correct": false
+              }
+            ],
+            "explanation": "Water molecules attract each other (cohesion), so pulling at the top lifts the whole column."
           },
           {
-            "text": "Which process makes a leaf a 'solar panel' for the plant?",
+            "text": "Why do farmers keep soil around seedling roots when transplanting?",
             "choices": [
-              { "label": "A) Photosynthesis", "correct": true },
-              { "label": "B) Respiration", "correct": false },
-              { "label": "C) Transpiration", "correct": false },
-              { "label": "D) Osmosis", "correct": false }
-            ]
+              {
+                "label": "To protect the delicate root hairs",
+                "correct": true
+              },
+              {
+                "label": "To keep the leaves from getting wet",
+                "correct": false
+              },
+              {
+                "label": "To make the seedlings much heavier",
+                "correct": false
+              },
+              {
+                "label": "To stop the seedlings from growing",
+                "correct": false
+              }
+            ],
+            "explanation": "Root hairs absorb most of the water. Damaging them causes wilting (transplant shock)."
+          },
+          {
+            "text": "Which tissue carries sugar from leaves to a kamote root?",
+            "choices": [
+              {
+                "label": "Phloem",
+                "correct": true
+              },
+              {
+                "label": "Xylem",
+                "correct": false
+              },
+              {
+                "label": "Epidermis",
+                "correct": false
+              },
+              {
+                "label": "Root cap",
+                "correct": false
+              }
+            ],
+            "explanation": "Phloem carries sugars from sources (leaves) to sinks such as storage roots."
+          },
+          {
+            "text": "Why is watering plants at noon on a hot day less efficient than in the early morning?",
+            "choices": [
+              {
+                "label": "More water evaporates before roots use it",
+                "correct": true
+              },
+              {
+                "label": "Roots cannot absorb any water in the daytime",
+                "correct": false
+              },
+              {
+                "label": "Water at noon is heavier and sinks too deep",
+                "correct": false
+              },
+              {
+                "label": "Plants only drink water when it is dark",
+                "correct": false
+              }
+            ],
+            "explanation": "High heat speeds evaporation from soil and leaves, wasting water. Cooler times let more reach the roots."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

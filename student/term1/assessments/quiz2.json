@@ -1,188 +1,272 @@
 {
   "title": "Quiz 2 — Properties of Light & Sound",
   "coverage": "Weeks 5–6",
+  "competencies": [
+    "GENSCI-11-T1-W5-C1",
+    "GENSCI-11-T1-W6-C1"
+  ],
   "items": 20,
-  "competencies": ["GENSCI-11-T1-W5-C1", "GENSCI-11-T1-W6-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
     {
       "id": "q1",
-      "text": "What type of wave is light?",
-      "options": ["Electromagnetic wave", "Mechanical wave", "Sound wave", "Seismic wave"],
+      "text": "What kind of wave is light?",
+      "options": [
+        "Electromagnetic wave",
+        "Mechanical sound wave",
+        "Longitudinal wave",
+        "Seismic wave"
+      ],
       "correct": "Electromagnetic wave",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "properties of light" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q2",
-      "text": "What is the speed of light in a vacuum?",
-      "options": ["3 × 10⁸ m/s", "343 m/s", "1,480 m/s", "3 × 10⁶ m/s"],
+      "text": "How fast does light travel in a vacuum?",
+      "options": [
+        "3 × 10⁸ m/s",
+        "343 m/s",
+        "1,500 m/s",
+        "3 × 10⁵ m/s"
+      ],
       "correct": "3 × 10⁸ m/s",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "speed of light" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q3",
-      "text": "Which property of light determines its color?",
-      "options": ["Wavelength (or frequency)", "Amplitude", "Speed", "Intensity"],
-      "correct": "Wavelength (or frequency)",
+      "text": "Why can sunlight reach Earth through the vacuum of space?",
+      "options": [
+        "Light needs no medium to travel",
+        "Space is filled with thin air",
+        "Light travels only through gases",
+        "Sunlight is carried by sound waves"
+      ],
+      "correct": "Light needs no medium to travel",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light property" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q4",
-      "text": "When light bounces off a mirror, this is called:",
-      "options": ["Reflection", "Refraction", "Diffraction", "Absorption"],
-      "correct": "Reflection",
+      "text": "A straw in a glass of water looks bent at the surface. What property of light causes this?",
+      "options": [
+        "Refraction",
+        "Reflection",
+        "Absorption",
+        "Amplification"
+      ],
+      "correct": "Refraction",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light behavior" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q5",
-      "text": "Why does a straw look bent when placed in a glass of water?",
-      "options": ["Refraction", "Reflection", "Diffraction", "Polarization"],
-      "correct": "Refraction",
+      "text": "Fiber-optic cables carry internet data over long distances. Which property keeps the light inside the fiber?",
+      "options": [
+        "Total internal reflection",
+        "Diffraction around the cable",
+        "Absorption by the glass core",
+        "Scattering by dust particles"
+      ],
+      "correct": "Total internal reflection",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "refraction = light property" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q6",
-      "text": "The Law of Reflection states that:",
-      "options": ["Angle of incidence = angle of reflection", "Angle of incidence = 2 × angle of reflection", "Angle of incidence = 0", "Angle of incidence = angle of refraction"],
-      "correct": "Angle of incidence = angle of reflection",
+      "text": "Which device produces a narrow, intense beam of light of one color?",
+      "options": [
+        "Laser",
+        "Prism",
+        "Hologram",
+        "Concave lens"
+      ],
+      "correct": "Laser",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "law of reflection" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q7",
-      "text": "Which EM wave is used in TV remote controls?",
-      "options": ["Infrared", "Ultraviolet", "X-ray", "Gamma ray"],
-      "correct": "Infrared",
+      "text": "Why are LEDs called energy-efficient compared with ordinary incandescent bulbs?",
+      "options": [
+        "They turn more energy into light, less into heat",
+        "They need no electricity once they are switched on",
+        "They give off much brighter ultraviolet rays",
+        "They store sunlight during the day for later use"
+      ],
+      "correct": "They turn more energy into light, less into heat",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM spectrum application" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q8",
-      "text": "Which EM wave is used to take images of bones in hospitals?",
-      "options": ["X-rays", "Radio waves", "Infrared", "Microwaves"],
-      "correct": "X-rays",
+      "text": "Doctors use X-rays to see broken bones. Which property makes this possible?",
+      "options": [
+        "X-rays pass through soft tissue but not dense bone",
+        "X-rays bounce off the skin and form a mirror image",
+        "X-rays are sound waves that echo from the bones",
+        "X-rays heat the bones until they begin to glow"
+      ],
+      "correct": "X-rays pass through soft tissue but not dense bone",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM wave in medicine" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q9",
-      "text": "Which EM wave has the SHORTEST wavelength?",
-      "options": ["Gamma rays", "Radio waves", "Infrared", "Visible light"],
-      "correct": "Gamma rays",
+      "text": "A radio station broadcasts at 100 MHz (1 × 10⁸ Hz). Using c = fλ with c = 3 × 10⁸ m/s, what is its wavelength?",
+      "options": [
+        "3 m",
+        "0.3 m",
+        "30 m",
+        "300 m"
+      ],
+      "correct": "3 m",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "EM spectrum ordering" }
+      "bloomLevel": "Applying"
     },
     {
       "id": "q10",
-      "text": "Which technology uses light to transmit internet data at very high speeds?",
-      "options": ["Fiber-optic cables", "Copper phone lines", "Satellite dishes", "Bluetooth speakers"],
-      "correct": "Fiber-optic cables",
+      "text": "A bank uses a hologram on its ATM cards. What is the MAIN reason for this choice?",
+      "options": [
+        "A hologram is hard to copy, so it prevents fakes",
+        "A hologram makes the card more durable in water use",
+        "A hologram stores the owner's money balance",
+        "A hologram lets the card work without a chip"
+      ],
+      "correct": "A hologram is hard to copy, so it prevents fakes",
       "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "light in communications" }
+      "bloomLevel": "Analyzing"
     },
     {
       "id": "q11",
-      "text": "What is the typical range of the visible light spectrum?",
-      "options": ["400 nm to 700 nm", "20 Hz to 20,000 Hz", "100 nm to 200 nm", "1 mm to 1 m"],
-      "correct": "400 nm to 700 nm",
-      "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "visible light spectrum range" }
+      "text": "What kind of wave is sound?",
+      "options": [
+        "Mechanical, longitudinal wave",
+        "Electromagnetic, transverse",
+        "Electromagnetic, longitudinal",
+        "Mechanical, light-like wave"
+      ],
+      "correct": "Mechanical, longitudinal wave",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q12",
-      "text": "Which lighting technology is the MOST energy-efficient?",
-      "options": ["LED", "Incandescent", "Halogen", "Fluorescent tube"],
-      "correct": "LED",
-      "competency": "GENSCI-11-T1-W5-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "LED innovation = light property application" }
+      "text": "Astronauts on the Moon cannot talk to each other without radios. Why?",
+      "options": [
+        "Sound needs a medium, and the Moon has no air",
+        "Sound travels too fast on the Moon to hear",
+        "The Moon's weak gravity bends all sound waves",
+        "Their helmets absorb all the light waves"
+      ],
+      "correct": "Sound needs a medium, and the Moon has no air",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q13",
-      "text": "What type of wave is sound?",
-      "options": ["Mechanical wave", "Electromagnetic wave", "Light wave", "Radio wave"],
-      "correct": "Mechanical wave",
+      "text": "Which property of a sound wave determines its pitch?",
+      "options": [
+        "Frequency",
+        "Amplitude",
+        "Speed",
+        "Medium"
+      ],
+      "correct": "Frequency",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "properties of sound" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q14",
-      "text": "Why can't sound travel through space?",
-      "options": ["Space has no particles to vibrate", "Space is too cold", "Sound is absorbed by stars", "Sound moves faster than light"],
-      "correct": "Space has no particles to vibrate",
+      "text": "A worker strikes a steel rail 1 km away. A girl with her ear on the rail hears the hit before her friend standing beside her hears it through the air. What BEST explains this?",
+      "options": [
+        "Sound travels faster in solids than in air",
+        "Light from the hammer reaches the rail first",
+        "The rail makes the sound higher in pitch",
+        "Air absorbs sound only near railway tracks"
+      ],
+      "correct": "Sound travels faster in solids than in air",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound needs medium" }
+      "bloomLevel": "Analyzing"
     },
     {
       "id": "q15",
-      "text": "Sound travels FASTEST through which medium?",
-      "options": ["Steel", "Air", "Water", "Vacuum"],
-      "correct": "Steel",
+      "text": "Why do recording studios cover their walls with foam panels?",
+      "options": [
+        "Foam absorbs sound and reduces echoes",
+        "Foam reflects more sound toward the singer",
+        "Foam makes the sound travel much faster",
+        "Foam raises the pitch of the recorded voice"
+      ],
+      "correct": "Foam absorbs sound and reduces echoes",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound speed in media" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q16",
-      "text": "Which property of a sound wave determines how loud or soft it sounds?",
-      "options": ["Amplitude", "Frequency", "Wavelength", "Speed"],
-      "correct": "Amplitude",
+      "text": "Which device uses sound waves above 20,000 Hz to see a baby inside the womb?",
+      "options": [
+        "Ultrasound scanner",
+        "X-ray imaging machine",
+        "Laser scanner",
+        "Radio receiver"
+      ],
+      "correct": "Ultrasound scanner",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound amplitude" }
+      "bloomLevel": "Remembering"
     },
     {
       "id": "q17",
-      "text": "What frequency range can the human ear typically hear?",
-      "options": ["20 Hz – 20,000 Hz", "0 – 10 Hz", "20,000 Hz – 100,000 Hz", "100 Hz – 1,000 Hz"],
-      "correct": "20 Hz – 20,000 Hz",
+      "text": "What does an amplifier do to a sound signal?",
+      "options": [
+        "Increases its amplitude, making it louder",
+        "Increases its speed so it arrives sooner",
+        "Raises its frequency so it sounds much higher",
+        "Changes it into light for longer travel"
+      ],
+      "correct": "Increases its amplitude, making it louder",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "human hearing range" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q18",
-      "text": "What does SONAR stand for?",
-      "options": ["Sound Navigation And Ranging", "Sonic Ocean Navigation And Radar", "Sound Observation Network And Receiver", "Submarine Orientation Navigation And Response"],
-      "correct": "Sound Navigation And Ranging",
+      "text": "A fishing boat's sonar pulse returns 2.0 s after it was sent. Sound travels 1,500 m/s in sea water. How deep is the water?",
+      "options": [
+        "1,500 m",
+        "750 m",
+        "3,000 m",
+        "6,000 m"
+      ],
+      "correct": "1,500 m",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "SONAR = sound navigation" }
+      "bloomLevel": "Applying"
     },
     {
       "id": "q19",
-      "text": "Which material is BEST for soundproofing a music room?",
-      "options": ["Acoustic foam panels", "Glass", "Ceramic tile", "Steel plates"],
-      "correct": "Acoustic foam panels",
+      "text": "A school beside a busy highway wants quieter classrooms. Which plan is MOST effective?",
+      "options": [
+        "Plant thick trees and use sealed, double-glazed windows",
+        "Paint the classroom walls with bright, glossy colors",
+        "Open all the windows to let the noise escape faster",
+        "Install more loudspeakers so all teachers sound louder"
+      ],
+      "correct": "Plant thick trees and use sealed, double-glazed windows",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soundproofing = sound innovation" }
+      "bloomLevel": "Analyzing"
     },
     {
       "id": "q20",
-      "text": "How do noise-cancelling headphones reduce background noise?",
-      "options": ["They emit inverse sound waves that cancel out incoming noise", "They block all sound with foam", "They increase sound frequency", "They reduce the speed of sound"],
-      "correct": "They emit inverse sound waves that cancel out incoming noise",
+      "text": "A student claims, \"Ultrasound and X-rays are the same because both are used to see inside the body.\" Which judgment is BEST?",
+      "options": [
+        "Incorrect — ultrasound is sound, X-rays are EM waves",
+        "Correct — both are electromagnetic waves",
+        "Correct — both are sound waves at a very high pitch",
+        "Incorrect — X-rays travel slower than ultrasound does"
+      ],
+      "correct": "Incorrect — ultrasound is sound, X-rays are EM waves",
       "competency": "GENSCI-11-T1-W6-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "sound innovation application" }
+      "bloomLevel": "Evaluating"
     }
   ]
 }

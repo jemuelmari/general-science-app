@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Cumulative Review — Weeks 1–5",
-      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to recall and apply all major physics concepts from Weeks 1–5: physics in daily life, motion, machines, hydraulics, and light.</p><h3>📚 Term 1 Recap — Weeks 1 to 5</h3><table><thead><tr><th>Week</th><th>Topic</th><th>Key Idea</th></tr></thead><tbody><tr><td>1</td><td>Physics in Real Life</td><td>Physics improves household, health &amp; safety, work, and leisure.</td></tr><tr><td>2</td><td>Linear vs Angular Motion</td><td>d = rθ, v = rω, a = rα. Points farther from the axis move faster.</td></tr><tr><td>3</td><td>Efficient Machines</td><td>Six simple machines + compound machines. MA = F_out ÷ F_in.</td></tr><tr><td>4</td><td>Hydraulics &amp; Energy</td><td>Pascal's Principle; F₁/A₁ = F₂/A₂. kWh = energy consumed.</td></tr><tr><td>5</td><td>Properties of Light</td><td>Reflection, refraction, EM spectrum, LEDs, lasers, fiber optics.</td></tr></tbody></table><h3>🔑 Physics Big Ideas (Weeks 1–5)</h3><ul><li><strong>Motion:</strong> translational vs rotational; r connects linear and angular quantities.</li><li><strong>Machines:</strong> multiply force or change direction — but never create energy.</li><li><strong>Fluids:</strong> Pascal's Principle makes hydraulics possible (car brakes, jacks).</li><li><strong>Light:</strong> wave nature; reflection, refraction, EM spectrum. Used in meds, comms, entertainment.</li></ul><h3>🧮 Must-Know Formulas</h3><ul><li>v = r × ω (linear velocity from angular velocity)</li><li>MA = F_out ÷ F_in (mechanical advantage)</li><li>P = F ÷ A (pressure)</li><li>F₁/A₁ = F₂/A₂ (hydraulic equation)</li><li>c = f × λ (speed of light = frequency × wavelength)</li></ul><h3>💡 Study Tips</h3><ul><li>Draw diagrams for machines and hydraulic systems.</li><li>Practice 3–5 numeric problems per formula.</li><li>Know one real-life example per concept.</li><li>Link physics topics to chemistry topics (e.g., batteries combine both).</li></ul><h3>📌 Quick Check</h3><ul><li>Name all six simple machines. (Lever, wheel &amp; axle, pulley, inclined plane, wedge, screw)</li><li>If a wheel rotates at 3 rad/s with radius 0.5 m, what is v? (Answer: 1.5 m/s)</li><li>What does SONAR stand for? (Answer: SOund Navigation And Ranging)</li></ul>"
+      "title": "Review: Motion and Machines (Weeks 1–4)",
+      "badge": {
+        "id": "term1-finisher",
+        "name": "Term 1 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>review and connect all Term 1 competencies</strong> to prepare for the Term Exam.</p>\n<h3>📚 Weeks 1–4 at a Glance</h3>\n<table><thead><tr><th>Week</th><th>Big idea</th><th>Must-know</th></tr></thead><tbody>\n<tr><td>1</td><td>Physics improves household, health &amp; safety, work and leisure</td><td>Stopping time, refraction, pressure, friction in daily life</td></tr>\n<tr><td>2</td><td>Translational vs rotational motion</td><td>d = rθ, v = rω, a = rα; same ω, bigger r → faster</td></tr>\n<tr><td>3</td><td>Machines multiply force or change direction</td><td>MA = F<sub>out</sub> ÷ F<sub>in</sub>; τ = F × r; efficiency &lt; 100%</td></tr>\n<tr><td>4</td><td>Pressure in fluids; using energy wisely</td><td>P = F ÷ A; F₁/A₁ = F₂/A₂; kWh = kW × h</td></tr>\n</tbody></table>\n<h3>🧠 Connecting Ideas</h3>\n<p>Torque (Week 3) uses the same \"radius\" idea as v = rω (Week 2): farther from the axis means a bigger effect. Hydraulics (Week 4) and levers (Week 3) both <strong>trade distance for force</strong> — work is never multiplied.</p>\n<h3>✅ Quick Check</h3><p>3 mixed questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "A Ferris wheel turns once every 60 s. Rider A sits 10 m from the axis, rider B 5 m. Which is TRUE?",
+            "choices": [
+              {
+                "label": "Both have the same ω; A moves twice as fast",
+                "correct": true
+              },
+              {
+                "label": "B moves twice as fast because B is nearer the axis",
+                "correct": false
+              },
+              {
+                "label": "Both move at the same linear speed",
+                "correct": false
+              },
+              {
+                "label": "A has twice the angular velocity of B",
+                "correct": false
+              }
+            ],
+            "explanation": "All riders turn once in 60 s (same ω). With v = rω, rider A at twice the radius moves twice as fast."
+          },
+          {
+            "text": "A hydraulic lift has pistons of 0.02 m² and 0.40 m². A 150 N push gives what output force?",
+            "choices": [
+              {
+                "label": "3,000 N",
+                "correct": true
+              },
+              {
+                "label": "7.5 N",
+                "correct": false
+              },
+              {
+                "label": "300 N",
+                "correct": false
+              },
+              {
+                "label": "6,000 N",
+                "correct": false
+              }
+            ],
+            "explanation": "The force is multiplied by 0.40 ÷ 0.02 = 20, so F₂ = 150 × 20 = 3,000 N."
+          },
+          {
+            "text": "A lever and a hydraulic jack both lift heavy loads with small efforts. What do they have in common?",
+            "choices": [
+              {
+                "label": "Both trade a longer input distance for force",
+                "correct": true
+              },
+              {
+                "label": "Both create extra energy out of nothing at all",
+                "correct": false
+              },
+              {
+                "label": "Both work only with liquids inside",
+                "correct": false
+              },
+              {
+                "label": "Both change light energy into work",
+                "correct": false
+              }
+            ],
+            "explanation": "Neither machine creates energy. Each lets a small force move through a long distance so a large force moves a short distance."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Term 1 Concepts",
-      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each Term 1 concept from across all weeks to its correct description or example. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Review: Waves (Weeks 5–6)",
+      "badge": {
+        "id": "term1-finisher",
+        "name": "Term 1 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🌊 Light vs Sound</h3>\n<table><thead><tr><th></th><th>Light</th><th>Sound</th></tr></thead><tbody>\n<tr><td>Type of wave</td><td>Electromagnetic, transverse</td><td>Mechanical, longitudinal</td></tr>\n<tr><td>Needs a medium?</td><td>No — crosses a vacuum</td><td>Yes — solid, liquid or gas</td></tr>\n<tr><td>Speed</td><td>3 × 10⁸ m/s in vacuum</td><td>343 m/s in air; fastest in solids</td></tr>\n<tr><td>Frequency decides</td><td>Color (and energy)</td><td>Pitch</td></tr>\n<tr><td>Amplitude decides</td><td>Brightness</td><td>Loudness</td></tr>\n<tr><td>Innovations</td><td>LED, laser, fiber optics, hologram</td><td>Sonar, ultrasound, amplifier, soundproofing</td></tr>\n</tbody></table>\n<h3>🧠 Common Traps</h3>\n<ul>\n<li>Both light and sound <strong>reflect</strong> (mirror image, echo) and <strong>refract</strong>.</li>\n<li>Ultrasound (sound) is safe for pregnant mothers; X-rays (EM) are ionizing.</li>\n<li>For echoes and sonar, divide the round-trip distance by 2.</li>\n</ul>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each idea to the correct wave fact. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Translational motion", "right": "A car driving forward on a straight road" },
-          { "key": "k2", "left": "Angular velocity (ω)", "right": "Measured in rad/s — how fast an object spins" },
-          { "key": "k3", "left": "Lever", "right": "Crowbar or wheelbarrow — uses a fulcrum to multiply force" },
-          { "key": "k4", "left": "Pascal's Principle", "right": "Pressure applied to an enclosed fluid is transmitted equally" },
-          { "key": "k5", "left": "Reflection", "right": "Light bouncing off a mirror" },
-          { "key": "k6", "left": "Refraction", "right": "Straw appearing bent in a glass of water" },
-          { "key": "k7", "left": "Longitudinal wave", "right": "Sound — particles vibrate parallel to wave direction" },
-          { "key": "k8", "left": "Pasteurization", "right": "Heating liquids to kill harmful bacteria" }
+          {
+            "key": "k1",
+            "left": "Light in a vacuum",
+            "right": "Travels at 3 × 10⁸ m/s",
+            "why": "Light is electromagnetic and needs no medium."
+          },
+          {
+            "key": "k2",
+            "left": "Sound in a vacuum",
+            "right": "Cannot travel at all",
+            "why": "Sound needs particles to pass the vibration along."
+          },
+          {
+            "key": "k3",
+            "left": "Frequency of sound",
+            "right": "Decides the pitch",
+            "why": "More vibrations per second sound higher."
+          },
+          {
+            "key": "k4",
+            "left": "Wavelength of light",
+            "right": "Decides the color",
+            "why": "Red has a longer wavelength than violet."
+          },
+          {
+            "key": "k5",
+            "left": "Echo",
+            "right": "Reflected sound wave",
+            "why": "Hard surfaces bounce sound back to the listener."
+          },
+          {
+            "key": "k6",
+            "left": "Refraction",
+            "right": "Bending as speed changes in a new medium",
+            "why": "A straw looks broken in a glass of water."
+          },
+          {
+            "key": "k7",
+            "left": "Fiber optics",
+            "right": "Total internal reflection carries data",
+            "why": "Light stays inside the glass fiber."
+          },
+          {
+            "key": "k8",
+            "left": "Sonar",
+            "right": "Times echoes to find depth",
+            "why": "Distance = speed × time ÷ 2."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Full-Term Scenarios",
-      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. These integrate concepts from the full term. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Review: Chemistry and Synthesis (Weeks 7–9)",
+      "badge": {
+        "id": "term1-finisher",
+        "name": "Term 1 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🧪 Weeks 7–9 at a Glance</h3>\n<table><thead><tr><th>Week</th><th>Big idea</th><th>Must-know</th></tr></thead><tbody>\n<tr><td>7</td><td>Pasteur joined chemistry and biology</td><td>Swan-neck flask → germ theory; pasteurization denatures microbial proteins; vaccines build immunity</td></tr>\n<tr><td>8</td><td>Household products: benefits and risks</td><td>Active ingredients; never mix bleach with ammonia or acids; eutrophication; FDA, DTI, DENR</td></tr>\n<tr><td>9</td><td>Real systems need both sciences</td><td>Battery (redox + current), engine (combustion + torque), aircon (phase change + heat transfer)</td></tr>\n</tbody></table>\n<h3>🔁 Cross-Links Across the Term</h3>\n<ul>\n<li><strong>Heat and proteins:</strong> pasteurization (Week 7) and cooking (Week 9) both denature proteins.</li>\n<li><strong>Energy wisely:</strong> kWh and efficient appliances (Week 4) connect to the aircon and LEDs (Weeks 5 and 9).</li>\n<li><strong>Safety:</strong> stopping time (Week 1), hearing damage above 85 dB (Week 6), and chemical warnings (Week 8) all protect health.</li>\n</ul>\n<h3>📝 How to Answer HOTS Questions</h3>\n<p>Underline what is asked (BEST, MOST, NOT, TRUE). Identify the concept. Eliminate choices that break a rule you know (energy created, sound in a vacuum, mixing bleach). Then compare the two best choices against the evidence in the question.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Mixed scenarios from the whole term. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🚗 A mechanic uses a hydraulic lift to raise a car. The input piston has area 0.01 m², and the output piston has area 0.5 m². If the mechanic applies 200 N, what is the output force?",
+            "text": "A student says, \"Pasteurized milk can stay on the table all week because pasteurization killed every germ.\" How should you respond?",
             "choices": [
-              { "label": "A) 200 N", "correct": false },
-              { "label": "B) 4,000 N", "correct": false },
-              { "label": "C) 10,000 N", "correct": true },
-              { "label": "D) 50 N", "correct": false }
-            ]
+              {
+                "label": "Wrong — it kills most microbes, so it must stay cold",
+                "correct": true
+              },
+              {
+                "label": "Right — pasteurization makes milk completely sterile",
+                "correct": false
+              },
+              {
+                "label": "Wrong — pasteurization adds germs to keep milk fresh",
+                "correct": false
+              },
+              {
+                "label": "Right — but only if the milk is kept near sunlight",
+                "correct": false
+              }
+            ],
+            "explanation": "Pasteurization reduces harmful microbes but does not sterilize. Survivors multiply at room temperature, so the milk needs refrigeration."
           },
           {
-            "text": "🎡 A Ferris wheel rotates once every 30 seconds. A rider at the outer edge (radius 10 m) and a rider near the center (radius 3 m) both complete a full circle in the same time. Which statement is TRUE?",
+            "text": "A concert in an open field uses large speakers. Why can listeners far away still hear the music clearly?",
             "choices": [
-              { "label": "A) Both riders have the same angular velocity, but the outer rider has greater linear velocity.", "correct": true },
-              { "label": "B) Both riders have the same linear velocity.", "correct": false },
-              { "label": "C) The inner rider moves faster.", "correct": false },
-              { "label": "D) Neither rider moves.", "correct": false }
-            ]
+              {
+                "label": "Amplifiers give the sound a much larger amplitude",
+                "correct": true
+              },
+              {
+                "label": "Speakers raise the speed of sound in the air",
+                "correct": false
+              },
+              {
+                "label": "Sound travels faster in open fields at night",
+                "correct": false
+              },
+              {
+                "label": "Amplifiers raise the pitch so the sound carries farther",
+                "correct": false
+              }
+            ],
+            "explanation": "Amplifiers increase the amplitude (energy) of the sound waves, so they are still loud enough after spreading out. Speed and pitch are unchanged."
           },
           {
-            "text": "🧴 Your household has a bottle of bleach and a bottle of ammonia cleaner. What must you NEVER do?",
+            "text": "Your barangay replaces 100 W bulbs with 15 W LEDs that are just as bright. Which TWO ideas from this term explain the savings?",
             "choices": [
-              { "label": "A) Store them in the same cabinet", "correct": false },
-              { "label": "B) Mix them together — releases toxic chloramine gas", "correct": true },
-              { "label": "C) Use bleach on white clothes", "correct": false },
-              { "label": "D) Read the labels", "correct": false }
-            ]
+              {
+                "label": "LEDs waste less energy as heat; kWh drops",
+                "correct": true
+              },
+              {
+                "label": "LEDs give off ultraviolet light; kWh rises",
+                "correct": false
+              },
+              {
+                "label": "LEDs reflect more light; power stays the same",
+                "correct": false
+              },
+              {
+                "label": "LEDs need hydraulic pressure; bills go down",
+                "correct": false
+              }
+            ],
+            "explanation": "LEDs turn more of their energy into light instead of heat (efficiency), so the energy used (kW × h) and the bill both drop."
           },
           {
-            "text": "💡 Your barangay installs LED streetlights instead of traditional incandescent bulbs. What is the primary benefit?",
+            "text": "While cleaning, someone mixes bleach with a vinegar-based cleaner in a small, closed bathroom. What is the FIRST thing to do?",
             "choices": [
-              { "label": "A) LEDs are cheaper but dimmer.", "correct": false },
-              { "label": "B) LEDs use far less energy per unit of light output, saving on electricity and lasting longer.", "correct": true },
-              { "label": "C) LEDs don't use electricity.", "correct": false },
-              { "label": "D) LEDs generate more heat.", "correct": false }
-            ]
+              {
+                "label": "Leave the room and get fresh air at once",
+                "correct": true
+              },
+              {
+                "label": "Add water to the mixture and keep cleaning",
+                "correct": false
+              },
+              {
+                "label": "Close the door so the gas stays inside",
+                "correct": false
+              },
+              {
+                "label": "Add baking soda to make the gas safer",
+                "correct": false
+              }
+            ],
+            "explanation": "The mixture releases chlorine gas. Getting away from it into fresh air comes first; then ventilate the room and seek help if anyone has trouble breathing."
           },
           {
-            "text": "🔊 A concert is held in an open field. Why do people far away still hear the music?",
+            "text": "A mechanic must loosen a very tight lug nut but has only a short wrench. Which solution is BEST and why?",
             "choices": [
-              { "label": "A) Sound travels through solid ground faster than air.", "correct": false },
-              { "label": "B) Sound waves spread outward through the air, and amplifiers increase the amplitude so the sound carries farther.", "correct": true },
-              { "label": "C) Sound travels at the speed of light.", "correct": false },
-              { "label": "D) Sound can travel through vacuum.", "correct": false }
-            ]
+              {
+                "label": "Slip a pipe over the handle to lengthen the lever arm",
+                "correct": true
+              },
+              {
+                "label": "Heat the wrench so the metal becomes softer",
+                "correct": false
+              },
+              {
+                "label": "Push faster on the wrench for a shorter time",
+                "correct": false
+              },
+              {
+                "label": "Hold the wrench closer to the nut for better control",
+                "correct": false
+              }
+            ],
+            "explanation": "Torque = force × lever arm. A longer handle gives more torque with the same push; pushing closer to the nut gives less."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Term 1 Review",
-      "badge": { "id": "term1-finisher", "name": "Term 1 Finisher", "icon": "🏁" },
-      "content": "<h3>🔐 Formative Check — Escape the Term 1 Review</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. This is your final formative check before the Term Exam.</p>",
+      "title": "Final Practice Check",
+      "badge": {
+        "id": "term1-finisher",
+        "name": "Term 1 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>📋 Getting Ready for the Term Exam</h3>\n<ol>\n<li><strong>Know the formulas and units</strong>: v = rω, τ = F × r, MA = F<sub>out</sub> ÷ F<sub>in</sub>, P = F ÷ A, F₁/A₁ = F₂/A₂, kWh = kW × h, c = fλ, distance = speed × time ÷ 2 for echoes.</li>\n<li><strong>Write one real-life example</strong> for every concept — the exam uses Filipino settings like jeepneys, sari-sari stores and barangay projects.</li>\n<li><strong>Practice reasoning</strong>: most items ask you to <em>apply</em>, <em>analyze</em> or <em>judge</em>, not just recall.</li>\n<li><strong>Manage time</strong>: answer the items you are sure of first, then return to the harder ones.</li>\n</ol>\n<h3>🧭 Reading Choices Carefully</h3>\n<p>The choices in this app are written to be similar in length and style, so you cannot guess by picking the longest one. Read every choice and test it against the concept. Watch for words like <strong>always</strong>, <strong>never</strong> and <strong>only</strong> — they often make a statement false.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>Mixed review. 3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "Which formula relates linear velocity (v) to angular velocity (ω) and radius (r)?",
+            "text": "Which formula connects linear speed to angular velocity?",
             "choices": [
-              { "label": "A) v = r + ω", "correct": false },
-              { "label": "B) v = r × ω", "correct": true },
-              { "label": "C) v = ω ÷ r", "correct": false },
-              { "label": "D) v = r ÷ ω", "correct": false }
-            ]
+              {
+                "label": "v = r × ω",
+                "correct": true
+              },
+              {
+                "label": "v = ω ÷ r",
+                "correct": false
+              },
+              {
+                "label": "v = r ÷ ω",
+                "correct": false
+              },
+              {
+                "label": "v = r + ω",
+                "correct": false
+              }
+            ],
+            "explanation": "Linear speed equals the distance from the axis times the angular velocity (in rad/s)."
           },
           {
-            "text": "Which of the following is a COMPOUND machine?",
+            "text": "A 100 N force acts on an area of 0.02 m². What is the pressure?",
             "choices": [
-              { "label": "A) A single crowbar", "correct": false },
-              { "label": "B) A pair of scissors (two levers + two wedges)", "correct": true },
-              { "label": "C) A ramp", "correct": false },
-              { "label": "D) A screw", "correct": false }
-            ]
-          },
-          {
-            "text": "What is the pressure if a force of 100 N is applied over an area of 0.02 m²?",
-            "choices": [
-              { "label": "A) 2 Pa", "correct": false },
-              { "label": "B) 50 Pa", "correct": false },
-              { "label": "C) 5,000 Pa", "correct": true },
-              { "label": "D) 200 Pa", "correct": false }
-            ]
+              {
+                "label": "5,000 Pa",
+                "correct": true
+              },
+              {
+                "label": "2 Pa",
+                "correct": false
+              },
+              {
+                "label": "100.02 Pa",
+                "correct": false
+              },
+              {
+                "label": "0.0002 Pa",
+                "correct": false
+              }
+            ],
+            "explanation": "P = F ÷ A = 100 ÷ 0.02 = 5,000 Pa."
           },
           {
             "text": "Which EM wave has the LONGEST wavelength?",
             "choices": [
-              { "label": "A) Gamma rays", "correct": false },
-              { "label": "B) X-rays", "correct": false },
-              { "label": "C) Visible light", "correct": false },
-              { "label": "D) Radio waves", "correct": true }
-            ]
+              {
+                "label": "Radio waves",
+                "correct": true
+              },
+              {
+                "label": "Gamma rays",
+                "correct": false
+              },
+              {
+                "label": "X-rays",
+                "correct": false
+              },
+              {
+                "label": "Visible light",
+                "correct": false
+              }
+            ],
+            "explanation": "Radio waves are at the low-frequency, long-wavelength end of the electromagnetic spectrum."
           },
           {
-            "text": "Louis Pasteur's swan-neck flask experiment disproved which theory?",
+            "text": "A sonar echo returns from the sea floor 1.0 s after it is sent. Sound in sea water travels 1,500 m/s. How deep is the sea there?",
             "choices": [
-              { "label": "A) Germ theory", "correct": false },
-              { "label": "B) Spontaneous generation", "correct": true },
-              { "label": "C) Theory of relativity", "correct": false },
-              { "label": "D) Evolution", "correct": false }
-            ]
+              {
+                "label": "750 m",
+                "correct": true
+              },
+              {
+                "label": "1,500 m",
+                "correct": false
+              },
+              {
+                "label": "3,000 m",
+                "correct": false
+              },
+              {
+                "label": "1,501 m",
+                "correct": false
+              }
+            ],
+            "explanation": "The pulse travels down and back: 1,500 m in total, so the depth is half, 750 m."
           },
           {
-            "text": "Which government agency in the Philippines approves cosmetics and personal care products before they can be sold?",
+            "text": "Which Philippine agency approves cosmetics and personal care products before they are sold?",
             "choices": [
-              { "label": "A) DTI", "correct": false },
-              { "label": "B) DENR", "correct": false },
-              { "label": "C) FDA Philippines", "correct": true },
-              { "label": "D) DepEd", "correct": false }
-            ]
+              {
+                "label": "FDA",
+                "correct": true
+              },
+              {
+                "label": "DENR",
+                "correct": false
+              },
+              {
+                "label": "DTI",
+                "correct": false
+              },
+              {
+                "label": "DOST",
+                "correct": false
+              }
+            ],
+            "explanation": "The Food and Drug Administration registers or notifies cosmetics, drugs and household hazardous products."
+          },
+          {
+            "text": "Which of these is a COMPOUND machine?",
+            "choices": [
+              {
+                "label": "Bicycle",
+                "correct": true
+              },
+              {
+                "label": "Ramp",
+                "correct": false
+              },
+              {
+                "label": "Wedge",
+                "correct": false
+              },
+              {
+                "label": "Single pulley",
+                "correct": false
+              }
+            ],
+            "explanation": "A bicycle combines wheels and axles, levers and a chain drive. Ramps, wedges and single pulleys are simple machines."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }
