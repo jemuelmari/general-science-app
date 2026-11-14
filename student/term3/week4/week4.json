@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Landforms, Climate & Life",
-      "badge": { "id": "biodiversity-pro", "name": "Biodiversity Pro", "icon": "🦜" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe the unique landforms, climate types, and biodiversity of the Philippines, and explain how they are connected.</p><h3>🏔️ Unique Landforms of the Philippines</h3><p>The Philippines has a wide variety of landforms shaped by its tectonic history and tropical climate:</p><table><thead><tr><th>Landform</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Volcanoes</strong></td><td>Mountains formed by magma rising through subduction zones</td><td>Mayon, Taal, Pinatubo, Apo, Kanlaon</td></tr><tr><td><strong>Mountain ranges</strong></td><td>Chains of mountains formed by uplift and faulting</td><td>Cordillera, Sierra Madre, Kitanglad</td></tr><tr><td><strong>Rolling hills</strong></td><td>Rounded hills formed by weathering</td><td>Chocolate Hills (Bohol), Batanes hills</td></tr><tr><td><strong>Karst landscapes</strong></td><td>Limestone formations with caves and underground rivers</td><td>Puerto Princesa Underground River, Sagada caves</td></tr><tr><td><strong>Rice terraces</strong></td><td>Human-made stepped slopes for farming</td><td>Banaue Rice Terraces</td></tr><tr><td><strong>Coastal landforms</strong></td><td>Beaches, coral reefs, mangroves, lagoons</td><td>Boracay, Tubbataha Reefs, Palawan</td></tr><tr><td><strong>Valleys &amp; plains</strong></td><td>Low-lying areas for agriculture</td><td>Central Luzon Plain, Cagayan Valley</td></tr></tbody></table><h3>🌦️ Climate Types of the Philippines</h3><p>The Philippines has a <strong>tropical maritime climate</strong>, influenced by:</p><ul><li>Its location near the equator</li><li>Surrounding warm ocean waters</li><li>Monsoon winds (Amihan and Habagat)</li><li>Typhoons that pass through the region</li></ul><p>The four climate types (PAGASA classification based on rainfall distribution):</p><table><thead><tr><th>Type</th><th>Description</th><th>Regions</th></tr></thead><tbody><tr><td><strong>Type I</strong></td><td>Two distinct seasons: dry (Nov–Apr) and wet (May–Oct)</td><td>Ilocos, Central Luzon, parts of Mindanao</td></tr><tr><td><strong>Type II</strong></td><td>No dry season — rainfall distributed throughout the year</td><td>Bicol, Eastern Visayas, Eastern Mindanao</td></tr><tr><td><strong>Type III</strong></td><td>Seasons not very pronounced — relatively dry (Dec–Feb)</td><td>Cagayan, Isabela, Nueva Vizcaya</td></tr><tr><td><strong>Type IV</strong></td><td>Rainfall more or less evenly distributed</td><td>Batanes, Aurora, parts of Mindoro</td></tr></tbody></table><h3>💨 Monsoon Winds</h3><table><thead><tr><th>Wind</th><th>Direction</th><th>Season</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Amihan</strong> (NE monsoon)</td><td>From northeast</td><td>November–February</td><td>Cool, dry season</td></tr><tr><td><strong>Habagat</strong> (SW monsoon)</td><td>From southwest</td><td>June–October</td><td>Wet season with rains</td></tr></tbody></table><h3>🌪️ Typhoon Belt</h3><p>The Philippines is in the <strong>typhoon belt</strong> — about <strong>20 tropical cyclones</strong> enter Philippine waters each year, with about 8–9 making landfall. This is due to:</p><ul><li>Warm ocean temperatures (at least 26.5°C)</li><li>Location in the western Pacific</li><li>Coriolis effect away from the equator</li></ul><h3>🌱 Biodiversity of the Philippines</h3><p>The Philippines is one of 17 <strong>megadiverse countries</strong> — together they contain 70% of the world's biodiversity.</p><table><thead><tr><th>Group</th><th>PH Significance</th></tr></thead><tbody><tr><td><strong>Plants</strong></td><td>Over 10,000 species; ~65% are endemic (found only in PH)</td></tr><tr><td><strong>Birds</strong></td><td>Over 700 species; ~240 endemic — like the Philippine Eagle</td></tr><tr><td><strong>Mammals</strong></td><td>Over 200 species; ~100 endemic — like the Tamaraw, Visayan Warty Pig</td></tr><tr><td><strong>Reptiles &amp; amphibians</strong></td><td>Over 400 species; ~65% endemic</td></tr><tr><td><strong>Marine life</strong></td><td>Part of the Coral Triangle — 2,500+ fish species, 500+ coral species</td></tr></tbody></table><h3>🦅 Iconic Species of the Philippines</h3><ul><li><strong>Philippine Eagle</strong> — one of the largest eagles in the world; critically endangered</li><li><strong>Tamaraw</strong> — small buffalo found only in Mindoro</li><li><strong>Visayan Warty Pig</strong> — critically endangered</li><li><strong>Palawan Peacock-Pheasant</strong> — endemic to Palawan</li><li><strong>Philippine Tarsier</strong> — one of the smallest primates</li><li><strong>Whale sharks (Butanding)</strong> — spotted in Donsol, Sorsogon</li></ul><h3>🌏 Why Biodiversity Matters</h3><p>Biodiversity provides:</p><ul><li><strong>Food security</strong> — fisheries, agriculture, forest products</li><li><strong>Medicine</strong> — many drugs derive from natural sources</li><li><strong>Ecosystem services</strong> — clean water, air, fertile soil</li><li><strong>Cultural value</strong> — Indigenous peoples depend on forests and reefs</li><li><strong>Climate regulation</strong> — forests and oceans absorb CO₂</li></ul><h3>⚠️ Threats to Philippine Biodiversity</h3><ul><li>Deforestation (illegal logging, mining, land conversion)</li><li>Overfishing and destructive fishing (dynamite, cyanide)</li><li>Habitat loss from urbanization</li><li>Climate change</li><li>Wildlife trafficking</li><li>Pollution</li></ul><h3>📌 Quick Check</h3><ul><li>How many climate types does PAGASA classify in the Philippines? (Answer: four — Types I–IV)</li><li>What are the two monsoon winds? (Answer: Amihan from NE, Habagat from SW)</li><li>What percentage of Philippine plants are endemic? (Answer: about 65%)</li></ul>"
+      "title": "Unique Philippine Landforms",
+      "badge": {
+        "id": "biodiversity-pro",
+        "name": "Biodiversity Pro",
+        "icon": "🦜"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>explain the unique landforms, climate and life forms of the Philippines</strong> using images, maps and cross-sections.</p>\n<h3>🏔️ Landforms and How They Formed</h3>\n<table><thead><tr><th>Landform</th><th>How it formed</th><th>Example</th></tr></thead><tbody>\n<tr><td>Volcanoes</td><td>Magma from subduction rising to the surface</td><td>Mayon, Taal, Kanlaon, Apo</td></tr>\n<tr><td>Mountain ranges</td><td>Uplift and folding from plate collisions</td><td>Cordillera Central, Sierra Madre</td></tr>\n<tr><td>Karst (limestone) landscapes</td><td>Rainwater, a weak acid, dissolving uplifted limestone</td><td>Chocolate Hills (Bohol), Puerto Princesa Underground River, El Nido</td></tr>\n<tr><td>Valleys and plains</td><td>Rivers depositing sediments</td><td>Central Luzon Plain, Cagayan Valley</td></tr>\n<tr><td>Coral reefs and atolls</td><td>Coral growth in warm, shallow, clear seas</td><td>Tubbataha Reefs</td></tr>\n<tr><td>Human-made terraces</td><td>Carved by Ifugao farmers on steep slopes</td><td>Banaue Rice Terraces</td></tr>\n</tbody></table>\n<h3>🍫 The Chocolate Hills</h3>\n<p>More than 1,200 cone-shaped hills in Bohol are made of marine limestone that was uplifted and then shaped by rain and erosion over a very long time. They turn brown in the dry season — hence the name.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What formed the Chocolate Hills of Bohol?",
+            "choices": [
+              {
+                "label": "Erosion of uplifted marine limestone",
+                "correct": true
+              },
+              {
+                "label": "Lava cooling into small round domes",
+                "correct": false
+              },
+              {
+                "label": "Ancient people piling soil into mounds",
+                "correct": false
+              },
+              {
+                "label": "Meteorites striking the island long ago",
+                "correct": false
+              }
+            ],
+            "explanation": "Uplifted limestone from old sea floor was slowly dissolved and shaped by rainwater and erosion."
+          },
+          {
+            "text": "Which landform was created mainly by human activity?",
+            "choices": [
+              {
+                "label": "Banaue Rice Terraces",
+                "correct": true
+              },
+              {
+                "label": "Mayon Volcano slopes",
+                "correct": false
+              },
+              {
+                "label": "Sierra Madre range",
+                "correct": false
+              },
+              {
+                "label": "Tubbataha Reefs atoll",
+                "correct": false
+              }
+            ],
+            "explanation": "The Ifugao people carved the terraces into mountainsides about 2,000 years ago or more."
+          },
+          {
+            "text": "How do karst landscapes such as underground rivers form?",
+            "choices": [
+              {
+                "label": "Weakly acidic water dissolves limestone",
+                "correct": true
+              },
+              {
+                "label": "Lava tubes cool and harden into caves",
+                "correct": false
+              },
+              {
+                "label": "Earthquakes crack granite into tunnels",
+                "correct": false
+              },
+              {
+                "label": "Wind blows sand to carve deep caves",
+                "correct": false
+              }
+            ],
+            "explanation": "Rainwater with dissolved CO₂ is a weak acid that slowly dissolves limestone, forming caves and underground rivers."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Philippine Landforms",
-      "badge": { "id": "biodiversity-pro", "name": "Biodiversity Pro", "icon": "🦜" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each Philippine landform, climate concept, or species to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Philippine Climate",
+      "badge": {
+        "id": "biodiversity-pro",
+        "name": "Biodiversity Pro",
+        "icon": "🦜"
+      },
+      "content": "<h3>🌦️ A Tropical Maritime Climate</h3>\n<p>Being near the equator and surrounded by warm seas gives the Philippines high temperatures, high humidity and abundant rain. Two monsoon winds shape the seasons:</p>\n<ul>\n<li><strong>Amihan</strong> (northeast monsoon), about November to February — cooler, drier air in most of the west.</li>\n<li><strong>Habagat</strong> (southwest monsoon), about June to September — warm, moist air and heavy rain in the west.</li>\n</ul>\n<p>The country also lies in the <strong>typhoon belt</strong>; about 20 tropical cyclones enter the Philippine Area of Responsibility each year.</p>\n<h3>📊 PAGASA's Four Climate Types (Modified Coronas)</h3>\n<table><thead><tr><th>Type</th><th>Rainfall pattern</th><th>Example areas</th></tr></thead><tbody>\n<tr><td>I</td><td>Two pronounced seasons: dry Nov–Apr, wet the rest</td><td>Western Luzon, Mindoro, Palawan, western Negros</td></tr>\n<tr><td>II</td><td>No dry season; most rain Nov–Jan</td><td>Catanduanes, Eastern Samar, eastern Mindanao</td></tr>\n<tr><td>III</td><td>Seasons not very pronounced; short dry period</td><td>Cagayan Valley, parts of the Visayas</td></tr>\n<tr><td>IV</td><td>Rain more or less evenly spread through the year</td><td>Batanes, parts of central Mindanao</td></tr>\n</tbody></table>\n<p>Mountains matter: the side facing a monsoon gets heavy rain, while the sheltered side stays drier (a <strong>rain shadow</strong>).</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Chocolate Hills", "right": "Rounded hills in Bohol formed by weathering of limestone" },
-          { "key": "k2", "left": "Banaue Rice Terraces", "right": "Human-made stepped slopes in the Cordillera for farming" },
-          { "key": "k3", "left": "Puerto Princesa Underground River", "right": "Karst landscape with a cave and river in Palawan" },
-          { "key": "k4", "left": "Amihan (NE monsoon)", "right": "Cool, dry wind from the northeast — November to February" },
-          { "key": "k5", "left": "Habagat (SW monsoon)", "right": "Warm, wet wind from the southwest — June to October" },
-          { "key": "k6", "left": "Typhoon belt", "right": "Zone where ~20 tropical cyclones pass each year over the Philippines" },
-          { "key": "k7", "left": "Philippine Eagle", "right": "One of the largest eagles in the world — critically endangered" },
-          { "key": "k8", "left": "Coral Triangle", "right": "Marine region including the Philippines with 2,500+ fish species" }
+          {
+            "key": "k1",
+            "left": "Chocolate Hills",
+            "right": "Uplifted limestone hills shaped by erosion",
+            "why": "Found in Bohol."
+          },
+          {
+            "key": "k2",
+            "left": "Banaue Rice Terraces",
+            "right": "Human-made steps on mountain slopes",
+            "why": "Carved by Ifugao farmers."
+          },
+          {
+            "key": "k3",
+            "left": "Puerto Princesa Underground River",
+            "right": "River flowing through a limestone cave",
+            "why": "A karst landscape in Palawan."
+          },
+          {
+            "key": "k4",
+            "left": "Amihan",
+            "right": "Northeast monsoon; cooler, drier months",
+            "why": "Roughly November to February."
+          },
+          {
+            "key": "k5",
+            "left": "Habagat",
+            "right": "Southwest monsoon; heavy rain in the west",
+            "why": "Roughly June to September."
+          },
+          {
+            "key": "k6",
+            "left": "Climate Type I",
+            "right": "Pronounced dry and wet seasons",
+            "why": "Example: western Luzon."
+          },
+          {
+            "key": "k7",
+            "left": "Climate Type II",
+            "right": "No dry season; heavy rain at year's end",
+            "why": "Example: Eastern Samar."
+          },
+          {
+            "key": "k8",
+            "left": "Rain shadow",
+            "right": "Drier side of a mountain away from the wind",
+            "why": "Moist air drops rain on the windward side."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Biodiversity Hotspots",
-      "badge": { "id": "biodiversity-pro", "name": "Biodiversity Pro", "icon": "🦜" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Philippine Biodiversity",
+      "badge": {
+        "id": "biodiversity-pro",
+        "name": "Biodiversity Pro",
+        "icon": "🦜"
+      },
+      "content": "<h3>🦅 A Megadiverse Country</h3>\n<p>The Philippines is one of about 17 <strong>megadiverse</strong> countries and also a <strong>biodiversity hotspot</strong> — very rich in species but heavily threatened. A large share of its land mammals, reptiles, amphibians and plants are <strong>endemic</strong>, meaning they live nowhere else on Earth.</p>\n<table><thead><tr><th>Species</th><th>Where</th><th>Status</th></tr></thead><tbody>\n<tr><td>Philippine Eagle</td><td>Forests of Mindanao, Samar, Leyte, Luzon</td><td>Critically endangered</td></tr>\n<tr><td>Tamaraw</td><td>Only on Mindoro</td><td>Critically endangered</td></tr>\n<tr><td>Philippine Tarsier</td><td>Bohol, Samar, Leyte, Mindanao</td><td>Near threatened</td></tr>\n<tr><td>Visayan Warty Pig</td><td>Negros and Panay forests</td><td>Critically endangered</td></tr>\n</tbody></table>\n<h3>🏝️ Why So Many Unique Species?</h3>\n<ul>\n<li><strong>Isolation</strong>: thousands of islands separated by deep water let populations evolve separately.</li>\n<li><strong>Varied habitats</strong>: mountains, lowland forests, mangroves, reefs and caves.</li>\n<li><strong>Warm, wet climate</strong>: supports rainforests and coral growth all year.</li>\n<li><strong>Coral Triangle</strong>: our seas are part of the world's richest marine region.</li>\n</ul>\n<h3>⚠️ Main Threat</h3>\n<p>The biggest threat is <strong>habitat loss</strong> — deforestation, conversion to farms and settlements, and reef destruction — followed by hunting, illegal wildlife trade, invasive species, pollution and climate change.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Connect landforms, climate and life. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌾 A farmer in Cagayan Valley (Climate Type III) asks when the driest months usually are. What should you tell them?",
+            "text": "The tamaraw is found only on Mindoro. Which factor BEST explains this?",
             "choices": [
-              { "label": "A) December to February — Type III has a relatively dry season during these months", "correct": true },
-              { "label": "B) June to October", "correct": false },
-              { "label": "C) There is no dry season", "correct": false },
-              { "label": "D) Rainfall is distributed evenly all year", "correct": false }
-            ]
+              {
+                "label": "Island isolation let it evolve separately",
+                "correct": true
+              },
+              {
+                "label": "Mindoro is the coldest island in the country",
+                "correct": false
+              },
+              {
+                "label": "Tamaraws can swim but dislike other islands",
+                "correct": false
+              },
+              {
+                "label": "Mindoro has no mountains or any forests",
+                "correct": false
+              }
+            ],
+            "explanation": "Separated by deep water, Mindoro's animals evolved in isolation, producing species found nowhere else."
           },
           {
-            "text": "🦅 A birdwatcher wants to see the Philippine Eagle in the wild. Where should they go?",
+            "text": "A farmer in Cagayan Valley (Type III) plans planting. What should he expect about rainfall?",
             "choices": [
-              { "label": "A) The remaining forests of Mindanao, Luzon, and Samar — its natural habitat", "correct": true },
-              { "label": "B) The beaches of Boracay", "correct": false },
-              { "label": "C) The Chocolate Hills in Bohol", "correct": false },
-              { "label": "D) The rice terraces of Banaue", "correct": false }
-            ]
+              {
+                "label": "A short dry period; seasons not very distinct",
+                "correct": true
+              },
+              {
+                "label": "No dry season at all, with constant heavy rain",
+                "correct": false
+              },
+              {
+                "label": "Six months of complete drought every single year",
+                "correct": false
+              },
+              {
+                "label": "Snowfall from December to February in the valley",
+                "correct": false
+              }
+            ],
+            "explanation": "Type III has a relatively short dry season, so farmers must still plan for a brief dry spell."
           },
           {
-            "text": "🌊 A marine biologist studies the Coral Triangle. Why is the Philippines a critical part of this region?",
+            "text": "Eastern Samar gets heavy rain in December while western Luzon is dry. What BEST explains the difference?",
             "choices": [
-              { "label": "A) The Philippines lies at the heart of the Coral Triangle — with over 500 coral species and 2,500 fish species", "correct": true },
-              { "label": "B) The Philippines has the largest ocean", "correct": false },
-              { "label": "C) The Philippines is outside the Coral Triangle", "correct": false },
-              { "label": "D) The Coral Triangle is a man-made reserve", "correct": false }
-            ]
+              {
+                "label": "Amihan winds bring moisture to east-facing coasts",
+                "correct": true
+              },
+              {
+                "label": "Habagat winds bring snow to Samar in December",
+                "correct": false
+              },
+              {
+                "label": "Western Luzon is closer to the equator than Samar",
+                "correct": false
+              },
+              {
+                "label": "Samar has more volcanoes that create rain clouds",
+                "correct": false
+              }
+            ],
+            "explanation": "The northeast monsoon (Amihan) carries moisture from the Pacific to eastern coasts, while the west lies in the dry season."
           },
           {
-            "text": "🌪️ A typhoon is expected to make landfall in Eastern Visayas in November. Which type of climate does this region have?",
+            "text": "Why are the Philippines' coral reefs so rich in fish species?",
             "choices": [
-              { "label": "A) Type II — no dry season, rainfall throughout the year, high typhoon exposure", "correct": true },
-              { "label": "B) Type I — two distinct seasons", "correct": false },
-              { "label": "C) Type III — short dry season", "correct": false },
-              { "label": "D) Type IV — evenly distributed rainfall", "correct": false }
-            ]
+              {
+                "label": "They lie in the warm, clear Coral Triangle",
+                "correct": true
+              },
+              {
+                "label": "They are found in very cold and deep waters",
+                "correct": false
+              },
+              {
+                "label": "They are protected from all sunlight and heat",
+                "correct": false
+              },
+              {
+                "label": "They are fed by fresh water from many rivers",
+                "correct": false
+              }
+            ],
+            "explanation": "Warm, clear, shallow seas within the Coral Triangle support the highest marine diversity on Earth."
           },
           {
-            "text": "🐒 A Visayan Warty Pig is critically endangered. What is the MAIN threat to its survival?",
+            "text": "The Philippine Eagle population keeps declining. What is the MOST important action to protect it?",
             "choices": [
-              { "label": "A) Habitat loss from deforestation and hunting", "correct": true },
-              { "label": "B) Too many pigs in the forest", "correct": false },
-              { "label": "C) Climate change only", "correct": false },
-              { "label": "D) Lack of food", "correct": false }
-            ]
+              {
+                "label": "Protect and restore large areas of its forest habitat",
+                "correct": true
+              },
+              {
+                "label": "Feed the eagles chicken in city zoos every day",
+                "correct": false
+              },
+              {
+                "label": "Move all the eagles to a colder foreign country",
+                "correct": false
+              },
+              {
+                "label": "Build more roads through the eagle's mountain forests",
+                "correct": false
+              }
+            ],
+            "explanation": "Each eagle pair needs a large forest territory. Habitat loss is the main threat, so protecting forests matters most."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Biodiversity Lab",
-      "badge": { "id": "biodiversity-pro", "name": "Biodiversity Pro", "icon": "🦜" },
-      "content": "<h3>🔐 Formative Check — Escape the Biodiversity Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Connecting Land, Climate and Life",
+      "badge": {
+        "id": "biodiversity-pro",
+        "name": "Biodiversity Pro",
+        "icon": "🦜"
+      },
+      "content": "<h3>🗺️ Reading Maps Together</h3>\n<p>Scientists overlay different maps to explain patterns:</p>\n<ul>\n<li>A <strong>relief map</strong> shows mountains (Cordillera, Sierra Madre).</li>\n<li>A <strong>climate map</strong> shows that the Sierra Madre's eastern side receives very heavy rain.</li>\n<li>A <strong>forest and species map</strong> shows that these wet mountains still hold large forests with eagles and endemic frogs.</li>\n</ul>\n<h3>✂️ A Mountain Cross-Section</h3>\n<p>Imagine slicing through a mountain like Mt. Pulag from base to peak. As elevation rises, temperature drops: lowland rainforest → montane forest → mossy forest → grassland near the summit. Each zone has different plants and animals. This is why one mountain can hold many species.</p>\n<h3>🧠 Big Idea</h3>\n<p>Plate tectonics built our islands and mountains. Location and mountains shape our climate. Islands, mountains and climate together created the habitats where unique Filipino species evolved.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "How many climate types does PAGASA classify in the Philippines?",
+            "text": "How many climate types does PAGASA use for the Philippines?",
             "choices": [
-              { "label": "A) Four (Types I–IV)", "correct": true },
-              { "label": "B) Two", "correct": false },
-              { "label": "C) Six", "correct": false },
-              { "label": "D) One", "correct": false }
-            ]
+              {
+                "label": "Four",
+                "correct": true
+              },
+              {
+                "label": "Two",
+                "correct": false
+              },
+              {
+                "label": "Three",
+                "correct": false
+              },
+              {
+                "label": "Six",
+                "correct": false
+              }
+            ],
+            "explanation": "PAGASA uses four climate types (I–IV) based on rainfall distribution."
           },
           {
-            "text": "Which monsoon wind brings cool, dry weather from November to February?",
+            "text": "Which monsoon brings heavy rain to western Luzon from about June to September?",
             "choices": [
-              { "label": "A) Amihan (NE monsoon)", "correct": true },
-              { "label": "B) Habagat (SW monsoon)", "correct": false },
-              { "label": "C) Trade winds", "correct": false },
-              { "label": "D) Sea breeze", "correct": false }
-            ]
+              {
+                "label": "Habagat (southwest monsoon)",
+                "correct": true
+              },
+              {
+                "label": "Amihan (northeast monsoon)",
+                "correct": false
+              },
+              {
+                "label": "Trade winds from the Pacific",
+                "correct": false
+              },
+              {
+                "label": "Sea breeze from Manila Bay",
+                "correct": false
+              }
+            ],
+            "explanation": "The southwest monsoon carries moist air from the West Philippine Sea, bringing heavy rain to the west."
           },
           {
-            "text": "How many tropical cyclones typically enter Philippine waters each year?",
+            "text": "What does endemic mean?",
             "choices": [
-              { "label": "A) About 20", "correct": true },
-              { "label": "B) About 5", "correct": false },
-              { "label": "C) About 50", "correct": false },
-              { "label": "D) About 100", "correct": false }
-            ]
+              {
+                "label": "Found naturally in only one place",
+                "correct": true
+              },
+              {
+                "label": "Found in every country on Earth",
+                "correct": false
+              },
+              {
+                "label": "Extinct for more than a whole century",
+                "correct": false
+              },
+              {
+                "label": "Brought in from another country",
+                "correct": false
+              }
+            ],
+            "explanation": "Endemic species occur naturally in only one area — for example, the tamaraw on Mindoro."
           },
           {
             "text": "What is the Coral Triangle?",
             "choices": [
-              { "label": "A) A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "correct": true },
-              { "label": "B) A political alliance of three countries", "correct": false },
-              { "label": "C) A type of coral reef", "correct": false },
-              { "label": "D) A scientific lab", "correct": false }
-            ]
+              {
+                "label": "The richest marine region, including our seas",
+                "correct": true
+              },
+              {
+                "label": "A triangle of hot deserts in central Mindanao",
+                "correct": false
+              },
+              {
+                "label": "A mountain range in northern Luzon",
+                "correct": false
+              },
+              {
+                "label": "A volcanic island chain near Japan",
+                "correct": false
+              }
+            ],
+            "explanation": "The Coral Triangle covers parts of the Philippines, Indonesia, Malaysia and nearby countries and has the most coral and reef fish species."
           },
           {
-            "text": "What percentage of Philippine plants are endemic (found only in the Philippines)?",
+            "text": "What is the MOST serious threat to Philippine biodiversity?",
             "choices": [
-              { "label": "A) About 65%", "correct": true },
-              { "label": "B) About 10%", "correct": false },
-              { "label": "C) About 100%", "correct": false },
-              { "label": "D) About 5%", "correct": false }
-            ]
+              {
+                "label": "Habitat loss from logging and reef damage",
+                "correct": true
+              },
+              {
+                "label": "Too many protected areas being created each year",
+                "correct": false
+              },
+              {
+                "label": "Animals moving into cooler forests",
+                "correct": false
+              },
+              {
+                "label": "Too much rain on the mountain forests",
+                "correct": false
+              }
+            ],
+            "explanation": "Losing forests and reefs removes the places species need to live — the leading cause of decline."
           },
           {
-            "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
+            "text": "Why does climbing Mt. Pulag take you through several forest types?",
             "choices": [
-              { "label": "A) Habitat loss from deforestation, mining, and land conversion", "correct": true },
-              { "label": "B) Too many protected areas", "correct": false },
-              { "label": "C) Overpopulation of endemic species", "correct": false },
-              { "label": "D) Excessive rainfall", "correct": false }
-            ]
+              {
+                "label": "Temperature drops as elevation increases",
+                "correct": true
+              },
+              {
+                "label": "Soil becomes saltier near the summit",
+                "correct": false
+              },
+              {
+                "label": "The mountain gets closer to the Sun",
+                "correct": false
+              },
+              {
+                "label": "Rainfall stops completely above 1,000 meters",
+                "correct": false
+              }
+            ],
+            "explanation": "Cooler temperatures at higher elevations support different plant communities, from rainforest to mossy forest to grassland."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

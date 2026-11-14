@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "DRRM Planning Basics",
-      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain what Disaster Risk Reduction and Management (DRRM) is, identify its four thematic pillars, and describe how families and communities can prepare for disasters.</p><h3>🛡️ What Is DRRM?</h3><p><strong>Disaster Risk Reduction and Management (DRRM)</strong> is the systematic approach to reducing the damage caused by natural and human-made hazards. It focuses on <em>prevention, mitigation, preparedness, response, and recovery</em>.</p><p>The Philippines has <strong>RA 10121</strong> — the Philippine Disaster Risk Reduction and Management Act of 2010 — which institutionalized DRRM nationwide.</p><h3>🏛️ The Four Thematic Pillars of DRRM</h3><table><thead><tr><th>Pillar</th><th>Focus</th><th>Examples</th></tr></thead><tbody><tr><td><strong>1. Prevention &amp; Mitigation</strong></td><td>Reduce or avoid the impact of hazards</td><td>Building codes, hazard maps, reforestation, drainage systems</td></tr><tr><td><strong>2. Preparedness</strong></td><td>Prepare people and systems to respond effectively</td><td>Drills, early warning systems, Go Bags, evacuation plans</td></tr><tr><td><strong>3. Response</strong></td><td>Immediate actions during and after a disaster</td><td>Search and rescue, relief distribution, medical aid, evacuation</td></tr><tr><td><strong>4. Rehabilitation &amp; Recovery</strong></td><td>Restore normal life after a disaster</td><td>Rebuilding homes, restoring livelihoods, psychological support</td></tr></tbody></table><h3>👨‍👩‍👧 Family-Based DRRM Plan</h3><p>Every family should have an emergency plan. Key components:</p><ol><li><strong>Designate a meeting point</strong> — inside and outside your community.</li><li><strong>Assign roles</strong> — who brings the Go Bag? Who checks on lolo/lola? Who turns off utilities?</li><li><strong>List emergency contacts</strong> — barangay, LGU, NDRRMC, PAGASA, PHIVOLCS hotlines.</li><li><strong>Prepare a Go Bag</strong> — ready to grab at any time.</li><li><strong>Know your evacuation route</strong> — and practice it twice a year.</li><li><strong>Backup important documents</strong> — IDs, birth certificates, land titles — keep copies in a waterproof bag or cloud storage.</li><li><strong>Plan for vulnerable members</strong> — elderly, PWDs, infants, pregnant women, and pets.</li></ol><h3>🎒 The Go Bag Checklist</h3><table><thead><tr><th>Category</th><th>Items</th></tr></thead><tbody><tr><td><strong>Water &amp; Food</strong></td><td>1 gallon water per person (3 days), non-perishable food (canned goods, biscuits, energy bars), manual can opener</td></tr><tr><td><strong>Communication</strong></td><td>Battery-powered radio, extra batteries, fully charged power bank, whistle</td></tr><tr><td><strong>Light</strong></td><td>Flashlight, headlamp, extra batteries</td></tr><tr><td><strong>First Aid</strong></td><td>Bandages, antiseptic, prescription medicines, pain relievers, thermometer</td></tr><tr><td><strong>Documents</strong></td><td>Copies of IDs, birth certificates, insurance, list of emergency contacts (in waterproof bag)</td></tr><tr><td><strong>Clothing</strong></td><td>Light clothing, rain jacket, sturdy shoes, blanket, towel</td></tr><tr><td><strong>Others</strong></td><td>Cash, multi-tool, face masks, hygiene kit, duct tape</td></tr></tbody></table><h3>🏘️ Community-Based DRRM Plan</h3><p>Barangays and LGUs also need DRRM plans, including:</p><ul><li><strong>Hazard mapping</strong> — know which areas flood, slide, or are exposed to surges.</li><li><strong>Early warning systems</strong> — sirens, SMS alerts, community flags.</li><li><strong>Evacuation centers</strong> — schools, barangay halls, churches — with capacity for vulnerable groups.</li><li><strong>Trained responders</strong> — Barangay Disaster Risk Reduction and Management Committee (BDRRMC).</li><li><strong>Stockpiles</strong> — food, water, medicines, blankets, generators.</li><li><strong>Drills</strong> — quarterly earthquake, fire, and typhoon drills.</li></ul><h3>⚠️ Climate Change Adaptation in DRRM</h3><p>As climate change makes hazards more intense and unpredictable, DRRM must also adapt:</p><ul><li><strong>Nature-based solutions:</strong> Mangrove restoration, urban forests, watershed protection.</li><li><strong>Resilient infrastructure:</strong> Elevated roads, flood-proof buildings, drainage upgrades.</li><li><strong>Climate-resilient agriculture:</strong> Salt-tolerant rice, drought-resistant corn.</li><li><strong>Insurance and safety nets:</strong> Crop insurance, emergency cash transfers.</li></ul><h3>🇵🇭 Key Agencies in Philippine DRRM</h3><ul><li><strong>NDRRMC</strong> — coordinates national disaster response.</li><li><strong>PAGASA</strong> — weather and climate warnings.</li><li><strong>PHIVOLCS</strong> — earthquake, volcano, tsunami warnings.</li><li><strong>DSWD</strong> — relief distribution and social protection.</li><li><strong>DOH</strong> — health emergency response.</li><li><strong>DepEd</strong> — school safety and class suspensions.</li><li><strong>DILG</strong> — supports LGUs and barangays in DRRM.</li></ul><h3>📌 Quick Check</h3><ul><li>What are the four thematic pillars of DRRM? (Answer: Prevention & Mitigation, Preparedness, Response, Rehabilitation & Recovery)</li><li>What is a Go Bag? (Answer: an emergency kit with essentials ready to grab in case of evacuation)</li><li>Which Philippine law institutionalized DRRM? (Answer: RA 10121 — DRRM Act of 2010)</li></ul>"
+      "title": "What Is DRRM?",
+      "badge": {
+        "id": "term3-finisher",
+        "name": "Term 3 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>develop family and community-based disaster risk reduction and management (DRRM) plans</strong>.</p>\n<h3>🛡️ Disaster Risk Reduction and Management</h3>\n<p><strong>DRRM</strong> is the organized way of preventing, reducing and coping with disaster risk. The <strong>Philippine DRRM Act of 2010 (RA 10121)</strong> shifted the country from simply responding after disasters to <strong>reducing risk before</strong> they happen. It created the NDRRMC and DRRM offices and councils down to the barangay level.</p>\n<table><thead><tr><th>Thematic area</th><th>Focus</th><th>Examples</th></tr></thead><tbody>\n<tr><td>1. Prevention and Mitigation</td><td>Avoid or lessen hazard impacts</td><td>Hazard maps, building codes, reforestation, drainage, mangroves</td></tr>\n<tr><td>2. Preparedness</td><td>Be ready to act</td><td>Drills, early warning systems, Go Bags, evacuation plans</td></tr>\n<tr><td>3. Response</td><td>Save lives during and right after</td><td>Evacuation, search and rescue, first aid, relief</td></tr>\n<tr><td>4. Rehabilitation and Recovery</td><td>Rebuild better</td><td>Repairing homes and schools, restoring livelihoods, psychosocial support</td></tr>\n</tbody></table>\n<p><strong>Risk = Hazard × Exposure × Vulnerability ÷ Capacity.</strong> DRRM lowers exposure and vulnerability and raises capacity.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "Which law institutionalized DRRM in the Philippines?",
+            "choices": [
+              {
+                "label": "RA 10121",
+                "correct": true
+              },
+              {
+                "label": "RA 9729",
+                "correct": false
+              },
+              {
+                "label": "RA 9003 (waste)",
+                "correct": false
+              },
+              {
+                "label": "RA 6969",
+                "correct": false
+              }
+            ],
+            "explanation": "RA 10121 is the Philippine Disaster Risk Reduction and Management Act of 2010."
+          },
+          {
+            "text": "Planting mangroves to reduce storm-surge damage belongs to which thematic area?",
+            "choices": [
+              {
+                "label": "Prevention and Mitigation",
+                "correct": true
+              },
+              {
+                "label": "Response",
+                "correct": false
+              },
+              {
+                "label": "Rehabilitation and Recovery",
+                "correct": false
+              },
+              {
+                "label": "Relief distribution",
+                "correct": false
+              }
+            ],
+            "explanation": "Mangroves lessen the impact of a hazard before it strikes — prevention and mitigation."
+          },
+          {
+            "text": "How can a community LOWER its disaster risk even if the hazard stays the same?",
+            "choices": [
+              {
+                "label": "Lower vulnerability, build capacity",
+                "correct": true
+              },
+              {
+                "label": "Wait until the hazard becomes weaker",
+                "correct": false
+              },
+              {
+                "label": "Move the hazard to another region",
+                "correct": false
+              },
+              {
+                "label": "Ignore warnings to avoid panic",
+                "correct": false
+              }
+            ],
+            "explanation": "Risk depends on vulnerability and capacity as well as the hazard; strong houses, warnings and drills reduce risk."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — DRRM Components",
-      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each DRRM concept, pillar, or agency to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "The Family DRRM Plan",
+      "badge": {
+        "id": "term3-finisher",
+        "name": "Term 3 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>👨‍👩‍👧 Parts of a Family Plan</h3>\n<ol>\n<li><strong>Know your hazards</strong> — check HazardHunterPH or barangay hazard maps for floods, landslides, faults, storm surge.</li>\n<li><strong>Communication plan</strong> — emergency numbers, an out-of-town contact, and what to do if phone lines fail.</li>\n<li><strong>Meeting points</strong> — one near home and one outside the neighborhood.</li>\n<li><strong>Evacuation route</strong> — the nearest evacuation center and a safe path to it.</li>\n<li><strong>Roles</strong> — who turns off power and gas, who helps the elderly, children and persons with disabilities, who brings pets.</li>\n<li><strong>Go Bag</strong> — ready for 72 hours.</li>\n<li><strong>Practice</strong> — drill the plan and update it yearly.</li>\n</ol>\n<h3>🎒 Go Bag Essentials</h3>\n<p>Drinking water, ready-to-eat food, flashlight and batteries, battery or crank radio, first-aid kit and maintenance medicines, whistle, copies of IDs and documents in a waterproof bag, some cash, hygiene items, face masks, extra clothes, and a power bank.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "DRRM", "right": "Systematic approach to reducing disaster damage — prevention, mitigation, preparedness, response, recovery" },
-          { "key": "k2", "left": "Prevention & Mitigation", "right": "Pillar focused on reducing or avoiding hazard impacts — like building codes and reforestation" },
-          { "key": "k3", "left": "Preparedness", "right": "Pillar focused on drills, early warning systems, Go Bags, and evacuation plans" },
-          { "key": "k4", "left": "Response", "right": "Pillar focused on immediate actions during and after a disaster — search and rescue" },
-          { "key": "k5", "left": "Rehabilitation & Recovery", "right": "Pillar focused on restoring normal life — rebuilding homes, restoring livelihoods" },
-          { "key": "k6", "left": "Go Bag", "right": "Emergency kit with water, food, radio, flashlight, medicines, and documents" },
-          { "key": "k7", "left": "RA 10121", "right": "Philippine DRRM Act of 2010" },
-          { "key": "k8", "left": "BDRRMC", "right": "Barangay Disaster Risk Reduction and Management Committee — first responders at the community level" }
+          {
+            "key": "k1",
+            "left": "DRRM",
+            "right": "Organized way to reduce and manage disaster risk",
+            "why": "It covers before, during and after."
+          },
+          {
+            "key": "k2",
+            "left": "Prevention and Mitigation",
+            "right": "Avoid or lessen hazard impacts",
+            "why": "Example: building codes and reforestation."
+          },
+          {
+            "key": "k3",
+            "left": "Preparedness",
+            "right": "Be ready to act when a hazard comes",
+            "why": "Example: drills and Go Bags."
+          },
+          {
+            "key": "k4",
+            "left": "Response",
+            "right": "Save lives during and right after",
+            "why": "Example: search and rescue."
+          },
+          {
+            "key": "k5",
+            "left": "Rehabilitation and Recovery",
+            "right": "Rebuild and restore normal life",
+            "why": "Example: restoring livelihoods."
+          },
+          {
+            "key": "k6",
+            "left": "Go Bag",
+            "right": "72-hour kit of essential supplies",
+            "why": "Keep it ready near the exit."
+          },
+          {
+            "key": "k7",
+            "left": "RA 10121",
+            "right": "Philippine DRRM Act of 2010",
+            "why": "It created DRRM councils at all levels."
+          },
+          {
+            "key": "k8",
+            "left": "BDRRMC",
+            "right": "Barangay DRRM committee",
+            "why": "First responders in the community."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Family Emergency Plan",
-      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "The Community DRRM Plan",
+      "badge": {
+        "id": "term3-finisher",
+        "name": "Term 3 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🏘️ Barangay-Level DRRM</h3>\n<p>The <strong>Barangay DRRM Committee (BDRRMC)</strong> leads local planning. A good community plan includes:</p>\n<ul>\n<li><strong>Risk assessment and hazard mapping</strong> with residents' knowledge of past floods and landslides.</li>\n<li><strong>Early warning system</strong> — sirens, bells, text blasts, and clear signals understood by everyone.</li>\n<li><strong>Evacuation centers</strong> that are safe from hazards, with water, toilets, and spaces for women, children and the elderly.</li>\n<li><strong>Inclusive planning</strong> — lists of persons with disabilities, senior citizens, pregnant women and infants so no one is left behind.</li>\n<li><strong>Pre-emptive evacuation</strong> before a hazard arrives, not during it.</li>\n<li><strong>Drills</strong> — such as the Nationwide Simultaneous Earthquake Drill.</li>\n</ul>\n<h3>🏫 Schools</h3>\n<p>Under DepEd, every school has a DRRM coordinator, evacuation plans, and conducts drills. Students can help by mapping hazards around school and teaching families what they learn.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply DRRM planning. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌀 A Signal No. 3 typhoon is approaching your province in 24 hours. What should your family do FIRST?",
+            "text": "A Signal No. 3 typhoon will arrive in 24 hours. What should your family do FIRST?",
             "choices": [
-              { "label": "A) Review the family DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA updates", "correct": true },
-              { "label": "B) Wait until the typhoon is directly overhead", "correct": false },
-              { "label": "C) Go to the mall to buy supplies during peak hours", "correct": false },
-              { "label": "D) Ignore the warning — typhoons pass quickly", "correct": false }
-            ]
+              {
+                "label": "Review the plan, ready the Go Bag, heed evacuation advice",
+                "correct": true
+              },
+              {
+                "label": "Wait until the winds are strong before deciding what to do",
+                "correct": false
+              },
+              {
+                "label": "Go to the beach to see how big the waves are getting",
+                "correct": false
+              },
+              {
+                "label": "Use all the stored water now so it will not go to waste",
+                "correct": false
+              }
+            ],
+            "explanation": "Acting early — reviewing the plan, preparing supplies and evacuating if advised — is the core of preparedness."
           },
           {
-            "text": "🎒 Your family is preparing a Go Bag. Which item should NEVER be left out?",
+            "text": "Which item should NEVER be left out of a Go Bag?",
             "choices": [
-              { "label": "A) Drinking water and non-perishable food for at least 3 days", "correct": true },
-              { "label": "B) Video game console", "correct": false },
-              { "label": "C) Formal party dress", "correct": false },
-              { "label": "D) Extra shoes", "correct": false }
-            ]
+              {
+                "label": "Drinking water",
+                "correct": true
+              },
+              {
+                "label": "Board games",
+                "correct": false
+              },
+              {
+                "label": "Jewelry box",
+                "correct": false
+              },
+              {
+                "label": "Large soft pillow",
+                "correct": false
+              }
+            ],
+            "explanation": "Safe drinking water is essential for survival during the first 72 hours."
           },
           {
-            "text": "🏫 Your barangay has an earthquake drill scheduled. Why is it important to participate?",
+            "text": "Why is it important to join barangay earthquake drills?",
             "choices": [
-              { "label": "A) Drills build muscle memory — during a real earthquake, you'll know to Drop, Cover, and Hold", "correct": true },
-              { "label": "B) Drills are just for fun", "correct": false },
-              { "label": "C) They replace the need for a Go Bag", "correct": false },
-              { "label": "D) They aren't important", "correct": false }
-            ]
+              {
+                "label": "Practice makes safe actions automatic",
+                "correct": true
+              },
+              {
+                "label": "Drills stop earthquakes from happening in the barangay",
+                "correct": false
+              },
+              {
+                "label": "Drills are only for teachers and barangay officials",
+                "correct": false
+              },
+              {
+                "label": "Joining drills replaces the need for any family plan",
+                "correct": false
+              }
+            ],
+            "explanation": "Under stress, people do what they have practiced. Drills build the habits that save lives."
           },
           {
-            "text": "👵 Your grandmother uses a wheelchair. How should she be included in the family DRRM plan?",
+            "text": "Your grandmother uses a wheelchair. How should she be included in the family plan?",
             "choices": [
-              { "label": "A) Assign someone to help her evacuate, ensure accessible routes, and prepare her medicines in the Go Bag", "correct": true },
-              { "label": "B) Leave her at home during evacuation", "correct": false },
-              { "label": "C) Ignore her needs", "correct": false },
-              { "label": "D) Hope for the best", "correct": false }
-            ]
+              {
+                "label": "Assign a helper and plan an accessible route early",
+                "correct": true
+              },
+              {
+                "label": "Leave her at home since she cannot use the stairs alone",
+                "correct": false
+              },
+              {
+                "label": "Ask her to evacuate last, after everyone else",
+                "correct": false
+              },
+              {
+                "label": "Wait for rescuers to arrive after the disaster",
+                "correct": false
+              }
+            ],
+            "explanation": "Inclusive plans assign responsibilities and plan for early, accessible evacuation of people with mobility needs."
           },
           {
-            "text": "🌳 A coastal barangay plants mangroves along the shoreline. What DRRM pillar does this activity fall under?",
+            "text": "A coastal barangay sets a rule to evacuate low areas when a storm surge warning is issued, even before rain begins. What is this called?",
             "choices": [
-              { "label": "A) Prevention & Mitigation — mangroves reduce storm surge and coastal erosion", "correct": true },
-              { "label": "B) Response — they help during rescue", "correct": false },
-              { "label": "C) Recovery — they rebuild homes", "correct": false },
-              { "label": "D) It doesn't fit any pillar", "correct": false }
-            ]
+              {
+                "label": "Pre-emptive evacuation",
+                "correct": true
+              },
+              {
+                "label": "Search-and-rescue operations",
+                "correct": false
+              },
+              {
+                "label": "Rehabilitation",
+                "correct": false
+              },
+              {
+                "label": "Relief operations",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving people out before the hazard arrives is pre-emptive evacuation, a preparedness measure."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the DRRM Lab",
-      "badge": { "id": "term3-finisher", "name": "Term 3 Finisher", "icon": "🏁" },
-      "content": "<h3>🔐 Formative Check — Escape the DRRM Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. This is your final formative check before the Term Exam.</p>",
+      "title": "Adapting for the Future",
+      "badge": {
+        "id": "term3-finisher",
+        "name": "Term 3 Finisher",
+        "icon": "🏁"
+      },
+      "content": "<h3>🔗 DRRM Meets Climate Change Adaptation</h3>\n<p>Climate change makes some hazards stronger and more frequent — intense rainfall, stronger typhoons, higher storm surges and more dangerous heat. So DRRM plans must <strong>look ahead</strong>, not just at past disasters:</p>\n<ul>\n<li>Use projections of sea-level rise and rainfall when planning roads, schools and houses.</li>\n<li>Build back better after disasters — stronger, safer and in less exposed locations.</li>\n<li>Protect ecosystems (mangroves, forests, reefs) as natural defenses.</li>\n<li>Diversify livelihoods so families recover faster after crop or fishing losses.</li>\n</ul>\n<h3>🧠 Your Role</h3>\n<p>Young people can map hazards, share PAGASA and PHIVOLCS warnings with family, help prepare Go Bags, and volunteer in barangay activities. A prepared family is the foundation of a resilient community.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What does DRRM stand for?",
             "choices": [
-              { "label": "A) Disaster Risk Reduction and Management", "correct": true },
-              { "label": "B) Department of Regional Risk Measures", "correct": false },
-              { "label": "C) Disaster Response and Recovery Method", "correct": false },
-              { "label": "D) Direct Rescue and Relief Management", "correct": false }
-            ]
+              {
+                "label": "Disaster Risk Reduction and Management",
+                "correct": true
+              },
+              {
+                "label": "Disaster Relief and Rescue Mission",
+                "correct": false
+              },
+              {
+                "label": "Department of Rural Road Maintenance",
+                "correct": false
+              },
+              {
+                "label": "Daily Readiness and Response Monitoring",
+                "correct": false
+              }
+            ],
+            "explanation": "DRRM means Disaster Risk Reduction and Management."
           },
           {
-            "text": "How many thematic pillars make up the DRRM framework?",
+            "text": "How many thematic areas does the national DRRM framework have?",
             "choices": [
-              { "label": "A) Four", "correct": true },
-              { "label": "B) Two", "correct": false },
-              { "label": "C) Six", "correct": false },
-              { "label": "D) Ten", "correct": false }
-            ]
+              {
+                "label": "Four",
+                "correct": true
+              },
+              {
+                "label": "Two",
+                "correct": false
+              },
+              {
+                "label": "Three",
+                "correct": false
+              },
+              {
+                "label": "Six",
+                "correct": false
+              }
+            ],
+            "explanation": "Prevention and Mitigation, Preparedness, Response, and Rehabilitation and Recovery."
           },
           {
-            "text": "Which pillar focuses on drills, Go Bags, and evacuation plans?",
+            "text": "Which thematic area includes drills, Go Bags and evacuation plans?",
             "choices": [
-              { "label": "A) Preparedness", "correct": true },
-              { "label": "B) Response", "correct": false },
-              { "label": "C) Recovery", "correct": false },
-              { "label": "D) Prevention", "correct": false }
-            ]
+              {
+                "label": "Preparedness",
+                "correct": true
+              },
+              {
+                "label": "Rehabilitation",
+                "correct": false
+              },
+              {
+                "label": "Response",
+                "correct": false
+              },
+              {
+                "label": "Recovery",
+                "correct": false
+              }
+            ],
+            "explanation": "Preparedness gets people and systems ready to act before a hazard strikes."
           },
           {
-            "text": "Which Philippine law institutionalized DRRM?",
+            "text": "Which activity is an example of MITIGATION?",
             "choices": [
-              { "label": "A) RA 10121 — Philippine DRRM Act of 2010", "correct": true },
-              { "label": "B) RA 9003", "correct": false },
-              { "label": "C) RA 6969", "correct": false },
-              { "label": "D) RA 9729", "correct": false }
-            ]
+              {
+                "label": "Following building codes for earthquake-resistant homes",
+                "correct": true
+              },
+              {
+                "label": "Distributing relief goods after a typhoon has passed",
+                "correct": false
+              },
+              {
+                "label": "Rescuing families trapped on their roofs during a flood",
+                "correct": false
+              },
+              {
+                "label": "Giving counseling to survivors a month after a disaster",
+                "correct": false
+              }
+            ],
+            "explanation": "Building to code lessens damage before a hazard strikes — mitigation. The others are response or recovery."
           },
           {
-            "text": "What should a family do FIRST when a typhoon warning is issued?",
+            "text": "Why should evacuation happen BEFORE a typhoon arrives?",
             "choices": [
-              { "label": "A) Review the DRRM plan, prepare the Go Bag, secure the house, and monitor PAGASA", "correct": true },
-              { "label": "B) Wait until the last minute", "correct": false },
-              { "label": "C) Go outside and watch the storm", "correct": false },
-              { "label": "D) Ignore warnings", "correct": false }
-            ]
+              {
+                "label": "Travel gets dangerous once winds and floods start",
+                "correct": true
+              },
+              {
+                "label": "Evacuation centers are always closed during typhoons",
+                "correct": false
+              },
+              {
+                "label": "Typhoons always pass faster than forecast",
+                "correct": false
+              },
+              {
+                "label": "Families can only evacuate in the daytime",
+                "correct": false
+              }
+            ],
+            "explanation": "Strong winds, flying debris and rising water make late evacuation risky for both residents and rescuers."
           },
           {
-            "text": "Which activity is an example of MITIGATION in DRRM?",
+            "text": "What does \"build back better\" mean in recovery?",
             "choices": [
-              { "label": "A) Planting mangroves to reduce storm surge impact", "correct": true },
-              { "label": "B) Distributing relief goods after a typhoon", "correct": false },
-              { "label": "C) Rebuilding houses after a flood", "correct": false },
-              { "label": "D) Conducting search and rescue", "correct": false }
-            ]
+              {
+                "label": "Rebuild stronger and safer than before",
+                "correct": true
+              },
+              {
+                "label": "Rebuild exactly as it was before",
+                "correct": false
+              },
+              {
+                "label": "Rebuild only the barangay hall first",
+                "correct": false
+              },
+              {
+                "label": "Do not rebuild anything after a disaster",
+                "correct": false
+              }
+            ],
+            "explanation": "Recovery should reduce future risk — stronger structures, safer locations and better systems."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

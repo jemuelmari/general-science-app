@@ -21,81 +21,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Human Impact on Landforms",
-      "badge": { "id": "hazard-assessor", "name": "Hazard Assessor", "icon": "⚠️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe how humans have modified landforms since the Neolithic period (~6,000 BCE), assess common hazards in the Philippines, and evaluate how human activities increase or reduce hazard risk.</p><h3>🌾 Human Modification of Landforms Through Time</h3><p>Humans have reshaped Earth's surface for thousands of years. This is called <strong>anthropogenic modification</strong> — changes caused by human activity.</p><table><thead><tr><th>Era</th><th>Time</th><th>Human Modification</th><th>Impact on Landforms</th></tr></thead><tbody><tr><td><strong>Neolithic</strong></td><td>~6,000 BCE</td><td>Slash-and-burn farming, early settlements</td><td>Small clearings, terraced hillsides (e.g., early rice terraces)</td></tr><tr><td><strong>Ancient civilizations</strong></td><td>3,000 BCE–500 CE</td><td>Irrigation canals, dams, stone cities</td><td>Rivers diverted; floodplains modified</td></tr><tr><td><strong>Medieval</strong></td><td>500–1,500 CE</td><td>Deforestation for farmland and timber</td><td>Soil erosion; hillside clearing</td></tr><tr><td><strong>Industrial era</strong></td><td>1700s–1900s</td><td>Mining, railways, urban expansion</td><td>Mountains carved; valleys filled; coastlines altered</td></tr><tr><td><strong>Modern era</strong></td><td>1950s–present</td><td>Mega-dams, highways, reclamation, mega-cities</td><td>Massive reshaping of rivers, coasts, and urban terrain</td></tr></tbody></table><h3>🏙️ Types of Human Modification</h3><table><thead><tr><th>Activity</th><th>Effect on Landforms</th><th>Example in the Philippines</th></tr></thead><tbody><tr><td><strong>Deforestation</strong></td><td>Removes root systems → soil erosion, landslides</td><td>Illegal logging in Sierra Madre</td></tr><tr><td><strong>Mining</strong></td><td>Removes topsoil, creates open pits, tailings dams</td><td>Marcopper disaster (Marinduque, 1996)</td></tr><tr><td><strong>Urbanization</strong></td><td>Covers land with concrete → less absorption, more flooding</td><td>Metro Manila flood-prone areas</td></tr><tr><td><strong>Agriculture</strong></td><td>Terraces, rice paddies, canals reshape slopes</td><td>Banaue Rice Terraces, Central Luzon</td></tr><tr><td><strong>Reclamation</strong></td><td>Adds land along coasts — changes wave patterns</td><td>Manila Bay reclamation projects</td></tr><tr><td><strong>Dam construction</strong></td><td>Alters river flow, traps sediment</td><td>San Roque Dam (Pangasinan), Pantabangan Dam</td></tr><tr><td><strong>Road building</strong></td><td>Cuts into mountainsides — creates landslide risk</td><td>Cordillera and Sierra Madre highways</td></tr></tbody></table><h3>⚠️ Natural Hazards in the Philippines</h3><p>A <strong>hazard</strong> is a natural event that can cause damage, injury, or loss of life. A <strong>disaster</strong> happens when a hazard strikes a vulnerable community.</p><h3>🌀 Tropical Cyclones (Typhoons)</h3><ul><li>About 20 enter Philippine waters each year</li><li>Bring strong winds, heavy rain, storm surges, and flooding</li><li>Worst example: Typhoon Yolanda (Haiyan, 2013) — 6,300+ deaths</li></ul><h3>🌪️ Ipo-Ipo (Tornadoes/Waterspouts)</h3><ul><li>Small, intense rotating columns of air</li><li>Common during thunderstorms and typhoon season</li><li>Can cause localized damage in minutes</li><li>Also called <strong>whirlwinds</strong> or <strong>buhawi</strong> in Filipino</li></ul><h3>⛈️ Thunderstorms</h3><ul><li>Produce lightning, thunder, heavy rain, and strong winds</li><li>Can trigger flash floods, hail, and ipo-ipo</li><li>Very common in the Philippines, especially in the afternoon during the rainy season</li></ul><h3>🌊 Storm Surges</h3><ul><li>Abnormal sea-level rise near the coast during a typhoon</li><li>Most destructive in low-lying coastal communities</li><li>Yolanda's storm surge reached 5–7 meters — the main cause of deaths</li></ul><h3>🔥 Heat Waves</h3><ul><li>Prolonged periods of abnormally high temperature</li><li>Combined with high humidity, the heat index can reach dangerous levels (41°C+)</li><li>Risks: heat cramps, heat exhaustion, heat stroke</li><li>Vulnerable: children, elderly, outdoor workers, athletes</li></ul><h3>📊 How Human Activities Increase or Reduce Hazard Risk</h3><table><thead><tr><th>Human Activity</th><th>Effect on Hazard Risk</th></tr></thead><tbody><tr><td>Deforestation</td><td>⬆️ Increases landslide, flood, and erosion risk</td></tr><tr><td>Improper waste disposal</td><td>⬆️ Increases flood risk (clogged drains)</td></tr><tr><td>Building on floodplains</td><td>⬆️ Increases flood damage</td></tr><tr><td>Coastal reclamation without planning</td><td>⬆️ Increases storm surge vulnerability</td></tr><tr><td>Reforestation &amp; mangrove restoration</td><td>⬇️ Reduces flood, landslide, and storm surge risk</td></tr><tr><td>Proper urban planning</td><td>⬇️ Reduces flooding and structural damage</td></tr><tr><td>Early warning systems</td><td>⬇️ Reduces casualties via evacuation</td></tr><tr><td>Community DRRM training</td><td>⬇️ Reduces disaster impact on people</td></tr></tbody></table><h3>🇵🇭 Philippine Agencies Managing Hazards</h3><ul><li><strong>PAGASA</strong> — typhoons, floods, heat index, rainfall warnings</li><li><strong>PHIVOLCS</strong> — earthquakes, volcanoes, tsunami warnings</li><li><strong>NDRRMC</strong> — national disaster response coordination</li><li><strong>MGB (Mines and Geosciences Bureau)</strong> — landslide and geohazard maps</li><li><strong>DENR</strong> — environmental regulation, reforestation, mining oversight</li></ul><h3>📌 Quick Check</h3><ul><li>What is a hazard, and how does it become a disaster? (Answer: a hazard is a natural event; it becomes a disaster when it strikes a vulnerable community)</li><li>What are ipo-ipo, and when are they most common? (Answer: tornadoes/waterspouts, most common during thunderstorms and typhoon season)</li><li>How does deforestation increase disaster risk? (Answer: loss of roots increases erosion, landslides, and flooding)</li></ul>"
+      "title": "Humans Reshape the Land",
+      "badge": {
+        "id": "hazard-assessor",
+        "name": "Hazard Assessor",
+        "icon": "⚠️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe how humans have modified landforms since the Neolithic period</strong> (about 6,000 BCE) and <strong>assess hazards</strong> such as tropical cyclones, ipo-ipo, thunderstorms, storm surges and heat waves.</p>\n<h3>🏺 From Farming to Megacities</h3>\n<table><thead><tr><th>Period</th><th>Activities</th><th>Effects on landforms</th></tr></thead><tbody>\n<tr><td>Neolithic (from about 6,000 BCE)</td><td>Early farming, clearing forests, settlements</td><td>Small clearings, early terraces, more erosion</td></tr>\n<tr><td>Ancient civilizations</td><td>Irrigation canals, dams, cities</td><td>Rivers redirected; floodplains changed</td></tr>\n<tr><td>Industrial era</td><td>Mining, railways, factories</td><td>Mountains cut, valleys filled</td></tr>\n<tr><td>Modern era</td><td>Highways, mega-dams, reclamation, quarrying</td><td>Coastlines moved; rivers channeled; land subsiding</td></tr>\n</tbody></table>\n<h3>🇵🇭 Philippine Examples</h3>\n<ul>\n<li><strong>Ifugao rice terraces</strong> — a sustainable, centuries-old reshaping of mountains.</li>\n<li><strong>Manila Bay reclamation</strong> — new land built from the sea, changing currents and drainage.</li>\n<li><strong>Quarrying and mining</strong> in Rizal and elsewhere — cut hills, silted rivers.</li>\n<li><strong>Deforestation</strong> — loss of forest cover in many uplands.</li>\n</ul>\n<p>Some changes reduce hazards (well-built drainage, terraces), while others increase them (cutting slopes, filling wetlands).</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What major change in human life began in the Neolithic period?",
+            "choices": [
+              {
+                "label": "People began farming and settling in villages",
+                "correct": true
+              },
+              {
+                "label": "People first began using smartphones and cars",
+                "correct": false
+              },
+              {
+                "label": "People started building large steel factories",
+                "correct": false
+              },
+              {
+                "label": "People first learned to mine coal for trains",
+                "correct": false
+              }
+            ],
+            "explanation": "The Neolithic saw the start of agriculture and permanent settlements, which began to change landforms."
+          },
+          {
+            "text": "Which is an example of SUSTAINABLE landform modification in the Philippines?",
+            "choices": [
+              {
+                "label": "The Ifugao rice terraces",
+                "correct": true
+              },
+              {
+                "label": "Illegal quarrying of hills",
+                "correct": false
+              },
+              {
+                "label": "Filling in a mangrove swamp",
+                "correct": false
+              },
+              {
+                "label": "Clear-cutting a watershed",
+                "correct": false
+              }
+            ],
+            "explanation": "The terraces reshape slopes while controlling water and erosion and have lasted for centuries."
+          },
+          {
+            "text": "Why can reclaiming land from the sea increase flood risk in nearby areas?",
+            "choices": [
+              {
+                "label": "It can block natural drainage and change water flow",
+                "correct": true
+              },
+              {
+                "label": "It makes the nearby sea much colder and calmer",
+                "correct": false
+              },
+              {
+                "label": "It removes all of the rain clouds from the coastal city",
+                "correct": false
+              },
+              {
+                "label": "It lowers the sea level along the whole coast",
+                "correct": false
+              }
+            ],
+            "explanation": "Reclaimed land can alter currents and block river outlets and drainage, so water backs up into nearby communities."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Hazard Types",
-      "badge": { "id": "hazard-assessor", "name": "Hazard Assessor", "icon": "⚠️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each hazard, human activity, or agency to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Hazards and Disasters",
+      "badge": {
+        "id": "hazard-assessor",
+        "name": "Hazard Assessor",
+        "icon": "⚠️"
+      },
+      "content": "<h3>🧩 Key Terms</h3>\n<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>\n<tr><td>Hazard</td><td>A natural or human-caused event that could cause harm</td></tr>\n<tr><td>Exposure</td><td>People and property located where the hazard can strike</td></tr>\n<tr><td>Vulnerability</td><td>How easily they are harmed (weak houses, poverty, no warning)</td></tr>\n<tr><td>Capacity</td><td>Resources and skills to cope (drills, savings, strong buildings)</td></tr>\n<tr><td>Disaster</td><td>Serious disruption when a hazard hits an exposed, vulnerable community</td></tr>\n</tbody></table>\n<h3>⛈️ Local Weather Hazards</h3>\n<ul>\n<li><strong>Thunderstorms</strong> — lightning, strong gusts, heavy rain that can cause flash floods. When thunder roars, go indoors.</li>\n<li><strong>Ipo-ipo (buhawi)</strong> — a small, intense rotating column of air from a strong thunderstorm; short-lived but can destroy light houses and crops along a narrow path.</li>\n<li><strong>Tropical cyclones and storm surges</strong> — large-scale, long-lasting threats.</li>\n<li><strong>Heat waves</strong> — extended high heat index; risk of heat stroke.</li>\n</ul>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Hazard", "right": "A natural event that can cause damage, injury, or loss of life" },
-          { "key": "k2", "left": "Disaster", "right": "When a hazard strikes a vulnerable community, causing widespread damage" },
-          { "key": "k3", "left": "Ipo-ipo", "right": "Small, intense rotating column of air — also called tornado or buhawi" },
-          { "key": "k4", "left": "Thunderstorm", "right": "Storm with lightning, thunder, heavy rain — can trigger flash floods" },
-          { "key": "k5", "left": "Deforestation", "right": "Increases landslide, flood, and erosion risk by removing roots" },
-          { "key": "k6", "left": "Reforestation", "right": "Reduces flood and landslide risk by restoring vegetation" },
-          { "key": "k7", "left": "PAGASA", "right": "Monitors typhoons, floods, heat index, and rainfall warnings" },
-          { "key": "k8", "left": "NDRRMC", "right": "Coordinates national disaster response in the Philippines" }
+          {
+            "key": "k1",
+            "left": "Hazard",
+            "right": "Event that could cause harm",
+            "why": "It is not yet a disaster."
+          },
+          {
+            "key": "k2",
+            "left": "Disaster",
+            "right": "Hazard striking an exposed, vulnerable community",
+            "why": "It seriously disrupts daily life."
+          },
+          {
+            "key": "k3",
+            "left": "Vulnerability",
+            "right": "How easily people or property are harmed",
+            "why": "Weak houses increase it."
+          },
+          {
+            "key": "k4",
+            "left": "Ipo-ipo",
+            "right": "Small, intense rotating column of air",
+            "why": "Also called buhawi."
+          },
+          {
+            "key": "k5",
+            "left": "Thunderstorm",
+            "right": "Storm with lightning and heavy rain",
+            "why": "It can trigger flash floods."
+          },
+          {
+            "key": "k6",
+            "left": "Deforestation",
+            "right": "Raises landslide and flood risk",
+            "why": "Roots no longer hold the soil."
+          },
+          {
+            "key": "k7",
+            "left": "Reforestation",
+            "right": "Lowers landslide and flood risk",
+            "why": "Restores soil-holding roots."
+          },
+          {
+            "key": "k8",
+            "left": "NDRRMC",
+            "right": "Coordinates national disaster response",
+            "why": "It works with OCD and LGUs."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Human-Made Risks",
-      "badge": { "id": "hazard-assessor", "name": "Hazard Assessor", "icon": "⚠️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Assessing Hazards",
+      "badge": {
+        "id": "hazard-assessor",
+        "name": "Hazard Assessor",
+        "icon": "⚠️"
+      },
+      "content": "<h3>📊 Assessing Risk</h3>\n<p>To assess a hazard in your community, ask:</p>\n<ol>\n<li><strong>What</strong> hazards occur here, and how often? (Use PAGASA and PHIVOLCS data and hazard maps.)</li>\n<li><strong>Who and what</strong> is exposed? (Homes near rivers, coasts or steep slopes.)</li>\n<li><strong>How vulnerable</strong> are they? (Building materials, age, health, access to warnings.)</li>\n<li><strong>What capacities</strong> exist? (Evacuation centers, drills, early warning systems.)</li>\n</ol>\n<h3>⬆️ Human Activities That Raise Risk</h3>\n<ul><li>Building on floodplains, riverbanks, fault lines or steep slopes</li><li>Deforestation and quarrying</li><li>Clogging drains with garbage</li><li>Over-pumping groundwater (subsidence)</li><li>Removing mangroves</li></ul>\n<h3>⬇️ Activities That Lower Risk</h3>\n<ul><li>Reforestation and mangrove planting</li><li>Proper drainage and waste segregation</li><li>Following land-use plans and building codes</li><li>Early warning systems and drills</li></ul>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Assess the hazards. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌲 A hillside forest in Rizal is cleared for a new subdivision. A year later, a heavy rain causes a landslide. What is the most likely cause?",
+            "text": "A forested hillside in Rizal is cleared for a subdivision. A year later, heavy rain causes a landslide. What MOST increased the risk?",
             "choices": [
-              { "label": "A) Deforestation removed the roots that held the soil together, making the slope unstable", "correct": true },
-              { "label": "B) The rain was unusually strong", "correct": false },
-              { "label": "C) The subdivision was built on flat ground", "correct": false },
-              { "label": "D) Nothing — landslides are always random", "correct": false }
-            ]
+              {
+                "label": "Removing trees whose roots held the soil",
+                "correct": true
+              },
+              {
+                "label": "Adding more trees to the steep hillside",
+                "correct": false
+              },
+              {
+                "label": "Building drainage canals along the slope",
+                "correct": false
+              },
+              {
+                "label": "Rain falling more slowly than in the past",
+                "correct": false
+              }
+            ],
+            "explanation": "Tree roots bind soil and absorb water. Without them, saturated slopes fail more easily."
           },
           {
-            "text": "🌪️ An ipo-ipo (tornado) is spotted forming over an open field during a thunderstorm. What should nearby residents do?",
+            "text": "An ipo-ipo forms over an open field during a thunderstorm. What should nearby residents do?",
             "choices": [
-              { "label": "A) Move indoors to a sturdy shelter, away from windows, and monitor PAGASA updates", "correct": true },
-              { "label": "B) Go outside to take photos", "correct": false },
-              { "label": "C) Stand under a tree for protection", "correct": false },
-              { "label": "D) Drive directly toward it", "correct": false }
-            ]
+              {
+                "label": "Shelter in a sturdy building, away from windows",
+                "correct": true
+              },
+              {
+                "label": "Go outside to record a video of it up close",
+                "correct": false
+              },
+              {
+                "label": "Hide in a light nipa hut in the middle of the field",
+                "correct": false
+              },
+              {
+                "label": "Stand under a tall tree until it passes by",
+                "correct": false
+              }
+            ],
+            "explanation": "Ipo-ipo winds can destroy light structures and throw debris. A sturdy building and an interior room are safest."
           },
           {
-            "text": "🌊 A coastal barangay experiences a 5-meter storm surge during a Signal No. 4 typhoon. Why is this surge more dangerous than the wind?",
+            "text": "Two barangays face the same typhoon. One has strong houses and an early warning system; the other does not. Which statement is TRUE?",
             "choices": [
-              { "label": "A) Storm surges cause most coastal deaths — they flood communities within minutes and sweep people away", "correct": true },
-              { "label": "B) They are not dangerous", "correct": false },
-              { "label": "C) They occur only after the typhoon passes", "correct": false },
-              { "label": "D) They only affect small boats", "correct": false }
-            ]
+              {
+                "label": "The second barangay has higher disaster risk",
+                "correct": true
+              },
+              {
+                "label": "Both barangays have exactly the same level of risk",
+                "correct": false
+              },
+              {
+                "label": "The first barangay has higher disaster risk",
+                "correct": false
+              },
+              {
+                "label": "Risk depends only on the typhoon's strength",
+                "correct": false
+              }
+            ],
+            "explanation": "Risk depends on hazard, exposure and vulnerability. Lower vulnerability and higher capacity reduce risk."
           },
           {
-            "text": "🔥 During El Niño, PAGASA reports a heat index of 43°C in your area. What is the main risk?",
+            "text": "During El Niño, the heat index in your town reaches 43 °C. What is the MAIN health risk?",
             "choices": [
-              { "label": "A) Heat stroke and heat exhaustion — especially for outdoor workers and the elderly", "correct": true },
-              { "label": "B) Flooding", "correct": false },
-              { "label": "C) Typhoons", "correct": false },
-              { "label": "D) Earthquakes", "correct": false }
-            ]
+              {
+                "label": "Heat exhaustion and heat stroke",
+                "correct": true
+              },
+              {
+                "label": "Hypothermia from cold winds",
+                "correct": false
+              },
+              {
+                "label": "Frostbite on fingers and toes",
+                "correct": false
+              },
+              {
+                "label": "Snow blindness from bright light",
+                "correct": false
+              }
+            ],
+            "explanation": "A heat index above 42 °C is in the Danger range, where heat cramps and exhaustion are likely and heat stroke is possible."
           },
           {
-            "text": "🏘️ A barangay plans to reduce flood risk. Which combination of strategies is BEST?",
+            "text": "A barangay wants to reduce flood risk. Which combination is BEST?",
             "choices": [
-              { "label": "A) Plant trees and mangroves, improve drainage, enforce proper waste disposal, and build with flood-aware design", "correct": true },
-              { "label": "B) Fill in rivers with concrete", "correct": false },
-              { "label": "C) Build more houses in flood zones", "correct": false },
-              { "label": "D) Ignore the problem and wait for the next flood", "correct": false }
-            ]
+              {
+                "label": "Clear drains, segregate waste, reforest uplands",
+                "correct": true
+              },
+              {
+                "label": "Pave all open soil and fill in all the creeks and streams",
+                "correct": false
+              },
+              {
+                "label": "Build houses closer to the riverbanks",
+                "correct": false
+              },
+              {
+                "label": "Burn garbage that clogs the canals",
+                "correct": false
+              }
+            ],
+            "explanation": "Clean drains and proper waste disposal let water flow; upland forests slow runoff — together they lower flood risk."
           }
         ]
       }
@@ -103,67 +290,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Hazard Lab",
-      "badge": { "id": "hazard-assessor", "name": "Hazard Assessor", "icon": "⚠️" },
-      "content": "<h3>🔐 Formative Check — Escape the Hazard Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Living Wisely With Hazards",
+      "badge": {
+        "id": "hazard-assessor",
+        "name": "Hazard Assessor",
+        "icon": "⚠️"
+      },
+      "content": "<h3>🗺️ Land-Use Planning</h3>\n<p>LGUs prepare a <strong>Comprehensive Land Use Plan (CLUP)</strong> that uses hazard maps to decide where homes, schools and industries should — and should not — be built. No-build zones along rivers, coasts and fault lines save lives over the long term.</p>\n<h3>🌳 Nature-Based Solutions</h3>\n<p>Healthy ecosystems are natural defenses: <strong>mangroves</strong> reduce storm-surge waves, <strong>forests</strong> hold soil and slow floods, <strong>wetlands</strong> store floodwater, and <strong>coral reefs</strong> break waves before they reach the shore. Protecting them is cheaper than rebuilding after disasters.</p>\n<h3>🧠 Big Idea</h3>\n<p>Humans have changed landforms for 8,000 years. Today we can choose changes that <strong>reduce</strong> hazards instead of increasing them — and every household can help by keeping drains clear, planting trees and following warnings.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
             "text": "What is the difference between a hazard and a disaster?",
             "choices": [
-              { "label": "A) A hazard is a natural event; a disaster is when it strikes a vulnerable community", "correct": true },
-              { "label": "B) They are the same thing", "correct": false },
-              { "label": "C) Hazards are man-made; disasters are natural", "correct": false },
-              { "label": "D) Hazards are always catastrophic", "correct": false }
-            ]
+              {
+                "label": "A disaster is a hazard's serious impact",
+                "correct": true
+              },
+              {
+                "label": "A hazard is always bigger than a disaster",
+                "correct": false
+              },
+              {
+                "label": "They mean exactly the same thing in DRRM",
+                "correct": false
+              },
+              {
+                "label": "A disaster happens only at sea, and never on land",
+                "correct": false
+              }
+            ],
+            "explanation": "A hazard becomes a disaster when it hits an exposed, vulnerable community and causes serious losses."
           },
           {
             "text": "What is an ipo-ipo?",
             "choices": [
-              { "label": "A) A small, intense rotating column of air — a tornado or waterspout", "correct": true },
-              { "label": "B) A type of typhoon", "correct": false },
-              { "label": "C) A tropical fish", "correct": false },
-              { "label": "D) A rain cloud", "correct": false }
-            ]
+              {
+                "label": "A small, intense rotating column of air",
+                "correct": true
+              },
+              {
+                "label": "A large ocean wave from an undersea earthquake",
+                "correct": false
+              },
+              {
+                "label": "A volcanic mudflow down a river",
+                "correct": false
+              },
+              {
+                "label": "A long period with no rainfall",
+                "correct": false
+              }
+            ],
+            "explanation": "Ipo-ipo (buhawi) is a tornado-like whirlwind formed from strong thunderstorms."
           },
           {
-            "text": "Which human activity MOST increases landslide risk?",
+            "text": "Which human activity MOST increases flood risk in cities?",
             "choices": [
-              { "label": "A) Deforestation on hillsides", "correct": true },
-              { "label": "B) Planting trees", "correct": false },
-              { "label": "C) Building on flat land", "correct": false },
-              { "label": "D) Using solar power", "correct": false }
-            ]
+              {
+                "label": "Garbage clogging drains and canals",
+                "correct": true
+              },
+              {
+                "label": "Planting more trees along the city streets",
+                "correct": false
+              },
+              {
+                "label": "Building rain gardens in parks",
+                "correct": false
+              },
+              {
+                "label": "Restoring wetlands near rivers",
+                "correct": false
+              }
+            ],
+            "explanation": "Clogged drains stop water from flowing away, so even moderate rain floods streets."
           },
           {
-            "text": "What should you do when a heat index reaches 43°C (Danger level)?",
+            "text": "Which natural ecosystem BEST reduces storm-surge damage on coasts?",
             "choices": [
-              { "label": "A) Avoid prolonged outdoor exposure, drink water, and take breaks in shaded or air-conditioned areas", "correct": true },
-              { "label": "B) Exercise intensively outdoors", "correct": false },
-              { "label": "C) Wear thick clothing", "correct": false },
-              { "label": "D) Ignore it — the heat index is not accurate", "correct": false }
-            ]
+              {
+                "label": "Mangrove forests",
+                "correct": true
+              },
+              {
+                "label": "Rice paddy fields",
+                "correct": false
+              },
+              {
+                "label": "Grasslands",
+                "correct": false
+              },
+              {
+                "label": "Pine forests in the highlands",
+                "correct": false
+              }
+            ],
+            "explanation": "Mangroves' dense roots and trunks slow waves and trap sediment along the shore."
           },
           {
             "text": "Which agency coordinates national disaster response in the Philippines?",
             "choices": [
-              { "label": "A) NDRRMC", "correct": true },
-              { "label": "B) PAGASA", "correct": false },
-              { "label": "C) PHIVOLCS", "correct": false },
-              { "label": "D) DepEd", "correct": false }
-            ]
+              {
+                "label": "NDRRMC",
+                "correct": true
+              },
+              {
+                "label": "PAGASA",
+                "correct": false
+              },
+              {
+                "label": "DepEd",
+                "correct": false
+              },
+              {
+                "label": "PHIVOLCS",
+                "correct": false
+              }
+            ],
+            "explanation": "The National Disaster Risk Reduction and Management Council coordinates disaster response with the Office of Civil Defense."
           },
           {
-            "text": "What is the BEST way for a community to reduce flood risk?",
+            "text": "What does a Comprehensive Land Use Plan use hazard maps for?",
             "choices": [
-              { "label": "A) Plant trees and mangroves, improve drainage, and enforce proper waste disposal", "correct": true },
-              { "label": "B) Build more houses in flood zones", "correct": false },
-              { "label": "C) Ignore the problem", "correct": false },
-              { "label": "D) Fill rivers with concrete", "correct": false }
-            ]
+              {
+                "label": "Deciding where it is safe to build",
+                "correct": true
+              },
+              {
+                "label": "Choosing the colors of school uniforms",
+                "correct": false
+              },
+              {
+                "label": "Setting the prices of rice in markets",
+                "correct": false
+              },
+              {
+                "label": "Planning the routes of jeepneys only",
+                "correct": false
+              }
+            ],
+            "explanation": "Hazard maps guide where homes and facilities should or should not be built."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

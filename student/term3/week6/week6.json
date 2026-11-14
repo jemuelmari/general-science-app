@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Geologic Processes — Fast & Slow",
-      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to describe fast geologic processes (volcanic eruptions, earthquakes, tsunamis) and slow geologic processes (soil erosion, saltwater intrusion), and explain their causes and effects.</p><h3>⏱️ Fast vs. Slow Geologic Processes</h3><table><thead><tr><th>Category</th><th>Time Scale</th><th>Examples</th></tr></thead><tbody><tr><td><strong>Fast (catastrophic)</strong></td><td>Seconds to days</td><td>Volcanic eruptions, earthquakes, tsunamis, landslides</td></tr><tr><td><strong>Slow (gradual)</strong></td><td>Years to centuries</td><td>Soil erosion, saltwater intrusion, weathering, subsidence</td></tr></tbody></table><h3>🌋 Volcanic Eruptions</h3><p>A <strong>volcano</strong> is an opening in Earth's crust where magma, gases, and ash escape from the mantle. Eruptions occur when pressure from dissolved gases builds up inside the magma chamber.</p><table><thead><tr><th>Type of Eruption</th><th>Characteristics</th><th>Example</th></tr></thead><tbody><tr><td><strong>Effusive</strong></td><td>Gentle lava flow, low gas content</td><td>Hawaiian volcanoes, Mayon's calmer phases</td></tr><tr><td><strong>Explosive</strong></td><td>Violent blast of ash, gas, pyroclastic flows</td><td>Pinatubo 1991, Taal 2020, Mayon 2018</td></tr></tbody></table><p><strong>Hazards:</strong> Lava flows, pyroclastic flows, ashfall, volcanic gases, lahars (mudflows), tsunami (if eruption is near or under the sea).</p><h3>🌎 Earthquakes</h3><p>An <strong>earthquake</strong> is a sudden release of energy in Earth's crust, usually caused by movement along faults (tectonic or volcanic).</p><table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><strong>Focus (hypocenter)</strong></td><td>Point inside Earth where the earthquake begins</td></tr><tr><td><strong>Epicenter</strong></td><td>Point directly above the focus on the surface</td></tr><tr><td><strong>Magnitude</strong></td><td>Measure of energy released (e.g., Richter, Moment Magnitude scale)</td></tr><tr><td><strong>Intensity</strong></td><td>Measure of shaking and damage at a specific location (e.g., PEIS)</td></tr><tr><td><strong>Aftershocks</strong></td><td>Smaller quakes that follow the main shock</td></tr></tbody></table><p><strong>Hazards:</strong> Ground shaking, ground rupture, landslides, liquefaction, tsunamis, fires, and building collapse.</p><h3>🌊 Tsunamis</h3><p>A <strong>tsunami</strong> is a series of large ocean waves usually caused by:</p><ul><li><strong>Underwater earthquakes</strong> (most common — especially along subduction zones)</li><li><strong>Volcanic eruptions</strong> (like the 1883 Krakatoa eruption)</li><li><strong>Landslides</strong> into the ocean</li><li><strong>Meteorite impacts</strong> (rare)</li></ul><p><strong>Warning signs:</strong> Strong shaking, sudden withdrawal of the sea (water recedes), loud roar.</p><p><strong>Philippine example:</strong> The 1976 Moro Gulf tsunami killed over 5,000 people — the deadliest in PH history.</p><h3>🌱 Soil Erosion — A Slow Process</h3><p><strong>Soil erosion</strong> is the gradual removal of topsoil by wind, water, or human activity.</p><table><thead><tr><th>Cause</th><th>Effect</th></tr></thead><tbody><tr><td>Deforestation</td><td>Loss of root systems that hold soil together</td></tr><tr><td>Overgrazing</td><td>Compacted, exposed soil washes away</td></tr><tr><td>Improper farming</td><td>Erosion on hillsides without terracing</td></tr><tr><td>Heavy rain &amp; floods</td><td>Rapid washing away of topsoil</td></tr><tr><td>Strong winds</td><td>Blowing away dry topsoil</td></tr></tbody></table><p><strong>Effects:</strong> Reduced soil fertility, lower crop yields, sedimentation in rivers, landslides, and desertification.</p><p><strong>Prevention:</strong> Contour plowing, terracing, cover crops, reforestation, and agroforestry.</p><h3>🌊 Saltwater Intrusion — A Slow Process</h3><p><strong>Saltwater intrusion</strong> is the movement of saline water into freshwater aquifers, usually caused by:</p><ul><li>Over-pumping of groundwater near the coast</li><li>Rising sea levels (climate change)</li><li>Droughts reducing freshwater recharge</li><li>Human-made channels allowing seawater inland</li></ul><p><strong>Effects:</strong></p><ul><li>Wells become salty — unusable for drinking</li><li>Farmland becomes saline — crops fail</li><li>Freshwater ecosystems disrupted</li><li>Coastal communities lose access to clean water</li></ul><p><strong>Prevention:</strong> Managed aquifer recharge, desalination (as a last resort), reducing groundwater pumping, and protecting coastal wetlands/mangroves.</p><h3>🇵🇭 Philippine Context</h3><ul><li>The Philippines is highly vulnerable to all of these — being in the Ring of Fire AND typhoon belt.</li><li>PHIVOLCS (Philippine Institute of Volcanology and Seismology) monitors volcanoes, earthquakes, and tsunami threats.</li><li>PHIVOLCS uses a hazard warning system with alert levels (Level 0 to 5 for volcanoes).</li></ul><h3>📌 Quick Check</h3><ul><li>What causes a tsunami? (Answer: usually an underwater earthquake; also volcanic eruptions and landslides)</li><li>What is soil erosion, and what causes it? (Answer: gradual removal of topsoil by wind, water, or human activity — often caused by deforestation)</li><li>What causes saltwater intrusion? (Answer: over-pumping of groundwater, rising sea levels, and droughts)</li></ul>"
+      "title": "Volcanic Eruptions",
+      "badge": {
+        "id": "geohazard-analyst",
+        "name": "Geohazard Analyst",
+        "icon": "🌋"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe fast geologic processes</strong> — volcanic eruptions, earthquakes and tsunamis — and <strong>slow processes</strong> such as soil erosion and saltwater intrusion.</p>\n<h3>🌋 Why Volcanoes Erupt</h3>\n<p>Magma contains dissolved gases. As it rises and pressure drops, the gases form bubbles (like opening a softdrink). If the magma is thick and gas-rich, pressure builds until it bursts out explosively. Runny, gas-poor magma flows out more gently.</p>\n<table><thead><tr><th>Eruption style</th><th>Features</th><th>Example</th></tr></thead><tbody>\n<tr><td>Effusive</td><td>Lava flows, little ash</td><td>Some of Mayon's lava-flow phases</td></tr>\n<tr><td>Explosive</td><td>Ash columns, pyroclastic flows</td><td>Pinatubo 1991, Taal 2020</td></tr>\n<tr><td>Phreatic</td><td>Steam-driven blast when water meets hot rock</td><td>Several Taal and Kanlaon events</td></tr>\n</tbody></table>\n<h3>⚠️ Volcanic Hazards</h3>\n<ul>\n<li><strong>Pyroclastic flows</strong> — fast, ground-hugging clouds of hot gas and rock; deadliest hazard.</li>\n<li><strong>Ashfall</strong> — damages lungs, crops and roofs.</li>\n<li><strong>Lahars</strong> — volcanic mudflows when rain mixes with loose ash (Pinatubo lahars buried towns for years).</li>\n<li><strong>Volcanic gases</strong> — such as sulfur dioxide (vog).</li>\n</ul>\n<p>PHIVOLCS uses <strong>alert levels 0–5</strong>; higher numbers mean an eruption is more likely or ongoing.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What MOST directly causes an explosive volcanic eruption?",
+            "choices": [
+              {
+                "label": "Gas pressure building up in thick magma",
+                "correct": true
+              },
+              {
+                "label": "Rainwater cooling the top of the volcano",
+                "correct": false
+              },
+              {
+                "label": "Strong winds pushing on the crater rim",
+                "correct": false
+              },
+              {
+                "label": "Sunlight heating the volcano's slopes",
+                "correct": false
+              }
+            ],
+            "explanation": "Dissolved gases expand as magma rises; in thick magma they cannot escape easily, so pressure builds until it explodes."
+          },
+          {
+            "text": "Which volcanic hazard is a fast-moving cloud of hot gas and rock fragments?",
+            "choices": [
+              {
+                "label": "Pyroclastic flow",
+                "correct": true
+              },
+              {
+                "label": "Lahar",
+                "correct": false
+              },
+              {
+                "label": "Lava flow from vents",
+                "correct": false
+              },
+              {
+                "label": "Ashfall",
+                "correct": false
+              }
+            ],
+            "explanation": "Pyroclastic flows race down slopes at very high speed and temperature and are the deadliest volcanic hazard."
+          },
+          {
+            "text": "Months after an eruption, heavy rain sends mud and debris down a volcano's rivers. What is this called?",
+            "choices": [
+              {
+                "label": "Lahar",
+                "correct": true
+              },
+              {
+                "label": "Tsunami",
+                "correct": false
+              },
+              {
+                "label": "Pyroclastic flow",
+                "correct": false
+              },
+              {
+                "label": "Landslide dam",
+                "correct": false
+              }
+            ],
+            "explanation": "Lahars form when rain mobilizes loose volcanic ash and debris into fast mudflows."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Geologic Hazards",
-      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each geologic process or concept to its correct description. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Earthquakes and Tsunamis",
+      "badge": {
+        "id": "geohazard-analyst",
+        "name": "Geohazard Analyst",
+        "icon": "🌋"
+      },
+      "content": "<h3>🌎 What Is an Earthquake?</h3>\n<p>Rocks along a <strong>fault</strong> lock together while plates keep moving. Stress builds until the rocks suddenly slip, releasing energy as <strong>seismic waves</strong>. Most Philippine earthquakes are <strong>tectonic</strong>; some are <strong>volcanic</strong>.</p>\n<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>\n<tr><td>Focus (hypocenter)</td><td>Point underground where the rupture starts</td></tr>\n<tr><td>Epicenter</td><td>Point on the surface directly above the focus</td></tr>\n<tr><td>Magnitude</td><td>Energy released (one number per quake)</td></tr>\n<tr><td>Intensity</td><td>Strength of shaking and damage at a place (PHIVOLCS Earthquake Intensity Scale I–X)</td></tr>\n</tbody></table>\n<h3>🌊 Tsunamis</h3>\n<p>A <strong>tsunami</strong> is a series of very long sea waves, usually caused by an undersea earthquake that suddenly moves the sea floor up or down. Other causes include undersea landslides and eruptions. Natural warning signs: <strong>strong shaking near the coast</strong>, a <strong>sudden drop or rise of sea level</strong>, and a <strong>roaring sound</strong> from the sea. Move to high ground immediately — do not wait for an official warning.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its meaning. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Volcanic eruption", "right": "Escape of magma, ash, and gases through an opening in Earth's crust" },
-          { "key": "k2", "left": "Effusive eruption", "right": "Gentle lava flow with low gas content — like Hawaiian volcanoes" },
-          { "key": "k3", "left": "Explosive eruption", "right": "Violent blast with ash, gas, and pyroclastic flows — like Pinatubo 1991" },
-          { "key": "k4", "left": "Epicenter", "right": "Point on Earth's surface directly above the earthquake focus" },
-          { "key": "k5", "left": "Tsunami", "right": "Series of large ocean waves usually caused by underwater earthquakes" },
-          { "key": "k6", "left": "Soil erosion", "right": "Gradual removal of topsoil by wind, water, or human activity" },
-          { "key": "k7", "left": "Saltwater intrusion", "right": "Seawater seeping into freshwater aquifers — often from over-pumping" },
-          { "key": "k8", "left": "PHIVOLCS", "right": "Agency that monitors Philippine volcanoes, earthquakes, and tsunamis" }
+          {
+            "key": "k1",
+            "left": "Fault",
+            "right": "Fracture where rocks have moved",
+            "why": "Earthquakes happen when faults slip."
+          },
+          {
+            "key": "k2",
+            "left": "Focus",
+            "right": "Underground point where rupture begins",
+            "why": "Also called the hypocenter."
+          },
+          {
+            "key": "k3",
+            "left": "Epicenter",
+            "right": "Surface point directly above the focus",
+            "why": "Shaking is often strongest near it."
+          },
+          {
+            "key": "k4",
+            "left": "Magnitude",
+            "right": "Amount of energy released by a quake",
+            "why": "Each earthquake has one magnitude."
+          },
+          {
+            "key": "k5",
+            "left": "Intensity",
+            "right": "Strength of shaking at a specific place",
+            "why": "It varies with distance and ground type."
+          },
+          {
+            "key": "k6",
+            "left": "Tsunami",
+            "right": "Series of long waves from sea-floor movement",
+            "why": "Most are caused by undersea earthquakes."
+          },
+          {
+            "key": "k7",
+            "left": "Sea suddenly drawing back",
+            "right": "Natural warning sign of a tsunami",
+            "why": "Go to high ground at once."
+          },
+          {
+            "key": "k8",
+            "left": "PHIVOLCS",
+            "right": "Monitors volcanoes, earthquakes and tsunamis",
+            "why": "It issues alerts and hazard maps."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Volcanoes & Earthquakes",
-      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Slow Processes: Erosion and Saltwater Intrusion",
+      "badge": {
+        "id": "geohazard-analyst",
+        "name": "Geohazard Analyst",
+        "icon": "🌋"
+      },
+      "content": "<h3>🐢 Slow but Serious</h3>\n<p>Not all geologic hazards are sudden. Some act over years and decades, so they are easy to ignore until damage is large.</p>\n<h3>🌧️ Soil Erosion</h3>\n<p><strong>Erosion</strong> removes topsoil through rain, flowing water and wind. Heavy tropical rain on <strong>bare, steep slopes</strong> is especially damaging. Causes include deforestation, slash-and-burn (kaingin), overgrazing and quarrying. Effects: less fertile farmland, muddy rivers, silted dams and reefs, more flooding and landslides. Solutions: reforestation, contour farming, terracing, cover crops and grass strips.</p>\n<h3>🧂 Saltwater Intrusion</h3>\n<p>Near the coast, fresh groundwater floats above denser salty groundwater. When wells pump too much fresh water, seawater moves inland underground. Sea-level rise and land <strong>subsidence</strong> (sinking ground, often from over-pumping) make it worse — parts of coastal Bulacan, Pampanga and Metro Manila are sinking. Effects: salty wells, failing crops, corroded pipes. Solutions: limit pumping, use surface water and rainwater, recharge aquifers, protect mangroves.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Decide what to do in real situations. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🌋 Taal Volcano erupts, and PHIVOLCS raises the alert level to 4. What does this mean for residents nearby?",
+            "text": "PHIVOLCS raises Taal Volcano to Alert Level 4. What does this mean for residents near the volcano?",
             "choices": [
-              { "label": "A) A hazardous explosive eruption is imminent — they must evacuate immediately", "correct": true },
-              { "label": "B) The volcano is dormant", "correct": false },
-              { "label": "C) Nothing — alert levels are only for scientists", "correct": false },
-              { "label": "D) It means the volcano is safe to visit", "correct": false }
-            ]
+              {
+                "label": "A hazardous eruption may come within days — evacuate",
+                "correct": true
+              },
+              {
+                "label": "The volcano has become quiet and is safe for visitors again",
+                "correct": false
+              },
+              {
+                "label": "Only boats on the lake need to move, while homes are safe",
+                "correct": false
+              },
+              {
+                "label": "The volcano is extinct and will never erupt again",
+                "correct": false
+              }
+            ],
+            "explanation": "Alert Level 4 means a hazardous explosive eruption is possible soon. Residents in the danger zone must evacuate."
           },
           {
-            "text": "🌊 You're at the beach and the water suddenly recedes far out to sea, exposing the ocean floor. What should you do?",
+            "text": "At the beach after strong shaking, the sea suddenly pulls far back, exposing the sea floor. What should you do?",
             "choices": [
-              { "label": "A) Run to higher ground immediately — a tsunami is coming", "correct": true },
-              { "label": "B) Walk out to explore the exposed ocean floor", "correct": false },
-              { "label": "C) Take photos to post online", "correct": false },
-              { "label": "D) Stay in place and wait", "correct": false }
-            ]
+              {
+                "label": "Run to high ground right away",
+                "correct": true
+              },
+              {
+                "label": "Walk out to collect fish and shells",
+                "correct": false
+              },
+              {
+                "label": "Wait on the shore for an announcement",
+                "correct": false
+              },
+              {
+                "label": "Take photos from the edge of the water",
+                "correct": false
+              }
+            ],
+            "explanation": "A sudden drop in sea level after an earthquake is a natural tsunami warning. The waves can arrive within minutes."
           },
           {
-            "text": "🌧️ After heavy rains, a hillside in your barangay starts to slide into the river. Which slow process likely made the hillside vulnerable?",
+            "text": "A hillside cleared for kaingin is losing soil every rainy season. Which solution addresses the CAUSE?",
             "choices": [
-              { "label": "A) Soil erosion caused by deforestation and loss of vegetation roots", "correct": true },
-              { "label": "B) Volcanic activity", "correct": false },
-              { "label": "C) Tsunami impact", "correct": false },
-              { "label": "D) Earthquakes", "correct": false }
-            ]
+              {
+                "label": "Replant trees and use contour farming on the slope",
+                "correct": true
+              },
+              {
+                "label": "Clear even more trees so the water can drain faster",
+                "correct": false
+              },
+              {
+                "label": "Burn the remaining grass to make the soil firmer",
+                "correct": false
+              },
+              {
+                "label": "Dig straight ditches running down the steepest slope",
+                "correct": false
+              }
+            ],
+            "explanation": "Roots and contour farming slow runoff and hold soil in place, reducing erosion at its source."
           },
           {
-            "text": "🌊 A coastal barangay's wells are becoming salty, and residents can no longer use them for drinking. What is the likely cause?",
+            "text": "Coastal wells in a barangay become salty while nearby land slowly sinks. Which human activity MOST likely links both?",
             "choices": [
-              { "label": "A) Saltwater intrusion from over-pumping of groundwater and rising sea levels", "correct": true },
-              { "label": "B) Residents added too much salt to the well", "correct": false },
-              { "label": "C) There's too much rainfall", "correct": false },
-              { "label": "D) The wells are too deep", "correct": false }
-            ]
+              {
+                "label": "Over-pumping of groundwater",
+                "correct": true
+              },
+              {
+                "label": "Planting too many mangroves",
+                "correct": false
+              },
+              {
+                "label": "Building too many schools",
+                "correct": false
+              },
+              {
+                "label": "Using solar panels on roofs",
+                "correct": false
+              }
+            ],
+            "explanation": "Pumping out too much groundwater lets seawater move in and also causes the ground to compact and subside."
           },
           {
-            "text": "🏠 An earthquake of magnitude 7.2 hits your province. What should you do DURING the shaking?",
+            "text": "A magnitude 7.2 earthquake strikes while you are in a classroom. What should you do DURING the shaking?",
             "choices": [
-              { "label": "A) Drop, cover, and hold — get under a sturdy table and protect your head", "correct": true },
-              { "label": "B) Run outside immediately", "correct": false },
-              { "label": "C) Stand in a doorway only", "correct": false },
-              { "label": "D) Take the elevator", "correct": false }
-            ]
+              {
+                "label": "Drop, cover under a sturdy desk, and hold on",
+                "correct": true
+              },
+              {
+                "label": "Run outside immediately through the crowded hall",
+                "correct": false
+              },
+              {
+                "label": "Stand near the windows to see what is happening",
+                "correct": false
+              },
+              {
+                "label": "Use the elevator to get down to the ground floor",
+                "correct": false
+              }
+            ],
+            "explanation": "Drop, Cover and Hold protects you from falling objects. Running during shaking causes injuries; windows can shatter."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Geohazard Lab",
-      "badge": { "id": "geohazard-analyst", "name": "Geohazard Analyst", "icon": "🌋" },
-      "content": "<h3>🔐 Formative Check — Escape the Geohazard Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Reducing Geologic Risk",
+      "badge": {
+        "id": "geohazard-analyst",
+        "name": "Geohazard Analyst",
+        "icon": "🌋"
+      },
+      "content": "<h3>🗺️ Know the Hazard</h3>\n<p>PHIVOLCS maps active faults (like the <strong>West Valley Fault</strong> through Metro Manila), volcano danger zones, tsunami and liquefaction areas. Communities use these maps to avoid building on fault traces or in lahar channels.</p>\n<h3>🏗️ Build Safely</h3>\n<ul>\n<li>Follow the <strong>National Building Code</strong> and structural code for earthquake-resistant design: reinforced concrete, proper steel bars, strong connections.</li>\n<li>Avoid heavy, unreinforced hollow-block walls and overhanging loads.</li>\n<li>Secure tall cabinets and water tanks.</li>\n</ul>\n<h3>🏫 Prepare</h3>\n<p>The <strong>Nationwide Simultaneous Earthquake Drill (NSED)</strong> trains schools and offices. Families should know evacuation routes, meeting points and emergency numbers. Coastal communities should know tsunami routes to high ground.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What is a tsunami usually caused by?",
+            "text": "What usually causes a tsunami?",
             "choices": [
-              { "label": "A) An underwater earthquake", "correct": true },
-              { "label": "B) Strong winds", "correct": false },
-              { "label": "C) Tides", "correct": false },
-              { "label": "D) Fish migration", "correct": false }
-            ]
+              {
+                "label": "An undersea earthquake moving the sea floor",
+                "correct": true
+              },
+              {
+                "label": "Strong typhoon winds blowing hard on the sea",
+                "correct": false
+              },
+              {
+                "label": "Heavy rain falling far out in the ocean",
+                "correct": false
+              },
+              {
+                "label": "The Moon pulling the tides much higher",
+                "correct": false
+              }
+            ],
+            "explanation": "Sudden vertical movement of the sea floor during an undersea earthquake displaces a huge volume of water."
           },
           {
-            "text": "What is the point on Earth's surface directly above an earthquake's origin called?",
+            "text": "What is the point on Earth's surface directly above an earthquake's focus called?",
             "choices": [
-              { "label": "A) Epicenter", "correct": true },
-              { "label": "B) Focus", "correct": false },
-              { "label": "C) Fault", "correct": false },
-              { "label": "D) Crater", "correct": false }
-            ]
+              {
+                "label": "Epicenter",
+                "correct": true
+              },
+              {
+                "label": "Hypocenter",
+                "correct": false
+              },
+              {
+                "label": "Fault line",
+                "correct": false
+              },
+              {
+                "label": "Seismograph",
+                "correct": false
+              }
+            ],
+            "explanation": "The epicenter is directly above the focus (hypocenter), where the rupture begins."
           },
           {
-            "text": "Which of the following is a SLOW geologic process?",
+            "text": "Which is a SLOW geologic process?",
             "choices": [
-              { "label": "A) Saltwater intrusion", "correct": true },
-              { "label": "B) Volcanic eruption", "correct": false },
-              { "label": "C) Tsunami", "correct": false },
-              { "label": "D) Earthquake", "correct": false }
-            ]
+              {
+                "label": "Soil erosion",
+                "correct": true
+              },
+              {
+                "label": "Earthquake",
+                "correct": false
+              },
+              {
+                "label": "Tsunami",
+                "correct": false
+              },
+              {
+                "label": "Pyroclastic flow",
+                "correct": false
+              }
+            ],
+            "explanation": "Erosion acts gradually over years; the others happen in seconds to hours."
           },
           {
-            "text": "What is soil erosion?",
+            "text": "Which agency monitors volcanoes, earthquakes and tsunamis in the Philippines?",
             "choices": [
-              { "label": "A) The gradual removal of topsoil by wind, water, or human activity", "correct": true },
-              { "label": "B) A sudden landslide", "correct": false },
-              { "label": "C) The formation of new soil", "correct": false },
-              { "label": "D) Volcanic ashfall", "correct": false }
-            ]
+              {
+                "label": "PHIVOLCS",
+                "correct": true
+              },
+              {
+                "label": "PAGASA (DOST)",
+                "correct": false
+              },
+              {
+                "label": "DPWH",
+                "correct": false
+              },
+              {
+                "label": "MMDA",
+                "correct": false
+              }
+            ],
+            "explanation": "PHIVOLCS, under DOST, monitors geologic hazards and issues alerts."
           },
           {
-            "text": "Which agency monitors volcanic and seismic activity in the Philippines?",
+            "text": "How is earthquake MAGNITUDE different from INTENSITY?",
             "choices": [
-              { "label": "A) PHIVOLCS", "correct": true },
-              { "label": "B) PAGASA", "correct": false },
-              { "label": "C) DENR", "correct": false },
-              { "label": "D) NDRRMC", "correct": false }
-            ]
+              {
+                "label": "Magnitude is energy; intensity is local shaking",
+                "correct": true
+              },
+              {
+                "label": "Magnitude is shaking; intensity is total energy",
+                "correct": false
+              },
+              {
+                "label": "They are two names for exactly the same value",
+                "correct": false
+              },
+              {
+                "label": "Magnitude is only measured on the ocean floor",
+                "correct": false
+              }
+            ],
+            "explanation": "Magnitude is one value for the energy released; intensity varies from place to place."
           },
           {
-            "text": "What is the BEST response during a strong earthquake?",
+            "text": "What is the BEST action during strong earthquake shaking indoors?",
             "choices": [
-              { "label": "A) Drop, cover, and hold under a sturdy table", "correct": true },
-              { "label": "B) Run outside immediately", "correct": false },
-              { "label": "C) Take an elevator to the ground floor", "correct": false },
-              { "label": "D) Stand under a window", "correct": false }
-            ]
+              {
+                "label": "Drop, Cover and Hold",
+                "correct": true
+              },
+              {
+                "label": "Run down the stairs fast",
+                "correct": false
+              },
+              {
+                "label": "Stand in a doorway",
+                "correct": false
+              },
+              {
+                "label": "Jump out a window",
+                "correct": false
+              }
+            ],
+            "explanation": "Drop, Cover and Hold under sturdy furniture protects you from falling and flying objects."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

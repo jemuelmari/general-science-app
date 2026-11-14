@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "The Greenhouse Effect",
-      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to explain how the greenhouse effect works, identify the major greenhouse gases, distinguish the natural greenhouse effect from the enhanced greenhouse effect, and describe Earth's energy balance.</p><h3>🌡️ Earth's Energy Balance</h3><p>Earth receives energy from the Sun and radiates energy back to space. In a balanced system, the amount in equals the amount out — keeping Earth's average temperature stable at about <strong>15°C</strong>.</p><p>Earth's energy balance follows three main paths when sunlight arrives:</p><ol><li><strong>~30% is reflected</strong> back to space by clouds, ice, and bright surfaces (called <strong>albedo</strong>).</li><li><strong>~20% is absorbed</strong> by the atmosphere (ozone, water vapor, clouds).</li><li><strong>~50% is absorbed</strong> by Earth's surface (land and oceans), warming the planet.</li></ol><p>The absorbed energy is later radiated back as <strong>infrared (IR) radiation</strong> — heat.</p><h3>🌿 What Is the Greenhouse Effect?</h3><p>The <strong>greenhouse effect</strong> is the process by which certain gases in the atmosphere trap some of the infrared radiation (heat) that Earth emits, keeping the planet warm enough for life.</p><p style='background:#e3f2fd;padding:12px;border-radius:8px;font-family:monospace;text-align:center;'>Sunlight in → Earth warms → IR emitted → GHGs absorb IR → Re-emit in all directions → Some escapes, some returns → Earth stays warm</p><h3>🔬 The Major Greenhouse Gases</h3><table><thead><tr><th>Gas</th><th>Formula</th><th>Main Source</th><th>Global Warming Potential (GWP)</th></tr></thead><tbody><tr><td>Water vapor</td><td>H₂O</td><td>Evaporation from oceans, lakes</td><td>— (most abundant, natural)</td></tr><tr><td>Carbon dioxide</td><td>CO₂</td><td>Fossil fuels, deforestation, respiration</td><td>1 (reference)</td></tr><tr><td>Methane</td><td>CH₄</td><td>Livestock, rice paddies, landfills</td><td>~28× CO₂</td></tr><tr><td>Nitrous oxide</td><td>N₂O</td><td>Fertilizers, industrial processes</td><td>~265× CO₂</td></tr><tr><td>Ozone</td><td>O₃</td><td>Natural + pollution (tropospheric)</td><td>Varies</td></tr><tr><td>Fluorinated gases (CFCs, HFCs)</td><td>Various</td><td>Refrigerants, aerosols</td><td>Hundreds to thousands × CO₂</td></tr></tbody></table><h3>🌍 Natural vs. Enhanced Greenhouse Effect</h3><table><thead><tr><th>Type</th><th>What It Is</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Natural greenhouse effect</strong></td><td>Greenhouse gases that occur naturally keep Earth ~33°C warmer than it would be without them</td><td>Enables life — without it Earth's average would be −18°C</td></tr><tr><td><strong>Enhanced greenhouse effect</strong></td><td>Human activities add extra GHGs (CO₂, CH₄, N₂O) that increase the trapping of heat</td><td>Global warming; climate change; sea-level rise; extreme weather</td></tr></tbody></table><p><strong>Key idea:</strong> The natural greenhouse effect is <em>good and necessary</em>. The enhanced greenhouse effect (from human activity) is what causes climate change.</p><h3>☀️ The Electromagnetic Spectrum Connection</h3><p>Why doesn't sunlight just pass through GHGs too?</p><ul><li><strong>Sunlight</strong> arrives as <em>visible light</em> (short wavelength, high energy). GHGs do not absorb visible light well.</li><li><strong>Earth's heat</strong> is emitted as <em>infrared radiation</em> (long wavelength, lower energy). GHGs <em>do</em> absorb IR.</li></ul><p>This is the physics behind the greenhouse effect — molecules like CO₂ and H₂O have chemical bonds that vibrate at IR frequencies.</p><h3>🌡️ Why 15°C Is Just Right</h3><p>Earth's average surface temperature is <strong>15°C</strong>. Compare with:</p><ul><li><strong>Venus</strong> (464°C) — runaway greenhouse effect with 96% CO₂</li><li><strong>Mars</strong> (−63°C) — very thin atmosphere, weak greenhouse effect</li><li><strong>Earth without greenhouse effect</strong> (−18°C) — too cold for most life</li></ul><h3>🇵🇭 Why This Matters for the Philippines</h3><ul><li>The Philippines contributes only 0.3% of global CO₂ emissions — but is among the <strong>most vulnerable</strong> to climate impacts.</li><li>Warmer oceans fuel stronger typhoons (like Yolanda/Haiyan in 2013, Odette/Rai in 2021).</li><li>Rising sea levels threaten coastal barangays and freshwater supplies.</li></ul><h3>📌 Quick Check</h3><ul><li>What would Earth's average temperature be without the greenhouse effect? (Answer: −18°C)</li><li>Which gas traps the most heat per molecule? (Answer: fluorinated gases, then N₂O, CH₄, CO₂)</li><li>What kind of radiation do greenhouse gases absorb? (Answer: infrared — heat)</li></ul>"
+      "title": "Earth's Energy Balance",
+      "badge": {
+        "id": "atmosphere-pro",
+        "name": "Atmosphere Pro",
+        "icon": "🌡️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe how the greenhouse effect regulates Earth's temperature</strong>.</p>\n<h3>☀️ Energy In, Energy Out</h3>\n<p>Earth's temperature stays fairly stable because the energy it <strong>receives</strong> from the Sun is balanced by the energy it <strong>sends back</strong> to space.</p>\n<ul>\n<li>About <strong>30%</strong> of incoming sunlight is <strong>reflected</strong> by clouds, ice and bright surfaces. This reflectivity is called <strong>albedo</strong>.</li>\n<li>About <strong>20%</strong> is absorbed by the atmosphere.</li>\n<li>About <strong>50%</strong> is absorbed by land and oceans, warming them.</li>\n</ul>\n<h3>🔁 Short Waves In, Long Waves Out</h3>\n<p>Sunlight arrives mostly as <strong>visible light</strong> (short wavelength), which passes easily through the air. The warmed surface then gives off <strong>infrared radiation</strong> (heat, longer wavelength). Some gases in the air absorb this infrared and send part of it back down. If incoming and outgoing energy are equal, the average temperature stays steady. If more energy is trapped than leaves, Earth warms.</p>\n<h3>🧊 Albedo Matters</h3>\n<p>Bright ice and snow reflect most sunlight; dark oceans and forests absorb most of it. When ice melts, darker surfaces are exposed, more sunlight is absorbed, and warming speeds up — a <strong>feedback loop</strong>.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What is albedo?",
+            "choices": [
+              {
+                "label": "The fraction of sunlight a surface reflects",
+                "correct": true
+              },
+              {
+                "label": "The amount of CO₂ stored in the deep oceans",
+                "correct": false
+              },
+              {
+                "label": "The speed at which the Earth rotates",
+                "correct": false
+              },
+              {
+                "label": "The heat produced by Earth's core",
+                "correct": false
+              }
+            ],
+            "explanation": "Albedo measures reflectivity: ice has a high albedo, oceans and forests have a low albedo."
+          },
+          {
+            "text": "In what form does Earth's warm surface give off energy?",
+            "choices": [
+              {
+                "label": "Infrared radiation",
+                "correct": true
+              },
+              {
+                "label": "Ultraviolet rays",
+                "correct": false
+              },
+              {
+                "label": "Visible blue light",
+                "correct": false
+              },
+              {
+                "label": "Sound waves",
+                "correct": false
+              }
+            ],
+            "explanation": "Warm objects radiate heat as infrared, which greenhouse gases can absorb."
+          },
+          {
+            "text": "As polar ice melts, more dark ocean is exposed. What happens next?",
+            "choices": [
+              {
+                "label": "More sunlight is absorbed, causing more warming",
+                "correct": true
+              },
+              {
+                "label": "More sunlight is reflected, causing global cooling",
+                "correct": false
+              },
+              {
+                "label": "Nothing changes because water is colorless",
+                "correct": false
+              },
+              {
+                "label": "The ocean freezes again within a few days",
+                "correct": false
+              }
+            ],
+            "explanation": "Dark water has a lower albedo than ice, so it absorbs more energy — a feedback that speeds up warming."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Greenhouse Gases",
-      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each concept or gas to its correct description or source. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "Greenhouse Gases",
+      "badge": {
+        "id": "atmosphere-pro",
+        "name": "Atmosphere Pro",
+        "icon": "🌡️"
+      },
+      "content": "<h3>🌿 The Natural Greenhouse Effect</h3>\n<p>Certain gases absorb infrared radiation and re-emit it in all directions, including back to the surface. Without this effect, Earth's average temperature would be about <strong>−18 °C</strong> instead of about <strong>15 °C</strong> — too cold for most life.</p>\n<table><thead><tr><th>Gas</th><th>Main sources</th><th>Note</th></tr></thead><tbody>\n<tr><td>Water vapor (H₂O)</td><td>Evaporation</td><td>Most abundant; increases as air warms</td></tr>\n<tr><td>Carbon dioxide (CO₂)</td><td>Burning fossil fuels, deforestation</td><td>Main driver of recent warming; stays for centuries</td></tr>\n<tr><td>Methane (CH₄)</td><td>Livestock, rice paddies, landfills</td><td>About 28 times stronger than CO₂ over 100 years</td></tr>\n<tr><td>Nitrous oxide (N₂O)</td><td>Nitrogen fertilizers</td><td>About 265 times stronger than CO₂</td></tr>\n<tr><td>Fluorinated gases</td><td>Old refrigerants and aircon leaks</td><td>Can be thousands of times stronger</td></tr>\n</tbody></table>\n<h3>🔥 Natural vs Enhanced</h3>\n<p>The <strong>natural</strong> greenhouse effect keeps Earth habitable. The <strong>enhanced</strong> greenhouse effect is the extra warming from greenhouse gases added by human activities since the Industrial Revolution. Atmospheric CO₂ has risen from about 280 ppm before 1800 to more than 420 ppm today.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Greenhouse effect", "right": "Gases trap infrared radiation, warming Earth's surface" },
-          { "key": "k2", "left": "Carbon dioxide (CO₂)", "right": "Released by fossil fuels and deforestation; reference GWP = 1" },
-          { "key": "k3", "left": "Methane (CH₄)", "right": "Released by livestock, rice paddies, and landfills; ~28× CO₂ GWP" },
-          { "key": "k4", "left": "Nitrous oxide (N₂O)", "right": "Released by fertilizers; ~265× CO₂ GWP" },
-          { "key": "k5", "left": "Water vapor (H₂O)", "right": "Most abundant natural greenhouse gas" },
-          { "key": "k6", "left": "Enhanced greenhouse effect", "right": "Extra GHGs from human activity that amplify warming" },
-          { "key": "k7", "left": "Albedo", "right": "Fraction of sunlight reflected by clouds, ice, and bright surfaces" },
-          { "key": "k8", "left": "Infrared radiation", "right": "Type of radiation Earth emits as heat — absorbed by GHGs" }
+          {
+            "key": "k1",
+            "left": "Greenhouse effect",
+            "right": "Gases trap infrared heat and warm the surface",
+            "why": "It keeps Earth habitable."
+          },
+          {
+            "key": "k2",
+            "left": "Carbon dioxide",
+            "right": "Released by fossil fuels and deforestation",
+            "why": "Main driver of recent warming."
+          },
+          {
+            "key": "k3",
+            "left": "Methane",
+            "right": "From livestock, rice paddies and landfills",
+            "why": "Stronger than CO₂ per molecule."
+          },
+          {
+            "key": "k4",
+            "left": "Nitrous oxide",
+            "right": "Released by nitrogen fertilizers",
+            "why": "Very strong and long-lasting."
+          },
+          {
+            "key": "k5",
+            "left": "Water vapor",
+            "right": "Most abundant natural greenhouse gas",
+            "why": "It increases as air gets warmer."
+          },
+          {
+            "key": "k6",
+            "left": "Enhanced greenhouse effect",
+            "right": "Extra warming from human-added gases",
+            "why": "Beyond the natural effect."
+          },
+          {
+            "key": "k7",
+            "left": "Albedo",
+            "right": "Fraction of sunlight reflected",
+            "why": "Ice has a high albedo."
+          },
+          {
+            "key": "k8",
+            "left": "Infrared radiation",
+            "right": "Heat given off by Earth's surface",
+            "why": "Greenhouse gases absorb it."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Earth's Thermostat",
-      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "When the Balance Shifts",
+      "badge": {
+        "id": "atmosphere-pro",
+        "name": "Atmosphere Pro",
+        "icon": "🌡️"
+      },
+      "content": "<h3>📈 More Gas, More Heat</h3>\n<p>When greenhouse gases increase, less infrared escapes to space. Earth gains more energy than it loses until the surface warms enough to restore balance at a <strong>higher temperature</strong>. The global average has already risen about 1.1–1.2 °C since the late 1800s.</p>\n<h3>🔄 Feedback Loops</h3>\n<table><thead><tr><th>Feedback</th><th>How it works</th><th>Effect</th></tr></thead><tbody>\n<tr><td>Ice–albedo</td><td>Warming melts ice → darker surface absorbs more sunlight</td><td>More warming</td></tr>\n<tr><td>Water vapor</td><td>Warmer air holds more water vapor, a greenhouse gas</td><td>More warming</td></tr>\n<tr><td>Permafrost</td><td>Thawing frozen soil releases methane and CO₂</td><td>More warming</td></tr>\n<tr><td>Plant growth</td><td>More CO₂ can increase photosynthesis in some plants</td><td>Slight cooling (limited)</td></tr>\n</tbody></table>\n<h3>🇵🇭 Fairness and Responsibility</h3>\n<p>The Philippines produces only a small share of global emissions (well under 1%) but faces stronger typhoons, sea-level rise and heat. Climate change is global: gases from anywhere warm the whole planet. Every country, including ours, can reduce emissions and prepare for impacts.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply the greenhouse model. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "☀️ Sunlight passes through Earth's atmosphere but heat doesn't easily escape. Why?",
+            "text": "Sunlight passes easily through the atmosphere, but heat from the ground does not escape as easily. Why?",
             "choices": [
-              { "label": "A) Sunlight is visible light (short wavelength) and GHGs don't absorb it well; heat is infrared (long wavelength) and GHGs absorb it", "correct": true },
-              { "label": "B) The atmosphere is solid", "correct": false },
-              { "label": "C) Sunlight is stronger than heat", "correct": false },
-              { "label": "D) Earth's gravity holds heat in place", "correct": false }
-            ]
+              {
+                "label": "Greenhouse gases absorb infrared but pass visible light",
+                "correct": true
+              },
+              {
+                "label": "Clouds block every kind of radiation in both directions equally",
+                "correct": false
+              },
+              {
+                "label": "The ground absorbs all heat and never releases it",
+                "correct": false
+              },
+              {
+                "label": "Visible light turns into ice when it hits the ground",
+                "correct": false
+              }
+            ],
+            "explanation": "Incoming sunlight is mostly visible light, which passes through. Outgoing heat is infrared, which greenhouse gases absorb and re-emit."
           },
           {
-            "text": "🥩 A livestock farm has many cows producing methane. How does this contribute to climate change?",
+            "text": "A large livestock farm produces a lot of methane. Why does this matter for climate?",
             "choices": [
-              { "label": "A) Methane is a greenhouse gas that is ~28× more potent than CO₂ at trapping heat", "correct": true },
-              { "label": "B) Cows eat all the plants", "correct": false },
-              { "label": "C) Cows use too much water", "correct": false },
-              { "label": "D) Cows block sunlight", "correct": false }
-            ]
+              {
+                "label": "Methane traps more heat per molecule than CO₂",
+                "correct": true
+              },
+              {
+                "label": "Methane cools the air by blocking sunlight",
+                "correct": false
+              },
+              {
+                "label": "Methane removes ozone, which cools the whole Earth",
+                "correct": false
+              },
+              {
+                "label": "Methane turns into oxygen in a few minutes",
+                "correct": false
+              }
+            ],
+            "explanation": "Methane is a strong greenhouse gas — about 28 times as effective as CO₂ over 100 years."
           },
           {
-            "text": "❄️ Ice at the North and South Poles reflects sunlight. As ice melts due to warming, what happens to the greenhouse effect?",
+            "text": "Without the natural greenhouse effect, what would Earth's average temperature be?",
             "choices": [
-              { "label": "A) Less ice → less reflection → more heat absorbed → more warming (a positive feedback loop)", "correct": true },
-              { "label": "B) The greenhouse effect decreases", "correct": false },
-              { "label": "C) Nothing changes", "correct": false },
-              { "label": "D) The oceans cool down", "correct": false }
-            ]
+              {
+                "label": "About −18 °C",
+                "correct": true
+              },
+              {
+                "label": "About 15 °C",
+                "correct": false
+              },
+              {
+                "label": "About 33 °C",
+                "correct": false
+              },
+              {
+                "label": "About 100 °C",
+                "correct": false
+              }
+            ],
+            "explanation": "Greenhouse gases keep Earth roughly 33 °C warmer than it would otherwise be (about 15 °C instead of −18 °C)."
           },
           {
-            "text": "🌫️ Without the natural greenhouse effect, what would Earth's average temperature be?",
+            "text": "A student says, \"Since the greenhouse effect is natural, adding more CO₂ cannot cause harm.\" Which response is BEST?",
             "choices": [
-              { "label": "A) About −18°C — too cold for most life", "correct": true },
-              { "label": "B) About 15°C — same as now", "correct": false },
-              { "label": "C) About 100°C", "correct": false },
-              { "label": "D) Same as Venus", "correct": false }
-            ]
+              {
+                "label": "Extra CO₂ strengthens the effect beyond natural levels",
+                "correct": true
+              },
+              {
+                "label": "The student is right; natural things never cause any harm",
+                "correct": false
+              },
+              {
+                "label": "CO₂ has no effect on temperature at any amount",
+                "correct": false
+              },
+              {
+                "label": "The greenhouse effect only happens on Venus, not Earth",
+                "correct": false
+              }
+            ],
+            "explanation": "The natural effect is helpful, but adding more greenhouse gases traps extra heat and raises the temperature — the enhanced effect."
           },
           {
-            "text": "🇵🇭 The Philippines contributes only 0.3% of global CO₂ emissions but faces strong climate impacts. Why?",
+            "text": "Why is warmer air holding more water vapor a concern?",
             "choices": [
-              { "label": "A) It's an archipelago in the typhoon belt with coastal communities vulnerable to sea-level rise and storms", "correct": true },
-              { "label": "B) It has the largest population", "correct": false },
-              { "label": "C) It burns the most fossil fuels", "correct": false },
-              { "label": "D) It has no greenhouse gases", "correct": false }
-            ]
+              {
+                "label": "Water vapor is also a greenhouse gas",
+                "correct": true
+              },
+              {
+                "label": "Water vapor reflects all sunlight back to space",
+                "correct": false
+              },
+              {
+                "label": "Water vapor removes carbon dioxide from the air",
+                "correct": false
+              },
+              {
+                "label": "Water vapor makes the air much colder at night",
+                "correct": false
+              }
+            ],
+            "explanation": "This is a positive feedback: warming adds water vapor, and more water vapor traps more heat."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Atmosphere Lab",
-      "badge": { "id": "atmosphere-pro", "name": "Atmosphere Pro", "icon": "🌡️" },
-      "content": "<h3>🔐 Formative Check — Escape the Atmosphere Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Reducing Our Greenhouse Footprint",
+      "badge": {
+        "id": "atmosphere-pro",
+        "name": "Atmosphere Pro",
+        "icon": "🌡️"
+      },
+      "content": "<h3>🏠 Everyday Choices</h3>\n<ul>\n<li><strong>Save electricity</strong>: much of our power comes from coal. Turning off unused lights and choosing efficient appliances reduces CO₂.</li>\n<li><strong>Walk, bike or take public transport</strong> instead of private cars for short trips.</li>\n<li><strong>Reduce food waste and compost</strong>: rotting food in dumpsites releases methane.</li>\n<li><strong>Maintain aircons and refrigerators</strong> to prevent leaks of strong fluorinated gases.</li>\n<li><strong>Plant and protect trees and mangroves</strong>, which absorb CO₂.</li>\n</ul>\n<h3>🇵🇭 National Efforts</h3>\n<p>The Philippines has committed to reduce greenhouse gas emissions under the Paris Agreement and is expanding <strong>renewable energy</strong> — geothermal (we are among the world's top geothermal producers), hydro, solar and wind. Rice farmers are trying <strong>alternate wetting and drying</strong>, which reduces methane from paddies.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What would Earth's average temperature be WITHOUT the natural greenhouse effect?",
+            "text": "Which greenhouse gas is MOST abundant naturally in the atmosphere?",
             "choices": [
-              { "label": "A) About −18°C", "correct": true },
-              { "label": "B) About 15°C", "correct": false },
-              { "label": "C) About 100°C", "correct": false },
-              { "label": "D) About 0°C", "correct": false }
-            ]
+              {
+                "label": "Water vapor",
+                "correct": true
+              },
+              {
+                "label": "Carbon dioxide",
+                "correct": false
+              },
+              {
+                "label": "Methane gas",
+                "correct": false
+              },
+              {
+                "label": "Nitrous oxide",
+                "correct": false
+              }
+            ],
+            "explanation": "Water vapor is the most abundant greenhouse gas, though its amount depends on temperature."
           },
           {
-            "text": "Which greenhouse gas is the MOST abundant naturally in Earth's atmosphere?",
+            "text": "What type of radiation do greenhouse gases absorb?",
             "choices": [
-              { "label": "A) Water vapor (H₂O)", "correct": true },
-              { "label": "B) Carbon dioxide (CO₂)", "correct": false },
-              { "label": "C) Methane (CH₄)", "correct": false },
-              { "label": "D) Ozone (O₃)", "correct": false }
-            ]
+              {
+                "label": "Infrared",
+                "correct": true
+              },
+              {
+                "label": "Ultraviolet",
+                "correct": false
+              },
+              {
+                "label": "X-rays",
+                "correct": false
+              },
+              {
+                "label": "Gamma rays",
+                "correct": false
+              }
+            ],
+            "explanation": "Greenhouse gases absorb the infrared (heat) radiation given off by Earth's surface."
           },
           {
-            "text": "What kind of radiation do greenhouse gases absorb?",
+            "text": "What is the ENHANCED greenhouse effect caused by?",
             "choices": [
-              { "label": "A) Infrared (heat)", "correct": true },
-              { "label": "B) Visible light", "correct": false },
-              { "label": "C) Ultraviolet", "correct": false },
-              { "label": "D) X-rays", "correct": false }
-            ]
+              {
+                "label": "Greenhouse gases added by human activities",
+                "correct": true
+              },
+              {
+                "label": "Natural water vapor from the oceans only, every year",
+                "correct": false
+              },
+              {
+                "label": "The Sun moving closer to the Earth",
+                "correct": false
+              },
+              {
+                "label": "The ozone layer becoming much thicker",
+                "correct": false
+              }
+            ],
+            "explanation": "Burning fossil fuels, deforestation and agriculture add extra gases, strengthening the natural effect."
           },
           {
-            "text": "Which gas has the HIGHEST global warming potential per molecule?",
+            "text": "Which rice-farming practice reduces methane emissions?",
             "choices": [
-              { "label": "A) Fluorinated gases (CFCs, HFCs)", "correct": true },
-              { "label": "B) Carbon dioxide", "correct": false },
-              { "label": "C) Water vapor", "correct": false },
-              { "label": "D) Oxygen", "correct": false }
-            ]
+              {
+                "label": "Alternate wetting and drying of fields",
+                "correct": true
+              },
+              {
+                "label": "Keeping fields flooded all year long",
+                "correct": false
+              },
+              {
+                "label": "Burning the rice straw in the field",
+                "correct": false
+              },
+              {
+                "label": "Using more nitrogen fertilizer each time",
+                "correct": false
+              }
+            ],
+            "explanation": "Methane forms in flooded, oxygen-poor soil. Letting fields dry out periodically reduces methane."
           },
           {
-            "text": "The ENHANCED greenhouse effect is caused by:",
+            "text": "Which planet shows a runaway greenhouse effect?",
             "choices": [
-              { "label": "A) Human activities that add extra greenhouse gases", "correct": true },
-              { "label": "B) Natural volcanic eruptions only", "correct": false },
-              { "label": "C) Solar flares", "correct": false },
-              { "label": "D) Ocean tides", "correct": false }
-            ]
+              {
+                "label": "Venus",
+                "correct": true
+              },
+              {
+                "label": "Mars",
+                "correct": false
+              },
+              {
+                "label": "Mercury",
+                "correct": false
+              },
+              {
+                "label": "Earth",
+                "correct": false
+              }
+            ],
+            "explanation": "Venus' thick CO₂ atmosphere traps so much heat that its surface is hotter than Mercury's."
           },
           {
-            "text": "Which planet has a runaway greenhouse effect making it the hottest in the Solar System?",
+            "text": "Which household action BEST reduces greenhouse gas emissions?",
             "choices": [
-              { "label": "A) Venus", "correct": true },
-              { "label": "B) Mercury", "correct": false },
-              { "label": "C) Mars", "correct": false },
-              { "label": "D) Earth", "correct": false }
-            ]
+              {
+                "label": "Switching to efficient LEDs and appliances",
+                "correct": true
+              },
+              {
+                "label": "Leaving the TV on standby mode all day",
+                "correct": false
+              },
+              {
+                "label": "Burning dry leaves and plastic in the yard",
+                "correct": false
+              },
+              {
+                "label": "Throwing all food scraps into the open dumpsite",
+                "correct": false
+              }
+            ],
+            "explanation": "Efficient appliances use less electricity, much of which comes from burning fossil fuels."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

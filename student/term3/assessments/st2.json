@@ -1,155 +1,404 @@
 {
-  "title": "Summative Test 2 — Earth Materials, Hazards & PAGASA",
-  "coverage": "Weeks 5–9",
+  "title": "Summative Test 2 — Earth Materials, Geologic & Weather Hazards",
+  "coverage": "Weeks 5–8",
+  "competencies": [
+    "GENSCI-11-T3-W5-C1",
+    "GENSCI-11-T3-W6-C1",
+    "GENSCI-11-T3-W7-C1",
+    "GENSCI-11-T3-W8-C1"
+  ],
   "items": 30,
-  "competencies": ["GENSCI-11-T3-W5-C1", "GENSCI-11-T3-W6-C1", "GENSCI-11-T3-W7-C1", "GENSCI-11-T3-W8-C1", "GENSCI-11-T3-W9-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
     {
       "id": "q1",
-      "text": "What is the difference between a rock and a mineral?",
+      "text": "Which is the hardest mineral on the Mohs scale?",
       "options": [
-        "Rocks are made of one or more minerals; minerals have a definite chemical composition",
-        "Rocks are generally harder than any mineral found in nature",
-        "Minerals are always bigger than the rocks that contain them",
-        "Rocks are always igneous regardless of where they formed"
+        "Diamond",
+        "Quartz crystal",
+        "Talc powder",
+        "Calcite rock"
       ],
-      "correct": "Rocks are made of one or more minerals; minerals have a definite chemical composition",
+      "correct": "Diamond",
       "competency": "GENSCI-11-T3-W5-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "rock vs mineral; distractors balanced (Phase 6)" }
+      "bloomLevel": "Remembering"
     },
-    { "id": "q2", "text": "How are igneous rocks formed?", "options": ["Cooling and solidifying of magma or lava", "Compaction of sediments", "Heat and pressure on existing rocks", "Evaporation of seawater"], "correct": "Cooling and solidifying of magma or lava", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "igneous rocks" } },
-    { "id": "q3", "text": "Which rock type is formed from heat and pressure on existing rocks?", "options": ["Metamorphic", "Igneous", "Sedimentary", "Volcanic"], "correct": "Metamorphic", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "metamorphic rocks" } },
-    { "id": "q4", "text": "Which mineral is used to make cement?", "options": ["Limestone", "Gold", "Copper", "Mica"], "correct": "Limestone", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "mineral in industry" } },
-    { "id": "q5", "text": "Which soil type is BEST for most crops?", "options": ["Loam — balanced mix of sand, silt, and clay", "Sandy soil", "Clay soil", "Gravel"], "correct": "Loam — balanced mix of sand, silt, and clay", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soil properties" } },
-    { "id": "q6", "text": "Which Philippine province is known for its marble?", "options": ["Romblon", "Batanes", "Bohol", "Cebu"], "correct": "Romblon", "competency": "GENSCI-11-T3-W5-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "local mineral resource" } },
+    {
+      "id": "q2",
+      "text": "Which rock is the main raw material for cement?",
+      "options": [
+        "Limestone",
+        "Basalt rock",
+        "Granite slab",
+        "Obsidian glass"
+      ],
+      "correct": "Limestone",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q3",
+      "text": "How does a metamorphic rock form?",
+      "options": [
+        "Heat and pressure change existing rock",
+        "Magma cools quickly at the surface",
+        "Sediments settle and become cemented together",
+        "Salt water evaporates in shallow seas"
+      ],
+      "correct": "Heat and pressure change existing rock",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "Why is streak more reliable than surface color for identifying minerals?",
+      "options": [
+        "Powder color stays the same",
+        "Surface color never changes",
+        "Streak shows the mineral's weight",
+        "Streak measures the hardness"
+      ],
+      "correct": "Powder color stays the same",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "Which metal mined in Surigao is used in stainless steel?",
+      "options": [
+        "Nickel",
+        "Mercury",
+        "Silver",
+        "Tin"
+      ],
+      "correct": "Nickel",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q6",
+      "text": "Why are minerals considered non-renewable?",
+      "options": [
+        "They take millions of years to form",
+        "They grow back after every rainy season",
+        "They are made by plants in the forest",
+        "They can be produced quickly in factories"
+      ],
+      "correct": "They take millions of years to form",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q7",
-      "text": "Which type of mining practice helps minimize environmental impact?",
+      "text": "A farmer's clay soil becomes waterlogged after rain. What should she add to improve it?",
       "options": [
-        "Sustainable mining with rehabilitation of mined areas",
-        "Unregulated open-pit mining without environmental permits",
-        "Dumping mining tailings directly into nearby rivers",
-        "Clearing forests to make room for wide mining access roads"
+        "Compost and some sand",
+        "More clay from a river",
+        "Plastic sheets on top",
+        "Cement to firm it up"
       ],
-      "correct": "Sustainable mining with rehabilitation of mined areas",
+      "correct": "Compost and some sand",
       "competency": "GENSCI-11-T3-W5-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "minerals harnessed sustainably; distractors balanced (Phase 6)" }
+      "bloomLevel": "Applying"
     },
-    { "id": "q8", "text": "What is a tsunami usually caused by?", "options": ["An underwater earthquake", "Strong winds", "Tides", "Fish migration"], "correct": "An underwater earthquake", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "tsunami cause" } },
-    { "id": "q9", "text": "What is the point on Earth's surface directly above an earthquake's origin called?", "options": ["Epicenter", "Focus", "Fault", "Crater"], "correct": "Epicenter", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "epicenter" } },
-    { "id": "q10", "text": "Which of the following is a SLOW geologic process?", "options": ["Saltwater intrusion", "Volcanic eruption", "Tsunami", "Earthquake"], "correct": "Saltwater intrusion", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "slow geologic process" } },
-    { "id": "q11", "text": "What is soil erosion?", "options": ["The gradual removal of topsoil by wind, water, or human activity", "A sudden landslide", "The formation of new soil", "Volcanic ashfall"], "correct": "The gradual removal of topsoil by wind, water, or human activity", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "soil erosion" } },
-    { "id": "q12", "text": "Which agency monitors volcanic and seismic activity in the Philippines?", "options": ["PHIVOLCS", "PAGASA", "DENR", "NDRRMC"], "correct": "PHIVOLCS", "competency": "GENSCI-11-T3-W6-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PHIVOLCS = geologic monitoring" } },
-    { "id": "q13", "text": "What is the BEST response during a strong earthquake?", "options": ["Drop, cover, and hold under a sturdy table", "Run outside immediately", "Take an elevator to the ground floor", "Stand under a window"], "correct": "Drop, cover, and hold under a sturdy table", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Evaluating", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hazard response" } },
-    { "id": "q14", "text": "About how many tropical cyclones enter Philippine waters each year?", "options": ["About 20", "About 3", "About 50", "About 100"], "correct": "About 20", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "typhoon frequency = W7" } },
+    {
+      "id": "q8",
+      "text": "A town must decide whether to allow a quarry beside its river. Which condition is MOST important to require?",
+      "options": [
+        "Silt control plus replanting afterward",
+        "A promise to pay for a new basketball court",
+        "A larger sign at the quarry entrance",
+        "Permission to dump waste rock in the river"
+      ],
+      "correct": "Silt control plus replanting afterward",
+      "competency": "GENSCI-11-T3-W5-C1",
+      "bloomLevel": "Evaluating"
+    },
+    {
+      "id": "q9",
+      "text": "What is the point inside Earth where an earthquake starts?",
+      "options": [
+        "Focus",
+        "Epicenter",
+        "Fault scarp line",
+        "Seismograph"
+      ],
+      "correct": "Focus",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q10",
+      "text": "Which volcano erupted explosively in 1991, cooling global temperatures?",
+      "options": [
+        "Mount Pinatubo",
+        "Mount Apo",
+        "Mount Pulag",
+        "Mount Banahaw (Quezon)"
+      ],
+      "correct": "Mount Pinatubo",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q11",
+      "text": "Why are pyroclastic flows so deadly?",
+      "options": [
+        "They are fast and extremely hot",
+        "They move slowly and are cool",
+        "They are made only of rainwater",
+        "They happen only under the ocean"
+      ],
+      "correct": "They are fast and extremely hot",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q12",
+      "text": "How does an undersea earthquake create a tsunami?",
+      "options": [
+        "It suddenly moves the sea floor and water",
+        "It heats the water until the sea boils over",
+        "It pulls the Moon closer to the Earth",
+        "It blows strong winds across the sea"
+      ],
+      "correct": "It suddenly moves the sea floor and water",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q13",
+      "text": "Which is a SLOW geologic process?",
+      "options": [
+        "Soil erosion",
+        "Earthquake",
+        "Pyroclastic flow",
+        "Tsunami wave"
+      ],
+      "correct": "Soil erosion",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q14",
+      "text": "How does deforestation speed up soil erosion?",
+      "options": [
+        "Roots no longer hold the soil",
+        "Trees make the soil too heavy",
+        "Leaves block all rain from soil",
+        "Forests make the slopes steeper"
+      ],
+      "correct": "Roots no longer hold the soil",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q15",
-      "text": "What causes a storm surge?",
+      "text": "You feel strong shaking while near the shore, and the sea starts to drop. Which action is BEST?",
       "options": [
-        "A typhoon's strong winds and low pressure pushing sea water onto the coast",
-        "Underwater earthquakes that displace large volumes of water",
-        "Lunar gravitational tides acting alone on the coastline",
-        "Volcanic eruptions occurring near coastal population areas"
+        "Move to high ground at once",
+        "Stay to watch the water move",
+        "Walk out to see the sea floor",
+        "Wait for the shaking to repeat"
       ],
-      "correct": "A typhoon's strong winds and low pressure pushing sea water onto the coast",
-      "competency": "GENSCI-11-T3-W7-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "storm surge; distractors balanced (Phase 6)" }
+      "correct": "Move to high ground at once",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Applying"
     },
-    { "id": "q16", "text": "Which of the following is the STRONGEST part of a typhoon?", "options": ["The eyewall", "The eye", "The outer rain bands", "The tail"], "correct": "The eyewall", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "typhoon structure" } },
-    { "id": "q17", "text": "Which PAGASA signal number corresponds to winds of 89–117 km/h?", "options": ["Signal No. 3", "Signal No. 1", "Signal No. 2", "Signal No. 4"], "correct": "Signal No. 3", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PAGASA signal system" } },
-    { "id": "q18", "text": "What is a flash flood?", "options": ["Sudden, fast-rising water — common in mountain areas after heavy rain", "A slow-rising flood lasting weeks", "A flood caused by tsunamis", "A flood from ocean tides"], "correct": "Sudden, fast-rising water — common in mountain areas after heavy rain", "competency": "GENSCI-11-T3-W7-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "flood = hydrometeorological" } },
+    {
+      "id": "q16",
+      "text": "Lahars kept burying towns for years after Pinatubo erupted. Why did the danger last so long?",
+      "options": [
+        "Rain kept washing loose ash down",
+        "The volcano kept erupting every week",
+        "Ash slowly turned into hot lava",
+        "Earthquakes pushed ash into rivers"
+      ],
+      "correct": "Rain kept washing loose ash down",
+      "competency": "GENSCI-11-T3-W6-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q17",
+      "text": "Over what kind of water do typhoons form?",
+      "options": [
+        "Warm ocean water",
+        "Cold polar seas",
+        "Freshwater lakes",
+        "Frozen bays"
+      ],
+      "correct": "Warm ocean water",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "What are the wind speeds for PAGASA Signal No. 4?",
+      "options": [
+        "118–184 km/h",
+        "39–61 km/h only",
+        "62–88 km/h",
+        "89–117 km/h"
+      ],
+      "correct": "118–184 km/h",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q19",
-      "text": "Which of the following is a warning sign of a possible landslide?",
+      "text": "What is a flash flood?",
       "options": [
-        "Cracks in the ground and tilting trees",
-        "Bright, sunny weather lasting several days",
-        "A sudden increase in the ocean's surface temperature",
-        "An unusual presence of birds flying overhead"
+        "Water rising very fast after intense rain",
+        "A slow flood that lasts for several months",
+        "A flood caused only by high ocean tides",
+        "Water from melting snow in the mountains"
       ],
-      "correct": "Cracks in the ground and tilting trees",
-      "competency": "GENSCI-11-T3-W8-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide warning sign; distractors balanced (Phase 6)" }
+      "correct": "Water rising very fast after intense rain",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding"
     },
-    { "id": "q20", "text": "What is the heat index?", "options": ["The 'feels like' temperature combining heat and humidity", "The actual air temperature", "The temperature of the ocean", "The temperature inside the house"], "correct": "The 'feels like' temperature combining heat and humidity", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index = W9 iHEAT" } },
-    { "id": "q21", "text": "What does PAGASA stand for?", "options": ["Philippine Atmospheric, Geophysical and Astronomical Services Administration", "Philippine Agency for General Science and Astronomy", "Philippine Atmospheric and Geological Assessment", "Pacific Atmospheric Group of Science Agencies"], "correct": "Philippine Atmospheric, Geophysical and Astronomical Services Administration", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "PAGASA" } },
-    { "id": "q22", "text": "What does the PAGASA iHEAT map show?", "options": ["Real-time and forecast heat index values across the Philippines", "Volcano locations", "Earthquake epicenters", "Tsunami warnings only"], "correct": "Real-time and forecast heat index values across the Philippines", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "iHEAT map" } },
-    { "id": "q23", "text": "Which heat index range is categorized as DANGER?", "options": ["42–51°C", "27–32°C", "33–41°C", "52°C and above"], "correct": "42–51°C", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat index categories" } },
+    {
+      "id": "q20",
+      "text": "Which warning sign suggests a landslide may happen?",
+      "options": [
+        "New cracks on a hillside",
+        "A clear blue sky at noon",
+        "Birds singing in the trees",
+        "A cool breeze at night"
+      ],
+      "correct": "New cracks on a hillside",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q21",
+      "text": "Why does the heat index feel higher than the actual temperature on humid days?",
+      "options": [
+        "Sweat evaporates more slowly",
+        "The Sun is closer on humid days",
+        "Humid air has less oxygen in it",
+        "Water vapor burns the skin directly"
+      ],
+      "correct": "Sweat evaporates more slowly",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q22",
+      "text": "PAGASA issues an Orange rainfall warning for your area. What should your family do?",
+      "options": [
+        "Get ready to evacuate if water rises",
+        "Ignore it, since it is not a Red warning yet",
+        "Go swimming in the rising river",
+        "Drive across flooded roads now"
+      ],
+      "correct": "Get ready to evacuate if water rises",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q23",
+      "text": "Two coastal towns face the same typhoon. Town A has wide mangroves; Town B cleared its mangroves. Which likely suffers MORE storm-surge damage, and why?",
+      "options": [
+        "Town B — no mangroves to slow the waves",
+        "Town A — mangroves make waves taller",
+        "Both equal — mangroves have no effect on waves",
+        "Town A — mangroves attract typhoons"
+      ],
+      "correct": "Town B — no mangroves to slow the waves",
+      "competency": "GENSCI-11-T3-W7-C1",
+      "bloomLevel": "Analyzing"
+    },
     {
       "id": "q24",
-      "text": "What should you do if someone shows signs of heat stroke (confusion, no sweating, high body temp)?",
+      "text": "What began in the Neolithic period that started changing landforms?",
       "options": [
-        "Call emergency help and cool the person's body immediately",
-        "Wait and observe whether the symptoms improve on their own",
-        "Give them coffee to boost their energy and alertness",
-        "Let them continue working until they feel better naturally"
+        "Farming and permanent settlements",
+        "Large steel factories and railways",
+        "Highways and land reclamation",
+        "Mega-dams and coal power plants"
       ],
-      "correct": "Call emergency help and cool the person's body immediately",
-      "competency": "GENSCI-11-T3-W9-C1",
-      "bloomLevel": "Applying",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "iHEAT response; distractors balanced (Phase 6)" }
+      "correct": "Farming and permanent settlements",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Understanding"
     },
-    { "id": "q25", "text": "What is the urban heat island effect?", "options": ["Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat", "Islands are always cooler than the mainland", "Heat escapes only at night", "Urban areas have more rain"], "correct": "Cities are hotter than surrounding areas because concrete and asphalt absorb and radiate heat", "competency": "GENSCI-11-T3-W9-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "heat context" } },
+    {
+      "id": "q25",
+      "text": "What is vulnerability in DRRM?",
+      "options": [
+        "How easily people are harmed",
+        "How strong the hazard is in a place",
+        "How often PAGASA issues a warning",
+        "How fast a typhoon moves over land"
+      ],
+      "correct": "How easily people are harmed",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q26",
-      "text": "Which human activity MOST increases landslide risk?",
+      "text": "How do mangroves reduce disaster risk?",
       "options": [
-        "Deforestation on steep hillsides for farming",
-        "Planting native trees on hillside slopes",
-        "Building houses on flat, low-lying land",
-        "Installing solar power systems on rooftops"
+        "They slow waves and hold soil",
+        "They make the sea level drop",
+        "They stop all typhoons forming",
+        "They raise the land by meters"
       ],
-      "correct": "Deforestation on steep hillsides for farming",
+      "correct": "They slow waves and hold soil",
       "competency": "GENSCI-11-T3-W8-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "landslide cause; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q27",
-      "text": "What is the difference between a hazard and a disaster?",
+      "text": "Why can land reclamation increase flooding nearby?",
       "options": [
-        "A hazard is a natural event; a disaster is when it strikes a vulnerable community",
-        "They are exactly the same thing in disaster science",
-        "Hazards are always man-made while disasters are natural",
-        "Hazards are always catastrophic regardless of location"
+        "It can block natural drainage paths",
+        "It lowers the sea level along coasts",
+        "It removes the clouds above a city",
+        "It makes the rain fall more slowly"
       ],
-      "correct": "A hazard is a natural event; a disaster is when it strikes a vulnerable community",
+      "correct": "It can block natural drainage paths",
       "competency": "GENSCI-11-T3-W8-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "hazard vs disaster; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
     {
       "id": "q28",
-      "text": "What is an ipo-ipo?",
+      "text": "Your barangay's drains are clogged with plastic every rainy season. Which action BEST reduces the flood risk?",
       "options": [
-        "A small, intense rotating column of air — a tornado or waterspout",
-        "A type of typhoon that forms over warm ocean waters",
-        "A tropical fish that lives in Philippine coastal reefs",
-        "A towering rain cloud that produces heavy thunderstorms"
+        "Segregate waste; clean drains often",
+        "Burn the plastic inside the drains",
+        "Pave the creek banks with concrete",
+        "Close the drains to keep out trash"
       ],
-      "correct": "A small, intense rotating column of air — a tornado or waterspout",
+      "correct": "Segregate waste; clean drains often",
       "competency": "GENSCI-11-T3-W8-C1",
-      "bloomLevel": "Remembering",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "ipo-ipo; distractors balanced (Phase 6)" }
+      "bloomLevel": "Applying"
     },
-    { "id": "q29", "text": "Which agency coordinates national disaster response in the Philippines?", "options": ["NDRRMC", "PAGASA", "PHIVOLCS", "DepEd"], "correct": "NDRRMC", "competency": "GENSCI-11-T3-W8-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "NDRRMC = disaster response" } },
+    {
+      "id": "q29",
+      "text": "Landslides increased in a mountain town after a quarry and new roads cut into its slopes. What is the BEST explanation?",
+      "options": [
+        "Cut slopes and lost plants weakened them",
+        "Quarries produce extra rain over the whole town",
+        "Roads attract lightning that loosens soil",
+        "Rock removal makes the mountain grow taller"
+      ],
+      "correct": "Cut slopes and lost plants weakened them",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Analyzing"
+    },
     {
       "id": "q30",
-      "text": "Which of the following BEST describes the difference between fast and slow geologic processes?",
+      "text": "Officials must choose a site for a new evacuation center. Which choice is BEST?",
       "options": [
-        "Fast processes happen in seconds to days (like eruptions); slow processes happen over years to centuries (like soil erosion)",
-        "Fast processes are always more dangerous than slow ones",
-        "Slow processes always cause major disasters when they occur",
-        "Fast processes occur only deep underground, not on the surface"
+        "High ground, away from rivers, faults and coasts",
+        "Beside the river, so rescue boats can reach it easily",
+        "On the beach, so people can see the storm",
+        "At the foot of a steep, deforested slope"
       ],
-      "correct": "Fast processes happen in seconds to days (like eruptions); slow processes happen over years to centuries (like soil erosion)",
-      "competency": "GENSCI-11-T3-W6-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "geologic process comparison; distractors balanced (Phase 6)" }
+      "correct": "High ground, away from rivers, faults and coasts",
+      "competency": "GENSCI-11-T3-W8-C1",
+      "bloomLevel": "Evaluating"
     }
   ]
 }

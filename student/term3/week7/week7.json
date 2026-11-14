@@ -3,88 +3,282 @@
   "week": 7,
   "title": "Hydrometeorological Processes",
   "competencies": [
-    { "code": "GENSCI-11-T3-W7-C1", "text": "Describe typhoons, floods, landslides, storm surges, and heat waves." }
+    {
+      "code": "GENSCI-11-T3-W7-C1",
+      "text": "Describe typhoons, floods, landslides, storm surges, and heat waves."
+    }
   ],
-  "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
+  "badge": {
+    "id": "weather-pro",
+    "name": "Weather Pro",
+    "icon": "🌀"
+  },
   "days": [
     {
       "day": 1,
       "type": "lesson",
-      "title": "Weather Hazards in the Philippines",
-      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>Learning Target</h3><p>By the end of today's lesson, you will be able to describe the major hydrometeorological hazards affecting the Philippines — typhoons, floods, landslides, storm surges, and heat waves — and explain their causes, warning signs, and effects.</p><h3>What Are Hydrometeorological Hazards?</h3><p><strong>Hydrometeorological hazards</strong> are natural hazards caused by atmospheric, oceanic, or hydrological processes. The Philippines is particularly vulnerable because of:</p><ul><li>Location in the typhoon belt (Western Pacific)</li><li>Warm ocean waters (fuel for typhoons)</li><li>An archipelago with long coastlines</li><li>Mountainous terrain prone to landslides</li><li>Many low-lying coastal communities</li></ul><h3>Typhoons (Tropical Cyclones)</h3><p>A <strong>typhoon</strong> is a powerful, rotating storm system that forms over warm ocean waters (at least 26.5 degrees Celsius). It has:</p><ul><li>Eye — calm center with lowest pressure</li><li>Eyewall — strongest winds and heaviest rain</li><li>Spiral rain bands — outer bands causing widespread rain</li></ul><p>PAGASA Tropical Cyclone Wind Signals:</p><table><thead><tr><th>Signal</th><th>Wind Speed</th><th>Expected Impact</th></tr></thead><tbody><tr><td>Signal No. 1</td><td>39–61 km/h</td><td>Very light damage; some trees sway</td></tr><tr><td>Signal No. 2</td><td>62–88 km/h</td><td>Light to moderate damage; some trees broken</td></tr><tr><td>Signal No. 3</td><td>89–117 km/h</td><td>Moderate to heavy damage; many trees down</td></tr><tr><td>Signal No. 4</td><td>118–184 km/h</td><td>Heavy to very heavy damage; widespread destruction</td></tr><tr><td>Signal No. 5</td><td>185+ km/h</td><td>Extreme damage; catastrophic</td></tr></tbody></table><p>About 20 tropical cyclones enter Philippine waters each year; 8–9 make landfall.</p><h3>Floods</h3><p>A <strong>flood</strong> is the overflow of water onto normally dry land. Types:</p><table><thead><tr><th>Type</th><th>Cause</th></tr></thead><tbody><tr><td>Riverine flood</td><td>Rivers overflow from heavy rain</td></tr><tr><td>Flash flood</td><td>Sudden, fast-rising water — common in mountain areas</td></tr><tr><td>Urban flood</td><td>Drainage systems overwhelmed; poor urban planning</td></tr><tr><td>Coastal flood</td><td>Storm surges or sea-level rise</td></tr></tbody></table><p>Main causes: heavy rainfall, deforestation, clogged drainage, and urbanization.</p><h3>Landslides</h3><p>A <strong>landslide</strong> is the sudden downward movement of rock, soil, and debris. Common triggers:</p><ul><li>Heavy rainfall (saturates soil)</li><li>Earthquakes</li><li>Volcanic eruptions</li><li>Deforestation and mining (weaken slopes)</li><li>Steep terrain and unstable geology</li></ul><p>Warning signs: cracks in the ground, tilting trees or posts, unusual water seepage, rumbling sounds.</p><h3>Storm Surges</h3><p>A <strong>storm surge</strong> is the abnormal rise of sea level near the coast, caused by a typhoon's strong winds and low pressure. It can:</p><ul><li>Reach 5–7 meters in extreme cases (like Yolanda/Haiyan in 2013)</li><li>Flood coastal communities within minutes</li><li>Cause most typhoon deaths when combined with high tide</li></ul><p>Most vulnerable: coastal barangays, especially in Eastern Visayas and Bicol.</p><h3>Heat Waves</h3><p>A <strong>heat wave</strong> is a prolonged period of abnormally high temperatures, often combined with high humidity. In the Philippines:</p><ul><li>Heat index (the feels like temperature) can reach danger levels (41–54 degrees Celsius)</li><li>DOH and PAGASA issue heat advisories</li><li>Vulnerable: elderly, children, outdoor workers, and those with health conditions</li></ul><p>Heat index categories:</p><table><thead><tr><th>Heat Index</th><th>Category</th><th>Effect</th></tr></thead><tbody><tr><td>27–32 C</td><td>Caution</td><td>Fatigue possible with prolonged exposure</td></tr><tr><td>33–41 C</td><td>Extreme Caution</td><td>Heat cramps and heat exhaustion possible</td></tr><tr><td>42–51 C</td><td>Danger</td><td>Heat cramps, exhaustion likely; heat stroke possible</td></tr><tr><td>52 C+</td><td>Extreme Danger</td><td>Heat stroke imminent</td></tr></tbody></table><h3>The Role of PAGASA</h3><p><strong>PAGASA</strong> monitors and warns about:</p><ul><li>Typhoons and tropical cyclones</li><li>Floods and rainfall</li><li>Storm surges</li><li>Heat index</li><li>El Nino and La Nina events</li></ul><p>PAGASA issues bulletins every 3–6 hours during active weather events.</p><h3>Preparedness Basics</h3><ul><li>Monitor PAGASA updates before, during, and after storms.</li><li>Prepare a Go Bag with water, food, flashlight, radio, medicines, and important documents.</li><li>Know your evacuation center and routes.</li><li>Secure loose objects; reinforce roofs and windows.</li><li>Never cross flooded roads or wade in floodwater.</li><li>Follow local government advisories on preemptive evacuation.</li></ul><h3>Quick Check</h3><ul><li>How many tropical cyclones enter Philippine waters each year? (Answer: about 20)</li><li>What causes a storm surge? (Answer: a typhoon's strong winds and low pressure pushing sea water onto the coast)</li><li>Which agency issues typhoon warnings in the Philippines? (Answer: PAGASA)</li></ul>"
+      "title": "Tropical Cyclones",
+      "badge": {
+        "id": "weather-pro",
+        "name": "Weather Pro",
+        "icon": "🌀"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe typhoons, floods, landslides, storm surges and heat waves</strong> — their causes, warning signs and effects.</p>\n<h3>🌀 How a Tropical Cyclone Forms</h3>\n<p>Tropical cyclones form over <strong>warm ocean water (at least about 26.5 °C)</strong>. Warm, moist air rises, cools and condenses into clouds, releasing heat that fuels more rising air. Earth's rotation makes the system spin — <strong>counterclockwise</strong> in the Northern Hemisphere. Parts:</p>\n<ul>\n<li><strong>Eye</strong> — calm center with the lowest pressure.</li>\n<li><strong>Eyewall</strong> — ring of the strongest winds and heaviest rain.</li>\n<li><strong>Rain bands</strong> — spiral bands that bring rain far from the center.</li>\n</ul>\n<h3>📢 PAGASA Tropical Cyclone Wind Signals</h3>\n<table><thead><tr><th>Signal</th><th>Wind speed (km/h)</th><th>Possible impact</th></tr></thead><tbody>\n<tr><td>No. 1</td><td>39–61</td><td>Minimal to minor threat</td></tr>\n<tr><td>No. 2</td><td>62–88</td><td>Minor to moderate threat</td></tr>\n<tr><td>No. 3</td><td>89–117</td><td>Moderate to significant threat</td></tr>\n<tr><td>No. 4</td><td>118–184</td><td>Significant to severe threat</td></tr>\n<tr><td>No. 5</td><td>185 or higher</td><td>Extreme threat to life and property</td></tr>\n</tbody></table>\n<p>Signals describe <strong>wind</strong>. Heavy rain, floods and storm surges can be dangerous even under a low signal — always read PAGASA's rainfall and storm-surge warnings too.</p>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What is the main source of energy for a typhoon?",
+            "choices": [
+              {
+                "label": "Heat from warm ocean water",
+                "correct": true
+              },
+              {
+                "label": "Cold air from the poles",
+                "correct": false
+              },
+              {
+                "label": "Lightning inside the clouds",
+                "correct": false
+              },
+              {
+                "label": "Strong winds over land",
+                "correct": false
+              }
+            ],
+            "explanation": "Warm seawater evaporates; when the vapor condenses into clouds, it releases heat that powers the storm."
+          },
+          {
+            "text": "Which part of a typhoon has the strongest winds?",
+            "choices": [
+              {
+                "label": "The eyewall",
+                "correct": true
+              },
+              {
+                "label": "The calm eye",
+                "correct": false
+              },
+              {
+                "label": "The outer rain bands",
+                "correct": false
+              },
+              {
+                "label": "The area far behind it",
+                "correct": false
+              }
+            ],
+            "explanation": "The eyewall surrounding the eye has the most intense winds and heaviest rain."
+          },
+          {
+            "text": "Why do typhoons usually weaken after crossing land?",
+            "choices": [
+              {
+                "label": "They lose their warm, moist ocean air",
+                "correct": true
+              },
+              {
+                "label": "Mountains add more heat to the storm clouds",
+                "correct": false
+              },
+              {
+                "label": "Land makes the typhoon spin much faster",
+                "correct": false
+              },
+              {
+                "label": "Cities cool the air until it turns to snow",
+                "correct": false
+              }
+            ],
+            "explanation": "Without warm ocean water to evaporate, the storm loses its energy source; friction with land also slows it."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Weather Hazards",
-      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>Activity 1 — Match the Pairs</h3><p>Match each hydrometeorological hazard or concept to its correct description. There are 8 pairs.</p>",
+      "title": "Floods, Landslides and Storm Surges",
+      "badge": {
+        "id": "weather-pro",
+        "name": "Weather Pro",
+        "icon": "🌀"
+      },
+      "content": "<h3>🌊 Storm Surge</h3>\n<p>A <strong>storm surge</strong> is an abnormal rise of sea level as a strong typhoon approaches the coast. Strong onshore winds pile up water, and low pressure lets the sea bulge upward. Shallow, funnel-shaped bays make it worse. During Super Typhoon Yolanda (Haiyan, 2013), storm surges over 5 m flooded Tacloban.</p>\n<h3>💧 Floods</h3>\n<ul>\n<li><strong>River floods</strong> — rivers overflow after days of heavy rain.</li>\n<li><strong>Flash floods</strong> — sudden, fast-rising water within minutes to hours, often in mountain areas or blocked creeks.</li>\n<li><strong>Urban floods</strong> — concrete and clogged drains stop water from soaking in.</li>\n</ul>\n<h3>⛰️ Landslides</h3>\n<p>A <strong>landslide</strong> is the downslope movement of soil, rock and debris. Triggers: long or heavy rain soaking slopes, earthquakes, and removing vegetation or cutting slopes for roads. Warning signs: new cracks on slopes, tilting trees or posts, muddy springs, rumbling sounds.</p>\n<h3>☀️ Heat Waves</h3>\n<p>Periods of unusually high temperatures and humidity. PAGASA reports the <strong>heat index</strong> — what the temperature \"feels like\" when humidity is included.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Typhoon", "right": "Powerful rotating storm that forms over warm ocean waters (at least 26.5 C)" },
-          { "key": "k2", "left": "Eye of the typhoon", "right": "Calm center with the lowest pressure" },
-          { "key": "k3", "left": "Eyewall", "right": "Ring around the eye with the strongest winds and heaviest rain" },
-          { "key": "k4", "left": "Storm surge", "right": "Abnormal rise of sea level near the coast, caused by typhoon winds and low pressure" },
-          { "key": "k5", "left": "Flash flood", "right": "Sudden, fast-rising water — common in mountain areas after heavy rain" },
-          { "key": "k6", "left": "Landslide", "right": "Sudden downward movement of rock, soil, and debris on a slope" },
-          { "key": "k7", "left": "Heat index", "right": "The feels like temperature combining heat and humidity" },
-          { "key": "k8", "left": "PAGASA", "right": "Agency that monitors typhoons, floods, storm surges, and heat index" }
+          {
+            "key": "k1",
+            "left": "Tropical cyclone",
+            "right": "Rotating storm formed over warm ocean water",
+            "why": "Called a typhoon at its strongest levels in our region."
+          },
+          {
+            "key": "k2",
+            "left": "Eye",
+            "right": "Calm center with the lowest pressure",
+            "why": "Skies may clear briefly as it passes."
+          },
+          {
+            "key": "k3",
+            "left": "Eyewall",
+            "right": "Ring with the strongest winds and rain",
+            "why": "It surrounds the eye."
+          },
+          {
+            "key": "k4",
+            "left": "Storm surge",
+            "right": "Abnormal sea-level rise pushed ashore by a typhoon",
+            "why": "It caused most deaths in Tacloban during Yolanda."
+          },
+          {
+            "key": "k5",
+            "left": "Flash flood",
+            "right": "Sudden, fast-rising water after intense rain",
+            "why": "Common in mountain streams."
+          },
+          {
+            "key": "k6",
+            "left": "Landslide",
+            "right": "Downslope movement of soil and rock",
+            "why": "Often triggered by heavy rain."
+          },
+          {
+            "key": "k7",
+            "left": "Heat index",
+            "right": "Feels-like temperature with humidity",
+            "why": "PAGASA issues heat index advisories."
+          },
+          {
+            "key": "k8",
+            "left": "Signal No. 5",
+            "right": "Winds of 185 km/h or more",
+            "why": "Extreme threat to life and property."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Storm Preparedness",
-      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are 5 scenarios.</p>",
+      "title": "Warning Signs and Safe Actions",
+      "badge": {
+        "id": "weather-pro",
+        "name": "Weather Pro",
+        "icon": "🌀"
+      },
+      "content": "<h3>🚦 Rainfall Warnings</h3>\n<p>PAGASA uses a color-coded heavy rainfall warning: <strong>Yellow</strong> (monitor; flooding possible in low areas), <strong>Orange</strong> (flooding threatening; be alert for evacuation), <strong>Red</strong> (serious flooding expected; evacuate low-lying areas).</p>\n<h3>✅ What to Do</h3>\n<table><thead><tr><th>Hazard</th><th>Safe actions</th></tr></thead><tbody>\n<tr><td>Typhoon</td><td>Secure the house, prepare a Go Bag, follow evacuation orders before winds become strong</td></tr>\n<tr><td>Storm surge</td><td>Evacuate coastal areas early to places inland or high enough above the expected surge height</td></tr>\n<tr><td>Flood</td><td>Move to higher ground; never walk or drive through moving floodwater; avoid wading (leptospirosis risk)</td></tr>\n<tr><td>Landslide</td><td>Leave slopes and valleys below them when cracks appear or heavy rain continues</td></tr>\n<tr><td>Heat</td><td>Drink water, rest in shade, avoid strenuous outdoor work at midday</td></tr>\n</tbody></table>\n<p>Just 15 cm of fast-moving water can knock a person down, and about 60 cm can float a car.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Choose the safest action. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "PAGASA raises Signal No. 3 in your province. What does this mean for residents?",
+            "text": "PAGASA raises Signal No. 3 over your province. What does this mean?",
             "choices": [
-              { "label": "A) Winds of 89–117 km/h are expected — moderate to heavy damage; prepare for possible evacuation", "correct": true },
-              { "label": "B) It is just a light rain warning", "correct": false },
-              { "label": "C) The typhoon has already passed", "correct": false },
-              { "label": "D) Nothing will happen", "correct": false }
-            ]
+              {
+                "label": "89–117 km/h winds; moderate to significant threat",
+                "correct": true
+              },
+              {
+                "label": "Winds of 39–61 km/h; only very light damage",
+                "correct": false
+              },
+              {
+                "label": "The typhoon has already passed over your whole province",
+                "correct": false
+              },
+              {
+                "label": "Only boats need to prepare; homes are safe",
+                "correct": false
+              }
+            ],
+            "explanation": "Signal No. 3 means winds of 89–117 km/h are expected — enough to damage houses and topple trees."
           },
           {
-            "text": "A coastal barangay is warned of a possible 5-meter storm surge. What should residents do?",
+            "text": "Your coastal barangay is warned of a possible 4-meter storm surge. What should residents do?",
             "choices": [
-              { "label": "A) Evacuate to higher ground or designated evacuation centers immediately", "correct": true },
-              { "label": "B) Stay home and wait it out", "correct": false },
-              { "label": "C) Go to the beach to watch the waves", "correct": false },
-              { "label": "D) Move to the second floor of their house", "correct": false }
-            ]
+              {
+                "label": "Evacuate early to higher ground inland",
+                "correct": true
+              },
+              {
+                "label": "Stay home and watch the waves from the shore",
+                "correct": false
+              },
+              {
+                "label": "Tie the boats closer to the shore and wait",
+                "correct": false
+              },
+              {
+                "label": "Climb onto the roof once the water arrives",
+                "correct": false
+              }
+            ],
+            "explanation": "Storm surges rise rapidly and are very powerful. Evacuating early before the surge arrives saves lives."
           },
           {
-            "text": "After three days of continuous heavy rain, you notice cracks appearing on a hillside near your house. What should you do?",
+            "text": "After three days of heavy rain, cracks appear on the slope above your house. What is the SAFEST action?",
             "choices": [
-              { "label": "A) Evacuate immediately — cracks are a warning sign of an impending landslide", "correct": true },
-              { "label": "B) Ignore them — they are normal", "correct": false },
-              { "label": "C) Fill the cracks with soil", "correct": false },
-              { "label": "D) Take pictures only", "correct": false }
-            ]
+              {
+                "label": "Leave immediately and warn neighbors",
+                "correct": true
+              },
+              {
+                "label": "Fill the cracks with soil and stay inside",
+                "correct": false
+              },
+              {
+                "label": "Wait until the rain stops before deciding",
+                "correct": false
+              },
+              {
+                "label": "Move to the room nearest the slope",
+                "correct": false
+              }
+            ],
+            "explanation": "New cracks are a landslide warning sign. Evacuating at once and alerting others is the safest response."
           },
           {
-            "text": "A river near your barangay is rising fast after hours of rain. What is the SAFEST action?",
+            "text": "A river near your home is rising fast after hours of rain, and the road is covered with moving water. What should you do?",
             "choices": [
-              { "label": "A) Move to higher ground and avoid crossing flooded areas", "correct": true },
-              { "label": "B) Try to cross the river to check on neighbors", "correct": false },
-              { "label": "C) Wait until the water reaches your house", "correct": false },
-              { "label": "D) Swim across", "correct": false }
-            ]
+              {
+                "label": "Go to higher ground; never cross it",
+                "correct": true
+              },
+              {
+                "label": "Drive across quickly before it gets deeper",
+                "correct": false
+              },
+              {
+                "label": "Wade through holding a rope for balance",
+                "correct": false
+              },
+              {
+                "label": "Wait on the riverbank to watch the water",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving floodwater can sweep away people and cars. Seek higher ground instead of crossing."
           },
           {
-            "text": "PAGASA reports a heat index of 48 C in your area. What should outdoor workers do?",
+            "text": "Why can a weak typhoon (Signal No. 1) still cause deadly floods?",
             "choices": [
-              { "label": "A) Avoid prolonged exposure, drink plenty of water, and take breaks in the shade — heat stroke is possible", "correct": true },
-              { "label": "B) Work longer hours to finish quickly", "correct": false },
-              { "label": "C) Wear thick clothing", "correct": false },
-              { "label": "D) Ignore it — heat index doesn't matter", "correct": false }
-            ]
+              {
+                "label": "It can bring very heavy rain even with weak winds",
+                "correct": true
+              },
+              {
+                "label": "Weak typhoons always have much stronger storm surges",
+                "correct": false
+              },
+              {
+                "label": "Signal No. 1 means the typhoon is the strongest",
+                "correct": false
+              },
+              {
+                "label": "Floods are caused only by wind, not by rain",
+                "correct": false
+              }
+            ],
+            "explanation": "Signals refer to wind. A slow, wet tropical cyclone can drop huge amounts of rain and cause floods and landslides."
           }
         ]
       }
@@ -92,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Weather Lab",
-      "badge": { "id": "weather-pro", "name": "Weather Pro", "icon": "🌀" },
-      "content": "<h3>Formative Check — Escape the Weather Lab</h3><p>You have 3 lives and 6 keys to unlock. You need 70% (5 of 6) to pass.</p>",
+      "title": "Why the Philippines Is So Exposed",
+      "badge": {
+        "id": "weather-pro",
+        "name": "Weather Pro",
+        "icon": "🌀"
+      },
+      "content": "<h3>🗺️ Exposure Factors</h3>\n<ul>\n<li>Location in the western Pacific <strong>typhoon belt</strong> with warm seas all year.</li>\n<li>Long coastlines and many people living in low coastal areas.</li>\n<li>Steep, deforested mountains that shed rain quickly — floods and landslides.</li>\n<li>Rapid urban growth with clogged drainage and informal settlements along rivers.</li>\n</ul>\n<h3>🌡️ Climate Change Links</h3>\n<p>Warmer seas give typhoons more energy and moisture, so the strongest storms are expected to become more intense and wetter. Rising sea levels make storm surges reach farther inland. Heat waves are becoming more frequent.</p>\n<h3>🧠 Hazard + Vulnerability = Risk</h3>\n<p>A typhoon is a <strong>hazard</strong>. It becomes a <strong>disaster</strong> when it hits a community that is <strong>exposed and vulnerable</strong>. Early warnings, strong houses, good drainage, healthy forests and mangroves, and prepared families reduce the risk.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "About how many tropical cyclones enter Philippine waters each year?",
+            "text": "About how many tropical cyclones enter the Philippine Area of Responsibility each year?",
             "choices": [
-              { "label": "A) About 20", "correct": true },
-              { "label": "B) About 3", "correct": false },
-              { "label": "C) About 50", "correct": false },
-              { "label": "D) About 100", "correct": false }
-            ]
+              {
+                "label": "About 20",
+                "correct": true
+              },
+              {
+                "label": "About 2",
+                "correct": false
+              },
+              {
+                "label": "About 5",
+                "correct": false
+              },
+              {
+                "label": "About 100",
+                "correct": false
+              }
+            ],
+            "explanation": "On average about 20 tropical cyclones enter PAR yearly, with several making landfall."
           },
           {
             "text": "What causes a storm surge?",
             "choices": [
-              { "label": "A) A typhoon's strong winds and low pressure pushing sea water onto the coast", "correct": true },
-              { "label": "B) Underwater earthquakes", "correct": false },
-              { "label": "C) Lunar tides only", "correct": false },
-              { "label": "D) Volcanic eruptions", "correct": false }
-            ]
+              {
+                "label": "Typhoon winds and low pressure piling up seawater",
+                "correct": true
+              },
+              {
+                "label": "An earthquake suddenly lifting the deep sea floor up high",
+                "correct": false
+              },
+              {
+                "label": "Heavy rain filling up the ocean from above",
+                "correct": false
+              },
+              {
+                "label": "The Moon pulling water away from the coast",
+                "correct": false
+              }
+            ],
+            "explanation": "Onshore winds pile up water and low air pressure lets the sea rise; together they flood the coast."
           },
           {
-            "text": "Which of the following is the STRONGEST part of a typhoon?",
+            "text": "Which agency issues tropical cyclone wind signals and rainfall warnings?",
             "choices": [
-              { "label": "A) The eyewall", "correct": true },
-              { "label": "B) The eye", "correct": false },
-              { "label": "C) The outer rain bands", "correct": false },
-              { "label": "D) The tail", "correct": false }
-            ]
+              {
+                "label": "PAGASA",
+                "correct": true
+              },
+              {
+                "label": "PHIVOLCS",
+                "correct": false
+              },
+              {
+                "label": "DepEd",
+                "correct": false
+              },
+              {
+                "label": "DOH",
+                "correct": false
+              }
+            ],
+            "explanation": "PAGASA, under DOST, monitors weather and issues typhoon signals, rainfall and heat index advisories."
           },
           {
-            "text": "What is the heat index?",
+            "text": "What does the heat index measure?",
             "choices": [
-              { "label": "A) The feels like temperature combining heat and humidity", "correct": true },
-              { "label": "B) The actual air temperature", "correct": false },
-              { "label": "C) The temperature of the ocean", "correct": false },
-              { "label": "D) The temperature inside the house", "correct": false }
-            ]
+              {
+                "label": "How hot it feels with humidity included",
+                "correct": true
+              },
+              {
+                "label": "The temperature of the ocean's surface water",
+                "correct": false
+              },
+              {
+                "label": "The amount of rain in one hour",
+                "correct": false
+              },
+              {
+                "label": "The wind speed of a typhoon",
+                "correct": false
+              }
+            ],
+            "explanation": "Humidity reduces sweat evaporation, so it feels hotter than the air temperature alone."
           },
           {
-            "text": "Which agency issues typhoon warnings and heat advisories in the Philippines?",
+            "text": "Which human activity MOST increases landslide risk on slopes?",
             "choices": [
-              { "label": "A) PAGASA", "correct": true },
-              { "label": "B) PHIVOLCS", "correct": false },
-              { "label": "C) DENR", "correct": false },
-              { "label": "D) DOH only", "correct": false }
-            ]
+              {
+                "label": "Clearing trees from steep hillsides",
+                "correct": true
+              },
+              {
+                "label": "Planting bamboo along riverbanks",
+                "correct": false
+              },
+              {
+                "label": "Building drainage canals on slopes",
+                "correct": false
+              },
+              {
+                "label": "Using terraces for hillside farming",
+                "correct": false
+              }
+            ],
+            "explanation": "Tree roots bind soil. Removing them leaves slopes loose and easily saturated."
           },
           {
-            "text": "What should you do if caught in a flood?",
+            "text": "What is the safest response to moving floodwater on a road?",
             "choices": [
-              { "label": "A) Move to higher ground immediately; never attempt to cross flooded roads", "correct": true },
-              { "label": "B) Try to drive through the flood", "correct": false },
-              { "label": "C) Wade through the water", "correct": false },
-              { "label": "D) Wait for the water to reach you", "correct": false }
-            ]
+              {
+                "label": "Turn back and go to higher ground",
+                "correct": true
+              },
+              {
+                "label": "Drive through it at a very high speed",
+                "correct": false
+              },
+              {
+                "label": "Walk through it to save time",
+                "correct": false
+              },
+              {
+                "label": "Swim across to the other side",
+                "correct": false
+              }
+            ],
+            "explanation": "Fast water can knock people down and float vehicles. Avoid entering it altogether."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }

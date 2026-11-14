@@ -1,93 +1,272 @@
 {
   "title": "Quiz 2 — Philippine Geology & Biodiversity",
   "coverage": "Weeks 3–4",
+  "competencies": [
+    "GENSCI-11-T3-W3-C1",
+    "GENSCI-11-T3-W4-C1"
+  ],
   "items": 20,
-  "competencies": ["GENSCI-11-T3-W3-C1", "GENSCI-11-T3-W4-C1"],
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
   "questions": [
-    { "id": "q1", "text": "What is the theory that Earth's outer shell is broken into moving plates called?", "options": ["Plate tectonics", "Continental drift", "Big Bang theory", "Rock cycle"], "correct": "Plate tectonics", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine geology formation" } },
-    { "id": "q2", "text": "At which type of plate boundary do volcanoes MOST commonly form?", "options": ["Convergent boundary (subduction zones)", "Divergent boundary only", "Transform boundary", "Volcanoes form randomly"], "correct": "Convergent boundary (subduction zones)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine archipelago formation" } },
-    { "id": "q3", "text": "The Philippine Fault System is an example of which plate boundary type?", "options": ["Transform (plates slide past each other)", "Convergent", "Divergent", "Accretion"], "correct": "Transform (plates slide past each other)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Understanding", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine geology" } },
+    {
+      "id": "q1",
+      "text": "What happens at a convergent plate boundary?",
+      "options": [
+        "Plates move toward each other",
+        "Plates move away from each other",
+        "Plates slide past each other sideways",
+        "Plates stay perfectly still forever"
+      ],
+      "correct": "Plates move toward each other",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q2",
+      "text": "Which layer do tectonic plates move over?",
+      "options": [
+        "Asthenosphere",
+        "Inner core",
+        "Outer core",
+        "Crust only (top layer)"
+      ],
+      "correct": "Asthenosphere",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q3",
+      "text": "Why does the Philippines have many active volcanoes?",
+      "options": [
+        "Subducting plates beneath them produce magma",
+        "The islands sit on a divergent ridge in the ocean",
+        "Hot ocean water melts the rocks along the coast",
+        "Typhoons bring heat that melts the mountains"
+      ],
+      "correct": "Subducting plates beneath them produce magma",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q4",
-      "text": "How were the Philippine islands primarily formed?",
+      "text": "What is the Philippine Trench?",
       "options": [
-        "Through volcanic arcs, collisions, and tectonic uplift over millions of years",
-        "They were carried to their current location by ocean currents",
-        "They are fragments of the Moon that broke off long ago",
-        "They were always a single big island that later fragmented"
+        "A deep trench where a plate subducts",
+        "A long, wide river valley in central Luzon",
+        "A canal dug for ships between islands",
+        "A shallow reef area off Palawan"
       ],
-      "correct": "Through volcanic arcs, collisions, and tectonic uplift over millions of years",
+      "correct": "A deep trench where a plate subducts",
       "competency": "GENSCI-11-T3-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine archipelago formation; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q5", "text": "What is the Pacific Ring of Fire?", "options": ["A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "A ring of fire in Hawaii", "A type of volcano", "A boundary between continents"], "correct": "A horseshoe-shaped zone around the Pacific where most volcanoes and earthquakes occur", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine geology context" } },
+    {
+      "id": "q5",
+      "text": "Which kind of motion happens along the Philippine Fault Zone?",
+      "options": [
+        "Blocks slide horizontally past each other",
+        "Plates pull apart to form a new ocean",
+        "One plate sinks straight into the mantle",
+        "Magma pours out along the fault all year round"
+      ],
+      "correct": "Blocks slide horizontally past each other",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Understanding"
+    },
     {
       "id": "q6",
-      "text": "Why are marine fossils found on Philippine mountains?",
+      "text": "Which evidence shows that some Philippine mountains were once under the sea?",
       "options": [
-        "The ocean once covered the area, and tectonic uplift raised the land above sea level",
-        "Fish used to live on dry land millions of years ago",
-        "Ancient people carried the fossils up the mountains",
-        "They fell from the sky during meteor showers long ago"
+        "Marine fossils and limestone up high",
+        "Snow found on top of the highest peaks",
+        "Rivers that flow down to the sea",
+        "Volcanic ash on the slopes of mountains"
       ],
-      "correct": "The ocean once covered the area, and tectonic uplift raised the land above sea level",
+      "correct": "Marine fossils and limestone up high",
       "competency": "GENSCI-11-T3-W3-C1",
-      "bloomLevel": "Analyzing",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine geology landform analysis; distractors balanced (Phase 6)" }
+      "bloomLevel": "Understanding"
     },
-    { "id": "q7", "text": "Which tectonic plate subducts beneath Luzon and the Visayas, creating volcanoes and trenches?", "options": ["Philippine Sea Plate", "Eurasian Plate", "Sunda Plate", "Pacific Plate"], "correct": "Philippine Sea Plate", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine geology specifics" } },
-    { "id": "q8", "text": "What geological feature is east of Mindanao and reaches depths of over 10,000 meters?", "options": ["Philippine Trench", "Manila Trench", "Mariana Trench", "Sulu Sea"], "correct": "Philippine Trench", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unique Philippine landforms" } },
-    { "id": "q9", "text": "Which of the following landforms is a karst landscape with an underground river?", "options": ["Puerto Princesa Underground River", "Chocolate Hills", "Banaue Rice Terraces", "Mayon Volcano"], "correct": "Puerto Princesa Underground River", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "unique Philippine landforms" } },
+    {
+      "id": "q7",
+      "text": "Why are parts of Palawan geologically different from Luzon's volcanic arc?",
+      "options": [
+        "They are continental pieces from Asia",
+        "They were formed only by very recent eruptions",
+        "They are made entirely of floating pumice rock",
+        "They rose from the sea floor during a typhoon"
+      ],
+      "correct": "They are continental pieces from Asia",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q8",
+      "text": "A map shows earthquakes getting deeper as you move west from the Philippine Trench. What does this tell a geologist?",
+      "options": [
+        "A plate is sinking at an angle beneath the islands",
+        "The islands are slowly floating eastward on the water",
+        "Earthquakes happen only near the surface of land",
+        "The trench is quickly filling with river sediment"
+      ],
+      "correct": "A plate is sinking at an angle beneath the islands",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q9",
+      "text": "Why does the Philippines have both many volcanoes AND many strong earthquakes?",
+      "options": [
+        "It lies on converging plates and active faults",
+        "It lies far away from any plate boundary on Earth",
+        "It receives very heavy rain every single year",
+        "It has many rivers that shake the ground"
+      ],
+      "correct": "It lies on converging plates and active faults",
+      "competency": "GENSCI-11-T3-W3-C1",
+      "bloomLevel": "Analyzing"
+    },
     {
       "id": "q10",
-      "text": "Which of the following describes the Chocolate Hills of Bohol?",
+      "text": "A town plans to build a new school directly on a mapped active fault line because the land is cheap. Which judgment is BEST?",
       "options": [
-        "Rounded hills formed by weathering of limestone",
-        "Ancient volcanic craters filled with rainwater",
-        "Wind-blown sand dunes from a prehistoric desert",
-        "Raised coral reefs from a shallow ancient sea"
+        "Unsafe — choose a site away from the fault",
+        "Safe — faults only move once every million years",
+        "Safe — buildings on faults are always stronger",
+        "Unsafe — but only because the land is too cheap"
       ],
-      "correct": "Rounded hills formed by weathering of limestone",
+      "correct": "Unsafe — choose a site away from the fault",
       "competency": "GENSCI-11-T3-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine landforms; distractors balanced (Phase 6)" }
+      "bloomLevel": "Evaluating"
     },
-    { "id": "q11", "text": "How many climate types does PAGASA classify in the Philippines?", "options": ["Four (Types I–IV)", "Two", "Six", "One"], "correct": "Four (Types I–IV)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine climate classification" } },
-    { "id": "q12", "text": "Which monsoon wind brings cool, dry weather from November to February?", "options": ["Amihan (NE monsoon)", "Habagat (SW monsoon)", "Trade winds", "Sea breeze"], "correct": "Amihan (NE monsoon)", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine climate" } },
-    { "id": "q13", "text": "About how many tropical cyclones enter Philippine waters each year?", "options": ["About 20", "About 5", "About 50", "About 100"], "correct": "About 20", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine climate context" } },
-    { "id": "q14", "text": "Which region of the Philippines typically has Type II climate (no dry season, rainfall throughout the year)?", "options": ["Bicol and Eastern Visayas", "Central Luzon", "Ilocos Region", "Cagayan Valley"], "correct": "Bicol and Eastern Visayas", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine climate types" } },
-    { "id": "q15", "text": "What is the Coral Triangle?", "options": ["A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "A political alliance of three countries", "A type of coral reef", "A scientific lab"], "correct": "A marine region including the Philippines with 2,500+ fish species and 500+ coral species", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine life forms" } },
-    { "id": "q16", "text": "About what percentage of Philippine plants are endemic (found only in the Philippines)?", "options": ["About 65%", "About 10%", "About 100%", "About 5%"], "correct": "About 65%", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine biodiversity" } },
-    { "id": "q17", "text": "Which iconic Philippine species is one of the largest eagles in the world and is critically endangered?", "options": ["Philippine Eagle", "Palawan Peacock-Pheasant", "Philippine Tarsier", "Visayan Warty Pig"], "correct": "Philippine Eagle", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine biodiversity" } },
-    { "id": "q18", "text": "Which small buffalo species is found ONLY in Mindoro?", "options": ["Tamaraw", "Carabao", "Anoa", "Banteng"], "correct": "Tamaraw", "competency": "GENSCI-11-T3-W3-C1", "bloomLevel": "Remembering", "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine biodiversity" } },
+    {
+      "id": "q11",
+      "text": "How many climate types does PAGASA use for the Philippines?",
+      "options": [
+        "Four",
+        "Two",
+        "Three",
+        "Five"
+      ],
+      "correct": "Four",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q12",
+      "text": "Which monsoon brings cool, drier air from about November to February?",
+      "options": [
+        "Amihan",
+        "Habagat",
+        "Trade wind",
+        "Sea breeze"
+      ],
+      "correct": "Amihan",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q13",
+      "text": "How were the Chocolate Hills of Bohol formed?",
+      "options": [
+        "Uplifted, eroded limestone",
+        "Lava domes that cooled quickly",
+        "Soil piled up by early farmers",
+        "Sand dunes blown in by the wind"
+      ],
+      "correct": "Uplifted, eroded limestone",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q14",
+      "text": "What does it mean when a species is endemic to the Philippines?",
+      "options": [
+        "It is found naturally only in the Philippines",
+        "It has spread to almost every country in the world",
+        "It was brought in from another country",
+        "It has been extinct for many centuries"
+      ],
+      "correct": "It is found naturally only in the Philippines",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q15",
+      "text": "Why do the Philippines have so many endemic species?",
+      "options": [
+        "Isolated islands let species evolve apart",
+        "The islands are all connected by bridges",
+        "The climate is cold and dry all year",
+        "Animals are brought in from other countries"
+      ],
+      "correct": "Isolated islands let species evolve apart",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q16",
+      "text": "Which landform is human-made?",
+      "options": [
+        "Banaue Terraces",
+        "Mayon Volcano",
+        "Chocolate Hills",
+        "Tubbataha Reefs Park"
+      ],
+      "correct": "Banaue Terraces",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q17",
+      "text": "What is the MAIN threat to Philippine biodiversity?",
+      "options": [
+        "Habitat loss",
+        "Too much rainfall",
+        "Cold weather",
+        "Strong sunlight"
+      ],
+      "correct": "Habitat loss",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "A farmer moves from western Luzon (Type I) to Eastern Samar (Type II). How should he adjust his planting plan?",
+      "options": [
+        "Expect no dry season; heavy rain late in the year",
+        "Expect six dry months, just like in western Luzon before",
+        "Expect snow during December and January",
+        "Expect no rain at all for most of the year"
+      ],
+      "correct": "Expect no dry season; heavy rain late in the year",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Applying"
+    },
     {
       "id": "q19",
-      "text": "Which of the following is the MOST serious threat to Philippine biodiversity?",
+      "text": "A mountain has lowland forest at the base, mossy forest higher up, and grassland near the top. What BEST explains this pattern?",
       "options": [
-        "Habitat loss from deforestation, mining, and land conversion",
-        "Too many protected areas being set aside by government",
-        "Overpopulation of endemic species in the wild",
-        "Excessive rainfall and flooding during typhoon season"
+        "Conditions change with elevation",
+        "The soil gets saltier closer to the summit",
+        "The Sun is nearer to the top of the mountain",
+        "People planted each forest type on purpose"
       ],
-      "correct": "Habitat loss from deforestation, mining, and land conversion",
-      "competency": "GENSCI-11-T3-W3-C1",
-      "bloomLevel": "Evaluating",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine biodiversity threats; distractors balanced (Phase 6)" }
+      "correct": "Conditions change with elevation",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Analyzing"
     },
     {
       "id": "q20",
-      "text": "The Philippines is one of 17 megadiverse countries. What does this mean?",
+      "text": "Two plans aim to save the Philippine Eagle: A protects large forest areas; B breeds a few eagles in a city zoo. Which is MORE effective long-term?",
       "options": [
-        "It contains a very high number of species, many of which are endemic",
-        "It has the largest total land area in the world",
-        "It has the highest human population density",
-        "It has the most active volcanoes in the world"
+        "Plan A — eagles need large wild forests",
+        "Plan B — zoos alone can replace the forests completely",
+        "Plan B — eagles prefer to live in busy cities",
+        "Plan A — because forests make eagles grow faster"
       ],
-      "correct": "It contains a very high number of species, many of which are endemic",
-      "competency": "GENSCI-11-T3-W3-C1",
-      "bloomLevel": "Understanding",
-      "_tag": { "layer": 2, "confidence": "HIGH", "rationale": "Philippine biodiversity; distractors balanced (Phase 6)" }
+      "correct": "Plan A — eagles need large wild forests",
+      "competency": "GENSCI-11-T3-W4-C1",
+      "bloomLevel": "Evaluating"
     }
   ]
 }

@@ -17,81 +17,268 @@
     {
       "day": 1,
       "type": "lesson",
-      "title": "Rocks, Minerals & Soils",
-      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
-      "content": "<h3>🎯 Learning Target</h3><p>By the end of today's lesson, you will be able to distinguish rocks, minerals, and soils; describe the three rock types; identify common Philippine minerals and their uses; and explain how earth materials are harnessed for industry.</p><h3>🪨 Rocks vs. Minerals vs. Soils</h3><table><thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead><tbody><tr><td><strong>Mineral</strong></td><td>A naturally occurring, inorganic solid with a definite chemical composition and crystal structure</td><td>Quartz, gold, calcite, feldspar</td></tr><tr><td><strong>Rock</strong></td><td>A naturally occurring solid made of one or more minerals</td><td>Granite (quartz + feldspar + mica), limestone (calcite)</td></tr><tr><td><strong>Soil</strong></td><td>Loose mixture of weathered rock, minerals, organic matter, water, and air</td><td>Loam, clay, sand</td></tr></tbody></table><h3>🔬 Properties Used to Identify Minerals</h3><table><thead><tr><th>Property</th><th>What It Tests</th></tr></thead><tbody><tr><td><strong>Hardness</strong></td><td>Resistance to scratching (Mohs scale 1–10)</td></tr><tr><td><strong>Color &amp; streak</strong></td><td>Color of mineral in solid form vs. when rubbed on a plate</td></tr><tr><td><strong>Luster</strong></td><td>How it reflects light — metallic, glassy, dull, pearly</td></tr><tr><td><strong>Cleavage &amp; fracture</strong></td><td>How it breaks along flat planes or irregularly</td></tr><tr><td><strong>Specific gravity</strong></td><td>Density compared to water</td></tr><tr><td><strong>Reaction to acid</strong></td><td>Effervescence (fizzing) in acid — identifies carbonates like calcite</td></tr></tbody></table><h3>🪨 The Three Rock Types</h3><table><thead><tr><th>Rock Type</th><th>How It Forms</th><th>Example</th><th>Uses</th></tr></thead><tbody><tr><td><strong>Igneous</strong></td><td>Cooling and solidifying of magma or lava</td><td>Granite, basalt, obsidian</td><td>Building stone, countertops, gravel</td></tr><tr><td><strong>Sedimentary</strong></td><td>Compaction and cementation of sediments (or chemical precipitation)</td><td>Limestone, sandstone, shale</td><td>Cement, building stone, chalk</td></tr><tr><td><strong>Metamorphic</strong></td><td>Existing rock changed by heat and pressure</td><td>Marble (from limestone), slate (from shale)</td><td>Marble for flooring &amp; sculpture; slate for roofing</td></tr></tbody></table><h3>💎 Common Philippine Minerals &amp; Their Uses</h3><table><thead><tr><th>Mineral</th><th>Location in PH</th><th>Uses</th></tr></thead><tbody><tr><td><strong>Gold</strong></td><td>Baguio, Benguet, Surigao, Masbate</td><td>Jewelry, electronics, coins, dentistry</td></tr><tr><td><strong>Copper</strong></td><td>Toledo (Cebu), Mankayan, Surigao</td><td>Electrical wiring, plumbing, electronics</td></tr><tr><td><strong>Nickel</strong></td><td>Surigao, Palawan, Zambales</td><td>Stainless steel, batteries, coins</td></tr><tr><td><strong>Chromite</strong></td><td>Zambales, Surigao</td><td>Stainless steel, refractory bricks</td></tr><tr><td><strong>Iron</strong></td><td>Bulacan, Camarines Norte, Surigao</td><td>Steel, construction, machinery</td></tr><tr><td><strong>Limestone</strong></td><td>Rizal, Cebu, Palawan, Bulacan</td><td>Cement, chalk, building stone, glass</td></tr><tr><td><strong>Marble</strong></td><td>Romblon</td><td>Sculpture, flooring, tiles</td></tr><tr><td><strong>Silica / Quartz</strong></td><td>Various</td><td>Glass, electronics, sandpaper</td></tr><tr><td><strong>Coal</strong></td><td>Semirara (Antique), Cebu, Surigao</td><td>Electricity generation, fuel</td></tr><tr><td><strong>Salt (halite)</strong></td><td>Pangasinan (asinan), Mindoro</td><td>Food, water softeners, chemistry</td></tr></tbody></table><h3>🌾 Soil — The Foundation of Agriculture</h3><table><thead><tr><th>Soil Type</th><th>Properties</th><th>Best For</th></tr></thead><tbody><tr><td><strong>Sandy</strong></td><td>Large particles, drains fast, low nutrients</td><td>Root crops (carrots, cassava)</td></tr><tr><td><strong>Clay</strong></td><td>Small particles, holds water, compact</td><td>Pottery, rice paddies (with irrigation)</td></tr><tr><td><strong>Loam</strong></td><td>Balanced mix — best for most crops</td><td>Rice, corn, vegetables, fruit trees</td></tr></tbody></table><h3>🏭 How Earth Materials Are Harnessed for Industry</h3><table><thead><tr><th>Industry</th><th>Earth Materials Used</th></tr></thead><tbody><tr><td><strong>Construction</strong></td><td>Limestone (cement), marble, granite, sand, gravel</td></tr><tr><td><strong>Electronics</strong></td><td>Copper, gold, silicon (quartz), rare earth metals</td></tr><tr><td><strong>Energy</strong></td><td>Coal, geothermal (heat from Earth's interior), natural gas</td></tr><tr><td><strong>Agriculture</strong></td><td>Soil, limestone (for neutralizing acid), phosphate rock (fertilizer)</td></tr><tr><td><strong>Jewelry</strong></td><td>Gold, silver, pearls, diamonds</td></tr><tr><td><strong>Ceramics</strong></td><td>Clay, kaolin, feldspar</td></tr><tr><td><strong>Glass</strong></td><td>Silica sand, limestone, soda ash</td></tr></tbody></table><h3>⚠️ Environmental Impact of Mining</h3><ul><li><strong>Deforestation:</strong> Clearing land for mining operations</li><li><strong>Water pollution:</strong> Acid mine drainage into rivers</li><li><strong>Soil erosion:</strong> Exposed land loses topsoil</li><li><strong>Habitat destruction:</strong> Ecosystems disrupted</li><li><strong>Social impact:</strong> Displacement of Indigenous communities</li></ul><p><strong>Solutions:</strong> Sustainable mining practices, rehabilitation of mined areas, strict regulation (DENR-MGB), and support for renewable alternatives.</p><h3>📌 Quick Check</h3><ul><li>What is the difference between a rock and a mineral? (Answer: rocks are made of one or more minerals)</li><li>How are igneous rocks formed? (Answer: cooling and solidifying of magma or lava)</li><li>What mineral is used in cement? (Answer: limestone)</li></ul>"
+      "title": "Minerals, Rocks and Soils",
+      "badge": {
+        "id": "geologist",
+        "name": "Geologist",
+        "icon": "⛏️"
+      },
+      "content": "<h3>🎯 Learning Target</h3>\n<p>This week you will <strong>describe the properties and local availability of rocks, minerals and soils</strong> and <strong>explain how they are harnessed for industries</strong>.</p>\n<h3>💎 Three Earth Materials</h3>\n<table><thead><tr><th>Material</th><th>Definition</th><th>Examples</th></tr></thead><tbody>\n<tr><td>Mineral</td><td>Naturally occurring, inorganic solid with a definite chemical composition and crystal structure</td><td>Quartz, calcite, gold, copper minerals</td></tr>\n<tr><td>Rock</td><td>Natural solid made of one or more minerals</td><td>Granite, limestone, basalt</td></tr>\n<tr><td>Soil</td><td>Loose mixture of weathered rock, organic matter, water and air</td><td>Sand, silt, clay, loam</td></tr>\n</tbody></table>\n<h3>🔍 Identifying Minerals</h3>\n<ul>\n<li><strong>Hardness</strong> — resistance to scratching, on the Mohs scale from 1 (talc) to 10 (diamond).</li>\n<li><strong>Streak</strong> — color of the powder when rubbed on a tile; more reliable than surface color.</li>\n<li><strong>Luster</strong> — how it reflects light: metallic, glassy, dull.</li>\n<li><strong>Cleavage/fracture</strong> — breaks along flat planes or irregularly.</li>\n<li><strong>Density</strong> — gold feels much heavier than quartz of the same size.</li>\n<li><strong>Acid test</strong> — calcite (in limestone) fizzes in dilute acid, releasing CO₂.</li>\n</ul>\n<h3>✅ Quick Check</h3><p>3 questions — read each explanation.</p>",
+      "activities": {
+        "scenario": [
+          {
+            "text": "What is the difference between a mineral and a rock?",
+            "choices": [
+              {
+                "label": "A rock is made of one or more minerals",
+                "correct": true
+              },
+              {
+                "label": "A mineral is made of many different rocks",
+                "correct": false
+              },
+              {
+                "label": "Rocks are always softer than any mineral",
+                "correct": false
+              },
+              {
+                "label": "Minerals are only found in volcanoes",
+                "correct": false
+              }
+            ],
+            "explanation": "Minerals are the building blocks; rocks are aggregates of one or more minerals."
+          },
+          {
+            "text": "A mineral scratches glass but is scratched by quartz. Which property is being tested?",
+            "choices": [
+              {
+                "label": "Hardness",
+                "correct": true
+              },
+              {
+                "label": "Streak",
+                "correct": false
+              },
+              {
+                "label": "Luster",
+                "correct": false
+              },
+              {
+                "label": "Density (mass)",
+                "correct": false
+              }
+            ],
+            "explanation": "Scratch tests compare hardness using the Mohs scale."
+          },
+          {
+            "text": "A rock fizzes when a drop of dilute acid is placed on it. Which mineral does it most likely contain?",
+            "choices": [
+              {
+                "label": "Calcite",
+                "correct": true
+              },
+              {
+                "label": "Quartz",
+                "correct": false
+              },
+              {
+                "label": "Feldspar",
+                "correct": false
+              },
+              {
+                "label": "Mica",
+                "correct": false
+              }
+            ],
+            "explanation": "Calcite (calcium carbonate) reacts with acid to release CO₂ bubbles; limestone and marble contain calcite."
+          }
+        ]
+      }
     },
     {
       "day": 2,
       "type": "activity1",
-      "title": "Match Game — Earth Materials",
-      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
-      "content": "<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each earth material, rock type, or concept to its correct description or use. There are <strong>8 pairs</strong> and unlimited retakes to reach 70%.</p>",
+      "title": "The Rock Cycle",
+      "badge": {
+        "id": "geologist",
+        "name": "Geologist",
+        "icon": "⛏️"
+      },
+      "content": "<h3>🪨 Three Rock Types</h3>\n<table><thead><tr><th>Type</th><th>How it forms</th><th>Examples and uses</th></tr></thead><tbody>\n<tr><td>Igneous</td><td>Magma or lava cools and hardens</td><td>Basalt (road gravel), granite (countertops), pumice (scrubbing)</td></tr>\n<tr><td>Sedimentary</td><td>Sediments are deposited, compacted and cemented; or minerals precipitate</td><td>Limestone (cement), sandstone, shale, coal</td></tr>\n<tr><td>Metamorphic</td><td>Existing rock changed by heat and pressure without melting</td><td>Marble from limestone (Romblon tiles), slate from shale</td></tr>\n</tbody></table>\n<h3>🔄 The Rock Cycle</h3>\n<p>Rocks constantly change from one type to another. Weathering and erosion break rocks into sediments; sediments become sedimentary rock; heat and pressure turn rocks into metamorphic rock; melting creates magma that cools into igneous rock. In the Philippines, active volcanoes, uplift and heavy tropical rain keep this cycle moving quickly.</p>\n<h3>🌋 Cooling Speed Matters</h3>\n<p>Magma that cools slowly underground forms <strong>large crystals</strong> (granite). Lava that cools quickly at the surface forms <strong>small crystals</strong> (basalt) or even glass (obsidian). Gas bubbles trapped in fast-cooling lava make <strong>pumice</strong>, light enough to float.</p>\n<h3>🔗 Activity 1 — Match the Pairs</h3><p>Match each term to its description. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "match": [
-          { "key": "k1", "left": "Mineral", "right": "Naturally occurring inorganic solid with a definite chemical composition" },
-          { "key": "k2", "left": "Igneous rock", "right": "Forms from cooling and solidifying of magma or lava" },
-          { "key": "k3", "left": "Sedimentary rock", "right": "Forms from compaction and cementation of sediments — like limestone" },
-          { "key": "k4", "left": "Metamorphic rock", "right": "Forms when existing rock is changed by heat and pressure — like marble" },
-          { "key": "k5", "left": "Limestone", "right": "Used to make cement, chalk, and building stone" },
-          { "key": "k6", "left": "Copper", "right": "Used in electrical wiring, plumbing, and electronics" },
-          { "key": "k7", "left": "Loam soil", "right": "Balanced mix of sand, silt, and clay — best for most crops" },
-          { "key": "k8", "left": "Marble (Romblon)", "right": "Used for sculpture, flooring, and tiles" }
+          {
+            "key": "k1",
+            "left": "Mineral",
+            "right": "Natural inorganic solid with a definite composition",
+            "why": "It has an ordered crystal structure."
+          },
+          {
+            "key": "k2",
+            "left": "Igneous rock",
+            "right": "Forms when magma or lava cools",
+            "why": "Basalt and granite are examples."
+          },
+          {
+            "key": "k3",
+            "left": "Sedimentary rock",
+            "right": "Forms from compacted, cemented sediments",
+            "why": "Limestone and sandstone are examples."
+          },
+          {
+            "key": "k4",
+            "left": "Metamorphic rock",
+            "right": "Changed by heat and pressure without melting",
+            "why": "Marble forms from limestone."
+          },
+          {
+            "key": "k5",
+            "left": "Limestone",
+            "right": "Main raw material for cement",
+            "why": "It is mostly calcite."
+          },
+          {
+            "key": "k6",
+            "left": "Marble (Romblon)",
+            "right": "Used for tiles, sculptures and flooring",
+            "why": "Romblon is famous for marble."
+          },
+          {
+            "key": "k7",
+            "left": "Pumice",
+            "right": "Light, bubbly volcanic rock",
+            "why": "Gas bubbles were trapped as lava cooled."
+          },
+          {
+            "key": "k8",
+            "left": "Streak",
+            "right": "Color of a mineral's powder",
+            "why": "More reliable than surface color."
+          }
         ]
       }
     },
     {
       "day": 3,
       "type": "activity2",
-      "title": "Scenario Challenge — Industry Uses",
-      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
-      "content": "<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Read each scenario and choose the best reasoning. There are <strong>5 scenarios</strong>. You have unlimited retakes to reach 70%.</p>",
+      "title": "Philippine Earth Resources",
+      "badge": {
+        "id": "geologist",
+        "name": "Geologist",
+        "icon": "⛏️"
+      },
+      "content": "<h3>⛏️ Mineral Wealth</h3>\n<p>Because of its volcanic and tectonic history, the Philippines is rich in metallic and non-metallic resources.</p>\n<table><thead><tr><th>Resource</th><th>Where found (examples)</th><th>Main uses</th></tr></thead><tbody>\n<tr><td>Gold</td><td>Benguet, Masbate, Davao de Oro</td><td>Jewelry, electronics, reserves</td></tr>\n<tr><td>Copper</td><td>Benguet, Cebu (Toledo), Zambales</td><td>Electric wiring, plumbing, electronics</td></tr>\n<tr><td>Nickel</td><td>Surigao, Palawan, Zambales</td><td>Stainless steel, batteries</td></tr>\n<tr><td>Chromite</td><td>Zambales</td><td>Stainless steel, chrome plating</td></tr>\n<tr><td>Limestone</td><td>Rizal, Cebu, Bohol</td><td>Cement, lime, building stone</td></tr>\n<tr><td>Marble</td><td>Romblon</td><td>Tiles, sculpture</td></tr>\n<tr><td>Clay</td><td>Many lowland areas (e.g., Ilocos)</td><td>Bricks, pottery (burnay jars)</td></tr>\n</tbody></table>\n<h3>🌱 Soils</h3>\n<p><strong>Sandy</strong> soil drains fast and holds few nutrients; <strong>clay</strong> holds water and nutrients but can become waterlogged and hard; <strong>loam</strong>, a balanced mix of sand, silt and clay with organic matter, is best for most crops. Volcanic soils are especially fertile.</p>\n<h3>⚖️ Costs of Extraction</h3>\n<p>Mining and quarrying bring jobs and materials but can cause deforestation, erosion, silted rivers and <strong>acid mine drainage</strong>. The <strong>Philippine Mining Act (RA 7942)</strong> requires environmental permits and rehabilitation of mined land.</p>\n<h3>🎯 Activity 2 — Scenario Challenge</h3><p>Apply your knowledge of earth materials. Read every explanation. You need <strong>70%</strong>; retakes are unlimited.</p>",
       "activities": {
         "scenario": [
           {
-            "text": "🏗️ A construction company needs cement for a new bridge. Which earth material is the MAIN ingredient?",
+            "text": "A construction firm needs cement for a bridge. Which earth material is the MAIN raw material?",
             "choices": [
-              { "label": "A) Limestone — heated to produce lime, the key ingredient in cement", "correct": true },
-              { "label": "B) Gold", "correct": false },
-              { "label": "C) Coal", "correct": false },
-              { "label": "D) Obsidian", "correct": false }
-            ]
+              {
+                "label": "Limestone",
+                "correct": true
+              },
+              {
+                "label": "Granite",
+                "correct": false
+              },
+              {
+                "label": "Pumice",
+                "correct": false
+              },
+              {
+                "label": "Copper ore",
+                "correct": false
+              }
+            ],
+            "explanation": "Cement is made by heating limestone (calcium carbonate) with clay."
           },
           {
-            "text": "💻 A tech company builds a new factory for electronics. Which minerals from the Philippines would they most likely need?",
+            "text": "A farmer's soil drains very fast and her crops lack nutrients. What should she do?",
             "choices": [
-              { "label": "A) Copper, gold, and silica (for wiring, contacts, and semiconductors)", "correct": true },
-              { "label": "B) Only clay", "correct": false },
-              { "label": "C) Only marble", "correct": false },
-              { "label": "D) Only limestone", "correct": false }
-            ]
+              {
+                "label": "Mix in compost so it holds water and nutrients",
+                "correct": true
+              },
+              {
+                "label": "Add more sand so the water drains away even faster",
+                "correct": false
+              },
+              {
+                "label": "Remove all organic matter from the top layer",
+                "correct": false
+              },
+              {
+                "label": "Pave the field so the soil cannot dry out",
+                "correct": false
+              }
+            ],
+            "explanation": "Sandy soil drains quickly. Adding organic matter moves it toward loam, which holds water and nutrients better."
           },
           {
-            "text": "🌾 A farmer complains that their soil drains too quickly and doesn't hold nutrients. What type of soil are they likely using?",
+            "text": "A copper mine opens upstream of a farming town. Which impact should the town watch for MOST closely?",
             "choices": [
-              { "label": "A) Sandy soil — large particles drain fast and hold few nutrients", "correct": true },
-              { "label": "B) Clay soil", "correct": false },
-              { "label": "C) Loam soil", "correct": false },
-              { "label": "D) Volcanic ash", "correct": false }
-            ]
+              {
+                "label": "Acidic, metal-laden runoff reaching rivers",
+                "correct": true
+              },
+              {
+                "label": "Rivers becoming much colder in summer",
+                "correct": false
+              },
+              {
+                "label": "Copper turning all the rice crops into gold",
+                "correct": false
+              },
+              {
+                "label": "More rain falling only on the mine site",
+                "correct": false
+              }
+            ],
+            "explanation": "Exposed sulfide rocks can produce acid mine drainage that carries toxic metals into water used for farms and drinking."
           },
           {
-            "text": "⛏️ A mining company opens a copper mine in Surigao. What environmental impact should be carefully managed?",
+            "text": "Why does granite have large crystals while basalt has tiny ones?",
             "choices": [
-              { "label": "A) Acid mine drainage, deforestation, and habitat destruction", "correct": true },
-              { "label": "B) Increased rainfall", "correct": false },
-              { "label": "C) Cooling of the local climate", "correct": false },
-              { "label": "D) Formation of new mountains", "correct": false }
-            ]
+              {
+                "label": "Granite's magma cooled slowly underground",
+                "correct": true
+              },
+              {
+                "label": "Basalt cooled slowly deep inside the Earth",
+                "correct": false
+              },
+              {
+                "label": "Granite formed from sediments in the sea",
+                "correct": false
+              },
+              {
+                "label": "Basalt was squeezed by heat and pressure",
+                "correct": false
+              }
+            ],
+            "explanation": "Slow cooling deep underground gives crystals time to grow large; fast cooling at the surface makes small crystals."
           },
           {
-            "text": "🏺 A potter in Vigan wants to make traditional clay pots. Which soil type is BEST?",
+            "text": "A potter in Vigan makes burnay jars. Why is clay the best soil for this?",
             "choices": [
-              { "label": "A) Clay — small particles that hold shape and harden when fired", "correct": true },
-              { "label": "B) Sandy soil", "correct": false },
-              { "label": "C) Loam", "correct": false },
-              { "label": "D) Gravel", "correct": false }
-            ]
+              {
+                "label": "Its fine, sticky particles hold a shape",
+                "correct": true
+              },
+              {
+                "label": "It drains water quickly and stays loose and dry",
+                "correct": false
+              },
+              {
+                "label": "It is full of large rocks and pebbles",
+                "correct": false
+              },
+              {
+                "label": "It contains much more sand than silt",
+                "correct": false
+              }
+            ],
+            "explanation": "Clay's very fine particles stick together when wet and hold a shape, then harden when fired."
           }
         ]
       }
@@ -99,67 +286,150 @@
     {
       "day": 4,
       "type": "formative",
-      "title": "Formative Check — Escape the Geology Lab",
-      "badge": { "id": "geologist", "name": "Geologist", "icon": "⛏️" },
-      "content": "<h3>🔐 Formative Check — Escape the Geology Lab</h3><p>You have <strong>3 lives</strong> and <strong>6 keys</strong> to unlock. You need <strong>70%</strong> (5 of 6) to pass. Take your time — read every option carefully.</p>",
+      "title": "Using Earth Materials Responsibly",
+      "badge": {
+        "id": "geologist",
+        "name": "Geologist",
+        "icon": "⛏️"
+      },
+      "content": "<h3>♻️ Non-Renewable Resources</h3>\n<p>Minerals and rocks form over millions of years, so on a human time scale they are <strong>non-renewable</strong>. Using them wisely means:</p>\n<ul>\n<li><strong>Recycling metals</strong> — recycling copper and aluminum uses far less energy than mining new ore.</li>\n<li><strong>Responsible mining</strong> — permits, water treatment, tailings management and replanting mined areas.</li>\n<li><strong>Protecting soil</strong> — terracing, cover crops and reforestation reduce erosion; topsoil can take centuries to form.</li>\n<li><strong>Small-scale miners' safety</strong> — mercury used to extract gold is toxic to people and rivers; safer methods exist.</li>\n</ul>\n<h3>📱 Earth Materials in Your Phone</h3>\n<p>A smartphone contains copper (wiring), gold (connectors), nickel and cobalt (battery), silicon from quartz (chips) and many other elements. Every device links us to mines somewhere — and recycling old phones recovers these materials.</p>\n<h3>🔐 Formative Check — Escape the Lab</h3><p>3 lives, 6 keys. You need <strong>70%</strong> (5 of 6). Read each explanation.</p>",
       "activities": {
         "escape": [
           {
-            "text": "What is the difference between a rock and a mineral?",
-            "choices": [
-              { "label": "A) Rocks are made of one or more minerals; minerals have a definite chemical composition", "correct": true },
-              { "label": "B) Rocks are harder than minerals", "correct": false },
-              { "label": "C) Minerals are bigger than rocks", "correct": false },
-              { "label": "D) Rocks are always igneous", "correct": false }
-            ]
-          },
-          {
             "text": "How are igneous rocks formed?",
             "choices": [
-              { "label": "A) Cooling and solidifying of magma or lava", "correct": true },
-              { "label": "B) Compaction of sediments", "correct": false },
-              { "label": "C) Heat and pressure on existing rocks", "correct": false },
-              { "label": "D) Evaporation of seawater", "correct": false }
-            ]
+              {
+                "label": "By cooling of magma or lava",
+                "correct": true
+              },
+              {
+                "label": "By compacting layers of sediments",
+                "correct": false
+              },
+              {
+                "label": "By heat and pressure without melting",
+                "correct": false
+              },
+              {
+                "label": "By evaporation of salt water at sea",
+                "correct": false
+              }
+            ],
+            "explanation": "Igneous rocks form when molten rock (magma underground, lava at the surface) cools and solidifies."
           },
           {
-            "text": "Which rock type is formed from heat and pressure on existing rocks?",
+            "text": "Which rock type forms when heat and pressure change existing rock?",
             "choices": [
-              { "label": "A) Metamorphic", "correct": true },
-              { "label": "B) Igneous", "correct": false },
-              { "label": "C) Sedimentary", "correct": false },
-              { "label": "D) Volcanic", "correct": false }
-            ]
-          },
-          {
-            "text": "Which mineral is used to make cement?",
-            "choices": [
-              { "label": "A) Limestone", "correct": true },
-              { "label": "B) Gold", "correct": false },
-              { "label": "C) Copper", "correct": false },
-              { "label": "D) Mica", "correct": false }
-            ]
+              {
+                "label": "Metamorphic",
+                "correct": true
+              },
+              {
+                "label": "Igneous",
+                "correct": false
+              },
+              {
+                "label": "Sedimentary",
+                "correct": false
+              },
+              {
+                "label": "Volcanic glass",
+                "correct": false
+              }
+            ],
+            "explanation": "Metamorphic rocks form from existing rocks transformed by heat and pressure, like limestone becoming marble."
           },
           {
             "text": "Which soil type is BEST for most crops?",
             "choices": [
-              { "label": "A) Loam — balanced mix of sand, silt, and clay", "correct": true },
-              { "label": "B) Sandy soil", "correct": false },
-              { "label": "C) Clay soil", "correct": false },
-              { "label": "D) Gravel", "correct": false }
-            ]
+              {
+                "label": "Loam",
+                "correct": true
+              },
+              {
+                "label": "Pure sand",
+                "correct": false
+              },
+              {
+                "label": "Pure clay",
+                "correct": false
+              },
+              {
+                "label": "Gravel",
+                "correct": false
+              }
+            ],
+            "explanation": "Loam balances drainage and water-holding and contains organic matter."
           },
           {
-            "text": "Which Philippine province is known for its marble?",
+            "text": "Which Philippine province is famous for marble?",
             "choices": [
-              { "label": "A) Romblon", "correct": true },
-              { "label": "B) Batanes", "correct": false },
-              { "label": "C) Bohol", "correct": false },
-              { "label": "D) Cebu", "correct": false }
-            ]
+              {
+                "label": "Romblon",
+                "correct": true
+              },
+              {
+                "label": "Benguet",
+                "correct": false
+              },
+              {
+                "label": "Batanes",
+                "correct": false
+              },
+              {
+                "label": "Surigao",
+                "correct": false
+              }
+            ],
+            "explanation": "Romblon is known nationwide for its marble industry."
+          },
+          {
+            "text": "Which metal from Surigao and Palawan is used in stainless steel and batteries?",
+            "choices": [
+              {
+                "label": "Nickel",
+                "correct": true
+              },
+              {
+                "label": "Gold",
+                "correct": false
+              },
+              {
+                "label": "Mercury",
+                "correct": false
+              },
+              {
+                "label": "Lead",
+                "correct": false
+              }
+            ],
+            "explanation": "The Philippines is a major nickel ore producer; nickel is used in stainless steel and batteries."
+          },
+          {
+            "text": "Why are minerals considered NON-renewable?",
+            "choices": [
+              {
+                "label": "They form over millions of years",
+                "correct": true
+              },
+              {
+                "label": "They regrow during each rainy season",
+                "correct": false
+              },
+              {
+                "label": "They can be grown in farms",
+                "correct": false
+              },
+              {
+                "label": "They are made fresh by plants",
+                "correct": false
+              }
+            ],
+            "explanation": "Mineral deposits take geological time to form, far longer than human lifetimes."
           }
         ]
       }
     }
-  ]
+  ],
+  "revision": "2026-11 rev2 — daily discussion, explained activities, balanced choices"
 }
