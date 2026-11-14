@@ -1,7 +1,26 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.11.0 (Teacher auth hardening + score overrides)
+   Version: 1.12.1 (Grade integrity hardening)
    ------------------------------------------------------------
+   Changelog v1.12.1:
+     - Answer-key check is version-aware: attempts carry a key fingerprint
+       (quiz-engine) and are key-checked only against the SAME version of the
+       published bank, so a bank revision or the 6-hour cache never marks an
+       honest answer wrong.
+
+   Changelog v1.12.0:
+     - SECURITY: unlock tombstones sent by a student device are IGNORED.
+       Only the server creates them (teacher unlock / redeemed code), so a
+       student can no longer delete a lock by editing localStorage.
+     - SECURITY: a NEW lock from a device is stamped with the server time
+       (a device clock set backwards can no longer make a lock look older
+       than the teacher's unlock).
+     - SECURITY: quiz / ST / TE scores are recomputed from the item results
+       (score = items answered correctly, percent from that). Editing only
+       the percent in localStorage no longer raises a grade.
+     - SECURITY (optional, CONFIG.VERIFY_ANSWER_KEYS): each item's expected
+       answer is checked against the published question bank
+       (CONFIG.SITE_URL); a forged "expected" counts as wrong.
    Changelog v1.11.0:
      - SECURITY: teacher-only actions now require the teacher token:
        setTermAccess, savePTGrade, markPTLegacy, deleteLock, markUsedBulk,
@@ -110,7 +129,15 @@ const CONFIG = {
   // (e.g. '2026-11-20T00:00:00+08:00'). Every "term2 / pt1" submission made
   // BEFORE this moment is treated as Term 1 PT1. '' = disabled.
   // Keep the SAME value in config.js (PT1_FIX_CUTOFF). Then run fixTerm1PT1() once.
-  PT1_FIX_CUTOFF: ''
+  PT1_FIX_CUTOFF: '',
+
+  // Published site (GitHub Pages) — used to read the official answer keys.
+  SITE_URL: 'https://jemuelmari.github.io/general-science-app/',
+  // Check every new quiz / ST / TE item against the published answer key.
+  VERIFY_ANSWER_KEYS: true,
+  // Only attempts taken on/after this moment are checked (older attempts were
+  // made with older question banks). Set it to the day you upload the revised banks.
+  VERIFY_SINCE: '2026-11-15T00:00:00+08:00'
 };
 
 const LEGACY_CUTOFF = '2026-10-29T00:00:00Z';
@@ -202,7 +229,7 @@ function _dispatch(action, body) {
       case 'deleteSyncCode':         response = deleteSyncCode(body); break;
       case 'getTermAccess':          response = getTermAccess(body); break;
       case 'setTermAccess':          response = setTermAccess(body); break;
-      case 'health':                 response = { ok: true, message: 'GSA backend is running', version: '1.11.0', time: new Date().toISOString() }; break;
+      case 'health':                 response = { ok: true, message: 'GSA backend is running', version: '1.12.1', time: new Date().toISOString() }; break;
       case 'pushAttempt':            response = pushAttempt(body); break;
       case 'pullAttempts':           response = pullAttempts(body); break;
       case 'markUsedBulk':           response = markUsedBulk(body); break;
@@ -244,7 +271,7 @@ function _dispatch(action, body) {
 
 function doGet(e) {
   var action = e.parameter.action;
-  if (action === 'ping') return respond({ ok: true, service: 'GSA Sync Backend', version: '1.11.0', time: new Date().toISOString() });
+  if (action === 'ping') return respond({ ok: true, service: 'GSA Sync Backend', version: '1.12.1', time: new Date().toISOString() });
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
     return respond({ ok: true, totalCodes: Math.max(0, sheet.getLastRow() - 1) });
@@ -556,6 +583,7 @@ function _mergeProgressData(existing, incoming) {
         Object.keys(incTypeScores).forEach(function (id) {
           var inc = incTypeScores[id];
           if (!inc || typeof inc !== 'object') return;
+          if (type === 'quizzes' || type === 'st' || type === 'te') inc = _verifyGraded(term, type === 'te' ? 'te' : id, inc);
           merged.scores[term][type][id] = mergeScoreEntry(merged.scores[term][type][id], inc);
         });
       });
@@ -575,7 +603,9 @@ function _mergeProgressData(existing, incoming) {
 
   // locks/unlocks: UNION (a stale device must not erase a lock). An unlock is a tombstone
   // (unlocks[key].unlockedAt) and beats any lock that is not newer than it.
-  mergeLocksAndUnlocks(merged, incoming.locks, incoming.unlocks);
+  // Unlock tombstones are created ONLY by the server (_applyServerUnlock);
+  // whatever a device sends in progressJSON.unlocks is ignored.
+  mergeLocksAndUnlocks(merged, _stampNewLocks(merged.locks, incoming.locks), {});
 
   if (incoming.lastLocalSave) merged.lastLocalSave = incoming.lastLocalSave;
 
@@ -612,6 +642,68 @@ function _hasItems(o) { return !!(o && Array.isArray(o.itemResults) && o.itemRes
 
 function _clone(o) { return JSON.parse(JSON.stringify(o)); }
 
+/* ===== GRADE INTEGRITY ===== */
+// Official answer keys, read from the published site and cached 6 h.
+function _answerKey(term, id) {
+  if (!CONFIG.VERIFY_ANSWER_KEYS || !CONFIG.SITE_URL) return null;
+  var cacheKey = 'AK2_' + term + '_' + id;
+  try {
+    var cache = CacheService.getScriptCache();
+    var hit = cache.get(cacheKey);
+    if (hit) return JSON.parse(hit);
+    var res = UrlFetchApp.fetch(CONFIG.SITE_URL + 'student/' + term + '/assessments/' + id + '.json?v=' + Date.now(), { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return null;
+    var bank = JSON.parse(res.getContentText());
+    var key = {};
+    (bank.questions || []).forEach(function (q) { key[String(q.id)] = q.correct; });
+    var out = { key: key, rev: _keyFingerprint(bank.questions || []) };
+    try { cache.put(cacheKey, JSON.stringify(out), 21600); } catch (e) {}
+    return out;
+  } catch (e) { return null; }
+}
+
+// Same fingerprint as quiz-engine.js (_keyFingerprint): ids + correct answers.
+function _keyFingerprint(qs) {
+  var lines = qs.map(function (q) { return String(q.id) + '=' + String(q.correct); }).sort();
+  var str = lines.join('\n'), h = 5381;
+  for (var i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+}
+
+/**
+ * Recompute a quiz / ST / TE record from its item results:
+ * score = items whose given answer equals the expected answer; percent from that.
+ * For attempts on/after VERIFY_SINCE the expected answer must also match the
+ * published key. Records without item results are left as they are.
+ */
+function _verifyGraded(term, id, rec) {
+  if (!rec || !Array.isArray(rec.itemResults) || !rec.itemResults.length) return rec;
+  var out = _clone(rec);
+  var ts = new Date(out.timestamp || 0).getTime();
+  var since = CONFIG.VERIFY_SINCE ? new Date(CONFIG.VERIFY_SINCE).getTime() : 0;
+  var ak = (ts && ts >= since) ? _answerKey(term, id === 'te' ? 'te' : id) : null;
+  // An attempt that carries a key fingerprint different from the published one
+  // was taken on another version of the test (e.g. before a bank revision, or
+  // while the 6-hour cache still holds the old key): do not key-check it.
+  var key = ak && !(out.keyRev && ak.rev && out.keyRev !== ak.rev) ? ak.key : null;
+  var correct = 0, flagged = 0;
+  out.itemResults = out.itemResults.map(function (r) {
+    if (!r || typeof r !== 'object') return r;
+    var ok = r.given != null && r.given !== '' && r.given === r.expected;
+    if (ok && key && r.questionId != null && key[String(r.questionId)] !== undefined && key[String(r.questionId)] !== r.expected) { ok = false; flagged++; }
+    if (ok) correct++;
+    var c = _clone(r); c.correct = ok; return c;
+  });
+  var total = out.itemResults.length;
+  if (Number(out.score) !== correct || Number(out.total) !== total) out.serverCorrected = true;
+  if (flagged) out.keyMismatch = flagged;
+  out.score = correct;
+  out.total = total;
+  out.percent = Math.round(correct / total * 100);
+  out.passed = out.percent >= 70;
+  return out;
+}
+
 function mergeScoreEntry(ex, inc) {
   if (!ex || typeof ex !== 'object') return inc;
   if (!inc || typeof inc !== 'object') return ex;
@@ -646,6 +738,22 @@ function mergeScoreEntry(ex, inc) {
 function _stampValue(v) {
   if (typeof v === 'string') return { unlockedAt: v };
   return v;
+}
+
+// New locks from a device get the SERVER time (device clocks can be wrong / set back)
+function _stampNewLocks(existing, incLocks) {
+  var out = {};
+  if (!incLocks || typeof incLocks !== 'object') return out;
+  var now = new Date().toISOString();
+  Object.keys(incLocks).forEach(function (k) {
+    var v = incLocks[k];
+    if (!v) return;
+    if (existing && existing[k]) { out[k] = v; return; }
+    var c = (typeof v === 'object') ? JSON.parse(JSON.stringify(v)) : { reason: 'failed' };
+    if (!c.lockedAt || new Date(c.lockedAt).getTime() < Date.now()) c.lockedAt = now;
+    out[k] = c;
+  });
+  return out;
 }
 
 function mergeLocksAndUnlocks(merged, incLocks, incUnlocks) {
@@ -1887,6 +1995,14 @@ function deleteScoreOverride(body) {
 }
 
 /* ===== DIAGNOSTICS & FIXES (run manually in the Apps Script editor) ===== */
+
+// Run ONCE after pasting v1.12.0: grants the "connect to an external service"
+// permission (needed to read the official answer keys) and shows a sample.
+function testAnswerKey() {
+  var k = _answerKey('term1', 'quiz1');
+  Logger.log(k ? ('OK — ' + Object.keys(k.key).length + ' answers read for term1/quiz1 (key version ' + k.rev + ')') : 'Could not read the answer key (check CONFIG.SITE_URL)');
+  return k;
+}
 
 // Run ONCE after setting CONFIG.PT1_FIX_CUTOFF: moves PTFiles / PTGrades rows
 // (term2, pt1, uploaded/graded before the cutoff) to term1, and fixes every

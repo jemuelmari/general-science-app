@@ -56,6 +56,16 @@ const QuizEngine = (() => {
 
     const setLetter = _getSetLetter(user.section);
 
+    // Short fingerprint of this answer key (ids + correct answers). The server
+    // computes the same value from the published bank; when they differ the
+    // attempt was taken on another version of the test and is not key-checked.
+    function _keyFingerprint(qs) {
+      const lines = (qs || []).map(q => String(q.id) + '=' + String(q.correct)).sort();
+      let h = 5381; const str = lines.join('\n');
+      for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+      return h.toString(36);
+    }
+
     ctx = {
       lrn: user.lrn,
       section: user.section,
@@ -65,6 +75,7 @@ const QuizEngine = (() => {
       id: config.id,
       title: config.title,
       questions: config.questions,
+      keyRev: _keyFingerprint(config.questions),
       timeLimit: config.timeLimit,
       passScore: config.passScore || PASS_THRESHOLD,
       showResults: config.showResults !== false,
@@ -580,7 +591,7 @@ const QuizEngine = (() => {
 
     const payload = {
       score: scoreResult.correct, total: scoreResult.total, percent: scorePercent, passed,
-      timeUsed, itemResults: scoreResult.itemResults, set: ctx.setLetter, timestamp
+      timeUsed, itemResults: scoreResult.itemResults, set: ctx.setLetter, timestamp, keyRev: ctx.keyRev
     };
 
     Store.saveScore(ctx.lrn, ctx.term, ctx.type, ctx.id, payload);
@@ -590,7 +601,7 @@ const QuizEngine = (() => {
       if (typeof SyncAuto !== 'undefined' && SyncAuto.enqueue) {
         SyncAuto.enqueue(ctx.lrn, ctx.term, ctx.id, {
           score: payload.score, total: payload.total,
-          itemResults: payload.itemResults, set: payload.set, timestamp: payload.timestamp
+          itemResults: payload.itemResults, set: payload.set, timestamp: payload.timestamp, keyRev: payload.keyRev
         });
       }
     } catch (e) {

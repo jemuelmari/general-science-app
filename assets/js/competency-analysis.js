@@ -73,9 +73,14 @@ const CompetencyAnalysis = (() => {
 
   /** Map one itemResult to { q, bankIndex, competency } or null. */
   function resolveItem(r, byId) {
-    const hit = r && r.questionId != null ? byId[String(r.questionId)] : null;
+    let hit = r && r.questionId != null ? byId[String(r.questionId)] : null;
+    // A bank revision may reuse an id for a different question. The answer the
+    // student was graded against travels with the result, so if it no longer
+    // matches the bank this response belongs to an older version of the item.
+    const stale = !!(hit && r.expected != null && hit.q.correct != null && String(r.expected) !== String(hit.q.correct));
+    if (stale) hit = null;
     const comp = (r && r.competency) || (hit && hit.q.competency) || null;
-    return { q: hit ? hit.q : null, bankIndex: hit ? hit.i : -1, competency: comp };
+    return { q: hit ? hit.q : null, bankIndex: hit ? hit.i : -1, competency: comp, stale: stale };
   }
 
   /**
@@ -149,17 +154,22 @@ const CompetencyAnalysis = (() => {
     }));
 
     const takers = [];
+    let staleTakers = 0;
     students.forEach(s => {
       if (opts.section && s.section !== opts.section) return;
       const rec = _record(s, term, id);
       if (!rec || !Array.isArray(rec.itemResults) || !rec.itemResults.length) return;
       if (opts.setLetter && rec.set && rec.set !== opts.setLetter) return;
       const resp = {};
+      let stale = 0;
       rec.itemResults.forEach(r => {
         const it = resolveItem(r, byId);
+        if (it.stale) stale++;
         if (it.bankIndex < 0) return;
         resp[it.bankIndex] = { correct: r.correct === true || (r.given != null && r.given === r.expected), given: r.given };
       });
+      if (stale) staleTakers++;
+      if (!Object.keys(resp).length) return;
       const score = Object.keys(resp).filter(k => resp[k].correct).length;
       takers.push({ lrn: s.lrn, score: score, resp: resp });
     });
@@ -211,7 +221,7 @@ const CompetencyAnalysis = (() => {
     return {
       term: term, assessment: id, title: bank.title || id, items: items, competencies: competencies,
       students: takers.length,
-      summary: { mps: allT ? Math.round(allC / allT * 1000) / 10 : null, items: items.length }
+      summary: { mps: allT ? Math.round(allC / allT * 1000) / 10 : null, items: items.length, staleTakers: staleTakers }
     };
   }
 

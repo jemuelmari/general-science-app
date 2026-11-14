@@ -7,10 +7,10 @@
       "ACADEMIC B"
     ],
     "schoolYear": "2026-2027",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "generatedAt": "2026-09-20",
     "patchedAt": "2026-11-14",
-    "notes": "Master competency list for TOS Generator, Item Analysis, and Term Exam auto-generation. Hours sourced from BOW. Bloom's levels are achievable per competency. v1.0.1 patched six competency bloomLevels arrays to cover all Phase 3 questions tagged against them. v1.1.0: every competency allows Remembering/Understanding (prerequisite knowledge) so each exam can follow the 70:30 LOTS:HOTS policy; T1-W2-C1 also allows Evaluating."
+    "notes": "Master competency list for TOS Generator, Item Analysis, and Term Exam auto-generation. Hours sourced from BOW. Bloom's levels are achievable per competency. v1.0.1 patched six competency bloomLevels arrays to cover all Phase 3 questions tagged against them. v1.1.0: every competency allows Remembering/Understanding (prerequisite knowledge) so each exam can follow the 70:30 LOTS:HOTS policy; T1-W2-C1 also allows Evaluating. v1.2.0: each competency's weeks = its own week (no overlap between ST1/ST2 coverage); T3 W1/W3/W4 descriptions aligned with the week modules."
   },
   "term1": {
     "title": "Physics & Chemistry",
@@ -42,8 +42,7 @@
         "description": "Differentiate translational motion from rotational motion and relate linear quantities (displacement, velocity, acceleration) to angular quantities.",
         "shortLabel": "Linear vs Angular Motion",
         "weeks": [
-          2,
-          3
+          2
         ],
         "hours": 5,
         "bloomLevels": [
@@ -64,8 +63,7 @@
         "description": "Design, construct, and test a simple or compound machine. Apply torque, angular motion, and radius to improve machine efficiency.",
         "shortLabel": "Efficient Machines",
         "weeks": [
-          3,
-          4
+          3
         ],
         "hours": 5,
         "bloomLevels": [
@@ -87,8 +85,7 @@
         "description": "Investigate how pressure is transmitted in fluids. Explain how cross-sectional area affects output force.",
         "shortLabel": "Hydraulics",
         "weeks": [
-          4,
-          5
+          4
         ],
         "hours": 5,
         "bloomLevels": [
@@ -238,8 +235,7 @@
         "description": "Explain common reaction types: decomposition, acid on carbonates, acids on metals, combustion. Identify reaction types in daily activities.",
         "shortLabel": "Chemical Reactions",
         "weeks": [
-          1,
-          2
+          1
         ],
         "hours": 5,
         "bloomLevels": [
@@ -440,11 +436,10 @@
     "competencies": [
       {
         "code": "GENSCI-11-T3-W1-C1",
-        "description": "Explain Earth's characteristics supporting life versus other planets. Describe how the greenhouse effect regulates Earth's temperature.",
+        "description": "Explain Earth's characteristics supporting life versus other planets.",
         "shortLabel": "Earth's Uniqueness",
         "weeks": [
-          1,
-          2
+          1
         ],
         "hours": 5,
         "bloomLevels": [
@@ -481,11 +476,10 @@
       },
       {
         "code": "GENSCI-11-T3-W3-C1",
-        "description": "Demonstrate how the Philippine archipelago was formed. Explain unique landforms, climate, and life forms using images, maps, and cross-sections.",
+        "description": "Demonstrate how the Philippine archipelago was formed.",
         "shortLabel": "Philippine Geology",
         "weeks": [
-          3,
-          4
+          3
         ],
         "hours": 5,
         "bloomLevels": [
@@ -503,18 +497,18 @@
       },
       {
         "code": "GENSCI-11-T3-W4-C1",
-        "description": "Describe properties and local availability of rocks, minerals, and soils. Explain how they are harnessed for industries.",
-        "shortLabel": "Philippine Landforms & Materials",
+        "description": "Explain the unique landforms, climate, and life forms of the Philippines using images, maps, and cross-sections.",
+        "shortLabel": "Philippine Landforms & Biodiversity",
         "weeks": [
-          4,
-          5
+          4
         ],
         "hours": 5,
         "bloomLevels": [
           "Remembering",
           "Understanding",
           "Applying",
-          "Analyzing"
+          "Analyzing",
+          "Evaluating"
         ],
         "termExamPriority": 3,
         "coveredBy": [

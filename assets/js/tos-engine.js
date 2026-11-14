@@ -185,18 +185,21 @@ const TOSEngine = (() => {
     var diff = totalItems - sum;
 
     if (diff !== 0) {
-      var withRemainder = rows.map(function (r) {
-        return { row: r, remainder: r.rawItems - Math.floor(r.rawItems) };
+      // Ties are broken by row order: earlier competencies keep (or get)
+      // the extra item, so equal-hour tests split like 8-8-7-7, matching
+      // the order of the question banks.
+      var withRemainder = rows.map(function (r, idx) {
+        return { row: r, idx: idx, remainder: r.rawItems - Math.floor(r.rawItems) };
       });
 
       if (diff > 0) {
         withRemainder
-          .sort(function (a, b) { return b.remainder - a.remainder; })
+          .sort(function (a, b) { return (b.remainder - a.remainder) || (a.idx - b.idx); })
           .slice(0, diff)
           .forEach(function (x) { x.row.items++; });
       } else {
         withRemainder
-          .sort(function (a, b) { return a.remainder - b.remainder; })
+          .sort(function (a, b) { return (a.remainder - b.remainder) || (b.idx - a.idx); })
           .filter(function (x) { return x.row.items > 1; })
           .slice(0, Math.abs(diff))
           .forEach(function (x) { x.row.items--; });
@@ -383,6 +386,27 @@ const TOSEngine = (() => {
         itemFrom: from,
         itemTo: to
       };
+    });
+  }
+
+  function alignBloomsToBank(rows, questionBank) {
+    var qs = (questionBank && questionBank.questions) || [];
+    return rows.map(function (row) {
+      var slice = qs.slice(row.itemFrom - 1, row.itemTo);
+      if (slice.length !== row.items) return row;
+      var ok = slice.every(function (q) { return q && q.competency === row.code && BLOOMS.indexOf(q.bloomLevel) !== -1; });
+      if (!ok) return row;
+      var dist = {};
+      BLOOMS.forEach(function (b) { dist[b] = 0; });
+      slice.forEach(function (q) { dist[q.bloomLevel]++; });
+      var lots = LOTS.reduce(function (s, l) { return s + dist[l]; }, 0);
+      var out = {};
+      Object.keys(row).forEach(function (k) { out[k] = row[k]; });
+      out.bloomDistribution = dist;
+      out.lotsCount = lots;
+      out.hotsCount = row.items - lots;
+      out.bloomSource = 'bank';
+      return out;
     });
   }
 
@@ -573,6 +597,10 @@ const TOSEngine = (() => {
       console.warn('[TOSEngine] Question bank not found:', e.message);
     }
 
+    // When the published bank already has exactly this row's items, describe
+    // the ACTUAL test: Bloom counts come from the bank, not from the formula.
+    if (!opts.manualOverrides) rows = alignBloomsToBank(rows, questionBank);
+
     var akResult = buildAnswerKey(rows, questionBank);
     var totals = computeTotals(rows);
 
@@ -605,6 +633,7 @@ const TOSEngine = (() => {
     applyManualBlooms: applyManualBlooms,
     assignItemNumbers: assignItemNumbers,
     buildAnswerKey: buildAnswerKey,
+    alignBloomsToBank: alignBloomsToBank,
     computeTotals: computeTotals,
     rankByMPS: rankByMPS,
     computeAllCompetencyMPS: computeAllCompetencyMPS,

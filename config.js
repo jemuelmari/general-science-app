@@ -14,7 +14,7 @@
 
 const CONFIG = {
   APP_NAME: 'General Science',
-  VERSION: '1.1.0',
+  VERSION: '1.2.0',
   GRADE_LEVEL: 11,
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],
