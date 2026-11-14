@@ -1,0 +1,272 @@
+{
+  "title": "Quiz 2 — Properties of Light & Sound",
+  "coverage": "Weeks 5–6",
+  "competencies": [
+    "GENSCI-11-T1-W5-C1",
+    "GENSCI-11-T1-W6-C1"
+  ],
+  "items": 20,
+  "revision": "2026-11 rev2 — 70:30 LOTS:HOTS, balanced choices, in-scope items only",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What kind of wave is light?",
+      "options": [
+        "Electromagnetic wave",
+        "Mechanical sound wave",
+        "Longitudinal wave",
+        "Seismic wave"
+      ],
+      "correct": "Electromagnetic wave",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q2",
+      "text": "How fast does light travel in a vacuum?",
+      "options": [
+        "3 × 10⁸ m/s",
+        "343 m/s",
+        "1,500 m/s",
+        "3 × 10⁵ m/s"
+      ],
+      "correct": "3 × 10⁸ m/s",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q3",
+      "text": "Why can sunlight reach Earth through the vacuum of space?",
+      "options": [
+        "Light needs no medium to travel",
+        "Space is filled with thin air",
+        "Light travels only through gases",
+        "Sunlight is carried by sound waves"
+      ],
+      "correct": "Light needs no medium to travel",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q4",
+      "text": "A straw in a glass of water looks bent at the surface. What property of light causes this?",
+      "options": [
+        "Refraction",
+        "Reflection",
+        "Absorption",
+        "Amplification"
+      ],
+      "correct": "Refraction",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q5",
+      "text": "Fiber-optic cables carry internet data over long distances. Which property keeps the light inside the fiber?",
+      "options": [
+        "Total internal reflection",
+        "Diffraction around the cable",
+        "Absorption by the glass core",
+        "Scattering by dust particles"
+      ],
+      "correct": "Total internal reflection",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q6",
+      "text": "Which device produces a narrow, intense beam of light of one color?",
+      "options": [
+        "Laser",
+        "Prism",
+        "Hologram",
+        "Concave lens"
+      ],
+      "correct": "Laser",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q7",
+      "text": "Why are LEDs called energy-efficient compared with ordinary incandescent bulbs?",
+      "options": [
+        "They turn more energy into light, less into heat",
+        "They need no electricity once they are switched on",
+        "They give off much brighter ultraviolet rays",
+        "They store sunlight during the day for later use"
+      ],
+      "correct": "They turn more energy into light, less into heat",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q8",
+      "text": "Doctors use X-rays to see broken bones. Which property makes this possible?",
+      "options": [
+        "X-rays pass through soft tissue but not dense bone",
+        "X-rays bounce off the skin and form a mirror image",
+        "X-rays are sound waves that echo from the bones",
+        "X-rays heat the bones until they begin to glow"
+      ],
+      "correct": "X-rays pass through soft tissue but not dense bone",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q9",
+      "text": "A radio station broadcasts at 100 MHz (1 × 10⁸ Hz). Using c = fλ with c = 3 × 10⁸ m/s, what is its wavelength?",
+      "options": [
+        "3 m",
+        "0.3 m",
+        "30 m",
+        "300 m"
+      ],
+      "correct": "3 m",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q10",
+      "text": "A bank uses a hologram on its ATM cards. What is the MAIN reason for this choice?",
+      "options": [
+        "A hologram is hard to copy, so it prevents fakes",
+        "A hologram makes the card more durable in water use",
+        "A hologram stores the owner's money balance",
+        "A hologram lets the card work without a chip"
+      ],
+      "correct": "A hologram is hard to copy, so it prevents fakes",
+      "competency": "GENSCI-11-T1-W5-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q11",
+      "text": "What kind of wave is sound?",
+      "options": [
+        "Mechanical, longitudinal wave",
+        "Electromagnetic, transverse",
+        "Electromagnetic, longitudinal",
+        "Mechanical, light-like wave"
+      ],
+      "correct": "Mechanical, longitudinal wave",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q12",
+      "text": "Astronauts on the Moon cannot talk to each other without radios. Why?",
+      "options": [
+        "Sound needs a medium, and the Moon has no air",
+        "Sound travels too fast on the Moon to hear",
+        "The Moon's weak gravity bends all sound waves",
+        "Their helmets absorb all the light waves"
+      ],
+      "correct": "Sound needs a medium, and the Moon has no air",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q13",
+      "text": "Which property of a sound wave determines its pitch?",
+      "options": [
+        "Frequency",
+        "Amplitude",
+        "Speed",
+        "Medium"
+      ],
+      "correct": "Frequency",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q14",
+      "text": "A worker strikes a steel rail 1 km away. A girl with her ear on the rail hears the hit before her friend standing beside her hears it through the air. What BEST explains this?",
+      "options": [
+        "Sound travels faster in solids than in air",
+        "Light from the hammer reaches the rail first",
+        "The rail makes the sound higher in pitch",
+        "Air absorbs sound only near railway tracks"
+      ],
+      "correct": "Sound travels faster in solids than in air",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q15",
+      "text": "Why do recording studios cover their walls with foam panels?",
+      "options": [
+        "Foam absorbs sound and reduces echoes",
+        "Foam reflects more sound toward the singer",
+        "Foam makes the sound travel much faster",
+        "Foam raises the pitch of the recorded voice"
+      ],
+      "correct": "Foam absorbs sound and reduces echoes",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q16",
+      "text": "Which device uses sound waves above 20,000 Hz to see a baby inside the womb?",
+      "options": [
+        "Ultrasound scanner",
+        "X-ray imaging machine",
+        "Laser scanner",
+        "Radio receiver"
+      ],
+      "correct": "Ultrasound scanner",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Remembering"
+    },
+    {
+      "id": "q17",
+      "text": "What does an amplifier do to a sound signal?",
+      "options": [
+        "Increases its amplitude, making it louder",
+        "Increases its speed so it arrives sooner",
+        "Raises its frequency so it sounds much higher",
+        "Changes it into light for longer travel"
+      ],
+      "correct": "Increases its amplitude, making it louder",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Understanding"
+    },
+    {
+      "id": "q18",
+      "text": "A fishing boat's sonar pulse returns 2.0 s after it was sent. Sound travels 1,500 m/s in sea water. How deep is the water?",
+      "options": [
+        "1,500 m",
+        "750 m",
+        "3,000 m",
+        "6,000 m"
+      ],
+      "correct": "1,500 m",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Applying"
+    },
+    {
+      "id": "q19",
+      "text": "A school beside a busy highway wants quieter classrooms. Which plan is MOST effective?",
+      "options": [
+        "Plant thick trees and use sealed, double-glazed windows",
+        "Paint the classroom walls with bright, glossy colors",
+        "Open all the windows to let the noise escape faster",
+        "Install more loudspeakers so all teachers sound louder"
+      ],
+      "correct": "Plant thick trees and use sealed, double-glazed windows",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Analyzing"
+    },
+    {
+      "id": "q20",
+      "text": "A student claims, \"Ultrasound and X-rays are the same because both are used to see inside the body.\" Which judgment is BEST?",
+      "options": [
+        "Incorrect — ultrasound is sound, X-rays are EM waves",
+        "Correct — both are electromagnetic waves",
+        "Correct — both are sound waves at a very high pitch",
+        "Incorrect — X-rays travel slower than ultrasound does"
+      ],
+      "correct": "Incorrect — ultrasound is sound, X-rays are EM waves",
+      "competency": "GENSCI-11-T1-W6-C1",
+      "bloomLevel": "Evaluating"
+    }
+  ]
+}
