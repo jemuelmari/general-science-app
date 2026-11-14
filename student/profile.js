@@ -32,7 +32,7 @@
     const initials = `${(user.firstName || '?').charAt(0)}${(user.lastName || '?').charAt(0)}`.toUpperCase();
     document.getElementById('profile-avatar').textContent = initials;
     document.getElementById('profile-name').textContent =
-      APP.formatFullName(user.lastName, user.firstName, user.middleName);
+      APP.formatFullNameText(user.lastName, user.firstName, user.middleName);
     document.getElementById('profile-meta').innerHTML =
       `LRN: ${APP.formatLRN(user.lrn)} · Grade ${user.gradeLevel} — ${user.section}` +
       (user.sex ? ` · ${APP.getSexBadge(user.sex)}` : '');
@@ -61,7 +61,7 @@
       return;
     }
     const sexIcon = sex === 'Female' ? '♀' : sex === 'Male' ? '♂' : '';
-    preview.textContent = `${sexIcon ? sexIcon + ' ' : ''}${APP.formatFullName(last, first, middle)}`;
+    preview.textContent = `${sexIcon ? sexIcon + ' ' : ''}${APP.formatFullNameText(last, first, middle)}`;
   }
 
   /* ---------- Auto-format on blur ---------- */
