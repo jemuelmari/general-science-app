@@ -35,7 +35,7 @@ window.Evidence = (function () {
   var APP_NAME = 'General Science Online Modular Application';
   var ID_PREFIX = 'GS';
   var TOKEN_KEY = 'gsa_teacher_token';      // kapareho ng teacher-cloud.js
-  var PASSING = 75;                         // PASS_THRESHOLD sa quiz-engine.js
+  var PASSING = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;   // = PASS_THRESHOLD sa quiz-engine.js
   var DEFAULT_SCHOOL_YEAR = 'S.Y. 2026-2027';
 
   var TERMS = [{ no: 1, key: 'term1', label: 'Term 1' }, { no: 2, key: 'term2', label: 'Term 2' }, { no: 3, key: 'term3', label: 'Term 3' }];
@@ -111,6 +111,7 @@ window.Evidence = (function () {
   function token() { try { return sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; } }
 
   async function post(body) {
+    if (token() && !body.token) body = Object.assign({}, body, { token: token() });
     var res = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
     return JSON.parse(await res.text());
   }
@@ -163,7 +164,7 @@ window.Evidence = (function () {
 
     var dashErr = '';
     try {
-      var d = await post({ action: 'pullTeacherDashboard', token: token() || CONFIG.TEACHER_PASSWORD_HASH });
+      var d = await post({ action: 'pullTeacherDashboard', token: token() });
       var list = d && d.ok ? (d.students || d.records || []) : [];
       if (list.length) { out.students = list.map(normalizeStudent).filter(function (s) { return s.lrn; }); out.source = 'cloud'; }
       else dashErr = (d && d.error) || 'No students returned.';
@@ -221,7 +222,8 @@ window.Evidence = (function () {
   function getEntry(student, termKey, code) {
     var a = findAssessment(code); if (!a) return null;
     var t = (student.scores || {})[termKey]; if (!t) return null;
-    var e = a.bucket === 'te' ? t.te : (t[a.bucket] || {})[code];
+    // Term Exam is saved as scores[term].te.te (older records: scores[term].te)
+    var e = a.bucket === 'te' ? ((t.te && t.te.te) || t.te) : (t[a.bucket] || {})[code];
     if (!e || typeof e !== 'object') return null;
     if (e.score == null && !(e.itemResults && e.itemResults.length)) return null;
     return e;

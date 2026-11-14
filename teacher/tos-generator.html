@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOS Generator — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .tos-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; padding:18px; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; }
     .tos-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
@@ -200,17 +200,18 @@
   </footer>
   
   <!-- Binago ang cache-busting version para sa tos-engine.js -->
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/mastery-scales.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/tos-engine.js?v=1.3.0-6a8ee00"></script> <!-- Updated version -->
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/version-sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/mastery-scales.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/competency-analysis.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/tos-engine.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
   
   <script>
     (function() {
@@ -220,6 +221,8 @@
       var currentTOS = null;
       var manualOverrides = {};   // per-competency Bloom's overrides
       var mllCache = null;
+      var cloudStudents = [];   // TeacherCloud students (PT grades + overrides merged, itemResults restored)
+      var esc = APP.escapeHtml;
 
       /* ============================================================
          INIT
@@ -229,7 +232,7 @@
 
         // Load class data from the cloud into the local Store cache (with itemResults)
         try {
-          await TeacherCloud.hydrateStore({ withItems: true });
+          cloudStudents = await TeacherCloud.fetchStudents({ withItems: true });
         } catch (e) {
           console.error('[TOS] Cloud load failed:', e);
           var tb = document.getElementById('te-banner');
@@ -288,20 +291,13 @@
 
         if (assessment !== 'te') { banner.innerHTML = ''; return; }
 
-        var students = Store.getAllUsers ? Store.getAllUsers() : [];
+        var students = sectionStudents();
         var st1Count = 0, st2Count = 0;
-        
-        // Kunin ang data asynchronously kung async ang store
-        for (var i = 0; i < students.length; i++) {
-            var s = students[i];
-            var scores = (Store.getScores.constructor.name === 'AsyncFunction') 
-                ? await Store.getScores(s.lrn) 
-                : Store.getScores(s.lrn);
-            if (!scores || !scores[term]) continue;
-            var st = scores[term].st || {};
-            if (st.st1) st1Count++;
-            if (st.st2) st2Count++;
-        }
+        students.forEach(function (s) {
+          var sc = (s.progress && s.progress.scores) || {};
+          if (TeacherCloud.getRecord(sc, term, 'st1')) st1Count++;
+          if (TeacherCloud.getRecord(sc, term, 'st2')) st2Count++;
+        });
 
         var total = students.length;
         if (total === 0) {
@@ -319,12 +315,13 @@
       /* ============================================================
          ST RANKING (for TE)
          ============================================================ */
-      async function computeSTRanking(term) {
-        var students = Store.getAllUsers ? Store.getAllUsers() : [];
+      function sectionStudents() {
         var sectionFilter = document.getElementById('filter-section').value;
-        if (sectionFilter) students = students.filter(function(s) { return s.section === sectionFilter; });
+        return sectionFilter ? cloudStudents.filter(function (s) { return s.section === sectionFilter; }) : cloudStudents.slice();
+      }
 
-        return TOSEngine.computeAllCompetencyMPS(students, term);
+      async function computeSTRanking(term) {
+        return TOSEngine.computeAllCompetencyMPS(sectionStudents(), term);
       }
 
       /* ============================================================
@@ -356,13 +353,9 @@
 
           // Compute MLL once per (term, section) and cache
           try {
-            var students = Store.getAllUsers ? Store.getAllUsers() : [];
-            var sf = document.getElementById('filter-section').value;
-            if (sf) students = students.filter(function(u){ return u.section === sf; });
-            
-            mllCache = await TOSEngine.computeAllCompetencyMPS(students, term);
-          } catch (e) { 
-            mllCache = []; 
+            mllCache = assessment === 'te' ? stRanking : await TOSEngine.computeAllCompetencyMPS(sectionStudents(), term);
+          } catch (e) {
+            mllCache = [];
           }
 
           renderAnswerKey(result);
@@ -417,7 +410,7 @@
             '<div class="tos-edit-banner no-print">' +
               '<div>💡 <strong>Tip:</strong> Click any Bloom\'s number to edit it. The sum per competency must match its item count.</div>' +
               '<div class="btns">' +
-                '<button class="btn btn-outline" id="btn-reset-blooms">🔄 Reset All to Auto 30:70</button>' +
+                '<button class="btn btn-outline" id="btn-reset-blooms">🔄 Reset All to Auto 70:30 (LOTS:HOTS)</button>' +
                 '<button class="btn btn-primary" id="btn-apply-blooms">✓ Apply Changes</button>' +
               '</div>' +
             '</div>' +
@@ -510,7 +503,7 @@
 
         document.getElementById('btn-reset-blooms').addEventListener('click', function() {
           manualOverrides = {};
-          APP.toast('Reset to auto 30:70 distribution', 'info', 2000);
+          APP.toast('Reset to auto 70:30 (LOTS:HOTS) distribution', 'info', 2000);
           generateTOS();
         });
 
@@ -602,8 +595,8 @@
             '<div class="sig-block">' +
               '<div class="sig-role">Prepared by</div>' +
               '<div class="sig-line"></div>' +
-              '<div class="sig-name">' + (s.prepared.name || '&nbsp;') + '</div>' +
-              '<div class="sig-position">' + (s.prepared.position || '&nbsp;') + '</div>' +
+              '<div class="sig-name">' + (s.prepared.name ? escapeHtml(s.prepared.name) : '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.prepared.position ? escapeHtml(s.prepared.position) : '&nbsp;') + '</div>' +
             '</div>'
           );
         }
@@ -612,8 +605,8 @@
             '<div class="sig-block">' +
               '<div class="sig-role">Checked by</div>' +
               '<div class="sig-line"></div>' +
-              '<div class="sig-name">' + (s.checked.name || '&nbsp;') + '</div>' +
-              '<div class="sig-position">' + (s.checked.position || '&nbsp;') + '</div>' +
+              '<div class="sig-name">' + (s.checked.name ? escapeHtml(s.checked.name) : '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.checked.position ? escapeHtml(s.checked.position) : '&nbsp;') + '</div>' +
             '</div>'
           );
         }
@@ -622,8 +615,8 @@
             '<div class="sig-block">' +
               '<div class="sig-role">Noted by</div>' +
               '<div class="sig-line"></div>' +
-              '<div class="sig-name">' + (s.noted.name || '&nbsp;') + '</div>' +
-              '<div class="sig-position">' + (s.noted.position || '&nbsp;') + '</div>' +
+              '<div class="sig-name">' + (s.noted.name ? escapeHtml(s.noted.name) : '&nbsp;') + '</div>' +
+              '<div class="sig-position">' + (s.noted.position ? escapeHtml(s.noted.position) : '&nbsp;') + '</div>' +
             '</div>'
           );
         }
@@ -746,27 +739,13 @@
           return;
         }
 
-        // Filter to competencies in this TOS
-        var codesInTOS = {};
-        tos.rows.forEach(function(r) { codesInTOS[r.code] = r; });
-
-        var rows = mllCache
-          .filter(function(r) { return codesInTOS[r.code]; })
-          .map(function(r) {
-            return {
-              code: r.code,
-              description: codesInTOS[r.code].description,
-              mps: r.mps,
-              pct: Math.round(r.mps * 1000) / 10
-            };
-          });
-
-        // Most learned = highest MPS, Least learned = lowest MPS
-        var sortedDesc = rows.slice().sort(function(a, b) { return b.mps - a.mps; });
-        var sortedAsc  = rows.slice().sort(function(a, b) { return a.mps - b.mps; });
-
-        var top5 = sortedDesc.slice(0, 5);
-        var bot5 = sortedAsc.slice(0, 5);
+        // ALL competencies assessed in ST1 + ST2 (not only those in this TOS),
+        // each in only one list; least learned is filled first (Term Exam basis).
+        var ml = CompetencyAnalysis.mostLeast(mllCache.map(function (r) {
+          return { code: r.code, description: r.description, mps: r.pct != null ? r.pct : r.mps * 100 };
+        }), 5);
+        var top5 = ml.most.map(function (r) { return { code: r.code, description: r.description, pct: Math.round(r.mps * 10) / 10 }; });
+        var bot5 = ml.least.map(function (r) { return { code: r.code, description: r.description, pct: Math.round(r.mps * 10) / 10 }; });
 
         var html =
           '<div class="tos-doc">' +
@@ -805,10 +784,10 @@
           var least = bot5[i];
           html += '<tr>' +
             '<td class="rank-cell">' + (i + 1) + '</td>' +
-            '<td class="most-col">' + (most ? escapeHtml(most.description) : '&nbsp;') + '</td>' +
+            '<td class="most-col">' + (most ? '<div style="font-size:0.68rem;color:#0d47a1;font-weight:700;">' + escapeHtml(most.code) + '</div>' + escapeHtml(most.description) : '&nbsp;') + '</td>' +
             '<td class="mps-cell">' + (most ? most.pct + '%' : '—') + '</td>' +
             '<td class="rank-cell">' + (i + 1) + '</td>' +
-            '<td class="least-col">' + (least ? escapeHtml(least.description) : '&nbsp;') + '</td>' +
+            '<td class="least-col">' + (least ? '<div style="font-size:0.68rem;color:#0d47a1;font-weight:700;">' + escapeHtml(least.code) + '</div>' + escapeHtml(least.description) : '&nbsp;') + '</td>' +
             '<td class="mps-cell">' + (least ? least.pct + '%' : '—') + '</td>' +
           '</tr>';
         }
@@ -816,6 +795,7 @@
         html +=
               '</tbody>' +
             '</table>' +
+            (ml.available < 10 ? '<p style="font-size:0.78rem;color:#607d8b;margin-top:8px;" class="no-print">ST1 + ST2 assessed ' + ml.available + ' competencies with data, so each appears in only one list (least learned first).</p>' : '') +
             renderSignatoriesBlock() +
           '</div>';
 

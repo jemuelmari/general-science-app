@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Retake Requests — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .rr-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 20px; }
     .rr-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -84,14 +84,14 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
   <script>
     (function() {
       'use strict';
@@ -230,7 +230,7 @@
               '<span>' + r.unlockCode + '</span>' +
               '<button data-copy="' + r.unlockCode + '">📋 Copy</button>' +
             '</div>' +
-            '<p style="font-size:0.78rem;color:#78909c;margin-top:8px;">Send this code to ' + (r.studentName || r.lrn) + ' via chat. Expires ' + APP.formatDate(r.codeExpiresAt) + '.</p>';
+            '<p style="font-size:0.78rem;color:#78909c;margin-top:8px;">Send this code to ' + APP.escapeHtml(r.studentName || r.lrn) + ' via chat. Expires ' + APP.formatDate(r.codeExpiresAt) + '.</p>';
         } else if (r.status === 'applied') {
           badge = '<span class="badge-pill" style="font-size:0.7rem;background:#0277bd;color:#fff;">✅ REDEEMED</span>';
           actions = '<p style="font-size:0.82rem;color:#5f6368;">✅ Student redeemed on ' + APP.formatDate(r.appliedAt) + '.</p>';
@@ -243,9 +243,9 @@
           '<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">' +
             '<div style="flex:1;min-width:220px;">' +
               '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">' +
-                '<strong style="font-size:0.95rem;color:#1a1a1a;">' + (r.studentName || r.lrn) + '</strong>' + badge +
+                '<strong style="font-size:0.95rem;color:#1a1a1a;">' + APP.escapeHtml(r.studentName || r.lrn) + '</strong>' + badge +
               '</div>' +
-              '<div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">LRN: ' + APP.formatLRN(r.lrn) + ' · ' + (r.section || '—') + '</div>' +
+              '<div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">LRN: ' + APP.formatLRN(r.lrn) + ' · ' + APP.escapeHtml(r.section || '—') + '</div>' +
               '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:0.88rem;align-items:center;">' +
                 '<span style="font-weight:600;color:#37474f;">' + termLabel + ' · ' + assessmentLabel + '</span>' +
                 '<span style="color:#c62828;font-weight:700;">' + r.score + '/' + r.total + ' (' + percent + '%)</span>' +

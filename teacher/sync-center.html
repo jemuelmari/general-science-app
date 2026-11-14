@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sync Center — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .sync-tabs { display: flex; gap: 4px; border-bottom: 2px solid #eceff1; margin-bottom: 24px; overflow-x: auto; }
     .sync-tab { padding: 14px 22px; background: none; border: none; border-bottom: 3px solid transparent; font-family: inherit; font-size: 0.9rem; font-weight: 600; color: #5f6368; cursor: pointer; transition: all 0.15s; white-space: nowrap; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 8px; }
@@ -189,16 +189,16 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.1</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/sync-auto.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/version-sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync-auto.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
   <script>
     (function() {
       'use strict';
@@ -288,7 +288,7 @@
           applyImport(record.payload);
           result.innerHTML = renderResult('success', 'Imported: ' + APP.formatFullName(record.payload.student.lastName, record.payload.student.firstName, record.payload.student.middleName),
             '<ul><li><strong>LRN:</strong> ' + APP.formatLRN(record.payload.student.lrn) + '</li>' +
-            '<li><strong>Section:</strong> ' + record.payload.student.section + '</li>' +
+            '<li><strong>Section:</strong> ' + APP.escapeHtml(record.payload.student.section) + '</li>' +
             '<li><strong>Source:</strong> ' + record.source + '</li>' +
             '<li><strong>Progress:</strong> ' + countProgress(record.payload) + ' days</li></ul>');
           APP.toast('Student data imported!', 'success', 3500);
@@ -310,7 +310,7 @@
           applyImport(envelope.payload);
           result.innerHTML = renderResult('success', 'Imported: ' + APP.formatFullName(envelope.payload.student.lastName, envelope.payload.student.firstName, envelope.payload.student.middleName),
             '<ul><li><strong>LRN:</strong> ' + APP.formatLRN(envelope.payload.student.lrn) + '</li>' +
-            '<li><strong>File:</strong> ' + file.name + '</li>' +
+            '<li><strong>File:</strong> ' + APP.escapeHtml(file.name) + '</li>' +
             '<li><strong>Progress:</strong> ' + countProgress(envelope.payload) + ' days</li></ul>');
           APP.toast('Student data imported from file!', 'success', 3500);
         }).catch(function(err) {
@@ -419,7 +419,7 @@
           return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #e0e0e0;border-radius:10px;margin-bottom:10px;">' +
             '<div style="font-family:Consolas,monospace;font-size:0.82rem;color:#0d47a1;font-weight:700;letter-spacing:1px;">' + code + '</div>' +
             '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + APP.formatFullName(student.lastName || '', student.firstName || '', student.middleName || '') + '</div>' +
-            '<div style="font-size:0.75rem;color:#78909c;">' + (student.section || '—') + ' · saved ' + APP.formatDate(data.savedAt || new Date()) + '</div></div>' +
+            '<div style="font-size:0.75rem;color:#78909c;">' + APP.escapeHtml(student.section || '—') + ' · saved ' + APP.formatDate(data.savedAt || new Date()) + '</div></div>' +
             '<button class="btn btn-primary" style="padding:6px 14px;font-size:0.8rem;" data-apply="' + code + '">Apply</button></div>';
         }).join('');
         list.querySelectorAll('[data-apply]').forEach(function(btn) {
@@ -437,7 +437,29 @@
       }
 
       /* ===== Existing: Apply import ===== */
+      // v2: imported / applied data is sent to the CLOUD (StudentsMaster) so it shows
+      // in the Class Record and the student's own devices. (Before, it was only
+      // saved in THIS browser's localStorage and never reached the gradebook.)
+      function pushToCloud(lrn, progressJSON, student) {
+        var body = { action: 'syncStudentProgress', lrn: lrn, progressJSON: progressJSON };
+        if (student && student.lastName && student.firstName) {
+          body.studentInfo = { lastName: student.lastName, firstName: student.firstName, middleName: student.middleName || '',
+                               sex: student.sex || '', section: student.section || '' };
+        }
+        return Sync.backendPost(body).then(function (res) {
+          if (!res || !res.ok) throw new Error((res && res.error) || 'Cloud save failed');
+          return res;
+        });
+      }
+
       function applyImport(payload) {
+        pushToCloud(payload.student.lrn, {
+          scores: payload.scores || {}, progress: payload.progress || {}, badges: payload.badges || {}
+        }, payload.student).then(function () {
+          APP.toast('☁️ Saved to the cloud gradebook', 'success', 3000);
+        }).catch(function (e) {
+          APP.toast('⚠️ Imported on this device only — cloud save failed: ' + e.message, 'danger', 6000);
+        });
         if (!payload || !payload.student) throw new Error('Invalid payload');
         var student = {
           lrn: payload.student.lrn,
@@ -640,6 +662,7 @@
 
         var pushIds = [];
         var applied = 0;
+        var byLrn = {};
 
         selected.forEach(function(cb) {
           var pid = cb.dataset.pushid;
@@ -661,7 +684,15 @@
             var assessment = attempt.assessment || record.assessment;
             var type = (assessment === 'te') ? 'te' : ((assessment === 'st1' || assessment === 'st2') ? 'st' : 'quizzes');
 
+            if (attempt.percent == null && attempt.total) attempt.percent = Math.round(attempt.score / attempt.total * 100);
+            if (attempt.passed == null && attempt.percent != null) attempt.passed = attempt.percent >= ((CONFIG && CONFIG.PASSING_PERCENT) || 70);
             Store.saveScore(record.lrn, term, type, assessment, attempt);
+            var lrnKey = String(record.lrn);
+            byLrn[lrnKey] = byLrn[lrnKey] || { scores: {} };
+            var sc = byLrn[lrnKey].scores;
+            sc[term] = sc[term] || {};
+            if (type === 'te') { sc[term].te = { te: attempt }; }
+            else { sc[term][type] = sc[term][type] || {}; sc[term][type][assessment] = attempt; }
             pushIds.push(pid);
             applied++;
           } catch (e) {
@@ -671,7 +702,10 @@
 
         if (!pushIds.length) { APP.toast('No records could be applied', 'danger'); return; }
 
-        Sync.markUsedBulk(pushIds, 'teacher').then(function(res) {
+        // Save to the cloud FIRST; mark as used only after the gradebook has them
+        Promise.all(Object.keys(byLrn).map(function (lrn) { return pushToCloud(lrn, byLrn[lrn]); })).then(function () {
+          return Sync.markUsedBulk(pushIds, 'teacher');
+        }).then(function(res) {
           if (res.ok) {
             APP.toast('✅ Applied ' + applied + ' attempt(s), marked ' + res.marked + ' as used', 'success', 4000);
             attemptsCache = attemptsCache.filter(function(r) { return pushIds.indexOf(r.pushId) === -1; });

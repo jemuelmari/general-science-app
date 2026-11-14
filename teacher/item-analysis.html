@@ -4,17 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
-    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px; }
-    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-    .analysis-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
-    .analysis-table th, .analysis-table td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; }
-    .analysis-table th { background: #f5f7fa; font-weight: 600; color: #37474f; }
-    .analysis-table tr:nth-child(even) { background: #fafbfc; }
-    .badge-pass { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
-    .badge-fail { background: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 8px; }
+    .form-row label { display:block; font-size:0.8rem; font-weight:600; color:#37474f; margin-bottom:6px; }
+    .form-row select { width:100%; padding:10px 12px; }
+    .ia-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.86rem; }
+    .ia-table th, .ia-table td { border: 1px solid #e0e0e0; padding: 8px 10px; text-align: left; vertical-align: top; }
+    .ia-table th { background: #f5f7fa; font-weight: 600; color: #37474f; }
+    .ia-table tr:nth-child(even) td { background: #fafbfc; }
+    .num { text-align: right !important; white-space: nowrap; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.74rem; font-weight:700; }
+    .ok { background:#e8f5e9; color:#2e7d32; } .warn { background:#fff3e0; color:#e65100; } .bad { background:#ffebee; color:#c62828; } .mute { background:#eceff1; color:#607d8b; }
+    .code { font-size:0.72rem; color:#0d47a1; font-weight:700; display:block; }
+    .opts { font-size:0.76rem; color:#546e7a; }
+    .opts b { color:#2e7d32; }
+    .ia-sum { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:12px; margin:8px 0 20px; }
+    .ia-sum div { background:#f5f9ff; border-radius:10px; padding:12px 14px; }
+    .ia-sum .v { font-size:1.5rem; font-weight:800; color:#0d47a1; }
+    .ia-sum .l { font-size:0.75rem; color:#607d8b; }
+    .ml-grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    @media (max-width: 760px) { .ml-grid { grid-template-columns: 1fr; } }
+    .legend { font-size:0.78rem; color:#607d8b; line-height:1.6; margin-top:10px; }
   </style>
 </head>
 <body>
@@ -23,12 +35,13 @@
     <div class="container flex-between">
       <div>
         <h1>📊 Item Analysis</h1>
-        <span class="version">v1.0.20</span>
+        <span class="version">v2.0.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
         <a href="item-analysis.html" style="color:#ffd54f;border-color:#ffd54f;">📊 Item Analysis</a>
+        <a href="tos-generator.html">📐 TOS</a>
         <a href="evidence.html">📄 Exam Evidence</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
@@ -38,165 +51,169 @@
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
     <div class="card" style="padding:24px;margin-bottom:20px;">
       <h2 style="margin:0 0 6px;color:#0d47a1;">Class Item Analysis</h2>
-      <p style="color:#546e7a;margin:0 0 20px;font-size:0.9rem;">
-        Analyze how students performed on individual questions across a specific assessment.
+      <p style="color:#546e7a;margin:0 0 18px;font-size:0.9rem;">
+        Difficulty, discrimination and distractors per item, plus mastery per learning competency.
+        Items are matched by question ID, so Set A and Set B are combined correctly.
+        Paper scores entered in Score Entry have no item data and are not included here.
       </p>
-
       <div class="form-row">
-        <div>
-          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Term</label>
-          <select id="ia-term" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="1">Term 1</option>
-            <option value="2">Term 2</option>
-            <option value="3">Term 3</option>
-          </select>
-        </div>
-        <div>
-          <label style="display:block;font-size:0.8rem;font-weight:600;color:#37474f;margin-bottom:6px;">Assessment</label>
-          <select id="ia-assessment" class="form-control" style="width:100%;padding:10px 12px;">
-            <option value="st1">Summative Test 1 (ST1)</option>
-            <option value="st2">Summative Test 2 (ST2)</option>
-            <option value="te">Term Exam (TE)</option>
-          </select>
-        </div>
-        <div style="display:flex; align-items:flex-end;">
-          <button id="btn-analyze" style="padding:10px 20px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;width:100%;">Analyze Data</button>
+        <div><label for="ia-term">Term</label>
+          <select id="ia-term" class="form-control"><option value="term1">Term 1</option><option value="term2">Term 2</option><option value="term3">Term 3</option></select></div>
+        <div><label for="ia-assessment">Assessment</label>
+          <select id="ia-assessment" class="form-control">
+            <option value="quiz1">Quiz 1</option><option value="quiz2">Quiz 2</option><option value="quiz3">Quiz 3</option>
+            <option value="st1" selected>Summative Test 1</option><option value="st2">Summative Test 2</option><option value="te">Term Exam</option>
+          </select></div>
+        <div><label for="ia-section">Section</label>
+          <select id="ia-section" class="form-control"><option value="">All sections</option><option value="ACADEMIC A">ACADEMIC A</option><option value="ACADEMIC B">ACADEMIC B</option></select></div>
+        <div><label for="ia-set">Set</label>
+          <select id="ia-set" class="form-control"><option value="">Both sets</option><option value="A">Set A</option><option value="B">Set B</option></select></div>
+        <div style="display:flex;align-items:flex-end;gap:8px;">
+          <button id="btn-analyze" class="btn btn-primary" style="flex:1;">Analyze</button>
+          <button id="btn-csv" class="btn btn-outline" disabled>CSV</button>
         </div>
       </div>
     </div>
 
-    <div id="ia-loading" style="text-align:center; padding: 40px; color:#78909c; display:none;">
-      <p>⏳ Kinukuha ang data mula sa Cloud at nag-aanalyze...</p>
-    </div>
-
-    <div id="ia-results" style="display:none;">
-      <div class="card" style="padding:24px;">
-        <h3 style="margin:0 0 16px;color:#0d47a1;" id="ia-title">Results</h3>
-        <div style="overflow-x:auto;">
-          <table class="analysis-table" id="ia-table">
-            <thead>
-              <tr>
-                <th>Q#</th>
-                <th>Competency</th>
-                <th>Correct</th>
-                <th>Wrong</th>
-                <th>MPS (%)</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="ia-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div id="ia-status" style="text-align:center;padding:30px;color:#78909c;">⏳ Loading class data from the cloud…</div>
+    <div id="ia-results" style="display:none;"></div>
   </main>
 
-  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.20</span></p></footer>
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v2.0.0</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-6a8ee00"></script>
-  
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/transmutation.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/competency-analysis.js?v=1.3.0-aa6f34f"></script>
   <script>
-    (function() {
+    (function () {
       'use strict';
-      let allStudents = [];
+      var esc = APP.escapeHtml;
+      var students = [];
+      var last = null;
+      var $ = function (id) { return document.getElementById(id); };
 
-      TeacherAuthBoot.ready(async function(auth) {
+      TeacherAuthBoot.ready(async function (auth) {
         if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
-        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-
-        // Fetch Cloud Data
+        $('btn-logout').addEventListener('click', function () { auth.logout(); });
+        $('btn-analyze').addEventListener('click', analyze);
+        $('btn-csv').addEventListener('click', exportCsv);
         try {
-          allStudents = await TeacherCloud.fetchStudents({ withItems: true });
+          students = await TeacherCloud.fetchStudents({ withItems: true });
+          $('ia-status').textContent = students.length + ' students loaded. Choose an assessment and click Analyze.';
         } catch (e) {
-          console.error("Cloud error:", e);
+          $('ia-status').innerHTML = '<span style="color:#c62828;">⚠️ ' + esc(e.message) + '</span>';
         }
-
-        document.getElementById('btn-analyze').addEventListener('click', async function() {
-          const term = document.getElementById('ia-term').value;
-          const assessment = document.getElementById('ia-assessment').value;
-          
-          document.getElementById('ia-loading').style.display = 'block';
-          document.getElementById('ia-results').style.display = 'none';
-          this.disabled = true;
-
-          try {
-            // Kunin ang Question Bank para malaman ang Competencies
-            const bankUrl = `../student/term${term}/assessments/${assessment}.json`;
-            const bankRes = await fetch(bankUrl + '?v=' + Date.now());
-            if (!bankRes.ok) throw new Error("Hindi ma-load ang questions file para sa assessment na ito.");
-            const bank = await bankRes.json();
-            const questions = bank.questions || [];
-
-            // I-prepare ang stats array
-            let questionStats = questions.map((q, idx) => ({
-              qNum: idx + 1,
-              competency: q.competency || 'UNKNOWN',
-              correct: 0,
-              wrong: 0,
-              total: 0
-            }));
-
-            // I-count ang tamali at tama per question
-            allStudents.forEach(student => {
-              const progress = student.progress || {};
-              const scores = progress.scores && progress.scores['term' + term];
-              if (!scores) return;
-
-              let record = null;
-              if (assessment === 'te') record = (scores.te && scores.te.te) || scores.te;
-              else record = scores.st && scores.st[assessment];
-
-              if (!record || !record.itemResults) return;
-
-              record.itemResults.forEach(r => {
-                const idx = r.originalIndex != null ? r.originalIndex : r.index;
-                if (idx != null && questionStats[idx]) {
-                  questionStats[idx].total++;
-                  if (r.correct) questionStats[idx].correct++;
-                  else questionStats[idx].wrong++;
-                }
-              });
-            });
-
-            // I-render sa Table
-            const tbody = document.getElementById('ia-tbody');
-            tbody.innerHTML = '';
-            
-            questionStats.forEach(stat => {
-              const mps = stat.total ? Math.round((stat.correct / stat.total) * 100) : 0;
-              const statusBadge = mps >= 75 
-                ? '<span class="badge-pass">Mastered</span>' 
-                : '<span class="badge-fail">Least Learned</span>';
-
-              tbody.innerHTML += `
-                <tr>
-                  <td><strong>Q${stat.qNum}</strong></td>
-                  <td>${stat.competency}</td>
-                  <td>${stat.correct}</td>
-                  <td>${stat.wrong}</td>
-                  <td><strong>${mps}%</strong></td>
-                  <td>${statusBadge}</td>
-                </tr>
-              `;
-            });
-
-            document.getElementById('ia-title').textContent = `Results: Term ${term} - ${assessment.toUpperCase()}`;
-            document.getElementById('ia-results').style.display = 'block';
-
-          } catch (err) {
-            alert('Error: ' + err.message);
-          } finally {
-            document.getElementById('ia-loading').style.display = 'none';
-            this.disabled = false;
-          }
-        });
       });
+
+      function pill(text, kind) { return '<span class="pill ' + kind + '">' + esc(text) + '</span>'; }
+      function pct(v) { return v == null ? '—' : v.toFixed(1) + '%'; }
+
+      async function analyze() {
+        var btn = $('btn-analyze');
+        btn.disabled = true;
+        $('ia-status').style.display = 'block';
+        $('ia-status').textContent = '⏳ Analyzing…';
+        $('ia-results').style.display = 'none';
+        try {
+          var r = await CompetencyAnalysis.itemAnalysis(students, $('ia-term').value, $('ia-assessment').value,
+            { section: $('ia-section').value, setLetter: $('ia-set').value });
+          last = r;
+          render(r);
+          $('btn-csv').disabled = false;
+          $('ia-status').style.display = 'none';
+        } catch (e) {
+          $('ia-status').innerHTML = '<span style="color:#c62828;">⚠️ ' + esc(e.message) + '</span>';
+        } finally { btn.disabled = false; }
+      }
+
+      function render(r) {
+        var box = $('ia-results');
+        if (!r.students) {
+          box.innerHTML = '<div class="card" style="padding:32px;text-align:center;color:#78909c;">No online attempts with item data yet for this assessment.</div>';
+          box.style.display = 'block';
+          return;
+        }
+        var lvl = CompetencyAnalysis.mpsLevel(r.summary.mps);
+        var flagged = r.items.filter(function (i) { return i.decision && i.decision !== 'Retain'; }).length;
+        var comps = r.competencies.filter(function (c) { return c.mps != null; });
+        var ml = CompetencyAnalysis.mostLeast(comps.map(function (c) { return { code: c.code, description: c.description, mps: c.mps }; }), 5);
+
+        var html = '<div class="card" style="padding:24px;margin-bottom:20px;">' +
+          '<h3 style="margin:0 0 4px;color:#0d47a1;">' + esc(r.title) + '</h3>' +
+          '<div class="ia-sum">' +
+            '<div><div class="v">' + r.students + '</div><div class="l">Students with item data</div></div>' +
+            '<div><div class="v">' + pct(r.summary.mps) + '</div><div class="l">Class MPS · ' + esc(lvl) + '</div></div>' +
+            '<div><div class="v">' + r.summary.items + '</div><div class="l">Items</div></div>' +
+            '<div><div class="v">' + flagged + '</div><div class="l">Items to revise / reject</div></div>' +
+          '</div>' +
+          '<h4 style="margin:18px 0 6px;">Learning competencies in this assessment</h4>' +
+          '<div style="overflow-x:auto;"><table class="ia-table"><thead><tr><th>Competency</th><th>Items</th><th class="num">MPS</th><th>Mastery level</th></tr></thead><tbody>' +
+          r.competencies.map(function (c) {
+            return '<tr><td><span class="code">' + esc(c.code) + '</span>' + esc(c.description) + '</td><td>' + esc(c.itemNos.join(', ')) +
+              '</td><td class="num"><strong>' + pct(c.mps) + '</strong></td><td>' + esc(c.mps == null ? '' : CompetencyAnalysis.mpsLevel(c.mps)) + '</td></tr>';
+          }).join('') + '</tbody></table></div>' +
+          '<div class="ml-grid" style="margin-top:16px;">' +
+            '<div><h4 style="margin:0 0 6px;color:#2e7d32;">✅ Most learned</h4><ol style="margin:0;padding-left:20px;font-size:0.88rem;">' +
+              (ml.most.length ? ml.most.map(function (c) { return '<li><span class="code">' + esc(c.code) + ' · ' + pct(c.mps) + '</span>' + esc(c.description) + '</li>'; }).join('') : '<li style="list-style:none;color:#90a4ae;">—</li>') + '</ol></div>' +
+            '<div><h4 style="margin:0 0 6px;color:#c62828;">⚠️ Least learned</h4><ol style="margin:0;padding-left:20px;font-size:0.88rem;">' +
+              ml.least.map(function (c) { return '<li><span class="code">' + esc(c.code) + ' · ' + pct(c.mps) + '</span>' + esc(c.description) + '</li>'; }).join('') + '</ol></div>' +
+          '</div>' +
+          (ml.available < 10 ? '<p class="legend">This assessment covers ' + ml.available + ' competencies, so each one appears in only one list (least learned is filled first). For the Term Exam basis (top 5 least learned from ST1 + ST2), see the TOS Generator.</p>' : '') +
+        '</div>';
+
+        html += '<div class="card" style="padding:24px;"><h3 style="margin:0 0 4px;color:#0d47a1;">Item statistics</h3>' +
+          '<div style="overflow-x:auto;"><table class="ia-table"><thead><tr>' +
+            '<th>#</th><th>Question / competency</th><th>Bloom</th><th class="num">Correct</th><th class="num">p (difficulty)</th><th class="num">D (discrimination)</th><th>How students answered</th><th>Decision</th>' +
+          '</tr></thead><tbody>' +
+          r.items.map(function (it) {
+            var pKind = it.p == null ? 'mute' : it.p > 0.9 || it.p < 0.2 ? 'warn' : 'ok';
+            var dKind = it.D == null ? 'mute' : it.D < 0 ? 'bad' : it.D < 0.2 ? 'warn' : 'ok';
+            var decKind = it.decision === 'Retain' ? 'ok' : it.decision === 'Revise' ? 'warn' : it.decision ? 'bad' : 'mute';
+            var opts = it.options.map(function (o) {
+              var n = it.optionCounts[o] || 0;
+              var t = esc(o.length > 46 ? o.slice(0, 45) + '…' : o) + ' — ' + n;
+              return o === it.correctText ? '<b>✔ ' + t + '</b>' : t;
+            }).join('<br>') + (it.blank ? '<br>(blank) — ' + it.blank : '') +
+              (it.nonFunctioning.length ? '<br><span style="color:#e65100;">' + it.nonFunctioning.length + ' distractor(s) chosen by nobody</span>' : '');
+            return '<tr><td><strong>' + it.no + '</strong></td>' +
+              '<td>' + esc(it.text) + '<span class="code" style="margin-top:4px;">' + esc(it.competency) + (it.shortLabel ? ' · ' + esc(it.shortLabel) : '') + '</span></td>' +
+              '<td>' + esc(it.bloomLevel) + '</td>' +
+              '<td class="num">' + it.correct + '/' + it.total + '</td>' +
+              '<td class="num">' + (it.p == null ? '—' : it.p.toFixed(2)) + '<br>' + pill(it.difficultyLabel, pKind) + '</td>' +
+              '<td class="num">' + (it.D == null ? '—' : it.D.toFixed(2)) + '<br>' + pill(it.discriminationLabel, dKind) + '</td>' +
+              '<td class="opts">' + opts + '</td>' +
+              '<td>' + (it.decision ? pill(it.decision, decKind) : '—') + '</td></tr>';
+          }).join('') + '</tbody></table></div>' +
+          '<p class="legend"><strong>p</strong> = proportion who answered correctly (above 0.80 easy, 0.20–0.80 average, below 0.20 difficult). ' +
+          '<strong>D</strong> = upper 27% minus lower 27% correct (0.40+ very good, 0.30–0.39 good, 0.20–0.29 fair, below 0.20 poor, negative = revise or reject). ' +
+          'Item numbers follow the question bank (master copy) order.</p></div>';
+
+        box.innerHTML = html;
+        box.style.display = 'block';
+      }
+
+      function exportCsv() {
+        if (!last) return;
+        var rows = [['Item', 'Question', 'Competency', 'Competency statement', 'Bloom', 'Correct', 'Answered', 'p', 'D', 'Difficulty', 'Discrimination', 'Decision']];
+        last.items.forEach(function (it) {
+          rows.push([it.no, it.text, it.competency, it.competencyText, it.bloomLevel, it.correct, it.total,
+            it.p == null ? '' : it.p.toFixed(2), it.D == null ? '' : it.D.toFixed(2), it.difficultyLabel, it.discriminationLabel, it.decision]);
+        });
+        rows.push([]);
+        rows.push(['Competency', 'Statement', 'Items', 'MPS', 'Level']);
+        last.competencies.forEach(function (c) { rows.push([c.code, c.description, c.itemNos.join(' '), c.mps == null ? '' : c.mps, c.mps == null ? '' : CompetencyAnalysis.mpsLevel(c.mps)]); });
+        var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+        a.download = 'ItemAnalysis_' + last.term + '_' + last.assessment + '.csv';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
     })();
   </script>
 </body>

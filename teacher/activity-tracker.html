@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Activity Tracker — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .at-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; align-items: end; }
     .at-filters button { width: 100%; padding: 10px 12px; background: #0d47a1; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
@@ -89,13 +89,13 @@
 
   <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
   
   <script>
     (function() {
@@ -130,11 +130,17 @@
         students.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
 
         let totalDone = 0, totalPossible = students.length * 40, behind = [];
-        
+
+        // "Behind pace" = more than one week (4 days) behind the CLASS pace.
+        // Class pace = the median number of days completed in this term.
+        // (Old rule "fewer than 30 of 40 days" marked everyone behind early in the term.)
+        const counts = students.map(s => (s.progress?.progress?.[term]?.completed || []).length).sort((a, b) => a - b);
+        const mid = Math.floor(counts.length / 2);
+        const pace = counts.length ? (counts.length % 2 ? counts[mid] : Math.round((counts[mid - 1] + counts[mid]) / 2)) : 0;
         students.forEach(s => {
           const p = s.progress?.progress?.[term]?.completed || [];
           totalDone += p.length;
-          if (p.length < 30) behind.push({ student: s, done: p.length, missing: 40 - p.length });
+          if (pace - p.length > 4) behind.push({ student: s, done: p.length, missing: pace - p.length });
         });
         
         const classPct = totalPossible ? Math.round((totalDone / totalPossible) * 100) : 0;
@@ -179,12 +185,12 @@
             <div style="font-weight:700;color:#c62828;margin:24px 0 12px;font-size:1.1rem;">⚠️ Students Behind Pace</div>
             <div class="table-responsive">
               <table class="modern-table">
-                <thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Missing</th></tr></thead>
+                <thead><tr><th>Student</th><th>Section</th><th>Done</th><th>Days behind class pace</th></tr></thead>
                 <tbody>
                   ${behind.map(b => `
                     <tr>
-                      <td><strong>${b.student.lastName}, ${b.student.firstName}</strong></td>
-                      <td>${b.student.section}</td>
+                      <td><strong>${APP.escapeHtml(b.student.lastName + ', ' + b.student.firstName)}</strong></td>
+                      <td>${APP.escapeHtml(b.student.section)}</td>
                       <td>${b.done}/40</td>
                       <td><span style="color:#c62828;font-weight:700;">${b.missing}</span></td>
                     </tr>
@@ -212,8 +218,8 @@
           
           html += `<tr><td class="row-header">
             <div style="display:flex;align-items:center;gap:8px;padding:2px;">
-              <div style="font-weight:700;font-size:0.75rem;color:#37474f;">${initials}</div>
-              <div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">${s.lastName}, ${s.firstName}</div>
+              <div style="font-weight:700;font-size:0.75rem;color:#37474f;">${APP.escapeHtml(initials)}</div>
+              <div style="font-size:0.78rem;color:#37474f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;">${APP.escapeHtml(s.lastName + ', ' + s.firstName)}</div>
             </div>
           </td>`;
           

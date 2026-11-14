@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intervention — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .iv-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; align-items: end; }
     .iv-filters button { width: 100%; padding: 10px 12px; background: #0d47a1; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
@@ -99,14 +99,14 @@
 
   <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.10</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/transmutation.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/transmutation.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
   
   <script>
     (function() {
@@ -150,20 +150,25 @@
           const st = scores.st || {};
           const quizzes = scores.quizzes || {};
 
+          // Quizzes, STs and the Term Exam (paper overrides included)
           let pcts = [];
-          Object.values(st).forEach(r => { if (r && r.total) pcts.push((r.score / r.total) * 100); });
-          Object.values(quizzes).forEach(r => { if (r && r.total) pcts.push((r.score / r.total) * 100); });
-          
+          ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te'].forEach(id => {
+            const v = TeacherCloud.percentOf(TeacherCloud.getRecord(p.scores || {}, term, id));
+            if (v != null) pcts.push(v);
+          });
+
           const avg = pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : null;
-          const classification = avg !== null ? Transmutation.classifyStudent(avg) : { label: 'No data yet', key: 'on-track' };
+          const classification = avg !== null ? Transmutation.classifyStudent(avg) : { label: 'No data yet', key: 'nodata' };
           
           const progress = p.progress?.[term]?.completed || [];
           return { student: s, avg, classification, stCount: Object.keys(st).length, quizCount: Object.keys(quizzes).length, daysDone: progress.length };
         });
 
-        const order = { urgent: 0, remediation: 1, 'on-track': 2, enrichment: 3 };
+        // NOTE: urgent = 0, so never use `order[key] || 99` (0 is falsy → urgent was sorted LAST)
+        const order = { urgent: 0, remediation: 1, 'on-track': 2, enrichment: 3, nodata: 4 };
+        const rank = k => (k in order ? order[k] : 99);
         allClassified.sort((a, b) => {
-          let diff = (order[a.classification.key] || 99) - (order[b.classification.key] || 99);
+          let diff = rank(a.classification.key) - rank(b.classification.key);
           if (diff !== 0) return diff;
           return (a.avg === null ? 100 : a.avg) - (b.avg === null ? 100 : b.avg);
         });
@@ -172,7 +177,8 @@
           enrichment: allClassified.filter(x => x.classification.key === 'enrichment'),
           'on-track': allClassified.filter(x => x.classification.key === 'on-track'),
           remediation: allClassified.filter(x => x.classification.key === 'remediation'),
-          urgent: allClassified.filter(x => x.classification.key === 'urgent')
+          urgent: allClassified.filter(x => x.classification.key === 'urgent'),
+          nodata: allClassified.filter(x => x.classification.key === 'nodata')
         };
 
         activeBucket = 'all';
@@ -190,7 +196,8 @@
           { key: 'enrichment', label: 'Enrichment', color: '#2e7d32', count: currentBuckets.enrichment.length },
           { key: 'on-track', label: 'On Track', color: '#0277bd', count: currentBuckets['on-track'].length },
           { key: 'remediation', label: 'Remediation', color: '#ed6c02', count: currentBuckets.remediation.length },
-          { key: 'urgent', label: 'Urgent', color: '#c62828', count: currentBuckets.urgent.length }
+          { key: 'urgent', label: 'Urgent', color: '#c62828', count: currentBuckets.urgent.length },
+          { key: 'nodata', label: 'No data yet', color: '#90a4ae', count: currentBuckets.nodata.length }
         ];
         
         grid.innerHTML = cards.map(b => `
@@ -225,10 +232,10 @@
           return `
             <div class="iv-card ${cls.key}">
               <div class="iv-student-head">
-                <div style="width:36px; height:36px; border-radius:50%; background:#0d47a1; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">${initials}</div>
+                <div style="width:36px; height:36px; border-radius:50%; background:#0d47a1; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">${APP.escapeHtml(initials)}</div>
                 <div style="flex:1; min-width:180px;">
-                  <div style="font-weight:700; font-size:1rem;">${s.lastName}, ${s.firstName}</div>
-                  <div style="font-size:0.78rem; color:#78909c;">LRN: ${s.lrn} · ${s.section}</div>
+                  <div style="font-weight:700; font-size:1rem;">${APP.escapeHtml(s.lastName + ', ' + s.firstName)}</div>
+                  <div style="font-size:0.78rem; color:#78909c;">LRN: ${APP.escapeHtml(s.lrn)} · ${APP.escapeHtml(s.section)}</div>
                 </div>
                 <span class="badge" style="background:${cls.key==='urgent'?'#ffebee':cls.key==='remediation'?'#fff3e0':'#e8f5e9'}; color:${cls.key==='urgent'?'#c62828':cls.key==='remediation'?'#e65100':'#1b5e20'}; font-weight:700;">${cls.label}</span>
               </div>

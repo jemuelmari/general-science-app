@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Score Entry (Paper & Pen) — General Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
+  <style>
+    .se-form { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:14px; align-items:end; }
+    .se-form label { display:block; font-size:0.8rem; font-weight:600; color:#37474f; margin-bottom:6px; }
+    .se-form select { width:100%; padding:10px 12px; }
+    .se-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    .se-table th, .se-table td { border-bottom:1px solid #e0e0e0; padding:8px 10px; text-align:left; vertical-align:middle; }
+    .se-table th { background:#f5f7fa; color:#37474f; font-weight:600; position:sticky; top:0; }
+    .se-table input[type=number] { width:72px; padding:6px 8px; border:1.5px solid #cfd8dc; border-radius:6px; font:inherit; text-align:center; }
+    .se-table input[type=text] { width:100%; min-width:120px; padding:6px 8px; border:1.5px solid #cfd8dc; border-radius:6px; font:inherit; }
+    .se-table tr.changed td { background:#fffde7; }
+    .se-table tr.bad td { background:#ffebee; }
+    .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.72rem; font-weight:700; }
+    .tag-paper { background:#f3e5f5; color:#6a1b9a; } .tag-online { background:#e3f2fd; color:#0d47a1; } .tag-none { background:#eceff1; color:#78909c; }
+    .tag-pass { background:#e8f5e9; color:#2e7d32; } .tag-fail { background:#ffebee; color:#c62828; }
+    .se-help { background:#f3e5f5; border-radius:10px; padding:12px 14px; font-size:0.86rem; color:#4a148c; line-height:1.55; }
+    .se-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:16px 0; }
+    .se-paste textarea { width:100%; min-height:110px; font-family:Consolas,monospace; font-size:0.85rem; padding:8px; border:1.5px solid #cfd8dc; border-radius:8px; }
+    .linkbtn { background:none; border:none; color:#c62828; cursor:pointer; font-size:0.8rem; text-decoration:underline; padding:0; }
+  </style>
+</head>
+<body>
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>✍️ Score Entry — Paper &amp; Pen</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <a href="../classrecord.html">📊 Class Record</a>
+        <a href="assessment-tracker.html">📋 Tracker</a>
+        <a href="print-exam.html">🖨️ Print Exam</a>
+        <a href="score-entry.html" style="color:#ffd54f;border-color:#ffd54f;">✍️ Score Entry</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div class="card" style="padding:24px;margin-bottom:20px;">
+      <div class="se-help">
+        <b>For students who took the test on paper</b> (no device / no internet), or to correct a score.<br>
+        1) Print the test and answer sheet in <a href="print-exam.html">Print Exam</a> (same questions and order as online, Set A = ACADEMIC A, Set B = ACADEMIC B). &nbsp;
+        2) Check the papers. &nbsp; 3) Type the raw score here and click <b>Save</b>.<br>
+        A saved score is marked <span class="tag tag-paper">PAPER</span> and <b>replaces the online score</b> in the Class Record, Grading Sheet, Reports, Assessment Tracker and Intervention — it may also be lower.
+        Remove it to go back to the online score. PT scores are out of 100 (the same as the rubric total).
+      </div>
+      <div class="se-form" style="margin-top:18px;">
+        <div><label for="se-term">Term</label>
+          <select id="se-term" class="form-control"><option value="term1">Term 1</option><option value="term2">Term 2</option><option value="term3">Term 3</option></select></div>
+        <div><label for="se-assessment">Assessment</label>
+          <select id="se-assessment" class="form-control">
+            <option value="quiz1">Quiz 1</option><option value="quiz2">Quiz 2</option><option value="quiz3">Quiz 3</option>
+            <option value="st1">Summative Test 1</option><option value="st2">Summative Test 2</option><option value="te">Term Exam</option>
+            <option value="pt1">Performance Task 1</option><option value="pt2">Performance Task 2</option><option value="pt3">Performance Task 3</option>
+          </select></div>
+        <div><label for="se-section">Section</label>
+          <select id="se-section" class="form-control"><option value="">All sections</option><option value="ACADEMIC A">ACADEMIC A</option><option value="ACADEMIC B">ACADEMIC B</option></select></div>
+        <div><label for="se-show">Show</label>
+          <select id="se-show" class="form-control"><option value="all">All students</option><option value="missing">No score yet</option><option value="paper">Paper scores only</option></select></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:24px;">
+      <div id="se-status" style="color:#78909c;">⏳ Loading class data…</div>
+      <div class="se-actions">
+        <button id="se-save" class="btn btn-primary" disabled>💾 Save changed scores</button>
+        <span id="se-dirty" style="font-size:0.85rem;color:#607d8b;"></span>
+        <button id="se-toggle-paste" class="btn btn-outline" style="margin-left:auto;">📋 Paste many scores</button>
+      </div>
+      <div id="se-paste" class="se-paste" style="display:none;margin-bottom:16px;">
+        <p style="font-size:0.84rem;color:#546e7a;margin:0 0 6px;">One student per line: <code>LRN score</code> or <code>LRN,score</code> (tabs from Excel work too). Total = the number of items shown below.</p>
+        <textarea id="se-paste-text" placeholder="106645150041 24&#10;106645150042, 18"></textarea>
+        <button id="se-paste-apply" class="btn btn-outline" style="margin-top:8px;">Fill the table</button>
+        <span id="se-paste-msg" style="font-size:0.84rem;margin-left:8px;"></span>
+      </div>
+      <div style="overflow-x:auto;max-height:70vh;">
+        <table class="se-table">
+          <thead><tr><th>Student</th><th>Set</th><th>Online score</th><th>Paper / entered score</th><th>Total</th><th>%</th><th>Note</th><th></th></tr></thead>
+          <tbody id="se-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v1.0.0</span></p></footer>
+
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
+  <script>
+    (function () {
+      'use strict';
+      var esc = APP.escapeHtml;
+      var $ = function (id) { return document.getElementById(id); };
+      var RAW_PASS = (CONFIG && CONFIG.PASSING_PERCENT) || 70;
+      var students = [];
+      var itemCount = {};       // term/assessment -> number of items in the bank
+      var rows = [];            // current table rows
+
+      TeacherAuthBoot.ready(async function (auth) {
+        if (!auth.isAuthenticated()) { window.location.replace('../teacher-login.html'); return; }
+        $('btn-logout').addEventListener('click', function () { auth.logout(); });
+        ['se-term', 'se-assessment', 'se-section', 'se-show'].forEach(function (id) { $(id).addEventListener('change', render); });
+        $('se-save').addEventListener('click', save);
+        $('se-toggle-paste').addEventListener('click', function () { var b = $('se-paste'); b.style.display = b.style.display === 'none' ? 'block' : 'none'; });
+        $('se-paste-apply').addEventListener('click', applyPaste);
+        window.addEventListener('beforeunload', function (e) { if (dirtyRows().length) { e.preventDefault(); e.returnValue = ''; } });
+        await load();
+      });
+
+      async function load() {
+        $('se-status').textContent = '⏳ Loading class data…';
+        try {
+          students = await TeacherCloud.fetchStudents();
+          students.sort(function (a, b) { return (a.lastName || '').localeCompare(b.lastName || '') || (a.firstName || '').localeCompare(b.firstName || ''); });
+          await render();
+        } catch (e) {
+          $('se-status').innerHTML = '<span style="color:#c62828;">⚠️ ' + esc(e.message) + '</span>';
+        }
+      }
+
+      async function totalFor(term, id) {
+        if (/^pt/.test(id)) return 100;
+        var k = term + '/' + id;
+        if (itemCount[k]) return itemCount[k];
+        try {
+          var res = await fetch('../student/' + term + '/assessments/' + id + '.json?v=' + (CONFIG.VERSION || '1'));
+          var bank = await res.json();
+          itemCount[k] = (bank.questions || []).length || bank.items || 0;
+        } catch (e) { itemCount[k] = 0; }
+        return itemCount[k];
+      }
+
+      function setOf(section) { return (CONFIG.SET_ASSIGNMENT && CONFIG.SET_ASSIGNMENT[section]) || 'A'; }
+
+      async function render() {
+        if (dirtyRows().length && !confirm('You have unsaved scores. Discard them?')) return;
+        var term = $('se-term').value, id = $('se-assessment').value, sec = $('se-section').value, show = $('se-show').value;
+        var total = await totalFor(term, id);
+        rows = [];
+        var list = students.filter(function (s) { return !sec || s.section === sec; });
+        var html = list.map(function (s) {
+          var rec = TeacherCloud.getRecord((s.progress && s.progress.scores) || {}, term, id);
+          var isPaper = !!(rec && rec.override);
+          var online = isPaper ? rec.online : (rec && rec.score != null && rec.total ? { score: rec.score, total: rec.total, percent: TeacherCloud.percentOf(rec) } : null);
+          if (show === 'missing' && rec && rec.score != null) return '';
+          if (show === 'paper' && !isPaper) return '';
+          var i = rows.length;
+          rows.push({ lrn: s.lrn, s: s, isPaper: isPaper, origScore: isPaper ? rec.score : null, origTotal: isPaper ? rec.total : total, origNote: isPaper ? (rec.note || '') : '' });
+          var onlineTxt = online ? '<span class="tag tag-online">' + esc(online.score + '/' + online.total) + '</span>' +
+            (/^pt/.test(id) && rec && rec.graded ? ' <span style="font-size:0.75rem;color:#78909c;">rubric</span>' : '') : '<span class="tag tag-none">none</span>';
+          if (/^pt/.test(id) && rec && rec.submittedAt && !rec.graded && !isPaper) onlineTxt = '<span class="tag tag-none">submitted, not graded</span>';
+          return '<tr data-i="' + i + '">' +
+            '<td><strong>' + esc((s.lastName || '').toUpperCase() + ', ' + (s.firstName || '')) + '</strong><div style="font-size:0.74rem;color:#90a4ae;">' + esc(s.lrn) + ' · ' + esc(s.section || '') + '</div></td>' +
+            '<td>' + (/^pt/.test(id) ? '—' : esc(setOf(s.section))) + '</td>' +
+            '<td>' + onlineTxt + '</td>' +
+            '<td><input type="number" min="0" step="1" class="se-score" value="' + (isPaper ? esc(rec.score) : '') + '" placeholder="—" /> ' + (isPaper ? '<span class="tag tag-paper">PAPER</span>' : '') + '</td>' +
+            '<td><input type="number" min="1" step="1" class="se-total" value="' + esc(isPaper ? rec.total : total) + '" /></td>' +
+            '<td class="se-pct"></td>' +
+            '<td><input type="text" class="se-note" maxlength="200" value="' + esc(isPaper ? (rec.note || '') : '') + '" placeholder="e.g. took paper test" /></td>' +
+            '<td>' + (isPaper ? '<button class="linkbtn se-del">Remove</button>' : '') + '</td></tr>';
+        }).join('');
+        $('se-body').innerHTML = html || '<tr><td colspan="8" style="text-align:center;padding:30px;color:#90a4ae;">No students match.</td></tr>';
+        $('se-body').querySelectorAll('tr[data-i]').forEach(function (tr) {
+          tr.querySelectorAll('input').forEach(function (inp) { inp.addEventListener('input', function () { refreshRow(tr); }); });
+          var del = tr.querySelector('.se-del');
+          if (del) del.addEventListener('click', function () { removeOverride(rows[+tr.dataset.i]); });
+          refreshRow(tr);
+        });
+        $('se-status').innerHTML = esc(rows.length + ' students · ' + (total ? total + (/^pt/.test(id) ? ' points' : ' items') : 'item count unknown — type the total'));
+      }
+
+      function readRow(tr) {
+        var r = rows[+tr.dataset.i];
+        var sv = tr.querySelector('.se-score').value.trim();
+        var tv = tr.querySelector('.se-total').value.trim();
+        return { r: r, score: sv === '' ? null : Number(sv), total: Number(tv), note: tr.querySelector('.se-note').value.trim() };
+      }
+
+      function refreshRow(tr) {
+        var x = readRow(tr);
+        var bad = x.score != null && (isNaN(x.score) || x.score < 0 || !(x.total > 0) || x.score > x.total);
+        var changed = x.score != null && (x.score !== x.r.origScore || x.total !== Number(x.r.origTotal) || x.note !== x.r.origNote);
+        tr.classList.toggle('bad', bad);
+        tr.classList.toggle('changed', changed && !bad);
+        var cell = tr.querySelector('.se-pct');
+        if (x.score == null || bad) cell.innerHTML = bad ? '<span style="color:#c62828;font-size:0.8rem;">0 – total only</span>' : '';
+        else {
+          var p = x.score / x.total * 100;
+          cell.innerHTML = p.toFixed(1) + '% <span class="tag ' + (p >= RAW_PASS ? 'tag-pass' : 'tag-fail') + '">' + (p >= RAW_PASS ? 'pass' : 'below') + '</span>';
+        }
+        var n = dirtyRows().length;
+        $('se-save').disabled = n === 0;
+        $('se-dirty').textContent = n ? n + ' score(s) not saved yet' : '';
+      }
+
+      function dirtyRows() {
+        var out = [];
+        $('se-body').querySelectorAll('tr.changed').forEach(function (tr) { out.push(readRow(tr)); });
+        return out;
+      }
+
+      async function save() {
+        var term = $('se-term').value, id = $('se-assessment').value;
+        var list = dirtyRows();
+        if (!list.length) return;
+        var btn = $('se-save'); btn.disabled = true; btn.textContent = '⏳ Saving…';
+        try {
+          var res = await TeacherCloud.saveOverrides(list.map(function (x) {
+            return { lrn: x.r.lrn, term: term, assessment: id, score: x.score, total: x.total, source: 'paper', note: x.note,
+                     studentName: (x.r.s.lastName || '') + ', ' + (x.r.s.firstName || ''), section: x.r.s.section || '' };
+          }), 'Teacher');
+          APP.toast('✅ Saved ' + res.saved + ' score(s)' + (res.errors && res.errors.length ? ' — ' + res.errors.length + ' rejected' : ''), res.errors && res.errors.length ? 'warning' : 'success', 4000);
+          $('se-body').innerHTML = '';
+          await load();
+        } catch (e) {
+          APP.toast('❌ ' + e.message, 'danger', 5000);
+        } finally { btn.textContent = '💾 Save changed scores'; }
+      }
+
+      async function removeOverride(r) {
+        var term = $('se-term').value, id = $('se-assessment').value;
+        if (!confirm('Remove the entered score for ' + (r.s.lastName || '') + ', ' + (r.s.firstName || '') + '? The online score (if any) will be used again.')) return;
+        try {
+          await TeacherCloud.deleteOverride(r.lrn, term, id);
+          APP.toast('Removed', 'success');
+          $('se-body').innerHTML = '';
+          await load();
+        } catch (e) { APP.toast('❌ ' + e.message, 'danger', 5000); }
+      }
+
+      function applyPaste() {
+        var lines = $('se-paste-text').value.split(/\r?\n/), filled = 0, unknown = [];
+        lines.forEach(function (line) {
+          var m = line.trim().match(/^(\d[\d\- ]{9,16}\d)[\s,;\t]+(\d+(?:\.\d+)?)/);
+          if (!m) return;
+          var lrn = m[1].replace(/\D/g, ''), sc = m[2];
+          var tr = null;
+          $('se-body').querySelectorAll('tr[data-i]').forEach(function (t) { if (rows[+t.dataset.i].lrn === lrn) tr = t; });
+          if (!tr) { unknown.push(lrn); return; }
+          tr.querySelector('.se-score').value = sc;
+          if (!tr.querySelector('.se-note').value) tr.querySelector('.se-note').value = 'paper';
+          refreshRow(tr); filled++;
+        });
+        $('se-paste-msg').textContent = filled + ' filled' + (unknown.length ? ' · not in this list: ' + unknown.join(', ') : '') + '. Check, then click Save.';
+      }
+    })();
+  </script>
+</body>
+</html>

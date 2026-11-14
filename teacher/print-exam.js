@@ -1,8 +1,12 @@
 /* ============================================================
    print-exam.js — Printable Exam Copies
-   Version: 1.0.0
+   Version: 1.1.0
    App: General Science
    ------------------------------------------------------------
+   v1.1.0: + Student ANSWER SHEET (bubble sheet: Name / LRN / Section / Set,
+             one row per item) for students without devices; print it
+             alone, with the test, or with test + key. After checking,
+             record the scores in Score Entry (teacher/score-entry.html).
    Lets the teacher print the ACTUAL questions of any Quiz,
    Summative Test or Term Exam (per term) for students who
    cannot access the internet, or save them as an editable
@@ -156,6 +160,16 @@ window.PrintExam = (function () {
     return { key: which, label: which === 'MASTER' ? 'Master Copy' : 'Set ' + which, items: items };
   }
 
+  /** Which parts to print for the "What to print" choice. */
+  function parts(o) {
+    var out = o.output || 'student';
+    return {
+      questions: ['student', 'both', 'student-sheet', 'all'].indexOf(out) !== -1,
+      sheet: ['sheet', 'student-sheet', 'all'].indexOf(out) !== -1,
+      key: ['both', 'key', 'all'].indexOf(out) !== -1
+    };
+  }
+
   function versionKeys(choice) {
     if (choice === 'AB') return ['A', 'B'];
     return [choice];
@@ -185,7 +199,12 @@ window.PrintExam = (function () {
       '.pe-doc .pe-keytitle{text-align:center;font-weight:bold;font-size:1.2em;margin:0 0 4px;}' +
       '.pe-doc .pe-keysub{text-align:center;margin:0 0 14px;}' +
       '.pe-doc table.pe-key{width:100%;border-collapse:collapse;}' +
-      '.pe-doc table.pe-key td{border:1px solid #888;padding:4px 8px;width:20%;}';
+      '.pe-doc table.pe-key td{border:1px solid #888;padding:4px 8px;width:20%;}' +
+      '.pe-doc table.pe-sheet{width:100%;border-collapse:collapse;margin-top:6px;}' +
+      '.pe-doc table.pe-sheet td{padding:3px 4px;vertical-align:middle;white-space:nowrap;}' +
+      '.pe-doc .pe-bn{display:inline-block;width:2.2em;text-align:right;margin-right:.4em;font-weight:bold;}' +
+      '.pe-doc .pe-bub{display:inline-block;width:1.45em;height:1.45em;line-height:1.4em;border:1.2px solid #000;border-radius:50%;text-align:center;font-size:.8em;margin:0 .18em;}' +
+      '.pe-doc .pe-sheetbox{border:1.5px solid #000;padding:6px 10px;margin:8px 0;}';
   }
 
   function headHtml(model, v) {
@@ -254,16 +273,54 @@ window.PrintExam = (function () {
       '<table class="pe-key">' + trs.join('') + '</table>';
   }
 
+  /** Bubble answer sheet: one row per item, column-major (1–20 down the first column …). */
+  function sheetHtml(model, v) {
+    var s = model.school || {};
+    var n = v.items.length;
+    var cols = n > 40 ? 3 : n > 20 ? 2 : 1;
+    var rows = Math.ceil(n / cols);
+    var nOpt = Math.max.apply(null, v.items.map(function (it) { return it.options.length; }).concat([4]));
+    var trs = [];
+    for (var r = 0; r < rows; r++) {
+      var tds = [];
+      for (var c = 0; c < cols; c++) {
+        var i = r + c * rows;
+        if (i >= n) { tds.push('<td></td>'); continue; }
+        var b = '';
+        for (var k = 0; k < nOpt; k++) b += '<span class="pe-bub">' + LETTERS[k] + '</span>';
+        tds.push('<td><span class="pe-bn">' + (i + 1) + '.</span>' + b + '</td>');
+      }
+      trs.push('<tr>' + tds.join('') + '</tr>');
+    }
+    return (s.schoolName ? '<p class="pe-c pe-s2">' + esc(s.schoolName) + '</p>' : '') +
+      '<p class="pe-title">ANSWER SHEET</p>' +
+      '<p class="pe-sub">' + esc(model.bank.title || model.assessmentLabel) + ' · Term ' + model.termNo + ' · ' + n + ' items</p>' +
+      '<p class="pe-set">— ' + esc(v.key === 'MASTER' ? 'MASTER COPY' : v.label.toUpperCase()) + ' —</p>' +
+      '<div class="pe-sheetbox"><table class="pe-info">' +
+        '<tr><td>Name: ______________________________</td><td>LRN: ____________________</td></tr>' +
+        '<tr><td>Section: ____________________</td><td>Date: ____________________</td></tr>' +
+        '<tr><td>Score: ________ / ' + n + '</td><td>Checked by: ________________</td></tr></table></div>' +
+      '<div class="pe-dir"><b>Directions:</b> Shade or encircle the letter of your answer. Use only one answer per number. ' +
+        'Make sure the SET on your test paper is the same as this answer sheet (' + esc(v.key === 'MASTER' ? 'Master' : v.label) + ').</div>' +
+      '<table class="pe-sheet">' + trs.join('') + '</table>';
+  }
+
   /** Returns the inner HTML (a series of .pe-page blocks). */
   function renderHtml(model) {
     var o = model.opts;
+    var want = parts(o);
     var pages = [];
-    if (o.output !== 'key') {
+    if (want.questions) {
       model.versions.forEach(function (v) {
         pages.push('<section class="pe-page">' + headHtml(model, v) + questionsHtml(v, o) + '</section>');
       });
     }
-    if (o.output !== 'student') {
+    if (want.sheet) {
+      model.versions.forEach(function (v) {
+        pages.push('<section class="pe-page">' + sheetHtml(model, v) + '</section>');
+      });
+    }
+    if (want.key) {
       model.versions.forEach(function (v) {
         pages.push('<section class="pe-page">' + keyHtml(model, v) + '</section>');
       });
@@ -420,7 +477,8 @@ window.PrintExam = (function () {
     var sections = [];
     var baseLabel = (s.subject || 'General Science') + ' · Term ' + model.termNo + ' · ' + model.assessmentLabel;
 
-    if (o.output !== 'key') {
+    var want = parts(o);
+    if (want.questions) {
       model.versions.forEach(function (v) {
         var label = baseLabel + ' · ' + v.label;
         if (o.cols === 2) {
@@ -435,7 +493,34 @@ window.PrintExam = (function () {
         }
       });
     }
-    if (o.output !== 'student') {
+    if (want.sheet) {
+      model.versions.forEach(function (v) {
+        var n = v.items.length, cols = n > 40 ? 3 : n > 20 ? 2 : 1, rows = Math.ceil(n / cols);
+        var trs = [];
+        for (var r = 0; r < rows; r++) {
+          var cells = [];
+          for (var c = 0; c < cols; c++) {
+            var i = r + c * rows;
+            var txt = i < n ? (i + 1) + '.   ( A )   ( B )   ( C )   ( D )' : '';
+            cells.push(new D.TableCell({ borders: { top: none(), bottom: none(), left: none(), right: none() }, children: [para([run(txt)])] }));
+          }
+          trs.push(new D.TableRow({ children: cells }));
+        }
+        sections.push({
+          properties: { page: pageProps(true) },
+          footers: footers('Answer Sheet · ' + baseLabel + ' · ' + v.label),
+          children: [
+            center('ANSWER SHEET', { bold: true }),
+            center((model.bank.title || model.assessmentLabel) + ' · Term ' + model.termNo + ' · ' + v.label),
+            para([run('Name: ______________________________    LRN: ____________________')]),
+            para([run('Section: ____________________    Date: ______________    Score: ______ / ' + n)]),
+            para([run('Directions: Encircle the letter of your answer. Use the same SET as your test paper.')], { spacing: { after: 160 } }),
+            new D.Table({ width: { size: 100, type: D.WidthType.PERCENTAGE }, rows: trs })
+          ]
+        });
+      });
+    }
+    if (want.key) {
       model.versions.forEach(function (v) {
         sections.push({
           properties: { page: pageProps(true) },
@@ -457,7 +542,7 @@ window.PrintExam = (function () {
 
   /* ---------- file name + download ---------- */
   function fileBase(model) {
-    var tag = model.opts.output === 'key' ? 'AnswerKey' : 'Exam';
+    var tag = model.opts.output === 'key' ? 'AnswerKey' : model.opts.output === 'sheet' ? 'AnswerSheet' : 'Exam';
     var vers = model.versions.map(function (v) { return v.key === 'MASTER' ? 'Master' : 'Set' + v.key; }).join('');
     return 'GenSci_T' + model.termNo + '_' + model.assessmentId.toUpperCase() + '_' + vers + '_' + tag;
   }

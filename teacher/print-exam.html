@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Print Exam Copies — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-6a8ee00" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-6a8ee00" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .pe-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
     .pe-form label { display: block; font-size: 0.78rem; font-weight: 700; color: #455a64; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
@@ -50,6 +50,7 @@
         <a href="../instructor.html">🏠 Dashboard</a>
         <a href="../classrecord.html">📊 Class Record</a>
         <a href="print-exam.html" style="color:#ffd54f;border-color:#ffd54f;">🖨️ Print Exam</a>
+        <a href="score-entry.html">✍️ Score Entry</a>
         <button id="btn-logout">🚪 Logout</button>
       </nav>
     </div>
@@ -96,7 +97,10 @@
           <label for="pe-output">What to print</label>
           <select id="pe-output">
             <option value="student">Student copy (no answers)</option>
+            <option value="student-sheet">Student copy + Answer sheet</option>
+            <option value="sheet">Answer sheet only</option>
             <option value="both">Student copy + Answer key (last page)</option>
+            <option value="all">Student copy + Answer sheet + Answer key</option>
             <option value="key">Answer key only</option>
           </select>
         </div>
@@ -132,6 +136,10 @@
         </div>
       </div>
 
+      <p style="font-size:0.85rem;color:#4a148c;background:#f3e5f5;border-radius:8px;padding:10px 12px;margin:0 0 14px;">
+        📝 <b>Students without devices:</b> print the student copy + answer sheet of their section's set (Set A = ACADEMIC A, Set B = ACADEMIC B — same questions and order as online).
+        After checking, record their scores in <a href="score-entry.html"><b>Score Entry</b></a>; those scores count in the Class Record, Grading Sheet, Reports and Tracker.
+      </p>
       <div class="pe-actions">
         <button class="pe-btn pe-btn-print" id="pe-print">🖨️ Print</button>
         <button class="pe-btn pe-btn-word" id="pe-word">💾 Save as Word (.docx)</button>
@@ -153,14 +161,14 @@
   <footer class="app-footer no-print"><p>General Science Online Modular Application · <span class="version">v1.0.0</span></p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/app.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/store.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/security.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-6a8ee00"></script>
-  <script src="../assets/js/randomize.js?v=1.3.0-6a8ee00"></script>
-  <script src="print-exam.js?v=1.3.0-6a8ee00"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/randomize.js?v=1.3.0-aa6f34f"></script>
+  <script src="print-exam.js?v=1.3.0-aa6f34f"></script>
 
   <script>
     (function () {
