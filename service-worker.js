@@ -1,13 +1,23 @@
 /* ============================================================
    service-worker.js — PWA Offline Cache
-   Version: 1.0.0
+   Version: 2.0.0
+   Changelog v2.0.0:
+     - FIX: './login.html' (does not exist) was in the precache list, so
+       cache.addAll() failed and the service worker NEVER installed.
+       Precache now skips missing files instead of failing.
+     - FIX: JS / CSS / JSON were cache-first forever → students kept old
+       question banks, lessons and scripts after an update. Everything is
+       now NETWORK-FIRST; the cache is only used when offline.
+     - FIX: request.headers.get('accept') can be null.
    ============================================================ */
 
-const CACHE_NAME = 'gensci-v1.0.11';
+const CACHE_NAME = 'gensci-v2.0.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './login.html',
+  './student/login.html',
+  './teacher-login.html',
+  './config.js',
   './manifest.json',
   './assets/css/main.css',
   './assets/css/student.css',
@@ -16,74 +26,46 @@ const ASSETS_TO_CACHE = [
   './assets/js/store.js',
   './assets/js/security.js',
   './assets/js/sync.js',
+  './assets/js/randomize.js',
   './assets/js/pt-upload.js',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png'
 ];
 
-// Install: Cache core assets
+// Install: cache what exists (one missing file must not break the install)
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then((cache) => Promise.all(ASSETS_TO_CACHE.map((url) => cache.add(url).catch(() => null))))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activate: Clean up old caches
+// Activate: clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then((names) => Promise.all(names.map((n) => (n !== CACHE_NAME ? caches.delete(n) : null))))
+      .then(() => self.clients.claim())
   );
 });
 
-// Fetch: Network-first for HTML, Cache-first for assets
+// Fetch: network-first for every same-origin GET; cache only as offline fallback
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  
-  // Skip caching for non-GET requests or external APIs (Google Apps Script)
-  if (request.method !== 'GET' || request.url.includes('script.google.com')) {
-    return;
-  }
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;          // Apps Script, CDNs, Drive: browser handles it
 
-  // Always fetch fresh HTML from network, fallback to cache if offline
-  if (request.headers.get('accept').includes('text/html')) {
-    event.respondWith(
-      fetch(request).then((networkResponse) => {
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
-        return networkResponse;
-      }).catch(() => {
-        return caches.match(request);
-      })
-    );
-    return;
-  }
-
-  // For JS/CSS/Images: Cache-first, fallback to network
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
+    fetch(request)
+      .then((response) => {
+        if (response && response.status === 200 && response.type === 'basic') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {});
         }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseToCache);
-        });
-        return networkResponse;
-      });
-    })
+        return response;
+      })
+      .catch(() => caches.match(request).then((hit) => hit || caches.match(request, { ignoreSearch: true })))
   );
 });

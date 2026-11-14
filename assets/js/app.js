@@ -168,7 +168,13 @@ const APP = (() => {
     return str.toString().trim().toUpperCase();
   }
 
+  /** "LAST, First Middle" — HTML-escaped (safe for innerHTML). */
   function formatFullName(lastName, firstName, middleName) {
+    return escapeHtml(formatFullNameText(lastName, firstName, middleName));
+  }
+
+  /** Same as formatFullName but NOT escaped — only for textContent / file names. */
+  function formatFullNameText(lastName, firstName, middleName) {
     const last = toLastNameFormat(lastName);
     const first = toTitleCase(firstName);
     const middle = middleName ? ' ' + toTitleCase(middleName) : '';
@@ -179,7 +185,7 @@ const APP = (() => {
     const last = toLastNameFormat(lastName);
     const first = toTitleCase(firstName);
     const middle = middleName ? ' ' + toTitleCase(middleName) : '';
-    return `${first}${middle} ${last}`.trim();
+    return escapeHtml(`${first}${middle} ${last}`.trim());
   }
 
   /* ---------- Sex Helpers ---------- */
@@ -384,7 +390,17 @@ const APP = (() => {
   }
 
   /* ---------- Public API ---------- */
+  /** Escape text before putting it inside innerHTML (student names, notes, etc.) */
+  function escapeHtml(v) {
+    return String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   return {
+    escapeHtml,
+    esc: escapeHtml,
+    formatFullNameText,
     VERSION,
     BUILD_DATE,
     APP_NAME,

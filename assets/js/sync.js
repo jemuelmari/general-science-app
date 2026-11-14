@@ -72,6 +72,10 @@ const Sync = (() => {
   }
 
   async function backendPost(body) {
+    // Teacher pages: attach the teacher token automatically (backend 1.11.0
+    // requires it for teacher-only actions). Students never have one.
+    var tTok = getTeacherToken();
+    if (tTok && body && !body.token) body = Object.assign({}, body, { token: tTok });
     // 25s timeout: without it ONE stalled request (phone lost signal mid-request) hangs
     // forever and everything waiting on it (SyncAuto queue flush) is stuck until page reload.
     var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
@@ -117,13 +121,10 @@ const Sync = (() => {
 
   function getTeacherToken() {
     try {
+      // Only the real teacher password works on the backend; the session's
+      // random id is NOT a token, so it is never sent.
       var t = sessionStorage.getItem('gsa_teacher_token');
       if (t) return t;
-      var session = sessionStorage.getItem('gsa_teacher_session');
-      if (session) {
-        var s = JSON.parse(session);
-        if (s && s.token) return s.token;
-      }
     } catch (e) {}
     return null;
   }

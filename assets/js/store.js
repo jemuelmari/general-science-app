@@ -773,7 +773,23 @@ const Store = (() => {
   }
 
   function getScores(lrn) {
-    return get('scores_' + lrn, {});
+    const scores = get('scores_' + lrn, {});
+    // Term 1 PT1 page used to save to term2 (see CONFIG.PT1_FIX_CUTOFF)
+    try {
+      const cutIso = typeof CONFIG !== 'undefined' && CONFIG.PT1_FIX_CUTOFF;
+      const rec = scores.term2 && scores.term2.pt && scores.term2.pt.pt1;
+      if (cutIso && rec) {
+        const when = new Date(rec.submittedAt || rec.timestamp || 0).getTime();
+        if (when && when < new Date(cutIso).getTime()) {
+          scores.term1 = scores.term1 || {};
+          scores.term1.pt = scores.term1.pt || {};
+          if (!scores.term1.pt.pt1) scores.term1.pt.pt1 = rec;
+          delete scores.term2.pt.pt1;
+          set('scores_' + lrn, scores);
+        }
+      }
+    } catch (e) { /* never block reading scores */ }
+    return scores;
   }
 
   function saveProgress(lrn, term, data) {
@@ -800,9 +816,12 @@ const Store = (() => {
   /* ============================================================
      LOCKS & UNLOCKS
      ============================================================ */
-  function lockAssessment(lrn, lockKey, reason) {
+  function lockAssessment(lrn, lockKey, reason, score) {
     const locks = get('locks_' + lrn, {});
-    locks[lockKey] = { lockedAt: new Date().toISOString(), reason: reason || 'failed' };
+    // reason must be a string ('failed' | 'tab-switch'); older callers passed an object
+    if (reason && typeof reason === 'object') { score = reason.score; reason = reason.reason; }
+    locks[lockKey] = { lockedAt: new Date().toISOString(), reason: String(reason || 'failed') };
+    if (score != null) locks[lockKey].score = score;
     set('locks_' + lrn, locks);
   }
 

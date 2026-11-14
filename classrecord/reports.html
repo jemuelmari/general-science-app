@@ -111,8 +111,9 @@
     (function() {
       'use strict';
 
-      var WEIGHTS = { ww: 0.20, pt: 0.50, ex: 0.30 };
-      var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
+      // Same weights as Class Record (config.js)
+      var WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
+      var EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
 
       var TERM_LABEL = {
         term1: 'Term 1 — Physics & Chemistry',
@@ -145,15 +146,8 @@
       });
 
       function pct(lrn, term, type, id) {
-        var scores = Store.getScores(lrn);
-        var t = scores[term] || {};
-        var record = null;
-        if (type === 'te') record = (t.te && t.te.te) || t.te;
-        else if (t[type] && t[type][id]) record = t[type][id];
-        if (!record) return null;
-        if (record.percent !== undefined && record.percent !== null) return record.percent;
-        if (record.score !== undefined && record.total) return (record.score / record.total) * 100;
-        return null;
+        // Store was hydrated by TeacherCloud: PT grades + paper overrides included
+        return TeacherCloud.percentOf(TeacherCloud.getRecord(Store.getScores(lrn), term, id));
       }
 
       function getRows(term, section) {
@@ -356,7 +350,7 @@
                 return '<tr>' +
                   '<td style="font-weight:800;color:' + (i < 3 ? '#2e7d32' : '#37474f') + ';">' + rankIcon + ' #' + (i + 1) + '</td>' +
                   '<td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
-                  '<td>' + r.student.section + '</td>' +
+                  '<td>' + APP.escapeHtml(r.student.section) + '</td>' +
                   '<td style="text-align:right;"' + (r.wwAvg === null ? ' class="partial-cell"' : '') + '>' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
                   '<td style="text-align:right;"' + (r.ptAvg === null ? ' class="partial-cell"' : '') + '>' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
                   '<td style="text-align:right;"' + (r.exAvg === null ? ' class="partial-cell"' : '') + '>' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +
@@ -379,7 +373,7 @@
                 var fd = finalDisplay(r);
                 return '<tr>' +
                   '<td><strong>' + APP.formatFullName(r.student.lastName, r.student.firstName, r.student.middleName) + '</strong></td>' +
-                  '<td>' + r.student.section + '</td>' +
+                  '<td>' + APP.escapeHtml(r.student.section) + '</td>' +
                   '<td style="text-align:right;"' + (r.wwAvg === null ? ' class="partial-cell"' : '') + '>' + (r.wwAvg !== null ? r.wwAvg.toFixed(1) : '—') + '</td>' +
                   '<td style="text-align:right;"' + (r.ptAvg === null ? ' class="partial-cell"' : '') + '>' + (r.ptAvg !== null ? r.ptAvg.toFixed(1) : '—') + '</td>' +
                   '<td style="text-align:right;"' + (r.exAvg === null ? ' class="partial-cell"' : '') + '>' + (r.exAvg !== null ? r.exAvg.toFixed(1) : '—') + '</td>' +

@@ -35,7 +35,7 @@
   const headerTitle = document.getElementById('header-title');
   if (headerTitle) headerTitle.textContent = `📖 Week ${WEEK} · Day ${DAY}`;
 
-  fetch(`week${WEEK}.json`)
+  fetch(`week${WEEK}.json?v=${(typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1'}`)
     .then((r) => { if (!r.ok) throw new Error('Failed to load lesson data'); return r.json(); })
     .then((data) => {
       const day = data.days?.find((d) => d.day === DAY);

@@ -1,6 +1,13 @@
 /* ============================================================
    classrecord.js — Gradebook logic (Cloud-First + Fixed)
-   Version: 2.2.0
+   Version: 3.0.0
+   v3.0.0: - Scores come from TeacherCloud (PT grades + teacher/paper
+             overrides already merged) — same numbers as Grading Sheet,
+             Reports and Assessment Tracker.
+           - One grade formula: Transmutation.computeTermGrade().
+           - Most & Least Learned tab is now COMPETENCY based (top 5 / 5,
+             code + full statement, from ST1 + ST2 item results).
+           - Student names are HTML-escaped. Paper scores are marked "P".
    ============================================================ */
 
 (async function() {
@@ -13,11 +20,10 @@
     if (!TeacherAuth.require()) { console.log('[ClassRecord] Auth failed'); return; }
   }
 
-  const WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
-  const EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
+  const RAW_PASS = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
+  const esc = (v) => (typeof APP !== 'undefined' && APP.escapeHtml) ? APP.escapeHtml(v) : String(v == null ? '' : v);
 
   let allStudents = [];
-  let backendPTGrades = {};
 
   // ── FETCH DATA FROM BACKEND ──
   async function fetchStudentsFromCloud() {
@@ -27,34 +33,12 @@
     
     try {
       if (typeof TeacherCloud === 'undefined') throw new Error('TeacherCloud module not loaded.');
-      allStudents = await TeacherCloud.fetchStudents();
+      allStudents = await TeacherCloud.fetchStudents({ withItems: true });
       console.log('[ClassRecord] Fetched students:', allStudents.length);
     } catch (err) {
       console.error('[ClassRecord] Fetch error:', err);
       if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#c62828;">❌ ${err.message}</td></tr>`;
       throw err;
-    }
-  }
-
-  async function fetchPTGrades() {
-    console.log('[ClassRecord] Fetching PT Grades...');
-    if (typeof PTGrade === 'undefined' || typeof CONFIG === 'undefined' || !CONFIG.BACKEND_URL) {
-      console.warn('[ClassRecord] PTGrade or CONFIG missing');
-      return;
-    }
-    try {
-      var res = await PTGrade.pullGrades({});
-      if (res && res.ok && res.records) {
-        var map = {};
-        res.records.forEach(function(g) {
-          if (!map[g.lrn]) map[g.lrn] = {};
-          if (!map[g.lrn][g.term]) map[g.lrn][g.term] = {};
-          map[g.lrn][g.term][g.ptId] = g.totalScore;
-        });
-        backendPTGrades = map;
-      }
-    } catch (e) {
-      console.warn('[ClassRecord] Failed to fetch PT grades:', e);
     }
   }
 
@@ -71,66 +55,27 @@
     return list.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
   }
 
-  function getScorePercent(lrn, term, type, id) {
-    if (type === 'pt') {
-      var backendScore = backendPTGrades[lrn]?.[term]?.[id];
-      if (backendScore !== undefined) return backendScore;
-      return null;
-    }
+  const IDS = { q1: 'quiz1', q2: 'quiz2', q3: 'quiz3', st1: 'st1', st2: 'st2', pt1: 'pt1', pt2: 'pt2', pt3: 'pt3', te: 'te' };
 
-    const student = allStudents.find(s => s.lrn === lrn);
-    if (!student) return null;
-    
-    const scores = student.progress?.scores?.[term] || {};
-    let record = null;
-    if (type === 'te') record = (scores.te && scores.te.te) || scores.te;
-    else record = scores[type]?.[id];
-    
-    if (!record) return null;
-    if (record.percent != null) return record.percent;
-    if (record.score != null && record.total) return (record.score / record.total) * 100;
-    return null;
+  function getRec(s, term, id) {
+    return TeacherCloud.getRecord((s.progress && s.progress.scores) || {}, term, id);
   }
 
   function computeGrade(students, term) {
     return students.map((s) => {
-      const q1 = getScorePercent(s.lrn, term, 'quizzes', 'quiz1');
-      const q2 = getScorePercent(s.lrn, term, 'quizzes', 'quiz2');
-      const q3 = getScorePercent(s.lrn, term, 'quizzes', 'quiz3');
-      const st1 = getScorePercent(s.lrn, term, 'st', 'st1');
-      const st2 = getScorePercent(s.lrn, term, 'st', 'st2');
-      const pt1 = getScorePercent(s.lrn, term, 'pt', 'pt1');
-      const pt2 = getScorePercent(s.lrn, term, 'pt', 'pt2');
-      const pt3 = getScorePercent(s.lrn, term, 'pt', 'pt3');
-      const te = getScorePercent(s.lrn, term, 'te', 'te');
-
-      const quizPcts = [q1, q2, q3].filter((v) => v != null);
-      const wwAvg = quizPcts.length ? quizPcts.reduce((a, b) => a + b, 0) / quizPcts.length : null;
-
-      const ptPcts = [pt1, pt2, pt3].filter((v) => v != null);
-      const ptAvg = ptPcts.length ? ptPcts.reduce((a, b) => a + b, 0) / ptPcts.length : null;
-
-      let exAvg = null;
-      if (st1 != null && st2 != null && te != null) {
-        exAvg = (st1 * EX_INTERNAL.st1) + (st2 * EX_INTERNAL.st2) + (te * EX_INTERNAL.te);
-      }
-
-      const finalGrade = (typeof Transmutation !== 'undefined' && Transmutation.computeFinalGradeSafe)
-        ? Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS)
-        : { insufficient: true, transmuted: null };
-
-      let availableSum = 0, availableWeight = 0;
-      if (wwAvg !== null) { availableSum += wwAvg * WEIGHTS.ww; availableWeight += WEIGHTS.ww; }
-      if (ptAvg !== null) { availableSum += ptAvg * WEIGHTS.pt; availableWeight += WEIGHTS.pt; }
-      if (exAvg !== null) { availableSum += exAvg * WEIGHTS.ex; availableWeight += WEIGHTS.ex; }
-      const partialScore = availableWeight > 0 ? (availableSum / availableWeight) : 0;
-
-      const compCount = [q1, q2, q3, pt1, pt2, pt3, st1, st2, te].filter((v) => v != null).length;
-
+      const scores = {}, paper = {};
+      Object.keys(IDS).forEach(k => {
+        const rec = getRec(s, term, IDS[k]);
+        scores[k] = TeacherCloud.percentOf(rec);
+        paper[k] = !!(rec && rec.override);
+      });
+      const g = Transmutation.computeTermGrade(scores);
+      const compCount = Object.values(scores).filter((v) => v != null).length;
       return {
-        student: s,
-        scores: { q1, q2, q3, st1, st2, pt1, pt2, pt3, te },
-        wwAvg, ptAvg, exAvg, final: finalGrade, partialScore, compCount
+        student: s, scores: scores, paper: paper,
+        wwAvg: g.wwAvg, ptAvg: g.ptAvg, exAvg: g.exAvg, final: g.final,
+        partialScore: g.partialScore == null ? 0 : g.partialScore,
+        partialTransmuted: g.partialTransmuted, compCount
       };
     });
   }
@@ -161,31 +106,30 @@
       tr.innerHTML =
         '<td class="student-cell">' +
           '<div class="student-cell">' +
-            '<div class="student-avatar" style="background:#0d47a1;">' + initials + '</div>' +
+            '<div class="student-avatar" style="background:#0d47a1;">' + esc(initials) + '</div>' +
             '<div class="student-info">' +
-              '<div class="name">' + (s.lastName || '') + ', ' + (s.firstName || '') + '</div>' +
-              '<div class="meta">' + (s.section || '') + '</div>' +
+              '<div class="name">' + esc((s.lastName || '') + ', ' + (s.firstName || '')) + '</div>' +
+              '<div class="meta">' + esc(s.section || '') + '</div>' +
             '</div>' +
           '</div>' +
         '</td>' +
-        cellValue(r.scores.q1) + cellValue(r.scores.q2) + cellValue(r.scores.q3) +
-        cellValue(r.scores.pt1) + cellValue(r.scores.pt2) + cellValue(r.scores.pt3) +
-        cellValue(r.scores.st1) + cellValue(r.scores.st2) + cellValue(r.scores.te) +
+        ['q1', 'q2', 'q3', 'pt1', 'pt2', 'pt3', 'st1', 'st2', 'te'].map(k => cellValue(r.scores[k], r.paper[k])).join('') +
         finalCell;
 
       tbody.appendChild(tr);
     });
   }
 
-  function cellValue(pct) {
+  function cellValue(pct, isPaper) {
     if (pct == null) return '<td class="empty-cell">—</td>';
     const rounded = Math.round(pct);
     let color = '#37474f';
     if (rounded >= 90) color = '#2e7d32';
-    else if (rounded >= 75) color = '#0d47a1';
-    else if (rounded >= 65) color = '#ed6c02';
+    else if (rounded >= RAW_PASS) color = '#0d47a1';
+    else if (rounded >= RAW_PASS - 10) color = '#ed6c02';
     else color = '#c62828';
-    return '<td class="grade-cell" style="color:' + color + ';">' + rounded + '</td>';
+    const tag = isPaper ? '<sup title="Paper / teacher-entered score" style="color:#6a1b9a;font-weight:700;margin-left:2px;">P</sup>' : '';
+    return '<td class="grade-cell" style="color:' + color + ';">' + rounded + tag + '</td>';
   }
 
   // ── RENDER: STATS ──
@@ -198,7 +142,7 @@
     }
 
     const rowsWithData = rows.filter((r) => r.compCount > 0);
-    const partialScores = rowsWithData.map((r) => r.partialScore).filter((v) => v > 0);
+    const partialScores = rowsWithData.map((r) => r.partialTransmuted).filter((v) => v != null && v > 0);
     const avg = partialScores.length ? partialScores.reduce((a, b) => a + b, 0) / partialScores.length : 0;
 
     const completeFinals = rows.map((r) => (r.final && !r.final.insufficient) ? r.final.transmuted : null).filter((v) => v != null && v > 0);
@@ -210,7 +154,7 @@
 
     stats.innerHTML =
       '<div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">' + rows.length + '</div><div class="cs-label">Students</div></div>' +
-      '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average</div></div>' +
+      '<div class="cr-stat-card ' + (avg >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📊</div><div class="cs-value">' + avg.toFixed(1) + '</div><div class="cs-label">Class Average (transmuted)</div></div>' +
       '<div class="cr-stat-card green"><div class="cs-icon">✅</div><div class="cs-value">' + passing + '</div><div class="cs-label">Passing</div></div>' +
       '<div class="cr-stat-card red"><div class="cs-icon">❌</div><div class="cs-value">' + failing + '</div><div class="cs-label">Failing</div></div>' +
       '<div class="cr-stat-card ' + (completion >= 75 ? 'green' : 'amber') + '"><div class="cs-icon">📝</div><div class="cs-value">' + completion + '%</div><div class="cs-label">Submission Rate</div></div>';
@@ -261,27 +205,26 @@
     return '#c62828';
   }
 
-  // ── RENDER: MLL ──
-  function renderMLL(rows) {
+  // ── RENDER: MLL (competency-based, ST1 + ST2) ──
+  async function renderMLL(students, term) {
     const grid = document.getElementById('mll-grid');
     if (!grid) return;
-    const labels = { q1: 'Quiz 1', q2: 'Quiz 2', q3: 'Quiz 3', pt1: 'PT1', pt2: 'PT2', pt3: 'PT3', st1: 'ST1', st2: 'ST2', te: 'Term Exam' };
-    const assessmentStats = Object.keys(labels).map((k) => {
-      const pcts = rows.map((r) => r.scores[k]).filter((v) => v != null);
-      return { key: k, label: labels[k], avg: pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : 0, count: pcts.length };
-    }).filter((a) => a.count > 0);
-
-    const sorted = [...assessmentStats].sort((a, b) => b.avg - a.avg);
-    const most = sorted.slice(0, 3);
-    const least = sorted.slice(-3).reverse();
-
-    grid.innerHTML =
-      '<div class="report-card"><h4>✅ Most Learned</h4><ul class="mll-list">' +
-        most.map((a) => `<li><div class="mll-desc"><span class="mll-code">${a.count} sub</span>${a.label}</div><div class="mll-mps" style="color:#2e7d32;">${a.avg.toFixed(1)}%</div></li>`).join('') +
-      '</ul></div>' +
-      '<div class="report-card"><h4>⚠️ Least Learned</h4><ul class="mll-list">' +
-        least.map((a) => `<li><div class="mll-desc"><span class="mll-code">${a.count} sub</span>${a.label}</div><div class="mll-mps" style="color:#c62828;">${a.avg.toFixed(1)}%</div></li>`).join('') +
-      '</ul></div>';
+    if (typeof CompetencyAnalysis === 'undefined') { grid.innerHTML = '<div class="report-card">Competency module not loaded.</div>'; return; }
+    grid.innerHTML = '<div class="report-card">⏳ Computing competency MPS from ST1 and ST2…</div>';
+    try {
+      const list = await CompetencyAnalysis.competencyMPS(students, term, ['st1', 'st2']);
+      if (!list.length) { grid.innerHTML = '<div class="report-card"><p class="text-muted">No ST1 / ST2 item data yet for this term.</p></div>'; return; }
+      const ml = CompetencyAnalysis.mostLeast(list, 5);
+      const li = (c, color) => '<li><div class="mll-desc"><span class="mll-code">' + esc(c.code) + '</span>' + esc(c.description) +
+        '<div class="text-small text-muted">' + esc(CompetencyAnalysis.mpsLevel(c.mps)) + ' · ' + c.students + ' students</div></div>' +
+        '<div class="mll-mps" style="color:' + color + ';">' + c.mps.toFixed(1) + '%</div></li>';
+      const note = ml.available < 10 ? '<p class="text-small text-muted" style="margin-top:8px;">ST1 + ST2 cover ' + ml.available + ' competencies this term, so each competency appears in only one list (least learned is filled first).</p>' : '';
+      grid.innerHTML =
+        '<div class="report-card"><h4>✅ Most Learned (top ' + ml.most.length + ')</h4><ul class="mll-list">' + ml.most.map(c => li(c, '#2e7d32')).join('') + '</ul></div>' +
+        '<div class="report-card"><h4>⚠️ Least Learned (top ' + ml.least.length + ') — Term Exam basis</h4><ul class="mll-list">' + ml.least.map(c => li(c, '#c62828')).join('') + '</ul>' + note + '</div>';
+    } catch (e) {
+      grid.innerHTML = '<div class="report-card" style="color:#c62828;">⚠️ ' + esc(e.message) + '</div>';
+    }
   }
 
   // ── RENDER: TRANSMUTATION ──
@@ -318,7 +261,6 @@
       const section = document.getElementById('filter-section').value;
 
       if (!allStudents.length) await fetchStudentsFromCloud();
-      await fetchPTGrades();
 
       const students = getStudents(term, section);
       const rows = computeGrade(students, term);
@@ -326,7 +268,7 @@
       renderStats(rows);
       renderSummary(rows, term);
       renderDistribution(rows);
-      renderMLL(rows);
+      renderMLL(students, term);
       renderTransmutationTable();
     } catch (err) {
       console.error('[ClassRecord] Render error:', err);

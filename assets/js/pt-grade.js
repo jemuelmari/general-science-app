@@ -211,6 +211,8 @@ var body = {
      HELPERS
      ============================================================ */
   async function _post(body) {
+    var tok = _token();
+    if (tok && body && !body.token) body = Object.assign({}, body, { token: tok });
     var res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -226,11 +228,6 @@ var body = {
     try {
       var t = sessionStorage.getItem('gsa_teacher_token');
       if (t) return t;
-      var session = sessionStorage.getItem('gsa_teacher_session');
-      if (session) {
-        var s = JSON.parse(session);
-        if (s && s.token) return s.token;
-      }
     } catch (e) {}
     return null;
   }

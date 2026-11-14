@@ -1,7 +1,50 @@
 /* ============================================================
    Code.gs — Google Apps Script backend for General Science App
-   Version: 1.9.3 (Ghost-row, Merge, UNIDENTIFIED Repair & Faster Sync)
+   Version: 1.11.0 (Teacher auth hardening + score overrides)
    ------------------------------------------------------------
+   Changelog v1.11.0:
+     - SECURITY: teacher-only actions now require the teacher token:
+       setTermAccess, savePTGrade, markPTLegacy, deleteLock, markUsedBulk,
+       archiveUsed, deleteSyncCode, pullAttempts, listPTFiles, pullLocks,
+       getSyncStatus, pullAllPending, and pullPTGrades without an LRN.
+     - ADDED: ScoreOverrides sheet + saveScoreOverride / pullScoreOverrides /
+       deleteScoreOverride (teacher): paper-and-pen scores that take priority
+       over online scores everywhere on the teacher side (may also LOWER a score).
+     - ADDED: pullTeacherDashboard also returns ptGrades + overrides (one call).
+     - FIX: a student device can no longer rename an existing student or move
+       them to another section; only an empty/placeholder name is filled in.
+       Teacher (with token) can still correct names. Names are sanitised.
+     - FIX: requestRetake() no longer returns an EXPIRED approved code forever
+       (student was stuck); expired approvals are cancelled and a new request
+       is created, same as requestPTReupload().
+     - FIX: forceUnlock read back as boolean (Sheets converts 'TRUE').
+     - FIX: savePTGrade clamps totalScore to 0..100.
+     - FIX: writers that delete rows or write by row number now run under the
+       script lock (no wrong-row deletes when many requests arrive together).
+     - CHANGE: ATTEMPT_EXPIRY_DAYS 90 -> 400 so evidence / item analysis keep
+       a full school year of attempts.
+   Changelog v1.10.0:
+     - ADDED: DATA_VERSION stamp (Script Properties). Bumped on every
+       write that changes student/teacher-visible data. New teacher action
+       getDataVersion (cheap, no sheet scan) -> teacher pages poll it and
+       show a "refresh the page" banner when it changes.
+       pullTeacherDashboard also returns dataVersion (read BEFORE the rows).
+     - ADDED: pullStudentProgress (read-only, supports `since` -> returns
+       {unchanged:true} when nothing changed) so a student's other devices
+       can auto-pull. Not written to the Log sheet (polling would flood it).
+     - FIX: mergeProgressData() no longer lets a stale device overwrite
+       'daily' / 'activity' / PT-submission entries (they have no percent, so
+       the old code always replaced them). Now merged by newest timestamp,
+       with max() for points / bestScore / attempts.
+     - FIX: locks/unlocks were REPLACED by whatever the last device sent, so a
+       stale device could erase a lock (retake bypass). Now unioned; an unlock
+       tombstone (unlocks[key].unlockedAt) beats an older lock.
+     - FIX: pushUnlock / redeemUnlockCode also write the unlock tombstone into
+       the student's StudentsMaster row, so every device sees the unlock.
+     - FIX: tie between two equal scores keeps the record that still has its
+       itemResults (oversize strip no longer wins).
+     - syncStudentProgress reports dataChanged=false for no-op syncs so they
+       do not trigger the teacher banner.
    Changelog v1.9.3:
      - PERF: loginStudent/syncStudentProgress read only column A to find
        the student, then just that one row (was: whole sheet incl. every
@@ -38,11 +81,12 @@ const CONFIG = {
   PT_GRADES_SHEET: 'PTGrades',
   PT_UNLOCK_REQUESTS_SHEET: 'PTUnlockRequests',
   STUDENTS_MASTER_SHEET: 'StudentsMaster',
+  SCORE_OVERRIDES_SHEET: 'ScoreOverrides',
 
   PT_DRIVE_FOLDER_ID: '1ecTB98tuU6mVElteVVKJavQRv2xgz21t',
 
   CODE_EXPIRY_DAYS: 30,
-  ATTEMPT_EXPIRY_DAYS: 90,
+  ATTEMPT_EXPIRY_DAYS: 400,
   UNLOCK_EXPIRY_DAYS: 60,
   LOCK_EXPIRY_DAYS: 120,
   REQUEST_CODE_EXPIRY_DAYS: 7,
@@ -59,7 +103,14 @@ const CONFIG = {
   ALLOWED_ORIGINS: '*',
   VALID_SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   VALID_ASSESSMENTS: ['quiz1', 'quiz2', 'quiz3', 'st1', 'st2', 'te', 'pt1', 'pt2', 'pt3'],
-  VALID_TERMS: ['term1', 'term2', 'term3']
+  VALID_TERMS: ['term1', 'term2', 'term3'],
+
+  // Term 1 PT1 page was saving to TERM 2 (bug fixed in the frontend).
+  // Set to the ISO date/time when Term 2 PT1 was really opened to students
+  // (e.g. '2026-11-20T00:00:00+08:00'). Every "term2 / pt1" submission made
+  // BEFORE this moment is treated as Term 1 PT1. '' = disabled.
+  // Keep the SAME value in config.js (PT1_FIX_CUTOFF). Then run fixTerm1PT1() once.
+  PT1_FIX_CUTOFF: ''
 };
 
 const LEGACY_CUTOFF = '2026-10-29T00:00:00Z';
@@ -70,14 +121,46 @@ var REQUESTS_HEADERS = ['requestId','lrn','studentName','section','term','assess
 var PT_FILES_HEADERS = ['fileId','lrn','studentName','section','term','ptId','driveFileId','driveUrl','originalFilename','renamedFilename','mimeType','fileSize','uploadedAt','syncedFrom','isLegacy','reflection','option'];
 var PT_GRADES_HEADERS = ['gradeId','lrn','studentName','section','term','ptId','rubricScores','totalScore','teacherNotes','gradedAt','gradedBy','syncedToStudent','syncedAt'];
 var PT_UNLOCK_REQUESTS_HEADERS = ['requestId','lrn','studentName','section','term','ptId','reason','currentGrade','requestedAt','status','unlockCode','codeGeneratedAt','codeExpiresAt','appliedAt'];
+var SCORE_OVERRIDES_HEADERS = ['overrideId','lrn','studentName','section','term','assessment','score','total','percent','source','note','enteredAt','enteredBy'];
 var STUDENTS_MASTER_HEADERS = ['lrn','lastName','firstName','middleName','sex','section','progressJSON','lastSyncedAt','createdAt','updatedAt','integrityHash','deviceId'];
+
+// Polling actions: not written to the Log sheet (it would fill up with noise).
+var QUIET_ACTIONS = { getDataVersion: true, pullStudentProgress: true };
+
+// Actions that change data a teacher page can show -> bump DATA_VERSION.
+var WRITE_ACTIONS = {
+  syncStudentProgress: true, pushAttempt: true, markUsedBulk: true, archiveUsed: true,
+  pushLock: true, deleteLock: true, pushUnlock: true, markUnlockApplied: true, revokeUnlock: true,
+  requestRetake: true, approveRetake: true, cancelRequest: true, redeemUnlockCode: true,
+  setTermAccess: true, uploadPT: true, savePTGrade: true, markPTLegacy: true,
+  requestPTReupload: true, approvePTReupload: true, redeemPTReuploadCode: true,
+  saveScoreOverride: true, deleteScoreOverride: true
+};
+
+// Actions that delete rows or write by row number: run one at a time.
+// (Never list an action that already takes the script lock itself.)
+var LOCKED_ACTIONS = {
+  pushAttempt: true, markUsedBulk: true, archiveUsed: true, deleteLock: true,
+  savePTGrade: true, markPTLegacy: true, approveRetake: true, cancelRequest: true,
+  approvePTReupload: true, registerSyncCode: true, deleteSyncCode: true,
+  saveScoreOverride: true, deleteScoreOverride: true
+};
+
+// Actions that need the teacher token (checked before the handler runs).
+var TEACHER_ACTIONS = {
+  setTermAccess: true, savePTGrade: true, markPTLegacy: true, deleteLock: true,
+  markUsedBulk: true, archiveUsed: true, deleteSyncCode: true, pullAttempts: true,
+  listPTFiles: true, pullLocks: true, getSyncStatus: true, pullAllPending: true,
+  saveScoreOverride: true, pullScoreOverrides: true, deleteScoreOverride: true
+};
 
 function doPost(e) {
   var startedAt = Date.now();
   try {
     var body = parseBody(e);
     var action = body.action;
-    logAction(action, body.lrn, body.pushId || body.code, 'received');
+    var quiet = !!QUIET_ACTIONS[action];
+    if (!quiet) logAction(action, body.lrn, body.pushId || body.code, 'received');
 
     if (action !== 'health') {
       var rl = checkRateLimit(body.lrn || body.ip || 'anonymous', action);
@@ -87,10 +170,31 @@ function doPost(e) {
       }
     }
 
+    if (TEACHER_ACTIONS[action]) requireTeacherToken(body.token);
+    if (action === 'pullPTGrades' && !body.lrn) requireTeacherToken(body.token);
+
+    var response = LOCKED_ACTIONS[action]
+      ? _withScriptLock(function () { return _dispatch(action, body); })
+      : _dispatch(action, body);
+
+    if (response && response.ok && WRITE_ACTIONS[action] && response.dataChanged !== false) _bumpDataVersion();
+
+    response.serverMs = Date.now() - startedAt;
+    if (!quiet || !response.ok) logAction(action, body.lrn, body.pushId || body.code, response.ok ? 'success' : 'error', response.error || '');
+    return respond(response);
+  } catch (err) {
+    logAction('doPost', '', '', 'exception', err.message);
+    return respond({ ok: false, error: err.message, serverMs: Date.now() - startedAt });
+  }
+}
+
+function _dispatch(action, body) {
     var response;
     switch (action) {
       case 'loginStudent':           response = loginStudent(body); break;
       case 'syncStudentProgress':    response = syncStudentProgress(body); break;
+      case 'pullStudentProgress':    response = pullStudentProgress(body); break;
+      case 'getDataVersion':         response = getDataVersion(body); break;
       case 'pullTeacherDashboard':   response = pullTeacherDashboard(body); break;
       case 'registerSyncCode':       response = registerSyncCode(body); break;
       case 'resolveSyncCode':        response = resolveSyncCode(body); break;
@@ -98,7 +202,7 @@ function doPost(e) {
       case 'deleteSyncCode':         response = deleteSyncCode(body); break;
       case 'getTermAccess':          response = getTermAccess(body); break;
       case 'setTermAccess':          response = setTermAccess(body); break;
-      case 'health':                 response = { ok: true, message: 'GSA backend is running', version: '1.9.3', time: new Date().toISOString() }; break;
+      case 'health':                 response = { ok: true, message: 'GSA backend is running', version: '1.11.0', time: new Date().toISOString() }; break;
       case 'pushAttempt':            response = pushAttempt(body); break;
       case 'pullAttempts':           response = pullAttempts(body); break;
       case 'markUsedBulk':           response = markUsedBulk(body); break;
@@ -129,22 +233,18 @@ function doPost(e) {
       case 'getPTReuploadRequests':  response = getPTReuploadRequests(body); break;
       case 'approvePTReupload':      response = approvePTReupload(body); break;
       case 'redeemPTReuploadCode':   response = redeemPTReuploadCode(body); break;
+      case 'saveScoreOverride':      response = saveScoreOverride(body); break;
+      case 'pullScoreOverrides':     response = pullScoreOverrides(body); break;
+      case 'deleteScoreOverride':    response = deleteScoreOverride(body); break;
       default:
         response = { ok: false, error: 'Unknown action: ' + action };
     }
-
-    response.serverMs = Date.now() - startedAt;
-    logAction(action, body.lrn, body.pushId || body.code, response.ok ? 'success' : 'error', response.error || '');
-    return respond(response);
-  } catch (err) {
-    logAction('doPost', '', '', 'exception', err.message);
-    return respond({ ok: false, error: err.message, serverMs: Date.now() - startedAt });
-  }
+    return response || { ok: false, error: 'Empty response' };
 }
 
 function doGet(e) {
   var action = e.parameter.action;
-  if (action === 'ping') return respond({ ok: true, service: 'GSA Sync Backend', version: '1.9.3', time: new Date().toISOString() });
+  if (action === 'ping') return respond({ ok: true, service: 'GSA Sync Backend', version: '1.11.0', time: new Date().toISOString() });
   if (action === 'count') {
     var sheet = getOrCreateSheet(CONFIG.SYNC_CODES_SHEET);
     return respond({ ok: true, totalCodes: Math.max(0, sheet.getLastRow() - 1) });
@@ -165,6 +265,23 @@ function parseBody(e) {
   if (!e || !e.postData || !e.postData.contents) return {};
   try { return JSON.parse(e.postData.contents); }
   catch (err) { throw new Error('Invalid JSON body: ' + err.message); }
+}
+
+function _isTeacher(body) {
+  try { requireTeacherToken(body && body.token); return true; } catch (e) { return false; }
+}
+
+// Free-text names: strip characters that could become HTML/script on teacher pages.
+function _cleanName(v) {
+  return String(v == null ? '' : v).replace(/[<>"'`\\]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60);
+}
+
+function _hasRealName(last, first) {
+  var l = String(last || '').trim().toUpperCase(), f = String(first || '').trim().toUpperCase();
+  if (!l && !f) return false;
+  if (l === 'UNIDENTIFIED') return false;
+  if (l === 'NEW' && f === 'STUDENT') return false;
+  return true;
 }
 
 function requireTeacherToken(token) {
@@ -304,12 +421,21 @@ function syncStudentProgress(body) {
       var rowIndex = foundRow;
       var row = sheet.getRange(foundRow, 1, 1, 12).getValues()[0];
       while (row.length < 12) row.push('');
+      var before = row.slice();
 
-      if (studentInfo.lastName)   row[1] = studentInfo.lastName;
-      if (studentInfo.firstName)  row[2] = studentInfo.firstName;
-      if (studentInfo.middleName) row[3] = studentInfo.middleName;
-      if (studentInfo.sex)        row[4] = studentInfo.sex;
-      if (studentInfo.section)    row[5] = studentInfo.section;
+      // Names/section: a student device may only FILL an empty or placeholder
+      // record. Changing an existing name or section needs the teacher token
+      // (Normalize Names page). Stops stale sessions from undoing corrections
+      // and stops anyone from renaming another student via the Register tab.
+      var teacherEdit = _isTeacher(body);
+      var canSetName = teacherEdit || !_hasRealName(row[1], row[2]);
+      if (canSetName) {
+        if (studentInfo.lastName)  row[1] = _cleanName(studentInfo.lastName);
+        if (studentInfo.firstName) row[2] = _cleanName(studentInfo.firstName);
+        if (studentInfo.middleName !== undefined && (teacherEdit || studentInfo.middleName)) row[3] = _cleanName(studentInfo.middleName);
+      }
+      if (studentInfo.sex && (teacherEdit || !String(row[4] || '').trim())) row[4] = _cleanName(studentInfo.sex);
+      if (studentInfo.section && (teacherEdit || !String(row[5] || '').trim())) row[5] = studentInfo.section;
 
       var existingProgress = {};
       try {
@@ -321,7 +447,14 @@ function syncStudentProgress(body) {
       } catch (e) { existingProgress = {}; }
 
       var merged = mergeProgressData(existingProgress, incomingProgress);
-      row[6]  = _safeJson(merged, cleanLrn);
+      var newJson = _safeJson(merged, cleanLrn);
+      // Did anything a teacher could see actually change? (no-op syncs must not raise the banner)
+      var changed = newJson !== String(row[6] || '') ||
+        String(row[1]) !== String(before[1]) || String(row[2]) !== String(before[2]) ||
+        String(row[3]) !== String(before[3]) || String(row[4]) !== String(before[4]) ||
+        String(row[5]) !== String(before[5]);
+
+      row[6]  = newJson;
       row[7]  = now;
       row[8]  = _iso(row[8]) || now;
       row[9]  = now;
@@ -330,7 +463,7 @@ function syncStudentProgress(body) {
 
       // '@' = plain text, so Sheets does not turn ISO strings into Date objects
       sheet.getRange(rowIndex, 2, 1, 11).setNumberFormat('@').setValues([row.slice(1, 12)]);
-      return { ok: true, syncedAt: now, hash: expectedHash, merged: true };
+      return { ok: true, syncedAt: now, hash: expectedHash, merged: true, dataChanged: changed };
     }
 
     // Unknown LRN without a name would become a ghost row — refuse it.
@@ -343,10 +476,10 @@ function syncStudentProgress(body) {
     sheet.getRange(newRowIdx, 1, 1, 12).setNumberFormat('@');
     sheet.getRange(newRowIdx, 1, 1, 12).setValues([[
       cleanLrn,
-      String(studentInfo.lastName).trim(),
-      String(studentInfo.firstName).trim(),
-      String(studentInfo.middleName || '').trim(),
-      String(studentInfo.sex || '').trim(),
+      _cleanName(studentInfo.lastName),
+      _cleanName(studentInfo.firstName),
+      _cleanName(studentInfo.middleName || ''),
+      _cleanName(studentInfo.sex || ''),
       String(studentInfo.section || '').trim(),
       _safeJson(incomingProgress, cleanLrn), now, now, now, expectedHash, deviceId
     ]]);
@@ -355,7 +488,26 @@ function syncStudentProgress(body) {
   });
 }
 
+// Moves a "term2/pt1" score entry that was really Term 1 PT1 (see CONFIG.PT1_FIX_CUTOFF).
+function _fixPT1(progress) {
+  if (!CONFIG.PT1_FIX_CUTOFF || !progress || !progress.scores) return progress;
+  var cut = new Date(CONFIG.PT1_FIX_CUTOFF).getTime();
+  var t2 = progress.scores.term2, rec = t2 && t2.pt && t2.pt.pt1;
+  if (!rec) return progress;
+  var when = new Date(rec.submittedAt || rec.timestamp || rec.updatedAt || 0).getTime();
+  if (!when || when >= cut) return progress;
+  progress.scores.term1 = progress.scores.term1 || {};
+  progress.scores.term1.pt = progress.scores.term1.pt || {};
+  if (!progress.scores.term1.pt.pt1) progress.scores.term1.pt.pt1 = rec;
+  delete t2.pt.pt1;
+  return progress;
+}
+
 function mergeProgressData(existing, incoming) {
+  return _fixPT1(_mergeProgressData(_fixPT1(existing), _fixPT1(incoming)));
+}
+
+function _mergeProgressData(existing, incoming) {
   if (!existing || typeof existing !== 'object') existing = {};
   if (!incoming || typeof incoming !== 'object') incoming = {};
 
@@ -381,33 +533,30 @@ function mergeProgressData(existing, incoming) {
         if (!merged.progress[term].weeks) merged.progress[term].weeks = {};
         Object.assign(merged.progress[term].weeks, incTerm.weeks);
       }
+      // any other per-term field: incoming wins (keeps cloud and device identical)
+      Object.keys(incTerm).forEach(function (k) {
+        if (k !== 'completed' && k !== 'weeks') merged.progress[term][k] = incTerm[k];
+      });
     });
   }
 
-  // scores: keep ONE whole record (the higher percent). Previously a hybrid
-  // (score/percent from one attempt, passed/timestamp/itemResults from another).
+  // scores: merge ENTRY by entry (see mergeScoreEntry). Graded attempts keep ONE whole
+  // record (higher percent); daily/activity/PT entries (no percent) were always overwritten
+  // by the last device before - now newest timestamp wins and counters use max().
   if (incoming.scores && typeof incoming.scores === 'object') {
-    if (!merged.scores) merged.scores = {};
+    if (!merged.scores || typeof merged.scores !== 'object') merged.scores = {};
     Object.keys(incoming.scores).forEach(function (term) {
-      if (!merged.scores[term]) merged.scores[term] = {};
+      if (!merged.scores[term] || typeof merged.scores[term] !== 'object') merged.scores[term] = {};
       var incTermScores = incoming.scores[term];
       if (!incTermScores || typeof incTermScores !== 'object') return;
       Object.keys(incTermScores).forEach(function (type) {
-        if (!merged.scores[term][type]) merged.scores[term][type] = {};
+        if (!merged.scores[term][type] || typeof merged.scores[term][type] !== 'object') merged.scores[term][type] = {};
         var incTypeScores = incTermScores[type];
         if (!incTypeScores || typeof incTypeScores !== 'object') return;
         Object.keys(incTypeScores).forEach(function (id) {
           var inc = incTypeScores[id];
           if (!inc || typeof inc !== 'object') return;
-          var ex = merged.scores[term][type][id];
-          if (!ex || typeof ex !== 'object' || (ex.percent === undefined && ex.score === undefined)) {
-            merged.scores[term][type][id] = inc;
-            return;
-          }
-          var incPct = Number(inc.percent !== undefined ? inc.percent : (inc.total ? inc.score / inc.total * 100 : 0)) || 0;
-          var exPct = Number(ex.percent !== undefined ? ex.percent : (ex.total ? ex.score / ex.total * 100 : 0)) || 0;
-          if (incPct > exPct) merged.scores[term][type][id] = inc;
-          else if (incPct === exPct && String(inc.timestamp || '') > String(ex.timestamp || '')) merged.scores[term][type][id] = inc;
+          merged.scores[term][type][id] = mergeScoreEntry(merged.scores[term][type][id], inc);
         });
       });
     });
@@ -424,16 +573,172 @@ function mergeProgressData(existing, incoming) {
     });
   }
 
-  // locks/unlocks: the device sends its full state, so REPLACE (an unlocked
-  // assessment must disappear from the server too).
-  if (incoming.locks && typeof incoming.locks === 'object') merged.locks = incoming.locks;
-  if (incoming.unlocks && typeof incoming.unlocks === 'object') merged.unlocks = incoming.unlocks;
+  // locks/unlocks: UNION (a stale device must not erase a lock). An unlock is a tombstone
+  // (unlocks[key].unlockedAt) and beats any lock that is not newer than it.
+  mergeLocksAndUnlocks(merged, incoming.locks, incoming.unlocks);
+
+  if (incoming.lastLocalSave) merged.lastLocalSave = incoming.lastLocalSave;
 
   return merged;
 }
 
+/* ===== MERGE HELPERS (keep in sync with Store in assets/js/store.js) ===== */
+var _TS_KEYS = ['timestamp', 'updatedAt', 'submittedAt', 'gradedAt', 'lockedAt', 'unlockedAt', 'at'];
+
+function _tsOf(o) {
+  if (typeof o === 'string') { var d = Date.parse(o); return isNaN(d) ? 0 : d; }
+  if (!o || typeof o !== 'object') return 0;
+  var best = 0;
+  for (var i = 0; i < _TS_KEYS.length; i++) {
+    var v = o[_TS_KEYS[i]];
+    if (!v) continue;
+    var t = Date.parse(v);
+    if (!isNaN(t) && t > best) best = t;
+  }
+  return best;
+}
+
+function _isGraded(o) {
+  return !!o && typeof o === 'object' &&
+    ((o.percent !== undefined && o.percent !== null) || (o.score !== undefined && o.score !== null && Number(o.total) > 0));
+}
+
+function _pctOf(o) {
+  if (o.percent !== undefined && o.percent !== null) return Number(o.percent) || 0;
+  return Number(o.total) ? (Number(o.score) / Number(o.total) * 100) : 0;
+}
+
+function _hasItems(o) { return !!(o && Array.isArray(o.itemResults) && o.itemResults.length); }
+
+function _clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+function mergeScoreEntry(ex, inc) {
+  if (!ex || typeof ex !== 'object') return inc;
+  if (!inc || typeof inc !== 'object') return ex;
+
+  // 1) graded attempts (quiz / ST / TE): ONE whole record, higher percent wins
+  if (_isGraded(ex) && _isGraded(inc)) {
+    var ep = _pctOf(ex), ip = _pctOf(inc), out;
+    if (ip > ep) out = inc;
+    else if (ip < ep) out = ex;
+    else out = _tsOf(inc) > _tsOf(ex) ? inc : ex;
+    var other = out === ex ? inc : ex;
+    // same score but one copy lost its itemResults (oversize strip) -> keep them
+    if (!_hasItems(out) && _hasItems(other) && ip === ep) {
+      out = _clone(out);
+      out.itemResults = other.itemResults;
+    }
+    return out;
+  }
+
+  // 2) everything else (daily points, activity, PT submission): newest wins; tie keeps existing
+  var newer = _tsOf(inc) > _tsOf(ex) ? inc : ex;
+  var older = newer === inc ? ex : inc;
+  var res = _clone(newer);
+  ['bestScore', 'attempts', 'points'].forEach(function (k) {
+    if (typeof ex[k] === 'number' || typeof inc[k] === 'number') res[k] = Math.max(Number(ex[k]) || 0, Number(inc[k]) || 0);
+  });
+  if (ex.passed !== undefined || inc.passed !== undefined) res.passed = !!(ex.passed || inc.passed);
+  if (older && res.score === undefined && older.score !== undefined) res.score = older.score;
+  return res;
+}
+
+function _stampValue(v) {
+  if (typeof v === 'string') return { unlockedAt: v };
+  return v;
+}
+
+function mergeLocksAndUnlocks(merged, incLocks, incUnlocks) {
+  var locks = {}, unlocks = {};
+  [merged.locks, incLocks].forEach(function (src) {
+    if (!src || typeof src !== 'object') return;
+    Object.keys(src).forEach(function (k) {
+      var v = src[k];
+      if (!v) return;
+      if (!locks[k] || _tsOf(v) >= _tsOf(locks[k])) locks[k] = v;
+    });
+  });
+  [merged.unlocks, incUnlocks].forEach(function (src) {
+    if (!src || typeof src !== 'object') return;
+    Object.keys(src).forEach(function (k) {
+      var v = _stampValue(src[k]);
+      if (!v || typeof v !== 'object') return;
+      if (!unlocks[k] || _tsOf(v) >= _tsOf(unlocks[k])) unlocks[k] = v;
+    });
+  });
+  Object.keys(locks).forEach(function (k) {
+    if (unlocks[k] && _tsOf(unlocks[k]) >= _tsOf(locks[k])) delete locks[k];
+  });
+  merged.locks = locks;
+  merged.unlocks = unlocks;
+}
+
+/* ===== DATA VERSION (teacher "refresh" banner) ===== */
+function _bumpDataVersion() {
+  try {
+    PropertiesService.getScriptProperties().setProperty('DATA_VERSION', new Date().toISOString() + '-' + Math.floor(Math.random() * 1e6));
+  } catch (e) { /* never break a real request because of the stamp */ }
+}
+
+function _readDataVersion() {
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var v = props.getProperty('DATA_VERSION');
+    if (!v) { v = new Date().toISOString() + '-0'; props.setProperty('DATA_VERSION', v); }
+    return v;
+  } catch (e) { return 'unavailable'; }
+}
+
+// Cheap: no sheet scan. Teacher pages poll this and show a banner when it changes.
+function getDataVersion(body) {
+  requireTeacherToken(body.token);
+  return { ok: true, version: _readDataVersion(), serverTime: new Date().toISOString() };
+}
+
+/* ===== STUDENT AUTO-PULL ===== */
+// Read-only. body.since = lastSyncedAt the device already has -> {unchanged:true} (tiny response).
+function pullStudentProgress(body) {
+  var cleanLrn = _lrnKey(body.lrn);
+  if (cleanLrn.length !== 12) return { ok: false, error: 'Invalid LRN format. Must be 12 digits.' };
+  if (body.since) {
+    var sheet = getOrCreateSheet(CONFIG.STUDENTS_MASTER_SHEET);
+    var rowNum = _findStudentRow(sheet, cleanLrn);
+    if (rowNum) {
+      var stamp = _iso(sheet.getRange(rowNum, 8).getValue());
+      if (stamp && String(stamp) === String(body.since)) return { ok: true, unchanged: true, lastSyncedAt: stamp };
+    }
+  }
+  return loginStudent(body);
+}
+
+// Writes an unlock tombstone into the student's StudentsMaster row (and drops the lock) so
+// every device of that student sees the unlock, not only the one that polls first.
+function _applyServerUnlock(lrn, term, assessment) {
+  var cleanLrn = _lrnKey(lrn);
+  if (!cleanLrn) return false;
+  var key = term + '_' + assessment;
+  var res = _withScriptLock(function () {
+    var sheet = getOrCreateSheet(CONFIG.STUDENTS_MASTER_SHEET);
+    var rowNum = _findStudentRow(sheet, cleanLrn);
+    if (!rowNum) return { ok: true, skipped: true };
+    var cell = sheet.getRange(rowNum, 7);
+    var progress = {};
+    try { progress = JSON.parse(cell.getValue() || '{}'); } catch (e) { progress = {}; }
+    if (!progress || typeof progress !== 'object') progress = {};
+    var now = new Date().toISOString();
+    var tomb = {}; tomb[key] = { unlockedAt: now, by: 'teacher' };
+    mergeLocksAndUnlocks(progress, {}, tomb);
+    cell.setNumberFormat('@').setValue(_safeJson(progress, cleanLrn));
+    sheet.getRange(rowNum, 8).setNumberFormat('@').setValue(now);   // lastSyncedAt -> devices pull it
+    sheet.getRange(rowNum, 10).setNumberFormat('@').setValue(now);
+    return { ok: true };
+  });
+  return !!(res && res.ok);
+}
+
 function pullTeacherDashboard(body) {
   requireTeacherToken(body.token);
+  var dataVersion = _readDataVersion();   // read BEFORE the rows: a write during the read then still shows as "new"
   var sheet = getOrCreateSheet(CONFIG.STUDENTS_MASTER_SHEET);
   var data = sheet.getDataRange().getValues();
   var students = [];
@@ -445,6 +750,7 @@ function pullTeacherDashboard(body) {
     var progress = {};
     try { progress = JSON.parse(row[6] || '{}'); } catch(e) {}
     if (!progress || typeof progress !== 'object') progress = {};
+    progress = _fixPT1(progress);
 
     var cleanLrn = _lrnKey(row[0]);
     if (!cleanLrn) continue;
@@ -464,7 +770,11 @@ function pullTeacherDashboard(body) {
       deviceId: row[11] || ''
     });
   }
-  return { ok: true, count: students.length, students: students };
+  var ptGrades = [], overrides = [];
+  try { ptGrades = pullPTGrades({}).records || []; } catch (e) { ptGrades = []; }
+  try { overrides = pullScoreOverrides({}).records || []; } catch (e) { overrides = []; }
+  return { ok: true, count: students.length, students: students, dataVersion: dataVersion,
+           ptGrades: ptGrades, overrides: overrides };
 }
 
 function computeSimpleHash(str) {
@@ -765,6 +1075,7 @@ function getOrCreateSheet(name) {
     else if (name === CONFIG.PT_GRADES_SHEET) headers = PT_GRADES_HEADERS;
     else if (name === CONFIG.PT_UNLOCK_REQUESTS_SHEET) headers = PT_UNLOCK_REQUESTS_HEADERS;
     else if (name === CONFIG.STUDENTS_MASTER_SHEET) headers = STUDENTS_MASTER_HEADERS;
+    else if (name === CONFIG.SCORE_OVERRIDES_SHEET) headers = SCORE_OVERRIDES_HEADERS;
     if (headers) { sheet.appendRow(headers); sheet.setFrozenRows(1); }
   }
   return sheet;
@@ -929,7 +1240,7 @@ function savePTGrade(body) {
   var term = String(body.term || '');
   var ptId = String(body.ptId || '');
   var rubricScores = body.rubricScores || [];
-  var totalScore = Number(body.totalScore || 0);
+  var totalScore = Math.max(0, Math.min(100, Number(body.totalScore || 0) || 0));
   var teacherNotes = String(body.teacherNotes || '');
   var gradedBy = String(body.gradedBy || 'Teacher');
   var student = body.student || {};
@@ -941,8 +1252,8 @@ function savePTGrade(body) {
   var data = sheet.getDataRange().getValues();
   var now = new Date().toISOString();
   var gradeId = 'GRD-' + lrn + '-' + term + '-' + ptId + '-' + Date.now();
-  var studentName = (student.lastName || '') + ', ' + (student.firstName || '');
-  var section = student.section || '';
+  var studentName = _cleanName(student.lastName) + ', ' + _cleanName(student.firstName);
+  var section = _cleanName(student.section || '');
 
   for (var i = data.length - 1; i >= 1; i--) {
     if (_lrnKey(data[i][1]) === lrn && data[i][4] === term && data[i][5] === ptId) sheet.deleteRow(i + 1);
@@ -1226,14 +1537,19 @@ function requestRetake(body) {
   var data = sheet.getDataRange().getValues();
   for (var i = 1; i < data.length; i++) {
     if (_lrnKey(data[i][1]) === lrn && data[i][4] === term && data[i][5] === assessment && (data[i][10] === 'pending' || data[i][10] === 'approved')) {
+      if (data[i][10] === 'approved' && data[i][13] && new Date(data[i][13]).getTime() < Date.now()) {
+        // Approved code expired without being used -> close it and fall through to a new request
+        sheet.getRange(i + 1, 11).setValue('cancelled');
+        continue;
+      }
       return { ok: true, existing: true, requestId: data[i][0], status: data[i][10], unlockCode: data[i][10] === 'approved' ? data[i][11] : null };
     }
   }
   var requestId = 'REQ-' + lrn + '-' + term + '-' + assessment + '-' + Date.now();
   var student = body.student || {};
-  var studentName = (student.lastName || '') + ', ' + (student.firstName || '');
+  var studentName = _cleanName(student.lastName) + ', ' + _cleanName(student.firstName);
   var now = new Date().toISOString();
-  sheet.appendRow([requestId, lrn, studentName.trim().replace(/,$/, ''), student.section || '', term, assessment, body.reason || 'failed-attempt', Number(body.score || 0), Number(body.total || 0), now, 'pending', '', '', '', '']);
+  sheet.appendRow([requestId, lrn, studentName.trim().replace(/,$/, ''), _cleanName(student.section || ''), term, assessment, body.reason || 'failed-attempt', Number(body.score || 0), Number(body.total || 0), now, 'pending', '', '', '', '']);
   return { ok: true, requestId: requestId, requestedAt: now };
 }
 
@@ -1323,6 +1639,7 @@ function redeemUnlockCode(body) {
     var now = new Date().toISOString();
     sheet.getRange(i + 1, 11).setValue('applied');
     sheet.getRange(i + 1, 15).setValue(now);
+    try { _applyServerUnlock(lrn, String(row[4]), String(row[5])); } catch (e) { logAction('redeemUnlockCode', lrn, '', 'tombstone_failed', e.message); }
     return { ok: true, requestId: row[0], term: row[4], assessment: row[5], appliedAt: now };
   }
   return { ok: false, error: 'Code not found' };
@@ -1427,6 +1744,7 @@ function pushUnlock(body) {
       if (_lrnKey(lockData[l][1]) === searchLrn && lockData[l][2] === body.term && lockData[l][3] === body.assessment) lockSheet.deleteRow(l + 1);
     }
   } catch (e) {}
+  try { _applyServerUnlock(searchLrn, body.term, body.assessment); } catch (e) { logAction('pushUnlock', searchLrn, '', 'tombstone_failed', e.message); }
   return { ok: true, unlockId: unlockId, pushedAt: now, forceUnlock: !!body.forceUnlock };
 }
 
@@ -1444,7 +1762,7 @@ function pullUnlocks(body) {
     if (row[6] === 'applied' || row[6] === 'revoked') continue;
     var pushedMs = row[5] ? new Date(row[5]).getTime() : 0;
     if (pushedMs && pushedMs < cutoffMs) continue;
-    records.push({ unlockId: row[0], lrn: _lrnKey(row[1]), term: row[2], assessment: row[3], reason: row[4], pushedAt: row[5], status: row[6], unlockedBy: row[8], forceUnlock: row[9] === 'TRUE' });
+    records.push({ unlockId: row[0], lrn: _lrnKey(row[1]), term: row[2], assessment: row[3], reason: row[4], pushedAt: row[5], status: row[6], unlockedBy: row[8], forceUnlock: (row[9] === 'TRUE' || row[9] === true) });
   }
   return { ok: true, count: records.length, records: records };
 }
@@ -1486,7 +1804,7 @@ function getAllUnlocks(body) {
   var records = [];
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    records.push({ unlockId: row[0], lrn: _lrnKey(row[1]), term: row[2], assessment: row[3], reason: row[4], pushedAt: row[5], status: row[6], appliedAt: row[7], unlockedBy: row[8], forceUnlock: row[9] === 'TRUE' });
+    records.push({ unlockId: row[0], lrn: _lrnKey(row[1]), term: row[2], assessment: row[3], reason: row[4], pushedAt: row[5], status: row[6], appliedAt: row[7], unlockedBy: row[8], forceUnlock: (row[9] === 'TRUE' || row[9] === true) });
   }
   return { ok: true, count: records.length, records: records };
 }
@@ -1506,7 +1824,102 @@ function getUnlockStatus(body) {
   return { ok: true, pending: pending, applied: applied, revoked: revoked, expired: expired, total: pending + applied + revoked + expired };
 }
 
+/* ===== SCORE OVERRIDES (paper-and-pen / teacher-entered scores) ===== */
+var OVERRIDE_SOURCES = ['paper', 'manual', 'sync-center'];
+
+function _overrideSheet() {
+  return getOrCreateSheet(CONFIG.SCORE_OVERRIDES_SHEET);
+}
+
+// body.records = [{ lrn, term, assessment, score, total, source?, note?, studentName?, section? }]
+// Upsert by lrn+term+assessment. Score may be LOWER than the online score.
+function saveScoreOverride(body) {
+  var list = Array.isArray(body.records) ? body.records : (body.lrn ? [body] : []);
+  if (!list.length) return { ok: false, error: 'No records' };
+  var sheet = _overrideSheet();
+  sheet.getRange(1, 2, Math.max(1, sheet.getMaxRows()), 1).setNumberFormat('@');   // LRN column as text
+  var data = sheet.getDataRange().getValues();
+  var index = {};
+  for (var i = 1; i < data.length; i++) index[_lrnKey(data[i][1]) + '|' + data[i][4] + '|' + data[i][5]] = i + 1;
+
+  var now = new Date().toISOString(), saved = 0, errors = [];
+  list.forEach(function (r) {
+    var lrn = _lrnKey(r.lrn), term = String(r.term || ''), asmt = String(r.assessment || '');
+    var score = Number(r.score), total = Number(r.total);
+    if (!lrn || CONFIG.VALID_TERMS.indexOf(term) === -1 || CONFIG.VALID_ASSESSMENTS.indexOf(asmt) === -1) { errors.push({ lrn: lrn, error: 'Invalid lrn/term/assessment' }); return; }
+    if (!(total > 0) || !(score >= 0) || score > total || isNaN(score)) { errors.push({ lrn: lrn, error: 'Score must be 0..total' }); return; }
+    var source = OVERRIDE_SOURCES.indexOf(r.source) !== -1 ? r.source : 'paper';
+    var pct = Math.round(score / total * 10000) / 100;
+    var rowVals = ['OVR-' + lrn + '-' + term + '-' + asmt, lrn, _cleanName(r.studentName || ''), _cleanName(r.section || ''),
+      term, asmt, score, total, pct, source, String(r.note || '').slice(0, 200), now, String(body.enteredBy || 'Teacher').slice(0, 60)];
+    var key = lrn + '|' + term + '|' + asmt;
+    if (index[key]) sheet.getRange(index[key], 1, 1, rowVals.length).setValues([rowVals]);
+    else { sheet.appendRow(rowVals); index[key] = sheet.getLastRow(); }
+    saved++;
+  });
+  return { ok: errors.length === 0 || saved > 0, saved: saved, errors: errors, savedAt: now };
+}
+
+function pullScoreOverrides(body) {
+  var sheet = _overrideSheet();
+  var data = sheet.getDataRange().getValues();
+  var term = String((body && body.term) || ''), records = [];
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (!row[1]) continue;
+    if (term && row[4] !== term) continue;
+    records.push({ overrideId: row[0], lrn: _lrnKey(row[1]), studentName: row[2], section: row[3], term: row[4],
+      assessment: row[5], score: Number(row[6]), total: Number(row[7]), percent: Number(row[8]),
+      source: row[9] || 'paper', note: row[10] || '', enteredAt: _iso(row[11]), enteredBy: row[12] || '' });
+  }
+  return { ok: true, count: records.length, records: records };
+}
+
+function deleteScoreOverride(body) {
+  var lrn = _lrnKey(body.lrn), term = String(body.term || ''), asmt = String(body.assessment || '');
+  if (!lrn || !term || !asmt) return { ok: false, error: 'Missing lrn/term/assessment' };
+  var sheet = _overrideSheet();
+  var data = sheet.getDataRange().getValues(), removed = 0;
+  for (var i = data.length - 1; i >= 1; i--) {
+    if (_lrnKey(data[i][1]) === lrn && data[i][4] === term && data[i][5] === asmt) { sheet.deleteRow(i + 1); removed++; }
+  }
+  return { ok: true, removed: removed };
+}
+
 /* ===== DIAGNOSTICS & FIXES (run manually in the Apps Script editor) ===== */
+
+// Run ONCE after setting CONFIG.PT1_FIX_CUTOFF: moves PTFiles / PTGrades rows
+// (term2, pt1, uploaded/graded before the cutoff) to term1, and fixes every
+// StudentsMaster progress cell. Returns counts. Safe to re-run.
+function fixTerm1PT1() {
+  if (!CONFIG.PT1_FIX_CUTOFF) throw new Error('Set CONFIG.PT1_FIX_CUTOFF first.');
+  var cut = new Date(CONFIG.PT1_FIX_CUTOFF).getTime();
+  var out = { files: 0, grades: 0, students: 0 };
+  return _withScriptLock(function () {
+    var f = getOrCreateSheet(CONFIG.PT_FILES_SHEET), fd = f.getDataRange().getValues();
+    for (var i = 1; i < fd.length; i++) {
+      if (fd[i][4] === 'term2' && fd[i][5] === 'pt1' && new Date(fd[i][12]).getTime() < cut) { f.getRange(i + 1, 5).setValue('term1'); out.files++; }
+    }
+    var g = getOrCreateSheet(CONFIG.PT_GRADES_SHEET), gd = g.getDataRange().getValues();
+    for (var j = 1; j < gd.length; j++) {
+      if (gd[j][4] !== 'term2' || gd[j][5] !== 'pt1') continue;
+      // a grade belongs to Term 1 if that student's (moved) Term 1 PT1 file exists
+      var lrn = _lrnKey(gd[j][1]), hasT1 = false;
+      for (var k = 1; k < fd.length; k++) if (_lrnKey(fd[k][1]) === lrn && fd[k][5] === 'pt1' && new Date(fd[k][12]).getTime() < cut) hasT1 = true;
+      if (hasT1) { g.getRange(j + 1, 5).setValue('term1'); out.grades++; }
+    }
+    var sm = getOrCreateSheet(CONFIG.STUDENTS_MASTER_SHEET), sd = sm.getDataRange().getValues();
+    for (var r = 1; r < sd.length; r++) {
+      var p; try { p = JSON.parse(sd[r][6] || '{}'); } catch (e) { continue; }
+      var before = JSON.stringify(p), after = JSON.stringify(_fixPT1(p));
+      if (before !== after) { sm.getRange(r + 1, 7).setNumberFormat('@').setValue(after); out.students++; }
+    }
+    _bumpDataVersion();
+    Logger.log(JSON.stringify(out));
+    return out;
+  });
+}
+
 function fixCorruptedAttempts() {
   var sheet = getOrCreateSheet(CONFIG.ATTEMPTS_SHEET);
   var data = sheet.getDataRange().getValues();

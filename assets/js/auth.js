@@ -192,7 +192,7 @@
             ${APP.formatFullName(u.lastName, u.firstName, u.middleName)}
           </div>
           <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">
-            LRN: ${APP.formatLRN(u.lrn)} · ${u.section}
+            LRN: ${APP.formatLRN(u.lrn)} · ${APP.escapeHtml(u.section)}
           </div>
         </div>
         <div style="display:flex;gap:6px;">

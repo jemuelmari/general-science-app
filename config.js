@@ -3,6 +3,9 @@
    Version: 1.0.9
    App: General Science
    Changelog:
+     v1.1.0 — Backend Code.gs v1.11.0 (teacher token on teacher actions, score
+              overrides). PASSING_PERCENT 70 (raw 70 = transmuted 75),
+              linear transmutation 70→75 … 100→100, BLOOM_RATIO 70:30.
      v1.0.9 — Full progress sync (student auto-pull), teacher "new data - refresh" banner,
               backend Code.gs v1.10.0. (Changing this file also triggers bump-cache.yml.)
      v1.0.8 — Bump version for PT sync and re-upload fixes
@@ -11,7 +14,7 @@
 
 const CONFIG = {
   APP_NAME: 'General Science',
-  VERSION: '1.0.9',
+  VERSION: '1.1.0',
   GRADE_LEVEL: 11,
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],
@@ -44,6 +47,19 @@ const CONFIG = {
   TEACHER_MAX_ATTEMPTS: 3,
   TEACHER_LOCKOUT_TIME: 5 * 60 * 1000,
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
+
+  // Raw % needed to PASS a quiz / ST / TE (raw 70 = transmuted 75).
+  // Below this the assessment locks and a retake request is needed.
+  PASSING_PERCENT: 70,
+
+  // Term 1 PT1 used to be saved as Term 2 PT1 (fixed). Put the date/time when
+  // Term 2 PT1 was REALLY opened (e.g. '2026-11-20T00:00:00+08:00') to move older
+  // "Term 2 PT1" submissions back to Term 1. Same value as PT1_FIX_CUTOFF in Code.gs.
+  // '' = off.
+  PT1_FIX_CUTOFF: '',
+
+  // LOTS : HOTS target for every quiz and exam (teacher policy)
+  BLOOM_RATIO: { LOTS: 0.70, HOTS: 0.30 },
 
   // IDINAGDAG ITO PARA SA FINAL GRADE COMPUTATION
   WEIGHTS: {

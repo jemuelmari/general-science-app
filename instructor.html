@@ -155,6 +155,13 @@
         <span class="action-badge" style="background:#e3f2fd;color:#0d47a1;">New</span>
       </a>
 
+      <a class="action-card" href="teacher/score-entry.html" style="border-top-color:#6a1b9a;background:linear-gradient(135deg,#f3e5f5,#ffffff);">
+        <div class="action-icon" style="background:#f3e5f5;">✍️</div>
+        <h3>Score Entry (Paper &amp; Pen)</h3>
+        <p>Type the scores of students who took a quiz, ST, Term Exam or PT on paper — or correct a score. Counts everywhere in the gradebook.</p>
+        <span class="action-badge" style="background:#f3e5f5;color:#4a148c;">New</span>
+      </a>
+
       <a class="action-card" href="teacher/print-exam.html" style="border-top-color:#2e7d32;background:linear-gradient(135deg,#e8f5e9,#ffffff);">
         <div class="action-icon" style="background:#e8f5e9;">🖨️</div>
         <h3>Print Exam Copies</h3>
@@ -335,12 +342,12 @@
           const t2 = p.term2?.completed?.length || 0;
           const t3 = p.term3?.completed?.length || 0;
           
-          const fullName = `${s.lastName}, ${s.firstName}`;
-          const initials = `${(s.firstName||' ')[0]}${(s.lastName||' ')[0]}`;
+          const fullName = APP.escapeHtml(`${s.lastName}, ${s.firstName}`);
+          const initials = APP.escapeHtml(`${(s.firstName||' ')[0]}${(s.lastName||' ')[0]}`);
 
           return `<tr>
             <td><div style="display:flex; align-items:center; gap:10px;"><div style="width:32px; height:32px; border-radius:50%; background:#0d47a1; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">${initials}</div><div><div style="font-weight:600;">${fullName}</div></div></div></td>
-            <td style="font-family:monospace;">${s.lrn}</td><td>${s.section}</td><td>${s.sex || '—'}</td>
+            <td style="font-family:monospace;">${APP.escapeHtml(s.lrn)}</td><td>${APP.escapeHtml(s.section)}</td><td>${APP.escapeHtml(s.sex || '—')}</td>
             <td>${t1}</td><td>${t2}</td><td>${t3}</td>
             <td><a href="classrecord.html" class="btn btn-sm btn-outline" style="font-size:0.75rem; padding:4px 8px;">View</a></td>
           </tr>`;

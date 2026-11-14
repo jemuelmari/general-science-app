@@ -1,6 +1,21 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine
-   Version: 2.2.0
+   Version: 2.3.0
+   Changelog v2.3.0:
+     - FIX: Term Exam score was never found (saved as scores.te.te) → a student
+       who already passed the TE could take it again. Now read correctly.
+     - FIX: when TIME RAN OUT the attempt was locked and labelled
+       "tab-switch / Tampered" even if the student PASSED. Time-up now just
+       submits; it locks only when the score is below passing.
+     - FIX: reloading the page restarted the timer and the tab-switch count.
+       The deadline, answers and switch count are now kept in localStorage
+       (per student + assessment) and resumed; the timer uses the real clock,
+       so it keeps running while the phone screen is off.
+       If the deadline passed while away, the saved answers are submitted.
+     - FIX: if randomize.js cannot load, the exam does NOT start with the old
+       random shuffle any more (that made online ≠ printed Set A/B and broke
+       the evidence). The student sees a "Retry" message instead.
+     - Passing score from CONFIG.PASSING_PERCENT (70).
    Changelog v2.2.0 (Exam <-> Evidence <-> Print alignment):
      - FIX: assessment pages never loaded randomize.js, so every attempt
        silently used the legacy Math.random() shuffle (different question
@@ -19,7 +34,7 @@
 const QuizEngine = (() => {
   'use strict';
 
-  const PASS_THRESHOLD = 75;
+  const PASS_THRESHOLD = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
   const AUTOSAVE_INTERVAL = 10000;
 
   let ctx = null;
@@ -157,7 +172,7 @@ const QuizEngine = (() => {
   function _getPrevScore(scores, term, type, id) {
     if (!scores || !scores[term]) return null;
     const t = scores[term];
-    if (type === 'te') return t.te || null;
+    if (type === 'te') return (t.te && t.te.te) || (t.te && t.te.score !== undefined ? t.te : null);
     if ((type === 'st' || type === 'st1' || type === 'st2') && t.st) return t.st[id] || null;
     if (type === 'quizzes' && t.quizzes) return t.quizzes[id] || null;
     if (t[type] && t[type][id]) return t[type][id];
@@ -185,7 +200,7 @@ const QuizEngine = (() => {
             <li>Answer all questions within ${mins} minutes.</li>
             <li>You need <strong>${ctx.passScore}%</strong> to pass.</li>
             <li>Copying, pasting, and switching tabs are disabled.</li>
-            <li>Your progress is saved automatically every 10 seconds.</li>
+            <li>Your answers are saved on this device as you go. If the page reloads, you continue where you stopped — but the timer keeps running.</li>
             <li>3 tab-switches will lock your attempt.</li>
           </ul>
         </div>
@@ -305,58 +320,113 @@ const QuizEngine = (() => {
   }
 
   async function startQuiz() {
-    await _ensureRandomize();
+    const ok = await _ensureRandomize();
+    shuffledSet = null;
     try {
-      if (typeof Randomize !== 'undefined' && Randomize.generateSet) {
+      if (ok && typeof Randomize !== 'undefined' && Randomize.generateSet) {
         const assessmentId = ctx.term + '-' + ctx.id;
         shuffledSet = Randomize.generateSet({ questions: ctx.questions }, assessmentId, ctx.setLetter);
       }
     } catch (e) {
-      console.warn('[QuizEngine] Randomize unavailable, using legacy shuffle:', e.message);
+      console.warn('[QuizEngine] Randomize failed:', e.message);
       shuffledSet = null;
     }
 
     if (!shuffledSet) {
-      const legacy = Security.shuffleQuestions(ctx.questions);
-      shuffledSet = {
-        assessmentId: ctx.term + '-' + ctx.id,
-        setLetter: ctx.setLetter,
-        questions: legacy.map((q, i) => ({
-          setIndex: i,
-          originalIndex: Math.max(0, ctx.questions.findIndex((x) => x.id === q.id)),
-          id: q.id, text: q.text, options: q.options, correct: q.correct,
-          competency: q.competency || null, bloomLevel: q.bloomLevel || null
-        }))
-      };
+      // Never fall back to a random per-student shuffle: the online copy must
+      // equal the printed Set A/B and the exam evidence.
+      const container = document.getElementById('quiz-root');
+      container.innerHTML = `
+        <div class="card" style="max-width:560px;margin:0 auto;text-align:center;padding:32px;">
+          <div style="font-size:2.5rem;">📶</div>
+          <h3 style="margin:10px 0;">Could not prepare your test set</h3>
+          <p class="text-muted">Please check your internet connection, then tap Retry. Your time has not started.</p>
+          <button id="quiz-retry-load" class="btn btn-primary" style="margin-top:14px;">🔄 Retry</button>
+        </div>`;
+      document.getElementById('quiz-retry-load').addEventListener('click', startQuiz);
+      return;
     }
 
-    answers = {};
-    currentIndex = 0;
-    startTime = Date.now();
+    // Resume an attempt that was interrupted (reload, closed tab, dead battery)
+    const saved = _loadAttemptState();
+    answers = (saved && saved.answers) || {};
+    currentIndex = (saved && saved.currentIndex) || 0;
+    const now = Date.now();
+    const deadline = (saved && saved.deadline) || (now + ctx.timeLimit * 1000);
+    startTime = (saved && saved.startedAt) || now;
+    const switches = (saved && saved.switches) || 0;
+    _saveAttemptState({ deadline: deadline, startedAt: startTime, switches: switches });
+    if (saved) APP.toast('💾 Resumed your attempt — the timer kept running.', 'info', 3500);
 
     document.body.classList.add('quiz-active');
     Security.disableCopyPaste(document);
     Security.disableDevShortcuts();
 
+    if (deadline <= now) {
+      // Time ran out while the student was away: submit what was saved
+      renderQuizShell();
+      renderQuestion();
+      APP.toast('⏰ Time ran out while you were away. Submitting your saved answers…', 'warning', 4000);
+      submitQuiz(false, 'time-up');
+      return;
+    }
+
     tabMonitor = Security.startTabMonitor((count, isFinal) => {
+      _saveAttemptState({ switches: count });
       if (isFinal) {
         APP.toast('❌ Too many tab switches. Quiz locked.', 'danger', 4000);
-        submitQuiz(true);
+        submitQuiz(true, 'tab-switch');
       } else {
         APP.toast(`⚠️ Tab switch detected (${count}/3)`, 'warning', 2500);
       }
-    }, 3);
+    }, 3, switches);
 
-    timer = Security.createTimer(ctx.timeLimit, updateTimerDisplay, () => {
+    timer = _clockTimer(deadline, updateTimerDisplay, () => {
       APP.toast('⏰ Time is up! Submitting...', 'warning', 3000);
-      submitQuiz(true);
+      submitQuiz(false, 'time-up');
     });
 
     autosaveTimer = setInterval(saveProgress, AUTOSAVE_INTERVAL);
-    restoreSaved();
 
     renderQuizShell();
     renderQuestion();
+  }
+
+  /* ---------- v2.3.0: attempt state that survives reloads ---------- */
+  function _stateKey() { return 'gsa_v1_attempt_' + ctx.lrn + '_' + ctx.term + '_' + ctx.id; }
+  function _loadAttemptState() {
+    try {
+      const raw = localStorage.getItem(_stateKey());
+      if (!raw) return null;
+      const st = JSON.parse(raw);
+      // stale state (older than time limit + 1 day) is ignored
+      if (!st || !st.deadline || (Date.now() - st.deadline) > 86400000) return null;
+      if (st.setLetter && st.setLetter !== ctx.setLetter) return null;
+      return st;
+    } catch (e) { return null; }
+  }
+  function _saveAttemptState(patch) {
+    try {
+      const cur = _loadAttemptState() || {};
+      const next = Object.assign(cur, patch, { setLetter: ctx.setLetter });
+      localStorage.setItem(_stateKey(), JSON.stringify(next));
+    } catch (e) { /* storage full: attempt still works, just not resumable */ }
+  }
+  function _clearAttemptState() { try { localStorage.removeItem(_stateKey()); } catch (e) {} }
+
+  // Timer based on the real clock (keeps counting while the screen is off)
+  function _clockTimer(deadline, onTick, onExpire) {
+    let done = false;
+    const left = () => Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+    const tick = () => {
+      if (done) return;
+      const r = left();
+      onTick && onTick(r);
+      if (r <= 0) { done = true; clearInterval(iv); onExpire && onExpire(); }
+    };
+    const iv = setInterval(tick, 1000);
+    setTimeout(tick, 0);
+    return { stop: () => { done = true; clearInterval(iv); }, getRemaining: left };
   }
 
   function renderQuizShell() {
@@ -460,24 +530,9 @@ const QuizEngine = (() => {
   function saveProgress() {
     if (!ctx) return;
     try {
-      sessionStorage.setItem(`gsa_quiz_${ctx.term}_${ctx.id}`, JSON.stringify({
-        answers, currentIndex, elapsed: ctx.timeLimit - (timer?.getRemaining() || 0), savedAt: Date.now()
-      }));
+      _saveAttemptState({ answers: answers, currentIndex: currentIndex, savedAt: Date.now() });
       const ind = document.getElementById('autosave-indicator');
       if (ind) { ind.textContent = '💾 Progress saved'; ind.style.opacity = '1'; setTimeout(() => { ind.style.opacity = '0'; }, 1500); }
-    } catch (e) { /* ignore */ }
-  }
-
-  function restoreSaved() {
-    try {
-      const raw = sessionStorage.getItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      if (data.savedAt && (Date.now() - data.savedAt) < 3600000) {
-        answers = data.answers || {};
-        currentIndex = data.currentIndex || 0;
-        APP.toast('💾 Restored previous progress', 'info', 2500);
-      }
     } catch (e) { /* ignore */ }
   }
 
@@ -489,7 +544,7 @@ const QuizEngine = (() => {
     if (confirm(msg)) submitQuiz(false);
   }
 
-  async function submitQuiz(forceLock) {
+  async function submitQuiz(forceLock, why) {
     if (submitting) return;
     submitting = true;
 
@@ -519,7 +574,7 @@ const QuizEngine = (() => {
 
     const scorePercent = scoreResult.percent;
     const passed = scorePercent >= ctx.passScore;
-    const timeUsed = ctx.timeLimit - (timer?.getRemaining() || 0);
+    const timeUsed = Math.min(ctx.timeLimit, Math.round((Date.now() - (startTime || Date.now())) / 1000));
     const timestamp = new Date().toISOString();
     const user = Store.getCurrentUser();
 
@@ -545,10 +600,7 @@ const QuizEngine = (() => {
     if (!passed || forceLock) {
       const lockKey = `${ctx.term}_${ctx.id}`;
       const reason = forceLock ? 'tab-switch' : 'failed';
-      Store.lockAssessment(ctx.lrn, lockKey, {
-        reason: reason,
-        score: scorePercent
-      });
+      Store.lockAssessment(ctx.lrn, lockKey, reason, scorePercent);
       console.log('[QuizEngine] 🔒 Locked:', lockKey, 'at', scorePercent + '%', '| Reason:', reason);
 
       // Push lock to backend so teacher's Locked Assessments page sees it
@@ -576,7 +628,8 @@ const QuizEngine = (() => {
       }
     }
 
-    sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`);
+    _clearAttemptState();
+    try { sessionStorage.removeItem(`gsa_quiz_${ctx.term}_${ctx.id}`); } catch (e) {}
     document.body.classList.remove('quiz-active');
     renderResults(payload);
     submitting = false;
@@ -584,8 +637,8 @@ const QuizEngine = (() => {
 
   function renderResults(result) {
     const container = document.getElementById('quiz-root');
-    const emoji = result.percent >= 90 ? '🏆' : result.percent >= 75 ? '🎉' : '📖';
-    const title = result.percent >= 90 ? 'Excellent!' : result.percent >= 75 ? 'Passed!' : 'Needs Review';
+    const emoji = result.percent >= 90 ? '🏆' : result.percent >= PASS_THRESHOLD ? '🎉' : '📖';
+    const title = result.percent >= 90 ? 'Excellent!' : result.percent >= PASS_THRESHOLD ? 'Passed!' : 'Needs Review';
 
     container.innerHTML = `
       <div class="card quiz-result-card" style="max-width:600px;margin:0 auto;">

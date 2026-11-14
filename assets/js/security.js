@@ -111,13 +111,19 @@ const Security = (() => {
     return diff === 0;
   }
 
-  function startTabMonitor(onViolation, threshold = 3) {
-    let count = 0;
+  function startTabMonitor(onViolation, threshold = 3, initialCount = 0) {
+    let count = Number(initialCount) || 0;
+    let lastHit = 0;
     let active = true;
 
     const handler = () => {
       if (!active) return;
+      // 'blur' and 'visibilitychange' both fire for ONE switch on some
+      // browsers: count at most one switch per second.
       if (document.hidden) {
+        const now = Date.now();
+        if (now - lastHit < 1000) return;
+        lastHit = now;
         count++;
         onViolation?.(count);
         if (count >= threshold) {

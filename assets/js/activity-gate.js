@@ -7,7 +7,7 @@ const ActivityGate = (() => {
   'use strict';
 
   const KEY_PREFIX = 'gsa_gate_v2_';
-  const PASS_THRESHOLD = 0.75;
+  const PASS_THRESHOLD = ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) / 100;
   const RESULT_DELAY_MS = 1500; // let the final result show before hiding the game
   let session = null;
 
@@ -189,7 +189,7 @@ const ActivityGate = (() => {
       <div style="font-size:2.5rem;">▶️</div>
       <div style="font-weight:700;margin-top:12px;color:#0d47a1;font-size:1.1rem;">${session.activityLabel}</div>
       <div style="font-size:0.85rem;margin-top:8px;color:#1565c0;">⏱️ Estimated time: <strong>${mins} minutes</strong></div>
-      <div style="font-size:0.85rem;margin-top:4px;color:#1565c0;">🎯 Passing score: <strong>75%</strong></div>
+      <div style="font-size:0.85rem;margin-top:4px;color:#1565c0;">🎯 Passing score: <strong>${Math.round(PASS_THRESHOLD * 100)}%</strong></div>
       ${session.attempts > 0 ? `<div style="font-size:0.8rem;margin-top:8px;color:#d84315;">Previous: <strong>${session.score}%</strong> (Attempt #${session.attempts})</div>` : ''}
       <button class="btn btn-primary" id="gate-start-btn" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;">▶️ Start Activity</button>
     `;
@@ -217,7 +217,7 @@ const ActivityGate = (() => {
     el.innerHTML = `
       <div style="font-size:2.5rem;">🔁</div>
       <div style="font-weight:700;margin-top:8px;color:#e65100;font-size:1.1rem;">Try Again!</div>
-      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: <strong>${session.score}%</strong> — Need 75%.</div>
+      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: <strong>${session.score}%</strong> — Need ${Math.round(PASS_THRESHOLD * 100)}%.</div>
       <button class="btn btn-primary" id="gate-retry-btn" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;">🔁 Retake</button>
     `;
     const btn = el.querySelector('#gate-retry-btn');

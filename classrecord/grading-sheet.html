@@ -122,8 +122,12 @@
     (function() {
       'use strict';
 
-      var WEIGHTS = { ww: 0.20, pt: 0.50, ex: 0.30 };
-      var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
+      // Same weights as Class Record (config.js)
+      var WEIGHTS = (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
+      var EX_INTERNAL = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
+      var RAW_PASS = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
+      var esc = APP.escapeHtml;
+      function pctOf(rec) { return TeacherCloud.percentOf(rec); }
 
       TeacherAuthBoot.ready(function(auth) {
         if (!auth.isAuthenticated()) {
@@ -172,26 +176,22 @@
         students.forEach(function(s) {
           var opt = document.createElement('option');
           opt.value = s.lrn;
-          opt.textContent = APP.formatFullName(s.lastName, s.firstName, s.middleName) + ' · ' + s.section;
+          opt.textContent = APP.formatFullNameText(s.lastName, s.firstName, s.middleName) + ' · ' + s.section;
           select.appendChild(opt);
         });
         if (currentValue) select.value = currentValue;
       }
 
       function getScore(lrn, term, type, id) {
-        var scores = Store.getScores(lrn);
-        var t = scores[term] || {};
-        var record = null;
-        if (type === 'te') record = (t.te && t.te.te) || t.te;
-        else if (t[type] && t[type][id]) record = t[type][id];
-        return record || null;
+        // Store was hydrated by TeacherCloud: PT grades + paper overrides included
+        return TeacherCloud.getRecord(Store.getScores(lrn), term, id);
       }
 
       function pctClass(pct) {
         if (pct === null || pct === undefined) return '';
         if (pct >= 90) return 'high';
-        if (pct >= 75) return 'mid';
-        if (pct >= 65) return 'low';
+        if (pct >= RAW_PASS) return 'mid';
+        if (pct >= RAW_PASS - 10) return 'low';
         return 'crit';
       }
 
@@ -227,15 +227,15 @@
         var pt3 = getScore(lrn, term, 'pt', 'pt3');
         var te = getScore(lrn, term, 'te', 'te');
 
-        var quizPcts = [q1, q2, q3].map(function(q) { return q && q.percent !== undefined ? q.percent : null; }).filter(function(v) { return v !== null; });
+        var quizPcts = [q1, q2, q3].map(pctOf).filter(function(v) { return v !== null; });
         var wwAvg = quizPcts.length ? quizPcts.reduce(function(a, b) { return a + b; }, 0) / quizPcts.length : null;
 
-        var ptPcts = [pt1, pt2, pt3].map(function(p) { return p && p.percent !== undefined ? p.percent : null; }).filter(function(v) { return v !== null; });
+        var ptPcts = [pt1, pt2, pt3].map(pctOf).filter(function(v) { return v !== null; });
         var ptAvg = ptPcts.length ? ptPcts.reduce(function(a, b) { return a + b; }, 0) / ptPcts.length : null;
 
-        var st1Pct = st1 && st1.percent !== undefined ? st1.percent : null;
-        var st2Pct = st2 && st2.percent !== undefined ? st2.percent : null;
-        var tePct = te && te.percent !== undefined ? te.percent : null;
+        var st1Pct = pctOf(st1);
+        var st2Pct = pctOf(st2);
+        var tePct = pctOf(te);
 
         // ⚠️ FIX (X3): null when any EX component missing
         var exAvg = null;
@@ -260,27 +260,27 @@
         area.innerHTML =
           '<div class="card" style="padding:20px;margin-bottom:20px;">' +
             '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
-              '<div class="student-avatar ' + avatarClass + '" style="width:56px;height:56px;font-size:1.1rem;">' + initials + '</div>' +
+              '<div class="student-avatar ' + avatarClass + '" style="width:56px;height:56px;font-size:1.1rem;">' + esc(initials) + '</div>' +
               '<div style="flex:1;min-width:200px;">' +
                 '<div style="font-size:1.15rem;font-weight:700;color:#004d40;">' + APP.formatFullName(student.lastName, student.firstName, student.middleName) + '</div>' +
-                '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">LRN: ' + APP.formatLRN(student.lrn) + ' · ' + student.section + ' · ' + (APP.getSexValue(student.sex) || '—') + '</div>' +
+                '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">LRN: ' + APP.formatLRN(student.lrn) + ' · ' + esc(student.section) + ' · ' + (APP.getSexValue(student.sex) || '—') + '</div>' +
               '</div>' +
               '<span class="badge-pill ' + (classification.key === 'enrichment' ? 'success' : classification.key === 'on-track' ? 'info' : classification.key === 'remediation' ? 'warning' : 'danger') + '">' + classification.label + '</span>' +
             '</div>' +
           '</div>' +
 
           '<div class="gs-student-summary">' +
-            '<div class="gs-summary-card ' + (wwAvg !== null && wwAvg >= 75 ? 'green' : wwAvg !== null ? 'amber' : '') + '">' +
+            '<div class="gs-summary-card ' + (wwAvg !== null && wwAvg >= RAW_PASS ? 'green' : wwAvg !== null ? 'amber' : '') + '">' +
               '<div class="lbl">Written Works (20%)</div>' +
               '<div class="val">' + (wwAvg !== null ? wwAvg.toFixed(1) + '%' : '—') + '</div>' +
               '<div class="sub">' + quizPcts.length + '/3 quizzes taken</div>' +
             '</div>' +
-            '<div class="gs-summary-card ' + (ptAvg !== null && ptAvg >= 75 ? 'green' : ptAvg !== null ? 'amber' : '') + '">' +
+            '<div class="gs-summary-card ' + (ptAvg !== null && ptAvg >= RAW_PASS ? 'green' : ptAvg !== null ? 'amber' : '') + '">' +
               '<div class="lbl">Performance Tasks (50%)</div>' +
               '<div class="val">' + (ptAvg !== null ? ptAvg.toFixed(1) + '%' : '—') + '</div>' +
               '<div class="sub">' + ptPcts.length + '/3 PTs completed</div>' +
             '</div>' +
-            '<div class="gs-summary-card ' + (exAvg !== null && exAvg >= 75 ? 'green' : exAvg !== null ? 'amber' : '') + '">' +
+            '<div class="gs-summary-card ' + (exAvg !== null && exAvg >= RAW_PASS ? 'green' : exAvg !== null ? 'amber' : '') + '">' +
               '<div class="lbl">Term Exam (30%)</div>' +
               '<div class="val">' + (exAvg !== null ? exAvg.toFixed(1) + '%' : '—') + '</div>' +
               '<div class="sub">30% ST1 + 30% ST2 + 40% TE</div>' +
@@ -365,11 +365,12 @@
 
         var score = record.score !== undefined ? record.score : (type === 'pt' && record.submittedAt ? '✓' : '—');
         var total = record.total !== undefined ? record.total : (type === 'pt' ? 100 : '—');
-        var pct = record.percent !== undefined ? record.percent : (record.score !== undefined && record.total ? (record.score / record.total) * 100 : null);
+        var pct = pctOf(record);
         var weighted = pct !== null ? (pct * weight) : null;
+        var tag = record.override ? ' <span title="Paper / teacher-entered score" style="font-size:0.7rem;background:#f3e5f5;color:#6a1b9a;border-radius:4px;padding:1px 5px;font-weight:700;">PAPER</span>' : '';
 
         return '<div class="gs-row">' +
-          '<div class="label">' + label + '</div>' +
+          '<div class="label">' + label + tag + '</div>' +
           '<div class="val">' + score + '</div>' +
           '<div class="val">' + total + '</div>' +
           '<div class="val pct ' + pctClass(pct) + '">' + (pct !== null ? pct.toFixed(1) + '%' : '—') + '</div>' +
@@ -385,7 +386,7 @@
         var t = scores[term] || {};
 
         var rows = [
-          ['Student', APP.formatFullName(student.lastName, student.firstName, student.middleName)],
+          ['Student', APP.formatFullNameText(student.lastName, student.firstName, student.middleName)],
           ['LRN', student.lrn],
           ['Section', student.section],
           ['Term', term],
@@ -395,8 +396,8 @@
 
         function addRow(label, rec, total) {
           if (!rec) { rows.push([label, '', '', '']); return; }
-          var pct = rec.percent !== undefined ? rec.percent : (rec.score !== undefined && rec.total ? (rec.score / rec.total) * 100 : null);
-          rows.push([label, rec.score !== undefined ? rec.score : (rec.submittedAt ? 'Submitted' : ''), rec.total !== undefined ? rec.total : (total || ''), pct !== null ? pct.toFixed(1) : '']);
+          var pct = pctOf(rec);
+          rows.push([label + (rec.override ? ' (paper)' : ''), rec.score !== undefined ? rec.score : (rec.submittedAt ? 'Submitted' : ''), rec.total !== undefined ? rec.total : (total || ''), pct !== null ? pct.toFixed(1) : '']);
         }
 
         addRow('Quiz 1', t.quizzes && t.quizzes.quiz1, 20);

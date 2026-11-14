@@ -1,7 +1,11 @@
 /* ============================================================
    sync-auto.js — Offline-first auto-push + unlock poller
-   Version: 1.3.0
+   Version: 1.4.0
    App: General Science
+   Changelog v1.4.0: flushNow() no longer overwrites the queue with its own
+                     snapshot — an attempt submitted WHILE a flush was running
+                     used to be lost. Items that keep failing (after 5 tries)
+                     are retried at most every 10 minutes instead of every 30 s.
    Changelog v1.3.0: flushNow() always releases its lock (try/finally) - a thrown error
                      used to leave _isFlushing=true and the queue never flushed again.
                      Remote unlocks are applied even if THIS device holds no lock: the
@@ -93,6 +97,9 @@ const SyncAuto = (() => {
 
       for (var i = 0; i < queue.length; i++) {
         var item = queue[i];
+        if (item.retries >= MAX_RETRIES && item.nextAttemptAt && Date.now() < item.nextAttemptAt) {
+          remaining.push(item); continue;
+        }
         if (item.retries > 0 && item.nextAttemptAt && Date.now() < item.nextAttemptAt) {
           remaining.push(item); continue;
         }
@@ -106,7 +113,8 @@ const SyncAuto = (() => {
           item.retries = (item.retries || 0) + 1;
           item.lastError = (res && res.error) || 'Unknown error';
           if (item.retries >= MAX_RETRIES) {
-            item.failedAt = new Date().toISOString();
+            item.failedAt = item.failedAt || new Date().toISOString();
+            item.nextAttemptAt = Date.now() + 10 * 60 * 1000;   // slow retry, keeps quota low
             remaining.push(item);
           } else {
             var delay = Math.min(BASE_RETRY_DELAY_MS * Math.pow(2, item.retries - 1), MAX_RETRY_DELAY_MS);
@@ -116,6 +124,13 @@ const SyncAuto = (() => {
         }
       }
 
+      // Merge with anything enqueued while we were pushing (do not drop it)
+      var latest = _loadQueue();
+      var keep = {};
+      remaining.forEach(function (it) { keep[it.pushId] = it; });
+      var processed = {};
+      queue.forEach(function (it) { processed[it.pushId] = true; });
+      latest.forEach(function (it) { if (!processed[it.pushId] && !keep[it.pushId]) { keep[it.pushId] = it; remaining.push(it); } });
       _saveQueue(remaining);
       var state = _loadState();
       if (pushed > 0) state.lastSync = new Date().toISOString();

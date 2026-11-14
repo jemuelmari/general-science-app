@@ -1,12 +1,21 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.21 (Fixed auto-complete override for review mode)
+   Version: 3.0.0
+   ------------------------------------------------------------
+   v3.0.0 (content redesign):
+     - Scenario + Escape choices are SHUFFLED each attempt and lettered by the
+       engine; any "A) " typed inside a label is stripped (no more "A. A)").
+     - After every answer the student sees WHY: the correct answer and the
+       item's `explanation` (scenario / escape) — timer pauses while reading.
+     - Match pairs may carry `why`; it is shown when the pair is matched.
+     - Scenario time: 60 s per item (HOTS scenarios need reading time).
+   v1.0.21: Fixed auto-complete override for review mode
    ============================================================ */
 
 const Lesson = (() => {
   'use strict';
 
-  const PASS_PERCENT = 75;
+  const PASS_PERCENT = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
   const ACTIVITY_IDS = ['activity-1', 'activity-2', 'formative'];
 
   let ctx = null;
@@ -34,6 +43,26 @@ const Lesson = (() => {
       const m = Math.floor(s / 60), r = s % 60;
       return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
     }
+  }
+
+  // "A) text" / "b. text" → "text" (letters are added by the engine)
+  function cleanLabel(l) {
+    return String(l == null ? '' : l).replace(/^\s*\(?[A-Ha-h][\)\.:]\s+/, '');
+  }
+
+  function escText(v) {
+    return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Feedback box shown after an answer: verdict, correct answer, explanation
+  function feedbackHtml(isRight, correctLetter, correctLabel, explanation, last) {
+    return '<div class="answer-feedback" style="margin-top:14px;padding:12px 14px;border-radius:10px;border-left:5px solid ' +
+      (isRight ? '#2e7d32;background:#e8f5e9;' : '#c62828;background:#ffebee;') + '">' +
+      '<div style="font-weight:800;margin-bottom:4px;">' + (isRight ? '✅ Correct!' : '❌ Not quite.') + '</div>' +
+      (isRight ? '' : '<div style="margin-bottom:4px;"><strong>Correct answer:</strong> ' + correctLetter + '. ' + escText(correctLabel) + '</div>') +
+      (explanation ? '<div style="line-height:1.5;"><strong>Why:</strong> ' + escText(explanation) + '</div>' : '') +
+      '<div style="text-align:right;margin-top:10px;"><button type="button" class="btn btn-primary btn-sm fb-next">' + (last ? 'Finish ✓' : 'Next →') + '</button></div>' +
+      '</div>';
   }
 
   function shuffle(arr) {
@@ -133,7 +162,7 @@ const Lesson = (() => {
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
     if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
-    if (type === 'scenario') return Math.max(MIN_SECONDS, count * 25);
+    if (type === 'scenario') return Math.max(MIN_SECONDS, count * 60);
     if (type === 'escape') return Math.max(MIN_SECONDS, count * 60);
     return MIN_SECONDS;
   }
@@ -405,6 +434,7 @@ const Lesson = (() => {
       <div class="text-center mt-md">
         <span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span>
       </div>
+      <div id="match-why" style="margin-top:10px;font-size:0.9rem;line-height:1.5;"></div>
     `;
 
     const leftEl = container.querySelector('#match-left');
@@ -442,6 +472,9 @@ const Lesson = (() => {
           selectedLeft = null;
           matches++;
           addPts(pointsCorrect);
+          const pr = pairs[Number(el.dataset.id)];
+          const whyEl = container.querySelector('#match-why');
+          if (pr && pr.why && whyEl) whyEl.innerHTML = '<div style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:8px 12px;border-radius:8px;">✅ <strong>' + escText(pr.left) + ' → ' + escText(pr.right) + ':</strong> ' + escText(pr.why) + '</div>';
           if (scoreEl) scoreEl.textContent = `Matches: ${matches} / ${pairs.length}`;
           if (matches === pairs.length) endGame('complete');
         } else {
@@ -489,7 +522,7 @@ const Lesson = (() => {
     const scenarios = config.scenarios;
     const timeLimit = config.timeLimit || 300;
     const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
-    let index = 0, correct = 0, finished = false;
+    let index = 0, correct = 0, finished = false, reviewing = false;
     let totalTimeLeft = timeLimit, overallTimer = null;
 
     const handle = {
@@ -507,7 +540,7 @@ const Lesson = (() => {
     `;
 
     overallTimer = setInterval(() => {
-      if (finished) return;
+      if (finished || reviewing) return;
       totalTimeLeft--;
       const el = container.querySelector('#scenario-overall-timer');
       if (el) el.textContent = fmt(Math.max(0, totalTimeLeft));
@@ -531,17 +564,24 @@ const Lesson = (() => {
       `;
       const row = body.querySelector('#choice-row');
       let answered = false;
-      sc.choices.forEach((choice) => {
+      const shown = shuffle(sc.choices);
+      const right = shown.find(c => c.correct) || {};
+      const rightLetter = String.fromCharCode(65 + shown.indexOf(right));
+      shown.forEach((choice, i) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        btn.textContent = choice.label;
+        btn.textContent = `${String.fromCharCode(65 + i)}. ${cleanLabel(choice.label)}`;
         btn.addEventListener('click', () => {
           if (finished || answered) return;
           answered = true;
           container.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
           if (choice.correct) { btn.classList.add('correct'); correct++; addPts(pointsCorrect); }
           else { btn.classList.add('wrong'); }
-          setTimeout(() => { index++; renderCard(); }, 1000);
+          reviewing = true;
+          const fb = document.createElement('div');
+          fb.innerHTML = feedbackHtml(!!choice.correct, rightLetter, cleanLabel(right.label), sc.explanation || choice.why || '', index === scenarios.length - 1);
+          body.querySelector('.scenario-card').appendChild(fb);
+          fb.querySelector('.fb-next').addEventListener('click', () => { reviewing = false; index++; renderCard(); });
         });
         row.appendChild(btn);
       });
@@ -568,7 +608,7 @@ const Lesson = (() => {
     const lives = config.lives !== undefined ? config.lives : 3;
     const timeLimit = config.timeLimit || 300;
     const pointsCorrect = config.pointsCorrect !== undefined ? config.pointsCorrect : 10;
-    let currentLives = lives, earnedKeys = 0, index = 0, locked = false, finished = false;
+    let currentLives = lives, earnedKeys = 0, index = 0, locked = false, finished = false, reviewing = false;
     let timeLeft = timeLimit, timerInterval = null;
 
     const handle = {
@@ -595,23 +635,32 @@ const Lesson = (() => {
         </div>
       `;
       const opts = container.querySelector('#escape-options');
-      q.choices.forEach((c, i) => {
+      const shown = shuffle(q.choices);
+      const right = shown.find(c => c.correct) || {};
+      const rightLetter = String.fromCharCode(65 + shown.indexOf(right));
+      shown.forEach((c, i) => {
         const btn = document.createElement('button');
         btn.className = 'escape-option';
-        btn.textContent = `${String.fromCharCode(65 + i)}. ${c.label}`;
+        btn.textContent = `${String.fromCharCode(65 + i)}. ${cleanLabel(c.label)}`;
         btn.addEventListener('click', () => {
           if (locked || finished) return;
           locked = true;
           container.querySelectorAll('.escape-option').forEach(b => b.disabled = true);
           if (c.correct) { btn.classList.add('correct'); earnedKeys++; addPts(pointsCorrect); }
           else { btn.classList.add('wrong'); currentLives--; }
-          setTimeout(() => {
+          reviewing = true;
+          const lastOne = currentLives <= 0 || index === questions.length - 1;
+          const fb = document.createElement('div');
+          fb.innerHTML = feedbackHtml(!!c.correct, rightLetter, cleanLabel(right.label), q.explanation || c.why || '', lastOne);
+          container.querySelector('.escape-question').appendChild(fb);
+          fb.querySelector('.fb-next').addEventListener('click', () => {
+            reviewing = false;
             locked = false;
             if (finished) return;
             if (currentLives <= 0) return endGame('no-lives');
             index++;
             renderQuestion();
-          }, 1000);
+          });
         });
         opts.appendChild(btn);
       });
@@ -628,7 +677,7 @@ const Lesson = (() => {
 
     renderQuestion();
     timerInterval = setInterval(() => {
-      if (finished) return;
+      if (finished || reviewing) return;
       timeLeft--;
       const el = container.querySelector('#escape-timer');
       if (el) el.textContent = fmt(Math.max(0, timeLeft));

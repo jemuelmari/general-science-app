@@ -1,8 +1,15 @@
 /* ============================================================
    tos-engine.js — Table of Specification computation engine
-   Version: 2.0.1
+   Version: 3.0.0
    App: General Science · v1.0.3
    ------------------------------------------------------------
+   Changelog v3.0.0:
+     - LOTS : HOTS target is now 70 : 30 (CONFIG.BLOOM_RATIO, teacher policy).
+     - Competency MPS (Most/Least Learned, Term Exam basis) is computed by
+       CompetencyAnalysis from cloud students: items are matched by
+       questionId / saved competency — NOT by the shuffled position
+       (the old code credited the wrong competency for every Set A/B item).
+     - Competencies with no data are no longer ranked as 0% "least learned".
    Changelog v2.0.1:
      - Fixed getRepoBase() to support Vercel and GitHub Pages
        without producing double-slash `//` URLs.
@@ -17,8 +24,8 @@ const TOSEngine = (() => {
   const LOTS = ['Remembering', 'Understanding'];
   const HOTS = ['Applying', 'Analyzing', 'Evaluating', 'Creating'];
 
-  const LOTS_RATIO = 0.30;
-  const HOTS_RATIO = 0.70;
+  const LOTS_RATIO = (typeof CONFIG !== 'undefined' && CONFIG.BLOOM_RATIO && CONFIG.BLOOM_RATIO.LOTS) || 0.70;
+  const HOTS_RATIO = 1 - LOTS_RATIO;
 
   const CACHE_VERSION = '1.2.1';
   const SIG_KEY = 'gsa_v1_signatories';
@@ -202,25 +209,44 @@ const TOSEngine = (() => {
   /* ============================================================
      BLOOM'S DISTRIBUTION
      ============================================================ */
+  // Per-competency LOTS/HOTS counts, then balanced so the WHOLE test hits the
+  // policy ratio exactly (rows that allow only HOTS or only LOTS are respected).
+  function _lotsPlan(rows) {
+    var plan = rows.map(function (row) {
+      var allowed = (row.bloomLevels && row.bloomLevels.length) ? row.bloomLevels : BLOOMS;
+      var canL = LOTS.some(function (l) { return allowed.indexOf(l) !== -1; });
+      var canH = HOTS.some(function (l) { return allowed.indexOf(l) !== -1; });
+      var lots = !canL ? 0 : !canH ? row.items : Math.round(row.items * LOTS_RATIO);
+      return { lots: lots, canL: canL, canH: canH, items: row.items };
+    });
+    var total = rows.reduce(function (s, r) { return s + r.items; }, 0);
+    var diff = Math.round(total * LOTS_RATIO) - plan.reduce(function (s, p) { return s + p.lots; }, 0);
+    var guard = 1000;
+    while (diff !== 0 && guard-- > 0) {
+      var cands = plan.filter(function (p) { return diff > 0 ? (p.canL && p.lots < p.items) : (p.canH && p.lots > 0); });
+      if (!cands.length) break;
+      // change the row that is furthest from the ratio first
+      cands.sort(function (a, b) {
+        var ra = a.lots / a.items, rb = b.lots / b.items;
+        return diff > 0 ? ra - rb : rb - ra;
+      });
+      cands[0].lots += diff > 0 ? 1 : -1;
+      diff += diff > 0 ? -1 : 1;
+    }
+    return plan;
+  }
+
   function distributeBlooms(rows) {
-    return rows.map(function (row) {
+    var plan = _lotsPlan(rows);
+    return rows.map(function (row, rowIdx) {
       var items = row.items;
       var allowed = (row.bloomLevels && row.bloomLevels.length) ? row.bloomLevels : BLOOMS;
 
       var allowedLOTS = LOTS.filter(function (l) { return allowed.indexOf(l) !== -1; });
       var allowedHOTS = HOTS.filter(function (l) { return allowed.indexOf(l) !== -1; });
 
-      var lotsTarget, hotsTarget;
-      if (allowedLOTS.length === 0) {
-        lotsTarget = 0;
-        hotsTarget = items;
-      } else if (allowedHOTS.length === 0) {
-        lotsTarget = items;
-        hotsTarget = 0;
-      } else {
-        lotsTarget = Math.round(items * LOTS_RATIO);
-        hotsTarget = items - lotsTarget;
-      }
+      var lotsTarget = plan[rowIdx].lots;
+      var hotsTarget = items - lotsTarget;
 
       var distribution = {};
       BLOOMS.forEach(function (b) { distribution[b] = 0; });
@@ -436,111 +462,18 @@ const TOSEngine = (() => {
   }
 
   /**
-   * Compute per-competency MPS from a single assessment.
-   * Updated to support async Store methods (Cloud-First).
+   * Per-competency MPS ranking (lowest first) from ST1 + ST2.
+   * students = TeacherCloud.fetchStudents({ withItems: true }) objects.
    */
-  async function computeCompetencyMPS(students, term, type, assessment) {
-    var result = {};
-    var questions = assessment.questions || [];
-
-    var byComp = {};
-    questions.forEach(function (q, i) {
-      var code = q.competency || 'UNKNOWN';
-      if (!byComp[code]) byComp[code] = [];
-      byComp[code].push(i);
-    });
-
-    Object.keys(byComp).forEach(function (code) {
-      result[code] = { correct: 0, total: 0, mps: 0 };
-    });
-
-    for (var i = 0; i < students.length; i++) {
-      var s = students[i];
-      if (typeof Store === 'undefined' || !Store.getScores) continue;
-
-      // Check kung async ang getScores (Cloud-First store)
-      var scores;
-      try {
-        scores = await Store.getScores(s.lrn);
-      } catch (e) {
-        console.warn('Error fetching scores for', s.lrn, e);
-        continue;
-      }
-
-      if (!scores) continue;
-      var termScores = scores[term];
-      if (!termScores) continue;
-
-      var record = null;
-      // Shape A — ST
-      if (type === 'st' || type === 'st1' || type === 'st2') {
-        if (termScores.st) {
-          var key = (type === 'st1') ? 'st1' : (type === 'st2') ? 'st2' : assessment.id;
-          record = termScores.st[key];
-        }
-      }
-      // Shape B — TE
-      if (!record && type === 'te') {
-        record = (termScores.te && termScores.te.te) || (termScores.te && termScores.te.score !== undefined ? termScores.te : null);
-      }
-      // Shape C — legacy
-      if (!record && termScores[type] && termScores[type][assessment.id]) {
-        record = termScores[type][assessment.id];
-      }
-
-      if (!record || !record.itemResults) continue;
-
-      record.itemResults.forEach(function (r) {
-        var idx = (typeof r.index === 'number') ? r.index : r.originalIndex;
-        if (typeof idx !== 'number') return;
-        var code = (questions[idx] && questions[idx].competency) || 'UNKNOWN';
-        if (!result[code]) result[code] = { correct: 0, total: 0, mps: 0 };
-        result[code].total++;
-        if (r.correct) result[code].correct++;
-      });
-    }
-
-    Object.keys(result).forEach(function (code) {
-      var v = result[code];
-      v.mps = v.total ? v.correct / v.total : 0;
-    });
-
-    return result;
-  }
-
   async function computeAllCompetencyMPS(students, term) {
-    var st1Bank, st2Bank;
-    try {
-      st1Bank = await loadQuestionBank(term, 'st1');
-      st2Bank = await loadQuestionBank(term, 'st2');
-    } catch (e) {
-      console.warn('[TOSEngine] Could not load ST banks:', e);
+    if (typeof CompetencyAnalysis === 'undefined') {
+      console.warn('[TOSEngine] competency-analysis.js not loaded');
       return [];
     }
-
-    st1Bank.id = 'st1';
-    st2Bank.id = 'st2';
-
-    var mps1 = await computeCompetencyMPS(students, term, 'st1', st1Bank);
-    var mps2 = await computeCompetencyMPS(students, term, 'st2', st2Bank);
-
-    var merged = {};
-    Object.keys(mps1).forEach(function (code) {
-      merged[code] = { code: code, correct: mps1[code].correct, total: mps1[code].total };
-    });
-    Object.keys(mps2).forEach(function (code) {
-      if (!merged[code]) merged[code] = { code: code, correct: 0, total: 0 };
-      merged[code].correct += mps2[code].correct;
-      merged[code].total += mps2[code].total;
-    });
-
-    var ranking = Object.keys(merged).map(function (code) {
-      var r = merged[code];
-      return { code: code, correct: r.correct, total: r.total, mps: r.total ? r.correct / r.total : 0 };
-    });
-
-    ranking.sort(function (a, b) { return a.mps - b.mps; });
-    return ranking;
+    const list = await CompetencyAnalysis.competencyMPS(students || [], term, ['st1', 'st2']);
+    return list
+      .map(function (c) { return { code: c.code, description: c.description, correct: c.correct, total: c.total, mps: c.mps / 100, pct: c.mps, students: c.students }; })
+      .sort(function (a, b) { return a.mps - b.mps; });
   }
 
   /* ============================================================
@@ -674,7 +607,6 @@ const TOSEngine = (() => {
     buildAnswerKey: buildAnswerKey,
     computeTotals: computeTotals,
     rankByMPS: rankByMPS,
-    computeCompetencyMPS: computeCompetencyMPS,
     computeAllCompetencyMPS: computeAllCompetencyMPS,
     getSignatories: getSignatories,
     saveSignatories: saveSignatories,

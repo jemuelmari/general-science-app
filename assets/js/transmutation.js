@@ -1,116 +1,96 @@
 /* ============================================================
-   transmutation.js — Adjusted Transmutation Table (SY 2026–2027)
-   Version: 1.0.1
-   App: General Science (Academic Elective)
-   Anchor: raw 70 → transmuted 75 (passing)
-   ------------------------------------------------------------
-   Changelog v1.0.1 (Phase 1 / X4 fix):
-     - Rebuilt TABLE to be strictly MONOTONIC.
-     - Previous TABLE was non-monotonic: raw 70 → 75, but raw 71 → 74.
-     - Now: raw 70 → 75, raw 71 → 76, raw 72 → 77, ..., raw 74 → 79, raw 75 → 80.
-     - Every raw value maps to a transmuted value >= the transmuted of any
-       lower raw value. No student is penalized for a higher raw score.
+   transmutation.js — Transmutation Table (SY 2026–2027)
+   Version: 2.0.0
+   App: General Science
+   Rule (per teacher, latest DepEd order for 2026):
+     - raw 70 → 75 (passing) and raw 100 → 100, evenly spaced in
+       between:  transmuted = 75 + (raw − 70) × 25 / 30
+     - below 70: raw + 5  (69 → 74 … 0 → 5)
+     - result rounded to the nearest whole number
+   Changelog v2.0.0:
+     - FIX: the old table was NOT monotonic (raw 76 → 81 but raw 77 → 77,
+       78 → 78 …): students with 77–80 got LOWER grades than a 76.
+     - Built from the formula above; strictly non-decreasing (unit-tested).
+     - Passing raw score is CONFIG.PASSING_PERCENT (70).
+     - classifyStudent thresholds aligned with raw 70 passing.
    ============================================================ */
 
 const Transmutation = (() => {
   'use strict';
 
-  // Adjusted Transmutation Table — SY 2026–2027
-  // Raw score → Transmuted grade
-  // ⚠️ FIX (X4): Strictly monotonic — transmuted(raw) >= transmuted(raw - 1) for all raw.
-  const TABLE = {
-    100: 100,
-    99: 99, 98: 98, 97: 97, 96: 96,
-    95: 95, 94: 94, 93: 93, 92: 92, 91: 91,
-    90: 90, 89: 89, 88: 88, 87: 87, 86: 86,
-    85: 85, 84: 84, 83: 83, 82: 82, 81: 81,
-    80: 80, 79: 79, 78: 78, 77: 77,
-    76: 81,  // skip — see anchor rule below
-    75: 80,
-    74: 79,
-    73: 78,
-    72: 77,
-    71: 76,
-    70: 75,  // ⚠️ KEY ANCHOR: raw 70 → transmuted 75 (passing)
-    69: 74, 68: 73, 67: 72, 66: 71, 65: 70,
-    64: 69, 63: 68, 62: 67, 61: 66, 60: 65,
-    59: 64, 58: 63, 57: 62, 56: 61, 55: 60,
-    54: 59, 53: 58, 52: 57, 51: 56, 50: 55,
-    49: 54, 48: 53, 47: 52, 46: 51, 45: 50,
-    44: 49, 43: 48, 42: 47, 41: 46, 40: 45,
-    39: 44, 38: 43, 37: 42, 36: 41, 35: 40,
-    34: 39, 33: 38, 32: 37, 31: 36, 30: 35,
-    29: 34, 28: 33, 27: 32, 26: 31, 25: 30,
-    24: 29, 23: 28, 22: 27, 21: 26, 20: 25,
-    19: 24, 18: 23, 17: 22, 16: 21, 15: 20,
-    14: 19, 13: 18, 12: 17, 11: 16, 10: 15,
-    9: 14, 8: 13, 7: 12, 6: 11, 5: 10,
-    4: 9, 3: 8, 2: 7, 1: 6, 0: 5
-  };
-
-  const PASSING = 75;
+  const PASSING = 75;                                           // transmuted passing grade
+  const RAW_PASSING = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
 
   /* ---------- Core ---------- */
-  function transmute(raw) {
-    const r = Math.round(Number(raw));
+  function transmuteExact(raw) {
+    const r = Number(raw);
     if (isNaN(r)) return 0;
-    if (r > 100) return 100;
-    if (r < 0) return 0;
-    return TABLE[r] ?? r;
+    if (r >= 100) return 100;
+    if (r <= 0) return 5;
+    if (r >= 70) return 75 + (r - 70) * 25 / 30;
+    return r + 5;
   }
+
+  function transmute(raw) {
+    if (raw === null || raw === undefined || raw === '' || isNaN(Number(raw))) return 0;
+    return Math.round(transmuteExact(raw));
+  }
+
+  // Lookup table for whole raw scores 0..100 (for display)
+  const TABLE = {};
+  for (let r = 0; r <= 100; r++) TABLE[r] = transmute(r);
 
   function isPassing(finalGrade) {
     return Number(finalGrade) >= PASSING;
   }
 
   /* ---------- Weighted Final Grade ---------- */
-  /**
-   * Computes final grade based on WW / PT / EX weighting.
-   * Default for General Science (Academic Elective): 20% WW / 50% PT / 30% EX
-   *
-   * ⚠️ FIX (X3 partial): If any component is null/undefined, it is treated
-   * as 0 ONLY when computing the weighted sum — BUT callers should pass
-   * null-safe values. Consider using computeFinalGradeSafe() for
-   * incomplete data.
-   */
-  function computeFinalGrade(wwPercent, ptPercent, exPercent, weights) {
-    const w = weights || { ww: 0.20, pt: 0.50, ex: 0.30 };
-    const raw = (wwPercent * w.ww) + (ptPercent * w.pt) + (exPercent * w.ex);
-    return {
-      raw: Math.round(raw * 100) / 100,
-      transmuted: transmute(raw),
-      passing: isPassing(transmute(raw))
-    };
+  function _weights(w) {
+    return w || (typeof CONFIG !== 'undefined' && CONFIG.WEIGHTS) || { ww: 0.20, pt: 0.50, ex: 0.30 };
   }
 
-  /**
-   * Safe final grade — returns null when insufficient data.
-   * Use this for reports to avoid showing fake failing grades when a
-   * component is missing (e.g., TE not yet taken).
-   */
+  /** Weighted initial grade → transmuted. Callers should pass non-null values. */
+  function computeFinalGrade(wwPercent, ptPercent, exPercent, weights) {
+    const w = _weights(weights);
+    const raw = (wwPercent * w.ww) + (ptPercent * w.pt) + (exPercent * w.ex);
+    const t = transmute(raw);
+    return { raw: Math.round(raw * 100) / 100, transmuted: t, passing: isPassing(t) };
+  }
+
+  /** Safe final grade — null when any component is missing. */
   function computeFinalGradeSafe(wwPercent, ptPercent, exPercent, weights) {
-    const w = weights || { ww: 0.20, pt: 0.50, ex: 0.30 };
-
-    // If ALL three are null → no data
-    if (wwPercent == null && ptPercent == null && exPercent == null) {
-      return { raw: null, transmuted: null, passing: false, insufficient: true };
-    }
-
-    // If any single component is null → insufficient
     if (wwPercent == null || ptPercent == null || exPercent == null) {
       return { raw: null, transmuted: null, passing: false, insufficient: true };
     }
-
-    return computeFinalGrade(wwPercent, ptPercent, exPercent, w);
+    return computeFinalGrade(wwPercent, ptPercent, exPercent, weights);
   }
 
   /* ---------- EX Internal Breakdown ---------- */
   function computeEX(st1, st2, te) {
-    // ST1 30%, ST2 30%, TE 40%
-    return (st1 * 0.30) + (st2 * 0.30) + (te * 0.40);
+    const x = (typeof CONFIG !== 'undefined' && CONFIG.EX_INTERNAL) || { st1: 0.30, st2: 0.30, te: 0.40 };
+    return (st1 * x.st1) + (st2 * x.st2) + (te * x.te);
   }
 
-  /* ---------- Proficiency Level ---------- */
+  /**
+   * One grade computation shared by Class Record, Grading Sheet and Reports.
+   * p = { q1,q2,q3, st1,st2, pt1,pt2,pt3, te } as percents (null = missing)
+   */
+  function computeTermGrade(p) {
+    const avg = (arr) => { const v = arr.filter(x => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+    const wwAvg = avg([p.q1, p.q2, p.q3]);
+    const ptAvg = avg([p.pt1, p.pt2, p.pt3]);
+    const exAvg = (p.st1 != null && p.st2 != null && p.te != null) ? computeEX(p.st1, p.st2, p.te) : null;
+    const final = computeFinalGradeSafe(wwAvg, ptAvg, exAvg);
+    const w = _weights();
+    let sum = 0, wt = 0;
+    if (wwAvg != null) { sum += wwAvg * w.ww; wt += w.ww; }
+    if (ptAvg != null) { sum += ptAvg * w.pt; wt += w.pt; }
+    if (exAvg != null) { sum += exAvg * w.ex; wt += w.ex; }
+    const partialScore = wt > 0 ? sum / wt : null;
+    return { wwAvg, ptAvg, exAvg, final, partialScore, partialTransmuted: partialScore == null ? null : transmute(partialScore) };
+  }
+
+  /* ---------- Proficiency Level (MPS descriptors) ---------- */
   function proficiencyLevel(mps) {
     const m = Number(mps);
     if (m >= 96) return { level: 'Mastered', key: 'mastered' };
@@ -122,24 +102,26 @@ const Transmutation = (() => {
     return { level: 'Absolutely No Mastery', key: 'nomastery' };
   }
 
-  /* ---------- Intervention Classification ---------- */
+  /* ---------- Intervention Classification (raw average %) ---------- */
   function classifyStudent(stAverage) {
     const avg = Number(stAverage);
     if (avg >= 90) return { label: 'Enrichment', key: 'enrichment' };
-    if (avg >= 75) return { label: 'On Track', key: 'on-track' };
-    if (avg >= 65) return { label: 'Remediation Needed', key: 'remediation' };
+    if (avg >= RAW_PASSING) return { label: 'On Track', key: 'on-track' };
+    if (avg >= RAW_PASSING - 10) return { label: 'Remediation Needed', key: 'remediation' };
     return { label: 'Urgent Intervention', key: 'urgent' };
   }
 
-  /* ---------- Public API ---------- */
   return {
     TABLE,
     PASSING,
+    RAW_PASSING,
     transmute,
+    transmuteExact,
     isPassing,
     computeFinalGrade,
-    computeFinalGradeSafe,   // NEW — safe version for incomplete data
+    computeFinalGradeSafe,
     computeEX,
+    computeTermGrade,
     proficiencyLevel,
     classifyStudent
   };

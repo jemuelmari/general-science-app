@@ -129,12 +129,12 @@
             <div class="student-avatar ${avatarClass}">${initials}</div>
             <div class="student-info">
               <div class="name">${APP.formatFullName(s.lastName, s.firstName, s.middleName)}</div>
-              <div class="meta">Grade ${s.gradeLevel} · ${s.section}</div>
+              <div class="meta">Grade ${APP.escapeHtml(s.gradeLevel)} · ${APP.escapeHtml(s.section)}</div>
             </div>
           </div>
         </td>
         <td style="font-family:'Consolas',monospace;font-size:0.8rem;">${APP.formatLRN(s.lrn)}</td>
-        <td><span class="badge-pill info">${s.section}</span></td>
+        <td><span class="badge-pill info">${APP.escapeHtml(s.section)}</span></td>
         <td>${APP.getSexBadge(s.sex)}</td>
         <td>${progressBadge(t1)}</td>
         <td>${progressBadge(t2)}</td>
@@ -208,7 +208,7 @@
           <div style="flex:1;min-width:0;">
             <div style="font-weight:700;font-size:1.1rem;">${APP.formatFullName(student.lastName, student.firstName, student.middleName)}</div>
             <div style="font-size:0.8rem;opacity:0.9;margin-top:2px;">
-              LRN: ${APP.formatLRN(student.lrn)} · ${student.section} · ${APP.getSexValue(student.sex) || '—'}
+              LRN: ${APP.formatLRN(student.lrn)} · ${APP.escapeHtml(student.section)} · ${APP.getSexValue(student.sex) || '—'}
             </div>
           </div>
           <button id="detail-close" style="background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.2rem;width:36px;height:36px;border-radius:50%;cursor:pointer;">×</button>
