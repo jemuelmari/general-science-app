@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Analysis — General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-d741b77" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-d741b77" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 8px; }
     .form-row label { display:block; font-size:0.8rem; font-weight:600; color:#37474f; margin-bottom:6px; }
@@ -81,15 +81,15 @@
 
   <footer class="app-footer"><p>General Science Online Modular Application · <span class="version">v2.0.0</span></p></footer>
 
-  <script src="../config.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/app.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/store.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/security.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/transmutation.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-d741b77"></script>
-  <script src="../assets/js/competency-analysis.js?v=1.3.0-d741b77"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/transmutation.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/competency-analysis.js?v=1.3.0-aa6f34f"></script>
   <script>
     (function () {
       'use strict';
@@ -135,7 +135,7 @@
       function render(r) {
         var box = $('ia-results');
         if (!r.students) {
-          box.innerHTML = '<div class="card" style="padding:32px;text-align:center;color:#78909c;">No online attempts with item data yet for this assessment.</div>';
+          box.innerHTML = '<div class="card" style="padding:32px;text-align:center;color:#78909c;">' + (r.summary && r.summary.staleTakers ? r.summary.staleTakers + ' attempt(s) were taken on the older version of this test, before its questions were revised, so there is no item data for the current questions yet.' : 'No online attempts with item data yet for this assessment.') + '</div>';
           box.style.display = 'block';
           return;
         }
@@ -152,6 +152,8 @@
             '<div><div class="v">' + r.summary.items + '</div><div class="l">Items</div></div>' +
             '<div><div class="v">' + flagged + '</div><div class="l">Items to revise / reject</div></div>' +
           '</div>' +
+          (r.summary.staleTakers ? '<p style="margin:10px 0 0;font-size:0.8rem;color:#8d6e63;">' + r.summary.staleTakers +
+            ' student attempt(s) were taken on an older version of this test (before the Nov 2026 revision). Those answers are left out of the item table because the questions changed; they still count in competency MPS.</p>' : '') +
           '<h4 style="margin:18px 0 6px;">Learning competencies in this assessment</h4>' +
           '<div style="overflow-x:auto;"><table class="ia-table"><thead><tr><th>Competency</th><th>Items</th><th class="num">MPS</th><th>Mastery level</th></tr></thead><tbody>' +
           r.competencies.map(function (c) {
