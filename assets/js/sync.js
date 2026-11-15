@@ -553,3 +553,6 @@ const Sync = (() => {
     redeemUnlockCode: redeemUnlockCode
   };
 })();
+
+// Expose on window (a top-level const is not a window property).
+if (typeof window !== "undefined") window.Sync = Sync;

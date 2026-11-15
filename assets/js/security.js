@@ -115,9 +115,10 @@ const Security = (() => {
     let count = Number(initialCount) || 0;
     let lastHit = 0;
     let active = true;
+    let unloading = false;            // reloading / closing the page is not a tab switch
 
     const handler = () => {
-      if (!active) return;
+      if (!active || unloading) return;
       // 'blur' and 'visibilitychange' both fire for ONE switch on some
       // browsers: count at most one switch per second.
       if (document.hidden) {
@@ -133,13 +134,21 @@ const Security = (() => {
       }
     };
 
+    const onUnload = () => { unloading = true; };
+    const onShow = () => { unloading = false; };
     document.addEventListener('visibilitychange', handler);
     window.addEventListener('blur', handler);
+    window.addEventListener('beforeunload', onUnload);
+    window.addEventListener('pagehide', onUnload);
+    window.addEventListener('pageshow', onShow);
 
     function stopTabMonitor() {
       active = false;
       document.removeEventListener('visibilitychange', handler);
       window.removeEventListener('blur', handler);
+      window.removeEventListener('beforeunload', onUnload);
+      window.removeEventListener('pagehide', onUnload);
+      window.removeEventListener('pageshow', onShow);
     }
 
     return { stop: stopTabMonitor, getCount: () => count };

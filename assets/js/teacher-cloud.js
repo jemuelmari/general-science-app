@@ -39,7 +39,14 @@ const TeacherCloud = (() => {
     let data;
     try { data = JSON.parse(text); }
     catch (e) { throw new Error('Backend returned a non-JSON response (HTTP ' + res.status + ')'); }
-    if (!data || !data.ok) throw new Error((data && data.error) || 'Request failed.');
+    if (!data || !data.ok) {
+      const msg = (data && data.error) || 'Request failed.';
+      if (/^Unknown action/i.test(msg)) {
+        throw new Error('The Apps Script backend is an older version and does not know "' + body.action +
+          '". Paste the new Code.gs (v1.12.1) and deploy it as a NEW VERSION (Deploy → Manage deployments → Edit → New version).');
+      }
+      throw new Error(msg);
+    }
     return data;
   }
 
@@ -72,8 +79,9 @@ const TeacherCloud = (() => {
   /** Percent of a record, or null. */
   function percentOf(rec) {
     if (!rec) return null;
+    // exact score ÷ total first (a stored percent may be rounded) — same as the DepEd ECR
+    if (rec.score != null && rec.score !== '' && rec.total && !isNaN(Number(rec.score))) return (Number(rec.score) / Number(rec.total)) * 100;
     if (rec.percent != null && rec.percent !== '' && !isNaN(Number(rec.percent))) return Number(rec.percent);
-    if (rec.score != null && rec.total) return (Number(rec.score) / Number(rec.total)) * 100;
     return null;
   }
 

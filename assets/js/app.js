@@ -431,3 +431,6 @@ const APP = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', APP.init);
+
+// Expose on window (a top-level const is not a window property).
+if (typeof window !== "undefined") window.APP = APP;

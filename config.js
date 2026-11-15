@@ -3,6 +3,9 @@
    Version: 1.0.9
    App: General Science
    Changelog:
+     v1.3.2 — Fill DepEd ECR checked against the actual GenSci ECR: keeps the teacher's own scores, auto-detects columns, ECR-exact preview, manual name pairing.
+     v1.3.1 — DepEd ECR alignment: ECR transmutation table + term grade, Fill DepEd ECR,
+              DepEd-format Item Analysis, TOS → Word (.docx).
      v1.1.0 — Backend Code.gs v1.11.0 (teacher token on teacher actions, score
               overrides). PASSING_PERCENT 70 (raw 70 = transmuted 75),
               linear transmutation 70→75 … 100→100, BLOOM_RATIO 70:30.
@@ -14,7 +17,7 @@
 
 const CONFIG = {
   APP_NAME: 'General Science',
-  VERSION: '1.2.0',
+  VERSION: '1.3.2',
   GRADE_LEVEL: 11,
   SECTIONS: ['ACADEMIC A', 'ACADEMIC B'],
   TERMS: ['term1', 'term2', 'term3'],

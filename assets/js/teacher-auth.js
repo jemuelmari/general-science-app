@@ -280,3 +280,6 @@ const TeacherAuth = (() => {
     clearLockout: clearLockout
   };
 })();
+
+// Expose on window (a top-level const is not a window property).
+if (typeof window !== "undefined") window.TeacherAuth = TeacherAuth;

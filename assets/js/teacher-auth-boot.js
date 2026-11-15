@@ -79,3 +79,6 @@ const TeacherAuthBoot = (() => {
 
   return { ready };
 })();
+
+// Expose on window (a top-level const is not a window property).
+if (typeof window !== "undefined") window.TeacherAuthBoot = TeacherAuthBoot;

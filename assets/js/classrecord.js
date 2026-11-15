@@ -62,6 +62,9 @@
   }
 
   function computeGrade(students, term) {
+    const pcts = (s) => { const o = {}; Object.keys(IDS).forEach(k => { o[k] = TeacherCloud.percentOf(getRec(s, term, IDS[k])); }); return o; };
+    // assessments already given to the class (all sections) — a missed one counts as 0, like the ECR
+    const given = Transmutation.givenFrom(allStudents.map(pcts));
     return students.map((s) => {
       const scores = {}, paper = {};
       Object.keys(IDS).forEach(k => {
@@ -69,7 +72,7 @@
         scores[k] = TeacherCloud.percentOf(rec);
         paper[k] = !!(rec && rec.override);
       });
-      const g = Transmutation.computeTermGrade(scores);
+      const g = Transmutation.computeTermGrade(scores, given);
       const compCount = Object.values(scores).filter((v) => v != null).length;
       return {
         student: s, scores: scores, paper: paper,
