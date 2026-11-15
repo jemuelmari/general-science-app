@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOS Generator — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-909d57a" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-909d57a" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .tos-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:end; background:#fff; padding:18px; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:20px; }
     .tos-filters .form-group { min-width:180px; flex:1; margin-bottom:0; }
@@ -189,6 +189,11 @@
 
     <div class="tos-actions" id="tos-actions" style="display:none;">
       <button id="btn-print" class="btn btn-primary">🖨️ Print / Save as PDF</button>
+      <button id="btn-word" class="btn btn-primary" style="background:#1565c0;">💾 Save as Word (.docx)</button>
+      <select id="word-paper" class="form-control" style="width:auto;display:inline-block;" title="Paper size (Word)">
+        <option value="letter">Short bond</option><option value="long">Long bond</option><option value="a4">A4</option></select>
+      <label style="font-size:0.85rem;display:inline-flex;gap:4px;align-items:center;"><input type="checkbox" id="word-mll" checked> Most/Least Learned</label>
+      <label style="font-size:0.85rem;display:inline-flex;gap:4px;align-items:center;"><input type="checkbox" id="word-key"> Answer Key</label>
       <button id="btn-export-csv" class="btn btn-outline">📥 Export CSV</button>
       <button id="btn-edit-signatories2" class="btn btn-outline">✏️ Edit Signatories</button>
     </div>
@@ -200,25 +205,27 @@
   </footer>
   
   <!-- Binago ang cache-busting version para sa tos-engine.js -->
-  <script src="../config.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/app.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/version-sync.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/store.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/mastery-scales.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/competency-analysis.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/tos-engine.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/teacher-cloud.js?v=1.3.0-909d57a"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-909d57a"></script>
-  
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/version-sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/mastery-scales.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/competency-analysis.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/tos-engine.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="tos-word.js?v=1.3.0"></script>
   <script>
     (function() {
       'use strict';
 
       var signatories = null;
       var currentTOS = null;
+      var lastMLL = null;
       var manualOverrides = {};   // per-competency Bloom's overrides
       var mllCache = null;
       var cloudStudents = [];   // TeacherCloud students (PT grades + overrides merged, itemResults restored)
@@ -252,6 +259,17 @@
 
         document.getElementById('btn-generate').addEventListener('click', generateTOS);
         document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
+        document.getElementById('btn-word').addEventListener('click', async function() {
+          if (!currentTOS) { APP.toast('Generate a TOS first', 'warning'); return; }
+          var b = this; b.disabled = true;
+          try {
+            var kind = await TosWord.save({ tos: currentTOS, mll: lastMLL, signatories: signatories || TOSEngine.loadLocalSignatories(),
+              paper: document.getElementById('word-paper').value, withMll: document.getElementById('word-mll').checked,
+              withKey: document.getElementById('word-key').checked });
+            APP.toast(kind === 'docx' ? 'Na-save ang Word file — i-edit at i-print.' : 'Na-save bilang .doc (offline) — nabubuksan sa Word.', 'success', 4000);
+          } catch (e) { APP.toast('Hindi na-save: ' + e.message, 'error', 5000); }
+          finally { b.disabled = false; }
+        });
         document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
         document.getElementById('btn-edit-signatories').addEventListener('click', openSignatoryModal);
         document.getElementById('btn-edit-signatories2').addEventListener('click', openSignatoryModal);
@@ -735,6 +753,7 @@
          ============================================================ */
       function renderMostLeastLearned(tos) {
         var container = document.getElementById('mll-container');
+        lastMLL = null;
         if (!mllCache || !mllCache.length) {
           container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#90a4ae;">No ST attempt data yet. Students must complete ST1 and ST2 for M/L Learned to populate.</div>';
           return;
@@ -747,6 +766,7 @@
         }), 5);
         var top5 = ml.most.map(function (r) { return { code: r.code, description: r.description, pct: Math.round(r.mps * 10) / 10 }; });
         var bot5 = ml.least.map(function (r) { return { code: r.code, description: r.description, pct: Math.round(r.mps * 10) / 10 }; });
+        lastMLL = { top5: top5, bot5: bot5 };
 
         var html =
           '<div class="tos-doc">' +
