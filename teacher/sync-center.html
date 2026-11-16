@@ -341,62 +341,81 @@
 
       /* ===== UPDATED: Pull All Pending with Amnesty Support ===== */
       function pullAllPending() {
-  var result = document.getElementById('sheets-result');
-  if (!Sync.backendEnabled()) {
-    result.innerHTML = renderResult('warning', 'Backend not configured', 'Set CONFIG.BACKEND_URL first.');
-    return;
-  }
-  result.innerHTML = '<div style="text-align:center;padding:20px;color:#5f6368;">⏳ Pulling...</div>';
-
-  // Gumamit ng pullAttempts (existing sa Code.gs) imbes na pullAllPending
-  Sync.pullAttempts({ includeUsed: false }).then(function(res) {
-    if (!res.ok) throw new Error(res.error || 'Unknown error');
-
-    var applied = 0;
-    var failed = 0;
-    var amnestied = 0;
-    var chain = Promise.resolve();
-
-    (res.records || []).forEach(function(record) {
-      chain = chain.then(function() {
-        // Kung may legacyAmnesty, tanggapin na agad
-        if (record.legacyAmnesty) {
-          amnestied++;
-          try { applyImport(record.payload); } catch (e) {}
+        var result = document.getElementById('sheets-result');
+        var btn = document.getElementById('btn-pull-all');
+        if (!Sync.backendEnabled()) {
+          result.innerHTML = renderResult('warning', 'Backend not configured', 'Set CONFIG.BACKEND_URL first.');
           return;
         }
+        var status = function (msg) { result.innerHTML = '<div style="text-align:center;padding:20px;color:#5f6368;">⏳ ' + msg + '</div>'; };
+        status('Pulling...');
+        if (btn) btn.disabled = true;
 
-        // Kung wala, i-verify gamit ang Security module
-        return Security.verify(record.payload, record.signature).then(function(valid) {
-          if (!valid) { 
-            failed++; 
-            console.warn('[Sync] Failed verification for:', record.pushId);
-            return; 
-          }
-          applyImport(record.payload);
-          applied++;
-        }).catch(function(err) {
-          failed++;
-          console.warn('[Sync] Verification error:', err.message);
-        });
-      });
-    });
-
-    return chain.then(function() {
-      var summary = 'Pulled ' + (applied + amnestied) + ' record(s)';
-      var detail = '<div style="margin-top:6px;">Applied: ' + applied + ' · Amnesty: ' + amnestied;
-      if (failed > 0) {
-        detail += ' · <span style="color:#c62828;">Failed: ' + failed + '</span>';
+        var verified = 0, amnestied = 0, failedVerify = 0;
+        var byLrn = {};   // one merged payload per student -> one cloud request per student
+        Sync.pullAttempts({ includeUsed: false }).then(function (res) {
+          if (!res.ok) throw new Error(res.error || 'Unknown error');
+          var records = res.records || [];
+          var chain = Promise.resolve();
+          records.forEach(function (record) {
+            chain = chain.then(function () {
+              var p = record.payload;
+              var take = function () {
+                if (!p || !p.student || !p.student.lrn) { failedVerify++; return; }
+                try { applyLocal(p); } catch (e) { failedVerify++; return; }
+                var k = String(p.student.lrn);
+                var g = byLrn[k] || (byLrn[k] = { student: p.student, scores: {}, progress: { term1: {}, term2: {}, term3: {} }, badges: {}, pushIds: [] });
+                g.student = Object.assign({}, g.student, p.student);
+                g.scores = mergeScores(g.scores, p.scores || {});
+                g.progress = mergeProgress(g.progress, p.progress || {});
+                g.badges = mergeBadges(g.badges, p.badges || {});
+                if (record.pushId) g.pushIds.push(record.pushId);
+                return true;
+              };
+              if (record.legacyAmnesty) { if (take()) amnestied++; return; }
+              return Security.verify(p, record.signature).then(function (valid) {
+                if (!valid) { failedVerify++; console.warn('[Sync] Failed verification for:', record.pushId); return; }
+                if (take()) verified++;
+              }).catch(function (err) { failedVerify++; console.warn('[Sync] Verification error:', err.message); });
+            });
+          });
+          return chain;
+        }).then(function () {
+          // Send each student once, one after another (the backend handles one request at a time).
+          var lrns = Object.keys(byLrn);
+          var saved = 0, cloudFailed = [];
+          var chain = Promise.resolve();
+          lrns.forEach(function (lrn, i) {
+            chain = chain.then(function () {
+              status('Saving to the cloud gradebook... ' + (i + 1) + ' / ' + lrns.length);
+              var g = byLrn[lrn];
+              return pushWithRetry(lrn, { scores: g.scores, progress: g.progress, badges: g.badges }, g.student).then(function () {
+                saved++;
+                // Done: mark these attempts as used so the next pull does not repeat them.
+                if (g.pushIds.length && Sync.markUsedBulk) return Sync.markUsedBulk(g.pushIds, 'teacher-sync-center').catch(function () {});
+              }).catch(function (e) {
+                cloudFailed.push(APP.formatFullName(g.student.lastName || '', g.student.firstName || '', '') + ' (' + e.message + ')');
+              });
+            });
+          });
+          return chain.then(function () {
+            var total = verified + amnestied;
+            var summary = 'Pulled ' + total + ' record(s) · ' + saved + ' of ' + lrns.length + ' student(s) saved to the cloud';
+            var detail = '<div style="margin-top:6px;">Applied: ' + verified + ' · Amnesty: ' + amnestied;
+            if (failedVerify > 0) detail += ' · <span style="color:#c62828;">Failed verification: ' + failedVerify + '</span>';
+            detail += '</div>';
+            if (cloudFailed.length) {
+              detail += '<div style="margin-top:8px;color:#c62828;">Not yet saved to the cloud (' + cloudFailed.length + '). Press <b>Pull All Pending</b> again to retry them:<br>' +
+                cloudFailed.map(function (x) { return APP.escapeHtml(x); }).join('<br>') + '</div>';
+            }
+            result.innerHTML = renderResult(failedVerify || cloudFailed.length ? 'warning' : 'success', summary, detail);
+            APP.toast(cloudFailed.length ? '⚠️ ' + cloudFailed.length + ' student(s) not yet saved to the cloud' : '✅ ' + saved + ' student(s) saved to the cloud',
+              cloudFailed.length ? 'warning' : 'success', 4000);
+          });
+        }).catch(function (err) {
+          result.innerHTML = renderResult('error', 'Pull failed', err.message);
+        }).then(function () { if (btn) btn.disabled = false; });
       }
-      detail += '</div>';
-
-      result.innerHTML = renderResult(failed > 0 ? 'warning' : 'success', summary, detail);
-      APP.toast('Imported ' + (applied + amnestied) + ' record(s)', 'success');
-    });
-  }).catch(function(err) {
-    result.innerHTML = renderResult('error', 'Pull failed', err.message);
-  });
-}
       /* ===== Existing: Pending ===== */
       function renderPending() {
         var list = document.getElementById('pending-list');
@@ -452,14 +471,30 @@
         });
       }
 
+      // Busy backend (one request at a time): wait and try again a few times.
+      function pushWithRetry(lrn, progressJSON, student, tries) {
+        tries = tries || 0;
+        return pushToCloud(lrn, progressJSON, student).catch(function (e) {
+          if (tries >= 3 || !/busy|timeout|network|fetch/i.test(String(e && e.message))) throw e;
+          return new Promise(function (r) { setTimeout(r, 2500 * (tries + 1)); })
+            .then(function () { return pushWithRetry(lrn, progressJSON, student, tries + 1); });
+        });
+      }
+
+      // One record (sync code / JSON file / pending): save here, then send to the cloud.
       function applyImport(payload) {
-        pushToCloud(payload.student.lrn, {
+        if (!payload || !payload.student) throw new Error('Invalid payload');
+        applyLocal(payload);
+        pushWithRetry(payload.student.lrn, {
           scores: payload.scores || {}, progress: payload.progress || {}, badges: payload.badges || {}
         }, payload.student).then(function () {
           APP.toast('☁️ Saved to the cloud gradebook', 'success', 3000);
         }).catch(function (e) {
           APP.toast('⚠️ Imported on this device only — cloud save failed: ' + e.message, 'danger', 6000);
         });
+      }
+
+      function applyLocal(payload) {
         if (!payload || !payload.student) throw new Error('Invalid payload');
         var student = {
           lrn: payload.student.lrn,
