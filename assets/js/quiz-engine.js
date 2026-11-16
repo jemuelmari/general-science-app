@@ -91,6 +91,7 @@ const QuizEngine = (() => {
     } catch (e) { /* offline / server busy: continue with this device's data */ }
 
     await _checkBackendUnlocks(ctx.lrn);
+    if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) await _checkRedeemedCode(ctx.lrn, ctx.term, ctx.id);
 
     if (Store.isAssessmentLocked(ctx.lrn, `${ctx.term}_${ctx.id}`)) {
       renderLocked();
@@ -132,6 +133,31 @@ const QuizEngine = (() => {
       });
     } catch (e) {
       console.warn('[QuizEngine] Unlock check failed:', e.message);
+    }
+  }
+
+  // A retake code the student already redeemed (request status "applied") unlocks the lock
+  // that came before it, even when the cloud pull above was too slow to bring the unlock.
+  // A lock made AFTER the code was used (failed again) stays.
+  async function _checkRedeemedCode(lrn, term, id) {
+    if (typeof Sync === 'undefined' || typeof Sync.getStudentRequests !== 'function') return;
+    try {
+      var res = await Promise.race([Sync.getStudentRequests(lrn), new Promise(function (r) { setTimeout(function () { r(null); }, 8000); })]);
+      if (!res || !res.ok || !Array.isArray(res.records)) return;
+      var key = term + '_' + id;
+      var lock = (Store.getAllLocks(lrn) || {})[key];
+      if (!lock) return;
+      var lockedAt = Date.parse(lock.lockedAt || '') || 0;
+      var hit = res.records.filter(function (r) {
+        return r && String(r.term) === term && String(r.assessment) === id && String(r.status) === 'applied' &&
+          (Date.parse(r.appliedAt || '') || 0) >= lockedAt - 120000;   // 2-min allowance for device clocks
+      })[0];
+      if (hit) {
+        Store.unlockAssessment(lrn, key);
+        console.log('[QuizEngine] 🔓 Unlocked by redeemed code:', key);
+      }
+    } catch (e) {
+      console.warn('[QuizEngine] Redeemed-code check failed:', e.message);
     }
   }
 
@@ -296,7 +322,7 @@ const QuizEngine = (() => {
           ${itemAnalysisHTML}
         </div>
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
@@ -674,7 +700,7 @@ const QuizEngine = (() => {
           </div>
         `}
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <a href="../../student/dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
+          <a href="../../dashboard.html" class="btn btn-primary" style="flex:1;">🏠 Back to Dashboard</a>
           <a href="javascript:history.back()" class="btn btn-outline" style="flex:1;">← Back to Assessments</a>
         </div>
       </div>
@@ -689,7 +715,7 @@ const QuizEngine = (() => {
         <h2 style="color:var(--color-danger);">Assessment Locked</h2>
         <p class="text-muted" style="margin:12px 0;">This assessment was locked because you did not reach the passing score, or a security violation was detected.</p>
         <p class="text-small text-muted">Please ask your teacher to unlock this assessment for a retake.</p>
-        <a href="../../student/dashboard.html" class="btn btn-primary mt-lg">🏠 Back to Dashboard</a>
+        <a href="../../dashboard.html" class="btn btn-primary mt-lg">🏠 Back to Dashboard</a>
       </div>
     `;
   }
