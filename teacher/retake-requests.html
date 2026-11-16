@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Retake Requests — Teacher · General Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-81f64ec" />
-  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-81f64ec" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=1.3.0-aa6f34f" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=1.3.0-aa6f34f" />
   <style>
     .rr-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 20px; }
     .rr-filters .form-group { min-width: 160px; flex: 1; margin-bottom: 0; }
@@ -46,6 +46,27 @@
       </div>
     </div>
 
+    <div class="card" style="padding:20px;margin-bottom:24px;border-left:4px solid #1565c0;">
+      <h3 style="margin:0 0 6px;">🎟️ Give a retake code (no request needed)</h3>
+      <p class="text-small text-muted" style="margin:0 0 12px;">For a student who was absent, had a device problem, was locked by a tab switch, or must retake after remediation. The code works only for this student and this test (7 days).</p>
+      <div class="rr-filters">
+        <div class="form-group"><label class="form-label">Section</label>
+          <select id="ic-section" class="form-control"><option value="">All Sections</option><option value="ACADEMIC A">ACADEMIC A</option><option value="ACADEMIC B">ACADEMIC B</option></select></div>
+        <div class="form-group" style="flex:2;"><label class="form-label">Student</label>
+          <select id="ic-student" class="form-control"><option value="">⏳ Loading students…</option></select></div>
+        <div class="form-group"><label class="form-label">Term</label>
+          <select id="ic-term" class="form-control"><option value="term1">Term 1</option><option value="term2">Term 2</option><option value="term3">Term 3</option></select></div>
+        <div class="form-group"><label class="form-label">Assessment</label>
+          <select id="ic-assessment" class="form-control">
+            <option value="quiz1">Quiz 1</option><option value="quiz2">Quiz 2</option><option value="quiz3">Quiz 3</option>
+            <option value="st1">Summative Test 1</option><option value="st2">Summative Test 2</option><option value="te">Term Exam</option>
+          </select></div>
+        <div class="form-group" style="flex:0;"><label class="form-label">&nbsp;</label>
+          <button id="ic-btn" class="btn btn-primary" style="white-space:nowrap;">🎟️ Generate code</button></div>
+      </div>
+      <div id="ic-out" style="margin-top:12px;"></div>
+    </div>
+
     <div class="card" style="padding:20px;margin-bottom:24px;">
       <div class="rr-filters">
         <div class="form-group">
@@ -84,14 +105,15 @@
     <p>General Science Online Modular Application · <span class="version">v1.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/app.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/store.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/security.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/sync.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/ui-helpers.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/teacher-auth.js?v=1.3.0-81f64ec"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-81f64ec"></script>
+  <script src="../config.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/app.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/store.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/security.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/sync.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/ui-helpers.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1.3.0-aa6f34f"></script>
+  <script src="../assets/js/teacher-cloud.js?v=1.3.0-aa6f34f"></script>
   <script>
     (function() {
       'use strict';
@@ -115,9 +137,54 @@
         document.getElementById('filter-section').addEventListener('change', fetchAndRender);
 
         fetchAndRender();
+        initIssueCode();
       }, function() {
         document.getElementById('list').innerHTML = '<div class="card la-empty">⚠️ Auth module failed to load</div>';
       });
+
+      /* ---- teacher-issued retake code ---- */
+      var icStudents = [];
+      function icEsc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function icFill() {
+        var sec = document.getElementById('ic-section').value;
+        var list = icStudents.filter(function (u) { return !sec || String(u.section || '').toUpperCase() === sec; })
+          .sort(function (a, b) { return (a.lastName + a.firstName).localeCompare(b.lastName + b.firstName); });
+        document.getElementById('ic-student').innerHTML = '<option value="">— Select student (' + list.length + ') —</option>' +
+          list.map(function (u) { return '<option value="' + icEsc(u.lrn) + '">' + icEsc((u.lastName || '') + ', ' + (u.firstName || '')) + ' · ' + icEsc(u.section || '') + '</option>'; }).join('');
+      }
+      async function initIssueCode() {
+        document.getElementById('ic-section').addEventListener('change', icFill);
+        document.getElementById('ic-btn').addEventListener('click', issueCode);
+        try { icStudents = await TeacherCloud.fetchStudents(); icFill(); }
+        catch (e) { document.getElementById('ic-student').innerHTML = '<option value="">❌ ' + icEsc(e.message) + '</option>'; }
+      }
+      async function issueCode() {
+        var out = document.getElementById('ic-out'), btn = document.getElementById('ic-btn');
+        var lrn = document.getElementById('ic-student').value;
+        var term = document.getElementById('ic-term').value, assessment = document.getElementById('ic-assessment').value;
+        if (!lrn) { APP.toast('Select a student first', 'warning'); return; }
+        var u = icStudents.find(function (x) { return String(x.lrn) === lrn; }) || {};
+        var label = (LABELS[assessment] || assessment) + ' · ' + term.replace('term', 'Term ');
+        btn.disabled = true; out.innerHTML = '<div class="text-small text-muted">⏳ Generating…</div>';
+        try {
+          var res = await Sync.backendPost({ action: 'issueRetakeCode', token: sessionStorage.getItem('gsa_teacher_token') || '', lrn: lrn, term: term, assessment: assessment,
+            studentName: (u.lastName || '') + ', ' + (u.firstName || ''), section: u.section || '' });
+          if (!res || !res.ok) throw new Error((res && res.error) || 'Backend error');
+          out.innerHTML = '<div class="alert alert-success">✅ Code for <strong>' + icEsc((u.lastName || '') + ', ' + (u.firstName || '')) + '</strong> — ' + icEsc(label) + ':' +
+            ' <span style="font-family:monospace;font-size:1.2rem;font-weight:800;margin-left:6px;">' + icEsc(res.unlockCode) + '</span>' +
+            ' <button id="ic-copy" class="btn btn-outline" style="padding:4px 10px;font-size:0.8rem;margin-left:6px;">📋 Copy</button>' +
+            (res.existing ? '<div class="text-small" style="margin-top:4px;">This student already had an unused code for this test — same code.</div>' : '') +
+            '<div class="text-small" style="margin-top:4px;">Send it to the student. They enter it on their Dashboard (Retake section). Valid until ' + icEsc(new Date(res.codeExpiresAt).toLocaleDateString()) + '.</div></div>';
+          document.getElementById('ic-copy').onclick = function () {
+            if (navigator.clipboard) navigator.clipboard.writeText(res.unlockCode).then(function () { APP.toast('Copied!', 'success'); }, function () { prompt('Copy this code:', res.unlockCode); });
+            else prompt('Copy this code:', res.unlockCode);
+          };
+          fetchAndRender();
+        } catch (e) {
+          var m = String(e.message || e);
+          out.innerHTML = '<div class="alert alert-danger">❌ ' + icEsc(m) + (/unknown action/i.test(m) ? ' — i-paste ang bagong Code.gs at mag-deploy ng New version.' : '') + '</div>';
+        } finally { btn.disabled = false; }
+      }
 
       async function fetchAndRender() {
         var listEl = document.getElementById('list');
