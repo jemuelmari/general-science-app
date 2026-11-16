@@ -426,10 +426,23 @@
         }
       }
 
+      // The request that matters now: an unused code first, then a pending request, then the
+      // latest used code — but a used code no longer counts once the test was locked again after it.
       function getRequest(term, assessment) {
-        return allRequests.find(function(r) {
-          return r.term === term && r.assessment === assessment;
-        }) || null;
+        var mine = allRequests.filter(function(r) { return r.term === term && r.assessment === assessment; });
+        var t = function(r) { return Date.parse(r.appliedAt || r.codeGeneratedAt || r.requestedAt || '') || 0; };
+        var open = mine.filter(function(r) {
+          return r.status === 'approved' && r.unlockCode && (!r.codeExpiresAt || Date.parse(r.codeExpiresAt) > Date.now());
+        }).sort(function(a, b) { return t(b) - t(a); })[0];
+        if (open) return open;
+        var pending = mine.filter(function(r) { return r.status === 'pending'; })[0];
+        if (pending) return pending;
+        var used = mine.filter(function(r) { return r.status === 'applied'; }).sort(function(a, b) { return t(b) - t(a); })[0];
+        if (!used) return null;
+        var lock = (Store.getAllLocks(user.lrn) || {})[term + '_' + assessment];
+        var lockedAt = lock ? (Date.parse(lock.lockedAt || '') || 0) : 0;
+        if (lock && lockedAt > t(used) + 120000) return null;   // failed again after the retake: may ask again
+        return used;
       }
 
       function scanFailedAssessments() {
@@ -465,6 +478,13 @@
       async function renderFailedSection() {
         await loadRequests();
         failedCache = scanFailedAssessments();
+        // codes the teacher gave without a request (absent, tab-switch lock, ...) also need a place to enter them
+        allRequests.forEach(function(r) {
+          if (r.status !== 'approved' || !r.unlockCode) return;
+          if (failedCache.some(function(f) { return f.term === r.term && f.assessment === r.assessment; })) return;
+          if (getRequest(r.term, r.assessment) !== r) return;
+          failedCache.push({ term: r.term, assessment: r.assessment, score: null, total: null, percent: null, issued: true });
+        });
 
         var section = document.getElementById('failed-section');
         var list = document.getElementById('failed-list');
@@ -487,7 +507,7 @@
             cls = 'awaiting';
             badge = '<span class="badge" style="background:#e8f5e9;color:#1b5e20;font-weight:700;">🔑 Code Ready</span>';
             extra =
-              '<p style="margin:6px 0 0;font-size:0.82rem;color:#37474f;">Your teacher approved your retake! Enter the code:</p>' +
+              '<p style="margin:6px 0 0;font-size:0.82rem;color:#37474f;">' + (f.issued ? 'Your teacher gave you a retake code. Enter it here:' : 'Your teacher approved your retake! Enter the code:') + '</p>' +
               '<div class="retake-code-input">' +
                 '<input type="text" data-code-input="' + f.term + '|' + f.assessment + '" placeholder="RTK-XXXX-XXXX" maxlength="13" />' +
                 '<button data-redeem="' + f.term + '|' + f.assessment + '">Redeem</button>' +
@@ -512,11 +532,11 @@
             '<div class="failed-header">' +
               '<div>' +
                 '<div class="failed-title">' + termLabel + ' · ' + assessmentLabel + '</div>' +
-                '<div class="failed-meta">Failed attempt · ' + APP.formatDate(new Date().toISOString()) + '</div>' +
+                '<div class="failed-meta">' + (f.issued ? 'Retake code from your teacher' : 'Failed attempt') + ' · ' + APP.formatDate(new Date().toISOString()) + '</div>' +
               '</div>' +
               '<div style="text-align:right;">' +
                 badge +
-                '<div class="failed-score" style="margin-top:4px;">' + f.score + '/' + f.total + ' (' + f.percent + '%)</div>' +
+                (f.issued ? '' : '<div class="failed-score" style="margin-top:4px;">' + f.score + '/' + f.total + ' (' + f.percent + '%)</div>') +
               '</div>' +
             '</div>' +
             extra +
